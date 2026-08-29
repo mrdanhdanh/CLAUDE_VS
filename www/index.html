@@ -4,99 +4,266 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>YUNIE STATUS — Harness v2</title>
-  <meta name="description" content="YUNIE — System chatbot cho CLAUDE HARNESS v2. Trạng thái hệ thống, registry, presets, plans, health." />
+  <meta name="description" content="YUNIE — Trợ lý hệ thống cho Harness v2. Theo dõi trạng thái, registry, presets, kế hoạch và tình trạng triển khai." />
   <meta name="color-scheme" content="light" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="./styles.css" />
 </head>
 <body>
+  <a class="skip-link" href="#main">Bỏ qua đến nội dung chính</a>
+
   <header class="header" role="banner">
     <div class="container header-inner">
-      <div class="brand" aria-label="YUNIE STATUS">
-        <div class="brand-mark" aria-hidden="true">Y</div>
+      <a class="brand" href="#yunie" aria-label="YUNIE — Your Unified Navigator for Intelligent Execution, bấm để xem lore">
+        <div class="brand-mark" aria-hidden="true" title="YUNIE = Your Unified Navigator for Intelligent Execution">Y</div>
         <div class="brand-text">
-          <strong>YUNIE STATUS</strong>
-          <span>Harness v2 · Process &gt; Model</span>
+          <strong>YUNIE STATUS <span class="badge badge-live" title="Dữ liệu trực tiếp từ status.json"><i aria-hidden="true"></i> Trực tiếp</span></strong>
+          <span title="Your Unified Navigator for Intelligent Execution · Yu-ni = You & I">Harness v2 · Yu-ni = You & I · Process &gt; Model</span>
         </div>
-        <span class="badge badge-live" title="Live from status.json"><i></i> Live</span>
-      </div>
-      <div class="header-actions">
-        <button class="btn btn-ghost" id="btnRefresh" type="button" aria-label="Làm mới dữ liệu">↻ Làm mới</button>
-        <a class="btn btn-ghost" href="./status.json" target="_blank" rel="noopener">status.json</a>
-        <a class="btn btn-primary" href="https://github.com" target="_blank" rel="noopener">GitHub Pages</a>
-      </div>
+      </a>
+      <nav class="header-actions" aria-label="Thao tác nhanh">
+        <button class="btn btn-ghost btn-icon" id="btnRefresh" type="button" aria-label="Làm mới dữ liệu">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a9 9 0 1 1-2.64-6.36"/><path d="M21 3v6h-6"/></svg>
+          <span class="btn-text-full">Làm mới</span>
+        </button>
+        <button class="btn btn-ghost btn-icon" id="btnPipeline" type="button" aria-label="Xem quy trình Harness" aria-haspopup="dialog" aria-controls="pipelineModal">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><path d="M10 6.5h4M6.5 10v4M17.5 10v4M10 17.5h4"/></svg>
+          <span class="btn-text-full">Quy trình</span>
+        </button>
+        <a class="btn btn-ghost btn-icon" href="./status.json" target="_blank" rel="noopener" aria-label="Mở tệp status.json">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M10 13H8"/><path d="M16 17H8"/><path d="M13 13h3"/></svg>
+          <span class="btn-text-full">status.json</span>
+        </a>
+        <a class="btn btn-primary btn-icon" href="https://github.com" target="_blank" rel="noopener" aria-label="Mở GitHub">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 4 5 4 5 4c-.28 1.15-.28 2.35 0 3.5A4.97 4.97 0 0 0 4 11c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.2 1.23-.1 1.85"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg>
+          <span class="btn-text-full">GitHub</span>
+        </a>
+      </nav>
     </div>
   </header>
 
-  <main class="container" role="main">
+  <main id="main" class="container" role="main">
     <!-- Hero -->
     <section class="hero" aria-labelledby="hero-title">
       <div class="hero-grid">
         <div class="hero-card">
-          <h1 id="hero-title">Hệ thống Harness v2 — <span style="color:var(--color-primary)">YUNIE</span> đang trực</h1>
-          <p>Chatbot hệ thống: hiểu toàn bộ Harness, thực thi task, kiểm tra tình trạng, cập nhật STATUS và deploy GitHub Pages từ <span class="kbd">www/</span>. Copy file mới vào <span class="kbd">www/</span> là tự lên Pages.</p>
-          <div class="hero-meta" id="heroMeta">
-            <span class="meta-pill">⏱ <span id="metaGenerated">—</span></span>
-            <span class="meta-pill">🤖 <span id="metaBy">YUNIE</span></span>
-            <span class="meta-pill">🔁 <span id="metaPipeline">Idea → … → Done</span></span>
-            <span class="meta-pill">📦 <span id="metaHealth">—</span></span>
+          <div class="eyebrow">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2l3 7h7l-5.5 4 2 7L12 16l-6.5 4 2-7L2 9h7z"/></svg>
+            YUNIE · Harness v2
           </div>
-          <div style="margin-top:14px;display:flex;gap:8px;flex-wrap:wrap">
-            <button class="btn btn-primary" id="btnCheck" type="button">Kiểm tra hệ thống</button>
-            <a class="btn btn-ghost" href="#registry">Xem registry</a>
+          <h1 id="hero-title">Hệ thống Harness v2 <span style="color:var(--color-primary)">đang hoạt động</span></h1>
+          <p>YUNIE hiểu toàn bộ hệ thống Harness, hỗ trợ thực thi tác vụ, kiểm tra trạng thái và cập nhật trang này. Mọi tệp trong thư mục <span class="kbd">www/</span> sẽ tự động triển khai lên GitHub Pages.</p>
+          <div class="hero-meta" id="heroMeta" aria-label="Thông tin hệ thống">
+            <span class="meta-pill">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>
+              Cập nhật <strong id="metaGenerated" style="font-weight:600;margin-left:4px">—</strong>
+            </span>
+            <span class="meta-pill">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8z"/><path d="M4 20a8 8 0 0 1 16 0"/></svg>
+              Vận hành bởi <strong id="metaBy" style="font-weight:600;margin-left:4px">YUNIE</strong>
+            </span>
+            <span class="meta-pill">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12h4l2-6 4 12 2-6h4"/></svg>
+              <span id="metaPipeline">Idea → … → Done</span>
+            </span>
+            <span class="meta-pill" id="metaHealthWrap">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+              <span id="metaHealth" style="margin-left:4px">—</span>
+            </span>
+          </div>
+          <div class="hero-actions">
+            <button class="btn btn-primary" id="btnCheck" type="button">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+              Kiểm tra hệ thống
+            </button>
+            <button class="btn btn-ghost" id="btnPipelineHero" type="button" aria-haspopup="dialog" aria-controls="pipelineModal">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><path d="M10 6.5h4M6.5 10v4M17.5 10v4M10 17.5h4"/></svg>
+              Xem quy trình
+            </button>
+            <a class="btn btn-ghost" href="#registry">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 6h16"/><path d="M4 12h16"/><path d="M4 18h16"/></svg>
+              Xem registry
+            </a>
           </div>
         </div>
-        <div class="hero-side">
+        <div class="hero-side" aria-label="Thông tin bổ sung">
           <div class="mini-card">
-            <h3>📂 www/ là root của Pages</h3>
-            <p>Workflow <span class="kbd">.github/workflows/pages.yml</span> upload toàn bộ <span class="kbd">www/</span>. Thêm trang mới chỉ cần copy vào <span class="kbd">www/</span> — không cần sửa workflow.</p>
-          </div>
-          <div class="mini-card">
-            <h3>💬 Gọi YUNIE trong Copilot Chat</h3>
-            <p>Gõ <span class="kbd">@YUNIE kiểm tra hệ thống</span> hoặc <span class="kbd">yunie cập nhật status</span>. YUNIE sẽ đọc <span class="kbd">registry.json</span>, chạy <span class="kbd">status</span> và regenerate <span class="kbd">status.json</span>.</p>
-          </div>
-          <div class="mini-card" style="display:flex;align-items:center;justify-content:space-between;gap:12px">
-            <div>
-              <h3 style="margin:0">Pipeline</h3>
-              <p style="margin:2px 0 0">Idea → Explore → Clarify → PRD → Design → Plan → Implement → Polish → Verify → Done</p>
+            <div class="mini-card-icon" aria-hidden="true">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M10 13H8"/><path d="M16 17H8"/><path d="M13 13h3"/></svg>
             </div>
-            <span class="tag tag-on">Process &gt; Model</span>
+            <div>
+              <h3>Thư mục www/ là gốc của GitHub Pages</h3>
+              <p>Tệp workflow <span class="kbd">.github/workflows/pages.yml</span> sẽ tự động triển khai toàn bộ nội dung trong <span class="kbd">www/</span>. Chỉ cần thêm tệp mới vào <span class="kbd">www/</span> — không cần chỉnh workflow.</p>
+            </div>
+          </div>
+          <div class="mini-card">
+            <div class="mini-card-icon" aria-hidden="true">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+            </div>
+            <div>
+              <h3>Gọi YUNIE ngay trong Copilot Chat</h3>
+              <p>Nhập <span class="kbd">@YUNIE kiểm tra hệ thống</span> hoặc <span class="kbd">yunie cập nhật status</span>. YUNIE sẽ đọc <span class="kbd">registry.json</span>, chạy kiểm tra và tạo lại <span class="kbd">status.json</span>.</p>
+            </div>
+          </div>
+          <div class="mini-card mini-card-row">
+            <div>
+              <h3>Quy trình 8 bước</h3>
+              <p>Idea → Explore → Clarify → PRD → Design → Plan → Implement → Polish → Verify → Done</p>
+            </div>
+            <span class="tag tag-accent" aria-label="Triết lý">Process &gt; Model</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- YUNIE Lore — Your Unified Navigator for Intelligent Execution -->
+    <section class="section yunie-section" id="yunie" aria-labelledby="yunie-title">
+      <div class="section-head">
+        <div>
+          <h2 id="yunie-title">✨ YUNIE là gì?</h2>
+          <p id="yunieSub">Your Unified Navigator for Intelligent Execution · Yu-ni = You &amp; I</p>
+        </div>
+        <span class="tag tag-on" id="yunieTag" aria-live="polite">5 chữ · 3 bản giới thiệu</span>
+      </div>
+
+      <div class="yunie-hero" id="yunieHero" aria-label="Slogan và phát âm YUNIE">
+        <div class="yunie-hero-main">
+          <div class="yunie-wordmark" aria-label="YUNIE wordmark">
+            <span class="yunie-letter-accent">Y</span><span>U</span><span>N</span><span>I</span><span>E</span>
+          </div>
+          <div class="yunie-fullname" id="yunieFullname">Your Unified Navigator for Intelligent Execution</div>
+          <div class="yunie-pronounce" id="yuniePronounce">Yu-ni = <strong>You &amp; I</strong> — Bạn và Mình cùng build product</div>
+          <div class="yunie-slogan" id="yunieSlogan">“Hiểu hệ thống. Làm thay bạn. Trực 24/7.”</div>
+          <div class="yunie-philosophy"><span class="tag tag-on">Process &gt; Model</span> <span class="muted small">· Harness v2 · 8 phase: Idea → … → Done</span></div>
+        </div>
+        <div class="yunie-hero-side" aria-label="Gọi YUNIE">
+          <div class="yunie-callout">
+            <strong>💬 Gọi YUNIE</strong>
+            <code class="kbd">YUNIE bạn là ai?</code>
+            <code class="kbd">yunie kiểm tra hệ thống</code>
+            <code class="kbd">@YUNIE cập nhật status</code>
+          </div>
+          <div style="display:flex;gap:8px;flex-wrap:wrap">
+            <button class="btn btn-primary btn-sm" id="btnYunieCopy" type="button" aria-label="Copy giới thiệu ngắn">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v3"/></svg>
+              Copy giới thiệu
+            </button>
+            <button class="btn btn-ghost btn-sm" id="btnYunieSurprise" type="button" aria-label="Xem bản vui">🎲 Bản vui</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="yunie-letters" id="yunieLetters" role="list" aria-label="5 chữ Y-U-N-I-E">
+        <div class="yunie-letter-card skeleton" style="height:110px"></div>
+        <div class="yunie-letter-card skeleton" style="height:110px"></div>
+        <div class="yunie-letter-card skeleton" style="height:110px"></div>
+        <div class="yunie-letter-card skeleton" style="height:110px"></div>
+        <div class="yunie-letter-card skeleton" style="height:110px"></div>
+      </div>
+
+      <div class="grid-2">
+        <div class="card card-pad" id="yunieAliasesCard" aria-labelledby="yunie-aliases-title">
+          <h3 id="yunie-aliases-title" style="margin:0 0 10px;font:700 13px var(--font-display)">🎭 Alias vui — để chém gió</h3>
+          <div id="yunieAliases"><div class="skeleton" style="height:16px;margin-bottom:8px"></div><div class="skeleton" style="height:16px"></div></div>
+        </div>
+        <div class="card card-pad" id="yunieIntrosCard" aria-labelledby="yunie-intros-title">
+          <div style="display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:10px">
+            <h3 id="yunie-intros-title" style="margin:0;font:700 13px var(--font-display)">💬 3 bản tự giới thiệu</h3>
+            <span class="tag" id="yunieIntroTag">ngắn</span>
+          </div>
+          <div class="yunie-tabs" role="tablist" aria-label="Chọn bản giới thiệu">
+            <button class="filter-pill is-active" role="tab" aria-selected="true" data-intro="short" type="button">Ngắn</button>
+            <button class="filter-pill" role="tab" aria-selected="false" data-intro="full" type="button">Đầy đủ</button>
+            <button class="filter-pill" role="tab" aria-selected="false" data-intro="fun" type="button">Vui 🎉</button>
+          </div>
+          <blockquote class="yunie-intro-text" id="yunieIntroText" aria-live="polite">—</blockquote>
+          <div style="display:flex;gap:8px;margin-top:10px;flex-wrap:wrap">
+            <button class="btn btn-ghost btn-sm" id="btnCopyIntro" type="button">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v3"/></svg>
+              Copy
+            </button>
+            <button class="btn btn-ghost btn-sm" id="btnSpeakIntro" type="button" title="Đọc to (nếu trình duyệt hỗ trợ)">🔊 Đọc</button>
           </div>
         </div>
       </div>
     </section>
 
     <!-- Stats -->
-    <section class="stats" id="stats" aria-label="Thống kê">
-      <!-- injected by app.js -->
-      <div class="stat"><div class="skeleton" style="height:60px"></div></div>
-      <div class="stat"><div class="skeleton" style="height:60px"></div></div>
-      <div class="stat"><div class="skeleton" style="height:60px"></div></div>
-      <div class="stat"><div class="skeleton" style="height:60px"></div></div>
-      <div class="stat"><div class="skeleton" style="height:60px"></div></div>
+    <section aria-label="Thống kê tổng quan">
+      <div class="stats" id="stats" role="list">
+        <div class="stat" role="listitem"><div class="skeleton" style="height:72px"></div></div>
+        <div class="stat" role="listitem"><div class="skeleton" style="height:72px"></div></div>
+        <div class="stat" role="listitem"><div class="skeleton" style="height:72px"></div></div>
+        <div class="stat" role="listitem"><div class="skeleton" style="height:72px"></div></div>
+        <div class="stat" role="listitem"><div class="skeleton" style="height:72px"></div></div>
+      </div>
     </section>
 
     <!-- Registry -->
     <section class="section" id="registry" aria-labelledby="registry-title">
       <div class="section-head">
         <div>
-          <h2 id="registry-title">Registry — Tháo lắp wise</h2>
-          <p id="registrySub">Nguồn: .github/harness/registry.json · Đồng bộ skills/registry.json</p>
+          <h2 id="registry-title">Registry — Quản lý thành phần</h2>
+          <p id="registrySub">Nguồn: .github/harness/registry.json · Đồng bộ với skills/registry.json</p>
         </div>
-        <span class="tag" id="registryTag">—</span>
+        <span class="tag" id="registryTag" aria-live="polite">—</span>
       </div>
-      <div class="card">
+      <div class="card" id="registryCard">
+        <div class="registry-controls" role="search" aria-label="Tìm kiếm registry">
+          <label class="search-wrap" aria-label="Tìm kiếm">
+            <span class="search-icon" aria-hidden="true">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
+            </span>
+            <input id="registrySearch" type="search" placeholder="Tìm theo tên hoặc mô tả..." autocomplete="off" aria-label="Tìm trong registry" />
+            <span class="search-hint" aria-hidden="true">/</span>
+          </label>
+          <div class="filter-pills" id="registryFilter" role="group" aria-label="Lọc theo loại">
+            <button class="filter-pill is-active" data-filter="all" type="button" aria-pressed="true">Tất cả</button>
+            <button class="filter-pill" data-filter="skill" type="button" aria-pressed="false">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 11a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/><path d="M12 2a3 3 0 0 1 3 3v1h1a3 3 0 0 1 3 3v1a3 3 0 0 1-3 3h-1v1a3 3 0 0 1-3 3h-1a3 3 0 0 1-3-3v-1H6a3 3 0 0 1-3-3V9a3 3 0 0 1 3-3h1V5a3 3 0 0 1 3-3h1z"/></svg>
+              Skill
+            </button>
+            <button class="filter-pill" data-filter="instruction" type="button" aria-pressed="false">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M10 13H8"/><path d="M16 17H8"/></svg>
+              Instruction
+            </button>
+            <button class="filter-pill" data-filter="agent" type="button" aria-pressed="false">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="11" width="18" height="10" rx="2"/><path d="M12 11V7a3 3 0 0 1 3-3h1"/><path d="M12 7a3 3 0 0 0-3-3H8"/><circle cx="9" cy="16" r="1"/><circle cx="15" cy="16" r="1"/></svg>
+              Agent
+            </button>
+            <button class="filter-pill" data-filter="prompt" type="button" aria-pressed="false">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+              Prompt
+            </button>
+            <button class="filter-pill" data-filter="hook" type="button" aria-pressed="false">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22a7 7 0 0 0 7-7c0-3.5-2.5-6-7-10-4.5 4-7 6.5-7 10a7 7 0 0 0 7 7z"/><path d="M9 12h6"/></svg>
+              Hook
+            </button>
+          </div>
+        </div>
         <div class="table-wrap">
-          <table aria-label="Registry table">
+          <table aria-label="Bảng registry">
             <thead>
-              <tr><th>Loại</th><th>Tên</th><th>Mô tả</th><th>Trạng thái</th></tr>
+              <tr><th scope="col">Loại</th><th scope="col">Tên</th><th scope="col">Mô tả</th><th scope="col">Trạng thái</th></tr>
             </thead>
             <tbody id="registryBody">
-              <tr><td colspan="4"><div class="skeleton"></div></td></tr>
+              <tr><td colspan="4"><div class="skeleton" style="height:16px"></div></td></tr>
+              <tr><td colspan="4"><div class="skeleton" style="height:16px"></div></td></tr>
+              <tr><td colspan="4"><div class="skeleton" style="height:16px"></div></td></tr>
             </tbody>
           </table>
+        </div>
+        <div class="registry-cards" id="registryCards" aria-label="Registry dạng thẻ (mobile)">
+          <!-- injected -->
+        </div>
+        <div id="registryEmpty" style="display:none;padding:16px">
+          <div class="empty">
+            <strong>Không tìm thấy kết quả</strong><br>
+            Thử từ khóa khác hoặc chọn bộ lọc khác.
+          </div>
         </div>
       </div>
     </section>
@@ -105,20 +272,30 @@
     <div class="grid-2">
       <section class="section" aria-labelledby="preset-title">
         <div class="section-head">
-          <h2 id="preset-title">Presets</h2>
-          <p>1 lệnh áp đúng bộ</p>
+          <div>
+            <h2 id="preset-title">Bộ cấu hình</h2>
+            <p>Áp dụng nhanh theo nhu cầu</p>
+          </div>
+          <span class="tag" id="presetTag">3 presets</span>
         </div>
         <div class="card card-pad" id="presetList">
-          <div class="skeleton"></div>
+          <div class="skeleton" style="height:16px;margin-bottom:8px"></div>
+          <div class="skeleton" style="height:16px;margin-bottom:8px"></div>
+          <div class="skeleton" style="height:16px"></div>
         </div>
       </section>
       <section class="section" aria-labelledby="plans-title">
         <div class="section-head">
-          <h2 id="plans-title">Plans & Demos</h2>
-          <p>.agent/plans + focus-flow</p>
+          <div>
+            <h2 id="plans-title">Kế hoạch &amp; Bản thử</h2>
+            <p>.agent/plans và bản demo</p>
+          </div>
+          <span class="tag" id="plansTag">—</span>
         </div>
         <div class="card card-pad" id="plansList">
-          <div class="skeleton"></div>
+          <div class="skeleton" style="height:16px;margin-bottom:8px"></div>
+          <div class="skeleton" style="height:16px;margin-bottom:8px"></div>
+          <div class="skeleton" style="height:16px"></div>
         </div>
       </section>
     </div>
@@ -127,20 +304,28 @@
     <div class="grid-2">
       <section class="section" aria-labelledby="health-title">
         <div class="section-head">
-          <h2 id="health-title">Health</h2>
-          <p id="healthSub">—</p>
+          <div>
+            <h2 id="health-title">Tình trạng hệ thống</h2>
+            <p id="healthSub">—</p>
+          </div>
+          <span id="healthBadge">—</span>
         </div>
         <div class="card card-pad" id="healthCard">
-          <div class="skeleton"></div>
+          <div class="skeleton" style="height:16px;margin-bottom:8px"></div>
+          <div class="skeleton" style="height:16px"></div>
         </div>
       </section>
       <section class="section" aria-labelledby="pages-title">
         <div class="section-head">
-          <h2 id="pages-title">Pages — www/</h2>
-          <p>Copy file vào www/ là tự deploy</p>
+          <div>
+            <h2 id="pages-title">Trang đã triển khai</h2>
+            <p>Tự động triển khai khi thêm tệp vào www/</p>
+          </div>
+          <span class="tag" id="pagesTag">—</span>
         </div>
         <div class="card card-pad" id="pagesCard">
-          <div class="skeleton"></div>
+          <div class="skeleton" style="height:16px;margin-bottom:8px"></div>
+          <div class="skeleton" style="height:16px"></div>
         </div>
       </section>
     </div>
@@ -148,43 +333,226 @@
     <!-- How to -->
     <section class="section" aria-labelledby="howto-title">
       <div class="section-head">
-        <h2 id="howto-title">Thêm trang mới — không cần sửa workflow</h2>
+        <h2 id="howto-title">Thêm trang mới chỉ với 3 bước</h2>
+        <p>Không cần chỉnh workflow</p>
       </div>
       <div class="grid-3">
-        <div class="card card-pad">
-          <h3 style="margin:0 0 6px;font:700 14px var(--font-display)">1. Copy file</h3>
-          <p style="margin:0;color:var(--color-neutral-500);font-size:13px">Tạo <span class="kbd">www/ten-trang.html</span> hoặc <span class="kbd">www/docs/index.html</span>. Dùng chung <span class="kbd">styles.css</span> để giữ design system.</p>
+        <div class="card card-pad howto-card">
+          <div class="howto-num" aria-hidden="true">1</div>
+          <h3>Tạo tệp mới</h3>
+          <p>Tạo <span class="kbd">www/ten-trang.html</span> hoặc <span class="kbd">www/docs/index.html</span>. Dùng chung <span class="kbd">styles.css</span> để giữ hệ thống thiết kế nhất quán.</p>
         </div>
-        <div class="card card-pad">
-          <h3 style="margin:0 0 6px;font:700 14px var(--font-display)">2. YUNIE cập nhật</h3>
-          <p style="margin:0;color:var(--color-neutral-500);font-size:13px">Gọi <span class="kbd">YUNIE cập nhật status</span> — YUNIE sẽ thêm entry vào <span class="kbd">status.json → pages.entries</span> và verify.</p>
+        <div class="card card-pad howto-card">
+          <div class="howto-num" aria-hidden="true">2</div>
+          <h3>Cập nhật trạng thái</h3>
+          <p>Gọi <span class="kbd">YUNIE cập nhật status</span> — YUNIE sẽ thêm mục mới vào <span class="kbd">status.json → pages.entries</span> và kiểm tra lại.</p>
         </div>
-        <div class="card card-pad">
-          <h3 style="margin:0 0 6px;font:700 14px var(--font-display)">3. Push → Pages</h3>
-          <p style="margin:0;color:var(--color-neutral-500);font-size:13px"><span class="kbd">git add www && git commit -m "add page" && git push</span> — workflow tự deploy. URL: <span class="kbd">https://&lt;user&gt;.github.io/&lt;repo&gt;/</span></p>
+        <div class="card card-pad howto-card">
+          <div class="howto-num" aria-hidden="true">3</div>
+          <h3>Đẩy lên GitHub</h3>
+          <p><span class="kbd">git add www && git commit -m "add page" && git push</span> — workflow sẽ tự động triển khai. Đường dẫn: <span class="kbd">https://&lt;user&gt;.github.io/&lt;repo&gt;/</span></p>
         </div>
       </div>
-      <details style="margin-top:12px">
-        <summary>Xem lệnh YUNIE hay dùng <span class="chev">›</span></summary>
+      <details style="margin-top:16px">
+        <summary>Xem các lệnh YUNIE thường dùng <span class="chev" aria-hidden="true">›</span></summary>
         <div class="detail-body">
-          <pre class="mono" style="white-space:pre-wrap;background:var(--color-neutral-50);padding:12px;border-radius:10px;border:1px solid #e2e8f0;margin:10px 0 0">node .github/harness/scripts/harness-manager.mjs status
+          <pre class="mono" style="white-space:pre-wrap;background:var(--color-neutral-50);padding:12px;border-radius:10px;border:1px solid var(--color-neutral-200);margin:12px 0 0;line-height:1.6">node .github/harness/scripts/harness-manager.mjs status
 node .github/harness/scripts/harness-manager.mjs list --type agent
 node .github/harness/scripts/harness-manager.mjs disable instruction product-quality
 node .github/harness/scripts/harness-manager.mjs enable instruction product-quality
 node .github/harness/scripts/harness-manager.mjs preset apply web-product
 node .github/harness/scripts/harness-manager.mjs create agent my-agent
-# YUNIE tự regenerate www/status.json sau mỗi thay đổi hệ thống</pre>
+# YUNIE sẽ tự tạo lại www/status.json sau mỗi thay đổi hệ thống</pre>
         </div>
       </details>
     </section>
 
-    <div class="footer">
-      <div>Built by <strong>YUNIE</strong> · Harness v2 · <a href="./status.json">status.json</a> · <a href="../README.md">README</a></div>
-      <div style="margin-top:4px">Mở file:// <span class="kbd">www/index.html</span> để xem local — push lên GitHub để Pages deploy.</div>
-    </div>
+    <footer class="footer" role="contentinfo">
+      <div>Phát triển bởi <strong>YUNIE</strong> · Harness v2 · <a href="./status.json">status.json</a> · <a href="../README.md">README</a></div>
+      <div style="margin-top:6px">Chạy <span class="kbd">npx serve www</span> để xem trên máy — đẩy lên GitHub để tự động triển khai. <span class="muted">Lưu ý: mở bằng file:// có thể bị lỗi CORS.</span></div>
+    </footer>
   </main>
 
-  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <!-- Pipeline Modal -->
+  <div id="pipelineModal" class="modal" aria-hidden="true" role="presentation">
+    <div class="modal-overlay" id="pipelineOverlay" data-close="true"></div>
+    <div class="modal-panel" role="dialog" aria-modal="true" aria-labelledby="pipelineTitle" aria-describedby="pipelineDesc" tabindex="-1">
+      <div class="modal-handle" aria-hidden="true"></div>
+      <div class="modal-header">
+        <div>
+          <h2 id="pipelineTitle">Quy trình Harness v2</h2>
+          <p id="pipelineDesc">8 bước từ ý tưởng đến sản phẩm hoàn chỉnh — Process &gt; Model</p>
+        </div>
+        <button class="btn btn-ghost btn-icon" id="btnClosePipeline" type="button" aria-label="Đóng">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6L6 18"/><path d="M6 6l12 12"/></svg>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="pipeline-intro">
+          <div class="pipeline-flow" aria-label="Luồng tổng quan">
+            <span class="flow-step">Idea</span>
+            <span class="flow-arrow" aria-hidden="true">→</span>
+            <span class="flow-step">Explore</span>
+            <span class="flow-arrow" aria-hidden="true">→</span>
+            <span class="flow-step">Clarify</span>
+            <span class="flow-arrow" aria-hidden="true">→</span>
+            <span class="flow-step">PRD</span>
+            <span class="flow-arrow" aria-hidden="true">→</span>
+            <span class="flow-step">Design</span>
+            <span class="flow-arrow" aria-hidden="true">→</span>
+            <span class="flow-step">Plan</span>
+            <span class="flow-arrow" aria-hidden="true">→</span>
+            <span class="flow-step">Implement</span>
+            <span class="flow-arrow" aria-hidden="true">→</span>
+            <span class="flow-step">Polish</span>
+            <span class="flow-arrow" aria-hidden="true">→</span>
+            <span class="flow-step is-accent">Verify</span>
+            <span class="flow-arrow" aria-hidden="true">→</span>
+            <span class="flow-step is-done">Done</span>
+          </div>
+          <p class="pipeline-note">Mọi tác vụ đều phải đi qua đủ 8 bước. Với tác vụ nhỏ (1–2 tệp), quy trình được rút gọn nhưng <strong>không bỏ bước Polish</strong>.</p>
+        </div>
+
+        <ol class="pipeline-steps" aria-label="Chi tiết 8 bước">
+          <li class="pipeline-step">
+            <div class="step-num" aria-hidden="true">1</div>
+            <div class="step-icon" aria-hidden="true">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/><path d="M11 8v6"/><path d="M8 11h6"/></svg>
+            </div>
+            <div class="step-content">
+              <h3>Explore — Khám phá</h3>
+              <p>Hiểu codebase, đọc README, package.json, tìm pattern liên quan bằng grep.</p>
+              <div class="step-meta">
+                <span class="tag"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg> Tóm tắt stack</span>
+                <span class="mono">Explore subagent</span>
+              </div>
+            </div>
+          </li>
+          <li class="pipeline-step">
+            <div class="step-num" aria-hidden="true">2</div>
+            <div class="step-icon" aria-hidden="true">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/><path d="M9 10h.01"/><path d="M15 10h.01"/><path d="M9.5 15a3.5 3.5 0 0 0 5 0"/></svg>
+            </div>
+            <div class="step-content">
+              <h3>Clarify — Làm rõ</h3>
+              <p>Nếu ý tưởng còn mơ hồ, hỏi tối đa 3 câu có lựa chọn và chốt giả định.</p>
+              <div class="step-meta">
+                <span class="tag">Câu hỏi + giả định</span>
+                <span class="mono">vscode_askQuestions</span>
+              </div>
+            </div>
+          </li>
+          <li class="pipeline-step">
+            <div class="step-num" aria-hidden="true">3</div>
+            <div class="step-icon" aria-hidden="true">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M10 13H8"/><path d="M16 17H8"/><path d="M13 13h3"/></svg>
+            </div>
+            <div class="step-content">
+              <h3>PRD — Đặc tả</h3>
+              <p>Biến ý tưởng thành đặc tả: tầm nhìn, user stories P0/P1, phạm vi, tiêu chí thành công.</p>
+              <div class="step-meta">
+                <span class="tag">.agent/plans/&lt;slug&gt;/prd.md</span>
+                <span class="mono">Plan agent</span>
+              </div>
+            </div>
+          </li>
+          <li class="pipeline-step">
+            <div class="step-num" aria-hidden="true">4</div>
+            <div class="step-icon" aria-hidden="true">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7a4 4 0 0 1 4 4c0 2-2 3-2 3"/><path d="M12 17h.01"/></svg>
+            </div>
+            <div class="step-content">
+              <h3>Design — Thiết kế</h3>
+              <p>Định nghĩa hệ thống thiết kế: bảng màu, typography, wireframe 375/768/1280, trạng thái.</p>
+              <div class="step-meta">
+                <span class="tag">.agent/plans/&lt;slug&gt;/design.md</span>
+                <span class="mono">Designer agent</span>
+              </div>
+            </div>
+          </li>
+          <li class="pipeline-step">
+            <div class="step-num" aria-hidden="true">5</div>
+            <div class="step-icon" aria-hidden="true">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M8 6h13"/><path d="M8 12h13"/><path d="M8 18h13"/><path d="M3 6h.01"/><path d="M3 12h.01"/><path d="M3 18h.01"/></svg>
+            </div>
+            <div class="step-content">
+              <h3>Plan — Lập kế hoạch</h3>
+              <p>Chia nhỏ công việc thành todos, liệt kê tệp thay đổi, rủi ro và cách kiểm tra.</p>
+              <div class="step-meta">
+                <span class="tag">.agent/plans/&lt;slug&gt;/plan.md + todos</span>
+                <span class="mono">Plan agent</span>
+              </div>
+            </div>
+          </li>
+          <li class="pipeline-step">
+            <div class="step-num" aria-hidden="true">6</div>
+            <div class="step-icon" aria-hidden="true">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M10 13l2 2 4-4"/></svg>
+            </div>
+            <div class="step-content">
+              <h3>Implement — Thực thi</h3>
+              <p>Làm theo từng todo, mỗi lần chỉ một todo ở trạng thái đang làm, kiểm tra lỗi sau mỗi lần sửa.</p>
+              <div class="step-meta">
+                <span class="tag">Mã nguồn</span>
+                <span class="mono">Implement agent · get_errors</span>
+              </div>
+            </div>
+          </li>
+          <li class="pipeline-step">
+            <div class="step-num" aria-hidden="true">7</div>
+            <div class="step-icon" aria-hidden="true">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l3 7h7l-5.5 4 2 7L12 16l-6.5 4 2-7L2 9h7z"/></svg>
+            </div>
+            <div class="step-content">
+              <h3>Polish — Hoàn thiện</h3>
+              <p>Rà soát giao diện: responsive, trạng thái, animation 150–300ms, accessibility.</p>
+              <div class="step-meta">
+                <span class="tag">Chuẩn product-quality</span>
+                <span class="mono">Polish agent</span>
+              </div>
+            </div>
+          </li>
+          <li class="pipeline-step is-verify">
+            <div class="step-num" aria-hidden="true">8</div>
+            <div class="step-icon" aria-hidden="true">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/><path d="M12 8v4"/><path d="M12 16h.01"/></svg>
+            </div>
+            <div class="step-content">
+              <h3>Verify — Kiểm định</h3>
+              <p>Chạy build/test/lint, kiểm tra trực quan, lặp lại sửa lỗi tối đa 3 lần cho đến khi đạt.</p>
+              <div class="step-meta">
+                <span class="tag tag-on">PASS → Done</span>
+                <span class="mono">Verify agent · loop fix</span>
+              </div>
+            </div>
+          </li>
+        </ol>
+
+        <div class="pipeline-extras">
+          <div class="extra-card">
+            <h4>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+              Rút gọn cho tác vụ nhỏ
+            </h4>
+            <p>Explore (nhanh) → Clarify (1 câu) → PRD mini → Design mini → Plan (3 todos) → Implement → Polish → Verify. Không bỏ Polish.</p>
+          </div>
+          <div class="extra-card">
+            <h4>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a9 9 0 1 1-2.64-6.36"/><path d="M21 3v6h-6"/></svg>
+              Vòng lặp kiểm định
+            </h4>
+            <p>Nếu Verify chưa đạt → quay lại Implement để sửa → Polish lại → Verify lại. Chỉ khi PASS mới hoàn tất.</p>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <span class="muted small">Triết lý: <strong>Process &gt; Model</strong> — Chất lượng đến từ quy trình, không phụ thuộc mô hình.</span>
+        <button class="btn btn-primary" id="btnClosePipeline2" type="button">Đã hiểu</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast" role="status" aria-live="polite" aria-atomic="true"></div>
   <script src="./app.js" type="module"></script>
 </body>
 </html>
