@@ -1,0 +1,163 @@
+{
+  "version": 2,
+  "skills": {
+    "claude-harness": {
+      "source": "local",
+      "path": "skills/claude-harness",
+      "ref": "local",
+      "enabled": true,
+      "description": "Claude Harness v2 product-driven pipeline Idea -> Explore -> Clarify -> PRD -> Design -> Plan -> Implement -> Polish -> Verify. Use when building product from small idea, need beautiful UI/UX, model-agnostic workflow, or user says harness/product/idea/giao dien dep.",
+      "file": "claude-harness/SKILL.md",
+      "installedAt": "2026-08-29T04:56:25.948Z"
+    },
+    "custom-registry": {
+      "source": "local",
+      "path": "skills/custom-registry",
+      "ref": "local",
+      "enabled": true,
+      "description": "Tháo lắp toàn bộ customizations: skill/instruction/rule/agent/prompt/hook như plugin, preset theo dự án, scaffold mới. Use when user wants to manage rules, tháo lắp rule/instruction/agent/prompt/hook, preset, tạo mới customization, custom dễ dàng, hoặc nói harness registry/custom registry.",
+      "file": "custom-registry/SKILL.md",
+      "installedAt": "2026-08-29T04:56:25.950Z"
+    },
+    "skill-registry": {
+      "source": "local",
+      "path": "skills/skill-registry",
+      "ref": "local",
+      "enabled": true,
+      "description": "Quản lý skill như plugin: cài/gỡ/bật/tắt skill từ GitHub, tháo lắp wise. Use when user wants to install skill from GitHub, manage skills, enable/disable skill, tháo lắp skill, sync skills, hoặc nói skill registry/plugin.",
+      "file": "skill-registry/SKILL.md",
+      "installedAt": "2026-08-29T04:56:25.951Z"
+    }
+  },
+  "instructions": {
+    "custom-registry": {
+      "source": "local",
+      "file": "custom-registry.instructions.md",
+      "enabled": true,
+      "description": "Tháo lắp toàn bộ customizations (skill/instruction/agent/prompt/hook) như plugin — preset, scaffold, wise loading",
+      "applyTo": "**",
+      "installedAt": "2026-08-29T04:56:25.952Z"
+    },
+    "harness-workflow": {
+      "source": "local",
+      "file": "harness-workflow.instructions.md",
+      "enabled": true,
+      "description": "Enforce Claude Harness v2 product-driven pipeline for all coding tasks",
+      "applyTo": "**",
+      "installedAt": "2026-08-29T04:56:25.952Z"
+    },
+    "product-quality": {
+      "source": "local",
+      "file": "product-quality.instructions.md",
+      "enabled": true,
+      "description": "Product quality standard for web UI/UX — beautiful, responsive, accessible",
+      "applyTo": "**/*.{html,css,tsx,jsx,vue,js,ts}",
+      "installedAt": "2026-08-29T04:56:25.952Z"
+    },
+    "skill-usage": {
+      "source": "local",
+      "file": "skill-usage.instructions.md",
+      "enabled": true,
+      "description": "Wise skill usage — only load skill when description matches task",
+      "applyTo": "**",
+      "installedAt": "2026-08-29T04:56:25.953Z"
+    }
+  },
+  "agents": {
+    "designer": {
+      "source": "local",
+      "file": "designer.agent.md",
+      "enabled": true,
+      "description": "Design product UI/UX: design system, wireframe, component states. Use when need beautiful interface, responsive layout, before coding.",
+      "installedAt": "2026-08-29T04:56:25.954Z"
+    },
+    "explore": {
+      "source": "local",
+      "file": "explore.agent.md",
+      "enabled": true,
+      "description": "Explore codebase read-only. Use when need to understand project structure, find files, trace patterns before planning or coding.",
+      "installedAt": "2026-08-29T04:56:25.955Z"
+    },
+    "implement": {
+      "source": "local",
+      "file": "implement.agent.md",
+      "enabled": true,
+      "description": "Implement code changes todo-driven. Use when executing plan todos, writing code, editing files, running checks.",
+      "installedAt": "2026-08-29T04:56:25.956Z"
+    },
+    "plan": {
+      "source": "local",
+      "file": "plan.agent.md",
+      "enabled": true,
+      "description": "Plan architecture and task breakdown. Use when need to design implementation plan, break down requirements, create todos before coding.",
+      "installedAt": "2026-08-29T04:56:25.957Z"
+    },
+    "polish": {
+      "source": "local",
+      "file": "polish.agent.md",
+      "enabled": true,
+      "description": "Polish UI/UX to product quality: responsive, states, animation, a11y. Use after implement, before verify, when UI needs beautifying.",
+      "installedAt": "2026-08-29T04:56:25.957Z"
+    },
+    "verify": {
+      "source": "local",
+      "file": "verify.agent.md",
+      "enabled": true,
+      "description": "Verify build, tests, lint and fix loops. Use when need to validate implementation, run checks, auto-fix failures before done.",
+      "installedAt": "2026-08-29T04:56:25.957Z"
+    }
+  },
+  "prompts": {
+    "harness": {
+      "source": "local",
+      "file": "harness.prompt.md",
+      "enabled": true,
+      "description": "Chạy full Claude Harness v2 pipeline Idea -> Explore -> Clarify -> PRD -> Design -> Plan -> Implement -> Polish -> Verify. Model-agnostic, product-driven.",
+      "installedAt": "2026-08-29T04:56:25.959Z"
+    },
+    "implement": {
+      "source": "local",
+      "file": "implement.prompt.md",
+      "enabled": true,
+      "description": "Implement plan đã duyệt theo todo-driven workflow. Đọc plan, chạy từng todo, verify sau mỗi edit.",
+      "installedAt": "2026-08-29T04:56:25.959Z"
+    },
+    "plan": {
+      "source": "local",
+      "file": "plan.prompt.md",
+      "enabled": true,
+      "description": "Tạo plan chi tiết Explore -> Plan cho task, xuất file .agent/plans/ và todos. Dùng trước khi implement.",
+      "installedAt": "2026-08-29T04:56:25.960Z"
+    },
+    "polish": {
+      "source": "local",
+      "file": "polish.prompt.md",
+      "enabled": true,
+      "description": "Polish giao diện đến chuẩn product: responsive, states, animation, a11y. Chạy sau implement, trước verify.",
+      "installedAt": "2026-08-29T04:56:25.960Z"
+    },
+    "product": {
+      "source": "local",
+      "file": "product.prompt.md",
+      "enabled": true,
+      "description": "Biến 1 ý tưởng nhỏ thành sản phẩm hoàn chỉnh: PRD mini -> Design -> Plan -> Implement -> Polish. Dùng khi có ý tưởng mơ hồ cần thành product đẹp.",
+      "installedAt": "2026-08-29T04:56:25.960Z"
+    },
+    "verify": {
+      "source": "local",
+      "file": "verify.prompt.md",
+      "enabled": true,
+      "description": "Verify build/test/lint và tự fix loop đến khi pass. Chạy sau implement, trước khi done.",
+      "installedAt": "2026-08-29T04:56:25.961Z"
+    }
+  },
+  "hooks": {
+    "hooks": {
+      "source": "local",
+      "file": "hooks.json",
+      "enabled": true,
+      "description": "hook hooks",
+      "installedAt": "2026-08-29T04:56:25.962Z"
+    }
+  }
+}

@@ -3,11 +3,30 @@
   "skills": {
     "claude-harness": {
       "source": "local",
-      "path": ".github/skills/claude-harness",
+      "path": "skills/claude-harness",
       "ref": "local",
       "enabled": true,
-      "description": "Claude Harness v2 product-driven pipeline Idea -> Explore -> Clarify -> PRD -> Design -> Plan -> Implement -> Polish -> Verify.",
-      "installedAt": "2026-08-29T00:00:00.000Z"
+      "description": "Claude Harness v2 product-driven pipeline Idea -> Explore -> Clarify -> PRD -> Design -> Plan -> Implement -> Polish -> Verify. Use when building product from small idea, need beautiful UI/UX, model-agnostic workflow, or user says harness/product/idea/giao dien dep.",
+      "file": "claude-harness/SKILL.md",
+      "installedAt": "2026-08-29T04:56:25.948Z"
+    },
+    "custom-registry": {
+      "source": "local",
+      "path": "skills/custom-registry",
+      "ref": "local",
+      "enabled": true,
+      "description": "Tháo lắp toàn bộ customizations: skill/instruction/rule/agent/prompt/hook như plugin, preset theo dự án, scaffold mới. Use when user wants to manage rules, tháo lắp rule/instruction/agent/prompt/hook, preset, tạo mới customization, custom dễ dàng, hoặc nói harness registry/custom registry.",
+      "file": "custom-registry/SKILL.md",
+      "installedAt": "2026-08-29T04:56:25.950Z"
+    },
+    "skill-registry": {
+      "source": "local",
+      "path": "skills/skill-registry",
+      "ref": "local",
+      "enabled": true,
+      "description": "Quản lý skill như plugin: cài/gỡ/bật/tắt skill từ GitHub, tháo lắp wise. Use when user wants to install skill from GitHub, manage skills, enable/disable skill, tháo lắp skill, sync skills, hoặc nói skill registry/plugin.",
+      "file": "skill-registry/SKILL.md",
+      "installedAt": "2026-08-29T04:56:25.951Z"
     }
   }
 }

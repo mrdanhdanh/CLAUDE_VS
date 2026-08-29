@@ -1,0 +1,34 @@
+{
+  "name": "web-product",
+  "description": "Preset cho dự án web cần giao diện đẹp — bật product-quality + designer/polish",
+  "skills": {
+    "claude-harness": true,
+    "skill-registry": true,
+    "custom-registry": true
+  },
+  "instructions": {
+    "harness-workflow": true,
+    "product-quality": true,
+    "skill-usage": true,
+    "custom-registry": true
+  },
+  "agents": {
+    "designer": true,
+    "explore": true,
+    "implement": true,
+    "plan": true,
+    "polish": true,
+    "verify": true
+  },
+  "prompts": {
+    "harness": true,
+    "implement": true,
+    "plan": true,
+    "polish": true,
+    "product": true,
+    "verify": true
+  },
+  "hooks": {
+    "hooks": true
+  }
+}

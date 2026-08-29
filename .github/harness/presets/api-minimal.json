@@ -1,0 +1,34 @@
+{
+  "name": "api-minimal",
+  "description": "Preset gọn cho API/script — tắt product-quality/designer/polish, giữ harness core",
+  "skills": {
+    "claude-harness": true,
+    "skill-registry": true,
+    "custom-registry": true
+  },
+  "instructions": {
+    "harness-workflow": true,
+    "product-quality": false,
+    "skill-usage": true,
+    "custom-registry": true
+  },
+  "agents": {
+    "designer": false,
+    "explore": true,
+    "implement": true,
+    "plan": true,
+    "polish": false,
+    "verify": true
+  },
+  "prompts": {
+    "harness": true,
+    "implement": true,
+    "plan": true,
+    "polish": false,
+    "product": false,
+    "verify": true
+  },
+  "hooks": {
+    "hooks": true
+  }
+}

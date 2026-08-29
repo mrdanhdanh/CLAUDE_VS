@@ -77,14 +77,18 @@ Mọi sản phẩm web PHẢI đạt:
 | Verify | `run_in_terminal` (sync) |
 | Ghi nhớ | `memory` (/memories/repo/, /memories/) |
 | Skill GitHub | `skill-manager` CLI (`.github/skills/skill-registry/scripts/skill-manager.mjs`) |
+| Harness Registry | `harness-manager` CLI (`.github/harness/scripts/harness-manager.mjs`) — tháo lắp mọi thứ |
 
-## 5b. Skill Registry — Tháo lắp Wise
+## 5b. Harness Registry — Tháo lắp Wise (toàn bộ)
 
-- **Registry:** `.github/skills/registry.json` là source of truth (commit vào git).
-- **Tháo lắp:** `disable` = move `skills/<name>` → `skills/.disabled/<name>` (không xóa), `enable` = move ngược, `uninstall` = xóa hẳn. Xem `skill-registry` skill.
-- **Wise usage:** Chỉ load `SKILL.md` khi `description` match task (progressive loading). Skill ở `.disabled/` không được load. Đừng bật 20 skill cùng lúc.
-- **Lệnh:** `node .github/skills/skill-registry/scripts/skill-manager.mjs <list|install|enable|disable|uninstall|sync|help>`
-- Chi tiết: `.github/skills/skill-registry/SKILL.md` + `.github/instructions/skill-usage.instructions.md`
+- **Registry:** `.github/harness/registry.json` v2 là source of truth (commit vào git), đồng bộ `.github/skills/registry.json` cho skills.
+- **Tháo lắp:** `disable <type> <name>` = move file/folder → `.disabled/` (không xóa), `enable` = move ngược, `uninstall` = xóa hẳn. Type = `skill|instruction|agent|prompt|hook`.
+- **Preset:** `preset apply web-product` (web cần đẹp) / `api-minimal` (API gọn) / `full` (bật tất cả). `preset save <name>` để lưu bộ hiện tại.
+- **Scaffold:** `create <type> <name>` tạo mới từ template — custom dễ dàng.
+- **Wise usage:** Chỉ load khi `description`/`applyTo` match task. Đừng bật 20 thứ cùng lúc — dùng preset.
+- **Lệnh:** `node .github/harness/scripts/harness-manager.mjs <list|status|enable|disable|install|create|preset|sync|help>`
+- Chi tiết: `.github/skills/custom-registry/SKILL.md` + `.github/instructions/custom-registry.instructions.md`
+- Skill riêng lẻ vẫn dùng `skill-registry` được, nhưng nên dùng `harness-manager` cho mọi loại.
 
 ## 6. Memory
 
