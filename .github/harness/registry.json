@@ -60,7 +60,7 @@
       "source": "local",
       "file": "harness-workflow.instructions.md",
       "enabled": true,
-      "description": "Enforce Claude Harness v2 product-driven pipeline for all coding tasks",
+      "description": "Enforce Claude Harness v2 pipeline — /harness for features, /fixbug for bugs. BẮT BUỘC đọc docs/knowleged.md trước mọi task.",
       "applyTo": "**",
       "installedAt": "2026-08-29T04:56:25.952Z"
     },
@@ -79,6 +79,14 @@
       "description": "Wise skill usage — only load skill when description matches task",
       "applyTo": "**",
       "installedAt": "2026-08-29T04:56:25.953Z"
+    },
+    "knowleged": {
+      "source": "local",
+      "file": "knowleged.instructions.md",
+      "enabled": true,
+      "description": "BẮT BUỘC đọc docs/knowleged.md trước mọi task — chứa bài học từ bug, anti-patterns, checklist phòng tránh. Use when any coding task, bug fix, feature, harness, implement, polish, verify, or before editing any file.",
+      "applyTo": "**",
+      "installedAt": "2026-08-29T11:04:17.005Z"
     }
   },
   "agents": {
@@ -174,6 +182,13 @@
       "enabled": true,
       "description": "Verify build/test/lint và tự fix loop đến khi pass. Chạy sau implement, trước khi done.",
       "installedAt": "2026-08-29T04:56:25.961Z"
+    },
+    "fixbug": {
+      "source": "local",
+      "file": "fixbug.prompt.md",
+      "enabled": true,
+      "description": "Fix bug gọn nhẹ: Reproduce → Root Cause → Fix → Verify → Learn. Lưu .agent/bugs/<slug>/bug.md và cập nhật docs/knowleged.md (bắt buộc đọc). Use when fixing bug, sửa lỗi, regression, hotfix — thay cho /harness full pipeline.",
+      "installedAt": "2026-08-29T11:04:17.194Z"
     }
   },
   "hooks": {
