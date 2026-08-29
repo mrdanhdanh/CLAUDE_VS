@@ -2,7 +2,6 @@
 description: "Implement code changes todo-driven. Use when executing plan todos, writing code, editing files, running checks."
 name: "Implement"
 tools: [read, edit, search, execute, todo]
-model: "Claude Sonnet 4.5 (copilot)"
 user-invocable: false
 ---
 

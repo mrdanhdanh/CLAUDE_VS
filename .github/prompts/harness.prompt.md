@@ -1,8 +1,7 @@
----
+﻿---
 description: "Chạy full Claude Harness v2 pipeline Idea -> Explore -> Clarify -> PRD -> Design -> Plan -> Implement -> Polish -> Verify. Model-agnostic, product-driven."
 name: "Harness"
 agent: "agent"
-model: "Claude Sonnet 4.5 (copilot)"
 tools: [read, edit, search, execute, todo, agent, web]
 argument-hint: "Mô tả task/ý tưởng cần harness thực thi"
 ---
@@ -29,16 +28,16 @@ Idea → Explore → Clarify → PRD → Design → Plan → Implement → Polis
 - Chốt giả định, ghi vào PRD
 
 ### Phase 3: PRD
-- Tạo `.agent/plans/<slug>-prd.md` từ template `../skills/claude-harness/templates/prd-template.md`
+- Tạo `.agent/plans/<slug>/prd.md` từ template `../skills/claude-harness/templates/prd-template.md`
 - Vision, User Stories (P0/P1), Scope In/Out, Non-Goals, Success Metrics
 
 ### Phase 4: DESIGN
 - Delegate `Designer` hoặc tự làm
-- Tạo `.agent/plans/<slug>-design.md` từ template `../skills/claude-harness/templates/design-template.md`
+- Tạo `.agent/plans/<slug>/design.md` từ template `../skills/claude-harness/templates/design-template.md`
 - Palette 3-5 màu, typography, wireframe 375/768/1280, states, UX flows
 
 ### Phase 5: PLAN
-- Tạo `.agent/plans/<slug>-plan.md` + `manage_todo_list` (3-7 từ/todo)
+- Tạo `.agent/plans/<slug>/plan.md` + `manage_todo_list` (3-7 từ/todo)
 
 ### Phase 6: IMPLEMENT
 - 1 todo `in-progress` → code → `get_errors` → `completed`

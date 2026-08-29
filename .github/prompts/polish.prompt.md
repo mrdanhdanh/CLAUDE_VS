@@ -1,8 +1,7 @@
----
+﻿---
 description: "Polish giao diện đến chuẩn product: responsive, states, animation, a11y. Chạy sau implement, trước verify."
 name: "Polish"
 agent: "agent"
-model: "Claude Sonnet 4.5 (copilot)"
 tools: [read, edit, search, execute, agent]
 argument-hint: "Mô tả view/component cần polish (để trống để polish toàn bộ)"
 ---
@@ -14,7 +13,7 @@ Bạn là **Polish Agent** — làm đẹp sản phẩm đến chuẩn product.
 **Target:** ${input:target:Để trống để polish toàn bộ, hoặc ghi view/component cụ thể}
 
 ## Steps
-1. Đọc Design doc `.agent/plans/*-design.md` + file implementation hiện tại
+1. Đọc Design doc `.agent/plans/*/design.md` + file implementation hiện tại
 2. Audit theo `.github/instructions/product-quality.instructions.md`:
    - [ ] Design system (CSS variables, không hardcode)
    - [ ] Responsive 375/768/1280 không vỡ

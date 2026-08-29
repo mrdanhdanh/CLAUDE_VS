@@ -2,7 +2,6 @@
 description: "Verify build/test/lint và tự fix loop đến khi pass. Chạy sau implement, trước khi done."
 name: "Verify"
 agent: "agent"
-model: "Claude Sonnet 4.5 (copilot)"
 tools: [read, search, execute, edit, todo]
 argument-hint: "Lệnh verify cụ thể (để trống để auto-detect)"
 ---

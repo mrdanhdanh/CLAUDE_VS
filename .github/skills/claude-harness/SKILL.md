@@ -1,4 +1,4 @@
----
+﻿---
 name: claude-harness
 description: "Claude Harness v2 product-driven pipeline Idea -> Explore -> Clarify -> PRD -> Design -> Plan -> Implement -> Polish -> Verify. Use when building product from small idea, need beautiful UI/UX, model-agnostic workflow, or user says harness/product/idea/giao dien dep."
 argument-hint: "Mô tả ý tưởng (1 câu cũng được) cần biến thành sản phẩm"
@@ -33,18 +33,18 @@ Idea → Explore → Clarify → PRD → Design → Plan → Implement → Polis
 - Không đoán — hỏi hoặc ghi assumption rõ ràng
 
 ### Phase 3: PRD
-- Tạo `.agent/plans/<task>-prd.md` từ template `./templates/prd-template.md`
+- Tạo `.agent/plans/<task>/prd.md` từ template `./templates/prd-template.md`
 - Nội dung: Vision, User Stories, Scope (In/Out), Non-Goals, Success Metrics, Edge Cases
 - Với ý tưởng nhỏ: PRD mini 5-10 dòng vẫn phải có
 
 ### Phase 4: DESIGN
 - Delegate `Designer` agent hoặc tự làm
-- Tạo `.agent/plans/<task>-design.md` từ template `./templates/design-template.md`
+- Tạo `.agent/plans/<task>/design.md` từ template `./templates/design-template.md`
 - Nội dung: Design System (palette 3-5 màu, typography, spacing, radius, shadow), Wireframe (mobile/tablet/desktop), Component States, UX Flows (loading/empty/error)
 - Quy tắc: Không code khi chưa có Design
 
 ### Phase 5: PLAN
-- Tạo `.agent/plans/<task>-plan.md` + `manage_todo_list` (3-7 từ/todo, 5-10 todos)
+- Tạo `.agent/plans/<task>/plan.md` + `manage_todo_list` (3-7 từ/todo, 5-10 todos)
 - Liệt kê File Changes (create/edit/delete), Risks, Verification Steps
 - Hỏi user confirm nếu task phức tạp
 

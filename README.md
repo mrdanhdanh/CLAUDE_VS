@@ -1,4 +1,4 @@
-# CLAUDE HARNESS v2 — VS Code Copilot
+﻿# CLAUDE HARNESS v2 — VS Code Copilot
 
 > **Process > Model.** Dù GPT / Claude / Gemini đều chạy cùng pipeline. Một ý tưởng nhỏ → **sản phẩm hoàn chỉnh, giao diện đẹp** — không phụ thuộc model.
 
@@ -67,7 +67,7 @@ flowchart TD
     B --> C{"❓ Clarify<br/>Mơ hồ?"}
     C -- "Có" --> C1["vscode_askQuestions<br/>max 3 câu"]
     C -- "Không" --> D
-    C1 --> D["📄 PRD<br/>.agent/plans/*-prd.md"]
+    C1 --> D["📄 PRD<br/>.agent/plans/*/prd.md"]
     D --> E["🎨 Design<br/>Designer subagent<br/>palette + wireframe 375/768/1280"]
     E --> F["🗂️ Plan<br/>Plan subagent<br/>*.md + manage_todo_list"]
     F --> H["🔨 Implement<br/>todo-driven<br/>1 in-progress → get_errors"]
@@ -188,7 +188,7 @@ Templates: `.github/harness/templates/` (instruction.md, agent.md, prompt.md, sk
 
 Ý tưởng 1 câu → product hoàn chỉnh qua Harness v2:
 
-- **PRD** `.agent/plans/focus-flow-prd.md` · **Design** `.agent/plans/focus-flow-design.md` · **Plan** `.agent/plans/focus-flow-plan.md`
+- **PRD** `.agent/plans/focus-flow/prd.md` · **Design** `.agent/plans/focus-flow/design.md` · **Plan** `.agent/plans/focus-flow/plan.md`
 - **Code** `focus-flow/index.html` + `styles.css` (CSS variables) + `app.js` (timer drift-free, task CRUD, stats, localStorage, sound, Notification, keyboard Space/R)
 - **Polish** responsive 375/768/1280 không vỡ, states đầy đủ, toast/confetti, a11y
 - **Verify** `get_errors` pass, visual check browser
@@ -205,10 +205,16 @@ Mở: `focus-flow/index.html` (file://, không cần build)
 ├── docs/
 │   ├── harness-flow.md      # Sơ đồ /harness (flowchart, sequence, architecture)
 │   └── capabilities.md      # Toàn bộ khả năng hệ thống
-├── .agent/plans/            # PRD / Design / Plan trace
-│   ├── focus-flow-prd.md
-│   ├── focus-flow-design.md
-│   └── focus-flow-plan.md
+├── .agent/plans/            # PRD / Design / Plan trace (mỗi task 1 thư mục)
+│   ├── focus-flow/
+│   │   ├── prd.md
+│   │   ├── design.md
+│   │   └── plan.md
+│   ├── todo-manager/
+│   │   ├── prd.md
+│   │   ├── design.md
+│   │   └── plan.md
+│   └── ...
 ├── .github/
 │   ├── copilot-instructions.md          # Harness v2 — Identity + Pipeline
 │   ├── harness/

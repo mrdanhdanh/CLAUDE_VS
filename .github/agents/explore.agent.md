@@ -2,7 +2,6 @@
 description: "Explore codebase read-only. Use when need to understand project structure, find files, trace patterns before planning or coding."
 name: "Explore"
 tools: [read, search, web, todo]
-model: "Claude Sonnet 4.5 (copilot)"
 user-invocable: false
 ---
 

@@ -1,4 +1,4 @@
-# Capabilities — Toàn bộ khả năng của hệ thống
+﻿# Capabilities — Toàn bộ khả năng của hệ thống
 
 > Harness v2 + Registry tháo lắp wise — VS Code Copilot Chat. Mọi customization đều là plugin.
 
@@ -37,9 +37,9 @@ Idea → Explore → Clarify → PRD → Design → Plan → Implement → Polis
 |-------|----------|--------|----------|----------|
 | Explore | Hiểu codebase + context | Tóm tắt stack, file liên quan, pattern | Explore | ❌ |
 | Clarify | Làm rõ mơ hồ | Câu hỏi + giả định chốt | — (vscode_askQuestions) | Rút gọn nếu rõ |
-| PRD | Biến ý tưởng thành spec | `.agent/plans/<slug>-prd.md` | Plan | ❌ (mini 5 dòng cũng phải có) |
-| Design | Định nghĩa giao diện đẹp | `.agent/plans/<slug>-design.md` | Designer | ❌ |
-| Plan | Chia nhỏ để code | `.agent/plans/<slug>-plan.md` + todos | Plan | ❌ |
+| PRD | Biến ý tưởng thành spec | `.agent/plans/<slug>/prd.md` | Plan | ❌ (mini 5 dòng cũng phải có) |
+| Design | Định nghĩa giao diện đẹp | `.agent/plans/<slug>/design.md` | Designer | ❌ |
+| Plan | Chia nhỏ để code | `.agent/plans/<slug>/plan.md` + todos | Plan | ❌ |
 | Implement | Code todo-driven | Files code | Implement | ❌ |
 | Polish | Làm đẹp + UX | Responsive, states, animation, a11y | Polish | ❌ |
 | Verify | Đảm bảo chất lượng | build/test/lint pass + visual check | Verify | ❌ |
@@ -263,9 +263,9 @@ Chi tiết: `.github/instructions/product-quality.instructions.md` · Checklist 
 
 | Nơi | Dùng để |
 |-----|---------|
-| `.agent/plans/<slug>-prd.md` | PRD trace |
-| `.agent/plans/<slug>-design.md` | Design trace |
-| `.agent/plans/<slug>-plan.md` | Plan + todos trace |
+| `.agent/plans/<slug>/prd.md` | PRD trace |
+| `.agent/plans/<slug>/design.md` | Design trace |
+| `.agent/plans/<slug>/plan.md` | Plan + todos trace |
 | `/memories/` | User memory (cross-workspace) |
 | `/memories/repo/` | Repo memory (pattern, conventions) |
 | `/memories/session/` | Session memory (task hiện tại) |
@@ -281,9 +281,9 @@ Chi tiết: `.github/instructions/product-quality.instructions.md` · Checklist 
 
 Ý tưởng 1 câu → product hoàn chỉnh qua Harness v2:
 
-- **PRD:** `.agent/plans/focus-flow-prd.md` — 6 User Stories P0/P1, Scope In/Out, Metrics, Edge Cases
-- **Design:** `.agent/plans/focus-flow-design.md` — Palette Indigo/Mint/Amber, wireframe 375/768/1280, states
-- **Plan:** `.agent/plans/focus-flow-plan.md` — Architecture vanilla HTML/CSS/JS, 7 todos
+- **PRD:** `.agent/plans/focus-flow/prd.md` — 6 User Stories P0/P1, Scope In/Out, Metrics, Edge Cases
+- **Design:** `.agent/plans/focus-flow/design.md` — Palette Indigo/Mint/Amber, wireframe 375/768/1280, states
+- **Plan:** `.agent/plans/focus-flow/plan.md` — Architecture vanilla HTML/CSS/JS, 7 todos
 - **Code:** `focus-flow/index.html` + `styles.css` + `app.js` — timer drift-free, task CRUD, stats, localStorage, sound, Notification, keyboard
 - **Polish:** responsive không vỡ, states đầy đủ, toast/confetti, a11y
 - **Verify:** `get_errors` pass, visual check browser

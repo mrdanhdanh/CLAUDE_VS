@@ -1,8 +1,8 @@
-# Plan: Focus Flow
+﻿# Plan: Focus Flow
 
 ## Context
-- PRD: `.agent/plans/focus-flow-prd.md`
-- Design: `.agent/plans/focus-flow-design.md`
+- PRD: `.agent/plans/focus-flow/prd.md`
+- Design: `.agent/plans/focus-flow/design.md`
 - Stack: Vanilla HTML/CSS/JS (không build), localStorage, Web Notification + Audio (Web Audio beep)
 - Harness v2 pipeline: Idea → Explore → Clarify → PRD → Design → Plan → Implement → Polish → Verify
 
@@ -23,7 +23,7 @@
 | `focus-flow/index.html` | create | Semantic HTML, header/main/sections, SVG ring, templates |
 | `focus-flow/styles.css` | create | Design system variables, responsive grid, states, animations |
 | `focus-flow/app.js` | create | State, timer, tasks, stats, storage, a11y, keyboard |
-| `.agent/plans/focus-flow-*` | done | PRD/Design/Plan trace |
+| `.agent/plans/focus-flow/*` | done | PRD/Design/Plan trace |
 
 ## Risks & Mitigations
 | Risk | Mitigation |

@@ -1,8 +1,8 @@
-# Plan: Harness Registry
+﻿# Plan: Harness Registry
 
 ## Context
-- PRD: `.agent/plans/custom-registry-prd.md`
-- Design: `.agent/plans/custom-registry-design.md`
+- PRD: `.agent/plans/custom-registry/prd.md`
+- Design: `.agent/plans/custom-registry/design.md`
 - Stack: Node 18+ ESM, no deps
 
 ## Requirements
@@ -26,7 +26,7 @@
 | `.github/instructions/custom-registry.instructions.md` | create | wise rules |
 | `.github/skills/skill-registry/scripts/skill-manager.mjs` | edit | thêm note wrapper |
 | `.github/copilot-instructions.md` | edit | thêm § Harness Registry |
-| `.agent/plans/custom-registry-*` | done | trace |
+| `.agent/plans/custom-registry/*` | done | trace |
 
 ## Risks & Mitigations
 | Risk | Mitigation |

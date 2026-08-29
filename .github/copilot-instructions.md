@@ -1,4 +1,4 @@
-# CLAUDE HARNESS v2 — Product-Driven, Model-Agnostic
+﻿# CLAUDE HARNESS v2 — Product-Driven, Model-Agnostic
 
 > **Triết lý:** Model nào cũng phải qua **quy trình** mới ra kết quả đúng. Harness này biến mọi ý tưởng nhỏ thành **sản phẩm hoàn chỉnh, giao diện đẹp** — không phụ thuộc model.
 
@@ -20,9 +20,9 @@ Idea → Explore → Clarify → PRD → Design → Plan → Implement → Polis
 |-------|----------|--------|------|
 | **Explore** | Hiểu codebase + context | Tóm tắt stack, file liên quan, pattern | `Explore` subagent, `grep_search`, `read_file` |
 | **Clarify** | Làm rõ ý tưởng mơ hồ | Câu hỏi + giả định đã chốt | `vscode_askQuestions` |
-| **PRD** | Biến ý tưởng thành spec | `.agent/plans/<task>-prd.md` (user stories, scope, non-goals) | `Plan` agent |
-| **Design** | Định nghĩa giao diện đẹp | `.agent/plans/<task>-design.md` (design system, wireframe, states) | `Designer` agent |
-| **Plan** | Chia nhỏ để code | `.agent/plans/<task>-plan.md` + `manage_todo_list` | `Plan` agent |
+| **PRD** | Biến ý tưởng thành spec | `.agent/plans/<task>/prd.md` (user stories, scope, non-goals) | `Plan` agent |
+| **Design** | Định nghĩa giao diện đẹp | `.agent/plans/<task>/design.md` (design system, wireframe, states) | `Designer` agent |
+| **Plan** | Chia nhỏ để code | `.agent/plans/<task>/plan.md` + `manage_todo_list` | `Plan` agent |
 | **Implement** | Code todo-driven | Files + `get_errors` sau mỗi edit | `Implement` agent |
 | **Polish** | Làm đẹp + UX | Responsive, animation, empty/error/loading states | `Polish` agent |
 | **Verify** | Đảm bảo chất lượng | build/test/lint pass, visual check | `Verify` agent |

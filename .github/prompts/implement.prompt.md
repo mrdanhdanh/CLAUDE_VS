@@ -1,8 +1,7 @@
----
+﻿---
 description: "Implement plan đã duyệt theo todo-driven workflow. Đọc plan, chạy từng todo, verify sau mỗi edit."
 name: "Implement"
 agent: "agent"
-model: "Claude Sonnet 4.5 (copilot)"
 tools: [read, edit, search, execute, todo, agent]
 argument-hint: "Tên plan hoặc mô tả task cần implement"
 ---
@@ -14,7 +13,7 @@ Bạn là **Implement Agent** trong Claude Harness.
 **Input:** ${input:task:Tên plan hoặc mô tả task (để trống nếu đã có plan trong .agent/plans/)}
 
 ## Steps
-1. Đọc plan từ `.agent/plans/<task>-plan.md` hoặc `/memories/session/plan.md`
+1. Đọc plan từ `.agent/plans/<task>/plan.md` hoặc `/memories/session/plan.md`
 2. Đảm bảo `manage_todo_list` đã có todos; nếu chưa, tạo từ plan
 3. Với mỗi todo:
    - Mark `in-progress` (chỉ 1 tại 1 thời điểm)

@@ -1,4 +1,4 @@
----
+﻿---
 description: "Enforce Claude Harness v2 product-driven pipeline for all coding tasks"
 applyTo: "**"
 ---
@@ -15,9 +15,9 @@ Mọi coding task PHẢI tuân thủ pipeline **Idea → Explore → Clarify →
 |-------|--------|----------|
 | **Explore** | Tóm tắt codebase, pattern | ❌ |
 | **Clarify** | Câu hỏi + giả định chốt | Rút gọn nếu rõ |
-| **PRD** | `.agent/plans/<task>-prd.md` | ❌ (mini 5 dòng cũng phải có) |
-| **Design** | `.agent/plans/<task>-design.md` (palette, wireframe, states) | ❌ |
-| **Plan** | `.agent/plans/<task>-plan.md` + `manage_todo_list` | ❌ |
+| **PRD** | `.agent/plans/<task>/prd.md` | ❌ (mini 5 dòng cũng phải có) |
+| **Design** | `.agent/plans/<task>/design.md` (palette, wireframe, states) | ❌ |
+| **Plan** | `.agent/plans/<task>/plan.md` + `manage_todo_list` | ❌ |
 | **Implement** | Code todo-driven, `get_errors` sau mỗi edit | ❌ |
 | **Polish** | Responsive 375/768/1280, states, animation, a11y | ❌ — giao diện xấu = chưa xong |
 | **Verify** | build/test/lint pass + visual check | ❌ |

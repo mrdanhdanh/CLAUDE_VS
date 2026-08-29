@@ -2,7 +2,6 @@
 description: "Verify build, tests, lint and fix loops. Use when need to validate implementation, run checks, auto-fix failures before done."
 name: "Verify"
 tools: [read, search, execute, edit, todo]
-model: "Claude Sonnet 4.5 (copilot)"
 user-invocable: false
 ---
 

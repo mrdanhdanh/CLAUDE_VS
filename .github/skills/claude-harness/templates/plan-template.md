@@ -1,8 +1,8 @@
-# Plan: {{TASK_NAME}}
+﻿# Plan: {{TASK_NAME}}
 
 ## Context
-- PRD: `.agent/plans/{{TASK}}-prd.md`
-- Design: `.agent/plans/{{TASK}}-design.md`
+- PRD: `.agent/plans/{{TASK}}/prd.md`
+- Design: `.agent/plans/{{TASK}}/design.md`
 - Stack: ...
 
 ## Requirements

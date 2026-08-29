@@ -1,0 +1,222 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="color-scheme" content="light" />
+  <meta name="description" content="TaskBoard — Todo Manager nâng cao: tạo, sửa, xóa, lọc, sắp xếp, dashboard, undo, lưu LocalStorage." />
+  <title>TaskBoard — Todo Manager</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body>
+  <a class="skip-link" href="#main">Bỏ qua đến nội dung</a>
+
+  <header class="site-header" role="banner">
+    <div class="container header-inner">
+      <a class="brand" href="#" aria-label="TaskBoard trang chủ">
+        <span class="brand-dot" aria-hidden="true"></span>
+        <span class="brand-name">TaskBoard</span>
+        <span class="brand-badge">BÀI 010</span>
+      </a>
+      <nav class="header-nav" aria-label="Điều hướng">
+        <span class="header-hint">State → xử lý → render</span>
+      </nav>
+      <div class="header-actions">
+        <button class="btn btn-primary" id="btn-open-add" aria-label="Thêm công việc mới">
+          <span aria-hidden="true">＋</span> Thêm việc
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main id="main" class="container">
+    <!-- Dashboard -->
+    <section class="dashboard" aria-labelledby="dashboard-title">
+      <div class="section-head">
+        <h1 id="dashboard-title" class="page-title">Quản lý công việc</h1>
+        <p class="page-sub">Tạo, lọc, sắp xếp và theo dõi deadline — dữ liệu lưu tự động.</p>
+      </div>
+      <div class="dash-grid" role="list" aria-label="Thống kê">
+        <div class="dash-card dash-total" role="listitem">
+          <div class="dash-icon" aria-hidden="true">📋</div>
+          <div class="dash-num" id="dash-total">0</div>
+          <div class="dash-label">Tổng số</div>
+          <div class="dash-sub">tất cả công việc</div>
+        </div>
+        <div class="dash-card" role="listitem">
+          <div class="dash-icon" aria-hidden="true">⭕</div>
+          <div class="dash-num" id="dash-todo">0</div>
+          <div class="dash-label">Chưa làm</div>
+          <div class="dash-sub">Todo</div>
+        </div>
+        <div class="dash-card dash-doing" role="listitem">
+          <div class="dash-icon" aria-hidden="true">⚡</div>
+          <div class="dash-num" id="dash-doing">0</div>
+          <div class="dash-label">Đang làm</div>
+          <div class="dash-sub">Doing</div>
+        </div>
+        <div class="dash-card dash-done" role="listitem">
+          <div class="dash-icon" aria-hidden="true">✅</div>
+          <div class="dash-num" id="dash-done">0</div>
+          <div class="dash-label">Hoàn thành</div>
+          <div class="dash-sub">Done</div>
+        </div>
+        <div class="dash-card dash-overdue" role="listitem">
+          <div class="dash-icon" aria-hidden="true">⚠️</div>
+          <div class="dash-num" id="dash-overdue">0</div>
+          <div class="dash-label">Quá hạn</div>
+          <div class="dash-sub">cần xử lý</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Toolbar -->
+    <section class="toolbar" aria-label="Tìm kiếm và bộ lọc">
+      <div class="toolbar-row">
+        <label class="search-wrap" aria-label="Tìm kiếm">
+          <span class="search-icon" aria-hidden="true">🔍</span>
+          <input id="search-input" class="input search-input" type="search" placeholder="Tìm theo tên hoặc mô tả..." autocomplete="off" />
+        </label>
+        <div class="toolbar-filters">
+          <label class="field field-sm">
+            <span class="field-label sr-only">Trạng thái</span>
+            <select id="filter-status" class="select" aria-label="Lọc trạng thái">
+              <option value="all">Tất cả trạng thái</option>
+              <option value="todo">Todo</option>
+              <option value="doing">Doing</option>
+              <option value="done">Done</option>
+            </select>
+          </label>
+          <label class="field field-sm">
+            <span class="field-label sr-only">Mức độ</span>
+            <select id="filter-priority" class="select" aria-label="Lọc mức độ">
+              <option value="all">Mọi mức độ</option>
+              <option value="low">Low</option>
+              <option value="medium">Medium</option>
+              <option value="high">High</option>
+            </select>
+          </label>
+          <label class="field field-sm">
+            <span class="field-label sr-only">Tag</span>
+            <select id="filter-tag" class="select" aria-label="Lọc theo tag">
+              <option value="all">Tất cả tags</option>
+            </select>
+          </label>
+          <label class="check-overdue">
+            <input type="checkbox" id="filter-overdue" />
+            <span>Quá hạn</span>
+          </label>
+        </div>
+      </div>
+      <div class="toolbar-row toolbar-row--bottom">
+        <div class="toolbar-left">
+          <label class="field field-sm">
+            <span class="field-label">Sắp xếp</span>
+            <select id="sort-by" class="select" aria-label="Sắp xếp">
+              <option value="newest">Mới nhất</option>
+              <option value="oldest">Cũ nhất</option>
+              <option value="dueDate">Deadline gần nhất</option>
+              <option value="priority">Priority cao → thấp</option>
+            </select>
+          </label>
+          <span class="count-badge" id="count-badge" aria-live="polite">0 công việc</span>
+        </div>
+        <div class="toolbar-right">
+          <button class="btn btn-ghost btn-sm" id="btn-clear-filters">Xóa bộ lọc</button>
+          <button class="btn btn-ghost btn-sm" id="btn-seed" title="Thêm dữ liệu mẫu">Seed mẫu</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Task list -->
+    <section class="list-section" aria-labelledby="list-title">
+      <h2 id="list-title" class="sr-only">Danh sách công việc</h2>
+      <div id="task-grid" class="task-grid" role="list" aria-live="polite" aria-busy="false"></div>
+
+      <div id="empty-state" class="empty-state" hidden>
+        <div class="empty-icon" aria-hidden="true">📭</div>
+        <h3 class="empty-title">Chưa có công việc phù hợp</h3>
+        <p class="empty-desc">Thử đổi bộ lọc hoặc tạo công việc mới để bắt đầu.</p>
+        <button class="btn btn-primary" id="btn-empty-add">＋ Thêm việc đầu tiên</button>
+      </div>
+
+      <div id="skeleton" class="task-grid" hidden aria-hidden="true">
+        <div class="card skeleton"></div>
+        <div class="card skeleton"></div>
+        <div class="card skeleton"></div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Modal -->
+  <div id="modal-backdrop" class="modal-backdrop" hidden></div>
+  <div id="modal" class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title" hidden>
+    <div class="modal-panel">
+      <div class="modal-head">
+        <h2 id="modal-title" class="modal-title">Thêm công việc</h2>
+        <button class="btn btn-ghost btn-icon" id="btn-close-modal" aria-label="Đóng">✕</button>
+      </div>
+      <form id="task-form" novalidate>
+        <input type="hidden" id="field-id" />
+        <div class="form-grid">
+          <label class="field field-full">
+            <span class="field-label">Tên công việc <span class="req">*</span></span>
+            <input id="field-title" class="input" type="text" placeholder="VD: Học JavaScript" maxlength="80" required autocomplete="off" />
+            <span class="field-error" id="err-title" role="alert"></span>
+          </label>
+          <label class="field field-full">
+            <span class="field-label">Mô tả</span>
+            <textarea id="field-desc" class="input textarea" rows="3" placeholder="Mô tả chi tiết..."></textarea>
+          </label>
+          <label class="field">
+            <span class="field-label">Mức độ</span>
+            <select id="field-priority" class="select">
+              <option value="low">Low</option>
+              <option value="medium" selected>Medium</option>
+              <option value="high">High</option>
+            </select>
+          </label>
+          <label class="field">
+            <span class="field-label">Trạng thái</span>
+            <select id="field-status" class="select">
+              <option value="todo" selected>Todo</option>
+              <option value="doing">Doing</option>
+              <option value="done">Done</option>
+            </select>
+          </label>
+          <label class="field">
+            <span class="field-label">Deadline</span>
+            <input id="field-due" class="input" type="date" />
+            <span class="field-hint">Để trống nếu không có hạn</span>
+          </label>
+          <label class="field">
+            <span class="field-label">Tags</span>
+            <input id="field-tags" class="input" type="text" placeholder="VD: javascript, study" autocomplete="off" />
+            <span class="field-hint">Ngăn cách bằng dấu phẩy</span>
+          </label>
+        </div>
+        <div class="modal-actions">
+          <button type="button" class="btn btn-ghost" id="btn-cancel">Hủy</button>
+          <button type="submit" class="btn btn-primary" id="btn-submit">Lưu công việc</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Toast stack -->
+  <div id="toast-stack" class="toast-stack" aria-live="polite" aria-atomic="true"></div>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <span>TaskBoard — Bài 010 · State duy nhất · Không reload · LocalStorage</span>
+      <span class="footer-dot">·</span>
+      <span id="footer-date"></span>
+    </div>
+  </footer>
+
+  <script src="./app.js"></script>
+</body>
+</html>

@@ -1,8 +1,8 @@
-# Plan: Skill Registry
+﻿# Plan: Skill Registry
 
 ## Context
-- PRD: `.agent/plans/skill-registry-prd.md`
-- Design: `.agent/plans/skill-registry-design.md`
+- PRD: `.agent/plans/skill-registry/prd.md`
+- Design: `.agent/plans/skill-registry/design.md`
 - Stack: Node 18+ ESM, no deps, fetch + fs, VS Code skills convention
 
 ## Requirements
@@ -24,7 +24,7 @@
 | `.github/skills/scripts/skill-manager.mjs` | create | wrapper re-export để chạy ngắn |
 | `.github/instructions/skill-usage.instructions.md` | create | quy tắc wise |
 | `.github/copilot-instructions.md` | edit | thêm đoạn Skill Registry |
-| `.agent/plans/skill-registry-*` | done | trace |
+| `.agent/plans/skill-registry/*` | done | trace |
 
 ## Risks & Mitigations
 | Risk | Mitigation |

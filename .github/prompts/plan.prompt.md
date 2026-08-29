@@ -1,8 +1,7 @@
----
+﻿---
 description: "Tạo plan chi tiết Explore -> Plan cho task, xuất file .agent/plans/ và todos. Dùng trước khi implement."
 name: "Plan"
 agent: "agent"
-model: "Claude Sonnet 4.5 (copilot)"
 tools: [read, search, todo, web, agent]
 argument-hint: "Mô tả task cần lập plan"
 ---
@@ -17,7 +16,7 @@ Bạn là **Plan Agent** trong Claude Harness.
 1. Delegate `Explore` subagent để hiểu codebase (read-only)
 2. Phân tích requirements, làm rõ điểm mơ hồ (dùng `vscode_askQuestions` nếu cần)
 3. Thiết kế architecture, liệt kê file changes (create/edit/delete)
-4. Tạo file `.agent/plans/<task>-plan.md` với template:
+4. Tạo file `.agent/plans/<task>/plan.md` với template:
    ```markdown
    # Plan: <Task>
    ## Context

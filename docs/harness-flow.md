@@ -1,4 +1,4 @@
-# Harness Flow — Sơ đồ khi dùng `/harness`
+﻿# Harness Flow — Sơ đồ khi dùng `/harness`
 
 > Skill: `claude-harness` — Harness v2 product-driven, model-agnostic. Một ý tưởng nhỏ → sản phẩm hoàn chỉnh, giao diện đẹp.
 
@@ -25,9 +25,9 @@ flowchart TD
     B --> C{"❓ Clarify<br/>Ý tưởng mơ hồ?"}
     C -- "Có → hỏi" --> C1["vscode_askQuestions<br/>max 3 câu, có options<br/>chốt giả định"]
     C -- "Rõ → chốt assumption" --> D
-    C1 --> D["📄 PRD<br/>.agent/plans/&lt;slug&gt;-prd.md<br/>Vision, User Stories P0/P1,<br/>Scope In/Out, Non-Goals, Metrics"]
-    D --> E["🎨 Design<br/>Subagent Designer<br/>.agent/plans/&lt;slug&gt;-design.md<br/>Palette 3-5 màu, Typography,<br/>Wireframe 375/768/1280, States"]
-    E --> F["🗂️ Plan<br/>Subagent Plan<br/>.agent/plans/&lt;slug&gt;-plan.md<br/>+ manage_todo_list<br/>5-10 todos, File Changes, Risks"]
+    C1 --> D["📄 PRD<br/>.agent/plans/&lt;slug&gt;/prd.md<br/>Vision, User Stories P0/P1,<br/>Scope In/Out, Non-Goals, Metrics"]
+    D --> E["🎨 Design<br/>Subagent Designer<br/>.agent/plans/&lt;slug&gt;/design.md<br/>Palette 3-5 màu, Typography,<br/>Wireframe 375/768/1280, States"]
+    E --> F["🗂️ Plan<br/>Subagent Plan<br/>.agent/plans/&lt;slug&gt;/plan.md<br/>+ manage_todo_list<br/>5-10 todos, File Changes, Risks"]
     F --> G{"📋 Plan cần duyệt?"}
     G -- "Phức tạp → hỏi user" --> G1["Chờ confirm"]
     G1 --> H
@@ -78,12 +78,12 @@ sequenceDiagram
     Ex->>FS: read README, package.json, grep_search
     Ex-->>C: tóm tắt stack + file liên quan + pattern
     C->>C: Clarify — mơ hồ? → vscode_askQuestions (nếu cần)
-    C->>FS: tạo .agent/plans/pomodoro-prd.md (từ template)
+    C->>FS: tạo .agent/plans/pomodoro/prd.md (từ template)
     C->>De: delegate Design
-    De->>FS: tạo .agent/plans/pomodoro-design.md<br/>palette, typography, wireframe 375/768/1280
+    De->>FS: tạo .agent/plans/pomodoro/design.md<br/>palette, typography, wireframe 375/768/1280
     De-->>C: design system + states
     C->>Pl: delegate Plan
-    Pl->>FS: tạo .agent/plans/pomodoro-plan.md + manage_todo_list (5-10 todos)
+    Pl->>FS: tạo .agent/plans/pomodoro/plan.md + manage_todo_list (5-10 todos)
     Pl-->>C: plan + todos
     C->>U: (nếu phức tạp) confirm plan?
     U-->>C: OK
@@ -152,9 +152,9 @@ flowchart LR
     end
 
     subgraph Output["Output (.agent/plans/)"]
-        O1["*-prd.md"]
-        O2["*-design.md"]
-        O3["*-plan.md"]
+        O1["<slug>/prd.md"]
+        O2["<slug>/design.md"]
+        O3["<slug>/plan.md"]
         O4["code + polish + verify"]
     end
 
@@ -181,18 +181,18 @@ flowchart LR
 |-------|----------|-------|--------|------------|----------|----------|
 | **Explore** | Hiểu codebase + context | Idea, workspace | Tóm tắt stack, file liên quan, pattern | `read_file`, `grep_search`, `list_dir` | `Explore` | ❌ |
 | **Clarify** | Làm rõ mơ hồ | Idea | Câu hỏi + giả định chốt (ghi vào PRD) | `vscode_askQuestions` | — | Rút gọn nếu rõ |
-| **PRD** | Biến ý tưởng thành spec | Clarify + Explore | `.agent/plans/<slug>-prd.md` | template `prd-template.md` | `Plan` | ❌ (mini 5 dòng cũng phải có) |
-| **Design** | Định nghĩa giao diện đẹp | PRD | `.agent/plans/<slug>-design.md` | template `design-template.md` | `Designer` | ❌ |
-| **Plan** | Chia nhỏ để code | PRD + Design | `.agent/plans/<slug>-plan.md` + `manage_todo_list` | `manage_todo_list` | `Plan` | ❌ |
+| **PRD** | Biến ý tưởng thành spec | Clarify + Explore | `.agent/plans/<slug>/prd.md` | template `prd-template.md` | `Plan` | ❌ (mini 5 dòng cũng phải có) |
+| **Design** | Định nghĩa giao diện đẹp | PRD | `.agent/plans/<slug>/design.md` | template `design-template.md` | `Designer` | ❌ |
+| **Plan** | Chia nhỏ để code | PRD + Design | `.agent/plans/<slug>/plan.md` + `manage_todo_list` | `manage_todo_list` | `Plan` | ❌ |
 | **Implement** | Code todo-driven | Plan + todos | Files code | `replace_string_in_file`, `multi_replace`, `get_errors` | `Implement` | ❌ |
 | **Polish** | Làm đẹp + UX | Code + Design | Responsive, states, animation, a11y | `read_file`, `replace`, `open_browser_page` | `Polish` | ❌ |
 | **Verify** | Đảm bảo chất lượng | Code | build/test/lint pass + visual check | `get_errors`, `run_in_terminal` | `Verify` | ❌ |
 
 ### Outputs mẫu (Focus Flow demo)
 
-- PRD: `.agent/plans/focus-flow-prd.md` — Vision, 6 User Stories (P0/P1), Scope In/Out, Metrics, Edge Cases
-- Design: `.agent/plans/focus-flow-design.md` — Palette Indigo/Mint/Amber, Typography Inter + Plus Jakarta Sans, Wireframe 375/768/1280, Component States, UX States
-- Plan: `.agent/plans/focus-flow-plan.md` — Architecture (vanilla HTML/CSS/JS, localStorage), File Changes, Risks, Todos 7 bước
+- PRD: `.agent/plans/focus-flow/prd.md` — Vision, 6 User Stories (P0/P1), Scope In/Out, Metrics, Edge Cases
+- Design: `.agent/plans/focus-flow/design.md` — Palette Indigo/Mint/Amber, Typography Inter + Plus Jakarta Sans, Wireframe 375/768/1280, Component States, UX States
+- Plan: `.agent/plans/focus-flow/plan.md` — Architecture (vanilla HTML/CSS/JS, localStorage), File Changes, Risks, Todos 7 bước
 - Code: `focus-flow/index.html` + `styles.css` (CSS variables) + `app.js` (timer drift-free, task CRUD, stats, a11y)
 - Polish: responsive 375/768/1280 không vỡ, hover/focus/active/disabled/loading, toast/confetti, keyboard Space/R
 - Verify: `get_errors` pass, visual check browser, `harness-manager status` pass
