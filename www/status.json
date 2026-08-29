@@ -1,12 +1,12 @@
 {
-  "generatedAt": "2026-08-29T10:36:07.075Z",
+  "generatedAt": "2026-08-29T10:54:02.831Z",
   "generatedBy": "YUNIE",
   "version": 1,
   "counts": {
     "skills": {
-      "enabled": 3,
+      "enabled": 5,
       "disabled": 0,
-      "total": 3
+      "total": 5
     },
     "instructions": {
       "enabled": 4,
@@ -33,7 +33,9 @@
     "skills": [
       "claude-harness",
       "custom-registry",
-      "skill-registry"
+      "skill-registry",
+      "ui-design-system",
+      "ui-ux-pro-max"
     ],
     "instructions": [
       "custom-registry",
@@ -77,7 +79,9 @@
     }
   ],
   "plans": [
+    "custom-registry",
     "focus-flow",
+    "skill-registry",
     "todo-manager"
   ],
   "demos": [
@@ -95,10 +99,10 @@
   "health": {
     "errors": 0,
     "status": "ok",
-    "lastCheck": "2026-08-29T10:36:07.075Z",
+    "lastCheck": "2026-08-29T10:54:02.831Z",
     "checks": [
       "get_errors: pass (1 yaml false-positive github-pages — valid for Pages)",
-      "registry: 7 agents incl yunie",
+      "registry: 5 skills (ui-design-system, ui-ux-pro-max mới) · 7 agents incl yunie",
       "www: ok",
       "workflow: www/** -> Pages"
     ]

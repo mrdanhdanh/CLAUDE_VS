@@ -27,6 +27,24 @@
       "description": "Quản lý skill như plugin: cài/gỡ/bật/tắt skill từ GitHub, tháo lắp wise. Use when user wants to install skill from GitHub, manage skills, enable/disable skill, tháo lắp skill, sync skills, hoặc nói skill registry/plugin.",
       "file": "skill-registry/SKILL.md",
       "installedAt": "2026-08-29T04:56:25.951Z"
+    },
+    "ui-design-system": {
+      "source": "davila7/claude-code-templates",
+      "path": "cli-tool/components/skills/creative-design/ui-design-system",
+      "ref": "main",
+      "enabled": true,
+      "description": "UI design system toolkit for Senior UI Designer including design token generation, component documentation, responsive design calculations, and developer handoff tools. Use for creating design systems, maintaining visual consistency, and facilitating design-dev collaboration.",
+      "file": "ui-design-system/SKILL.md",
+      "installedAt": "2026-08-29T10:44:31.095Z"
+    },
+    "ui-ux-pro-max": {
+      "source": "nextlevelbuilder/ui-ux-pro-max-skill",
+      "path": ".claude/skills/ui-ux-pro-max",
+      "ref": "main",
+      "enabled": true,
+      "description": "UI/UX design intelligence for web, mobile, and desktop. This skill should be used when designing, building, reviewing, or fixing interfaces, including pages, components, design systems, accessibility, interaction, responsive layout, typography, color, charts, and stack-specific UI implementation. Se",
+      "file": "ui-ux-pro-max/SKILL.md",
+      "installedAt": "2026-08-29T10:49:47.032Z"
     }
   }
 }
