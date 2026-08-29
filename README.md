@@ -184,6 +184,19 @@ Templates: `.github/harness/templates/` (instruction.md, agent.md, prompt.md, sk
 
 ---
 
+## YUNIE — System Chatbot + STATUS
+
+Chatbot hệ thống hiểu toàn bộ Harness, làm task về hệ thống, kiểm tra tình trạng, cập nhật STATUS và deploy GitHub Pages.
+
+- **Agent** `.github/agents/yunie.agent.md` — `user-invocable: true`, gọi `@YUNIE kiểm tra hệ thống` hoặc `yunie cập nhật status` trong Copilot Chat
+- **STATUS site** `www/index.html` + `status.json` + `styles.css` + `app.js` — dashboard fetch `status.json`, responsive 375/768/1280
+- **Deploy** `.github/workflows/pages.yml` — upload toàn bộ `www/` lên GitHub Pages (trigger `push` `www/**`)
+- **Thêm trang mới:** chỉ cần copy file vào `www/` (vd: `www/docs.html`) là tự lên Pages — không cần sửa workflow. YUNIE sẽ thêm entry vào `status.json → pages.entries`.
+
+Mở local: `www/index.html` (file://) · Sau push: `https://<user>.github.io/<repo>/`
+
+---
+
 ## Demo — Focus Flow
 
 Ý tưởng 1 câu → product hoàn chỉnh qua Harness v2:
@@ -217,9 +230,10 @@ Mở: `focus-flow/index.html` (file://, không cần build)
 │   └── ...
 ├── .github/
 │   ├── copilot-instructions.md          # Harness v2 — Identity + Pipeline
+│   ├── workflows/pages.yml              # Deploy www/ → GitHub Pages
 │   ├── harness/
-│   │   ├── registry.json                # v2 unified (commit vào git)
-│   │   ├── presets/                     # full, web-product, api-minimal
+│   │   ├── registry.json                # v2 unified (commit vào git) — 7 agents gồm YUNIE
+│   │   ├── presets/                     # full, web-product, api-minimal (đều bật yunie)
 │   │   ├── templates/                   # instruction, agent, prompt, skill
 │   │   ├── scripts/harness-manager.mjs  # CLI chính
 │   │   └── README.md
@@ -228,12 +242,17 @@ Mở: `focus-flow/index.html` (file://, không cần build)
 │   │   └── .disabled/
 │   ├── instructions/                    # harness-workflow, product-quality, ...
 │   │   └── .disabled/
-│   ├── agents/                          # Explore, Plan, Designer, Implement, Polish, Verify
+│   ├── agents/                          # Explore, Plan, Designer, Implement, Polish, Verify, YUNIE
 │   │   └── .disabled/
 │   ├── prompts/                         # /harness, /product, /plan, /implement, /polish, /verify
 │   │   └── .disabled/
 │   └── hooks/
-│       └── .disabled/
+│       └── .disabled/ (tự tạo khi disable)
+├── www/                                 # STATUS site — root của GitHub Pages
+│   ├── index.html                       # Dashboard (fetch status.json)
+│   ├── status.json                      # Source of truth (YUNIE generate)
+│   ├── styles.css                       # Design system Indigo/Sky/Amber
+│   └── app.js                           # Render dashboard
 └── focus-flow/                          # Demo product
     ├── index.html
     ├── styles.css
@@ -247,7 +266,7 @@ Mở: `focus-flow/index.html` (file://, không cần build)
 | Doc | Mô tả |
 |-----|-------|
 | [`docs/harness-flow.md`](docs/harness-flow.md) | Sơ đồ khi dùng `/harness` — flowchart, sequence, architecture, decision, chi tiết 8 phase |
-| [`docs/capabilities.md`](docs/capabilities.md) | Toàn bộ khả năng — Harness, Skills, Instructions, Agents, Prompts, Hooks, Registry, Presets, Templates, Product Quality, Memory, Demo, ma trận, lệnh tổng hợp |
+| [`docs/capabilities.md`](docs/capabilities.md) | Toàn bộ khả năng — Harness, Skills, Instructions, Agents (gồm YUNIE), Prompts, Hooks, Registry, Presets, Templates, Product Quality, Memory, www/ STATUS, Demo, ma trận, lệnh tổng hợp |
 | [`.github/harness/README.md`](.github/harness/README.md) | Harness Registry — tháo lắp, preset, scaffold |
 | [`.github/skills/custom-registry/SKILL.md`](.github/skills/custom-registry/SKILL.md) | `/custom-registry` — hướng dẫn tháo lắp toàn bộ |
 | [`.github/skills/skill-registry/SKILL.md`](.github/skills/skill-registry/SKILL.md) | `/skill-registry` — hướng dẫn skill registry |
@@ -263,4 +282,4 @@ Mở: `focus-flow/index.html` (file://, không cần build)
 
 ---
 
-*Harness v2: Process > Model. Idea nhỏ → Product đẹp. Mọi model đều chạy cùng pipeline. Mọi thứ đều là plugin.*
+*Harness v2: Process > Model. Idea nhỏ → Product đẹp. Mọi model đều chạy cùng pipeline. Mọi thứ đều là plugin — YUNIE trực hệ thống, www/ lên Pages.*

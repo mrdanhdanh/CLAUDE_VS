@@ -18,7 +18,8 @@
     "implement": true,
     "plan": true,
     "polish": true,
-    "verify": true
+    "verify": true,
+    "yunie": true
   },
   "prompts": {
     "harness": true,

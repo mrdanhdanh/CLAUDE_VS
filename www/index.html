@@ -1,0 +1,190 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>YUNIE STATUS — Harness v2</title>
+  <meta name="description" content="YUNIE — System chatbot cho CLAUDE HARNESS v2. Trạng thái hệ thống, registry, presets, plans, health." />
+  <meta name="color-scheme" content="light" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body>
+  <header class="header" role="banner">
+    <div class="container header-inner">
+      <div class="brand" aria-label="YUNIE STATUS">
+        <div class="brand-mark" aria-hidden="true">Y</div>
+        <div class="brand-text">
+          <strong>YUNIE STATUS</strong>
+          <span>Harness v2 · Process &gt; Model</span>
+        </div>
+        <span class="badge badge-live" title="Live from status.json"><i></i> Live</span>
+      </div>
+      <div class="header-actions">
+        <button class="btn btn-ghost" id="btnRefresh" type="button" aria-label="Làm mới dữ liệu">↻ Làm mới</button>
+        <a class="btn btn-ghost" href="./status.json" target="_blank" rel="noopener">status.json</a>
+        <a class="btn btn-primary" href="https://github.com" target="_blank" rel="noopener">GitHub Pages</a>
+      </div>
+    </div>
+  </header>
+
+  <main class="container" role="main">
+    <!-- Hero -->
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="hero-grid">
+        <div class="hero-card">
+          <h1 id="hero-title">Hệ thống Harness v2 — <span style="color:var(--color-primary)">YUNIE</span> đang trực</h1>
+          <p>Chatbot hệ thống: hiểu toàn bộ Harness, thực thi task, kiểm tra tình trạng, cập nhật STATUS và deploy GitHub Pages từ <span class="kbd">www/</span>. Copy file mới vào <span class="kbd">www/</span> là tự lên Pages.</p>
+          <div class="hero-meta" id="heroMeta">
+            <span class="meta-pill">⏱ <span id="metaGenerated">—</span></span>
+            <span class="meta-pill">🤖 <span id="metaBy">YUNIE</span></span>
+            <span class="meta-pill">🔁 <span id="metaPipeline">Idea → … → Done</span></span>
+            <span class="meta-pill">📦 <span id="metaHealth">—</span></span>
+          </div>
+          <div style="margin-top:14px;display:flex;gap:8px;flex-wrap:wrap">
+            <button class="btn btn-primary" id="btnCheck" type="button">Kiểm tra hệ thống</button>
+            <a class="btn btn-ghost" href="#registry">Xem registry</a>
+          </div>
+        </div>
+        <div class="hero-side">
+          <div class="mini-card">
+            <h3>📂 www/ là root của Pages</h3>
+            <p>Workflow <span class="kbd">.github/workflows/pages.yml</span> upload toàn bộ <span class="kbd">www/</span>. Thêm trang mới chỉ cần copy vào <span class="kbd">www/</span> — không cần sửa workflow.</p>
+          </div>
+          <div class="mini-card">
+            <h3>💬 Gọi YUNIE trong Copilot Chat</h3>
+            <p>Gõ <span class="kbd">@YUNIE kiểm tra hệ thống</span> hoặc <span class="kbd">yunie cập nhật status</span>. YUNIE sẽ đọc <span class="kbd">registry.json</span>, chạy <span class="kbd">status</span> và regenerate <span class="kbd">status.json</span>.</p>
+          </div>
+          <div class="mini-card" style="display:flex;align-items:center;justify-content:space-between;gap:12px">
+            <div>
+              <h3 style="margin:0">Pipeline</h3>
+              <p style="margin:2px 0 0">Idea → Explore → Clarify → PRD → Design → Plan → Implement → Polish → Verify → Done</p>
+            </div>
+            <span class="tag tag-on">Process &gt; Model</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Stats -->
+    <section class="stats" id="stats" aria-label="Thống kê">
+      <!-- injected by app.js -->
+      <div class="stat"><div class="skeleton" style="height:60px"></div></div>
+      <div class="stat"><div class="skeleton" style="height:60px"></div></div>
+      <div class="stat"><div class="skeleton" style="height:60px"></div></div>
+      <div class="stat"><div class="skeleton" style="height:60px"></div></div>
+      <div class="stat"><div class="skeleton" style="height:60px"></div></div>
+    </section>
+
+    <!-- Registry -->
+    <section class="section" id="registry" aria-labelledby="registry-title">
+      <div class="section-head">
+        <div>
+          <h2 id="registry-title">Registry — Tháo lắp wise</h2>
+          <p id="registrySub">Nguồn: .github/harness/registry.json · Đồng bộ skills/registry.json</p>
+        </div>
+        <span class="tag" id="registryTag">—</span>
+      </div>
+      <div class="card">
+        <div class="table-wrap">
+          <table aria-label="Registry table">
+            <thead>
+              <tr><th>Loại</th><th>Tên</th><th>Mô tả</th><th>Trạng thái</th></tr>
+            </thead>
+            <tbody id="registryBody">
+              <tr><td colspan="4"><div class="skeleton"></div></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- Presets + Plans -->
+    <div class="grid-2">
+      <section class="section" aria-labelledby="preset-title">
+        <div class="section-head">
+          <h2 id="preset-title">Presets</h2>
+          <p>1 lệnh áp đúng bộ</p>
+        </div>
+        <div class="card card-pad" id="presetList">
+          <div class="skeleton"></div>
+        </div>
+      </section>
+      <section class="section" aria-labelledby="plans-title">
+        <div class="section-head">
+          <h2 id="plans-title">Plans & Demos</h2>
+          <p>.agent/plans + focus-flow</p>
+        </div>
+        <div class="card card-pad" id="plansList">
+          <div class="skeleton"></div>
+        </div>
+      </section>
+    </div>
+
+    <!-- Health + Pages -->
+    <div class="grid-2">
+      <section class="section" aria-labelledby="health-title">
+        <div class="section-head">
+          <h2 id="health-title">Health</h2>
+          <p id="healthSub">—</p>
+        </div>
+        <div class="card card-pad" id="healthCard">
+          <div class="skeleton"></div>
+        </div>
+      </section>
+      <section class="section" aria-labelledby="pages-title">
+        <div class="section-head">
+          <h2 id="pages-title">Pages — www/</h2>
+          <p>Copy file vào www/ là tự deploy</p>
+        </div>
+        <div class="card card-pad" id="pagesCard">
+          <div class="skeleton"></div>
+        </div>
+      </section>
+    </div>
+
+    <!-- How to -->
+    <section class="section" aria-labelledby="howto-title">
+      <div class="section-head">
+        <h2 id="howto-title">Thêm trang mới — không cần sửa workflow</h2>
+      </div>
+      <div class="grid-3">
+        <div class="card card-pad">
+          <h3 style="margin:0 0 6px;font:700 14px var(--font-display)">1. Copy file</h3>
+          <p style="margin:0;color:var(--color-neutral-500);font-size:13px">Tạo <span class="kbd">www/ten-trang.html</span> hoặc <span class="kbd">www/docs/index.html</span>. Dùng chung <span class="kbd">styles.css</span> để giữ design system.</p>
+        </div>
+        <div class="card card-pad">
+          <h3 style="margin:0 0 6px;font:700 14px var(--font-display)">2. YUNIE cập nhật</h3>
+          <p style="margin:0;color:var(--color-neutral-500);font-size:13px">Gọi <span class="kbd">YUNIE cập nhật status</span> — YUNIE sẽ thêm entry vào <span class="kbd">status.json → pages.entries</span> và verify.</p>
+        </div>
+        <div class="card card-pad">
+          <h3 style="margin:0 0 6px;font:700 14px var(--font-display)">3. Push → Pages</h3>
+          <p style="margin:0;color:var(--color-neutral-500);font-size:13px"><span class="kbd">git add www && git commit -m "add page" && git push</span> — workflow tự deploy. URL: <span class="kbd">https://&lt;user&gt;.github.io/&lt;repo&gt;/</span></p>
+        </div>
+      </div>
+      <details style="margin-top:12px">
+        <summary>Xem lệnh YUNIE hay dùng <span class="chev">›</span></summary>
+        <div class="detail-body">
+          <pre class="mono" style="white-space:pre-wrap;background:var(--color-neutral-50);padding:12px;border-radius:10px;border:1px solid #e2e8f0;margin:10px 0 0">node .github/harness/scripts/harness-manager.mjs status
+node .github/harness/scripts/harness-manager.mjs list --type agent
+node .github/harness/scripts/harness-manager.mjs disable instruction product-quality
+node .github/harness/scripts/harness-manager.mjs enable instruction product-quality
+node .github/harness/scripts/harness-manager.mjs preset apply web-product
+node .github/harness/scripts/harness-manager.mjs create agent my-agent
+# YUNIE tự regenerate www/status.json sau mỗi thay đổi hệ thống</pre>
+        </div>
+      </details>
+    </section>
+
+    <div class="footer">
+      <div>Built by <strong>YUNIE</strong> · Harness v2 · <a href="./status.json">status.json</a> · <a href="../README.md">README</a></div>
+      <div style="margin-top:4px">Mở file:// <span class="kbd">www/index.html</span> để xem local — push lên GitHub để Pages deploy.</div>
+    </div>
+  </main>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <script src="./app.js" type="module"></script>
+</body>
+</html>

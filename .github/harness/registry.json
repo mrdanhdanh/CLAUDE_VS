@@ -105,6 +105,13 @@
       "enabled": true,
       "description": "Verify build, tests, lint and fix loops. Use when need to validate implementation, run checks, auto-fix failures before done.",
       "installedAt": "2026-08-29T04:56:25.957Z"
+    },
+    "yunie": {
+      "source": "local",
+      "file": "yunie.agent.md",
+      "enabled": true,
+      "description": "YUNIE — chatbot hệ thống Harness v2: hiểu toàn bộ hệ thống, thực thi task về hệ thống, kiểm tra tình trạng, cập nhật trang STATUS www/ và deploy GitHub Pages. Use when user says yunie, chatbot, status, kiểm tra hệ thống, cập nhật status page, www, github pages.",
+      "installedAt": "2026-08-29T10:31:16.694Z"
     }
   },
   "prompts": {

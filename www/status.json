@@ -1,0 +1,127 @@
+{
+  "generatedAt": "2026-08-29T10:36:07.075Z",
+  "generatedBy": "YUNIE",
+  "version": 1,
+  "counts": {
+    "skills": {
+      "enabled": 3,
+      "disabled": 0,
+      "total": 3
+    },
+    "instructions": {
+      "enabled": 4,
+      "disabled": 0,
+      "total": 4
+    },
+    "agents": {
+      "enabled": 7,
+      "disabled": 0,
+      "total": 7
+    },
+    "prompts": {
+      "enabled": 6,
+      "disabled": 0,
+      "total": 6
+    },
+    "hooks": {
+      "enabled": 1,
+      "disabled": 0,
+      "total": 1
+    }
+  },
+  "registry": {
+    "skills": [
+      "claude-harness",
+      "custom-registry",
+      "skill-registry"
+    ],
+    "instructions": [
+      "custom-registry",
+      "harness-workflow",
+      "product-quality",
+      "skill-usage"
+    ],
+    "agents": [
+      "designer",
+      "explore",
+      "implement",
+      "plan",
+      "polish",
+      "verify",
+      "yunie"
+    ],
+    "prompts": [
+      "harness",
+      "implement",
+      "plan",
+      "polish",
+      "product",
+      "verify"
+    ],
+    "hooks": [
+      "hooks"
+    ]
+  },
+  "presets": [
+    {
+      "name": "full",
+      "description": "Bật tất cả — dùng khi muốn full Harness v2"
+    },
+    {
+      "name": "web-product",
+      "description": "Preset cho dự án web cần giao diện đẹp — bật product-quality + designer/polish (hiện giống full)"
+    },
+    {
+      "name": "api-minimal",
+      "description": "Preset gọn cho API/script — tắt product-quality/designer/polish, giữ harness core"
+    }
+  ],
+  "plans": [
+    "focus-flow",
+    "todo-manager"
+  ],
+  "demos": [
+    {
+      "name": "focus-flow",
+      "path": "focus-flow/index.html",
+      "status": "ok"
+    },
+    {
+      "name": "todo-manager",
+      "path": "todo-manager/index.html",
+      "status": "ok"
+    }
+  ],
+  "health": {
+    "errors": 0,
+    "status": "ok",
+    "lastCheck": "2026-08-29T10:36:07.075Z",
+    "checks": [
+      "get_errors: pass (1 yaml false-positive github-pages — valid for Pages)",
+      "registry: 7 agents incl yunie",
+      "www: ok",
+      "workflow: www/** -> Pages"
+    ]
+  },
+  "pages": {
+    "root": "www",
+    "workflow": ".github/workflows/pages.yml",
+    "entries": [
+      {
+        "path": "index.html",
+        "title": "YUNIE STATUS — Harness v2",
+        "type": "status"
+      },
+      {
+        "path": "status.json",
+        "title": "Status JSON",
+        "type": "data"
+      }
+    ],
+    "note": "Copy file mới vào www/ là tự deploy lên GitHub Pages (workflow upload toàn bộ www)."
+  },
+  "harness": {
+    "pipeline": "Idea → Explore → Clarify → PRD → Design → Plan → Implement → Polish → Verify → Done",
+    "philosophy": "Process > Model"
+  }
+}

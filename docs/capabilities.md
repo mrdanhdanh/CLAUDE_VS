@@ -17,7 +17,8 @@
 9. [Templates & Scaffold](#9-templates--scaffold)
 10. [Product Quality Standard](#10-product-quality-standard)
 11. [Memory & Trace](#11-memory--trace)
-12. [Demo — Focus Flow](#12-demo--focus-flow)
+12. [YUNIE + STATUS (www/ → GitHub Pages)](#12-yunie--status-www--github-pages)
+13. [Demo — Focus Flow](#13-demo--focus-flow)
 13. [Ma trận khả năng](#13-ma-trận-khả-năng)
 14. [Lệnh tổng hợp](#14-lệnh-tổng-hợp)
 
@@ -100,11 +101,13 @@ Agents là subagent chuyên vai, delegate để isolate context và restrict too
 | `Implement` | Todo-driven code changes | read, edit, search, execute, todo | Thực thi plan todos |
 | `Polish` | Responsive, states, animation, a11y | read, edit, search, execute | Sau implement, trước verify |
 | `Verify` | Build/test/lint + fix loop | read, search, execute, edit, todo | Validate trước khi done |
+| `YUNIE` | **System chatbot** — hiểu toàn bộ Harness, thực thi task hệ thống, kiểm tra tình trạng, cập nhật `www/` STATUS + GitHub Pages | read, edit, search, execute, todo, web, agent | Khi user nói `yunie`, `chatbot`, `status`, `kiểm tra hệ thống`, `www`, `github pages` |
 
-- **Vị trí:** `.github/agents/*.agent.md`
-- **Frontmatter:** `description` (khi nào delegate) + `tools` (minimal) + `model` + `user-invocable: false` (chỉ subagent)
+- **Vị trí:** `.github/agents/*.agent.md` (hiện 7: Explore, Plan, Designer, Implement, Polish, Verify, **YUNIE**)
+- **Frontmatter:** `description` (khi nào delegate, keyword-rich `Use when ...`) + `tools` (minimal) + `user-invocable` (`false` cho subagent, `true` cho YUNIE để gọi trực tiếp) — **không pin `model:`** (model-agnostic, xem `copilot-instructions.md`)
 - **Tháo lắp:** `harness-manager disable agent designer` → move sang `.github/agents/.disabled/`
 - **Tạo mới:** `harness-manager create agent my-agent`
+- **YUNIE đặc biệt:** `user-invocable: true`, hiểu toàn bộ hệ thống (`registry.json`, `presets`, `plans`, `www/status.json`), tự regenerate `www/status.json` sau mỗi thay đổi hệ thống. Gọi: `@YUNIE kiểm tra hệ thống` hoặc delegate như subagent.
 
 ---
 
@@ -122,7 +125,7 @@ Prompts là task template 1 lần, gõ `/` trong chat để chạy.
 | `/verify` | Chỉ verify build/test/lint + visual | `checks` (để trống = auto-detect) |
 
 - **Vị trí:** `.github/prompts/*.prompt.md`
-- **Frontmatter:** `description` + `agent` + `model` + `tools` + `argument-hint`
+- **Frontmatter:** `description` + `agent` + `tools` + `argument-hint` — **không pin `model:`** (model-agnostic)
 - **Tháo lắp:** `harness-manager disable prompt product` → move sang `.github/prompts/.disabled/`
 - **Tạo mới:** `harness-manager create prompt my-prompt`
 
@@ -139,7 +142,7 @@ Hooks là deterministic shell commands chạy ở lifecycle events (enforce, kh�
 - **Vị trí:** `.github/hooks/*.json`
 - **Format:** `{ "hooks": { "PreToolUse": [{ "type": "command", "command": "...", "timeout": 10 }] } }`
 - **Events:** `SessionStart`, `UserPromptSubmit`, `PreToolUse`, `PostToolUse`, `PreCompact`, `SubagentStart`, `SubagentStop`, `Stop`
-- **Tháo lắp:** `harness-manager disable hook hooks` → move sang `.github/hooks/.disabled/`
+- **Tháo lắp:** `harness-manager disable hook hooks` → move sang `.github/hooks/.disabled/` (folder tự tạo khi disable lần đầu — hiện chưa có `.disabled/`)
 - **Tạo mới:** `harness-manager create hook my-hook`
 
 ---
@@ -187,9 +190,11 @@ Presets là bộ bật/tắt cho từng loại dự án — 1 lệnh áp đúng 
 
 | Preset | File | Dùng khi | Bật | Tắt |
 |--------|------|----------|-----|-----|
-| `full` | `presets/full.json` | Muốn tất cả | tất cả | — |
-| `web-product` | `presets/web-product.json` | Web cần giao diện đẹp | product-quality, designer, polish, product prompt | — |
-| `api-minimal` | `presets/api-minimal.json` | API/script gọn nhẹ | harness core | product-quality, designer, polish, product/polish prompts |
+| `full` | `presets/full.json` | Muốn tất cả | tất cả (7 agents gồm YUNIE) | — |
+| `web-product` | `presets/web-product.json` | Web cần giao diện đẹp | tất cả (hiện giống `full`, gồm YUNIE) | — |
+| `api-minimal` | `presets/api-minimal.json` | API/script gọn nhẹ | harness core + YUNIE | product-quality, designer, polish, product/polish prompts |
+
+> **Lưu ý:** `web-product.json` hiện bật tất cả `true` giống `full.json` (chưa phân biệt). `api-minimal` tắt đúng `product-quality`, `designer`, `polish`, `product`/`polish` prompts nhưng **vẫn bật YUNIE** để luôn có chatbot hệ thống.
 
 ```bash
 node .github/harness/scripts/harness-manager.mjs preset apply web-product
@@ -271,13 +276,32 @@ Chi tiết: `.github/instructions/product-quality.instructions.md` · Checklist 
 | `/memories/session/` | Session memory (task hiện tại) |
 | `.github/harness/registry.json` | Registry trace (commit vào git) |
 | `.github/harness/presets/*.json` | Preset trace |
+| `www/status.json` | **STATUS trace** — YUNIE generate, dashboard đọc (counts, registry, health, pages) |
+| `www/index.html` | STATUS dashboard — fetch `status.json`, responsive 375/768/1280 |
 
 - **Sau Verify PASS:** Ghi pattern quan trọng vào `/memories/repo/`.
 - **Trước khi bắt đầu task mới:** Đọc `/memories/` + `/memories/repo/`.
 
 ---
 
-## 12. Demo — Focus Flow
+## 12. YUNIE + STATUS (www/ → GitHub Pages)
+
+**YUNIE** là system chatbot — hiểu toàn bộ Harness, làm task hệ thống, kiểm tra tình trạng, cập nhật STATUS.
+
+| Thành phần | Đường dẫn | Mô tả |
+|------------|-----------|-------|
+| Agent | `.github/agents/yunie.agent.md` | `user-invocable: true`, tools `read,edit,search,execute,todo,web,agent` |
+| STATUS site | `www/index.html` + `styles.css` + `app.js` | Dashboard fetch `status.json`, design system Indigo/Sky/Amber, responsive 375/768/1280 |
+| Data | `www/status.json` | Source of truth: `generatedAt`, `counts`, `registry`, `presets`, `plans`, `health`, `pages` |
+| Deploy | `.github/workflows/pages.yml` | Upload `www/` → GitHub Pages (trigger `push` `www/**` + `workflow_dispatch`) |
+
+**Thêm trang mới:** chỉ cần copy file vào `www/` (vd: `www/docs.html`) — workflow deploy toàn bộ `www/`, không cần sửa workflow. YUNIE sẽ thêm entry vào `status.json → pages.entries` khi được gọi `yunie cập nhật status`.
+
+**Gọi YUNIE:** `@YUNIE kiểm tra hệ thống` / `yunie cập nhật status` / `yunie preset apply api-minimal` — YUNIE tự đọc `registry.json`, chạy `status`/`list`, `get_errors`, regenerate `status.json`.
+
+---
+
+## 12b. Demo — Focus Flow
 
 Ý tưởng 1 câu → product hoàn chỉnh qua Harness v2:
 
@@ -355,4 +379,4 @@ node .github/skills/skill-registry/scripts/skill-manager.mjs sync
 
 ---
 
-*Hệ thống: Harness v2 (Process > Model) + Registry tháo lắp wise + Preset + Template. Mọi thứ đều là plugin.*
+*Hệ thống: Harness v2 (Process > Model) + Registry tháo lắp wise + Preset + Template + YUNIE chatbot + www/ STATUS → GitHub Pages. Mọi thứ đều là plugin.*
