@@ -1,0 +1,13 @@
+{
+  "version": 1,
+  "skills": {
+    "claude-harness": {
+      "source": "local",
+      "path": ".github/skills/claude-harness",
+      "ref": "local",
+      "enabled": true,
+      "description": "Claude Harness v2 product-driven pipeline Idea -> Explore -> Clarify -> PRD -> Design -> Plan -> Implement -> Polish -> Verify.",
+      "installedAt": "2026-08-29T00:00:00.000Z"
+    }
+  }
+}

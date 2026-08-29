@@ -1,0 +1,18 @@
+{
+  "hooks": {
+    "PostToolUse": [
+      {
+        "type": "command",
+        "command": "echo [Harness] PostToolUse: check get_errors after edits",
+        "timeout": 5
+      }
+    ],
+    "Stop": [
+      {
+        "type": "command",
+        "command": "echo [Harness] Stop: ensure verify passed before task_complete",
+        "timeout": 5
+      }
+    ]
+  }
+}

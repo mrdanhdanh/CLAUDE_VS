@@ -1,0 +1,190 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="color-scheme" content="light" />
+  <meta name="description" content="Focus Flow — Pomodoro tập trung, quản lý task và thống kê. Một trang, dùng ngay." />
+  <title>Focus Flow — Pomodoro & Task</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body>
+  <a class="skip-link" href="#main">Bỏ qua đến nội dung</a>
+
+  <header class="site-header" role="banner">
+    <div class="container header-inner">
+      <a class="brand" href="#" aria-label="Focus Flow trang chủ">
+        <span class="brand-dot" aria-hidden="true"></span>
+        <span class="brand-name">Focus Flow</span>
+        <span class="brand-badge">POMODORO</span>
+      </a>
+      <div class="header-stats" aria-label="Thống kê hôm nay">
+        <span class="h-stat"><span class="h-stat-num" id="h-pomos">0</span> 🍅</span>
+        <span class="h-stat"><span class="h-stat-num" id="h-mins">0</span>m</span>
+        <span class="h-stat"><span class="h-stat-num" id="h-done">0</span> ✓</span>
+      </div>
+      <div class="header-actions">
+        <button class="btn btn-ghost btn-sm" id="btn-settings" aria-label="Mở cài đặt"><span aria-hidden="true">⚙️</span> <span class="btn-text">Cài đặt</span></button>
+      </div>
+    </div>
+  </header>
+
+  <main id="main" class="container main-grid">
+    <!-- Timer Card -->
+    <section class="card timer-card" aria-labelledby="timer-title">
+      <div class="timer-top">
+        <div class="mode-tabs" role="tablist" aria-label="Chế độ">
+          <button role="tab" aria-selected="true" data-mode="focus" class="tab is-active">Focus</button>
+          <button role="tab" aria-selected="false" data-mode="short" class="tab">Short Break</button>
+          <button role="tab" aria-selected="false" data-mode="long" class="tab">Long Break</button>
+        </div>
+        <span class="mode-hint" id="mode-hint">25 phút tập trung</span>
+      </div>
+
+      <div class="timer-body">
+        <div class="ring-wrap" aria-hidden="true">
+          <svg class="ring" viewBox="0 0 200 200" width="280" height="280">
+            <circle class="ring-bg" cx="100" cy="100" r="88" />
+            <circle class="ring-fg" id="ring-fg" cx="100" cy="100" r="88" />
+          </svg>
+          <div class="ring-center">
+            <div class="time" id="time-display" aria-live="polite" aria-atomic="true">25:00</div>
+            <div class="time-label" id="timer-title">Sẵn sàng tập trung</div>
+          </div>
+        </div>
+
+        <div class="timer-controls">
+          <button class="btn btn-primary btn-lg" id="btn-toggle" aria-label="Bắt đầu">
+            <span class="btn-icon" aria-hidden="true">▶</span>
+            <span id="btn-toggle-text">Bắt đầu</span>
+          </button>
+          <button class="btn btn-ghost" id="btn-reset" aria-label="Đặt lại (R)">↺ Đặt lại</button>
+        </div>
+
+        <div class="focusing" id="focusing" aria-live="polite">
+          <span class="focusing-dot" aria-hidden="true"></span>
+          <span id="focusing-text">Chưa chọn task — chọn 1 task để focus</span>
+        </div>
+
+        <p class="kbd-hint">Phím tắt: <kbd>Space</kbd> Start/Pause · <kbd>R</kbd> Reset · <kbd>Enter</kbd> thêm task</p>
+      </div>
+    </section>
+
+    <!-- Side: Stats + History -->
+    <div class="side-stack">
+      <section class="card stats-card" aria-labelledby="stats-title">
+        <h2 id="stats-title" class="card-title">Hôm nay</h2>
+        <div class="stats-grid">
+          <div class="stat">
+            <div class="stat-num" id="stat-pomos">0</div>
+            <div class="stat-label">Pomodoros</div>
+            <div class="stat-sub">🍅 hoàn thành</div>
+          </div>
+          <div class="stat">
+            <div class="stat-num" id="stat-mins">0<span class="stat-unit">m</span></div>
+            <div class="stat-label">Focus</div>
+            <div class="stat-sub">phút tập trung</div>
+          </div>
+          <div class="stat">
+            <div class="stat-num" id="stat-done">0</div>
+            <div class="stat-label">Đã xong</div>
+            <div class="stat-sub">task hoàn thành</div>
+          </div>
+        </div>
+      </section>
+
+      <section class="card history-card" aria-labelledby="history-title">
+        <div class="card-head">
+          <h2 id="history-title" class="card-title">7 ngày qua</h2>
+          <span class="card-sub">pomodoros / ngày</span>
+        </div>
+        <div class="bars" id="bars" role="img" aria-label="Biểu đồ 7 ngày"></div>
+        <div class="bars-labels" id="bars-labels" aria-hidden="true"></div>
+      </section>
+    </div>
+
+    <!-- Tasks -->
+    <section class="card tasks-card" aria-labelledby="tasks-title">
+      <div class="card-head">
+        <h2 id="tasks-title" class="card-title">Tasks</h2>
+        <span class="tasks-count" id="tasks-count">0 task</span>
+      </div>
+
+      <form class="task-form" id="task-form" autocomplete="off">
+        <label class="sr-only" for="task-input">Tên task</label>
+        <input id="task-input" class="input" type="text" placeholder="Việc cần focus tiếp theo… (VD: Viết báo cáo)" maxlength="80" />
+        <button class="btn btn-primary" type="submit" aria-label="Thêm task">＋ Thêm</button>
+      </form>
+
+      <div class="tasks-meta">
+        <span class="muted" id="tasks-hint">Chọn <strong>Focus</strong> để gán task vào timer</span>
+        <button class="btn btn-ghost btn-sm" id="btn-clear-done" type="button">Xóa đã xong</button>
+      </div>
+
+      <ul class="task-list" id="task-list" aria-live="polite"></ul>
+
+      <div class="empty" id="empty" hidden>
+        <div class="empty-ill" aria-hidden="true">
+          <span class="empty-circle"></span>
+          <span class="empty-dots"></span>
+        </div>
+        <p class="empty-title">Chưa có task nào</p>
+        <p class="empty-sub">Thêm việc cần làm — chọn 1 task để focus và bấm Bắt đầu.</p>
+      </div>
+
+      <div class="skeleton" id="skeleton" hidden aria-hidden="true">
+        <div class="sk-row"></div><div class="sk-row"></div><div class="sk-row"></div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer container">
+    <span class="muted">Focus Flow · Vanilla HTML/CSS/JS · Lưu local · <span id="footer-date"></span></span>
+  </footer>
+
+  <!-- Settings Dialog -->
+  <dialog id="settings-dialog" class="dialog" aria-labelledby="settings-title">
+    <form method="dialog" class="dialog-inner">
+      <div class="dialog-head">
+        <h2 id="settings-title" class="card-title">Cài đặt</h2>
+        <button class="btn btn-ghost btn-sm" value="cancel" aria-label="Đóng">✕</button>
+      </div>
+      <div class="dialog-body">
+        <label class="field">
+          <span class="field-label">Focus (phút)</span>
+          <input class="input" type="number" id="set-focus" min="1" max="90" value="25" />
+        </label>
+        <label class="field">
+          <span class="field-label">Short Break (phút)</span>
+          <input class="input" type="number" id="set-short" min="1" max="30" value="5" />
+        </label>
+        <label class="field">
+          <span class="field-label">Long Break (phút)</span>
+          <input class="input" type="number" id="set-long" min="1" max="60" value="15" />
+        </label>
+        <label class="field field-row">
+          <input type="checkbox" id="set-sound" checked />
+          <span>Âm báo khi hết giờ</span>
+        </label>
+        <label class="field field-row">
+          <input type="checkbox" id="set-notify" />
+          <span>Thông báo trình duyệt khi hết giờ</span>
+        </label>
+        <p class="muted small">Thay đổi sẽ áp dụng cho lần đếm tiếp theo. Đang chạy sẽ không bị reset.</p>
+      </div>
+      <div class="dialog-actions">
+        <button class="btn btn-ghost" value="cancel">Hủy</button>
+        <button class="btn btn-primary" id="btn-save-settings" value="default">Lưu</button>
+      </div>
+    </form>
+  </dialog>
+
+  <div class="toast-stack" id="toast-stack" aria-live="polite" aria-atomic="true"></div>
+  <div class="confetti" id="confetti" aria-hidden="true"></div>
+
+  <script type="module" src="./app.js"></script>
+</body>
+</html>
