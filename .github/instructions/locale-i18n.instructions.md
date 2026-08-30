@@ -1,0 +1,56 @@
+---
+description: "Locale-owned UI copy — no hardcoded text, typed dictionaries, t() helper. Use when writing UI text, button labels, messages, toast, empty/error states, need i18n, locale."
+applyTo: "**/*.{html,css,tsx,jsx,vue,js,ts}"
+---
+
+# Locale-Owned UI Copy — No Hardcoded Text
+
+> Inspired by **DeepSeek Harness** — *Client UI copy is locale-owned* (`verify-client-ui-i18n` rejects hardcoded copy). Mọi text user thấy phải qua dictionary + `t()`.
+
+## Khi nào áp dụng
+- Viết button label, heading, placeholder, toast, empty/error message
+- Thêm view/component mới có text
+- Review PR có string literal trong JSX/HTML
+
+## Quy tắc
+
+1. **Không hardcode copy trong component:** cấm `"Lưu"`, `"Loading..."` rải rác trong JSX/HTML. Mọi string phải qua `t('key')` hoặc `constants/messages.ts`.
+2. **Typed dictionaries:** `locales/vi.ts` + `locales/en.ts` (hoặc `i18n/dictionary.ts`) — key có type, thiếu key báo lỗi compile, không `any`.
+3. **Route qua `t()`:** component chỉ gọi `t('common.save')`, `t('empty.noData')` — không import dictionary trực tiếp.
+4. **Verify gate:** `verify-client-ui-i18n` (hoặc grep `>"[A-ZÀ-Ỹa-zà-ỹ ]{2,}"<` trong `*.tsx`) phải pass trước khi merge — hardcode = fail.
+5. **Fallback + plural:** `t('items.count', { n })` xử lý số ít/nhiều, không nối chuỗi `"Có " + n + " items"`.
+6. **A11y copy cũng locale-owned:** `aria-label`, `alt`, `title` cũng phải qua `t()`.
+
+## Ví dụ
+
+```ts
+// ❌ Sai — hardcode
+<button>Lưu thay đổi</button>
+<p>Chưa có dữ liệu — Thêm mới</p>
+
+// ✅ Đúng — locale-owned
+// locales/vi.ts
+export const vi = { common: { save: 'Lưu thay đổi' }, empty: { noData: 'Chưa có dữ liệu — Thêm mới' } } as const
+// Component
+<button>{t('common.save')}</button>
+<p>{t('empty.noData')}</p>
+```
+
+```ts
+// utils/i18n.ts — minimal helper
+import { vi } from '../locales/vi'
+type Path = Leaves<typeof vi> // typed key
+export const t = (key: Path, params?: Record<string, string|number>) => getByPath(vi, key, params)
+```
+
+## Checklist (trước khi done)
+
+- [ ] Không còn string literal tiếng Việt/Anh trong JSX/HTML (grep)?
+- [ ] Mọi copy đã vào `locales/vi.ts` (và `en.ts` nếu có)?
+- [ ] `aria-label`/`alt` cũng qua `t()`?
+- [ ] `verify-client-ui-i18n` / grep gate pass?
+
+> **Ref:** `deepseek-ai/deepseek-harness` — `AGENTS.md` § *Client UI copy is locale-owned* + `verify-client-ui-i18n`
+
+---
+*Harness v2 — Process > Model. Locale-owned pattern từ DeepSeek Harness.*

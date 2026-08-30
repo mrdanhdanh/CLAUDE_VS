@@ -1,0 +1,29 @@
+{
+  "version": 1,
+  "exportedAt": "2026-08-29T15:50:00.000Z",
+  "note": "File này do Thư Viện tạo khi bấm Xuất. Harness đọc file này qua search.mjs và mcp-server.mjs. Nếu vừa thêm sách mà chưa thấy, hãy mở www/library/index.html → bấm Xuất để cập nhật.",
+  "registry": {
+    "demo-hop-dong-mau": {
+      "id": "demo-hop-dong-mau",
+      "name": "Demo — Hợp đồng mẫu.txt",
+      "type": "txt",
+      "enabled": true,
+      "read": false,
+      "progress": 0,
+      "chunks": 1,
+      "size": 420,
+      "addedAt": "2026-08-29T15:50:00.000Z",
+      "pages": 1
+    }
+  },
+  "chunks": [
+    {
+      "id": "demo-hop-dong-mau#000",
+      "bookId": "demo-hop-dong-mau",
+      "bookName": "Demo — Hợp đồng mẫu.txt",
+      "index": 0,
+      "text": "HỢP ĐỒNG MẪU — ĐIỀU KHOẢN THANH TOÁN\n\nĐiều 5. Thanh toán: Bên A thanh toán cho Bên B trong vòng 30 ngày kể từ ngày nhận hóa đơn hợp lệ. Quá hạn sẽ tính lãi 0.05%/ngày.\n\nĐiều 6. Rủi ro pháp lý: Bên vi phạm chịu trách nhiệm bồi thường thiệt hại thực tế, bao gồm chi phí luật sư.\n\nChương 5. Quản lý rủi ro: Đánh giá rủi ro pháp lý, tài chính, vận hành. Lập kế hoạch dự phòng.\n\nPhụ lục A: Biểu mẫu nghiệm thu, biên bản bàn giao.",
+      "page": 1
+    }
+  ]
+}

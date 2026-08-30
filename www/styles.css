@@ -40,14 +40,36 @@
   --font-mono:'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
   --space-1:4px; --space-2:8px; --space-3:12px; --space-4:16px; --space-6:24px; --space-8:32px; --space-10:40px; --space-12:48px;
   --header-h:56px;
+  /* — Liquid Glass — */
+  --glass-blur:16px;
+  --glass-blur-sm:12px;
+  --glass-saturate:180%;
+  --glass-fill:rgba(255,255,255,0.68);
+  --glass-fill-strong:rgba(255,255,255,0.78);
+  --glass-fill-subtle:rgba(255,255,255,0.52);
+  --glass-rim:rgba(255,255,255,0.55);
+  --glass-rim-strong:rgba(255,255,255,0.75);
+  --glass-highlight:rgba(255,255,255,0.65);
+  --glass-shadow:rgba(15,23,42,0.08);
+  --glass-shadow-lg:rgba(15,23,42,0.12);
+  --glass-tint:transparent;
+  /* — Rainbow — */
+  --rainbow:conic-gradient(from var(--angle,0deg), #ff3b30, #ff9500, #ffcc02, #34c759, #007aff, #af52de, #ff3b30);
+  --border-w:1.5px;
 }
+@property --angle{syntax:"<angle>";initial-value:0deg;inherits:false;}
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
 body{
   margin:0;
   font-family:var(--font-sans);
   color:var(--color-neutral-900);
-  background:linear-gradient(180deg, #eef2ff 0%, #f8fafc 280px, #f8fafc 100%);
+  background:
+    radial-gradient(900px 500px at 10% -10%, rgba(99,102,241,0.18), transparent 60%),
+    radial-gradient(700px 400px at 90% 0%, rgba(14,165,233,0.14), transparent 60%),
+    radial-gradient(600px 400px at 50% 100%, rgba(245,158,11,0.08), transparent 60%),
+    linear-gradient(180deg, #eef2ff 0%, #f8fafc 320px, #f8fafc 100%);
+  background-attachment:fixed;
   line-height:1.6;
   -webkit-font-smoothing:antialiased;
   text-rendering:optimizeLegibility;
@@ -77,9 +99,11 @@ img{max-width:100%;height:auto}
 /* Header */
 .header{
   position:sticky;top:0;z-index:20;
-  backdrop-filter:saturate(180%) blur(12px);
-  background:rgba(255,255,255,.86);
-  border-bottom:1px solid rgba(203,213,225,.6);
+  background:linear-gradient(var(--glass-tint), var(--glass-tint)), var(--glass-fill-strong);
+  -webkit-backdrop-filter:blur(var(--glass-blur)) saturate(var(--glass-saturate));
+  backdrop-filter:blur(var(--glass-blur)) saturate(var(--glass-saturate));
+  border-bottom:1px solid var(--glass-rim-strong);
+  box-shadow:inset 0 1px 0 var(--glass-highlight), 0 4px 16px var(--glass-shadow);
 }
 .header-inner{
   display:flex;align-items:center;justify-content:space-between;
@@ -628,7 +652,206 @@ details[open] .chev{transform:rotate(90deg)}
 .brand:hover .brand-mark{transform:rotate(-3deg) scale(1.04);transition:transform .2s ease}
 .brand-mark{transition:transform .2s ease}
 
+/* ===== Liquid Glass — overrides for all main surfaces ===== */
+.hero-card,
+.mini-card,
+.stat,
+.card,
+.yunie-hero,
+.yunie-letter-card,
+.reg-card,
+.page-link,
+.howto-card,
+.modal-panel{
+  background:linear-gradient(var(--glass-tint), var(--glass-tint)), var(--glass-fill);
+  -webkit-backdrop-filter:blur(var(--glass-blur)) saturate(var(--glass-saturate));
+  backdrop-filter:blur(var(--glass-blur)) saturate(var(--glass-saturate));
+  border:1px solid var(--glass-rim);
+  box-shadow:
+    inset 0 1px 0 var(--glass-highlight),
+    inset 0 -1px 0 rgba(255,255,255,0.08),
+    0 8px 24px var(--glass-shadow),
+    0 2px 8px rgba(15,23,42,0.06);
+  position:relative;
+  isolation:isolate;
+}
+/* stronger glass for hero & modal */
+.yunie-hero{
+  --glass-fill:rgba(255,255,255,0.72);
+  --glass-blur:18px;
+  background:
+    radial-gradient(600px 200px at 20% 0%, rgba(99,102,241,.10), transparent 60%),
+    radial-gradient(400px 200px at 90% 100%, rgba(245,158,11,.08), transparent 60%),
+    linear-gradient(135deg, rgba(238,242,255,0.85) 0%, rgba(240,253,250,0.75) 50%, rgba(254,243,199,0.65) 100%),
+    var(--glass-fill);
+  -webkit-backdrop-filter:blur(var(--glass-blur)) saturate(var(--glass-saturate));
+  backdrop-filter:blur(var(--glass-blur)) saturate(var(--glass-saturate));
+}
+.yunie-hero::before{
+  /* keep mesh but make it subtle — now part of background, so hide old pseudo */
+  display:none;
+}
+.hero-card{ --glass-fill:rgba(255,255,255,0.74); }
+.modal-panel{
+  --glass-fill:rgba(255,255,255,0.82);
+  --glass-blur:20px;
+  background:linear-gradient(var(--glass-tint), var(--glass-tint)), var(--glass-fill);
+  -webkit-backdrop-filter:blur(var(--glass-blur)) saturate(var(--glass-saturate));
+  backdrop-filter:blur(var(--glass-blur)) saturate(var(--glass-saturate));
+  border:1px solid var(--glass-rim-strong);
+  box-shadow:inset 0 1px 0 var(--glass-highlight), 0 16px 40px rgba(15,23,42,0.14), 0 4px 16px rgba(15,23,42,0.08);
+}
+.page-link{
+  --glass-fill:rgba(255,255,255,0.60);
+  --glass-blur:12px;
+}
+.reg-card{ --glass-blur:12px; }
+.stat{ --glass-blur:14px; }
+.mini-card{ --glass-blur:14px; }
+
+/* fallback when backdrop-filter not supported */
+@supports not (backdrop-filter: blur(1px)){
+  .hero-card, .mini-card, .stat, .card, .yunie-hero, .yunie-letter-card, .reg-card, .page-link, .howto-card, .modal-panel, .header{
+    background:rgba(255,255,255,0.92) !important;
+    -webkit-backdrop-filter:none !important;
+    backdrop-filter:none !important;
+  }
+}
+
+/* ===== Rainbow border — hover only, animated ===== */
+@keyframes rainbow-rotate{ to{ --angle:360deg; } }
+
+.hero-card::before,
+.mini-card::before,
+.stat::before,
+.card::before,
+.reg-card::before,
+.page-link::before,
+.howto-card::before,
+.modal-panel::before{
+  content:""; position:absolute; inset:0;
+  border-radius:inherit; padding:var(--border-w);
+  background:var(--rainbow);
+  -webkit-mask:linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite:xor; mask-composite:exclude;
+  opacity:0; transition:opacity .25s ease;
+  animation:rainbow-rotate 3s linear infinite;
+  animation-play-state:paused;
+  pointer-events:none;
+  z-index:1;
+}
+/* yunie-hero & yunie-letter-card use ::after to avoid conflict with existing ::before */
+.yunie-hero::after,
+.yunie-letter-card::after{
+  content:""; position:absolute; inset:0;
+  border-radius:inherit; padding:var(--border-w);
+  background:var(--rainbow);
+  -webkit-mask:linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite:xor; mask-composite:exclude;
+  opacity:0; transition:opacity .25s ease;
+  animation:rainbow-rotate 3s linear infinite;
+  animation-play-state:paused;
+  pointer-events:none;
+  z-index:1;
+}
+/* keep yunie-letter-card top accent line — move to extra element via box-shadow trick, hide old ::before and recreate */
+.yunie-letter-card::before{
+  content:""; position:absolute; top:0; left:0; right:0; height:3px;
+  background:linear-gradient(90deg, var(--color-primary), var(--color-secondary));
+  opacity:0; transition:opacity .18s ease;
+  border-radius:inherit;
+  -webkit-mask:none; mask:none;
+  padding:0;
+  animation:none;
+  pointer-events:none;
+  z-index:2;
+}
+.yunie-letter-card:hover::before{ opacity:1; }
+
+/* hover / focus-within triggers */
+.hero-card:hover::before, .hero-card:focus-within::before,
+.mini-card:hover::before, .mini-card:focus-within::before,
+.stat:hover::before, .stat:focus-within::before,
+.card:hover::before, .card:focus-within::before,
+.reg-card:hover::before, .reg-card:focus-within::before,
+.page-link:hover::before, .page-link:focus-within::before,
+.howto-card:hover::before, .howto-card:focus-within::before,
+.modal-panel:hover::before, .modal-panel:focus-within::before{
+  opacity:1; animation-play-state:running;
+}
+.yunie-hero:hover::after, .yunie-hero:focus-within::after,
+.yunie-letter-card:hover::after, .yunie-letter-card:focus-within::after{
+  opacity:1; animation-play-state:running;
+}
+
+/* subtle lift on hover — keep existing but enhance */
+.hero-card:hover, .mini-card:hover, .stat:hover, .yunie-letter-card:hover, .reg-card:hover, .page-link:hover, .howto-card:hover{
+  transform:translateY(-2px);
+  box-shadow:
+    inset 0 1px 0 var(--glass-highlight),
+    0 12px 28px var(--glass-shadow-lg),
+    0 4px 12px rgba(15,23,42,0.08);
+  border-color:rgba(255,255,255,0.75);
+}
+.card:hover{
+  box-shadow:
+    inset 0 1px 0 var(--glass-highlight),
+    0 12px 28px var(--glass-shadow-lg),
+    0 4px 12px rgba(15,23,42,0.08);
+  border-color:rgba(255,255,255,0.75);
+}
+
+/* ensure content stays above rainbow pseudo */
+.hero-card > *, .mini-card > *, .stat > *, .card > *, .yunie-hero > *, .yunie-letter-card > *, .reg-card > *, .page-link > *, .howto-card > *, .modal-panel > *{
+  position:relative; z-index:2;
+}
+.yunie-hero > *{ z-index:2; }
+
+/* inner elements inside glass — keep readable */
+.card .registry-controls{
+  background:rgba(255,255,255,0.45);
+  -webkit-backdrop-filter:blur(8px) saturate(140%);
+  backdrop-filter:blur(8px) saturate(140%);
+  border-bottom:1px solid rgba(255,255,255,0.5);
+}
+.card .table-wrap th{
+  background:rgba(248,250,252,0.65);
+  -webkit-backdrop-filter:blur(6px);
+  backdrop-filter:blur(6px);
+}
+.preset-item:hover, .plan-item:hover, .health-item:hover{
+  background:rgba(255,255,255,0.55);
+}
+
+/* toast glass dark */
+.toast{
+  background:rgba(15,23,42,0.88);
+  -webkit-backdrop-filter:blur(12px) saturate(160%);
+  backdrop-filter:blur(12px) saturate(160%);
+  border:1px solid rgba(255,255,255,0.12);
+}
+
+/* header glass already set — ensure buttons inside stay solid for contrast */
+.header .btn-ghost{
+  background:rgba(255,255,255,0.72);
+  -webkit-backdrop-filter:blur(8px) saturate(140%);
+  backdrop-filter:blur(8px) saturate(140%);
+  border-color:rgba(255,255,255,0.6);
+}
+.header .btn-ghost:hover{ background:rgba(255,255,255,0.88); }
+
 /* Reduced motion */
 @media(prefers-reduced-motion: reduce){
   *, *::before, *::after{animation:none !important;transition:none !important;scroll-behavior:auto !important}
+  .hero-card::before, .mini-card::before, .stat::before, .card::before, .reg-card::before, .page-link::before, .howto-card::before, .modal-panel::before,
+  .yunie-hero::after, .yunie-letter-card::after{ animation:none !important; }
+}
+/* Reduced transparency */
+@media(prefers-reduced-transparency: reduce){
+  .hero-card, .mini-card, .stat, .card, .yunie-hero, .yunie-letter-card, .reg-card, .page-link, .howto-card, .modal-panel, .header{
+    --glass-fill:rgba(255,255,255,0.92) !important;
+    --glass-fill-strong:rgba(255,255,255,0.96) !important;
+    -webkit-backdrop-filter:blur(6px) saturate(120%) !important;
+    backdrop-filter:blur(6px) saturate(120%) !important;
+  }
 }

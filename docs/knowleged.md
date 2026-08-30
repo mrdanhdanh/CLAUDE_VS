@@ -24,6 +24,7 @@
 |----|------|-----|-----------------|-----------------|------|
 | KN-001 | 2026-08-29 | *Ví dụ: Modal không đóng khi bấm ESC* | Thiếu listener `keydown` + focus trap | Mọi overlay/modal phải có ESC + focus trap + aria | `ui` `a11y` |
 | KN-002 | 2026-08-29 | Trang STATUS www/ giao diện chưa hợp lý — registry sai, responsive vỡ, thiếu a11y | status.json array vs app.js object mismatch + không audit product-quality | Dashboard phải có single source of truth (registry.json → status.json) và polish responsive/a11y ngay từ đầu | `ui` `css` `a11y` `responsive` `data` |
+| KN-003 | 2026-08-30 | Rainbow border GlassUI không xoay (animated) ở một số browser | Detect `@property` sai (`CSS.supports('syntax')`) + `::before` dùng `var(--rainbow)` lồng không re-resolve `--angle` + fallback per-element bị UI reset | Animate custom property: dùng gradient trực tiếp tại `::before`, detect `@property` bằng `CSS.registerProperty`, fallback class ở `<html>` | `ui` `css` `animation` |
 
 > Dòng ví dụ trên sẽ bị thay khi có bug thật đầu tiên — giữ format.
 
@@ -61,6 +62,22 @@
 - **Tags:** `ui` `css` `a11y` `responsive` `data`
 - **Người ghi:** YUNIE / fixbug
 
+### KN-003 — Rainbow border GlassUI không xoay (animated) ở một số browser
+
+- **Ngày:** 2026-08-30
+- **Bug report:** `.agent/bugs/2026-08-29-rainbow-animated/bug.md`
+- **Severity:** major
+- **Triệu chứng:** Viền cầu vồng (`conic-gradient`) đứng yên, không xoay, dù nội dung mô tả "xoay 3s (HOT)". Một số browser/môi trường thấy tĩnh hoàn toàn.
+- **Nguyên nhân gốc:** (1) Detection `@property` sai — `CSS.supports('syntax: "<angle>"')` luôn `false` → code luôn ép JS fallback, tắt animation CSS gốc; (2) `::before` đọc `--angle` qua biến `--rainbow` định nghĩa tại `:root` (`var(--angle)` lồng) → một số engine không re-resolve → tĩnh 0deg; (3) fallback gắn `.js-fallback` per-element bị `updatePlayground()` reset `className` → mất driver ở playground.
+- **Cách sửa:** `::before` dùng `conic-gradient(from var(--angle,0deg), ...)` trực tiếp; detect `@property` bằng `CSS.registerProperty`; fallback gắn `.js-rainbow` ở `<html>` + rAF set `--angle`. Verify bằng Playwright (chromium/firefox/webkit, cả native + fallback mode) → `--angle` thay đổi rõ ràng.
+- **Cách phòng tránh:**
+  - Detect `@property` = `typeof CSS.registerProperty === 'function'`, không `CSS.supports('syntax: ...')`.
+  - Animate custom property: dùng giá trị trực tiếp tại property đích, không qua biến lồng `var()` chứa `var()`.
+  - Fallback class ở `<html>` (root), không per-element (tránh bị UI reset `className`).
+  - Verify animation bằng headless browser đo `--angle` trước/sau, không chỉ mắt thường.
+- **Tags:** `ui` `css` `animation`
+- **Người ghi:** YUNIE / fixbug
+
 <!-- Thêm bài học mới theo template dưới — copy block này -->
 
 <!--
@@ -88,6 +105,9 @@
 - ❌ Viết `status.json` tay không qua generator → data shape lệch với render (KN-002).
 - ❌ Không test responsive 375/768/1280 trước khi commit `www/` (KN-002).
 - ❌ Hardcode màu/spacing không dùng CSS variables (KN-002).
+- ❌ Detect `@property` bằng `CSS.supports('syntax: ...')` (luôn false) → ép JS fallback sai (KN-003).
+- ❌ Animate custom property qua biến lồng `var()` chứa `var()` → một số engine không re-resolve (KN-003).
+- ❌ Gắn fallback class per-element rồi để UI reset `className` → mất animation (KN-003).
 
 ## Checklist phòng tránh chung
 
@@ -100,4 +120,4 @@
 ---
 
 *File này do `/fixbug` tự động cập nhật. Mọi luồng khác phải đọc để không lặp lại lỗi cũ.*
-*UpdatedAt: 2026-08-29T12:00:00Z — Maintained by YUNIE / Harness v2 — KN-002 added*
+*UpdatedAt: 2026-08-30T12:00:00Z — Maintained by YUNIE / Harness v2 — KN-003 added (rainbow animated root cause + verify)*

@@ -1,0 +1,275 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="color-scheme" content="light" />
+  <meta name="description" content="Thư Viện RAG Local — Upload PDF/DOCX/TXT/MD, tháo lắp như plugin, tìm siêu nhanh offline 0đ. Cho cả người và AI." />
+  <title>Thư Viện — RAG Local · Tháo lắp · Tìm siêu nhanh</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./styles.css" />
+  <!-- PDF.js -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+  <script>
+    if (typeof pdfjsLib !== 'undefined') {
+      pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+    }
+  </script>
+  <!-- Mammoth for DOCX -->
+  <script src="https://unpkg.com/mammoth@1.6.0/mammoth.browser.min.js"></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Bỏ qua đến nội dung chính</a>
+
+  <header class="header" role="banner">
+    <div class="container header-inner">
+      <a class="brand" href="../index.html" aria-label="Về trang STATUS">
+        <div class="brand-mark" aria-hidden="true">📚</div>
+        <div class="brand-text">
+          <strong>THƯ VIỆN <span class="badge badge-live"><i aria-hidden="true"></i> Local · 0đ</span></strong>
+          <span>Tháo lắp như plugin · Tìm siêu nhanh · Cho cả người và AI</span>
+        </div>
+      </a>
+      <nav class="header-actions" aria-label="Thao tác nhanh">
+        <a class="btn btn-ghost btn-sm" href="../index.html" aria-label="Về STATUS">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/></svg>
+          <span class="btn-text-full">STATUS</span>
+        </a>
+        <button class="btn btn-ghost btn-sm" id="btnExport" type="button" aria-label="Xuất dữ liệu">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="M7 10l5 5 5-5"/><path d="M12 15V3"/></svg>
+          <span class="btn-text-full">Xuất</span>
+        </button>
+        <label class="btn btn-ghost btn-sm" for="importFile" style="cursor:pointer" aria-label="Nhập dữ liệu">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="M17 8l-5-5-5 5"/><path d="M12 3v12"/></svg>
+          <span class="btn-text-full">Nhập</span>
+          <input id="importFile" type="file" accept=".json" hidden />
+        </label>
+        <button class="btn btn-primary btn-sm" id="btnHelp" type="button" aria-label="Hướng dẫn cho AI">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><path d="M12 17h.01"/></svg>
+          <span class="btn-text-full">AI API</span>
+        </button>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main" class="container" role="main">
+    <!-- Hero -->
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="hero-card">
+        <div class="eyebrow">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+          RAG Local · BM25 · Offline 100%
+        </div>
+        <h1 id="hero-title">Thư viện <span style="color:var(--lib-primary)">tháo lắp</span> — tìm siêu nhanh</h1>
+        <p>Upload <strong>PDF / DOCX / TXT / MD</strong> (kể cả 1000 trang) → tự chia chunk → tìm trong <strong>&lt;100ms</strong>. Tháo ra là AI không thấy, gắn vào là tìm được ngay. Lưu <strong>localStorage + IndexedDB</strong>, 0đ, không cần server.</p>
+        <div class="hero-meta" aria-label="Thông tin">
+          <span class="meta-pill">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg>
+            Hỗ trợ <strong style="margin-left:4px">PDF · DOCX · TXT · MD</strong>
+          </span>
+          <span class="meta-pill">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22a7 7 0 0 0 7-7c0-3.5-2.5-6-7-10-4.5 4-7 6.5-7 10a7 7 0 0 0 7 7z"/></svg>
+            Cho cả <strong style="margin-left:4px">Người + AI</strong>
+          </span>
+          <span class="meta-pill">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+            <span id="heroStats">—</span>
+          </span>
+        </div>
+      </div>
+      <div class="hero-side">
+        <div class="mini-card">
+          <div class="mini-card-icon" aria-hidden="true">⚡</div>
+          <div>
+            <h3>Tìm siêu nhanh</h3>
+            <p>BM25 + highlight + citation (sách · chunk · score). Chỉ tìm trong sách <strong>đang gắn</strong>.</p>
+          </div>
+        </div>
+        <div class="mini-card">
+          <div class="mini-card-icon" aria-hidden="true">🧩</div>
+          <div>
+            <h3>Tháo lắp như plugin</h3>
+            <p><span class="kbd">Tháo</span> = loại khỏi search (không xóa). <span class="kbd">Gắn</span> = khôi phục instant.</p>
+          </div>
+        </div>
+        <div class="mini-card">
+          <div class="mini-card-icon" aria-hidden="true">🤖</div>
+          <div>
+            <h3>AI đọc được</h3>
+            <p><span class="kbd">window.LibrarySearch.search(q)</span> + MCP <span class="kbd">search_library</span></p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Stats -->
+    <section class="stats" id="stats" role="list" aria-label="Thống kê thư viện">
+      <div class="stat" role="listitem"><div class="skeleton" style="height:72px"></div></div>
+      <div class="stat" role="listitem"><div class="skeleton" style="height:72px"></div></div>
+      <div class="stat" role="listitem"><div class="skeleton" style="height:72px"></div></div>
+      <div class="stat" role="listitem"><div class="skeleton" style="height:72px"></div></div>
+    </section>
+
+    <!-- Search Bar (sticky) -->
+    <section class="search-section" aria-label="Tìm kiếm">
+      <div class="search-bar">
+        <div class="search-wrap">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="position:absolute;left:12px;top:50%;transform:translateY(-50%);color:var(--lib-muted)"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+          <input id="searchInput" type="search" placeholder="Tìm trong thư viện… (vd: điều khoản thanh toán, chương 5)" aria-label="Tìm trong thư viện" autocomplete="off" />
+          <button id="searchClear" class="search-clear" type="button" aria-label="Xóa tìm kiếm" hidden>✕</button>
+          <span class="search-hint" aria-hidden="true">/</span>
+        </div>
+        <div class="search-meta">
+          <span id="searchInfo" aria-live="polite">Gõ để tìm trong sách đang gắn</span>
+          <span id="searchTime" class="search-time"></span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Search Results -->
+    <section id="resultsSection" class="results-section" aria-label="Kết quả tìm kiếm" hidden>
+      <div class="section-head">
+        <h2 id="resultsTitle">Kết quả</h2>
+        <span class="tag" id="resultsTag">—</span>
+      </div>
+      <div id="resultsList" class="results-list" role="list"></div>
+      <div id="resultsEmpty" class="empty" hidden>
+        <strong>Không tìm thấy</strong><br>Thử từ khóa khác hoặc kiểm tra sách đang gắn.
+      </div>
+    </section>
+
+    <!-- Export stale banner -->
+    <div id="exportBanner" class="alert" style="background:#fef3c7;border:1px solid #fde68a;color:#92400e;display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin:16px 0;padding:12px 14px;border-radius:12px" hidden role="status" aria-live="polite">
+      <span aria-hidden="true">⚠️</span>
+      <span id="exportBannerMsg" style="flex:1;min-width:200px;font:500 13px var(--font-sans)">Thư viện đã thay đổi — file export.json còn cũ. Bấm Xuất để cập nhật cho /harness.</span>
+      <button class="btn btn-primary btn-sm" id="btnExportBanner" type="button">Xuất ngay</button>
+      <button class="btn btn-ghost btn-sm" id="btnDismissBanner" type="button" aria-label="Ẩn cảnh báo">Ẩn</button>
+    </div>
+
+    <!-- Upload Zone -->
+    <section class="upload-section" aria-labelledby="upload-title">
+      <div class="section-head">
+        <h2 id="upload-title">Thêm sách</h2>
+        <span class="tag">PDF · DOCX · TXT · MD</span>
+      </div>
+      <div id="uploadZone" class="upload-zone" tabindex="0" role="button" aria-label="Kéo thả file hoặc bấm để chọn">
+        <div class="upload-icon" aria-hidden="true">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="M17 8l-5-5-5 5"/><path d="M12 3v12"/></svg>
+        </div>
+        <strong>Kéo thả file vào đây</strong>
+        <span>hoặc bấm để chọn — hỗ trợ nhiều file cùng lúc</span>
+        <small>PDF (text-based) · DOCX · TXT · Markdown · Tối đa ~50MB/file</small>
+        <input id="fileInput" type="file" accept=".pdf,.docx,.txt,.md,.markdown" multiple hidden />
+      </div>
+      <div id="uploadProgress" class="upload-progress" hidden>
+        <div class="progress"><i id="uploadBar" style="width:0%"></i></div>
+        <span id="uploadText" class="upload-text">—</span>
+      </div>
+      <div id="uploadError" class="alert alert-danger" hidden role="alert"></div>
+    </section>
+
+    <!-- Filter Bar -->
+    <section class="filter-bar" aria-label="Lọc và sắp xếp">
+      <div class="filter-pills" id="filterPills" role="group" aria-label="Lọc sách">
+        <button class="filter-pill is-active" data-filter="all" type="button" aria-pressed="true">Tất cả</button>
+        <button class="filter-pill" data-filter="enabled" type="button" aria-pressed="false">Đang gắn</button>
+        <button class="filter-pill" data-filter="disabled" type="button" aria-pressed="false">Đã tháo</button>
+        <button class="filter-pill" data-filter="read" type="button" aria-pressed="false">Đã đọc</button>
+        <button class="filter-pill" data-filter="unread" type="button" aria-pressed="false">Chưa đọc</button>
+      </div>
+      <div class="filter-actions">
+        <label class="select-wrap" aria-label="Sắp xếp">
+          <span class="sr-only">Sắp xếp</span>
+          <select id="sortSelect">
+            <option value="newest">Mới nhất</option>
+            <option value="name">Tên A→Z</option>
+            <option value="chunks">Nhiều chunk nhất</option>
+            <option value="progress">Tiến độ</option>
+          </select>
+        </label>
+        <div class="view-toggle" role="group" aria-label="Chế độ xem">
+          <button class="view-btn is-active" data-view="grid" type="button" aria-label="Xem dạng lưới" aria-pressed="true">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+          </button>
+          <button class="view-btn" data-view="list" type="button" aria-label="Xem dạng danh sách" aria-pressed="false">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 6h13"/><path d="M8 12h13"/><path d="M8 18h13"/><path d="M3 6h.01"/><path d="M3 12h.01"/><path d="M3 18h.01"/></svg>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Book Grid -->
+    <section aria-labelledby="books-title">
+      <div class="section-head">
+        <h2 id="books-title">Sách trong thư viện</h2>
+        <span class="tag" id="booksTag">—</span>
+      </div>
+      <div id="bookGrid" class="book-grid" role="list"></div>
+      <div id="booksEmpty" class="empty" hidden>
+        <div style="font-size:32px;margin-bottom:8px" aria-hidden="true">📚</div>
+        <strong>Chưa có sách nào</strong><br>Kéo thả PDF/DOCX/TXT/MD vào vùng upload ở trên để bắt đầu.<br>
+        <small style="color:var(--lib-muted)">Dữ liệu lưu offline trong trình duyệt — không gửi đi đâu.</small>
+      </div>
+    </section>
+
+    <!-- Help / AI API -->
+    <section id="helpSection" class="card card-pad" style="margin-top:24px" aria-labelledby="help-title" hidden>
+      <h3 id="help-title" style="margin:0 0 12px;font:700 14px var(--font-display)">🤖 Cho AI đọc — 2 cách</h3>
+      <div class="grid-2">
+        <div>
+          <h4 style="margin:0 0 6px;font:600 13px var(--font-sans)">A. Trong browser (mọi AI)</h4>
+          <pre class="code-block"><code>// Trong console hoặc AI webview
+await window.LibrarySearch.search("điều khoản thanh toán", {top_k:5})
+// → [{bookName, chunkId, text, snippet, score, page}]
+
+window.LibrarySearch.listBooks()
+window.LibrarySearch.getStatus()</code></pre>
+        </div>
+        <div>
+          <h4 style="margin:0 0 6px;font:600 13px var(--font-sans)">B. MCP cho VS Code / Claude Code</h4>
+          <pre class="code-block"><code>// .vscode/mcp.json
+{
+  "servers": {
+    "library": {
+      "command": "node",
+      "args": ["./www/library/mcp-server.mjs"]
+    }
+  }
+}
+// Tools: search_library, list_books, get_book
+// Đọc www/library/export.json (bấm Xuất để tạo)</code></pre>
+        </div>
+      </div>
+      <div style="margin-top:12px;display:flex;gap:8px;flex-wrap:wrap">
+        <button class="btn btn-ghost btn-sm" id="btnCopyApi" type="button">Copy ví dụ</button>
+        <button class="btn btn-ghost btn-sm" id="btnTestSearch" type="button">Test search "hợp đồng"</button>
+      </div>
+    </section>
+
+    <footer class="footer" style="margin-top:32px;padding:16px 0;border-top:1px solid var(--lib-border);color:var(--lib-muted);font-size:12px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px">
+      <span>Thư Viện RAG Local · <a href="../index.html">← STATUS</a> · <a href="./README.md" target="_blank">README</a></span>
+      <span>Lưu: localStorage + IndexedDB · Key: <span class="kbd">library:*</span></span>
+    </footer>
+  </main>
+
+  <!-- Modal Confirm -->
+  <div id="modal" class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle" hidden>
+    <div class="modal-backdrop" id="modalBackdrop"></div>
+    <div class="modal-card" role="document">
+      <h3 id="modalTitle">Xác nhận</h3>
+      <p id="modalDesc">—</p>
+      <div class="modal-actions">
+        <button class="btn btn-ghost" id="modalCancel" type="button">Hủy</button>
+        <button class="btn btn-danger" id="modalConfirm" type="button">Xóa</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast -->
+  <div id="toast" class="toast" role="status" aria-live="polite" aria-atomic="true"></div>
+
+  <script type="module" src="./app.js"></script>
+</body>
+</html>

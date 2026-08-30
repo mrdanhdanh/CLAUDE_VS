@@ -1,17 +1,17 @@
 {
-  "generatedAt": "2026-08-29T12:55:15.648Z",
+  "generatedAt": "2026-08-29T16:20:46.904Z",
   "generatedBy": "YUNIE",
   "version": 1,
   "counts": {
     "skills": {
-      "enabled": 5,
+      "enabled": 6,
       "disabled": 0,
-      "total": 5
+      "total": 6
     },
     "instructions": {
-      "enabled": 5,
+      "enabled": 7,
       "disabled": 0,
-      "total": 5
+      "total": 7
     },
     "agents": {
       "enabled": 7,
@@ -49,7 +49,11 @@
       },
       "ui-ux-pro-max": {
         "enabled": true,
-        "description": "UI/UX design intelligence for web, mobile, and desktop. This skill should be used when designing, building, reviewing, or fixing interfaces, including pages, components, design systems, accessibility, interaction, responsive layout, typography, color, charts, and stack-specific UI implementation. Se"
+        "description": "UI/UX design intelligence for web, mobile, and desktop. This skill should be used when designing, building, reviewing, or fixing interfaces, including pages, components, design systems, accessibility, interaction, responsive layout, typography, color, charts, and stack-specific UI implementation. Searchable local data: 79 searchable styles (50 active), 192 product palettes and reasoning profiles, 74 font pairings, 119 UX guidelines, 105 icons, 17 GSAP presets, 25 chart types, and 22 stacks."
+      },
+      "glass-rainbow-effects": {
+        "enabled": true,
+        "description": "Liquid glass + rainbow border effects for web — Apple Liquid Glass backdrop-filter glassmorphism, frosted glass nav/cards/buttons/sheets, conic-gradient rainbow borders, animated rotating gradients, glass+rainbow combos. Use when user wants liquid glass, glassmorphism, frosted glass, backdrop-filter, rainbow border, gradient border, animated border, neon border, glass card, glass navbar, premium UI effects, or says liquid glass / rainbow border / glass effect."
       }
     },
     "instructions": {
@@ -63,7 +67,7 @@
       },
       "product-quality": {
         "enabled": true,
-        "description": "Product quality standard for web UI/UX — beautiful, responsive, accessible"
+        "description": "Product quality standard for web UI/UX — beautiful, responsive, accessible. Use when building web UI, need design system, responsive, a11y, polish, locale-owned copy."
       },
       "skill-usage": {
         "enabled": true,
@@ -72,6 +76,14 @@
       "knowleged": {
         "enabled": true,
         "description": "BẮT BUỘC đọc docs/knowleged.md trước mọi task — chứa bài học từ bug, anti-patterns, checklist phòng tránh. Use when any coding task, bug fix, feature, harness, implement, polish, verify, or before editing any file."
+      },
+      "plugin-seam": {
+        "enabled": true,
+        "description": "Everything is a Plugin — capability seam (Service Definition / Provider / Consumer), ctx.effect, patch layers, events. Use when adding new capability, tool, service, extending harness, need plugin architecture, seam, Cordis."
+      },
+      "locale-i18n": {
+        "enabled": true,
+        "description": "Locale-owned UI copy — no hardcoded text, typed dictionaries, t() helper. Use when writing UI text, button labels, messages, toast, empty/error states, need i18n, locale."
       }
     },
     "agents": {
@@ -160,7 +172,8 @@
     "focus-flow",
     "skill-registry",
     "status-ui-v2",
-    "todo-manager"
+    "todo-manager",
+    "library-rag"
   ],
   "demos": [
     {
@@ -172,18 +185,29 @@
       "name": "todo-manager",
       "path": "todo-manager/index.html",
       "status": "ok"
+    },
+    {
+      "name": "glassui",
+      "path": "glassui/index.html",
+      "status": "ok"
+    },
+    {
+      "name": "library",
+      "path": "library/index.html",
+      "status": "ok"
     }
   ],
   "health": {
     "errors": 0,
     "status": "ok",
-    "lastCheck": "2026-08-29T12:55:15.648Z",
+    "lastCheck": "2026-08-29T16:20:46.905Z",
     "checks": [
       "get_errors: pass (0 errors)",
-      "registry: 5 skills · 5 instructions · 7 agents · 7 prompts · 1 hook — all enabled",
+      "registry: 8 instructions (library-rag moi) - 6 skills - 7 agents - 7 prompts - 1 hook — all enabled",
       "www: polished — responsive 375/768/1280, a11y, states, animation 150-300ms",
       "workflow: www/** -> Pages (upload-artifact path: www)",
-      "status.json: object shape with enabled/description — app.js handles array+object"
+      "library: www/library/ (PDF/DOCX/TXT/MD, BM25 <100ms, thao lap) + search.mjs CLI + mcp-server.mjs + export.json + library-rag instruction cho harness",
+      "harness bridge: /harness tu search thu vien o Explore — node www/library/search.mjs query --json -> citation"
     ]
   },
   "pages": {
@@ -198,6 +222,36 @@
       {
         "path": "status.json",
         "title": "Status JSON",
+        "type": "data"
+      },
+      {
+        "path": "glassui/index.html",
+        "title": "GlassUI — Liquid Glass + Rainbow Border",
+        "type": "demo"
+      },
+      {
+        "path": "library/index.html",
+        "title": "Thư Viện — RAG Local · Tháo lắp · Tìm siêu nhanh",
+        "type": "demo"
+      },
+      {
+        "path": "library/README.md",
+        "title": "Thư Viện — README",
+        "type": "doc"
+      },
+      {
+        "path": "library/search.mjs",
+        "title": "Library CLI — search.mjs",
+        "type": "tool"
+      },
+      {
+        "path": "library/mcp-server.mjs",
+        "title": "Library MCP — mcp-server.mjs",
+        "type": "tool"
+      },
+      {
+        "path": "library/export.json",
+        "title": "Library Export — export.json",
         "type": "data"
       }
     ],

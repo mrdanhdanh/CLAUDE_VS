@@ -1,9 +1,11 @@
 ---
-description: "Product quality standard for web UI/UX — beautiful, responsive, accessible"
+description: "Product quality standard for web UI/UX — beautiful, responsive, accessible. Use when building web UI, need design system, responsive, a11y, polish, locale-owned copy."
 applyTo: "**/*.{html,css,tsx,jsx,vue,js,ts}"
 ---
 
 # Product Quality Standard — Web UI/UX
+
+> Inspired by **DeepSeek Harness — Everything is a Plugin** (Cordis). Web UI cũng là 1 capability seam — mọi giá trị nhìn thấy phải qua token, mọi copy phải locale-owned.
 
 Mọi sản phẩm web trong workspace này PHẢI đạt chuẩn sau. Nếu chưa đạt → chưa được gọi là xong.
 
@@ -87,11 +89,19 @@ Mọi view/list PHẢI xử lý 4 states:
 
 ## 7. Code Quality
 
-- Không hardcode text UI — đặt trong constants hoặc i18n-ready
+- **Locale-owned copy:** Không hardcode text UI — mọi copy phải qua `t()` / `locales/vi.ts` (xem `locale-i18n.instructions.md`). `aria-label`/`alt` cũng locale-owned. Gate: `verify-client-ui-i18n` / grep hardcode.
+- **Token invariant (UI-visible ⟺ token):** Mọi giá trị nhìn thấy (màu, spacing, radius, shadow, font) phải qua CSS variables / design tokens — không hardcode `#6366f1` hay `14px` lẻ trong component (xem `plugin-seam` § UI-visible ⟺ token).
 - Component consistent: cùng 1 style cho cùng loại element
 - Performance: lazy load image, không layout shift, không FOUC
+- ESM + `strict: true` nếu là TS — không `any` không lý do
 
-## 8. Polish Checklist (trước khi Verify)
+## 8. DeepSeek Invariants (học từ Everything is a Plugin)
+
+- **UI-visible ⟺ token** — như `Model-visible ⟺ logged` của DeepSeek: cái gì user thấy phải reconstruct được từ token, không hardcode.
+- **Seam = 3 vai:** Design System cũng là seam — `Definition` (tokens) + `Provider` (CSS variables) + `Consumer` (components). Thêm token mới phải đủ 3 vai.
+- **Patchable:** Palette/spacing có thể override bằng patch layer (vd: `www/cordis.patch.yml`) mà không sửa gốc — như `cordis.patch.yml` của DeepSeek.
+
+## 9. Polish Checklist (trước khi Verify)
 
 - [ ] Palette + typography + spacing đã định nghĩa
 - [ ] Responsive 375/768/1280 không vỡ

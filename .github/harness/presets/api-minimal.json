@@ -10,7 +10,10 @@
     "harness-workflow": true,
     "product-quality": false,
     "skill-usage": true,
-    "custom-registry": true
+    "custom-registry": true,
+    "plugin-seam": false,
+    "locale-i18n": false,
+    "knowleged": true
   },
   "agents": {
     "designer": false,

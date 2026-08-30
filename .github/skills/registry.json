@@ -8,7 +8,7 @@
       "enabled": true,
       "description": "Claude Harness v2 product-driven pipeline Idea -> Explore -> Clarify -> PRD -> Design -> Plan -> Implement -> Polish -> Verify. Use when building product from small idea, need beautiful UI/UX, model-agnostic workflow, or user says harness/product/idea/giao dien dep.",
       "file": "claude-harness/SKILL.md",
-      "installedAt": "2026-08-29T04:56:25.948Z"
+      "installedAt": "2026-08-29T15:13:36.592Z"
     },
     "custom-registry": {
       "source": "local",
@@ -17,7 +17,16 @@
       "enabled": true,
       "description": "Tháo lắp toàn bộ customizations: skill/instruction/rule/agent/prompt/hook như plugin, preset theo dự án, scaffold mới. Use when user wants to manage rules, tháo lắp rule/instruction/agent/prompt/hook, preset, tạo mới customization, custom dễ dàng, hoặc nói harness registry/custom registry.",
       "file": "custom-registry/SKILL.md",
-      "installedAt": "2026-08-29T04:56:25.950Z"
+      "installedAt": "2026-08-29T15:13:36.594Z"
+    },
+    "glass-rainbow-effects": {
+      "source": "local",
+      "path": "skills/glass-rainbow-effects",
+      "ref": "local",
+      "enabled": true,
+      "description": "Liquid glass + rainbow border effects for web — Apple Liquid Glass backdrop-filter glassmorphism, frosted glass nav/cards/buttons/sheets, conic-gradient rainbow borders, animated rotating gradients, glass+rainbow combos. Use when user wants liquid glass, glassmorphism, frosted glass, backdrop-filter, rainbow border, gradient border, animated border, neon border, glass card, glass navbar, premium UI effects, or says liquid glass / rainbow border / glass effect.",
+      "file": "glass-rainbow-effects/SKILL.md",
+      "installedAt": "2026-08-29T15:13:36.595Z"
     },
     "skill-registry": {
       "source": "local",
@@ -26,7 +35,7 @@
       "enabled": true,
       "description": "Quản lý skill như plugin: cài/gỡ/bật/tắt skill từ GitHub, tháo lắp wise. Use when user wants to install skill from GitHub, manage skills, enable/disable skill, tháo lắp skill, sync skills, hoặc nói skill registry/plugin.",
       "file": "skill-registry/SKILL.md",
-      "installedAt": "2026-08-29T04:56:25.951Z"
+      "installedAt": "2026-08-29T15:13:36.595Z"
     },
     "ui-design-system": {
       "source": "davila7/claude-code-templates",
@@ -35,16 +44,16 @@
       "enabled": true,
       "description": "UI design system toolkit for Senior UI Designer including design token generation, component documentation, responsive design calculations, and developer handoff tools. Use for creating design systems, maintaining visual consistency, and facilitating design-dev collaboration.",
       "file": "ui-design-system/SKILL.md",
-      "installedAt": "2026-08-29T10:44:31.095Z"
+      "installedAt": "2026-08-29T15:13:36.596Z"
     },
     "ui-ux-pro-max": {
       "source": "nextlevelbuilder/ui-ux-pro-max-skill",
       "path": ".claude/skills/ui-ux-pro-max",
       "ref": "main",
       "enabled": true,
-      "description": "UI/UX design intelligence for web, mobile, and desktop. This skill should be used when designing, building, reviewing, or fixing interfaces, including pages, components, design systems, accessibility, interaction, responsive layout, typography, color, charts, and stack-specific UI implementation. Se",
+      "description": "UI/UX design intelligence for web, mobile, and desktop. This skill should be used when designing, building, reviewing, or fixing interfaces, including pages, components, design systems, accessibility, interaction, responsive layout, typography, color, charts, and stack-specific UI implementation. Searchable local data: 79 searchable styles (50 active), 192 product palettes and reasoning profiles, 74 font pairings, 119 UX guidelines, 105 icons, 17 GSAP presets, 25 chart types, and 22 stacks.",
       "file": "ui-ux-pro-max/SKILL.md",
-      "installedAt": "2026-08-29T10:49:47.032Z"
+      "installedAt": "2026-08-29T15:13:36.596Z"
     }
   }
 }

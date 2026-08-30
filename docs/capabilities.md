@@ -77,9 +77,12 @@ Instructions là rule luôn-on hoặc theo `applyTo` glob, agent tự load khi f
 | Instruction | `applyTo` | Mô tả |
 |-------------|-----------|-------|
 | `harness-workflow` | `**` | Enforce Harness v2 pipeline cho mọi coding task |
-| `product-quality` | `**/*.{html,css,tsx,jsx,vue,js,ts}` | Chuẩn UI/UX: design system, responsive, states, animation, a11y |
+| `product-quality` | `**/*.{html,css,tsx,jsx,vue,js,ts}` | Chuẩn UI/UX: design system, responsive, states, animation, a11y + **locale-owned + token invariant** (DeepSeek) |
 | `skill-usage` | `**` | Wise skill usage — chỉ load khi description match |
 | `custom-registry` | `**` | Tháo lắp toàn bộ customizations như plugin |
+| `knowleged` | `**` | BẮT BUỘC đọc `docs/knowleged.md` trước mọi task — bài học bug, anti-patterns |
+| `plugin-seam` | `**` | **Everything is a Plugin** — capability seam (Definition/Provider/Consumer), `ctx.effect`, patch layers, events (DeepSeek Cordis) |
+| `locale-i18n` | `**/*.{html,css,tsx,jsx,vue,js,ts}` | **Locale-owned copy** — no hardcoded text, typed dictionaries, `t()` helper (DeepSeek) |
 
 - **Vị trí:** `.github/instructions/*.instructions.md`
 - **Frontmatter:** `description` (bắt buộc, keyword-rich) + `applyTo` (glob, tránh `**` nếu không global)
@@ -190,11 +193,11 @@ Presets là bộ bật/tắt cho từng loại dự án — 1 lệnh áp đúng 
 
 | Preset | File | Dùng khi | Bật | Tắt |
 |--------|------|----------|-----|-----|
-| `full` | `presets/full.json` | Muốn tất cả | tất cả (7 agents gồm YUNIE) | — |
-| `web-product` | `presets/web-product.json` | Web cần giao diện đẹp | tất cả (hiện giống `full`, gồm YUNIE) | — |
-| `api-minimal` | `presets/api-minimal.json` | API/script gọn nhẹ | harness core + YUNIE | product-quality, designer, polish, product/polish prompts |
+| `full` | `presets/full.json` | Muốn tất cả | tất cả (7 agents gồm YUNIE, 7 instructions gồm `plugin-seam`+`locale-i18n`) | — |
+| `web-product` | `presets/web-product.json` | Web cần giao diện đẹp | tất cả (giống `full`, gồm `plugin-seam`+`locale-i18n`) | — |
+| `api-minimal` | `presets/api-minimal.json` | API/script gọn nhẹ | harness core + YUNIE | `product-quality`, `plugin-seam`, `locale-i18n`, `designer`, `polish`, `product`/`polish` prompts |
 
-> **Lưu ý:** `web-product.json` hiện bật tất cả `true` giống `full.json` (chưa phân biệt). `api-minimal` tắt đúng `product-quality`, `designer`, `polish`, `product`/`polish` prompts nhưng **vẫn bật YUNIE** để luôn có chatbot hệ thống.
+> **Lưu ý:** `web-product`/`full` bật tất cả gồm 2 instructions mới học từ DeepSeek (`plugin-seam`, `locale-i18n`). `api-minimal` tắt cả 3 instructions web (`product-quality`, `plugin-seam`, `locale-i18n`) + `designer`/`polish` để gọn cho API/script, nhưng **vẫn bật YUNIE**.
 
 ```bash
 node .github/harness/scripts/harness-manager.mjs preset apply web-product
@@ -257,10 +260,14 @@ node .github/harness/scripts/harness-manager.mjs create instruction my-rule
 
 **Code:**
 - Không inline style bừa bãi — dùng CSS variables / Tailwind / module
-- Không hardcode text — constants / i18n-ready
+- **Locale-owned copy** — không hardcode text, mọi copy qua `t()` / `locales/vi.ts` (xem `locale-i18n.instructions.md`)
+- **Token invariant** — `UI-visible ⟺ token` (như `Model-visible ⟺ logged` của DeepSeek): mọi giá trị nhìn thấy phải qua token
 - Không layout shift
 
-Chi tiết: `.github/instructions/product-quality.instructions.md` · Checklist trong `docs/harness-flow.md`
+**DeepSeek Invariants (mới):**
+- `UI-visible ⟺ token` + `Seam = 3 vai` + `Patchable` — xem `product-quality.instructions.md` §8-9 và `plugin-seam.instructions.md`
+
+Chi tiết: `.github/instructions/product-quality.instructions.md` · `.github/instructions/plugin-seam.instructions.md` · `.github/instructions/locale-i18n.instructions.md` · Checklist trong `docs/harness-flow.md`
 
 ---
 
@@ -313,6 +320,21 @@ Chi tiết: `.github/instructions/product-quality.instructions.md` · Checklist 
 - **Verify:** `get_errors` pass, visual check browser
 
 Mở: `focus-flow/index.html` (file://) — không cần build.
+
+## 12c. Demo — Library RAG Local (Thư viện tháo lắp)
+
+Thư viện **local 0đ, offline 100%** — cho cả người và AI, tháo lắp như plugin:
+
+- **PRD:** `.agent/plans/library-rag/prd.md` — 7 US P0 (upload PDF/DOCX/TXT/MD, tháo/gắn, đã đọc, tìm <100ms, API + MCP)
+- **Design:** `.agent/plans/library-rag/design.md` — Palette Indigo/Sky/Amber, wireframe 375/768/1280, BM25 k1=1.2 b=0.75, registry shape, API + MCP
+- **Plan:** `.agent/plans/library-rag/plan.md` — 8 todos, file map `www/library/`
+- **Code:** `www/library/index.html` + `styles.css` + `app.js` — parser pdf.js/mammoth, chunk 2400/overlap 400, BM25, IndexedDB, highlight + citation, filter, progress, export/import
+- **API cho AI:** `window.LibrarySearch.search(q, {top_k})` + `fetch` + MCP `search_library` (stdio, đọc `export.json`)
+- **MCP:** `www/library/mcp-server.mjs` — tools `search_library`, `list_books`, `get_book`, `get_status`
+- **Polish:** responsive 375/768/1280, states, animation 150-300ms, a11y (skip-link, aria, focus-visible, ESC + focus trap modal), toast
+- **Verify:** `get_errors` pass, `status.json` valid, demo book sẵn
+
+Mở: `www/library/index.html` — kéo thả PDF/DOCX/TXT/MD, gõ `/` để tìm, bấm **Xuất** để tạo `export.json` cho MCP.
 
 ---
 

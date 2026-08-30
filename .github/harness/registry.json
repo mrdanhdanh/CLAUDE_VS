@@ -8,7 +8,7 @@
       "enabled": true,
       "description": "Claude Harness v2 product-driven pipeline Idea -> Explore -> Clarify -> PRD -> Design -> Plan -> Implement -> Polish -> Verify. Use when building product from small idea, need beautiful UI/UX, model-agnostic workflow, or user says harness/product/idea/giao dien dep.",
       "file": "claude-harness/SKILL.md",
-      "installedAt": "2026-08-29T04:56:25.948Z"
+      "installedAt": "2026-08-29T15:13:36.592Z"
     },
     "custom-registry": {
       "source": "local",
@@ -17,7 +17,16 @@
       "enabled": true,
       "description": "Tháo lắp toàn bộ customizations: skill/instruction/rule/agent/prompt/hook như plugin, preset theo dự án, scaffold mới. Use when user wants to manage rules, tháo lắp rule/instruction/agent/prompt/hook, preset, tạo mới customization, custom dễ dàng, hoặc nói harness registry/custom registry.",
       "file": "custom-registry/SKILL.md",
-      "installedAt": "2026-08-29T04:56:25.950Z"
+      "installedAt": "2026-08-29T15:13:36.594Z"
+    },
+    "glass-rainbow-effects": {
+      "source": "local",
+      "path": "skills/glass-rainbow-effects",
+      "ref": "local",
+      "enabled": true,
+      "description": "Liquid glass + rainbow border effects for web — Apple Liquid Glass backdrop-filter glassmorphism, frosted glass nav/cards/buttons/sheets, conic-gradient rainbow borders, animated rotating gradients, glass+rainbow combos. Use when user wants liquid glass, glassmorphism, frosted glass, backdrop-filter, rainbow border, gradient border, animated border, neon border, glass card, glass navbar, premium UI effects, or says liquid glass / rainbow border / glass effect.",
+      "file": "glass-rainbow-effects/SKILL.md",
+      "installedAt": "2026-08-29T15:13:36.595Z"
     },
     "skill-registry": {
       "source": "local",
@@ -26,7 +35,7 @@
       "enabled": true,
       "description": "Quản lý skill như plugin: cài/gỡ/bật/tắt skill từ GitHub, tháo lắp wise. Use when user wants to install skill from GitHub, manage skills, enable/disable skill, tháo lắp skill, sync skills, hoặc nói skill registry/plugin.",
       "file": "skill-registry/SKILL.md",
-      "installedAt": "2026-08-29T04:56:25.951Z"
+      "installedAt": "2026-08-29T15:13:36.595Z"
     },
     "ui-design-system": {
       "source": "davila7/claude-code-templates",
@@ -35,16 +44,16 @@
       "enabled": true,
       "description": "UI design system toolkit for Senior UI Designer including design token generation, component documentation, responsive design calculations, and developer handoff tools. Use for creating design systems, maintaining visual consistency, and facilitating design-dev collaboration.",
       "file": "ui-design-system/SKILL.md",
-      "installedAt": "2026-08-29T10:44:31.095Z"
+      "installedAt": "2026-08-29T15:13:36.596Z"
     },
     "ui-ux-pro-max": {
       "source": "nextlevelbuilder/ui-ux-pro-max-skill",
       "path": ".claude/skills/ui-ux-pro-max",
       "ref": "main",
       "enabled": true,
-      "description": "UI/UX design intelligence for web, mobile, and desktop. This skill should be used when designing, building, reviewing, or fixing interfaces, including pages, components, design systems, accessibility, interaction, responsive layout, typography, color, charts, and stack-specific UI implementation. Se",
+      "description": "UI/UX design intelligence for web, mobile, and desktop. This skill should be used when designing, building, reviewing, or fixing interfaces, including pages, components, design systems, accessibility, interaction, responsive layout, typography, color, charts, and stack-specific UI implementation. Searchable local data: 79 searchable styles (50 active), 192 product palettes and reasoning profiles, 74 font pairings, 119 UX guidelines, 105 icons, 17 GSAP presets, 25 chart types, and 22 stacks.",
       "file": "ui-ux-pro-max/SKILL.md",
-      "installedAt": "2026-08-29T10:49:47.032Z"
+      "installedAt": "2026-08-29T15:13:36.596Z"
     }
   },
   "instructions": {
@@ -54,31 +63,15 @@
       "enabled": true,
       "description": "Tháo lắp toàn bộ customizations (skill/instruction/agent/prompt/hook) như plugin — preset, scaffold, wise loading",
       "applyTo": "**",
-      "installedAt": "2026-08-29T04:56:25.952Z"
+      "installedAt": "2026-08-29T15:13:36.597Z"
     },
     "harness-workflow": {
       "source": "local",
       "file": "harness-workflow.instructions.md",
       "enabled": true,
-      "description": "Enforce Claude Harness v2 pipeline — /harness for features, /fixbug for bugs. BẮT BUỘC đọc docs/knowleged.md trước mọi task.",
+      "description": "Enforce Claude Harness v2 product-driven pipeline for all coding tasks — and /fixbug for bugs. BẮT BUỘC đọc docs/knowleged.md trước mọi task.",
       "applyTo": "**",
-      "installedAt": "2026-08-29T04:56:25.952Z"
-    },
-    "product-quality": {
-      "source": "local",
-      "file": "product-quality.instructions.md",
-      "enabled": true,
-      "description": "Product quality standard for web UI/UX — beautiful, responsive, accessible",
-      "applyTo": "**/*.{html,css,tsx,jsx,vue,js,ts}",
-      "installedAt": "2026-08-29T04:56:25.952Z"
-    },
-    "skill-usage": {
-      "source": "local",
-      "file": "skill-usage.instructions.md",
-      "enabled": true,
-      "description": "Wise skill usage — only load skill when description matches task",
-      "applyTo": "**",
-      "installedAt": "2026-08-29T04:56:25.953Z"
+      "installedAt": "2026-08-29T15:13:36.598Z"
     },
     "knowleged": {
       "source": "local",
@@ -86,7 +79,47 @@
       "enabled": true,
       "description": "BẮT BUỘC đọc docs/knowleged.md trước mọi task — chứa bài học từ bug, anti-patterns, checklist phòng tránh. Use when any coding task, bug fix, feature, harness, implement, polish, verify, or before editing any file.",
       "applyTo": "**",
-      "installedAt": "2026-08-29T11:04:17.005Z"
+      "installedAt": "2026-08-29T15:13:36.599Z"
+    },
+    "locale-i18n": {
+      "source": "local",
+      "file": "locale-i18n.instructions.md",
+      "enabled": true,
+      "description": "Locale-owned UI copy — no hardcoded text, typed dictionaries, t() helper. Use when writing UI text, button labels, messages, toast, empty/error states, need i18n, locale.",
+      "applyTo": "**/*.{html,css,tsx,jsx,vue,js,ts}",
+      "installedAt": "2026-08-29T15:13:36.599Z"
+    },
+    "plugin-seam": {
+      "source": "local",
+      "file": "plugin-seam.instructions.md",
+      "enabled": true,
+      "description": "Everything is a Plugin — capability seam (Service Definition / Provider / Consumer), ctx.effect, patch layers, events. Use when adding new capability, tool, service, extending harness, need plugin architecture, seam, Cordis.",
+      "applyTo": "**",
+      "installedAt": "2026-08-29T15:13:36.600Z"
+    },
+    "product-quality": {
+      "source": "local",
+      "file": "product-quality.instructions.md",
+      "enabled": true,
+      "description": "Product quality standard for web UI/UX — beautiful, responsive, accessible. Use when building web UI, need design system, responsive, a11y, polish, locale-owned copy.",
+      "applyTo": "**/*.{html,css,tsx,jsx,vue,js,ts}",
+      "installedAt": "2026-08-29T15:13:36.600Z"
+    },
+    "skill-usage": {
+      "source": "local",
+      "file": "skill-usage.instructions.md",
+      "enabled": true,
+      "description": "Wise skill usage — only load skill when description matches task",
+      "applyTo": "**",
+      "installedAt": "2026-08-29T15:13:36.601Z"
+    },
+    "library-rag": {
+      "source": "local",
+      "file": "library-rag.instructions.md",
+      "enabled": true,
+      "description": "Thư viện RAG Local — cho /harness trích xuất thông tin từ sách (PDF/DOCX/TXT/MD) qua BM25. Use when harness needs to extract knowledge from library books, need to search library, need citation from documents, or task mentions sách/thư viện/tài liệu.",
+      "applyTo": "**",
+      "installedAt": "2026-08-29T16:16:30.393Z"
     }
   },
   "agents": {
@@ -94,101 +127,101 @@
       "source": "local",
       "file": "designer.agent.md",
       "enabled": true,
-      "description": "Design product UI/UX: design system, wireframe, component states. Use when need beautiful interface, responsive layout, before coding.",
-      "installedAt": "2026-08-29T04:56:25.954Z"
+      "description": "agent designer",
+      "installedAt": "2026-08-29T15:13:36.603Z"
     },
     "explore": {
       "source": "local",
       "file": "explore.agent.md",
       "enabled": true,
       "description": "Explore codebase read-only. Use when need to understand project structure, find files, trace patterns before planning or coding.",
-      "installedAt": "2026-08-29T04:56:25.955Z"
+      "installedAt": "2026-08-29T15:13:36.603Z"
     },
     "implement": {
       "source": "local",
       "file": "implement.agent.md",
       "enabled": true,
       "description": "Implement code changes todo-driven. Use when executing plan todos, writing code, editing files, running checks.",
-      "installedAt": "2026-08-29T04:56:25.956Z"
+      "installedAt": "2026-08-29T15:13:36.604Z"
     },
     "plan": {
       "source": "local",
       "file": "plan.agent.md",
       "enabled": true,
-      "description": "Plan architecture and task breakdown. Use when need to design implementation plan, break down requirements, create todos before coding.",
-      "installedAt": "2026-08-29T04:56:25.957Z"
+      "description": "agent plan",
+      "installedAt": "2026-08-29T15:13:36.604Z"
     },
     "polish": {
       "source": "local",
       "file": "polish.agent.md",
       "enabled": true,
-      "description": "Polish UI/UX to product quality: responsive, states, animation, a11y. Use after implement, before verify, when UI needs beautifying.",
-      "installedAt": "2026-08-29T04:56:25.957Z"
+      "description": "agent polish",
+      "installedAt": "2026-08-29T15:13:36.605Z"
     },
     "verify": {
       "source": "local",
       "file": "verify.agent.md",
       "enabled": true,
       "description": "Verify build, tests, lint and fix loops. Use when need to validate implementation, run checks, auto-fix failures before done.",
-      "installedAt": "2026-08-29T04:56:25.957Z"
+      "installedAt": "2026-08-29T15:13:36.605Z"
     },
     "yunie": {
       "source": "local",
       "file": "yunie.agent.md",
       "enabled": true,
       "description": "YUNIE — chatbot hệ thống Harness v2: hiểu toàn bộ hệ thống, thực thi task về hệ thống, kiểm tra tình trạng, cập nhật trang STATUS www/ và deploy GitHub Pages. Use when user says yunie, chatbot, status, kiểm tra hệ thống, cập nhật status page, www, github pages.",
-      "installedAt": "2026-08-29T10:31:16.694Z"
+      "installedAt": "2026-08-29T15:13:36.606Z"
     }
   },
   "prompts": {
+    "fixbug": {
+      "source": "local",
+      "file": "fixbug.prompt.md",
+      "enabled": true,
+      "description": "Fix bug gọn nhẹ: Reproduce → Root Cause → Fix → Verify → Learn. Lưu .agent/bugs/<slug>/bug.md và cập nhật docs/knowleged.md (bắt buộc đọc). Use when fixing bug, sửa lỗi, regression, hotfix — thay cho /harness full pipeline.",
+      "installedAt": "2026-08-29T15:13:36.606Z"
+    },
     "harness": {
       "source": "local",
       "file": "harness.prompt.md",
       "enabled": true,
-      "description": "Chạy full Claude Harness v2 pipeline Idea -> Explore -> Clarify -> PRD -> Design -> Plan -> Implement -> Polish -> Verify. Model-agnostic, product-driven.",
-      "installedAt": "2026-08-29T04:56:25.959Z"
+      "description": "prompt harness",
+      "installedAt": "2026-08-29T15:13:36.607Z"
     },
     "implement": {
       "source": "local",
       "file": "implement.prompt.md",
       "enabled": true,
-      "description": "Implement plan đã duyệt theo todo-driven workflow. Đọc plan, chạy từng todo, verify sau mỗi edit.",
-      "installedAt": "2026-08-29T04:56:25.959Z"
+      "description": "prompt implement",
+      "installedAt": "2026-08-29T15:13:36.607Z"
     },
     "plan": {
       "source": "local",
       "file": "plan.prompt.md",
       "enabled": true,
-      "description": "Tạo plan chi tiết Explore -> Plan cho task, xuất file .agent/plans/ và todos. Dùng trước khi implement.",
-      "installedAt": "2026-08-29T04:56:25.960Z"
+      "description": "prompt plan",
+      "installedAt": "2026-08-29T15:13:36.608Z"
     },
     "polish": {
       "source": "local",
       "file": "polish.prompt.md",
       "enabled": true,
-      "description": "Polish giao diện đến chuẩn product: responsive, states, animation, a11y. Chạy sau implement, trước verify.",
-      "installedAt": "2026-08-29T04:56:25.960Z"
+      "description": "prompt polish",
+      "installedAt": "2026-08-29T15:13:36.608Z"
     },
     "product": {
       "source": "local",
       "file": "product.prompt.md",
       "enabled": true,
-      "description": "Biến 1 ý tưởng nhỏ thành sản phẩm hoàn chỉnh: PRD mini -> Design -> Plan -> Implement -> Polish. Dùng khi có ý tưởng mơ hồ cần thành product đẹp.",
-      "installedAt": "2026-08-29T04:56:25.960Z"
+      "description": "prompt product",
+      "installedAt": "2026-08-29T15:13:36.608Z"
     },
     "verify": {
       "source": "local",
       "file": "verify.prompt.md",
       "enabled": true,
       "description": "Verify build/test/lint và tự fix loop đến khi pass. Chạy sau implement, trước khi done.",
-      "installedAt": "2026-08-29T04:56:25.961Z"
-    },
-    "fixbug": {
-      "source": "local",
-      "file": "fixbug.prompt.md",
-      "enabled": true,
-      "description": "Fix bug gọn nhẹ: Reproduce → Root Cause → Fix → Verify → Learn. Lưu .agent/bugs/<slug>/bug.md và cập nhật docs/knowleged.md (bắt buộc đọc). Use when fixing bug, sửa lỗi, regression, hotfix — thay cho /harness full pipeline.",
-      "installedAt": "2026-08-29T11:04:17.194Z"
+      "installedAt": "2026-08-29T15:13:36.609Z"
     }
   },
   "hooks": {
@@ -197,7 +230,7 @@
       "file": "hooks.json",
       "enabled": true,
       "description": "hook hooks",
-      "installedAt": "2026-08-29T04:56:25.962Z"
+      "installedAt": "2026-08-29T15:13:36.610Z"
     }
   }
 }

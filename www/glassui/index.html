@@ -1,0 +1,494 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>GlassUI — Liquid Glass + Rainbow Border · YUNIE</title>
+  <meta name="description" content="Demo Liquid Glass + Rainbow Border — skill tổng hợp glass-rainbow-effects. Kính mờ Apple, viền cầu vồng xoay, combo premium. Copy-paste là chạy." />
+  <meta name="color-scheme" content="light dark" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body>
+  <!-- SVG refraction filter (Chromium-only progressive) -->
+  <svg width="0" height="0" aria-hidden="true" style="position:absolute">
+    <filter id="liquid-lens">
+      <feTurbulence type="fractalNoise" baseFrequency="0.008 0.008" numOctaves="2" seed="7" result="noise"/>
+      <feGaussianBlur in="noise" stdDeviation="2" result="soft"/>
+      <feDisplacementMap in="SourceGraphic" in2="soft" scale="48" xChannelSelector="R" yChannelSelector="G"/>
+    </filter>
+  </svg>
+
+  <a class="skip-link" href="#main">Bỏ qua đến nội dung chính</a>
+
+  <!-- Glass Header (fixed, samples hero behind) -->
+  <header class="site-header" role="banner">
+    <nav class="toolbar" aria-label="Thanh điều hướng GlassUI">
+      <a class="glass toolbar-item brand" href="../index.html" aria-label="Về trang STATUS">
+        <span class="brand-mark" aria-hidden="true">Y</span>
+        <span class="brand-text">YUNIE</span>
+      </a>
+      <span class="toolbar-divider" aria-hidden="true"></span>
+      <span class="toolbar-title">GlassUI</span>
+      <span class="badge-skill">glass-rainbow-effects</span>
+      <div class="toolbar-spacer"></div>
+      <a class="glass toolbar-item hide-mobile" href="#glass">Glass</a>
+      <a class="glass toolbar-item hide-mobile" href="#rainbow">Rainbow</a>
+      <a class="glass toolbar-item hide-mobile" href="#combo">Combo</a>
+      <div class="glass toolbar-group" role="group" aria-label="Nhóm thao tác">
+        <button type="button" id="btnTheme" aria-label="Đổi giao diện">◐</button>
+        <button type="button" id="btnSheet" aria-label="Mở bảng thông tin">ⓘ</button>
+        <a href="../status.json" target="_blank" rel="noopener" aria-label="Mở status.json">{"}"}</a>
+      </div>
+      <a class="glass toolbar-item cta" href="#playground">Playground →</a>
+    </nav>
+  </header>
+
+  <!-- Hero — full-bleed mesh behind glass header -->
+  <section class="hero" aria-labelledby="hero-title">
+    <div class="hero-mesh" aria-hidden="true"></div>
+    <div class="hero-inner">
+      <div class="hero-copy">
+        <div class="eyebrow">
+          <span class="dot"></span>
+          Liquid Glass + Rainbow Border · Skill tổng hợp
+        </div>
+        <h1 id="hero-title">Kính mờ <span class="grad-text">gặp</span> cầu vồng</h1>
+        <p class="hero-desc">Skill <code>glass-rainbow-effects</code> — Apple Liquid Glass <code>backdrop-filter</code> + viền <code>conic-gradient</code> xoay. Copy-paste là chạy, không lib, có a11y &amp; fallback.</p>
+        <div class="hero-actions">
+          <button class="glass btn-glass btn-glass-prominent glass-interactive" type="button" id="btnHeroPrimary">Dùng ngay — Copy tokens</button>
+          <a class="glass btn-glass glass-interactive" href="#glass" style="--glass-radius:999px">Xem demo ↓</a>
+        </div>
+        <div class="hero-meta">
+          <span class="meta-pill">✓ 0 lib</span>
+          <span class="meta-pill">✓ backdrop-filter + conic-gradient</span>
+          <span class="meta-pill">✓ prefers-reduced-motion</span>
+        </div>
+      </div>
+      <div class="hero-preview" aria-hidden="true">
+        <div class="preview-stack">
+          <div class="glass preview-card" style="--glass-radius:20px; padding:18px">
+            <div class="preview-label">Glass Card</div>
+            <div class="preview-title">Kính mờ nổi trên mesh</div>
+            <div class="preview-row">
+              <span class="glass" style="--glass-radius:999px; padding:6px 12px; font-size:12px">Pill</span>
+              <span class="glass" style="--glass-radius:12px; padding:6px 12px; font-size:12px">Rounded</span>
+            </div>
+          </div>
+          <div class="rainbow-animated preview-rainbow" style="padding:16px; border-radius:16px; background:white">
+            <div style="font:700 13px var(--font-sans)">Rainbow Animated</div>
+            <div style="font-size:12px; opacity:.7">conic-gradient xoay 3s</div>
+          </div>
+          <div class="glass-rainbow animated preview-combo" style="padding:16px; border-radius:16px">
+            <div style="font:700 13px var(--font-sans)">Glass + Rainbow</div>
+            <div style="font-size:12px; opacity:.8">Combo premium cho CTA</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <main id="main" class="container" role="main">
+
+    <!-- Stats -->
+    <section class="stats" aria-label="Thống kê skill">
+      <div class="stat"><strong>3</strong><span>Material</span><small>Glass / Rainbow / Combo</small></div>
+      <div class="stat"><strong>10+</strong><span>Variants</span><small>clear, tinted, glow, hover…</small></div>
+      <div class="stat"><strong>0</strong><span>Dependency</span><small>HTML + CSS + JS thuần</small></div>
+      <div class="stat"><strong>100%</strong><span>A11y</span><small>reduced-motion, contrast</small></div>
+    </section>
+
+    <!-- 1 — Liquid Glass -->
+    <section class="section" id="glass" aria-labelledby="glass-title">
+      <div class="section-head">
+        <div>
+          <h2 id="glass-title">1 — Liquid Glass</h2>
+          <p>Dành cho <strong>navigation layer</strong> (header, toolbar, tab bar, button, sheet) — phải có content phía sau để sample. Đừng glass cho article/grid.</p>
+        </div>
+        <button class="btn btn-ghost btn-sm" type="button" data-copy="glass-base">Copy CSS</button>
+      </div>
+
+      <div class="demo-grid">
+        <div class="demo-card">
+          <div class="demo-label">Base — capsule</div>
+          <div class="demo-stage mesh-sm">
+            <span class="glass" style="padding:10px 18px">Label</span>
+            <button class="glass" style="--glass-radius:16px; padding:10px 18px">Rounded 16px</button>
+            <button class="glass" style="--glass-tint: rgb(99 102 241 / 22%); color:#1e1b4b; padding:10px 18px">Tinted</button>
+          </div>
+          <code class="code-sm">.glass — blur 12px + saturate 180%</code>
+        </div>
+
+        <div class="demo-card">
+          <div class="demo-label">Variants — clear / identity</div>
+          <div class="demo-stage mesh-sm">
+            <span class="glass glass-clear" style="padding:10px 18px; --glass-radius:16px">Clear — nền rực vẫn thấy</span>
+            <span class="glass-identity" style="padding:10px 18px; border-radius:999px; border:1px dashed #cbd5e1">Identity — tắt glass</span>
+          </div>
+          <code class="code-sm">.glass-clear · .glass-identity</code>
+        </div>
+
+        <div class="demo-card">
+          <div class="demo-label">Shared surface — 1 snapshot cho 3 nút</div>
+          <div class="demo-stage mesh-sm">
+            <div class="glass toolbar-group" role="group" style="display:flex; gap:4px; padding:4px">
+              <button type="button" style="background:none; border:none; padding:8px 14px; border-radius:inherit; cursor:pointer">A</button>
+              <button type="button" style="background:none; border:none; padding:8px 14px; border-radius:inherit; cursor:pointer">B</button>
+              <button type="button" style="background:none; border:none; padding:8px 14px; border-radius:inherit; cursor:pointer">C</button>
+            </div>
+            <span class="hint">❌ 3× .glass riêng = 3 snapshot + double-filter</span>
+          </div>
+          <code class="code-sm">Gom vào 1 .glass container</code>
+        </div>
+
+        <div class="demo-card">
+          <div class="demo-label">Buttons — prominent + press</div>
+          <div class="demo-stage mesh-sm">
+            <button class="glass btn-glass glass-interactive" type="button">Action</button>
+            <button class="glass btn-glass btn-glass-prominent glass-interactive" type="button">Save</button>
+            <button class="glass btn-glass glass-interactive glass-refract" type="button" title="Chromium mới thấy refraction">Refract ✨</button>
+          </div>
+          <code class="code-sm">.btn-glass-prominent · :active scale(0.96)</code>
+        </div>
+
+        <div class="demo-card">
+          <div class="demo-label">Toolbar — bar trong suốt, controls là glass</div>
+          <div class="demo-stage mesh-sm" style="flex-direction:column; align-items:stretch">
+            <div class="toolbar-demo">
+              <a class="glass" href="#" style="padding:8px 12px; text-decoration:none; color:inherit; font-size:13px">‹ Back</a>
+              <span style="flex:1"></span>
+              <button class="glass" type="button" style="padding:8px 12px">Share</button>
+              <div class="glass" role="group" style="display:flex; gap:2px; padding:3px">
+                <button type="button" aria-label="Yêu thích" style="background:none; border:none; padding:6px 10px; cursor:pointer">♥</button>
+                <button type="button" aria-label="Thêm" style="background:none; border:none; padding:6px 10px; cursor:pointer">＋</button>
+              </div>
+            </div>
+          </div>
+          <code class="code-sm">.site-header pointer-events:none → controls auto</code>
+        </div>
+
+        <div class="demo-card">
+          <div class="demo-label">Sheet — dialog kính mờ</div>
+          <div class="demo-stage mesh-sm">
+            <button class="btn btn-primary" type="button" id="btnOpenSheet">Mở sheet glass</button>
+            <span class="hint">Dùng &lt;dialog&gt; + ::backdrop</span>
+          </div>
+          <code class="code-sm">&lt;dialog class="glass sheet"&gt;</code>
+        </div>
+      </div>
+
+      <details class="code-block">
+        <summary>Xem CSS — Base Glass</summary>
+<pre><code id="code-glass-base">.glass {
+  background: linear-gradient(var(--glass-tint), var(--glass-tint)), var(--glass-fill);
+  -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
+  backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
+  border: 1px solid var(--glass-rim);
+  border-radius: var(--glass-radius);
+  box-shadow: inset 0 1px 0 var(--glass-highlight), inset 0 -1px 0 rgb(255 255 255 / 8%), 0 8px 24px var(--glass-shadow);
+}</code></pre>
+        <button class="btn btn-sm" type="button" data-copy-target="code-glass-base">Copy</button>
+      </details>
+    </section>
+
+    <!-- 2 — Rainbow Border -->
+    <section class="section" id="rainbow" aria-labelledby="rainbow-title">
+      <div class="section-head">
+        <div>
+          <h2 id="rainbow-title">2 — Rainbow Border</h2>
+          <p>4 kỹ thuật: <code>::before + mask</code> (khuyên dùng, bo góc đẹp), <code>border-image</code>, <code>@property --angle</code> xoay, <code>glow</code> cho dark.</p>
+        </div>
+        <button class="btn btn-ghost btn-sm" type="button" data-copy="rainbow-animated">Copy animated</button>
+      </div>
+
+      <div class="demo-grid">
+        <div class="demo-card">
+          <div class="demo-label">Tĩnh — ::before + mask (bo góc đẹp)</div>
+          <div class="demo-stage" style="background:#f8fafc">
+            <div class="rainbow-border" style="padding:16px 20px; border-radius:16px; background:white; min-width:160px; text-align:center">
+              <strong style="font-size:13px">Static Rainbow</strong><br><small style="opacity:.6">conic-gradient + mask</small>
+            </div>
+          </div>
+          <code class="code-sm">.rainbow-border::before — mask-composite: exclude</code>
+        </div>
+
+        <div class="demo-card">
+          <div class="demo-label">Animated — xoay 3s (HOT)</div>
+          <div class="demo-stage" style="background:#f8fafc">
+            <div class="rainbow-animated" style="padding:16px 20px; border-radius:16px; background:white; min-width:160px; text-align:center">
+              <strong style="font-size:13px">Rotating</strong><br><small style="opacity:.6">@property --angle</small>
+            </div>
+          </div>
+          <code class="code-sm">@property --angle + animation: rotate 3s linear infinite</code>
+        </div>
+
+        <div class="demo-card">
+          <div class="demo-label">Hover-only — chỉ xoay khi hover</div>
+          <div class="demo-stage" style="background:#f8fafc">
+            <div class="rainbow-animated rainbow-hover" style="padding:16px 20px; border-radius:16px; background:white; min-width:160px; text-align:center">
+              <strong style="font-size:13px">Hover me →</strong><br><small style="opacity:.6">paused → running</small>
+            </div>
+          </div>
+          <code class="code-sm">.rainbow-hover::before { animation-play-state: paused }</code>
+        </div>
+
+        <div class="demo-card">
+          <div class="demo-label">Glow — dark premium</div>
+          <div class="demo-stage" style="background:#0a0a0f">
+            <div class="rainbow-glow" style="padding:16px 20px; border-radius:16px; min-width:160px; text-align:center">
+              <strong style="font-size:13px">Neon Glow</strong><br><small style="opacity:.7">blur 8px → 12px on hover</small>
+            </div>
+          </div>
+          <code class="code-sm">.rainbow-glow::before — filter: blur(8px)</code>
+        </div>
+
+        <div class="demo-card">
+          <div class="demo-label">Button — rainbow CTA</div>
+          <div class="demo-stage" style="background:#f8fafc">
+            <button class="rainbow-animated" type="button" style="padding:12px 24px; border:none; border-radius:999px; background:#111; color:white; font:600 13px var(--font-sans); cursor:pointer; position:relative">
+              <span style="position:relative">Get Started →</span>
+            </button>
+          </div>
+          <code class="code-sm">Dùng cho 1-2 CTA/page, không cho list dài</code>
+        </div>
+
+        <div class="demo-card">
+          <div class="demo-label">Card — viền cầu vồng tĩnh</div>
+          <div class="demo-stage" style="background:#f8fafc">
+            <div class="rainbow-border" style="padding:18px; border-radius:16px; background:white; width:100%; max-width:260px">
+              <div style="font:700 14px var(--font-sans)">Pricing — Pro</div>
+              <div style="font-size:12px; opacity:.6; margin-top:4px">Viền tĩnh, không xoay — tiết kiệm GPU</div>
+            </div>
+          </div>
+          <code class="code-sm">Tĩnh cho card, animated cho CTA</code>
+        </div>
+      </div>
+
+      <details class="code-block">
+        <summary>Xem CSS — Rainbow Animated</summary>
+<pre><code id="code-rainbow-animated">@property --angle { syntax:"&lt;angle&gt;"; initial-value:0deg; inherits:false; }
+.rainbow-animated { position:relative; border-radius:var(--radius); background:var(--card-bg, white); }
+.rainbow-animated::before {
+  content:""; position:absolute; inset:0; border-radius:inherit; padding:var(--border-w);
+  background: conic-gradient(from var(--angle), #ff3b30, #ff9500, #ffcc02, #34c759, #007aff, #af52de, #ff3b30);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor; mask-composite: exclude;
+  animation: rotate 3s linear infinite; pointer-events:none;
+}
+@keyframes rotate { to { --angle: 360deg; } }</code></pre>
+        <button class="btn btn-sm" type="button" data-copy-target="code-rainbow-animated">Copy</button>
+      </details>
+    </section>
+
+    <!-- 3 — Combo -->
+    <section class="section" id="combo" aria-labelledby="combo-title">
+      <div class="section-head">
+        <div>
+          <h2 id="combo-title">3 — Combo Glass + Rainbow</h2>
+          <p>Premium cho hero, pricing, CTA. Kính mờ + viền cầu vồng (tĩnh hoặc xoay).</p>
+        </div>
+        <button class="btn btn-ghost btn-sm" type="button" data-copy="combo">Copy combo</button>
+      </div>
+
+      <div class="demo-grid combo-grid">
+        <div class="glass-rainbow" style="padding:22px; border-radius:20px">
+          <div class="combo-badge">Tĩnh</div>
+          <h3 style="margin:8px 0 6px; font-size:16px">Glass + Rainbow — Tĩnh</h3>
+          <p style="margin:0; font-size:13px; opacity:.75">Dùng cho card pricing, không tốn GPU. Viền không xoay.</p>
+          <button class="btn btn-primary btn-sm" type="button" style="margin-top:12px">Chọn gói</button>
+        </div>
+        <div class="glass-rainbow animated" style="padding:22px; border-radius:20px">
+          <div class="combo-badge rainbow">Xoay</div>
+          <h3 style="margin:8px 0 6px; font-size:16px">Glass + Rainbow — Xoay</h3>
+          <p style="margin:0; font-size:13px; opacity:.75">Dùng cho hero CTA, chỉ 1-2 cái/page. Xoay 4s.</p>
+          <button class="glass btn-glass btn-glass-prominent glass-interactive" type="button" style="margin-top:12px">Bắt đầu ngay →</button>
+        </div>
+        <div class="glass-rainbow animated dark" style="padding:22px; border-radius:20px; --glass-fill: rgb(15 23 42 / 55%); --glass-tint: transparent; color:white">
+          <div class="combo-badge dark">Dark</div>
+          <h3 style="margin:8px 0 6px; font-size:16px; color:white">Dark Glass + Rainbow</h3>
+          <p style="margin:0; font-size:13px; opacity:.7">Nền tối + kính mờ + viền cầu vồng — premium nhất.</p>
+          <button class="rainbow-animated" type="button" style="margin-top:12px; padding:10px 18px; border:none; border-radius:999px; background:white; color:#0f172a; font:700 13px var(--font-sans); cursor:pointer; position:relative"><span style="position:relative">Dùng thử miễn phí</span></button>
+        </div>
+      </div>
+
+      <details class="code-block">
+        <summary>Xem CSS — Combo</summary>
+<pre><code id="code-combo">.glass-rainbow {
+  position:relative; border-radius:20px;
+  background: linear-gradient(var(--glass-tint), var(--glass-tint)), var(--glass-fill);
+  -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
+  backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
+  box-shadow: inset 0 1px 0 var(--glass-highlight), 0 8px 24px var(--glass-shadow);
+}
+.glass-rainbow::before {
+  content:""; position:absolute; inset:0; border-radius:inherit; padding:1.5px;
+  background: var(--rainbow);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor; mask-composite: exclude;
+  pointer-events:none; opacity:.9;
+}
+.glass-rainbow.animated::before { animation: rotate 4s linear infinite; }</code></pre>
+        <button class="btn btn-sm" type="button" data-copy-target="code-combo">Copy</button>
+      </details>
+    </section>
+
+    <!-- 4 — Playground -->
+    <section class="section" id="playground" aria-labelledby="play-title">
+      <div class="section-head">
+        <div>
+          <h2 id="play-title">4 — Playground</h2>
+          <p>Kéo slider để chỉnh trực tiếp — xem glass + rainbow thay đổi realtime. Giá trị sync vào CSS variables.</p>
+        </div>
+        <button class="btn btn-ghost btn-sm" type="button" id="btnReset">Reset</button>
+      </div>
+
+      <div class="playground">
+        <div class="play-controls" role="group" aria-label="Điều chỉnh hiệu ứng">
+          <label>Blur <span class="val" id="valBlur">12px</span>
+            <input type="range" id="rangeBlur" min="0" max="24" value="12" />
+          </label>
+          <label>Saturate <span class="val" id="valSat">180%</span>
+            <input type="range" id="rangeSat" min="100" max="250" value="180" />
+          </label>
+          <label>Border <span class="val" id="valBorder">2px</span>
+            <input type="range" id="rangeBorder" min="1" max="6" value="2" />
+          </label>
+          <label>Speed <span class="val" id="valSpeed">3s</span>
+            <input type="range" id="rangeSpeed" min="1" max="8" value="3" />
+          </label>
+          <label>Tint
+            <input type="color" id="inputTint" value="#6366f1" />
+            <input type="range" id="rangeTintA" min="0" max="40" value="0" title="Opacity" />
+          </label>
+          <label class="check"><input type="checkbox" id="checkAnimate" checked /> Animated</label>
+          <label class="check"><input type="checkbox" id="checkGlass" checked /> Glass</label>
+        </div>
+
+        <div class="play-stage mesh-lg" id="playStage">
+          <div class="glass-rainbow animated" id="playCard" style="padding:28px; border-radius:20px; max-width:420px; width:100%; text-align:center">
+            <div style="font:800 18px var(--font-display)">Playground Card</div>
+            <div style="font-size:13px; opacity:.7; margin-top:6px">Kéo slider bên trên để chỉnh blur / border / speed / tint</div>
+            <div style="margin-top:16px; display:flex; gap:8px; justify-content:center; flex-wrap:wrap">
+              <span class="glass" style="padding:8px 14px; font-size:12px">Glass pill</span>
+              <span class="rainbow-animated" style="padding:8px 14px; border-radius:999px; background:white; font-size:12px">Rainbow pill</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="play-code">
+          <div class="code-head">
+            <span>CSS variables hiện tại</span>
+            <button class="btn btn-sm" type="button" id="btnCopyPlay">Copy</button>
+          </div>
+<pre><code id="codePlay">:root {
+  --glass-blur: 12px;
+  --glass-saturate: 180%;
+  --border-w: 2px;
+  --angle-speed: 3s;
+}</code></pre>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5 — Tokens & Checklist -->
+    <section class="section" id="tokens" aria-labelledby="tokens-title">
+      <div class="section-head">
+        <div>
+          <h2 id="tokens-title">5 — Tokens &amp; Checklist</h2>
+          <p>Dán 1 lần vào <code>:root</code> là dùng được mọi class. Nhớ a11y &amp; performance.</p>
+        </div>
+        <button class="btn btn-primary btn-sm" type="button" id="btnCopyTokens">Copy tokens</button>
+      </div>
+
+      <div class="two-col">
+        <div>
+          <h3 style="font-size:14px; margin:0 0 8px">Tokens — dán vào :root</h3>
+<pre><code id="codeTokens">:root {
+  --glass-blur: 12px;
+  --glass-saturate: 180%;
+  --glass-fill: rgb(255 255 255 / 10%);
+  --glass-rim: rgb(255 255 255 / 25%);
+  --glass-highlight: rgb(255 255 255 / 40%);
+  --glass-shadow: rgb(0 0 0 / 15%);
+  --glass-radius: 999px;
+  --glass-tint: transparent;
+  --rainbow: conic-gradient(from var(--angle, 0deg), #ff3b30, #ff9500, #ffcc02, #34c759, #007aff, #af52de, #ff3b30);
+  --border-w: 2px;
+  --radius: 16px;
+}</code></pre>
+        </div>
+        <div class="checklist">
+          <h3 style="font-size:14px; margin:0 0 8px">Checklist trước khi ship</h3>
+          <label><input type="checkbox" checked disabled /> Glass chỉ ở nav/controls, có content phía sau</label>
+          <label><input type="checkbox" checked disabled /> Gom glass gần nhau vào shared surface</label>
+          <label><input type="checkbox" checked disabled /> Rainbow dùng ::before + mask (bo góc đẹp)</label>
+          <label><input type="checkbox" checked disabled /> prefers-reduced-motion + reduced-transparency</label>
+          <label><input type="checkbox" checked disabled /> Contrast text trên glass ≥4.5:1</label>
+          <label><input type="checkbox" checked disabled /> Test 375/768/1280, blur nhẹ trên mobile</label>
+          <label><input type="checkbox" checked disabled /> Chỉ 1-2 rainbow animated/page</label>
+          <div class="a11y-note">
+            <strong>A11y:</strong> <code>@media (prefers-reduced-motion: reduce)</code> tắt xoay, <code>prefers-reduced-transparency</code> tắt blur, <code>forced-colors</code> thêm border.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" style="text-align:center; padding:24px 0">
+      <p style="font-size:13px; color:var(--color-neutral-500)">Skill <code>glass-rainbow-effects</code> · Tổng hợp từ <code>dabit3/liquid-glass-web-skill</code> + <code>Tamoza4/apple-ui-design</code> + <code>dabaibian/css-skills</code> · Bởi YUNIE — Harness v2</p>
+      <div style="display:flex; gap:8px; justify-content:center; flex-wrap:wrap; margin-top:12px">
+        <a class="btn btn-ghost btn-sm" href="../index.html">← Về STATUS</a>
+        <a class="btn btn-ghost btn-sm" href="../status.json" target="_blank" rel="noopener">status.json</a>
+        <a class="btn btn-primary btn-sm" href="https://github.com" target="_blank" rel="noopener">GitHub</a>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Tab bar (mobile) -->
+  <nav class="tab-bar glass" id="tabBar" aria-label="Tab bar">
+    <a href="#glass" class="tab-item" aria-label="Glass">◈ Glass</a>
+    <a href="#rainbow" class="tab-item" aria-label="Rainbow">◎ Rainbow</a>
+    <a href="#combo" class="tab-item" aria-label="Combo">⬢ Combo</a>
+    <a href="#playground" class="tab-item" aria-label="Playground">⚡ Play</a>
+  </nav>
+
+  <!-- Sheet dialog -->
+  <dialog class="glass sheet" id="infoSheet" aria-labelledby="sheetTitle">
+    <div class="sheet-head">
+      <h3 id="sheetTitle" style="margin:0; font:800 16px var(--font-display)">GlassUI — Thông tin</h3>
+      <button class="btn btn-ghost btn-sm" type="button" id="btnCloseSheet" aria-label="Đóng">✕</button>
+    </div>
+    <div class="sheet-body">
+      <p style="margin:0 0 12px; font-size:13px; line-height:1.6">Demo cho skill <code>glass-rainbow-effects</code> — tổng hợp Liquid Glass + Rainbow Border. Mọi class đều copy-paste là chạy, không cần lib.</p>
+      <div class="sheet-grid">
+        <div class="sheet-card">
+          <strong>Glass</strong>
+          <span>backdrop-filter: blur + saturate, shared surface, header/toolbar/sheet</span>
+        </div>
+        <div class="sheet-card">
+          <strong>Rainbow</strong>
+          <span>conic-gradient + mask, @property --angle, glow</span>
+        </div>
+        <div class="sheet-card">
+          <strong>Combo</strong>
+          <span>glass-rainbow — kính mờ + viền cầu vồng</span>
+        </div>
+        <div class="sheet-card">
+          <strong>A11y</strong>
+          <span>reduced-motion, reduced-transparency, forced-colors</span>
+        </div>
+      </div>
+      <div style="margin-top:16px; display:flex; gap:8px; flex-wrap:wrap">
+        <a class="btn btn-primary btn-sm" href="../index.html">Về STATUS</a>
+        <button class="btn btn-ghost btn-sm" type="button" id="btnCopySheet">Copy tokens</button>
+      </div>
+    </div>
+  </dialog>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script src="./app.js" type="module"></script>
+</body>
+</html>
