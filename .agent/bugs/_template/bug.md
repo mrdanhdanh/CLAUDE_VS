@@ -49,14 +49,16 @@
 
 - **Impact:** Ảnh hưởng tới đâu, bao nhiêu user/case?
 - **Hypothesis:** Giả thuyết ban đầu (nếu có) + đã verify chưa?
+- **Confidence:** `HIGH` (proven + regression pass) | `MEDIUM` (strongly supported + reproduction fixed) | `LOW` (symptom fixed, root uncertain) — nếu LOW → STOP, report uncertainty, ask/escalate to `/harness`
 
 > Nếu bug chạm pattern trong `docs/knowleged.md` → ghi `Related KN: KN-XXX` và áp dụng **Cách phòng tránh** ngay.
+> **Root Cause Gate:** Nếu uncertain → investigate / escalate, không tự biến hypothesis thành sự thật.
 
 ---
 
 ## 3. Fix
 
-- **Approach:** Sửa ở gốc như thế nào (không patch triệu chứng)?
+- **Approach:** Sửa ở gốc như thế nào (không patch triệu chứng)? Bounded — không refactor lan rộng.
 - **Files Changed:**
   - `path/to/file.ts` — mô tả thay đổi
 - **Diff tóm tắt:**
@@ -64,7 +66,9 @@
 // before
 // after
 ```
-- **Non-Goals:** Việc gì KHÔNG làm trong lần fix này (tránh scope creep)?
+- **Non-Goals:** Việc gì KHÔNG làm trong lần fix này (tránh scope creep — bounded repair loop)?
+- **Fix Confidence:** `HIGH` | `MEDIUM` | `LOW` — đánh giá trước khi sang Verify. Nếu LOW → STOP, report uncertainty, ask/escalate.
+- **get_errors:** Sau mỗi edit → affected files; full scope ở Phase 4 Verify.
 
 ---
 
@@ -75,9 +79,10 @@
   - [ ] case 1: ...
   - [ ] case 2: ...
 - [ ] Regression: các case liên quan vẫn pass
-- [ ] `get_errors` → 0 errors
+- [ ] `get_errors` **toàn scope** → 0 errors (Phase 3 chỉ check affected files)
 - [ ] `lint` / `build` / `test` → PASS (ghi lệnh đã chạy)
 - [ ] UI audit (nếu là bug UI): responsive 375/768/1280, states, a11y
+- [ ] Fresh-eyes tier: `REQUIRED` (UX/UI/workflow/ambiguous) | `RECOMMENDED` (regression-prone) | `OPTIONAL` (deterministic: typo/null check/API mapping) — ghi tier đã áp dụng
 
 **Kết quả:**
 ```

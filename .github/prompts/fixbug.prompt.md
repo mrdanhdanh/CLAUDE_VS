@@ -14,10 +14,11 @@ Bạn là **Claude Harness v2 — Bug Fixer**. Thực thi pipeline **gọn nhẹ
 
 > ⚠️ **BƯỚC 0 BẮT BUỘC:** Mọi luồng đều phải đọc `docs/knowleged.md` trước khi làm — xem `.github/instructions/knowleged.instructions.md`.
 
-## Pipeline (6 phase — gọn, không bỏ Learn)
+## Pipeline (7 phases = 6 execution + Done — gọn, không bỏ Learn)
 
 ```
-Read Knowledge → Reproduce → Locate & Root Cause → Fix → Verify → Learn → Done
+Read Knowledge → Reproduce → Root Cause → Fix → Verify → Learn → Done
+  (6 execution phases + Done)
 ```
 
 | Phase | Mục tiêu | Output | Bỏ được? |
@@ -25,11 +26,24 @@ Read Knowledge → Reproduce → Locate & Root Cause → Fix → Verify → Lear
 | **0. Read Knowledge** | Đọc bài học cũ, tránh lặp lại | Đã đọc `docs/knowleged.md` | ❌ |
 | **1. Reproduce** | Tái hiện bug có bằng chứng | Steps + Expected/Actual + log/screenshot | ❌ |
 | **2. Locate & Root Cause** | Tìm file + 5 Whys | Root cause + file:line + giả thuyết | ❌ |
-| **3. Fix** | Sửa ở gốc, todo-driven | Code + `get_errors` sau mỗi edit | ❌ |
-| **4. Verify** | Không regression | Re-test bug + edge cases + build/lint | ❌ |
+| **3. Fix** | Sửa ở gốc, todo-driven (bounded) | Code + `get_errors` affected files | ❌ |
+| **4. Verify** | Không regression | Re-test + edge + regression + build/lint | ❌ |
 | **5. Learn** | Biến bug thành knowledge | `.agent/bugs/<slug>/bug.md` + `docs/knowleged.md` KN-XXX | ❌ |
+| **6. Done** | Đóng vòng, báo cáo | Tóm tắt + KN + files changed | ❌ |
 
-> **Khác `/harness`:** Không tạo PRD/Design/Plan dài. Chỉ 3-5 todos. Chỉ Polish nếu bug là UI. Tập trung **root cause + không lặp lại**.
+> **Khác `/harness`:** Không tạo PRD/Design/Plan dài. Chỉ 3-5 todos. Chỉ Polish nếu bug là UI. Tập trung **root cause + không lặp lại**. `/fixbug` là **bounded repair loop** — không phải `/harness` thu nhỏ.
+
+> **Kiến trúc (Bounded Repair Loop):**
+> ```
+> /fixbug
+>    ├─ 0 Knowledge Gate
+>    ├─ 1 Reproduce Gate ── FAIL → ask / stop
+>    ├─ 2 Root Cause Gate ── uncertain → investigate / escalate
+>    ├─ 3 Minimal Fix (scope control)
+>    ├─ 4 Verification Gate (reproduce + regression + build/errors)
+>    ├─ 5 Learning Gate (bug.md + knowleged.md)
+>    └─ DONE (confidence ≥ MEDIUM mới close)
+> ```
 
 ---
 
@@ -41,10 +55,10 @@ Read Knowledge → Reproduce → Locate & Root Cause → Fix → Verify → Lear
 
 ### Phase 1: REPRODUCE
 
-- Delegate `Explore` subagent (quick) nếu cần hiểu codebase.
+- **Explore delegate (tiết kiệm):** Chỉ delegate `Explore` subagent (quick) khi cần hiểu codebase rộng / chưa rõ vị trí bug. **Không delegate nếu bug nằm trong phạm vi nhỏ và agent có thể xác định trực tiếp bằng `grep_search`/`read_file`.** Tránh tốn agent call cho bug nhỏ (typo, null check, API mapping).
 - `grep_search` tìm code liên quan bug.
 - Ghi **Steps to Reproduce** (1-2-3), **Expected** vs **Actual**, **Evidence** (log, screenshot, test fail).
-- Nếu không reproduce được → hỏi user thêm info (`vscode_askQuestions` max 2 câu) — không đoán.
+- Nếu không reproduce được → hỏi user thêm info (`vscode_askQuestions` max 2 câu) — không đoán. Nếu vẫn FAIL → **Reproduce Gate: STOP / ask** — không đoán fix.
 - Tạo folder `.agent/bugs/<slug>/` với `slug = YYYY-MM-DD-<short-slug>` (vd: `2026-08-29-modal-esc`) và khởi tạo `bug.md` từ template `.agent/bugs/_template/bug.md`.
 - ⚠️ **Bug Blindness check (KN-005):** Reproduce như **user mới** — không dùng workaround quen tay, không đọc manual trang 43. Liệt kê mọi habitual mitigation mình đang làm (vd: đợi 2s mới gõ, tắt WiFi trước login) và coi đó là bug, không phải "cách dùng đúng". Nếu có thể, dùng LLM / người ngoài act as normal user để reproduce.
 
@@ -54,24 +68,45 @@ Read Knowledge → Reproduce → Locate & Root Cause → Fix → Verify → Lear
 - Chạy **5 Whys** để tìm root cause (không dừng ở triệu chứng).
 - Ghi vào `bug.md`: **Root Cause**, **Impact**, **Hypothesis**.
 - Nếu bug chạm pattern trong `knowleged.md` → ghi rõ `Related KN: KN-XXX`.
+- **Root Cause Gate:** Nếu root cause **uncertain** (chỉ là hypothesis chưa prove) → **STOP investigate / escalate** — không tự biến hypothesis thành sự thật. Ghi rõ confidence (xem Fix Confidence) và hỏi user / escalate sang `/harness` nếu cần.
 
-### Phase 3: FIX (todo-driven)
+### Phase 3: FIX (todo-driven — bounded)
 
 1. Tạo `manage_todo_list` 3-5 todos (3-7 từ/todo), vd:
    - `Reproduce bug + ghi bug.md`
    - `Fix root cause tại file:line`
    - `Verify + regression test`
    - `Cập nhật knowleged.md KN-XXX`
-2. Với mỗi todo: `in-progress` → `read_file` → `replace_string_in_file` / `multi_replace_string_in_file` → `get_errors` → fix ngay → `completed` (chỉ 1 `in-progress` tại 1 thời điểm).
-3. Sửa ở **gốc**, không patch triệu chứng. Không đổi scope ngoài bug (nếu phát hiện refactor lớn → ghi vào `Non-Goals` trong `bug.md`).
+2. Với mỗi todo: `in-progress` → `read_file` → `replace_string_in_file` / `multi_replace_string_in_file` → `get_errors` **affected files** → fix ngay → `completed` (chỉ 1 `in-progress` tại 1 thời điểm). **Không scan toàn project sau từng edit nhỏ** — chỉ check file vừa sửa. Full scope `get_errors` để ở Phase 4.
+3. Sửa ở **gốc**, không patch triệu chứng. **Scope control:** Không đổi scope ngoài bug (nếu phát hiện refactor lớn → ghi vào `Non-Goals` trong `bug.md`). `/fixbug` là **bounded repair loop** — không refactor lan rộng.
+4. **Fix Confidence / Stop Condition (bắt buộc đánh giá trước khi sang Verify):**
+   ```
+   Fix Confidence:
+   - HIGH: root cause proven + regression test passes
+   - MEDIUM: root cause strongly supported + reproduction fixed
+   - LOW: symptom fixed but root cause uncertain
+
+   If LOW:
+     STOP fixing
+     → report uncertainty trong bug.md
+     → ask user / escalate to /harness
+     → không tự close Done
+   ```
+   Chỉ sang Phase 4 khi confidence ≥ **MEDIUM**. Nếu LOW → dừng, báo rõ uncertainty, không tự biến hypothesis thành sự thật.
 
 ### Phase 4: VERIFY
 
 - Re-run steps reproduce → confirm **Fixed**.
 - Test **edge cases** + **regression** (các case liên quan).
-- Chạy `get_errors` (all files) + `run_in_terminal` lint/build/test nếu có (loop fix max 3 lần/check).
+- Chạy `get_errors` **toàn scope** + `run_in_terminal` lint/build/test nếu có (loop fix max 3 lần/check). *(Khác Phase 3: Phase 3 chỉ `get_errors` affected files sau mỗi edit; Phase 4 mới scan toàn scope.)*
 - Nếu bug là UI → audit nhanh theo `product-quality.instructions.md` (responsive, states, a11y) — không cần full Polish.
-- **Fresh eyes verify (KN-005):** Nhờ người ngoài team / LLM đóng vai user mới thử lại không gợi ý workaround. Hỏi: "user mới có dùng được không nếu không biết trick nào?" Nếu cần >1 bước không trực quan → vẫn là bug.
+- **Fresh eyes verify (KN-005) — tiered, không hard requirement cho mọi bug:**
+  ```
+  - REQUIRED: UX/UI, workflow, usability, ambiguous behavior
+  - RECOMMENDED: regression-prone bugs
+  - OPTIONAL: deterministic/localized bugs (typo, null check, API mapping rõ ràng)
+  ```
+  Khi REQUIRED/RECOMMENDED: nhờ người ngoài team / LLM đóng vai user mới thử lại không gợi ý workaround. Hỏi: "user mới có dùng được không nếu không biết trick nào?" Nếu cần >1 bước không trực quan → vẫn là bug.
 - Ghi kết quả vào `bug.md` → **Verification**.
 
 ### Phase 5: LEARN (BẮT BUỘC — không bỏ)
@@ -107,11 +142,15 @@ Mỗi `bug.md` phải có: Title, Date, Severity, Reproduce, Root Cause (5 Whys)
 
 ## Quy tắc
 
-- Không bỏ **Reproduce** — không reproduce = không được fix. Reproduce phải như **user mới**, không workaround vô thức (KN-005).
+- Không bỏ **Reproduce** — không reproduce = không được fix. Reproduce phải như **user mới**, không workaround vô thức (KN-005). Reproduce Gate FAIL → STOP / ask, không đoán.
 - Không bỏ **Learn** — fix xong không ghi `knowleged.md` = chưa xong.
-- Không fix triệu chứng — phải root cause (đào tới habitual mitigation / fan bias nếu có).
-- Mọi edit phải `get_errors` ngay.
-- `docs/knowleged.md` là source of truth — mọi luồng `/harness`, `/implement`, `/fixbug` đều đọc.
-- **Chống Bug Blindness (KN-005):** Liệt kê mọi workaround đang làm thành bug report; không nói "dễ mà, chỉ cần làm [7 bước phức tạp]"; luôn test fresh eyes trước khi Done.
+- Không fix triệu chứng — phải root cause (đào tới habitual mitigation / fan bias nếu có). Root Cause Gate uncertain → investigate / escalate, không tự biến hypothesis thành sự thật.
+- **Scope control (bounded repair loop):** Chỉ sửa ở gốc, không refactor lan rộng. Phát hiện việc lớn → ghi `Non-Goals` trong `bug.md`, không tự mở rộng.
+- **get_errors phân tầng:** Sau mỗi edit → `get_errors` **affected files**; sau khi hoàn tất fix (Phase 4) → `get_errors` **toàn scope** + build/test. Không scan toàn project sau từng edit nhỏ.
+- **Fresh-eyes tiered (KN-005):** REQUIRED cho UX/UI/workflow/ambiguous, RECOMMENDED cho regression-prone, OPTIONAL cho deterministic/localized (typo, null check, API mapping). Không hard requirement cho mọi bug.
+- **Fix Confidence gate:** Chỉ close Done khi confidence ≥ MEDIUM (HIGH: proven + regression pass; MEDIUM: strongly supported + reproduction fixed). Nếu LOW (symptom fixed, root uncertain) → STOP, report uncertainty, ask/escalate to `/harness`.
+- **Explore tiết kiệm:** Không delegate `Explore` nếu bug nhỏ và xác định được trực tiếp bằng `grep_search`/`read_file`.
+- `docs/knowleged.md` là source of truth — mọi luồng `/harness`, `/implement`, `/fixbug` đều đọc. *Lưu ý: `knowleged.md` là tên file chính thức của dự án (giữ nguyên, không đổi thành `knowledge.md`).*
+- **Chống Bug Blindness (KN-005):** Liệt kê mọi workaround đang làm thành bug report; không nói "dễ mà, chỉ cần làm [7 bước phức tạp]"; luôn test fresh eyes (theo tier) trước khi Done.
 
 > Tham chiếu: `.github/instructions/knowleged.instructions.md` + `docs/knowleged.md` + `.agent/bugs/_template/bug.md`

@@ -199,6 +199,47 @@ flowchart LR
 
 ---
 
+## 5b. Pipeline /fixbug — Bounded Repair Loop (6 execution + Done = 7 phases)
+
+> Không dùng `/harness` cho bug — sẽ tạo PRD/Design thừa. `/fixbug` là **bounded repair loop**, không phải `/harness` thu nhỏ.
+
+```
+Read Knowledge → Reproduce → Root Cause → Fix → Verify → Learn → Done
+  (6 execution + Done)
+```
+
+| Phase | Mục tiêu | Output | Bỏ được? |
+|-------|----------|--------|----------|
+| 0. Read Knowledge | Đọc bài học cũ, tránh lặp lại | Đã đọc `docs/knowleged.md` | ❌ |
+| 1. Reproduce | Tái hiện bug có bằng chứng | Steps + Expected/Actual + evidence | ❌ |
+| 2. Root Cause | file:line + 5 Whys | Root cause + confidence | ❌ |
+| 3. Fix | Sửa ở gốc, bounded, todo-driven | Code + `get_errors` affected files | ❌ |
+| 4. Verify | Không regression | Re-test + edge + regression + build/lint (full scope) | ❌ |
+| 5. Learn | Biến bug thành knowledge | `.agent/bugs/<slug>/bug.md` + `docs/knowleged.md` KN-XXX | ❌ |
+| 6. Done | Đóng vòng, báo cáo | Tóm tắt + KN + files changed | ❌ |
+
+**Bounded repair loop — Gates:**
+
+```
+0 Knowledge Gate
+→ 1 Reproduce Gate ── FAIL → ask / stop
+→ 2 Root Cause Gate ── uncertain → investigate / escalate
+→ 3 Minimal Fix (scope control, 3-5 todos, không refactor lan rộng)
+→ 4 Verification Gate (reproduce + regression + build/errors — full scope)
+→ 5 Learning Gate (bug.md + knowleged.md KN-XXX)
+→ DONE (confidence ≥ MEDIUM mới close)
+```
+
+- **Fix Confidence:** `HIGH` (proven + regression pass) | `MEDIUM` (strongly supported + reproduction fixed) | `LOW` (symptom fixed, root uncertain → STOP, report uncertainty, ask/escalate to `/harness`)
+- **Fresh-eyes tiered (KN-005):** `REQUIRED` (UX/UI/workflow/ambiguous) | `RECOMMENDED` (regression-prone) | `OPTIONAL` (deterministic: typo/null check/API mapping)
+- **get_errors phân tầng:** Phase 3 → affected files sau mỗi edit; Phase 4 → toàn scope + build/test
+- **Explore tiết kiệm:** Chỉ delegate `Explore` khi bug rộng/chưa rõ vị trí; bug nhỏ dùng `grep_search`/`read_file` trực tiếp
+- **Scope control:** Chỉ sửa ở gốc, không refactor lan rộng — việc lớn ghi `Non-Goals` trong `bug.md`
+
+Chi tiết: `.github/prompts/fixbug.prompt.md` · `.github/instructions/harness-workflow.instructions.md` · `.agent/bugs/_template/bug.md`
+
+---
+
 ## 6. Luồng quyết định (Decision)
 
 ```mermaid

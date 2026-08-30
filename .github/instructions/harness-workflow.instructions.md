@@ -24,9 +24,9 @@ read_file docs/knowleged.md  # <— bước 0, không bỏ
 | Tình huống | Pipeline | Prompt |
 |------------|----------|--------|
 | **Feature / product mới** (ý tưởng → sản phẩm) | Full 8 phase: `Explore → Clarify → PRD → Design → Plan → Implement → Polish → Verify` | `/harness` |
-| **Fix bug / regression / hotfix** | Gọn 6 phase: `Read Knowledge → Reproduce → Root Cause → Fix → Verify → Learn` | `/fixbug` |
+| **Fix bug / regression / hotfix** | Gọn **6 execution + Done (7 phases)**: `Read Knowledge → Reproduce → Root Cause → Fix → Verify → Learn → Done` | `/fixbug` |
 
-> **Không dùng `/harness` cho bug** — sẽ tạo PRD/Design thừa. Dùng `/fixbug` để gọn, tập trung root cause + Learn.
+> **Không dùng `/harness` cho bug** — sẽ tạo PRD/Design thừa. Dùng `/fixbug` để gọn, tập trung root cause + Learn. `/fixbug` là **bounded repair loop**, không phải `/harness` thu nhỏ — có scope control + confidence gate + escalation.
 
 ## Pipeline /harness (Feature)
 
@@ -43,32 +43,35 @@ read_file docs/knowleged.md  # <— bước 0, không bỏ
 
 Với task nhỏ (1-2 file): rút gọn Explore(quick) → Clarify(1 câu) → PRD mini → Design mini → Plan(3 todos) → Implement → Polish → Verify. **Không bỏ Polish.**
 
-## Pipeline /fixbug (Bug — gọn nhẹ)
+## Pipeline /fixbug (Bug — gọn nhẹ, bounded repair loop)
 
-| Phase | Output | Bỏ được? |
-|-------|--------|----------|
-| **0. Read Knowledge** | Đã đọc `docs/knowleged.md` | ❌ |
-| **1. Reproduce** | Steps + Expected/Actual + evidence | ❌ |
-| **2. Locate & Root Cause** | file:line + 5 Whys | ❌ |
-| **3. Fix** | Code todo-driven (3-5 todos) | ❌ |
-| **4. Verify** | Re-test + edge + regression + build/lint | ❌ |
-| **5. Learn** | `.agent/bugs/<slug>/bug.md` + `docs/knowleged.md` KN-XXX | ❌ |
+| Phase | Mục tiêu | Output | Bỏ được? |
+|-------|----------|--------|----------|
+| **0. Read Knowledge** | Đọc bài học cũ, tránh lặp lại | Đã đọc `docs/knowleged.md` | ❌ |
+| **1. Reproduce** | Tái hiện bug có bằng chứng | Steps + Expected/Actual + evidence | ❌ |
+| **2. Locate & Root Cause** | file:line + 5 Whys | Root cause + file:line + giả thuyết | ❌ |
+| **3. Fix** | Sửa ở gốc, todo-driven (bounded) | Code + `get_errors` affected files | ❌ |
+| **4. Verify** | Không regression | Re-test + edge + regression + build/lint (full scope) | ❌ |
+| **5. Learn** | Biến bug thành knowledge | `.agent/bugs/<slug>/bug.md` + `docs/knowleged.md` KN-XXX | ❌ |
+| **6. Done** | Đóng vòng, báo cáo | Tóm tắt + KN + files changed | ❌ |
 
 - Storage: `.agent/bugs/YYYY-MM-DD-<slug>/bug.md` (copy từ `_template/bug.md`)
 - Knowledge: `docs/knowleged.md` — Bảng tóm tắt + Chi tiết KN-XXX + Anti-patterns
 - Không bỏ **Reproduce** và **Learn** — fix xong không ghi knowledge = chưa xong.
+- **Bounded repair loop:** `0 Knowledge Gate → 1 Reproduce Gate (FAIL→ask/stop) → 2 Root Cause Gate (uncertain→investigate/escalate) → 3 Minimal Fix (scope control) → 4 Verification Gate (reproduce+regression+build) → 5 Learning Gate → DONE (confidence ≥ MEDIUM mới close)`.
+- **Gate chi tiết:** xem `.github/prompts/fixbug.prompt.md` (Fix Confidence HIGH/MEDIUM/LOW, Fresh-eyes tiered, get_errors phân tầng, Explore tiết kiệm).
 
 ## Tool Priority
 
 - Task >2 bước → `manage_todo_list` bắt buộc (3-7 từ/todo)
-- Hiểu codebase → `runSubagent` (Explore)
+- Hiểu codebase → `runSubagent` (Explore) — với `/fixbug` chỉ delegate nếu bug rộng, bug nhỏ dùng `grep_search`/`read_file` trực tiếp (tiết kiệm)
 - Ý tưởng mơ hồ → `vscode_askQuestions` (max 3 câu, có options)
 - PRD/Design/Plan → `.agent/plans/` + templates `../skills/claude-harness/templates/`
-- Bug → `.agent/bugs/` + template `_template/bug.md`
+- Bug → `.agent/bugs/` + template `_template/bug.md` — bounded repair loop, scope control, confidence gate
 - Multi-file edit → `multi_replace_string_in_file`
-- Sau edit → `get_errors`
-- Polish → audit theo `product-quality.instructions.md`
-- Verify → `run_in_terminal` (sync), loop fix max 3 lần/check
+- Sau edit → `get_errors` **affected files** (Phase 3 Fix); toàn scope ở Verify (Phase 4)
+- Polish → audit theo `product-quality.instructions.md` — với `/fixbug` chỉ audit nhanh nếu bug là UI
+- Verify → `run_in_terminal` (sync), loop fix max 3 lần/check — Fresh-eyes tiered: REQUIRED (UX/UI/workflow), RECOMMENDED (regression-prone), OPTIONAL (deterministic)
 
 ## Product Quality (áp dụng cho mọi web UI)
 

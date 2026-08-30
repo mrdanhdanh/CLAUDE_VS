@@ -51,6 +51,31 @@ Idea → Explore → Clarify → PRD → Design → Plan → Implement → Polis
 
 Chi tiết: `.github/copilot-instructions.md` · `.github/skills/claude-harness/SKILL.md` · `docs/harness-flow.md`
 
+### Pipeline /fixbug — Bounded Repair Loop (6 execution + Done = 7 phases)
+
+> Không dùng `/harness` cho bug — sẽ tạo PRD/Design thừa. `/fixbug` là **bounded repair loop**, không phải `/harness` thu nhỏ.
+
+```
+Read Knowledge → Reproduce → Root Cause → Fix → Verify → Learn → Done
+  (6 execution + Done)
+```
+
+| Phase | Mục tiêu | Output | Bỏ được? |
+|-------|----------|--------|----------|
+| 0. Read Knowledge | Đọc bài học cũ, tránh lặp lại | Đã đọc `docs/knowleged.md` | ❌ |
+| 1. Reproduce | Tái hiện bug có bằng chứng | Steps + Expected/Actual + evidence | ❌ |
+| 2. Root Cause | file:line + 5 Whys | Root cause + confidence | ❌ |
+| 3. Fix | Sửa ở gốc, bounded, todo-driven | Code + `get_errors` affected files | ❌ |
+| 4. Verify | Không regression | Re-test + edge + regression + build/lint (full scope) | ❌ |
+| 5. Learn | Biến bug thành knowledge | `.agent/bugs/<slug>/bug.md` + `docs/knowleged.md` KN-XXX | ❌ |
+| 6. Done | Đóng vòng, báo cáo | Tóm tắt + KN + files changed | ❌ |
+
+- **Bounded repair loop:** `0 Knowledge Gate → 1 Reproduce Gate (FAIL→ask/stop) → 2 Root Cause Gate (uncertain→investigate/escalate) → 3 Minimal Fix (scope control) → 4 Verification Gate → 5 Learning Gate → DONE (confidence ≥ MEDIUM)`
+- **Khác /harness:** Không tạo PRD/Design/Plan dài. Chỉ 3-5 todos. Chỉ Polish nếu bug là UI. Tập trung root cause + không lặp lại.
+- **Gates:** Reproduce FAIL→STOP/ask, Root Cause uncertain→investigate/escalate, Fix Confidence HIGH/MEDIUM/LOW (LOW→STOP report uncertainty), Fresh-eyes tiered (REQUIRED/RECOMMENDED/OPTIONAL), get_errors phân tầng (affected vs full scope), Explore tiết kiệm (không delegate nếu bug nhỏ).
+
+Chi tiết: `.github/prompts/fixbug.prompt.md` · `.github/instructions/harness-workflow.instructions.md`
+
 ---
 
 ## 2. Skills
