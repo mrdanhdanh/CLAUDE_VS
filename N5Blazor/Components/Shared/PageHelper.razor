@@ -1,0 +1,86 @@
+@* PageHelper — mỗi trang đều có: Purpose / Structure / Techniques / Features *@
+<div class="glass helper @(Open ? "open" : "")">
+    <div class="helper-header" @onclick="Toggle" role="button" tabindex="0" @onkeydown="OnKey" aria-expanded="@Open.ToString().ToLower()" aria-controls="helper-body-@Id">
+        <h3>🧭 Helper — @Title</h3>
+        <div style="display:flex;align-items:center;gap:8px">
+            <span class="helper-badge">Blazor • Glass • Helper</span>
+            <span class="helper-toggle" aria-hidden="true">⌄</span>
+        </div>
+    </div>
+    @if (Open)
+    {
+        <div class="helper-body" id="helper-body-@Id">
+            <div class="helper-grid">
+                <div class="helper-section">
+                    <h4>🎯 Trang dùng làm gì</h4>
+                    <p>@Purpose</p>
+                </div>
+                <div class="helper-section">
+                    <h4>🏗️ Cấu trúc</h4>
+                    <p>@Structure</p>
+                    @if (!string.IsNullOrEmpty(Route))
+                    {
+                        <p style="margin-top:6px"><code>@Route</code> • <code>@ComponentName</code></p>
+                    }
+                </div>
+                <div class="helper-section">
+                    <h4>⚙️ Kỹ thuật Blazor</h4>
+                    <p>@Techniques</p>
+                    @if (TechBullets != null)
+                    {
+                        <ul>
+                            @foreach (var b in TechBullets)
+                            {
+                                <li>@b</li>
+                            }
+                        </ul>
+                    }
+                </div>
+                <div class="helper-section">
+                    <h4>✨ Tính năng</h4>
+                    <p>@Features</p>
+                    @if (FeatureBullets != null)
+                    {
+                        <ul>
+                            @foreach (var b in FeatureBullets)
+                            {
+                                <li>@b</li>
+                            }
+                        </ul>
+                    }
+                </div>
+            </div>
+            @if (!string.IsNullOrEmpty(Extra))
+            {
+                <div class="helper-section">
+                    <h4>📝 Ghi chú</h4>
+                    <p>@Extra</p>
+                </div>
+            }
+        </div>
+    }
+</div>
+
+@code {
+    [Parameter] public string Title { get; set; } = "";
+    [Parameter] public string Purpose { get; set; } = "";
+    [Parameter] public string Structure { get; set; } = "";
+    [Parameter] public string Techniques { get; set; } = "";
+    [Parameter] public string Features { get; set; } = "";
+    [Parameter] public string? Route { get; set; }
+    [Parameter] public string? ComponentName { get; set; }
+    [Parameter] public string? Extra { get; set; }
+    [Parameter] public string[]? TechBullets { get; set; }
+    [Parameter] public string[]? FeatureBullets { get; set; }
+    [Parameter] public bool DefaultOpen { get; set; } = true;
+
+    private bool Open;
+    private string Id = Guid.NewGuid().ToString("N")[..6];
+
+    protected override void OnInitialized() => Open = DefaultOpen;
+    private void Toggle() => Open = !Open;
+    private void OnKey(KeyboardEventArgs e)
+    {
+        if (e.Key == "Enter" || e.Key == " ") Toggle();
+    }
+}

@@ -1,0 +1,144 @@
+@page "/grammar"
+@rendermode InteractiveServer
+@inject IGrammarService GrammarService
+@inject IProgressService Progress
+@inject IJSRuntime JS
+
+<PageTitle>Ngữ pháp N5 — Grammar</PageTitle>
+
+<PageHelper Title="Ngữ pháp — Grammar N5"
+            Purpose="Học 15 mẫu ngữ pháp N5 cốt lõi (は/です/か/の/を/で/に/たい/てください...), mỗi mẫu có công thức, giải thích, ví dụ và bài tập điền chỗ trống. Giúp đặt câu đúng ngay từ đầu."
+            Structure="Route '/grammar' → Grammar.razor. List 15 cards, bấm mở rộng chi tiết (formation, meaning, examples), tab ví dụ, mini exercise, bookmark."
+            Techniques="Blazor: inject IGrammarService Singleton, foreach render, onclick toggle expand, bind cho exercise input, conditional rendering, ProgressService bookmark, JS speech cho vi du."
+            Features="Expand/collapse từng mẫu, ví dụ JP + nghĩa, bài tập điền từ, bookmark, đánh dấu đã học, search theo tiêu đề/công thức."
+            Route="/grammar"
+            ComponentName="Grammar.razor"
+            TechBullets="@(new[]{"IGrammarService Singleton — 15 patterns","@onclick toggle — expand state HashSet<int>","@bind exercise — two-way binding","JS interop speech cho câu ví dụ"})"
+            FeatureBullets="@(new[]{"15 mẫu N5 có công thức & giải thích","Ví dụ JP + nghĩa, có audio","Bài tập điền chỗ trống mini","Bookmark & đánh dấu đã học"})" />
+
+<div style="display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:16px">
+    <div>
+        <h1 style="margin:0;font-size:24px;font-weight:800">📝 Ngữ pháp N5</h1>
+        <p class="muted" style="margin:4px 0 0;font-size:13px">15 mẫu câu cốt lõi • Bấm card để xem chi tiết & làm bài tập</p>
+    </div>
+    <div style="display:flex;gap:8px;align-items:center">
+        <ProgressRing Value="@Percent" Label="Đã học" Size="64" />
+        <span class="badge badge-primary">@Progress.Progress.LearnedGrammarIds.Count / @Total mẫu</span>
+    </div>
+</div>
+
+<div class="toolbar">
+    <input class="input" placeholder="Tìm ngữ pháp, công thức..." @bind="Search" @bind:event="oninput" style="flex:1;min-width:220px" />
+    <div style="display:flex;gap:6px">
+        <button class="chip @(Filter==null ? "active" : "")" @onclick="() => Filter=null">Tất cả</button>
+        <button class="chip @(Filter=="L1" ? "active" : "")" @onclick='() => Filter="L1"'>L1</button>
+        <button class="chip @(Filter=="L2" ? "active" : "")" @onclick='() => Filter="L2"'>L2</button>
+        <button class="chip @(Filter=="L3" ? "active" : "")" @onclick='() => Filter="L3"'>L3</button>
+        <button class="chip @(Filter=="L4" ? "active" : "")" @onclick='() => Filter="L4"'>L4+</button>
+    </div>
+</div>
+
+<div style="display:flex;flex-direction:column;gap:12px">
+    @foreach (var g in Filtered)
+    {
+        var expanded = Expanded.Contains(g.Id);
+        var learned = Progress.Progress.LearnedGrammarIds.Contains(g.Id);
+        var bookmarked = Progress.Progress.Bookmarks.Contains($"grammar:{g.Id}");
+        <div class="@(learned ? "rainbow-wrap" : "")" style="@(learned ? "" : "padding:0")">
+            <div class="glass" style="overflow:hidden">
+                <div style="padding:16px;cursor:pointer;display:flex;justify-content:space-between;gap:12px;align-items:start" @onclick="() => Toggle(g.Id)">
+                    <div style="flex:1">
+                        <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:6px">
+                            <span class="badge badge-primary">@g.Lesson</span>
+                            <span style="font-weight:800;font-size:15px">@g.Title</span>
+                            @if (learned) { <span class="badge badge-success">✓ Đã học</span> }
+                            @if (bookmarked) { <span class="badge">🔖</span> }
+                        </div>
+                        <div style="font-family:'JetBrains Mono',monospace;font-size:13px;color:#a5b4fc;background:rgba(99,102,241,0.10);padding:6px 10px;border-radius:8px;display:inline-block">@g.Formation</div>
+                        <div style="font-size:13px;color:var(--text-muted);margin-top:6px">@g.Meaning</div>
+                    </div>
+                    <span class="helper-toggle" style="flex-shrink:0;transform:@(expanded ? "rotate(180deg)" : "rotate(0)")">⌄</span>
+                </div>
+                @if (expanded)
+                {
+                    <div style="padding:0 16px 16px;border-top:1px solid rgba(255,255,255,0.06)">
+                        <p style="font-size:13px;line-height:1.6;color:var(--text-muted);margin:12px 0">@g.Explanation</p>
+                        <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:12px">
+                            @for (int i=0;i<g.Examples.Length;i++)
+                            {
+                                var idx = i;
+                                <div style="padding:10px 12px;border-radius:10px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.06);display:flex;justify-content:space-between;gap:8px;align-items:center">
+                                    <div>
+                                        <div class="jp" style="font-size:14px;font-weight:600">@g.Examples[idx]</div>
+                                        <div style="font-size:12px;color:var(--text-muted)">@g.ExampleMeanings[idx]</div>
+                                    </div>
+                                    <button class="btn btn-glass btn-sm" @onclick="() => Speak(g.Examples[idx])">🔊</button>
+                                </div>
+                            }
+                        </div>
+                        <div style="padding:12px;border-radius:12px;background:rgba(245,158,11,0.06);border:1px solid rgba(245,158,11,0.15)">
+                            <div style="font-weight:700;font-size:13px;margin-bottom:6px">✏️ Bài tập mini</div>
+                            <div style="font-size:13px;color:var(--text-muted);margin-bottom:8px">Điền trợ từ đúng: <span class="jp">@g.Examples[0].Replace("は","___").Replace("を","___").Replace("に","___")</span></div>
+                            <div style="display:flex;gap:8px">
+                                <input class="input" placeholder="Nhập đáp án..." @bind="ExerciseAnswers[g.Id]" style="flex:1;min-width:120px" />
+                                <button class="btn btn-primary btn-sm" @onclick="() => CheckExercise(g.Id)">Kiểm tra</button>
+                            </div>
+                            @if (ExerciseResults.ContainsKey(g.Id))
+                            {
+                                <div style="margin-top:8px;padding:8px 10px;border-radius:8px;background:@(ExerciseResults[g.Id] ? "rgba(34,197,94,0.12)" : "rgba(239,68,68,0.12)");border:1px solid @(ExerciseResults[g.Id] ? "rgba(34,197,94,0.25)" : "rgba(239,68,68,0.25)");font-size:13px">
+                                    @(ExerciseResults[g.Id] ? "✅ Chính xác! Bạn đã nắm mẫu này." : "❌ Thử lại — xem lại công thức và ví dụ nhé.")
+                                </div>
+                            }
+                        </div>
+                        <div style="display:flex;gap:8px;margin-top:12px">
+                            <button class="btn @(learned ? "btn-primary" : "btn-glass") btn-sm" @onclick="() => ToggleLearned(g.Id)">@(learned ? "✓ Đã học" : "Đánh dấu đã học")</button>
+                            <button class="btn btn-glass btn-sm" @onclick="() => ToggleBookmark(g.Id)">@(bookmarked ? "★ Đã ghim" : "☆ Ghim")</button>
+                            <button class="btn btn-glass btn-sm" @onclick="() => Speak(g.Examples[0])">🔊 Nghe ví dụ</button>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    }
+</div>
+@if (!Filtered.Any())
+{
+    <div class="glass empty" style="margin-top:16px">
+        <div class="empty-icon">🔍</div>
+        <div>Không tìm thấy mẫu nào</div>
+    </div>
+}
+
+@code {
+    private string Search = "";
+    private string? Filter;
+    private HashSet<int> Expanded = new();
+    private Dictionary<int,string> ExerciseAnswers = new();
+    private Dictionary<int,bool> ExerciseResults = new();
+    private int Total => GrammarService.GetAll().Count;
+    private int Percent => Total==0?0:(int)Math.Round(Progress.Progress.LearnedGrammarIds.Count*100.0/Total);
+    private IEnumerable<GrammarPattern> Filtered
+    {
+        get
+        {
+            var q = GrammarService.GetAll().AsEnumerable();
+            if (!string.IsNullOrWhiteSpace(Search))
+            {
+                var s = Search.Trim().ToLower();
+                q = q.Where(g=>g.Title.ToLower().Contains(s) || g.Formation.ToLower().Contains(s) || g.Meaning.ToLower().Contains(s));
+            }
+            if (Filter != null)
+            {
+                if (Filter=="L4+") q = q.Where(g=>g.Lesson!="L1" && g.Lesson!="L2" && g.Lesson!="L3");
+                else q = q.Where(g=>g.Lesson==Filter);
+            }
+            return q;
+        }
+    }
+    protected override async Task OnAfterRenderAsync(bool firstRender){ if(firstRender){ await Progress.LoadAsync(); foreach(var g in GrammarService.GetAll()) ExerciseAnswers[g.Id]=""; StateHasChanged(); } }
+    private void Toggle(int id){ if(!Expanded.Add(id)) Expanded.Remove(id); }
+    private async Task ToggleLearned(int id){ if(Progress.Progress.LearnedGrammarIds.Contains(id)){ Progress.Progress.LearnedGrammarIds.Remove(id); await Progress.SaveAsync(); } else { Progress.Progress.LearnedGrammarIds.Add(id); await Progress.SaveAsync(); } }
+    private async Task ToggleBookmark(int id){ await Progress.ToggleBookmark($"grammar:{id}"); }
+    private void CheckExercise(int id){ ExerciseResults[id] = !string.IsNullOrWhiteSpace(ExerciseAnswers.GetValueOrDefault(id)); }
+    private async Task Speak(string t){ try{ await JS.InvokeVoidAsync("n5Speech.speak", t, "ja-JP"); }catch{} }
+}

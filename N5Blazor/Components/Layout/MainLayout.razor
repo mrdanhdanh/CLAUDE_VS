@@ -1,0 +1,87 @@
+@inherits LayoutComponentBase
+@inject IProgressService Progress
+@inject IJSRuntime JS
+
+<a class="skip-link" href="#main">Bỏ qua tới nội dung</a>
+
+<div class="page">
+    <aside class="sidebar" aria-label="Điều hướng chính">
+        <div style="padding:16px 14px 8px; display:flex; align-items:center; gap:10px; border-bottom:1px solid var(--glass-border)">
+            <div class="brand-mark">N5</div>
+            <div>
+                <div style="font-weight:800; letter-spacing:-0.02em; line-height:1">N5 Blazor</div>
+                <div style="font-size:11px; color:var(--text-muted); letter-spacing:0.08em; text-transform:uppercase">JLPT N5 • Liquid Glass</div>
+            </div>
+        </div>
+        <NavMenu />
+        <div class="nav-footer">
+            <div class="progress-mini">
+                <span>🔥 @Progress.Progress.StreakDays ngày</span>
+                <div class="progress-mini-bar"><div class="progress-mini-fill" style="width:@OverallPercent%"></div></div>
+                <span>@OverallPercent%</span>
+            </div>
+            <div style="font-size:11px; color:var(--text-dim); margin-top:8px">Blazor Server • .NET 8 • Glass + Rainbow</div>
+        </div>
+    </aside>
+
+    <div class="main">
+        <header class="topbar">
+            <div class="topbar-left">
+                <button class="mobile-toggle" @onclick="ToggleDrawer" aria-label="Mở menu" aria-expanded="@DrawerOpen">☰</button>
+                <a class="brand" href="/">
+                    <span class="brand-mark" style="width:32px;height:32px;font-size:14px">N5</span>
+                    <span>N5 Blazor <small>JLPT N5 cho người mới</small></span>
+                </a>
+            </div>
+            <div class="topbar-actions">
+                <span class="badge badge-primary" style="font-size:12px">✨ Liquid Glass</span>
+                <span class="badge" style="font-size:12px">🌈 Rainbow</span>
+                <a class="btn btn-glass btn-sm" href="/progress">📊 Tiến độ</a>
+            </div>
+        </header>
+
+        <main id="main" class="content">
+            @Body
+        </main>
+
+        <footer style="padding:16px 24px; text-align:center; color:var(--text-dim); font-size:12px; border-top:1px solid rgba(255,255,255,0.06); margin-top:24px">
+            N5 Blazor • Blazor Server • DI • JS Interop • EditForm • Validation • localStorage • © 2026
+        </footer>
+    </div>
+</div>
+
+@if (DrawerOpen)
+{
+    <div class="mobile-drawer open" @onclick="CloseDrawer">
+        <div class="mobile-drawer-backdrop"></div>
+        <div class="mobile-drawer-panel" @onclick:stopPropagation="true">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px">
+                <div style="font-weight:800">Menu</div>
+                <button class="btn btn-glass btn-sm" @onclick="CloseDrawer">✕</button>
+            </div>
+            <NavMenu />
+        </div>
+    </div>
+}
+
+<div id="blazor-error-ui">
+    Đã xảy ra lỗi chưa xử lý.
+    <a href="" class="reload">Tải lại</a>
+    <a class="dismiss">🗙</a>
+</div>
+
+@code {
+    private bool DrawerOpen;
+    private int OverallPercent => Math.Clamp((Progress.Progress.LearnedKanji.Count * 100 / 36 + Progress.Progress.LearnedVocabIds.Count * 100 / 40) / 2, 0, 100);
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await Progress.LoadAsync();
+            Progress.OnChange += StateHasChanged;
+            StateHasChanged();
+        }
+    }
+    private void ToggleDrawer() => DrawerOpen = !DrawerOpen;
+    private void CloseDrawer() => DrawerOpen = false;
+}

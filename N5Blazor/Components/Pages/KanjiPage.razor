@@ -1,0 +1,146 @@
+@page "/kanji"
+@rendermode InteractiveServer
+@inject IKanjiService KanjiService
+@inject IProgressService Progress
+@inject IJSRuntime JS
+
+<PageTitle>Kanji N5 — Hán tự</PageTitle>
+
+<PageHelper Title="Kanji — Hán tự N5"
+            Purpose="Học 36 kanji N5 mẫu theo bài (L1-L8), mỗi kanji có nghĩa, âm on/kun, số nét, ví dụ. Là bước sau Kana — giúp đọc hiểu từ vựng và câu."
+            Structure="Route '/kanji' → Kanji.razor. Filter theo bài, search theo chữ/nghĩa, grid cards, modal chi tiết, bookmark, đánh dấu đã thuộc."
+            Techniques="Blazor: inject IKanjiService (Singleton), LINQ filter/search, onclick, conditional class (learned/bookmarked), JS interop speech, ProgressService HashSet, two-way bind cho search."
+            Features="Filter L1-L8, search, card hover lift + rainbow khi learned, modal chi tiết với ví dụ, bookmark, progress ring, responsive grid."
+            Route="/kanji"
+            ComponentName="Kanji.razor"
+            TechBullets="@(new[]{"IKanjiService Singleton — seed 36 kanji","LINQ Where + Contains cho search/filter","JS interop n5Speech.speak — phát âm ví dụ","ProgressService — HashSet<string> LearnedKanji"})"
+            FeatureBullets="@(new[]{"Filter theo bài L1-L8 + search","Grid cards với on/kun, nghĩa, số nét","Modal chi tiết + ví dụ + audio","Bookmark & đánh dấu đã thuộc"})" />
+
+<div style="display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:16px">
+    <div>
+        <h1 style="margin:0;font-size:24px;font-weight:800">漢 Kanji N5</h1>
+        <p class="muted" style="margin:4px 0 0;font-size:13px">36 kanji mẫu • Lọc theo bài, bấm card để xem chi tiết</p>
+    </div>
+    <div style="display:flex;gap:8px;align-items:center">
+        <ProgressRing Value="@Percent" Label="Đã thuộc" Size="64" />
+        <span class="badge badge-primary">@Progress.Progress.LearnedKanji.Count / @Total kanji</span>
+    </div>
+</div>
+
+<div class="toolbar">
+    <input class="input" placeholder="Tìm kanji / nghĩa / on-kun..." @bind="Search" @bind:event="oninput" />
+    <div style="display:flex;gap:6px;flex-wrap:wrap">
+        <button class="chip @(Lesson==null ? "active" : "")" @onclick="() => Lesson=null">Tất cả</button>
+        @foreach (var l in Lessons)
+        {
+            <button class="chip @(Lesson==l ? "active" : "")" @onclick="() => Lesson=l">@l</button>
+        }
+    </div>
+    <label style="display:flex;align-items:center;gap:6px;font-size:13px;color:var(--text-muted);cursor:pointer">
+        <input type="checkbox" @bind="OnlyLearned" /> Chỉ đã thuộc
+    </label>
+</div>
+
+<div class="grid grid-3">
+    @foreach (var k in Filtered)
+    {
+        var learned = Progress.Progress.LearnedKanji.Contains(k.Character);
+        var bookmarked = Progress.Progress.Bookmarks.Contains($"kanji:{k.Character}");
+        <div class="@(learned ? "rainbow-wrap" : "")" style="@(learned ? "" : "padding:0")">
+            <div class="glass kanji-card" style="cursor:pointer" @onclick="() => Selected=k">
+                <div style="display:flex;justify-content:space-between;align-items:start">
+                    <div class="kanji-char">@k.Character</div>
+                    <div style="display:flex;gap:6px">
+                        @if (learned) { <span class="badge badge-success">✓ Đã thuộc</span> }
+                        @if (bookmarked) { <span class="badge">🔖</span> }
+                    </div>
+                </div>
+                <div style="font-weight:700;font-size:14px">@k.Meaning</div>
+                <div class="kanji-meta">
+                    <span class="badge">On: @k.Onyomi</span>
+                    <span class="badge">Kun: @k.Kunyomi</span>
+                    <span class="badge">@k.Strokes nét</span>
+                    <span class="badge badge-primary">@k.Lesson</span>
+                </div>
+                <div style="font-size:12px;color:var(--text-muted);border-left:2px solid rgba(99,102,241,0.3);padding-left:8px">
+                    <span class="jp">@k.ExampleWord</span> (@k.ExampleReading) — @k.ExampleMeaning
+                </div>
+                <div style="display:flex;gap:6px;margin-top:4px">
+                    <button class="btn btn-glass btn-sm" @onclick:stopPropagation="true" @onclick="() => Speak(k.ExampleWord)">🔊</button>
+                    <button class="btn @(learned ? "btn-primary" : "btn-glass") btn-sm" @onclick:stopPropagation="true" @onclick="() => ToggleLearned(k.Character)">@(learned ? "✓" : "Đánh dấu")</button>
+                    <button class="btn btn-glass btn-sm" @onclick:stopPropagation="true" @onclick="() => ToggleBookmark(k.Character)">@(bookmarked ? "★" : "☆")</button>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+@if (!Filtered.Any())
+{
+    <div class="glass empty" style="margin-top:16px">
+        <div class="empty-icon">🔍</div>
+        <div>Không tìm thấy kanji nào</div>
+        <button class="btn btn-glass btn-sm" style="margin-top:8px" @onclick="ClearFilter">Xóa bộ lọc</button>
+    </div>
+}
+
+@if (Selected != null)
+{
+    <div style="position:fixed;inset:0;z-index:50;display:grid;place-items:center;padding:16px" @onclick="() => Selected=null">
+        <div style="position:absolute;inset:0;background:rgba(0,0,0,0.5);backdrop-filter:blur(6px)"></div>
+        <div class="glass glass-strong" style="position:relative;max-width:480px;width:100%;padding:24px" @onclick:stopPropagation="true">
+            <button class="btn btn-glass btn-sm" style="position:absolute;top:12px;right:12px" @onclick="() => Selected=null">✕</button>
+            <div style="text-align:center">
+                <div class="jp" style="font-size:64px;font-weight:800;line-height:1">@Selected.Character</div>
+                <div style="font-size:18px;font-weight:700;margin-top:8px">@Selected.Meaning</div>
+                <div style="display:flex;gap:8px;justify-content:center;margin-top:8px;flex-wrap:wrap">
+                    <span class="badge">On: @Selected.Onyomi</span>
+                    <span class="badge">Kun: @Selected.Kunyomi</span>
+                    <span class="badge">@Selected.Strokes nét</span>
+                    <span class="badge badge-primary">@Selected.Lesson</span>
+                </div>
+            </div>
+            <div style="margin-top:16px;padding:12px;border-radius:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.06)">
+                <div style="font-weight:700;font-size:13px;margin-bottom:4px">Ví dụ</div>
+                <div class="jp" style="font-size:16px">@Selected.ExampleWord <span style="color:var(--text-muted);font-size:13px">(@Selected.ExampleReading)</span></div>
+                <div style="font-size:13px;color:var(--text-muted)">@Selected.ExampleMeaning</div>
+                <button class="btn btn-glass btn-sm" style="margin-top:8px" @onclick="() => Speak(Selected.ExampleWord)">🔊 Nghe ví dụ</button>
+            </div>
+            <div style="display:flex;gap:8px;margin-top:16px">
+                <button class="btn @(Progress.Progress.LearnedKanji.Contains(Selected.Character) ? "btn-primary" : "btn-glass")" style="flex:1" @onclick="() => ToggleLearned(Selected.Character)">
+                    @(Progress.Progress.LearnedKanji.Contains(Selected.Character) ? "✓ Đã thuộc" : "Đánh dấu đã thuộc")
+                </button>
+                <button class="btn btn-glass" @onclick="() => ToggleBookmark(Selected.Character)">@(Progress.Progress.Bookmarks.Contains($"kanji:{Selected.Character}") ? "★ Đã ghim" : "☆ Ghim")</button>
+            </div>
+        </div>
+    </div>
+}
+
+@code {
+    private string Search = "";
+    private string? Lesson;
+    private bool OnlyLearned;
+    private Kanji? Selected;
+    private IReadOnlyList<string> Lessons => KanjiService.GetLessons();
+    private int Total => KanjiService.GetAll().Count;
+    private int Percent => Total==0?0:(int)Math.Round(Progress.Progress.LearnedKanji.Count*100.0/Total);
+    private IEnumerable<Kanji> Filtered
+    {
+        get
+        {
+            var q = KanjiService.GetAll().AsEnumerable();
+            if (!string.IsNullOrWhiteSpace(Lesson)) q = q.Where(k=>k.Lesson==Lesson);
+            if (!string.IsNullOrWhiteSpace(Search))
+            {
+                var s = Search.Trim().ToLower();
+                q = q.Where(k=>k.Character.Contains(s) || k.Meaning.ToLower().Contains(s) || k.Onyomi.ToLower().Contains(s) || k.Kunyomi.ToLower().Contains(s) || k.ExampleWord.Contains(s));
+            }
+            if (OnlyLearned) q = q.Where(k=>Progress.Progress.LearnedKanji.Contains(k.Character));
+            return q;
+        }
+    }
+    protected override async Task OnAfterRenderAsync(bool firstRender){ if(firstRender){ await Progress.LoadAsync(); StateHasChanged(); } }
+    private async Task ToggleLearned(string ch){ if(Progress.Progress.LearnedKanji.Contains(ch)){ Progress.Progress.LearnedKanji.Remove(ch); await Progress.SaveAsync(); } else await Progress.MarkKanjiLearned(ch); }
+    private async Task ToggleBookmark(string ch){ await Progress.ToggleBookmark($"kanji:{ch}"); }
+    private async Task Speak(string t){ try{ await JS.InvokeVoidAsync("n5Speech.speak", t, "ja-JP"); }catch{} }
+    private void ClearFilter(){ Search=""; Lesson=null; OnlyLearned=false; }
+}

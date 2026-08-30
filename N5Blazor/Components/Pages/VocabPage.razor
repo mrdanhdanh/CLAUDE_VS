@@ -1,0 +1,148 @@
+@page "/vocab"
+@rendermode InteractiveServer
+@inject IVocabService VocabService
+@inject IProgressService Progress
+@inject IJSRuntime JS
+
+<PageTitle>Từ vựng N5 — Vocabulary</PageTitle>
+
+<PageHelper Title="Từ vựng — Vocabulary"
+            Purpose="Học ~40 từ N5 theo chủ đề (greeting, family, time, daily...), có flashcard lật, search, filter, bookmark. Giúp nhớ từ qua ngữ cảnh và ví dụ."
+            Structure="Route '/vocab' → Vocab.razor. Toolbar (search + topic chips + view toggle), grid cards hoặc table, flashcard flip, modal chi tiết."
+            Techniques="Blazor: bind search, onclick filter, conditional rendering grid/table, CSS 3D flip (transform 300ms), JS interop speech, ProgressService bookmark, LINQ search."
+            Features="Search theo kanji/reading/nghĩa/romaji, filter topic, flip flashcard, table view, bookmark, đánh dấu đã thuộc, audio."
+            Route="/vocab"
+            ComponentName="Vocab.razor"
+            TechBullets="@(new[]{"@bind + @bind:event='oninput' — live search","CSS perspective + rotateY(180deg) — flip 300ms","IJSRuntime n5Speech.speak — audio","ProgressService HashSet<int> LearnedVocabIds"})"
+            FeatureBullets="@(new[]{"Search + filter topic (greeting/family/time...)","Flashcard lật (bấm để xem nghĩa)","Chuyển đổi Grid ↔ Table","Bookmark & đã thuộc + audio"})" />
+
+<div style="display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:16px">
+    <div>
+        <h1 style="margin:0;font-size:24px;font-weight:800">📚 Từ vựng N5</h1>
+        <p class="muted" style="margin:4px 0 0;font-size:13px">40 từ mẫu • Search, filter, flashcard lật</p>
+    </div>
+    <div style="display:flex;gap:8px;align-items:center">
+        <ProgressRing Value="@Percent" Label="Đã thuộc" Size="64" />
+        <span class="badge badge-primary">@Progress.Progress.LearnedVocabIds.Count / @Total từ</span>
+        <button class="btn @(View=="grid" ? "btn-primary" : "btn-glass") btn-sm" @onclick='() => View="grid"'>Grid</button>
+        <button class="btn @(View=="table" ? "btn-primary" : "btn-glass") btn-sm" @onclick='() => View="table"'>Table</button>
+    </div>
+</div>
+
+<div class="toolbar">
+    <input class="input" placeholder="Tìm từ, reading, nghĩa, romaji..." @bind="Search" @bind:event="oninput" style="flex:1;min-width:220px" />
+    <div style="display:flex;gap:6px;flex-wrap:wrap">
+        <button class="chip @(Topic==null ? "active" : "")" @onclick="() => Topic=null">Tất cả</button>
+        @foreach (var t in Topics)
+        {
+            <button class="chip @(Topic==t ? "active" : "")" @onclick="() => Topic=t">@t</button>
+        }
+    </div>
+    <label style="display:flex;align-items:center;gap:6px;font-size:13px;color:var(--text-muted);cursor:pointer">
+        <input type="checkbox" @bind="OnlyLearned" /> Chỉ đã thuộc
+    </label>
+</div>
+
+@if (View == "grid")
+{
+    <div class="grid grid-3">
+        @foreach (var v in Filtered)
+        {
+            var learned = Progress.Progress.LearnedVocabIds.Contains(v.Id);
+            var flipped = Flipped.Contains(v.Id);
+            var bookmarked = Progress.Progress.Bookmarks.Contains($"vocab:{v.Id}");
+            <div class="@(learned ? "rainbow-wrap" : "")" style="@(learned ? "" : "padding:0")">
+                <div class="glass vocab-card @(flipped ? "flipped" : "")" style="cursor:pointer;min-height:160px;position:relative" @onclick="() => ToggleFlip(v.Id)">
+                    @if (learned) { <span style="position:absolute;top:8px;right:8px" class="badge badge-success">✓</span> }
+                    @if (bookmarked) { <span style="position:absolute;top:8px;right:36px" class="badge">🔖</span> }
+                    @if (!flipped)
+                    {
+                        <div class="vocab-word jp">@v.Word</div>
+                        <div class="vocab-reading">@v.Reading • @v.Romaji</div>
+                        <div style="display:flex;gap:6px;margin-top:4px">
+                            <span class="badge">@v.Type</span>
+                            <span class="badge badge-primary">@v.Topic</span>
+                        </div>
+                        <div style="font-size:11px;color:var(--text-dim);margin-top:8px">Bấm để lật → xem nghĩa</div>
+                    }
+                    else
+                    {
+                        <div class="vocab-meaning" style="font-size:16px;font-weight:700">@v.Meaning</div>
+                        <div class="vocab-example">@v.Example<br/><span style="color:var(--text-dim)">@v.ExampleMeaning</span></div>
+                        <div style="display:flex;gap:6px;margin-top:8px" @onclick:stopPropagation="true">
+                            <button class="btn btn-glass btn-sm" @onclick="() => Speak(v.Word)">🔊</button>
+                            <button class="btn @(learned ? "btn-primary" : "btn-glass") btn-sm" @onclick="() => ToggleLearned(v.Id)">@(learned ? "✓" : "Đã thuộc")</button>
+                            <button class="btn btn-glass btn-sm" @onclick="() => ToggleBookmark(v.Id)">@(bookmarked ? "★" : "☆")</button>
+                        </div>
+                    }
+                </div>
+            </div>
+        }
+    </div>
+}
+else
+{
+    <div class="table-wrap glass" style="overflow:auto">
+        <table>
+            <thead><tr><th>Từ</th><th>Reading</th><th>Nghĩa</th><th>Loại</th><th>Chủ đề</th><th></th></tr></thead>
+            <tbody>
+                @foreach (var v in Filtered)
+                {
+                    var learned = Progress.Progress.LearnedVocabIds.Contains(v.Id);
+                    <tr style="@(learned ? "background:rgba(34,197,94,0.06)" : "")">
+                        <td class="jp" style="font-weight:700">@v.Word</td>
+                        <td class="mono" style="font-size:12px">@v.Reading</td>
+                        <td>@v.Meaning</td>
+                        <td><span class="badge">@v.Type</span></td>
+                        <td><span class="badge badge-primary">@v.Topic</span></td>
+                        <td style="display:flex;gap:6px">
+                            <button class="btn btn-glass btn-sm" @onclick="() => Speak(v.Word)">🔊</button>
+                            <button class="btn @(learned ? "btn-primary" : "btn-glass") btn-sm" @onclick="() => ToggleLearned(v.Id)">@(learned ? "✓" : "+")</button>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}
+
+@if (!Filtered.Any())
+{
+    <div class="glass empty" style="margin-top:16px">
+        <div class="empty-icon">🔍</div>
+        <div>Không tìm thấy từ nào</div>
+        <button class="btn btn-glass btn-sm" style="margin-top:8px" @onclick="ClearFilter">Xóa bộ lọc</button>
+    </div>
+}
+
+@code {
+    private string Search = "";
+    private string? Topic;
+    private bool OnlyLearned;
+    private string View = "grid";
+    private HashSet<int> Flipped = new();
+    private IReadOnlyList<string> Topics => VocabService.GetTopics();
+    private int Total => VocabService.GetAll().Count;
+    private int Percent => Total==0?0:(int)Math.Round(Progress.Progress.LearnedVocabIds.Count*100.0/Total);
+    private IEnumerable<Vocab> Filtered
+    {
+        get
+        {
+            var q = VocabService.GetAll().AsEnumerable();
+            if (!string.IsNullOrWhiteSpace(Topic)) q = q.Where(v=>v.Topic==Topic);
+            if (!string.IsNullOrWhiteSpace(Search))
+            {
+                var s = Search.Trim().ToLower();
+                q = q.Where(v=>v.Word.Contains(s) || v.Reading.Contains(s) || v.Meaning.ToLower().Contains(s) || v.Romaji.Contains(s));
+            }
+            if (OnlyLearned) q = q.Where(v=>Progress.Progress.LearnedVocabIds.Contains(v.Id));
+            return q;
+        }
+    }
+    protected override async Task OnAfterRenderAsync(bool firstRender){ if(firstRender){ await Progress.LoadAsync(); StateHasChanged(); } }
+    private void ToggleFlip(int id){ if(!Flipped.Add(id)) Flipped.Remove(id); }
+    private async Task ToggleLearned(int id){ if(Progress.Progress.LearnedVocabIds.Contains(id)){ Progress.Progress.LearnedVocabIds.Remove(id); await Progress.SaveAsync(); } else await Progress.MarkVocabLearned(id); }
+    private async Task ToggleBookmark(int id){ await Progress.ToggleBookmark($"vocab:{id}"); }
+    private async Task Speak(string t){ try{ await JS.InvokeVoidAsync("n5Speech.speak", t, "ja-JP"); }catch{} }
+    private void ClearFilter(){ Search=""; Topic=null; OnlyLearned=false; }
+}

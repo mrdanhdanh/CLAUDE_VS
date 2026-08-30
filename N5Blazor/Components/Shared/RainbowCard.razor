@@ -1,0 +1,13 @@
+<div class="rainbow-wrap @(Subtle ? "rainbow-subtle" : "") @WrapClass" style="@WrapStyle">
+    <div class="glass card @Class" style="@Style">
+        @ChildContent
+    </div>
+</div>
+@code {
+    [Parameter] public RenderFragment? ChildContent { get; set; }
+    [Parameter] public string? Class { get; set; }
+    [Parameter] public string? Style { get; set; }
+    [Parameter] public string? WrapClass { get; set; }
+    [Parameter] public string? WrapStyle { get; set; }
+    [Parameter] public bool Subtle { get; set; }
+}

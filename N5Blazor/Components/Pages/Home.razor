@@ -1,0 +1,192 @@
+﻿@page "/"
+@rendermode InteractiveServer
+@inject IKanaService KanaService
+@inject IKanjiService KanjiService
+@inject IVocabService VocabService
+@inject IGrammarService GrammarService
+@inject IProgressService Progress
+@inject IJSRuntime JS
+
+<PageTitle>N5 Blazor - Hoc JLPT N5</PageTitle>
+
+<PageHelper Title="Trang chu / Dashboard"
+            Purpose="Tong quan lo trinh N5, thong ke tien do, dieu huong nhanh toi 6 khu vuc hoc. La entry point cho nguoi moi."
+            Structure="Route '/' -> Home.razor. Gom Hero (glass + rainbow), 4 stat cards, roadmap 5 buoc, quick actions, tips. Dung MainLayout."
+            Techniques="Blazor Server (InteractiveServer), DI inject 5 services, IProgressService (Scoped) load tu localStorage qua JS interop, OnAfterRenderAsync firstRender pattern, ProgressRing component."
+            Features="Hien thi % hoan thanh Kana/Kanji/Vocab/Grammar, streak, nut CTA toi tung trang, roadmap truc quan, responsive grid."
+            Route="/"
+            ComponentName="Home.razor"
+            TechBullets="@(new[]{"@rendermode InteractiveServer - interactivity sau SSR","@inject IKanaService - DI Singleton","IJSRuntime + n5Storage.get/set - localStorage","OnAfterRenderAsync(firstRender) - tranh prerender JS loi"})"
+            FeatureBullets="@(new[]{"4 stat cards voi ProgressRing","Roadmap 5 buoc (Kana->Kanji->Vocab->Grammar->Test)","Quick actions 6 nut toi tung trang","Streak + % tong hop tu ProgressService"})" />
+
+<div class="rainbow-wrap" style="margin-bottom:16px">
+    <div class="glass hero">
+        <div class="hero-orb" aria-hidden="true"></div>
+        <div style="position:relative">
+            <div style="display:inline-flex;align-items:center;gap:8px;background:rgba(99,102,241,0.12);border:1px solid rgba(99,102,241,0.25);padding:6px 12px;border-radius:9999px;font-size:12px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;color:#a5b4fc;margin-bottom:12px">
+                JLPT N5 - Cho nguoi moi bat dau - Blazor Server
+            </div>
+            <h1>Hoc <span>JLPT N5</span> tu so 0<br/>voi Liquid Glass</h1>
+            <p>
+                Lo trinh 5 buoc: <strong>Kana</strong> -&gt; <strong>Kanji</strong> -&gt; <strong>Tu vung</strong> -&gt; <strong>Ngu phap</strong> -&gt; <strong>Thi thu</strong>.
+                Moi trang deu co <strong>Helper</strong> giai thich ro muc dich, cau truc, ky thuat Blazor va tinh nang.
+            </p>
+            <div class="hero-actions">
+                <a class="btn btn-primary" href="/kana">Bat dau voi Kana -&gt;</a>
+                <a class="btn btn-glass" href="/practice">Thi thu ngay</a>
+                <a class="btn btn-glass" href="/progress">Xem tien do</a>
+            </div>
+            <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:14px">
+                <span class="badge badge-primary">Blazor Server</span>
+                <span class="badge">DI - Services</span>
+                <span class="badge">JS Interop</span>
+                <span class="badge">EditForm</span>
+                <span class="badge">localStorage</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="grid grid-4" style="margin-bottom:16px">
+    <div class="rainbow-wrap">
+        <div class="glass stat">
+            <div class="stat-label">Kana</div>
+            <div style="display:flex;align-items:center;gap:12px">
+                <ProgressRing Value="@KanaPercent" Label="Kana" Size="72" />
+                <div>
+                    <div class="stat-value">@Progress.Progress.LearnedKana.Count / 92</div>
+                    <div class="stat-sub">Hiragana + Katakana</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="glass stat">
+        <div class="stat-label">Kanji N5</div>
+        <div style="display:flex;align-items:center;gap:12px">
+            <ProgressRing Value="@KanjiPercent" Label="Kanji" Size="72" />
+            <div>
+                <div class="stat-value">@Progress.Progress.LearnedKanji.Count / @TotalKanji</div>
+                <div class="stat-sub">36 kanji mau</div>
+            </div>
+        </div>
+    </div>
+    <div class="glass stat">
+        <div class="stat-label">Tu vung</div>
+        <div style="display:flex;align-items:center;gap:12px">
+            <ProgressRing Value="@VocabPercent" Label="Vocab" Size="72" />
+            <div>
+                <div class="stat-value">@Progress.Progress.LearnedVocabIds.Count / @TotalVocab</div>
+                <div class="stat-sub">40 tu mau</div>
+            </div>
+        </div>
+    </div>
+    <div class="glass stat">
+        <div class="stat-label">Ngu phap</div>
+        <div style="display:flex;align-items:center;gap:12px">
+            <ProgressRing Value="@GrammarPercent" Label="Grammar" Size="72" />
+            <div>
+                <div class="stat-value">@Progress.Progress.LearnedGrammarIds.Count / @TotalGrammar</div>
+                <div class="stat-sub">15 mau</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="grid grid-2" style="margin-bottom:16px">
+    <div class="glass card">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
+            <h3 style="margin:0;font-size:15px;font-weight:800">Lo trinh 5 buoc</h3>
+            <span class="badge">Goi y cho nguoi moi</span>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:10px">
+            @foreach (var step in Roadmap)
+            {
+                <a href="@step.Href" style="display:flex;align-items:center;gap:12px;padding:10px 12px;border-radius:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.06);text-decoration:none;color:inherit">
+                    <span style="width:36px;height:36px;border-radius:10px;display:grid;place-items:center;background:linear-gradient(135deg, var(--primary), var(--secondary));color:white;font-weight:700;flex-shrink:0">@step.Num</span>
+                    <div style="flex:1">
+                        <div style="font-weight:700;font-size:14px">@step.Title</div>
+                        <div style="font-size:12px;color:var(--text-muted)">@step.Desc</div>
+                    </div>
+                    <span style="color:var(--text-dim)">-&gt;</span>
+                </a>
+            }
+        </div>
+    </div>
+    <div class="glass card">
+        <h3 style="margin:0 0 12px;font-size:15px;font-weight:800">Hanh dong nhanh</h3>
+        <div class="grid grid-2">
+            <a class="glass" style="padding:14px;border-radius:14px;text-decoration:none;color:inherit;display:flex;flex-direction:column;gap:6px" href="/kana">
+                <span style="font-size:20px">A</span><strong style="font-size:14px">Hoc Kana</strong><span style="font-size:12px;color:var(--text-muted)">46 Hiragana + 46 Katakana</span>
+            </a>
+            <a class="glass" style="padding:14px;border-radius:14px;text-decoration:none;color:inherit;display:flex;flex-direction:column;gap:6px" href="/kanji">
+                <span style="font-size:20px">Kan</span><strong style="font-size:14px">Hoc Kanji</strong><span style="font-size:12px;color:var(--text-muted)">36 kanji N5 mau</span>
+            </a>
+            <a class="glass" style="padding:14px;border-radius:14px;text-decoration:none;color:inherit;display:flex;flex-direction:column;gap:6px" href="/vocab">
+                <span style="font-size:20px">Voc</span><strong style="font-size:14px">Tu vung</strong><span style="font-size:12px;color:var(--text-muted)">Flashcard + search</span>
+            </a>
+            <a class="glass" style="padding:14px;border-radius:14px;text-decoration:none;color:inherit;display:flex;flex-direction:column;gap:6px" href="/grammar">
+                <span style="font-size:20px">Gra</span><strong style="font-size:14px">Ngu phap</strong><span style="font-size:12px;color:var(--text-muted)">15 mau N5</span>
+            </a>
+            <a class="glass" style="padding:14px;border-radius:14px;text-decoration:none;color:inherit;display:flex;flex-direction:column;gap:6px" href="/practice">
+                <span style="font-size:20px">Test</span><strong style="font-size:14px">Thi thu</strong><span style="font-size:12px;color:var(--text-muted)">20 cau - cham diem</span>
+            </a>
+            <a class="glass" style="padding:14px;border-radius:14px;text-decoration:none;color:inherit;display:flex;flex-direction:column;gap:6px" href="/progress">
+                <span style="font-size:20px">Prog</span><strong style="font-size:14px">Tien do</strong><span style="font-size:12px;color:var(--text-muted)">Streak @Progress.Progress.StreakDays ngay</span>
+            </a>
+        </div>
+        <div style="margin-top:12px;padding:10px 12px;border-radius:12px;background:rgba(245,158,11,0.08);border:1px solid rgba(245,158,11,0.18);font-size:12px;color:#fcd34d">
+            Meo: Moi trang deu co <strong>Helper</strong> o dau - bam de xem trang dung lam gi, cau truc, ky thuat Blazor va tinh nang.
+        </div>
+    </div>
+</div>
+
+<div class="glass card">
+    <h3 style="margin:0 0 8px;font-size:15px;font-weight:800">Blazor duoc dung o dau?</h3>
+    <div class="grid grid-3">
+        <div style="padding:12px;border-radius:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.06)">
+            <div style="font-weight:700;font-size:13px;margin-bottom:4px">DI va Services</div>
+            <div style="font-size:12px;color:var(--text-muted)">6 services Singleton/Scoped inject vao moi trang.</div>
+            <code style="font-size:11px">builder.Services.AddSingleton&lt;IKanjiService&gt;</code>
+        </div>
+        <div style="padding:12px;border-radius:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.06)">
+            <div style="font-weight:700;font-size:13px;margin-bottom:4px">Interactivity</div>
+            <div style="font-size:12px;color:var(--text-muted)">Server interactivity + streaming. StateHasChanged, EventCallback, bind, onclick.</div>
+            <code style="font-size:11px">rendermode InteractiveServer</code>
+        </div>
+        <div style="padding:12px;border-radius:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.06)">
+            <div style="font-weight:700;font-size:13px;margin-bottom:4px">Forms va JS</div>
+            <div style="font-size:12px;color:var(--text-muted)">EditForm + DataAnnotationsValidator cho quiz, JS interop cho localStorage va speech.</div>
+            <code style="font-size:11px">IJSRuntime.InvokeAsync</code>
+        </div>
+    </div>
+</div>
+
+@code {
+    private int TotalKanji => KanjiService.GetAll().Count;
+    private int TotalVocab => VocabService.GetAll().Count;
+    private int TotalGrammar => GrammarService.GetAll().Count;
+    private int KanaPercent => (int)Math.Round(Progress.Progress.LearnedKana.Count * 100.0 / 92);
+    private int KanjiPercent => TotalKanji==0?0:(int)Math.Round(Progress.Progress.LearnedKanji.Count*100.0/TotalKanji);
+    private int VocabPercent => TotalVocab==0?0:(int)Math.Round(Progress.Progress.LearnedVocabIds.Count*100.0/TotalVocab);
+    private int GrammarPercent => TotalGrammar==0?0:(int)Math.Round(Progress.Progress.LearnedGrammarIds.Count*100.0/TotalGrammar);
+
+    private record Step(int Num, string Title, string Desc, string Href);
+    private List<Step> Roadmap = new()
+    {
+        new(1,"Kana - Bang chu cai","Hiragana + Katakana, 46 chu moi bang","/kana"),
+        new(2,"Kanji - Han tu","36 kanji N5 theo bai, co vi du","/kanji"),
+        new(3,"Tu vung - Vocabulary","40 tu theo chu de, flashcard","/vocab"),
+        new(4,"Ngu phap - Grammar","15 mau cau N5, vi du + bai tap","/grammar"),
+        new(5,"Thi thu - Practice","20 cau trac nghiem, cham diem","/practice"),
+    };
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await Progress.LoadAsync();
+            Progress.OnChange += StateHasChanged;
+            StateHasChanged();
+        }
+    }
+}

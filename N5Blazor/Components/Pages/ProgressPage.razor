@@ -1,0 +1,223 @@
+@page "/progress"
+@rendermode InteractiveServer
+@inject IKanaService KanaService
+@inject IKanjiService KanjiService
+@inject IVocabService VocabService
+@inject IGrammarService GrammarService
+@inject IQuizService QuizService
+@inject IProgressService ProgressSvc
+@inject IJSRuntime JS
+
+<PageTitle>Tiến độ — Progress</PageTitle>
+
+<PageHelper Title="Tiến độ — Progress Dashboard"
+            Purpose="Xem tổng quan tiến độ học: % hoàn thành từng mảng, streak, bookmark, điểm thi thử, và xuất dữ liệu. Giúp người học thấy mình đã đi được bao xa và cần ôn gì."
+            Structure="Route '/progress' → Progress.razor. Gồm 4 ProgressRing, streak calendar, bookmark list, quiz scores, nút Export JSON và Reset."
+            Techniques="Blazor: DI 5 services + IProgressService, OnAfterRenderAsync load, IJSRuntime cho export (n5Storage + download), ProgressRing component, conditional rendering, event OnChange."
+            Features="4 vòng tròn tiến độ, streak, danh sách bookmark, điểm cao nhất, export JSON, reset tiến độ, responsive grid."
+            Route="/progress"
+            ComponentName="Progress.razor"
+            TechBullets="@(new[]{"IProgressService Scoped — load/save via JS interop","OnAfterRenderAsync(firstRender) — tránh prerender lỗi","IJSRuntime.InvokeVoidAsync — export JSON","ProgressRing — SVG circle + stroke-dashoffset"})"
+            FeatureBullets="@(new[]{"4 ProgressRing (Kana/Kanji/Vocab/Grammar)","Streak + bookmark list","Quiz scores + export JSON","Reset tiến độ"})" />
+
+<div style="display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:16px">
+    <div>
+        <h1 style="margin:0;font-size:24px;font-weight:800">📊 Tiến độ học tập</h1>
+        <p class="muted" style="margin:4px 0 0;font-size:13px">Theo dõi hành trình N5 của bạn • Lưu tự động vào localStorage</p>
+    </div>
+    <div style="display:flex;gap:8px">
+        <button class="btn btn-glass btn-sm" @onclick="ExportJson">⬇ Export JSON</button>
+        <button class="btn btn-glass btn-sm" @onclick="Reset" style="color:var(--danger);border-color:rgba(239,68,68,0.25)">🗑 Reset</button>
+    </div>
+</div>
+
+<div class="grid grid-4" style="margin-bottom:16px">
+    <div class="glass" style="padding:16px;text-align:center">
+        <ProgressRing Value="@KanaPercent" Label="Kana" Size="96" />
+        <div style="margin-top:8px;font-weight:700">@ProgressSvc.Progress.LearnedKana.Count / 92 chữ</div>
+        <div style="font-size:12px;color:var(--text-muted)">Hiragana + Katakana</div>
+    </div>
+    <div class="glass" style="padding:16px;text-align:center">
+        <ProgressRing Value="@KanjiPercent" Label="Kanji" Size="96" />
+        <div style="margin-top:8px;font-weight:700">@ProgressSvc.Progress.LearnedKanji.Count / @TotalKanji kanji</div>
+        <div style="font-size:12px;color:var(--text-muted)">36 kanji mẫu</div>
+    </div>
+    <div class="glass" style="padding:16px;text-align:center">
+        <ProgressRing Value="@VocabPercent" Label="Vocab" Size="96" />
+        <div style="margin-top:8px;font-weight:700">@ProgressSvc.Progress.LearnedVocabIds.Count / @TotalVocab từ</div>
+        <div style="font-size:12px;color:var(--text-muted)">40 từ mẫu</div>
+    </div>
+    <div class="glass" style="padding:16px;text-align:center">
+        <ProgressRing Value="@GrammarPercent" Label="Grammar" Size="96" />
+        <div style="margin-top:8px;font-weight:700">@ProgressSvc.Progress.LearnedGrammarIds.Count / @TotalGrammar mẫu</div>
+        <div style="font-size:12px;color:var(--text-muted)">15 mẫu N5</div>
+    </div>
+</div>
+
+<div class="grid grid-2" style="margin-bottom:16px">
+    <div class="glass card">
+        <h3 style="margin:0 0 12px;font-size:15px;font-weight:800">🔥 Streak & Tổng quan</h3>
+        <div style="display:flex;gap:12px;align-items:center;margin-bottom:12px">
+            <div style="width:56px;height:56px;border-radius:14px;display:grid;place-items:center;background:linear-gradient(135deg, #f59e0b, #ef4444);color:white;font-size:24px;font-weight:800">@ProgressSvc.Progress.StreakDays</div>
+            <div>
+                <div style="font-weight:800;font-size:16px">@ProgressSvc.Progress.StreakDays ngày streak</div>
+                <div style="font-size:12px;color:var(--text-muted)">Lần học cuối: @(ProgressSvc.Progress.LastStudyDate?.ToString("dd/MM/yyyy") ?? "chưa có")</div>
+            </div>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(7,1fr);gap:6px">
+            @for (int i=6;i>=0;i--)
+            {
+                var d = DateTime.Today.AddDays(-i);
+                var active = ProgressSvc.Progress.LastStudyDate?.Date == d || (i==0 && ProgressSvc.Progress.StreakDays>0);
+                <div style="aspect-ratio:1;border-radius:8px;display:grid;place-items:center;font-size:11px;font-weight:700;background:@(active ? "linear-gradient(135deg, var(--primary), var(--secondary))" : "rgba(255,255,255,0.06)");color:@(active ? "white" : "var(--text-muted)");border:1px solid @(active ? "rgba(99,102,241,0.3)" : "var(--glass-border)")">
+                    @d.ToString("dd")
+                </div>
+            }
+        </div>
+        <div style="display:flex;gap:6px;margin-top:8px;justify-content:center">
+            @foreach (var day in new[]{"T2","T3","T4","T5","T6","T7","CN"})
+            {
+                <span style="font-size:10px;color:var(--text-dim);width:100%;text-align:center">@day</span>
+            }
+        </div>
+        <div style="margin-top:12px;padding:10px 12px;border-radius:12px;background:rgba(99,102,241,0.08);border:1px solid rgba(99,102,241,0.15);font-size:12px;color:var(--text-muted)">
+            💡 Streak tăng khi bạn học mỗi ngày. Dữ liệu lưu trong <code>localStorage</code> key <code>n5-progress</code> qua <code>n5Storage</code> JS interop.
+        </div>
+    </div>
+
+    <div class="glass card">
+        <h3 style="margin:0 0 12px;font-size:15px;font-weight:800">🏆 Điểm thi thử</h3>
+        @if (ProgressSvc.Progress.QuizScores.Any())
+        {
+            <div style="display:flex;flex-direction:column;gap:8px">
+                @foreach (var kv in ProgressSvc.Progress.QuizScores.OrderByDescending(kv=>kv.Value))
+                {
+                    <div style="display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.06)">
+                        <span class="badge badge-primary">@kv.Key</span>
+                        <div style="flex:1;height:8px;background:rgba(255,255,255,0.08);border-radius:9999px;overflow:hidden">
+                            <div style="height:100%;width:@(Math.Min(kv.Value*10,100))%;background:linear-gradient(90deg, var(--primary), var(--secondary));border-radius:9999px"></div>
+                        </div>
+                        <span style="font-weight:800">@kv.Value</span>
+                    </div>
+                }
+            </div>
+        }
+        else
+        {
+            <div class="empty" style="padding:20px">
+                <div class="empty-icon">🧪</div>
+                <div style="font-size:13px">Chưa có điểm thi thử</div>
+                <a class="btn btn-primary btn-sm" style="margin-top:8px" href="/practice">Làm bài ngay →</a>
+            </div>
+        }
+        <div style="margin-top:12px;display:flex;gap:8px">
+            <a class="btn btn-glass btn-sm" href="/practice">🧪 Thi thử</a>
+            <a class="btn btn-glass btn-sm" href="/kana">あ Kana</a>
+            <a class="btn btn-glass btn-sm" href="/kanji">漢 Kanji</a>
+        </div>
+    </div>
+</div>
+
+<div class="grid grid-2">
+    <div class="glass card">
+        <h3 style="margin:0 0 12px;font-size:15px;font-weight:800">🔖 Bookmark</h3>
+        @if (ProgressSvc.Progress.Bookmarks.Any())
+        {
+            <div style="display:flex;flex-direction:column;gap:6px;max-height:260px;overflow:auto">
+                @foreach (var b in ProgressSvc.Progress.Bookmarks)
+                {
+                    <div style="display:flex;align-items:center;justify-content:space-between;gap:8px;padding:8px 10px;border-radius:10px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.06);font-size:13px">
+                        <span>@b</span>
+                        <button class="btn btn-glass btn-sm" @onclick="() => RemoveBookmark(b)">✕</button>
+                    </div>
+                }
+            </div>
+        }
+        else
+        {
+            <div class="empty" style="padding:16px">
+                <div style="font-size:13px;color:var(--text-muted)">Chưa có bookmark. Bấm ☆ ở Kana/Kanji/Vocab/Grammar để ghim.</div>
+            </div>
+        }
+    </div>
+    <div class="glass card">
+        <h3 style="margin:0 0 12px;font-size:15px;font-weight:800">📦 Dữ liệu & Kỹ thuật</h3>
+        <div style="font-size:13px;line-height:1.6;color:var(--text-muted)">
+            <p style="margin:0 0 8px">Tiến độ được lưu bằng <code>IProgressService</code> (Scoped) + <code>IJSRuntime</code> gọi <code>n5Storage.set/get</code> (localStorage). Mỗi lần đánh dấu đã thuộc/bookmark/quiz đều <code>SaveAsync()</code> + <code>OnChange</code> event để layout cập nhật.</p>
+            <ul style="margin:8px 0;padding-left:16px">
+                <li><code>HashSet&lt;string&gt; LearnedKana</code> — 92 chữ</li>
+                <li><code>HashSet&lt;string&gt; LearnedKanji</code> — 36 kanji</li>
+                <li><code>HashSet&lt;int&gt; LearnedVocabIds</code> — 40 từ</li>
+                <li><code>HashSet&lt;int&gt; LearnedGrammarIds</code> — 15 mẫu</li>
+                <li><code>Dictionary&lt;string,int&gt; QuizScores</code> — điểm cao nhất</li>
+            </ul>
+            <p style="margin:8px 0 0">Export sẽ tải file <code>n5-progress.json</code> chứa toàn bộ JSON.</p>
+        </div>
+        <div style="display:flex;gap:8px;margin-top:12px">
+            <button class="btn btn-primary btn-sm" @onclick="ExportJson">⬇ Export JSON</button>
+            <button class="btn btn-glass btn-sm" @onclick="CopyJson">📋 Copy JSON</button>
+        </div>
+        @if (!string.IsNullOrEmpty(ExportMessage))
+        {
+            <div style="margin-top:8px;padding:8px 10px;border-radius:8px;background:rgba(34,197,94,0.12);border:1px solid rgba(34,197,94,0.25);font-size:12px">@ExportMessage</div>
+        }
+    </div>
+</div>
+
+@code {
+    private int TotalKanji => KanjiService.GetAll().Count;
+    private int TotalVocab => VocabService.GetAll().Count;
+    private int TotalGrammar => GrammarService.GetAll().Count;
+    private int KanaPercent => (int)Math.Round(ProgressSvc.Progress.LearnedKana.Count*100.0/92);
+    private int KanjiPercent => TotalKanji==0?0:(int)Math.Round(ProgressSvc.Progress.LearnedKanji.Count*100.0/TotalKanji);
+    private int VocabPercent => TotalVocab==0?0:(int)Math.Round(ProgressSvc.Progress.LearnedVocabIds.Count*100.0/TotalVocab);
+    private int GrammarPercent => TotalGrammar==0?0:(int)Math.Round(ProgressSvc.Progress.LearnedGrammarIds.Count*100.0/TotalGrammar);
+    private string? ExportMessage;
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await ProgressSvc.LoadAsync();
+            ProgressSvc.OnChange += StateHasChanged;
+            StateHasChanged();
+        }
+    }
+
+    private async Task ExportJson()
+    {
+        try
+        {
+            var json = System.Text.Json.JsonSerializer.Serialize(ProgressSvc.Progress, new System.Text.Json.JsonSerializerOptions{ WriteIndented=true });
+            var b64 = Convert.ToBase64String(System.Text.Encoding.UTF8.GetBytes(json));
+            await JS.InvokeVoidAsync("eval", $"const a=document.createElement('a');a.href='data:application/json;base64,{b64}';a.download='n5-progress.json';a.click()");
+            ExportMessage = "Đã export n5-progress.json ✓";
+        }
+        catch (Exception ex){ ExportMessage = "Lỗi export: " + ex.Message; }
+    }
+    private async Task CopyJson()
+    {
+        try
+        {
+            var json = System.Text.Json.JsonSerializer.Serialize(ProgressSvc.Progress);
+            await JS.InvokeVoidAsync("navigator.clipboard.writeText", json);
+            ExportMessage = "Đã copy JSON vào clipboard ✓";
+        }
+        catch { ExportMessage = "Không copy được — hãy dùng Export JSON"; }
+    }
+    private async Task RemoveBookmark(string b){ await ProgressSvc.ToggleBookmark(b); }
+    private async Task Reset()
+    {
+        try { await JS.InvokeVoidAsync("n5Storage.remove", "n5-progress"); } catch {}
+        ProgressSvc.Progress.LearnedKana.Clear();
+        ProgressSvc.Progress.LearnedKanji.Clear();
+        ProgressSvc.Progress.LearnedVocabIds.Clear();
+        ProgressSvc.Progress.LearnedGrammarIds.Clear();
+        ProgressSvc.Progress.Bookmarks.Clear();
+        ProgressSvc.Progress.QuizScores.Clear();
+        ProgressSvc.Progress.StreakDays = 0;
+        ProgressSvc.Progress.LastStudyDate = null;
+        await ProgressSvc.SaveAsync();
+        ExportMessage = "Đã reset tiến độ ✓";
+    }
+}

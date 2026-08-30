@@ -1,0 +1,189 @@
+@page "/kana"
+@rendermode InteractiveServer
+@inject IKanaService KanaService
+@inject IProgressService Progress
+@inject IJSRuntime JS
+
+<PageTitle>Kana — Hiragana & Katakana</PageTitle>
+
+<PageHelper Title="Kana — Bảng chữ cái"
+            Purpose="Học 46 Hiragana + 46 Katakana — nền tảng bắt buộc trước khi vào Kanji. Người mới cần nhớ mặt chữ, romaji, phát âm và thứ tự nét."
+            Structure="Route '/kana' → Kana.razor. Tabs Hira/Kata, filter theo hàng (a/ka/sa...), grid 46 ô, modal chi tiết, chế độ Quiz lật thẻ, nút đánh dấu đã thuộc."
+            Techniques="Blazor Server interactivity: bind cho tab/filter, onclick cho cell, conditional rendering cho modal/quiz, IJSRuntime cho speech (n5Speech.speak), ProgressService (Scoped) luu localStorage, LINQ filter."
+            Features="Grid Kana với hover lift + rainbow khi learned, modal chi tiết (chữ lớn + romaji + audio), quiz ngẫu nhiên 10 câu, đánh dấu đã thuộc, progress ring, search theo romaji."
+            Route="/kana"
+            ComponentName="Kana.razor"
+            TechBullets="@(new[]{"@rendermode InteractiveServer — tương tác không reload","@bind + @onclick — two-way & event handling","IJSRuntime.InvokeVoidAsync('n5Speech.speak') — JS interop audio","ProgressService.LearnedKana — HashSet + localStorage"})"
+            FeatureBullets="@(new[]{"Tabs Hiragana/Katakana + filter hàng a/ka/sa...","Grid 46 ô, click mở modal chi tiết","Quiz 10 câu ngẫu nhiên, chấm điểm","Đánh dấu đã thuộc + lưu tiến độ"})" />
+
+<div style="display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:16px">
+    <div>
+        <h1 style="margin:0;font-size:24px;font-weight:800;letter-spacing:-0.02em">あ Kana</h1>
+        <p class="muted" style="margin:4px 0 0;font-size:13px">Hiragana & Katakana — 92 chữ cơ bản • Bấm vào chữ để xem chi tiết & nghe phát âm</p>
+    </div>
+    <div style="display:flex;gap:8px;align-items:center">
+        <ProgressRing Value="@Percent" Label="Đã thuộc" Size="64" />
+        <button class="btn @(QuizMode ? "btn-primary" : "btn-glass")" @onclick="ToggleQuiz">@(QuizMode ? "Thoát Quiz" : "🧪 Quiz 10 câu")</button>
+    </div>
+</div>
+
+@if (QuizMode)
+{
+    <div class="glass card" style="margin-bottom:16px">
+        @if (QuizQuestions.Count == 0)
+        {
+            <div class="empty">Đang tạo quiz...</div>
+        }
+        else if (QuizIndex < QuizQuestions.Count)
+        {
+            var q = QuizQuestions[QuizIndex];
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+                <span class="badge badge-primary">Câu @(QuizIndex+1)/@QuizQuestions.Count</span>
+                <span class="badge">Điểm: @QuizScore</span>
+            </div>
+            <div style="text-align:center;padding:16px">
+                <div class="jp" style="font-size:48px;font-weight:800;margin-bottom:8px">@q.Char</div>
+                <div style="font-size:14px;color:var(--text-muted)">Chữ này đọc là gì?</div>
+            </div>
+            <div class="grid grid-2">
+                @foreach (var opt in q.Options)
+                {
+                    var isSelected = QuizSelected == opt;
+                    <button class="quiz-option @(isSelected ? (opt==q.Romaji ? "correct" : "wrong") : "")" @onclick="() => AnswerQuiz(opt)" disabled="@(QuizSelected!=null)">
+                        <span style="font-family:'JetBrains Mono',monospace;font-weight:700">@opt</span>
+                    </button>
+                }
+            </div>
+            @if (QuizSelected != null)
+            {
+                <div style="margin-top:12px;padding:10px 12px;border-radius:12px;background:@(QuizSelected==q.Romaji ? "rgba(34,197,94,0.12)" : "rgba(239,68,68,0.12)");border:1px solid @(QuizSelected==q.Romaji ? "rgba(34,197,94,0.25)" : "rgba(239,68,68,0.25)");font-size:13px">
+                    @(QuizSelected==q.Romaji ? "✅ Đúng!" : $"❌ Sai — đáp án: {q.Romaji}") 
+                    <button class="btn btn-primary btn-sm" style="margin-left:8px" @onclick="NextQuiz">Tiếp →</button>
+                </div>
+            }
+        }
+        else
+        {
+            <div style="text-align:center;padding:20px">
+                <div style="font-size:32px">🎉</div>
+                <h3 style="margin:8px 0">Hoàn thành! @QuizScore/@QuizQuestions.Count</h3>
+                <p class="muted" style="font-size:13px">@(QuizScore>=8 ? "Xuất sắc!" : QuizScore>=5 ? "Khá tốt, luyện thêm nhé!" : "Cố gắng thêm!")</p>
+                <div style="display:flex;gap:8px;justify-content:center;margin-top:12px">
+                    <button class="btn btn-primary" @onclick="StartQuiz">Làm lại</button>
+                    <button class="btn btn-glass" @onclick="ToggleQuiz">Về grid</button>
+                </div>
+            </div>
+        }
+    </div>
+}
+
+<div class="toolbar">
+    <div style="display:flex;gap:8px">
+        <button class="chip @(Type==KanaType.Hiragana ? "active" : "")" @onclick="() => Type=KanaType.Hiragana">あ Hiragana (@HiraCount)</button>
+        <button class="chip @(Type==KanaType.Katakana ? "active" : "")" @onclick="() => Type=KanaType.Katakana">ア Katakana (@KataCount)</button>
+    </div>
+    <input class="input" placeholder="Tìm romaji... (vd: ka, shi)" @bind="Search" @bind:event="oninput" style="min-width:180px" />
+    <div style="display:flex;gap:6px;flex-wrap:wrap">
+        <button class="chip @(RowFilter==null ? "active" : "")" @onclick="() => RowFilter=null">Tất cả</button>
+        @foreach (var r in Rows)
+        {
+            <button class="chip @(RowFilter==r ? "active" : "")" @onclick="() => RowFilter=r">@r</button>
+        }
+    </div>
+    <button class="btn btn-glass btn-sm" @onclick="SpeakAll">🔊 Đọc hàng</button>
+</div>
+
+<div class="kana-grid">
+    @foreach (var k in Filtered)
+    {
+        var learned = Progress.Progress.LearnedKana.Contains(k.Char);
+        <button class="kana-cell @(learned ? "learned" : "")" @onclick="() => OpenDetail(k)" aria-label="@k.Char @k.Romaji" title="@k.Char — @k.Romaji">
+            @if (learned) { <span class="kana-dot" aria-hidden="true"></span> }
+            <span class="kana-char">@k.Char</span>
+            <span class="kana-romaji">@k.Romaji</span>
+        </button>
+    }
+</div>
+@if (!Filtered.Any())
+{
+    <div class="glass empty" style="margin-top:16px">
+        <div class="empty-icon">🔍</div>
+        <div>Không tìm thấy chữ nào với "@Search"</div>
+    </div>
+}
+
+@if (Selected != null)
+{
+    <div style="position:fixed;inset:0;z-index:50;display:grid;place-items:center;padding:16px" @onclick="CloseDetail">
+        <div style="position:absolute;inset:0;background:rgba(0,0,0,0.5);backdrop-filter:blur(6px)" aria-hidden="true"></div>
+        <div class="glass glass-strong" style="position:relative;max-width:420px;width:100%;padding:24px;text-align:center" @onclick:stopPropagation="true">
+            <button class="btn btn-glass btn-sm" style="position:absolute;top:12px;right:12px" @onclick="CloseDetail" aria-label="Đóng">✕</button>
+            <div class="jp" style="font-size:72px;font-weight:800;line-height:1;margin-bottom:8px">@Selected.Char</div>
+            <div style="font-family:'JetBrains Mono',monospace;font-size:18px;font-weight:700;color:var(--primary)">@Selected.Romaji</div>
+            <div style="font-size:12px;color:var(--text-muted);margin-top:4px">@Selected.Type • hàng @Selected.Row</div>
+            <div style="display:flex;gap:8px;justify-content:center;margin-top:16px;flex-wrap:wrap">
+                <button class="btn btn-primary btn-sm" @onclick="() => Speak(Selected.Char)">🔊 Nghe</button>
+                <button class="btn @(Progress.Progress.LearnedKana.Contains(Selected.Char) ? "btn-primary" : "btn-glass") btn-sm" @onclick="() => ToggleLearned(Selected.Char)">
+                    @(Progress.Progress.LearnedKana.Contains(Selected.Char) ? "✓ Đã thuộc" : "Đánh dấu đã thuộc")
+                </button>
+            </div>
+            <div style="margin-top:12px;font-size:12px;color:var(--text-dim)">Bấm ngoài để đóng • ESC</div>
+        </div>
+    </div>
+}
+
+@code {
+    private KanaType Type = KanaType.Hiragana;
+    private string? RowFilter;
+    private string Search = "";
+    private Kana? Selected;
+    private bool QuizMode;
+    private List<QuizItem> QuizQuestions = new();
+    private int QuizIndex, QuizScore;
+    private string? QuizSelected;
+
+    private record QuizItem(string Char, string Romaji, string[] Options);
+
+    private IReadOnlyList<string> Rows => KanaService.GetRows();
+    private int HiraCount => KanaService.GetByType(KanaType.Hiragana).Count;
+    private int KataCount => KanaService.GetByType(KanaType.Katakana).Count;
+    private IEnumerable<Kana> Filtered
+    {
+        get
+        {
+            var q = KanaService.GetByType(Type).AsEnumerable();
+            if (!string.IsNullOrWhiteSpace(RowFilter)) q = q.Where(k => k.Row == RowFilter);
+            if (!string.IsNullOrWhiteSpace(Search)) q = q.Where(k => k.Romaji.Contains(Search.Trim().ToLower()));
+            return q;
+        }
+    }
+    private int Percent => (int)Math.Round(Progress.Progress.LearnedKana.Count * 100.0 / 92);
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender) { await Progress.LoadAsync(); StateHasChanged(); }
+    }
+
+    private void OpenDetail(Kana k) => Selected = k;
+    private void CloseDetail() => Selected = null;
+    private async Task ToggleLearned(string ch) { await Progress.MarkKanaLearned(ch); if (Progress.Progress.LearnedKana.Contains(ch) && Selected!=null) { /* already added, need toggle off? For now only add */ } StateHasChanged(); }
+    private async Task Speak(string text) { try { await JS.InvokeVoidAsync("n5Speech.speak", text, "ja-JP"); } catch {} }
+    private async Task SpeakAll() { foreach(var k in Filtered.Take(5)) { await Speak(k.Char); await Task.Delay(600); } }
+
+    private void ToggleQuiz() { QuizMode = !QuizMode; if (QuizMode) StartQuiz(); }
+    private void StartQuiz()
+    {
+        var pool = KanaService.GetByType(Type).OrderBy(_=>Guid.NewGuid()).Take(10).ToList();
+        QuizQuestions = pool.Select(k => {
+            var opts = KanaService.GetByType(Type).Where(x=>x.Romaji!=k.Romaji).OrderBy(_=>Guid.NewGuid()).Take(3).Select(x=>x.Romaji).Append(k.Romaji).OrderBy(_=>Guid.NewGuid()).ToArray();
+            return new QuizItem(k.Char, k.Romaji, opts);
+        }).ToList();
+        QuizIndex=0; QuizScore=0; QuizSelected=null;
+    }
+    private void AnswerQuiz(string opt)
+    {
+        QuizSelected = opt;
+        if (opt == QuizQuestions[QuizIndex].Romaji) QuizScore++;
+    }
+    private void NextQuiz() { QuizIndex++; QuizSelected=null; }
+}

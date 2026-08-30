@@ -1,0 +1,246 @@
+@page "/practice"
+@rendermode InteractiveServer
+@inject IQuizService QuizService
+@inject IProgressService Progress
+@inject IJSRuntime JS
+
+<PageTitle>Thi thử N5 — Practice</PageTitle>
+
+<PageHelper Title="Thi thử — Practice Test"
+            Purpose="Làm đề thi thử N5 10-20 câu trắc nghiệm (kana/kanji/vocab/grammar), chấm điểm, xem giải thích, lưu điểm cao nhất. Giúp đánh giá trình độ trước khi thi thật."
+            Structure="Route '/practice' → Practice.razor. Chọn category + số câu, bấm Bắt đầu → render từng câu với EditForm + InputRadioGroup, Next/Prev, Submit → Result + Review."
+            Techniques="Blazor Forms: EditForm + DataAnnotationsValidator + InputRadioGroup (int), ValidationMessage, OnValidSubmit. State: current index, answers dict, timer via PeriodicTimer. DI: IQuizService.GetRandom, IProgressService.RecordQuiz."
+            Features="Chọn category (all/kana/kanji/vocab/grammar), chọn 10/15/20 câu, làm bài từng câu, chấm điểm, xem giải thích, lưu điểm cao, làm lại."
+            Route="/practice"
+            ComponentName="Practice.razor"
+            TechBullets="@(new[]{"EditForm + DataAnnotationsValidator — form Blazor","InputRadioGroup<int> — bind đáp án","IQuizService.GetRandom(count, category) — random đề","IProgressService.RecordQuiz — lưu điểm cao nhất"})"
+            FeatureBullets="@(new[]{"Chọn category + số câu (10/15/20)","Làm bài từng câu, Next/Prev","Chấm điểm + % + giải thích","Lưu điểm cao nhất vào Progress"})" />
+
+<div style="display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:16px">
+    <div>
+        <h1 style="margin:0;font-size:24px;font-weight:800">🧪 Thi thử N5</h1>
+        <p class="muted" style="margin:4px 0 0;font-size:13px">Chọn đề, làm bài, chấm điểm — có giải thích chi tiết</p>
+    </div>
+    @if (Started && !Finished)
+    {
+        <div style="display:flex;gap:8px;align-items:center">
+            <span class="badge badge-primary">Câu @(Current+1)/@Questions.Count</span>
+            <span class="badge">⏱ @ElapsedSeconds s</span>
+            <button class="btn btn-glass btn-sm" @onclick="Quit">Thoát</button>
+        </div>
+    }
+</div>
+
+@if (!Started)
+{
+    <div class="glass card" style="margin-bottom:16px">
+        <h3 style="margin:0 0 12px;font-size:15px;font-weight:800">⚙️ Cấu hình đề</h3>
+        <div style="display:flex;gap:12px;flex-wrap:wrap;align-items:end">
+            <div>
+                <label style="font-size:12px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;color:var(--text-muted)">Category</label>
+                <div style="display:flex;gap:6px;margin-top:6px;flex-wrap:wrap">
+                    @foreach (var c in Categories)
+                    {
+                        <button class="chip @(Category==c.Value ? "active" : "")" @onclick="() => Category=c.Value">@c.Label</button>
+                    }
+                </div>
+            </div>
+            <div>
+                <label style="font-size:12px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;color:var(--text-muted)">Số câu</label>
+                <div style="display:flex;gap:6px;margin-top:6px">
+                    @foreach (var n in new[]{10,15,20})
+                    {
+                        <button class="chip @(Count==n ? "active" : "")" @onclick="() => Count=n">@n câu</button>
+                    }
+                </div>
+            </div>
+            <button class="btn btn-primary" @onclick="Start">Bắt đầu làm bài →</button>
+        </div>
+        <div style="margin-top:12px;padding:10px 12px;border-radius:12px;background:rgba(99,102,241,0.08);border:1px solid rgba(99,102,241,0.15);font-size:12px;color:var(--text-muted)">
+            💡 Đề được random từ ngân hàng 20 câu (kana/kanji/vocab/grammar). Dùng <code>EditForm</code> + <code>InputRadioGroup</code> để chọn đáp án, có validation.
+        </div>
+        @if (Progress.Progress.QuizScores.Any())
+        {
+            <div style="margin-top:12px;display:flex;gap:8px;flex-wrap:wrap">
+                @foreach (var kv in Progress.Progress.QuizScores)
+                {
+                    <span class="badge badge-success">@kv.Key: @kv.Value điểm cao nhất</span>
+                }
+            </div>
+        }
+    </div>
+    <div class="grid grid-3">
+        <div class="glass card">
+            <div style="font-weight:700;font-size:14px;margin-bottom:4px">📝 Cách làm bài</div>
+            <div style="font-size:13px;color:var(--text-muted);line-height:1.6">Chọn đáp án → bấm Tiếp. Có thể quay lại câu trước. Bấm Nộp bài để chấm điểm.</div>
+        </div>
+        <div class="glass card">
+            <div style="font-weight:700;font-size:14px;margin-bottom:4px">🎯 Chấm điểm</div>
+            <div style="font-size:13px;color:var(--text-muted);line-height:1.6">Mỗi câu 1 điểm. ≥80% là giỏi, ≥60% là đạt. Xem lại giải thích sau khi nộp.</div>
+        </div>
+        <div class="glass card">
+            <div style="font-weight:700;font-size:14px;margin-bottom:4px">💾 Lưu tiến độ</div>
+            <div style="font-size:13px;color:var(--text-muted);line-height:1.6">Điểm cao nhất được lưu vào <code>localStorage</code> qua <code>IProgressService</code> + JS interop.</div>
+        </div>
+    </div>
+}
+else if (!Finished)
+{
+    var q = Questions[Current];
+    <div class="glass card" style="margin-bottom:16px">
+        <div style="display:flex;gap:8px;margin-bottom:12px;flex-wrap:wrap">
+            @for (int i=0;i<Questions.Count;i++)
+            {
+                var idx=i;
+                <button class="chip @(idx==Current ? "active" : Answers.ContainsKey(Questions[idx].Id) ? "chip" : "")" style="@(Answers.ContainsKey(Questions[idx].Id) && idx!=Current ? "background:rgba(34,197,94,0.12);border-color:rgba(34,197,94,0.25);color:#86efac" : "")" @onclick="() => Current=idx">@(i+1)</button>
+            }
+        </div>
+
+        <div style="margin-bottom:8px;display:flex;gap:8px;align-items:center">
+            <span class="badge badge-primary">@q.Category</span>
+            <span class="badge">#@q.Id</span>
+        </div>
+        <h3 style="margin:0 0 16px;font-size:16px;font-weight:700;line-height:1.5">@q.Question</h3>
+
+        <EditForm Model="@FormModel" OnValidSubmit="NextOrSubmit">
+            <DataAnnotationsValidator />
+            <InputRadioGroup @bind-Value="FormModel.SelectedIndex">
+                <div style="display:flex;flex-direction:column;gap:10px">
+                    @for (int i=0;i<q.Options.Length;i++)
+                    {
+                        var oi=i;
+                        <label class="quiz-option @(FormModel.SelectedIndex==oi ? "selected" : "")" style="cursor:pointer">
+                            <InputRadio Value="@oi" />
+                            <span style="font-weight:600">@((char)('A'+oi)). @q.Options[oi]</span>
+                        </label>
+                    }
+                </div>
+            </InputRadioGroup>
+            <ValidationMessage For="@(() => FormModel.SelectedIndex)" />
+            <div style="display:flex;gap:8px;margin-top:16px;flex-wrap:wrap">
+                <button type="button" class="btn btn-glass" @onclick="Prev" disabled="@(Current==0)">← Trước</button>
+                @if (Current < Questions.Count-1)
+                {
+                    <button type="submit" class="btn btn-primary">Tiếp →</button>
+                }
+                else
+                {
+                    <button type="submit" class="btn btn-primary">Nộp bài ✓</button>
+                }
+                <span style="margin-left:auto;font-size:12px;color:var(--text-muted);align-self:center">Đã làm @Answers.Count/@Questions.Count câu</span>
+            </div>
+        </EditForm>
+    </div>
+}
+else
+{
+    <div class="rainbow-wrap" style="margin-bottom:16px">
+        <div class="glass card" style="text-align:center;padding:24px">
+            <div style="font-size:36px">🎉</div>
+            <h2 style="margin:8px 0;font-size:22px;font-weight:800">Kết quả: @Score/@Questions.Count (@Percent%)</h2>
+            <p style="color:var(--text-muted);font-size:14px;margin:0 0 12px">@ResultMessage</p>
+            <div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap">
+                <button class="btn btn-primary" @onclick="Restart">Làm lại</button>
+                <button class="btn btn-glass" @onclick="Quit">Chọn đề khác</button>
+                <a class="btn btn-glass" href="/progress">📊 Xem tiến độ</a>
+            </div>
+        </div>
+    </div>
+
+    <div style="display:flex;flex-direction:column;gap:12px">
+        @foreach (var q in Questions)
+        {
+            var ans = Answers.GetValueOrDefault(q.Id, -1);
+            var correct = ans == q.CorrectIndex;
+            <div class="glass" style="padding:16px;border-left:4px solid @(correct ? "var(--success)" : "var(--danger)")">
+                <div style="display:flex;gap:8px;align-items:center;margin-bottom:8px">
+                    <span class="badge @(correct ? "badge-success" : "")" style="@(correct ? "" : "background:rgba(239,68,68,0.12);color:#fca5a5;border-color:rgba(239,68,68,0.25)")">@(correct ? "✓ Đúng" : "✗ Sai")</span>
+                    <span class="badge badge-primary">@q.Category</span>
+                    <span style="font-size:13px;font-weight:600">@q.Question</span>
+                </div>
+                <div style="display:flex;flex-direction:column;gap:6px;margin-left:8px">
+                    @for (int i=0;i<q.Options.Length;i++)
+                    {
+                        var isAns = ans==i;
+                        var isCorrect = q.CorrectIndex==i;
+                        <div style="padding:8px 10px;border-radius:8px;font-size:13px;border:1px solid @(isCorrect ? "rgba(34,197,94,0.3)" : isAns ? "rgba(239,68,68,0.3)" : "rgba(255,255,255,0.06)");background:@(isCorrect ? "rgba(34,197,94,0.10)" : isAns ? "rgba(239,68,68,0.10)" : "rgba(255,255,255,0.03)")">
+                            @((char)('A'+i)). @q.Options[i] @(isAns ? "← bạn chọn" : "") @(isCorrect ? "✓ đáp án" : "")
+                        </div>
+                    }
+                </div>
+                <div style="margin-top:8px;padding:8px 10px;border-radius:8px;background:rgba(99,102,241,0.08);border:1px solid rgba(99,102,241,0.15);font-size:12px;color:var(--text-muted)">💡 @q.Explanation</div>
+            </div>
+        }
+    </div>
+}
+
+@code {
+    private string? Category = null;
+    private int Count = 10;
+    private List<QuizQuestion> Questions = new();
+    private Dictionary<int,int> Answers = new();
+    private int Current;
+    private bool Started, Finished;
+    private int Score, Percent;
+    private int ElapsedSeconds;
+    private System.Threading.Timer? Timer;
+    private QuizFormModel FormModel = new();
+
+    private record CatOption(string Label, string? Value);
+    private List<CatOption> Categories = new(){ new("Tất cả", null), new("Kana","kana"), new("Kanji","kanji"), new("Vocab","vocab"), new("Grammar","grammar") };
+
+    private string ResultMessage => Percent>=80 ? "Xuất sắc! Bạn đã sẵn sàng cho N5 🎌" : Percent>=60 ? "Khá tốt! Ôn thêm chút nữa nhé 💪" : "Cố gắng thêm! Xem lại Kana/Kanji/Vocab nhé 📚";
+
+    protected override async Task OnAfterRenderAsync(bool firstRender){ if(firstRender){ await Progress.LoadAsync(); StateHasChanged(); } }
+
+    private void Start()
+    {
+        Questions = QuizService.GetRandom(Count, Category).ToList();
+        Answers.Clear(); Current=0; Started=true; Finished=false; Score=0; ElapsedSeconds=0;
+        FormModel = new();
+        Timer?.Dispose();
+        Timer = new System.Threading.Timer(_ => { ElapsedSeconds++; InvokeAsync(StateHasChanged); }, null, 1000, 1000);
+        if (Questions.Any()) FormModel.SelectedIndex = Answers.GetValueOrDefault(Questions[0].Id, -1);
+    }
+
+    private void NextOrSubmit()
+    {
+        if (FormModel.SelectedIndex < 0) return;
+        Answers[Questions[Current].Id] = FormModel.SelectedIndex;
+        if (Current < Questions.Count-1)
+        {
+            Current++;
+            FormModel.SelectedIndex = Answers.GetValueOrDefault(Questions[Current].Id, -1);
+        }
+        else
+        {
+            Submit();
+        }
+    }
+
+    private void Prev()
+    {
+        if (FormModel.SelectedIndex >=0) Answers[Questions[Current].Id] = FormModel.SelectedIndex;
+        if (Current>0){ Current--; FormModel.SelectedIndex = Answers.GetValueOrDefault(Questions[Current].Id, -1); }
+    }
+
+    private async void Submit()
+    {
+        Score = Questions.Count(q => Answers.GetValueOrDefault(q.Id,-1)==q.CorrectIndex);
+        Percent = Questions.Count==0?0:(int)Math.Round(Score*100.0/Questions.Count);
+        Finished=true;
+        Timer?.Dispose();
+        var cat = Category ?? "all";
+        await Progress.RecordQuiz(cat, Score);
+        StateHasChanged();
+    }
+
+    private void Restart(){ Start(); }
+    private void Quit(){ Started=false; Finished=false; Timer?.Dispose(); }
+
+    public class QuizFormModel
+    {
+        [System.ComponentModel.DataAnnotations.Range(0, 10, ErrorMessage="Hãy chọn một đáp án")]
+        public int SelectedIndex { get; set; } = -1;
+    }
+}

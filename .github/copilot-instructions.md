@@ -30,6 +30,7 @@ Idea → Explore → Clarify → PRD → Design → Plan → Implement → Polis
 | **Verify** | Đảm bảo chất lượng | build/test/lint pass, visual check | `Verify` agent |
 
 > **Quy tắc:** Không được nhảy từ Idea → Code. Phải qua PRD + Design + Plan. Không có Agent sẵn thì harness tự tạo process.
+> **Verify animation:** CSS `conic-gradient`/`--angle` phải đo bằng Playwright `getComputedStyle(...).getPropertyValue('--angle')` trước/sau 500ms, không chỉ nhìn (KN-003/KN-004).
 
 ### Khi nào áp dụng
 - ✅ Mọi task code: feature, bug, refactor, web, API, script
@@ -89,6 +90,7 @@ Mọi sản phẩm web PHẢI đạt:
 - **Scaffold:** `create <type> <name>` tạo mới từ template — sửa `description`/`applyTo` là xong.
 - **Wise loading:** Chỉ load khi `description`/`applyTo` match task. Đừng bật 20 thứ cùng lúc.
 - **Lệnh:** `node .github/harness/scripts/harness-manager.mjs <list|status|enable|disable|install|create|preset|sync|help>`
+- **STATUS:** `www/status.json` không sửa tay — luôn regenerate từ `registry.json` (`generate-status.mjs`), verify `JSON.parse` + `serve www` 200 (KN-002)
 - Chi tiết: `.github/skills/custom-registry/SKILL.md` + `.github/instructions/custom-registry.instructions.md`
 
 ## 5c. Slash Command Contract
@@ -96,6 +98,13 @@ Mọi sản phẩm web PHẢI đạt:
 - Tên lệnh = tên file `*.prompt.md` chữ thường: `/harness`, `/product`, `/plan`, `/implement`, `/polish`, `/verify` — không `/Harness`, không `+`.
 - Cách gọi: gõ `/` → chọn trong list → điền `task` → `Enter`. Yêu cầu **Agent mode** (dropdown Chat).
 - Nếu không hiện gợi ý: `Developer: Reload Window` → kiểm tra `agent: agent` trong frontmatter và `chat.mcp.enabled`.
+
+## 5d. Windows Script Contract (PowerShell 5.1 — BẮT BUỘC)
+
+- Chạy script: `run_in_terminal` mode `sync`, dùng `;` không dùng `&&`, path dùng `/` hoặc `path.join`
+- `.ps1` luôn UTF-8 **with BOM**, `.mjs` thêm `try/catch` + `process.exit(1)` khi lỗi
+- Sau mỗi script: check `exit code` + `get_errors`, không đoán "chắc chạy được"
+- Chi tiết: `docs/knowleged.md` KN-003/KN-004 (encoding, path separator)
 
 ## 6. Memory
 
@@ -116,6 +125,10 @@ Mọi sản phẩm web PHẢI đạt:
 - ❌ Lưu plan flat `.agent/plans/<task>-prd.md` — phải `.agent/plans/<task>/prd.md`
 - ❌ Gõ `/Harness + lệnh` / chữ hoa / thiếu Agent mode
 - ❌ Sửa file trực tiếp mà không qua `harness-manager` (lệch `registry.json`)
+- ❌ Khi user nói "thử lại / vẫn lỗi / lặp lại" mà lặp nguyên output cũ — phải đổi strategy, diff file trước/sau, đo lại bằng tool
+- ❌ Viết script kiểu *nix trên Windows (dùng `&&`, path `\`, `.ps1` không BOM) → lỗi vặt PowerShell 5.1 (xem §5d)
+- ❌ Verify animation bằng mắt thường thay vì đo `--angle` bằng Playwright (KN-003/KN-004)
+- ❌ Sửa `www/status.json` tay thay vì regenerate từ `registry.json` (KN-002)
 
 ---
 *Harness v2: Process > Model. Idea nhỏ → Product đẹp. Mọi model đều chạy cùng pipeline.*
