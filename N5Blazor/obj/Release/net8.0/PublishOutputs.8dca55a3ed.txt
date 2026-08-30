@@ -1,7 +1,0 @@
-D:\CLAUDE_VS\N5Blazor\publish\N5Blazor.exe
-D:\CLAUDE_VS\N5Blazor\publish\appsettings.Development.json
-D:\CLAUDE_VS\N5Blazor\publish\appsettings.json
-D:\CLAUDE_VS\N5Blazor\publish\N5Blazor.dll
-D:\CLAUDE_VS\N5Blazor\publish\N5Blazor.deps.json
-D:\CLAUDE_VS\N5Blazor\publish\N5Blazor.runtimeconfig.json
-D:\CLAUDE_VS\N5Blazor\publish\N5Blazor.pdb

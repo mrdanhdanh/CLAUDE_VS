@@ -6,6 +6,20 @@ www/library/export.json
 www/library/library-export-*.json
 www/library/export.full.json
 
+# ===== .NET / Blazor build artifacts — NEVER commit (debug) =====
+bin/
+obj/
+publish/
+out/
+TestResults/
+*.coverage
+*.coveragexml
+*.user
+*.suo
+.vs/
+*.dbmdl
+*.jfm
+
 # ===== Common =====
 node_modules/
 .DS_Store
