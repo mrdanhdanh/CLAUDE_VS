@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-30T17:29:16.452Z",
+  "generatedAt": "2026-08-30T18:17:18.123Z",
   "generatedBy": "YUNIE",
   "version": 1,
   "counts": {
@@ -232,14 +232,14 @@
   "health": {
     "errors": 0,
     "status": "ok",
-    "lastCheck": "2026-08-30T17:29:16.453Z",
+    "lastCheck": "2026-08-30T18:17:18.124Z",
     "checks": [
       "get_errors: pass (0 errors)",
       "registry: 10 instructions (10 total) - 8 skills - 8 agents - 7 prompts - 1 hook — all enabled",
       "www: polished — responsive 375/768/1280, a11y, states, animation 150-300ms",
       "workflow: www/** -> Pages (upload-artifact path: www) — exists: true",
       "library: www/library/ (PDF/DOCX/TXT/MD, BM25 <100ms, tháo lắp) + mcp-server.mjs + export.json + library-rag instruction",
-      "auto-learn: 8 KN, 6 bugs, 0 drafts — suggest/log/propose/status (<50ms, IDF, tiếng Việt)",
+      "auto-learn: 9 KN, 6 bugs, 0 drafts — suggest/log/propose/status (<50ms, IDF, tiếng Việt)",
       "n5-blazor: www/n5-blazor/ 7 trang static + app.css + data.js + site.js — 100% Pages"
     ]
   },
@@ -287,7 +287,7 @@
     "philosophy": "Process > Model"
   },
   "learn": {
-    "knTotal": 8,
+    "knTotal": 9,
     "bugsTotal": 6,
     "drafts": 0
   }

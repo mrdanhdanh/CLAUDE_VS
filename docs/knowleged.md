@@ -204,6 +204,21 @@
 - **Tags:** `build` `process` `dx` `dotnet`
 - **Người ghi:** YUNIE / auto-learn
 
+### KN-009 — Slot máy chủ AI không hoạt động (hardcode localhost dev tunnel trong app released)
+
+- **Ngày:** 2026-08-30
+- **Bug report:** _(chưa có `.agent/bugs/<slug>/bug.md` — ghi trực tiếp vào Bảng tóm tắt, cần bổ sung qua `auto-learn log`)_
+- **Severity:** critical
+- **Triệu chứng:** App deploy ra môi trường thật vẫn gọi `localhost:5050` — slot máy chủ AI không hoạt động. Dev chạy server local thì "chạy tốt" → bug chỉ lộ khi rời máy dev.
+- **Nguyên nhân gốc:** Hardcode URL tunnel dev (`http://localhost:5050` / tunnel) vào `appsettings.json` + `Program.cs`. Build-time config gắn vào binary → publish sang máy khác là sai value vĩnh viễn.
+- **Cách sửa:** Bỏ tunnel URL khỏi repo. Server URL là **runtime config**: env `AI_SERVER_URL` / user-secrets (`dotnet user-secrets set AI_SERVER_URL http://localhost:5050`); `Program.cs` chỉ đọc config, không chứa giá trị máy dev.
+- **Cách phòng tránh:**
+  - 3 tầng config: `appsettings.json` (default code, không secret) / `user-secrets` + env (máy dev) / Docker secret + CI (prod).
+  - CI check cấm `localhost|http://` trong `appsettings*`.
+  - Trước khi deploy, test bằng **release build ở máy khác** — fresh eyes (KN-005).
+- **Tags:** `config` `api` `build` `dx`
+- **Người ghi:** YUNIE / harness
+
 <!-- Thêm bài học mới theo template dưới — copy block này -->
 
 <!--
@@ -274,4 +289,4 @@
 ---
 
 *File này do `/fixbug` tự động cập nhật. Mọi luồng khác phải đọc để không lặp lại lỗi cũ.*
-*UpdatedAt: 2026-08-30T16:25:00Z — Maintained by YUNIE / Harness v2 — KN-008 added (dotnet build file lock MSB3027) — KN-007 added (Auto-Learn) — KN-006 added (N5 UI polish) — KN-005 added (Bug Blindness)*
+*UpdatedAt: 2026-08-30T18:18:00Z — Maintained by YUNIE / Harness v2 — KN-009 bổ sung detail section (slot máy chủ AI — hardcode config) — KN-008 added (dotnet build file lock MSB3027) — KN-007 added (Auto-Learn) — KN-006 added (N5 UI polish) — KN-005 added (Bug Blindness)*
