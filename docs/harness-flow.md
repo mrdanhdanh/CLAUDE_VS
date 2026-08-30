@@ -120,6 +120,8 @@ flowchart LR
         S1["claude-harness<br/>Idea→Product pipeline"]
         S2["skill-registry<br/>tháo lắp skill"]
         S3["custom-registry<br/>tháo lắp toàn bộ"]
+        S4["tdd-gate<br/>RED-GREEN-REFACTOR"]
+        S5["systematic-debugging<br/>4-phase debug"]
     end
 
     subgraph Instructions["Instructions (.github/instructions/)"]
@@ -160,6 +162,8 @@ flowchart LR
 
     A --> S1 & I1 & AG1 & P1
     S1 --> AG1 & AG2 & AG3 & AG4 & AG5 & AG6
+    S4 --> AG4
+    S5 --> AG4 & AG6
     I1 --> AG1
     I2 --> AG5
     CLI --> R
@@ -184,9 +188,9 @@ flowchart LR
 | **PRD** | Biến ý tưởng thành spec | Clarify + Explore | `.agent/plans/<slug>/prd.md` | template `prd-template.md` | `Plan` | ❌ (mini 5 dòng cũng phải có) |
 | **Design** | Định nghĩa giao diện đẹp | PRD | `.agent/plans/<slug>/design.md` | template `design-template.md` | `Designer` | ❌ |
 | **Plan** | Chia nhỏ để code | PRD + Design | `.agent/plans/<slug>/plan.md` + `manage_todo_list` | `manage_todo_list` | `Plan` | ❌ |
-| **Implement** | Code todo-driven | Plan + todos | Files code | `replace_string_in_file`, `multi_replace`, `get_errors` | `Implement` | ❌ |
+| **Implement** | Code todo-driven **+ TDD Gate** | Plan + todos | Files code (RED→GREEN→REFACTOR) | `tdd-gate` skill, `replace_string_in_file`, `multi_replace`, `get_errors` | `Implement` | ❌ |
 | **Polish** | Làm đẹp + UX | Code + Design | Responsive, states, animation, a11y | `read_file`, `replace`, `open_browser_page` | `Polish` | ❌ |
-| **Verify** | Đảm bảo chất lượng | Code | build/test/lint pass + visual check | `get_errors`, `run_in_terminal` | `Verify` | ❌ |
+| **Verify** | Đảm bảo chất lượng **+ verification-before-completion** | Code | build/test/lint pass + visual check (fresh evidence) | `systematic-debugging` Phase 4.3, `get_errors`, `run_in_terminal` | `Verify` | ❌ |
 
 ### Outputs mẫu (Focus Flow demo)
 
@@ -236,7 +240,32 @@ Read Knowledge → Reproduce → Root Cause → Fix → Verify → Learn → Don
 - **Explore tiết kiệm:** Chỉ delegate `Explore` khi bug rộng/chưa rõ vị trí; bug nhỏ dùng `grep_search`/`read_file` trực tiếp
 - **Scope control:** Chỉ sửa ở gốc, không refactor lan rộng — việc lớn ghi `Non-Goals` trong `bug.md`
 
-Chi tiết: `.github/prompts/fixbug.prompt.md` · `.github/instructions/harness-workflow.instructions.md` · `.agent/bugs/_template/bug.md`
+Chi tiết: `.github/prompts/fixbug.prompt.md` · `.github/instructions/harness-workflow.instructions.md` · `.agent/bugs/_template/bug.md` · Skills: `tdd-gate` + `systematic-debugging` (inspired by `obra/superpowers`)
+
+---
+
+## 5c. Skills mới — TDD Gate + Systematic Debugging (từ obra/superpowers)
+
+> Adapted cho Harness v2 — không copy nguyên, đã tích hợp với `auto-learn`, `knowleged.md`, `dotnet test`, `get_errors` phân tầng.
+
+| Skill | Iron Law | Khi nào | Tích hợp |
+|-------|----------|---------|----------|
+| `tdd-gate` | `NO PRODUCTION CODE WITHOUT A FAILING TEST FIRST` | Mọi production code change (feature, bug fix, refactor) | `/harness` Implement + `/fixbug` Fix — mỗi todo có code phải có test fail trước (RED→verify FAIL→GREEN→verify PASS→REFACTOR) |
+| `systematic-debugging` | `NO FIXES WITHOUT ROOT CAUSE INVESTIGATION FIRST` | Mọi bug, test failure, build failure | `/fixbug` 4 phase (Root Cause → Pattern → Hypothesis → Implementation) + `/harness` Verify khi phát hiện bug — 3-fix limit → question architecture |
+
+**TDD Gate (RED-GREEN-REFACTOR):**
+- RED: 1 behavior, tên rõ, test real code → `dotnet test --filter` phải FAIL đúng lý do
+- GREEN: code minimal nhất để pass → `dotnet test` phải PASS + không break test khác
+- REFACTOR: chỉ sau GREEN, giữ test GREEN
+- Checklist trước Done: mỗi function có test, đã watch FAIL, fail đúng lý do, minimal code, all pass, edge cases covered
+
+**Systematic Debugging (4 Phase):**
+1. Root Cause Investigation — read errors, reproduce consistently, check recent changes, gather evidence at boundaries, trace data flow
+2. Pattern Analysis — find working examples, compare references, identify differences
+3. Hypothesis & Testing — single hypothesis, minimal change, verify
+4. Implementation — TDD fix (dùng `tdd-gate`), single fix, verification-before-completion (fresh evidence), 3-fix limit → question architecture
+
+Chi tiết: `.github/skills/tdd-gate/SKILL.md` · `.github/skills/systematic-debugging/SKILL.md` · Gốc: `obra/superpowers`
 
 ---
 

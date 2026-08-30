@@ -67,11 +67,12 @@ Với task nhỏ (1-2 file): rút gọn Explore(quick) → Clarify(1 câu) → P
 - Hiểu codebase → `runSubagent` (Explore) — với `/fixbug` chỉ delegate nếu bug rộng, bug nhỏ dùng `grep_search`/`read_file` trực tiếp (tiết kiệm)
 - Ý tưởng mơ hồ → `vscode_askQuestions` (max 3 câu, có options)
 - PRD/Design/Plan → `.agent/plans/` + templates `../skills/claude-harness/templates/`
-- Bug → `.agent/bugs/` + template `_template/bug.md` — bounded repair loop, scope control, confidence gate
+- Bug → `.agent/bugs/` + template `_template/bug.md` — bounded repair loop, scope control, confidence gate — dùng `systematic-debugging` skill (4 phase) cho mọi bug
+- Implement / Fix có code → `tdd-gate` skill (RED-GREEN-REFACTOR bắt buộc, không production code nếu chưa có test fail)
 - Multi-file edit → `multi_replace_string_in_file`
 - Sau edit → `get_errors` **affected files** (Phase 3 Fix); toàn scope ở Verify (Phase 4)
 - Polish → audit theo `product-quality.instructions.md` — với `/fixbug` chỉ audit nhanh nếu bug là UI
-- Verify → `run_in_terminal` (sync), loop fix max 3 lần/check — Fresh-eyes tiered: REQUIRED (UX/UI/workflow), RECOMMENDED (regression-prone), OPTIONAL (deterministic)
+- Verify → `run_in_terminal` (sync), loop fix max 3 lần/check — Fresh-eyes tiered: REQUIRED (UX/UI/workflow), RECOMMENDED (regression-prone), OPTIONAL (deterministic) — áp dụng `verification-before-completion` gate (fresh evidence, không dùng kết quả cũ)
 
 ## Product Quality (áp dụng cho mọi web UI)
 

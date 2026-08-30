@@ -54,6 +54,24 @@
       "description": "UI/UX design intelligence for web, mobile, and desktop. This skill should be used when designing, building, reviewing, or fixing interfaces, including pages, components, design systems, accessibility, interaction, responsive layout, typography, color, charts, and stack-specific UI implementation. Searchable local data: 79 searchable styles (50 active), 192 product palettes and reasoning profiles, 74 font pairings, 119 UX guidelines, 105 icons, 17 GSAP presets, 25 chart types, and 22 stacks.",
       "file": "ui-ux-pro-max/SKILL.md",
       "installedAt": "2026-08-29T15:13:36.596Z"
+    },
+    "tdd-gate": {
+      "source": "local",
+      "path": "skills/tdd-gate",
+      "ref": "local",
+      "enabled": true,
+      "description": "TDD gate — RED-GREEN-REFACTOR bắt buộc trước khi viết production code. Use when implementing feature, fixing bug, refactoring, or any production code change — enforces failing test first, minimal code, verify before claim. Inspired by obra/superpowers test-driven-development.",
+      "file": "tdd-gate/SKILL.md",
+      "installedAt": "2026-08-31T00:00:00.000Z"
+    },
+    "systematic-debugging": {
+      "source": "local",
+      "path": "skills/systematic-debugging",
+      "ref": "local",
+      "enabled": true,
+      "description": "Systematic debugging 4-phase — root cause first, no guessing. Use when bug, test failure, build failure, unexpected behavior, before proposing fixes. Enforces evidence gathering, pattern analysis, single hypothesis, TDD fix, 3-fix limit. Inspired by obra/superpowers systematic-debugging.",
+      "file": "systematic-debugging/SKILL.md",
+      "installedAt": "2026-08-31T00:00:00.000Z"
     }
   },
   "instructions": {

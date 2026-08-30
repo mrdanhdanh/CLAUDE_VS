@@ -85,8 +85,13 @@ Skills là workflow on-demand, agent chỉ load khi `description` match task (pr
 | Skill | Mô tả | Khi nào dùng | Slash |
 |-------|-------|--------------|-------|
 | `claude-harness` | Harness v2 Idea→Product pipeline | Mọi task code, ý tưởng nhỏ → product, cần UI đẹp | `/claude-harness` |
+| `tdd-gate` | **TDD gate** — RED-GREEN-REFACTOR bắt buộc, không production code nếu chưa có test fail trước (inspired by `obra/superpowers` TDD) | Implementing feature, fixing bug, refactoring — enforces failing test first | `/tdd-gate` |
+| `systematic-debugging` | **Systematic debugging 4-phase** — root cause first, evidence gathering, single hypothesis, TDD fix, 3-fix limit (inspired by `obra/superpowers`) | Bug, test failure, build failure, unexpected behavior — before proposing fixes | `/systematic-debugging` |
 | `skill-registry` | Tháo lắp skill như plugin | Cài/gỡ/bật/tắt skill từ GitHub | `/skill-registry` |
 | `custom-registry` | Tháo lắp toàn bộ (skill/instruction/agent/prompt/hook) + preset + scaffold | Quản lý rule, preset, tạo mới customization | `/custom-registry` |
+| `glass-rainbow-effects` | Liquid glass + rainbow border effects | Cần glassmorphism, rainbow border, animated gradient | — |
+| `ui-design-system` | UI design system toolkit | Tạo design system, token, component docs | — |
+| `ui-ux-pro-max` | UI/UX design intelligence (79 styles, 192 palettes) | Review/fix UI, cần palette, typography, layout | — |
 
 - **Vị trí:** `.github/skills/<name>/SKILL.md` (folder phải khớp `name` trong frontmatter)
 - **Tháo lắp:** `harness-manager disable skill <name>` → move sang `.github/skills/.disabled/<name>`

@@ -48,7 +48,9 @@ Idea → Explore → Clarify → PRD → Design → Plan → Implement → Polis
 - Liệt kê File Changes (create/edit/delete), Risks, Verification Steps
 - Hỏi user confirm nếu task phức tạp
 
-### Phase 6: IMPLEMENT (Todo-Driven)
+### Phase 6: IMPLEMENT (Todo-Driven + TDD Gate)
+- **TDD Gate (skill `tdd-gate` — BẮT BUỘC):** `NO PRODUCTION CODE WITHOUT A FAILING TEST FIRST` — mỗi todo có code → phải viết failing test trước (RED), verify FAIL đúng lý do, rồi code minimal (GREEN), verify PASS, rồi mới REFACTOR. Không test → không code. Xem `.github/skills/tdd-gate/SKILL.md`.
+- Plan mỗi Task phải có `Test: path/to/test` + `Interfaces: Consumes/Produces` (như `writing-plans` style)
 - 1 todo `in-progress` tại 1 thời điểm
 - `read_file` chunk lớn → `replace_string_in_file` / `multi_replace_string_in_file`
 - Sau mỗi edit: `get_errors` → fix ngay → mới `completed`
@@ -65,12 +67,14 @@ Idea → Explore → Clarify → PRD → Design → Plan → Implement → Polis
   - [ ] Không inline style bừa bãi, dùng CSS variables
 - Nếu giao diện xấu → chưa xong
 
-### Phase 8: VERIFY
-- `get_errors` + `run_in_terminal` (lint/build/test)
-- Visual check: mở browser, check responsive
-- Loop fix đến khi PASS (max 3 lần/check)
+### Phase 8: VERIFY (Verification-Before-Completion Gate)
+- **Gate (BẮT BUỘC):** `NO COMPLETION CLAIMS WITHOUT FRESH VERIFICATION EVIDENCE` — trước khi claim pass/done phải chạy lệnh verify **fresh** trong message này, đọc full output + exit code, không dùng kết quả cũ. Xem `systematic-debugging` Phase 4.3.
+- `get_errors` + `run_in_terminal` (lint/build/test) — `dotnet test --nologo`, `dotnet build --nologo`
+- Visual check: mở browser, check responsive 375/768/1280
+- Nếu phát hiện bug → chạy `systematic-debugging` skill (4 phase: Root Cause → Pattern → Hypothesis → Implementation) thay vì đoán
+- Loop fix đến khi PASS (max 3 lần/check) — nếu ≥3 fixes fail → question architecture (systematic-debugging Phase 4.5)
 - Cập nhật `/memories/repo/` nếu có pattern mới
-- Chỉ khi PASS mới `task_complete`
+- Chỉ khi PASS + fresh evidence mới `task_complete`
 
 ## Product Quality Standard
 Mọi sản phẩm web PHẢI đạt chuẩn trong `.github/instructions/product-quality.instructions.md`:

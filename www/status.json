@@ -1,12 +1,12 @@
 {
-  "generatedAt": "2026-08-30T16:26:51.196Z",
+  "generatedAt": "2026-08-30T17:29:16.452Z",
   "generatedBy": "YUNIE",
   "version": 1,
   "counts": {
     "skills": {
-      "enabled": 6,
+      "enabled": 8,
       "disabled": 0,
-      "total": 6
+      "total": 8
     },
     "instructions": {
       "enabled": 10,
@@ -54,6 +54,14 @@
       "ui-ux-pro-max": {
         "enabled": true,
         "description": "UI/UX design intelligence for web, mobile, and desktop. This skill should be used when designing, building, reviewing, or fixing interfaces, including pages, components, design systems, accessibility, interaction, responsive layout, typography, color, charts, and stack-specific UI implementation. Searchable local data: 79 searchable styles (50 active), 192 product palettes and reasoning profiles, 74 font pairings, 119 UX guidelines, 105 icons, 17 GSAP presets, 25 chart types, and 22 stacks."
+      },
+      "tdd-gate": {
+        "enabled": true,
+        "description": "TDD gate — RED-GREEN-REFACTOR bắt buộc trước khi viết production code. Use when implementing feature, fixing bug, refactoring, or any production code change — enforces failing test first, minimal code, verify before claim. Inspired by obra/superpowers test-driven-development."
+      },
+      "systematic-debugging": {
+        "enabled": true,
+        "description": "Systematic debugging 4-phase — root cause first, no guessing. Use when bug, test failure, build failure, unexpected behavior, before proposing fixes. Enforces evidence gathering, pattern analysis, single hypothesis, TDD fix, 3-fix limit. Inspired by obra/superpowers systematic-debugging."
       }
     },
     "instructions": {
@@ -224,10 +232,10 @@
   "health": {
     "errors": 0,
     "status": "ok",
-    "lastCheck": "2026-08-30T16:26:51.197Z",
+    "lastCheck": "2026-08-30T17:29:16.453Z",
     "checks": [
       "get_errors: pass (0 errors)",
-      "registry: 10 instructions (10 total) - 6 skills - 8 agents - 7 prompts - 1 hook — all enabled",
+      "registry: 10 instructions (10 total) - 8 skills - 8 agents - 7 prompts - 1 hook — all enabled",
       "www: polished — responsive 375/768/1280, a11y, states, animation 150-300ms",
       "workflow: www/** -> Pages (upload-artifact path: www) — exists: true",
       "library: www/library/ (PDF/DOCX/TXT/MD, BM25 <100ms, tháo lắp) + mcp-server.mjs + export.json + library-rag instruction",
