@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Kanji N5 — Hán tự | N5 Blazor</title>
+<script>(function(){try{var t=localStorage.getItem('n5-theme');if(!t)t=(window.matchMedia&&window.matchMedia('(prefers-color-scheme: light)').matches)?'light':'dark';document.documentElement.setAttribute('data-theme',t);}catch(e){document.documentElement.setAttribute('data-theme','dark');}})();</script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+JP:wght@400;500;700&family=Zen+Maru+Gothic:wght@500;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="./app.css"/>
+</head>
+<body>
+<a class="skip-link" href="#main">Bỏ qua tới nội dung</a>
+<div class="page">
+  <aside class="sidebar" aria-label="Điều hướng chính">
+    <div style="padding:16px 14px 8px; display:flex; align-items:center; gap:10px; border-bottom:1px solid var(--glass-border)">
+      <div class="brand-mark">N5</div>
+      <div><div style="font-weight:800; letter-spacing:-0.02em; line-height:1">N5 Blazor</div><div style="font-size:11px; color:var(--text-muted); letter-spacing:0.08em; text-transform:uppercase">JLPT N5 • Liquid Glass</div></div>
+    </div>
+    <nav class="nav" aria-label="Menu chính">
+      <div class="nav-section">🏠 Tổng quan</div>
+      <a class="nav-link" href="index.html"><span class="nav-icon">🏠</span><span style="flex:1">Trang chủ</span><span class="badge" style="font-size:10px">Home</span></a>
+      <div class="nav-section">📖 Học tập — N5 cơ bản</div>
+      <a class="nav-link" href="kana.html"><span class="nav-icon">あ</span><span style="flex:1">Kana</span><span class="badge" style="font-size:10px">92 chữ</span></a>
+      <a class="nav-link" href="kanji.html"><span class="nav-icon">漢</span><span style="flex:1">Kanji</span><span class="badge" style="font-size:10px">36 chữ</span></a>
+      <a class="nav-link" href="vocab.html"><span class="nav-icon">📚</span><span style="flex:1">Từ vựng</span><span class="badge" style="font-size:10px">40 từ</span></a>
+      <a class="nav-link" href="grammar.html"><span class="nav-icon">📝</span><span style="flex:1">Ngữ pháp</span><span class="badge" style="font-size:10px">15 mẫu</span></a>
+      <div class="nav-section">🧪 Luyện tập &amp; Đánh giá</div>
+      <a class="nav-link" href="practice.html"><span class="nav-icon">🧪</span><span style="flex:1">Thi thử</span><span class="badge badge-primary" style="font-size:10px">20 câu</span></a>
+      <a class="nav-link" href="progress.html"><span class="nav-icon">📊</span><span style="flex:1">Tiến độ</span><span class="badge badge-success" style="font-size:10px">Streak</span></a>
+      <div class="nav-section">⚙️ Hệ thống</div>
+      <div style="padding:8px 10px; display:flex; flex-direction:column; gap:8px">
+        <div class="glass" style="padding:12px; border-radius:12px; font-size:12px; line-height:1.6; color:var(--text-muted)">
+          <div style="font-weight:700; color:var(--text); font-size:13px; margin-bottom:6px; display:flex; align-items:center; gap:6px">💡 Static <span class="badge badge-primary" style="font-size:10px">Pages</span></div>
+          <div style="display:flex; flex-direction:column; gap:4px; font-size:11px">
+            <span>✓ 100% static — chạy trên GitHub Pages</span>
+            <span>✓ localStorage • speechSynthesis</span>
+            <span>✓ Liquid Glass • Rainbow</span>
+          </div>
+        </div>
+      </div>
+    </nav>
+    <div class="nav-footer">
+      <div class="progress-mini"><span id="miniStreak">🔥 0 ngày</span><div class="progress-mini-bar"><div id="miniBar" class="progress-mini-fill" style="width:0%"></div></div><span id="miniPct">0%</span></div>
+      <div style="font-size:11px; color:var(--text-dim); margin-top:8px">Static • Pages • Glass + Rainbow</div>
+    </div>
+  </aside>
+  <div class="main">
+    <header class="topbar">
+      <div class="topbar-left">
+        <button class="mobile-toggle" id="mobileToggle" aria-label="Mở menu">☰</button>
+        <a class="brand" href="index.html"><span class="brand-mark" style="width:32px;height:32px;font-size:14px">N5</span><span>N5 Blazor <small>JLPT N5 cho người mới</small></span></a>
+      </div>
+      <div class="topbar-actions">
+        <span class="badge badge-primary" style="font-size:12px">✨ Liquid Glass</span>
+        <span class="badge" style="font-size:12px">🌈 Rainbow</span>
+        <button class="theme-toggle" id="themeToggle" aria-label="Chuyển giao diện sáng/tối" title="Đổi giao diện sáng/tối">☀️</button>
+        <a class="btn btn-glass btn-sm" href="progress.html">📊 Tiến độ</a>
+      </div>
+    </header>
+    <main id="main" class="content">
+      <div id="helper"></div>
+      <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:16px">
+        <div><h1 style="margin:0;font-size:24px;font-weight:800">漢 Kanji N5</h1><p class="muted" style="margin:4px 0 0;font-size:13px">36 kanji mẫu • Lọc theo bài, bấm card để xem chi tiết</p></div>
+        <div style="display:flex;gap:8px;align-items:center"><div id="ring"></div><span class="badge badge-primary" id="countBadge">0 / 36 kanji</span></div>
+      </div>
+      <div class="toolbar">
+        <input class="input" id="search" placeholder="Tìm kanji / nghĩa / on-kun..." style="flex:1;min-width:220px"/>
+        <div style="display:flex;gap:6px;flex-wrap:wrap" id="lessonChips"></div>
+        <label style="display:flex;align-items:center;gap:6px;font-size:13px;color:var(--text-muted);cursor:pointer"><input type="checkbox" id="onlyLearned"/> Chỉ đã thuộc</label>
+      </div>
+      <div class="grid grid-3" id="grid"></div>
+      <div id="empty" class="glass empty" style="display:none;margin-top:16px"><div class="empty-icon">🔍</div><div>Không tìm thấy kanji nào</div><button class="btn btn-glass btn-sm" style="margin-top:8px" id="clearFilter">Xóa bộ lọc</button></div>
+      <div id="modal" style="display:none;position:fixed;inset:0;z-index:50;place-items:center;padding:16px">
+        <div style="position:absolute;inset:0;background:rgba(0,0,0,0.5);backdrop-filter:blur(6px)" id="modalBg"></div>
+        <div class="glass glass-strong" style="position:relative;max-width:480px;width:100%;padding:24px">
+          <button class="btn btn-glass btn-sm" style="position:absolute;top:12px;right:12px" id="modalClose">✕</button>
+          <div style="text-align:center">
+            <div class="jp" style="font-size:64px;font-weight:800;line-height:1" id="mChar"></div>
+            <div style="font-size:18px;font-weight:700;margin-top:8px" id="mMeaning"></div>
+            <div style="display:flex;gap:8px;justify-content:center;margin-top:8px;flex-wrap:wrap" id="mBadges"></div>
+          </div>
+          <div style="margin-top:16px;padding:12px;border-radius:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.06)">
+            <div style="font-weight:700;font-size:13px;margin-bottom:4px">Ví dụ</div>
+            <div class="jp" style="font-size:16px" id="mEx"></div>
+            <div style="font-size:13px;color:var(--text-muted)" id="mExMean"></div>
+            <button class="btn btn-glass btn-sm" style="margin-top:8px" id="mSpeak">🔊 Nghe ví dụ</button>
+          </div>
+          <div style="display:flex;gap:8px;margin-top:16px">
+            <button class="btn btn-glass" style="flex:1" id="mLearn">Đánh dấu đã thuộc</button>
+            <button class="btn btn-glass" id="mBook">☆ Ghim</button>
+          </div>
+        </div>
+      </div>
+    </main>
+    <footer style="padding:16px 24px; text-align:center; color:var(--text-dim); font-size:12px; border-top:1px solid rgba(255,255,255,0.06); margin-top:24px">N5 Blazor Static • <a href="index.html">Trang chủ</a> • <a href="../index.html">YUNIE STATUS</a></footer>
+  </div>
+</div>
+<div id="mobileDrawer" class="mobile-drawer"><div class="mobile-drawer-backdrop"></div><div class="mobile-drawer-panel"><div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px"><div style="font-weight:800">Menu</div><button class="btn btn-glass btn-sm" onclick="document.getElementById('mobileDrawer').classList.remove('open')">✕</button></div>
+<nav class="nav"><a class="nav-link" href="index.html"><span class="nav-icon">🏠</span> Trang chủ</a><a class="nav-link" href="kana.html"><span class="nav-icon">あ</span> Kana</a><a class="nav-link" href="kanji.html"><span class="nav-icon">漢</span> Kanji</a><a class="nav-link" href="vocab.html"><span class="nav-icon">📚</span> Từ vựng</a><a class="nav-link" href="grammar.html"><span class="nav-icon">📝</span> Ngữ pháp</a><a class="nav-link" href="practice.html"><span class="nav-icon">🧪</span> Thi thử</a><a class="nav-link" href="progress.html"><span class="nav-icon">📊</span> Tiến độ</a></nav>
+</div></div>
+<script src="./app.js"></script>
+<script src="./data.js"></script>
+<script src="./site.js"></script>
+<script>
+document.getElementById('helper').innerHTML = renderHelper({
+  title:"Kanji — Hán tự N5",
+  purpose:"Học 36 kanji N5 mẫu theo bài (L1-L8), mỗi kanji có nghĩa, âm on/kun, số nét, ví dụ. Là bước sau Kana — giúp đọc hiểu từ vựng và câu.",
+  structure:"Route 'kanji.html' — Filter theo bài, search theo chữ/nghĩa, grid cards, modal chi tiết, bookmark, đánh dấu đã thuộc.",
+  techniques:"Static JS: Array.filter/search, conditional class (learned/bookmarked), speechSynthesis, localStorage Set, live search.",
+  features:"Filter L1-L8, search, card hover lift + rainbow khi learned, modal chi tiết với ví dụ, bookmark, progress ring, responsive grid.",
+  route:"kanji.html", component:"kanji.html",
+  bulletsTech:["Array.filter + String.includes — search/filter","speechSynthesis ja-JP — phát âm ví dụ","localStorage Set learnedKanji — persist","Live search với input event"],
+  bulletsFeat:["Filter theo bài L1-L8 + search","Grid cards với on/kun, nghĩa, số nét","Modal chi tiết + ví dụ + audio","Bookmark & đánh dấu đã thuộc"]
+});
+let search='', lesson=null, onlyLearned=false, selected=null;
+const lessons=[...new Set(KANJI.map(k=>k.lesson))].sort();
+function renderChips(){
+  const c=document.getElementById('lessonChips');
+  c.innerHTML = `<button class="chip ${!lesson?'active':''}" data-l="">Tất cả</button>` + lessons.map(l=>`<button class="chip ${lesson===l?'active':''}" data-l="${l}">${l}</button>`).join('');
+  c.querySelectorAll('button').forEach(b=> b.addEventListener('click', ()=>{ lesson=b.dataset.l||null; renderChips(); renderGrid(); }));
+}
+function filtered(){
+  let q=KANJI.slice();
+  if(lesson) q=q.filter(k=>k.lesson===lesson);
+  if(search){ const s=search.toLowerCase(); q=q.filter(k=>k.ch.includes(s)||k.meaning.toLowerCase().includes(s)||k.onyomi.toLowerCase().includes(s)||k.kunyomi.toLowerCase().includes(s)||k.ex.includes(s)); }
+  if(onlyLearned){ const p=N5.get(); q=q.filter(k=>p.learnedKanji.has(k.ch)); }
+  return q;
+}
+function renderRing(){
+  const p=N5.get(); const pct=Math.round(p.learnedKanji.size/36*100)||0;
+  document.getElementById('ring').innerHTML=progressRing(pct,'Đã thuộc',64);
+  document.getElementById('countBadge').textContent=p.learnedKanji.size+' / 36 kanji';
+}
+function renderGrid(){
+  const list=filtered();
+  const p=N5.get();
+  const grid=document.getElementById('grid');
+  const empty=document.getElementById('empty');
+  if(!list.length){ grid.innerHTML=''; empty.style.display='block'; return; }
+  empty.style.display='none';
+  grid.innerHTML = list.map(k=>{
+    const learned=p.learnedKanji.has(k.ch);
+    const bm=p.bookmarks.has('kanji:'+k.ch);
+    return `<div class="${learned?'rainbow-wrap':''}" style="${learned?'':'padding:0'}">
+      <div class="glass kanji-card" data-ch="${k.ch}" style="cursor:pointer">
+        <div style="display:flex;justify-content:space-between;align-items:start">
+          <div class="kanji-char">${k.ch}</div>
+          <div style="display:flex;gap:6px">${learned?'<span class="badge badge-success">✓ Đã thuộc</span>':''}${bm?'<span class="badge">🔖</span>':''}</div>
+        </div>
+        <div style="font-weight:700;font-size:14px">${esc(k.meaning)}</div>
+        <div class="kanji-meta"><span class="badge">On: ${k.onyomi}</span><span class="badge">Kun: ${k.kunyomi}</span><span class="badge">${k.strokes} nét</span><span class="badge badge-primary">${k.lesson}</span></div>
+        <div style="font-size:12px;color:var(--text-muted);border-left:2px solid rgba(99,102,241,0.3);padding-left:8px"><span class="jp">${k.ex}</span> (${k.exRead}) — ${esc(k.exMean)}</div>
+        <div style="display:flex;gap:6px;margin-top:4px">
+          <button class="btn btn-glass btn-sm" data-speak="${k.ch}">🔊</button>
+          <button class="btn ${learned?'btn-primary':'btn-glass'} btn-sm" data-learn="${k.ch}">${learned?'✓':'Đánh dấu'}</button>
+          <button class="btn btn-glass btn-sm" data-book="${k.ch}">${bm?'★':'☆'}</button>
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+  grid.querySelectorAll('[data-ch]').forEach(card=>{
+    card.addEventListener('click', (e)=>{
+      if(e.target.closest('button')) return;
+      const ch=card.dataset.ch;
+      openModal(KANJI.find(x=>x.ch===ch));
+    });
+  });
+  grid.querySelectorAll('[data-speak]').forEach(b=> b.addEventListener('click', e=>{ e.stopPropagation(); speak(KANJI.find(x=>x.ch===b.dataset.speak).ex); }));
+  grid.querySelectorAll('[data-learn]').forEach(b=> b.addEventListener('click', e=>{ e.stopPropagation(); const ch=b.dataset.learn; const p=N5.get(); if(p.learnedKanji.has(ch)) p.learnedKanji.delete(ch); else p.learnedKanji.add(ch); N5.save(); renderGrid(); renderRing(); }));
+  grid.querySelectorAll('[data-book]').forEach(b=> b.addEventListener('click', e=>{ e.stopPropagation(); N5.toggleBookmark('kanji:'+b.dataset.book); renderGrid(); }));
+}
+function openModal(k){
+  selected=k;
+  document.getElementById('mChar').textContent=k.ch;
+  document.getElementById('mMeaning').textContent=k.meaning;
+  document.getElementById('mBadges').innerHTML=`<span class="badge">On: ${k.onyomi}</span><span class="badge">Kun: ${k.kunyomi}</span><span class="badge">${k.strokes} nét</span><span class="badge badge-primary">${k.lesson}</span>`;
+  document.getElementById('mEx').textContent=k.ex;
+  document.getElementById('mExMean').textContent=k.exMean+' ('+k.exRead+')';
+  const p=N5.get();
+  const learned=p.learnedKanji.has(k.ch);
+  const bm=p.bookmarks.has('kanji:'+k.ch);
+  const lb=document.getElementById('mLearn'); lb.textContent=learned?'✓ Đã thuộc':'Đánh dấu đã thuộc'; lb.className=learned?'btn btn-primary':'btn btn-glass'; lb.style.flex='1';
+  const bb=document.getElementById('mBook'); bb.textContent=bm?'★ Đã ghim':'☆ Ghim';
+  document.getElementById('modal').style.display='grid';
+}
+function closeModal(){ document.getElementById('modal').style.display='none'; selected=null; }
+document.getElementById('modalBg').addEventListener('click', closeModal);
+document.getElementById('modalClose').addEventListener('click', closeModal);
+document.addEventListener('keydown', e=>{ if(e.key==='Escape') closeModal(); });
+document.getElementById('mSpeak').addEventListener('click', ()=>{ if(selected) speak(selected.ex); });
+document.getElementById('mLearn').addEventListener('click', ()=>{
+  if(!selected) return;
+  const p=N5.get(); if(p.learnedKanji.has(selected.ch)) p.learnedKanji.delete(selected.ch); else p.learnedKanji.add(selected.ch); N5.save(); renderGrid(); renderRing();
+  const learned=N5.get().learnedKanji.has(selected.ch);
+  const lb=document.getElementById('mLearn'); lb.textContent=learned?'✓ Đã thuộc':'Đánh dấu đã thuộc'; lb.className=learned?'btn btn-primary':'btn btn-glass';
+});
+document.getElementById('mBook').addEventListener('click', ()=>{
+  if(!selected) return;
+  N5.toggleBookmark('kanji:'+selected.ch); renderGrid();
+  const bm=N5.get().bookmarks.has('kanji:'+selected.ch);
+  document.getElementById('mBook').textContent=bm?'★ Đã ghim':'☆ Ghim';
+});
+document.getElementById('search').addEventListener('input', e=>{ search=e.target.value; renderGrid(); });
+document.getElementById('onlyLearned').addEventListener('change', e=>{ onlyLearned=e.target.checked; renderGrid(); });
+document.getElementById('clearFilter').addEventListener('click', ()=>{ search=''; lesson=null; onlyLearned=false; document.getElementById('search').value=''; document.getElementById('onlyLearned').checked=false; renderChips(); renderGrid(); });
+renderChips(); renderGrid(); renderRing();
+document.addEventListener('n5:progress', ()=>{ renderGrid(); renderRing(); });
+</script>
+</body>
+</html>

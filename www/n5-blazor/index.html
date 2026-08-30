@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>N5 Blazor — Học JLPT N5 | Liquid Glass</title>
+<meta name="description" content="Học JLPT N5 từ số 0: Kana, Kanji, Từ vựng, Ngữ pháp, Thi thử. Liquid Glass + Rainbow, Helper đầy đủ, chạy 100% trên GitHub Pages."/>
+<script>(function(){try{var t=localStorage.getItem('n5-theme');if(!t)t=(window.matchMedia&&window.matchMedia('(prefers-color-scheme: light)').matches)?'light':'dark';document.documentElement.setAttribute('data-theme',t);}catch(e){document.documentElement.setAttribute('data-theme','dark');}})();</script>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+JP:wght@400;500;700&family=Zen+Maru+Gothic:wght@500;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="./app.css"/>
+</head>
+<body>
+<a class="skip-link" href="#main">Bỏ qua tới nội dung</a>
+<div class="page">
+  <aside class="sidebar" aria-label="Điều hướng chính">
+    <div style="padding:16px 14px 8px; display:flex; align-items:center; gap:10px; border-bottom:1px solid var(--glass-border)">
+      <div class="brand-mark">N5</div>
+      <div><div style="font-weight:800; letter-spacing:-0.02em; line-height:1">N5 Blazor</div><div style="font-size:11px; color:var(--text-muted); letter-spacing:0.08em; text-transform:uppercase">JLPT N5 • Liquid Glass</div></div>
+    </div>
+    <nav class="nav" aria-label="Menu chính">
+      <div class="nav-section">🏠 Tổng quan</div>
+      <a class="nav-link" href="index.html"><span class="nav-icon">🏠</span><span style="flex:1">Trang chủ</span><span class="badge" style="font-size:10px">Home</span></a>
+      <div class="nav-section">📖 Học tập — N5 cơ bản</div>
+      <a class="nav-link" href="kana.html"><span class="nav-icon">あ</span><span style="flex:1">Kana</span><span class="badge" style="font-size:10px">92 chữ</span></a>
+      <a class="nav-link" href="kanji.html"><span class="nav-icon">漢</span><span style="flex:1">Kanji</span><span class="badge" style="font-size:10px">36 chữ</span></a>
+      <a class="nav-link" href="vocab.html"><span class="nav-icon">📚</span><span style="flex:1">Từ vựng</span><span class="badge" style="font-size:10px">40 từ</span></a>
+      <a class="nav-link" href="grammar.html"><span class="nav-icon">📝</span><span style="flex:1">Ngữ pháp</span><span class="badge" style="font-size:10px">15 mẫu</span></a>
+      <div class="nav-section">🧪 Luyện tập &amp; Đánh giá</div>
+      <a class="nav-link" href="practice.html"><span class="nav-icon">🧪</span><span style="flex:1">Thi thử</span><span class="badge badge-primary" style="font-size:10px">20 câu</span></a>
+      <a class="nav-link" href="progress.html"><span class="nav-icon">📊</span><span style="flex:1">Tiến độ</span><span class="badge badge-success" style="font-size:10px">Streak</span></a>
+      <div class="nav-section">⚙️ Hệ thống</div>
+      <div style="padding:8px 10px; display:flex; flex-direction:column; gap:8px">
+        <div class="glass" style="padding:12px; border-radius:12px; font-size:12px; line-height:1.6; color:var(--text-muted)">
+          <div style="font-weight:700; color:var(--text); font-size:13px; margin-bottom:6px; display:flex; align-items:center; gap:6px">💡 Static <span class="badge badge-primary" style="font-size:10px">Pages</span></div>
+          <div style="display:flex; flex-direction:column; gap:4px; font-size:11px">
+            <span>✓ 100% static — chạy trên GitHub Pages</span>
+            <span>✓ localStorage • speechSynthesis</span>
+            <span>✓ Liquid Glass • Rainbow</span>
+            <span>✓ Helper đầy đủ 4 mục</span>
+          </div>
+          <div style="margin-top:8px; padding:6px 8px; border-radius:8px; background:rgba(99,102,241,0.08); border:1px solid rgba(99,102,241,0.12); font-size:11px; color:var(--text-muted)">
+            💡 Mỗi trang có <strong style="color:var(--text)">Helper</strong> — bấm để xem mục đích, cấu trúc, kỹ thuật &amp; tính năng.
+          </div>
+        </div>
+        <div style="display:flex; gap:6px; flex-wrap:wrap">
+          <span class="badge" style="font-size:10px">WCAG ≥4.5:1</span>
+          <span class="badge" style="font-size:10px">a11y</span>
+          <span class="badge" style="font-size:10px">Responsive</span>
+        </div>
+      </div>
+    </nav>
+    <div class="nav-footer">
+      <div class="progress-mini"><span id="miniStreak">🔥 0 ngày</span><div class="progress-mini-bar"><div id="miniBar" class="progress-mini-fill" style="width:0%"></div></div><span id="miniPct">0%</span></div>
+      <div style="font-size:11px; color:var(--text-dim); margin-top:8px">Static • Pages • Glass + Rainbow</div>
+    </div>
+  </aside>
+  <div class="main">
+    <header class="topbar">
+      <div class="topbar-left">
+        <button class="mobile-toggle" id="mobileToggle" aria-label="Mở menu">☰</button>
+        <a class="brand" href="index.html"><span class="brand-mark" style="width:32px;height:32px;font-size:14px">N5</span><span>N5 Blazor <small>JLPT N5 cho người mới</small></span></a>
+      </div>
+      <div class="topbar-actions">
+        <span class="badge badge-primary" style="font-size:12px">✨ Liquid Glass</span>
+        <span class="badge" style="font-size:12px">🌈 Rainbow</span>
+        <button class="theme-toggle" id="themeToggle" aria-label="Chuyển giao diện sáng/tối" title="Đổi giao diện sáng/tối">☀️</button>
+        <a class="btn btn-glass btn-sm" href="progress.html">📊 Tiến độ</a>
+      </div>
+    </header>
+    <main id="main" class="content">
+      <div id="helper"></div>
+      <div class="rainbow-wrap" style="margin-bottom:16px">
+        <div class="glass hero">
+          <div class="hero-orb" aria-hidden="true"></div>
+          <div style="position:relative">
+            <div style="display:inline-flex;align-items:center;gap:8px;background:rgba(99,102,241,0.12);border:1px solid rgba(99,102,241,0.25);padding:6px 12px;border-radius:9999px;font-size:12px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;color:#a5b4fc;margin-bottom:12px">✨ JLPT N5 • Cho người mới bắt đầu • Static Pages</div>
+            <h1>Học <span>JLPT N5</span> từ số 0<br/>với Liquid Glass</h1>
+            <p>Lộ trình 5 bước: <strong>Kana</strong> → <strong>Kanji</strong> → <strong>Từ vựng</strong> → <strong>Ngữ pháp</strong> → <strong>Thi thử</strong>. Mỗi trang đều có <strong>Helper</strong> giải thích rõ mục đích, cấu trúc, kỹ thuật và tính năng — chạy 100% trên GitHub Pages, không cần server.</p>
+            <div class="hero-actions">
+              <a class="btn btn-primary" href="kana.html">Bắt đầu với Kana →</a>
+              <a class="btn btn-glass" href="practice.html">🧪 Thi thử ngay</a>
+              <a class="btn btn-glass" href="progress.html">📊 Xem tiến độ</a>
+            </div>
+            <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:14px">
+              <span class="badge badge-primary">Static</span><span class="badge">localStorage</span><span class="badge">speechSynthesis</span><span class="badge">Pages</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="grid grid-4" style="margin-bottom:16px" id="stats"></div>
+      <div class="grid grid-2" style="margin-bottom:16px">
+        <div class="glass card">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px"><h3 style="margin:0;font-size:15px;font-weight:800">🗺️ Lộ trình 5 bước</h3><span class="badge">Gợi ý cho người mới</span></div>
+          <div style="display:flex;flex-direction:column;gap:10px" id="roadmap"></div>
+        </div>
+        <div class="glass card">
+          <h3 style="margin:0 0 12px;font-size:15px;font-weight:800">⚡ Hành động nhanh</h3>
+          <div class="grid grid-2">
+            <a class="glass" style="padding:14px;border-radius:14px;text-decoration:none;color:inherit;display:flex;flex-direction:column;gap:6px" href="kana.html"><span style="font-size:20px">あ</span><strong style="font-size:14px">Học Kana</strong><span style="font-size:12px;color:var(--text-muted)">46 Hiragana + 46 Katakana</span></a>
+            <a class="glass" style="padding:14px;border-radius:14px;text-decoration:none;color:inherit;display:flex;flex-direction:column;gap:6px" href="kanji.html"><span style="font-size:20px">漢</span><strong style="font-size:14px">Học Kanji</strong><span style="font-size:12px;color:var(--text-muted)">36 kanji N5 mẫu</span></a>
+            <a class="glass" style="padding:14px;border-radius:14px;text-decoration:none;color:inherit;display:flex;flex-direction:column;gap:6px" href="vocab.html"><span style="font-size:20px">📚</span><strong style="font-size:14px">Từ vựng</strong><span style="font-size:12px;color:var(--text-muted)">Flashcard + search</span></a>
+            <a class="glass" style="padding:14px;border-radius:14px;text-decoration:none;color:inherit;display:flex;flex-direction:column;gap:6px" href="grammar.html"><span style="font-size:20px">📝</span><strong style="font-size:14px">Ngữ pháp</strong><span style="font-size:12px;color:var(--text-muted)">15 mẫu N5</span></a>
+            <a class="glass" style="padding:14px;border-radius:14px;text-decoration:none;color:inherit;display:flex;flex-direction:column;gap:6px" href="practice.html"><span style="font-size:20px">🧪</span><strong style="font-size:14px">Thi thử</strong><span style="font-size:12px;color:var(--text-muted)">20 câu • chấm điểm</span></a>
+            <a class="glass" style="padding:14px;border-radius:14px;text-decoration:none;color:inherit;display:flex;flex-direction:column;gap:6px" href="progress.html"><span style="font-size:20px">📊</span><strong style="font-size:14px">Tiến độ</strong><span style="font-size:12px;color:var(--text-muted)" id="streakText">Streak 0 ngày</span></a>
+          </div>
+          <div style="margin-top:12px;padding:10px 12px;border-radius:12px;background:rgba(245,158,11,0.08);border:1px solid rgba(245,158,11,0.18);font-size:12px;color:#fcd34d">💡 <strong>Mẹo:</strong> Mỗi trang đều có <strong>Helper</strong> ở đầu — bấm để xem trang dùng làm gì, cấu trúc, kỹ thuật và tính năng.</div>
+        </div>
+      </div>
+      <div class="glass card">
+        <h3 style="margin:0 0 8px;font-size:15px;font-weight:800">🧠 Kỹ thuật (bản static)</h3>
+        <div class="grid grid-3">
+          <div style="padding:12px;border-radius:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.06)"><div style="font-weight:700;font-size:13px;margin-bottom:4px">💾 Lưu trữ</div><div style="font-size:12px;color:var(--text-muted)">localStorage key <code>n5-progress</code> — HashSet kana/kanji/vocab/grammar + bookmarks + quizScores + streak.</div><code style="font-size:11px">localStorage.getItem('n5-progress')</code></div>
+          <div style="padding:12px;border-radius:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.06)"><div style="font-weight:700;font-size:13px;margin-bottom:4px">🔊 Phát âm</div><div style="font-size:12px;color:var(--text-muted)">Web Speech API — <code>speechSynthesis</code> với voice ja-JP, cancel trước khi speak.</div><code style="font-size:11px">speechSynthesis.speak(u)</code></div>
+          <div style="padding:12px;border-radius:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.06)"><div style="font-weight:700;font-size:13px;margin-bottom:4px">🎨 Giao diện</div><div style="font-size:12px;color:var(--text-muted)">Liquid Glass + Rainbow <code>conic-gradient(from var(--angle))</code> + <code>@property</code> + light theme.</div><code style="font-size:11px">[data-theme="light"]</code></div>
+        </div>
+      </div>
+    </main>
+    <footer style="padding:16px 24px; text-align:center; color:var(--text-dim); font-size:12px; border-top:1px solid rgba(255,255,255,0.06); margin-top:24px">N5 Blazor Static • localStorage • speechSynthesis • Glass + Rainbow • © 2026 • <a href="../index.html">← YUNIE STATUS</a></footer>
+  </div>
+</div>
+<div id="mobileDrawer" class="mobile-drawer"><div class="mobile-drawer-backdrop"></div><div class="mobile-drawer-panel"><div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px"><div style="font-weight:800">Menu</div><button class="btn btn-glass btn-sm" onclick="document.getElementById('mobileDrawer').classList.remove('open')">✕</button></div>
+<nav class="nav" aria-label="Menu chính">
+  <a class="nav-link" href="index.html"><span class="nav-icon">🏠</span> Trang chủ</a>
+  <a class="nav-link" href="kana.html"><span class="nav-icon">あ</span> Kana</a>
+  <a class="nav-link" href="kanji.html"><span class="nav-icon">漢</span> Kanji</a>
+  <a class="nav-link" href="vocab.html"><span class="nav-icon">📚</span> Từ vựng</a>
+  <a class="nav-link" href="grammar.html"><span class="nav-icon">📝</span> Ngữ pháp</a>
+  <a class="nav-link" href="practice.html"><span class="nav-icon">🧪</span> Thi thử</a>
+  <a class="nav-link" href="progress.html"><span class="nav-icon">📊</span> Tiến độ</a>
+</nav>
+</div></div>
+<script src="./app.js"></script>
+<script src="./data.js"></script>
+<script src="./site.js"></script>
+<script>
+document.getElementById('helper').innerHTML = renderHelper({
+  title:"Trang chủ / Dashboard",
+  purpose:"Tổng quan lộ trình N5, thống kê tiến độ, điều hướng nhanh tới 6 khu vực học. Là entry point cho người mới — thấy ngay mình đang ở đâu và nên học gì tiếp.",
+  structure:"Route 'index.html' — Gồm Hero (glass + rainbow), 4 stat cards, roadmap 5 bước, quick actions, tips. Dùng layout sidebar + topbar.",
+  techniques:"Static HTML/JS: localStorage (n5-progress), speechSynthesis (ja-JP), CSS variables + [data-theme=light], conic-gradient rainbow với @property --angle.",
+  features:"Hiển thị % hoàn thành Kana/Kanji/Vocab/Grammar, streak, nút CTA tới từng trang, roadmap trực quan, responsive grid.",
+  route:"index.html", component:"index.html",
+  bulletsTech:["localStorage n5-progress — HashSet + JSON","speechSynthesis ja-JP — cancel trước khi speak","CSS variables + [data-theme=light] — 2 theme","conic-gradient(from var(--angle)) — rainbow 3s"],
+  bulletsFeat:["4 stat cards với ProgressRing","Roadmap 5 bước (Kana→Kanji→Vocab→Grammar→Test)","Quick actions 6 nút tới từng trang","Streak + % tổng hợp từ N5.get()"]
+});
+function renderStats(){
+  const p=N5.get();
+  const kanaPct=Math.round(p.learnedKana.size/92*100)||0;
+  const kanjiPct=Math.round(p.learnedKanji.size/36*100)||0;
+  const vocabPct=Math.round(p.learnedVocabIds.size/40*100)||0;
+  const grammarPct=Math.round(p.learnedGrammarIds.size/15*100)||0;
+  document.getElementById('stats').innerHTML = `
+    <div class="rainbow-wrap"><div class="glass stat"><div class="stat-label">Kana</div><div style="display:flex;align-items:center;gap:12px">${progressRing(kanaPct,'Kana',72)}<div><div class="stat-value">${p.learnedKana.size} / 92</div><div class="stat-sub">Hiragana + Katakana</div></div></div></div></div>
+    <div class="glass stat"><div class="stat-label">Kanji N5</div><div style="display:flex;align-items:center;gap:12px">${progressRing(kanjiPct,'Kanji',72)}<div><div class="stat-value">${p.learnedKanji.size} / 36</div><div class="stat-sub">36 kanji mẫu</div></div></div></div>
+    <div class="glass stat"><div class="stat-label">Từ vựng</div><div style="display:flex;align-items:center;gap:12px">${progressRing(vocabPct,'Vocab',72)}<div><div class="stat-value">${p.learnedVocabIds.size} / 40</div><div class="stat-sub">40 từ mẫu</div></div></div></div>
+    <div class="glass stat"><div class="stat-label">Ngữ pháp</div><div style="display:flex;align-items:center;gap:12px">${progressRing(grammarPct,'Grammar',72)}<div><div class="stat-value">${p.learnedGrammarIds.size} / 15</div><div class="stat-sub">15 mẫu</div></div></div></div>`;
+  document.getElementById('streakText').textContent = 'Streak '+p.streakDays+' ngày';
+}
+const roadmap=[{num:1,title:"Kana — Bảng chữ cái",desc:"Hiragana + Katakana, 46 chữ mỗi bảng",href:"kana.html"},{num:2,title:"Kanji — Hán tự",desc:"36 kanji N5 theo bài, có ví dụ",href:"kanji.html"},{num:3,title:"Từ vựng — Vocabulary",desc:"40 từ theo chủ đề, flashcard",href:"vocab.html"},{num:4,title:"Ngữ pháp — Grammar",desc:"15 mẫu câu N5, ví dụ + bài tập",href:"grammar.html"},{num:5,title:"Thi thử — Practice",desc:"20 câu trắc nghiệm, chấm điểm",href:"practice.html"}];
+document.getElementById('roadmap').innerHTML = roadmap.map(s=>`<a href="${s.href}" style="display:flex;align-items:center;gap:12px;padding:10px 12px;border-radius:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.06);text-decoration:none;color:inherit"><span style="width:36px;height:36px;border-radius:10px;display:grid;place-items:center;background:linear-gradient(135deg, var(--primary), var(--secondary));color:white;font-weight:700;flex-shrink:0">${s.num}</span><div style="flex:1"><div style="font-weight:700;font-size:14px">${s.title}</div><div style="font-size:12px;color:var(--text-muted)">${s.desc}</div></div><span style="color:var(--text-dim)">→</span></a>`).join('');
+renderStats();
+document.addEventListener('n5:progress', renderStats);
+</script>
+</body>
+</html>

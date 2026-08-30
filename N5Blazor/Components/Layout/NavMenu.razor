@@ -1,35 +1,64 @@
 <nav class="nav" aria-label="Menu chính">
-    <div class="nav-section">Học tập</div>
-    <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
-        <span class="nav-icon">🏠</span> Trang chủ
-    </NavLink>
-    <NavLink class="nav-link" href="kana">
-        <span class="nav-icon">あ</span> Kana
-    </NavLink>
-    <NavLink class="nav-link" href="kanji">
-        <span class="nav-icon">漢</span> Kanji
-    </NavLink>
-    <NavLink class="nav-link" href="vocab">
-        <span class="nav-icon">📚</span> Từ vựng
-    </NavLink>
-    <NavLink class="nav-link" href="grammar">
-        <span class="nav-icon">📝</span> Ngữ pháp
+    <div class="nav-section">🏠 Tổng quan</div>
+    <NavLink class="nav-link" href="" Match="NavLinkMatch.All" aria-label="Trang chủ Dashboard">
+        <span class="nav-icon" aria-hidden="true">🏠</span>
+        <span style="flex:1">Trang chủ</span>
+        <span class="badge" style="font-size:10px; padding:2px 6px">Home</span>
     </NavLink>
 
-    <div class="nav-section">Luyện tập</div>
-    <NavLink class="nav-link" href="practice">
-        <span class="nav-icon">🧪</span> Thi thử
+    <div class="nav-section">📖 Học tập — N5 cơ bản</div>
+    <NavLink class="nav-link" href="kana" aria-label="Học Kana Hiragana Katakana">
+        <span class="nav-icon" aria-hidden="true">あ</span>
+        <span style="flex:1">Kana</span>
+        <span class="badge" style="font-size:10px">92 chữ</span>
     </NavLink>
-    <NavLink class="nav-link" href="progress">
-        <span class="nav-icon">📊</span> Tiến độ
+    <NavLink class="nav-link" href="kanji" aria-label="Học Kanji Hán tự">
+        <span class="nav-icon" aria-hidden="true">漢</span>
+        <span style="flex:1">Kanji</span>
+        <span class="badge" style="font-size:10px">36 chữ</span>
+    </NavLink>
+    <NavLink class="nav-link" href="vocab" aria-label="Học Từ vựng">
+        <span class="nav-icon" aria-hidden="true">📚</span>
+        <span style="flex:1">Từ vựng</span>
+        <span class="badge" style="font-size:10px">40 từ</span>
+    </NavLink>
+    <NavLink class="nav-link" href="grammar" aria-label="Học Ngữ pháp">
+        <span class="nav-icon" aria-hidden="true">📝</span>
+        <span style="flex:1">Ngữ pháp</span>
+        <span class="badge" style="font-size:10px">15 mẫu</span>
     </NavLink>
 
-    <div class="nav-section">Hệ thống</div>
+    <div class="nav-section">🧪 Luyện tập &amp; Đánh giá</div>
+    <NavLink class="nav-link" href="practice" aria-label="Thi thử N5">
+        <span class="nav-icon" aria-hidden="true">🧪</span>
+        <span style="flex:1">Thi thử</span>
+        <span class="badge badge-primary" style="font-size:10px">20 câu</span>
+    </NavLink>
+    <NavLink class="nav-link" href="progress" aria-label="Xem Tiến độ">
+        <span class="nav-icon" aria-hidden="true">📊</span>
+        <span style="flex:1">Tiến độ</span>
+        <span class="badge badge-success" style="font-size:10px">Streak</span>
+    </NavLink>
+
+    <div class="nav-section">⚙️ Hệ thống</div>
     <div style="padding:8px 10px; display:flex; flex-direction:column; gap:8px">
-        <div class="glass" style="padding:10px; border-radius:12px; font-size:12px; line-height:1.5; color:var(--text-muted)">
-            <div style="font-weight:700; color:var(--text); font-size:13px; margin-bottom:4px">💡 Blazor Server</div>
-            SignalR • SSR • Streaming<br/>
-            DI • JS Interop • EditForm
+        <div class="glass" style="padding:12px; border-radius:12px; font-size:12px; line-height:1.6; color:var(--text-muted)">
+            <div style="font-weight:700; color:var(--text); font-size:13px; margin-bottom:6px; display:flex; align-items:center; gap:6px">💡 Blazor Server <span class="badge badge-primary" style="font-size:10px">.NET 8</span></div>
+            <div style="display:flex; flex-direction:column; gap:4px; font-size:11px">
+                <span>✓ SignalR • SSR • Streaming</span>
+                <span>✓ DI 6 Services • Singleton/Scoped</span>
+                <span>✓ JS Interop • localStorage</span>
+                <span>✓ EditForm • Validation</span>
+                <span>✓ Liquid Glass • Rainbow</span>
+            </div>
+            <div style="margin-top:8px; padding:6px 8px; border-radius:8px; background:rgba(99,102,241,0.08); border:1px solid rgba(99,102,241,0.12); font-size:11px; color:var(--text-muted)">
+                💡 Mỗi trang có <strong style="color:var(--text)">Helper</strong> — bấm để xem mục đích, cấu trúc, kỹ thuật &amp; tính năng.
+            </div>
+        </div>
+        <div style="display:flex; gap:6px; flex-wrap:wrap">
+            <span class="badge" style="font-size:10px">WCAG ≥4.5:1</span>
+            <span class="badge" style="font-size:10px">a11y</span>
+            <span class="badge" style="font-size:10px">Responsive</span>
         </div>
     </div>
 </nav>

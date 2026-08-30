@@ -1,4 +1,4 @@
-# Knowledge — Bài học từ Bug (BẮT BUỘC ĐỌC)
+﻿# Knowledge — Bài học từ Bug (BẮT BUỘC ĐỌC)
 
 > ⚠️ **QUY TẮC HARNESS:** Mọi agent / prompt / task — dù là `/harness`, `/fixbug`, `/implement`, `/plan`, `/polish`, `/verify` hay edit tay — **PHẢI đọc file này TRƯỚC KHI làm bất kỳ việc gì**. Không đọc = không được code.
 > File này là **bộ nhớ dài hạn** của dự án: mọi bug đã sửa phải rút ra 1 bài học và ghi vào đây.
@@ -26,6 +26,7 @@
 | KN-002 | 2026-08-29 | Trang STATUS www/ giao diện chưa hợp lý — registry sai, responsive vỡ, thiếu a11y | status.json array vs app.js object mismatch + không audit product-quality | Dashboard phải có single source of truth (registry.json → status.json) và polish responsive/a11y ngay từ đầu | `ui` `css` `a11y` `responsive` `data` |
 | KN-003 | 2026-08-30 | Rainbow border GlassUI không xoay (animated) ở một số browser | Detect `@property` sai (`CSS.supports('syntax')`) + `::before` dùng `var(--rainbow)` lồng không re-resolve `--angle` + fallback per-element bị UI reset | Animate custom property: dùng gradient trực tiếp tại `::before`, detect `@property` bằng `CSS.registerProperty`, fallback class ở `<html>` | `ui` `css` `animation` |
 | KN-004 | 2026-08-30 | `www/` grid-2 thừa khoảng cách + rainbow border index.html không xoay khi hover | `.grid-2` không có `margin` + `.section` con là grid item không collapse → margin kép 48px; `::before`/`::after` dùng `var(--rainbow)` lồng (lặp KN-003) → `--angle` không re-resolve | Wrapper `.grid-2` tự mang `margin:24px 0`, con `.section` đặt `margin:0`; animate `--angle` dùng `conic-gradient(from var(--angle), ...)` trực tiếp | `ui` `css` `animation` `spacing` |
+| KN-006 | 2026-08-30 | N5 Blazor thieu theme sang, tieng Viet mat dau, menu chua polish, contrast chua test light | Chi co dark variables, khong co [data-theme="light"] + fix encoding xoa dau + NavMenu minimal | Design system phai co 2 theme tu dau (CSS variables + toggle persist + early init) va i18n giu UTF-8 chuan | `ui` `css` `a11y` `i18n` `theme` `contrast` |
 | KN-005 | 2026-08-30 | Bug Blindness — dev không thấy bug do workaround vô thức + fan bias (Dan Luu) | Habitual mitigations (tự bù lỗi không nhận ra) + quality blindness + fan bias → dev nghĩ sản phẩm xịn dù user không dùng được | Chữa mù bug: fresh eyes, test như user mới, chỉ ra bug liên tục, không workaround vô thức, dogfooding có ý thức | `process` `quality` `ux` `perf` `a11y` |
 
 > Dòng ví dụ trên sẽ bị thay khi có bug thật đầu tiên — giữ format.
@@ -122,6 +123,22 @@
 - **Tags:** `process` `quality` `ux` `perf` `a11y`
 - **Người ghi:** YUNIE — tổng hợp từ Dan Luu "Bug Blindness" (2026-08-26) + Hacker News discussion
 
+### KN-006 — N5 Blazor thieu theme sang + tieng Viet mat dau + menu chua polish
+
+- **Ngày:** 2026-08-30
+- **Bug report:** `.agent/bugs/2026-08-30-n5-ui-polish/bug.md`
+- **Severity:** major
+- **Triệu chứng:** Chi co dark theme, khong co toggle sang/toi; Home.razor mat dau tieng Viet (Hoc thay Hoc, Tong quan thay Tổng quan) do fix encoding; menu don gian thieu badge/grouping/a11y; contrast chua test light; hieu ung rainbow chua co prefers-reduced-motion day du.
+- **Nguyên nhân gốc:** (1) Design system chi dinh nghia :root dark, chua co [data-theme="light"] variables; (2) Fix bug RZ9986 (Techniques="Blazor: @inject...") bang cach xoa dau + PowerShell here-string lam corrupt Home.razor -> restore ban ASCII an toan nhung mat dau; (3) NavMenu chi lam minimal chua polish theo product-quality; (4) Thieu early init theme -> flash khi reload.
+- **Cách sửa:** Them [data-theme="light"] vao app.css (glass sang, text #0f172a, contrast >=4.5:1) + light overrides cho sidebar/topbar/nav/kana/badge/chip/input/quiz/helper; them n5Theme vao app.js (get/set/apply/init, ton trong localStorage + prefers-color-scheme, init ASAP chong flash); them toggle button vao MainLayout.razor (JS interop n5Theme.toggle, persist); them early script vao App.razor <head>; restore Home.razor tieng Viet co dau chuan UTF-8; polish NavMenu (badge, grouping, aria-label, WCAG); fix KanaPage luu->lưu, GrammarPage vi du->ví dụ.
+- **Cách phòng tránh:**
+  - Design system mac dinh co 2 theme (dark/light) voi CSS variables + toggle persist + early init trong <head>.
+  - Moi file .razor phai UTF-8, khong dung PowerShell here-string cho tieng Viet — dung create_file voi UTF-8.
+  - Checklist truoc khi Done: co toggle sang/toi? co test ca 2 theme? tieng Viet co dau? contrast >=4.5:1? menu co badge/a11y?
+  - Them Playwright test cho theme toggle + contrast.
+- **Tags:** `ui` `css` `a11y` `i18n` `theme` `contrast`
+- **Người ghi:** YUNIE / fixbug
+
 <!-- Thêm bài học mới theo template dưới — copy block này -->
 
 <!--
@@ -156,6 +173,10 @@
 - ❌ Fan bias: yêu sản phẩm nên auto mù nhược điểm, bảo "xịn mà" dù user không dùng được (KN-005).
 - ❌ Chỉ dev tự dogfooding (giỏi workaround) thay vì test như user mới / fresh eyes (KN-005).
 - ❌ Nghĩ "dễ mà, chỉ cần làm [chuỗi 7 bước phức tạp]" — user thường bó tay (KN-005).
+- ❌ Chỉ làm dark theme, không có light theme + toggle persist + early init (KN-006).
+- ❌ Fix bug encoding bằng cách xóa dấu tiếng Việt — phải giữ UTF-8 chuẩn (KN-006).
+- ❌ Dùng PowerShell here-string cho file UTF-8 tiếng Việt → corrupt (KN-006).
+- ❌ NavMenu minimal không có badge/grouping/aria-label (KN-006).
 
 ## Checklist phòng tránh chung
 
@@ -167,8 +188,12 @@
 - [ ] Đã test như **user mới** (không dùng workaround, không đọc manual) — fresh eyes / LLM as normal user? (KN-005)
 - [ ] Đã liệt kê mọi habitual mitigation mình đang làm và biến thành bug report? (KN-005)
 - [ ] Đã nhờ người ngoài team thử không gợi ý? (KN-005)
+- [ ] Đã có toggle sáng/tối với persist + early init chống flash? (KN-006)
+- [ ] Đã test contrast ≥4.5:1 cả 2 theme (dark/light)? (KN-006)
+- [ ] Đã giữ tiếng Việt có dấu chuẩn UTF-8 (không xóa dấu khi fix bug)? (KN-006)
+- [ ] Đã polish menu với badge/grouping/aria-label? (KN-006)
 
 ---
 
 *File này do `/fixbug` tự động cập nhật. Mọi luồng khác phải đọc để không lặp lại lỗi cũ.*
-*UpdatedAt: 2026-08-30T15:00:00Z — Maintained by YUNIE / Harness v2 — KN-005 added (Bug Blindness — Dan Luu)*
+*UpdatedAt: 2026-08-30T16:30:00Z — Maintained by YUNIE / Harness v2 — KN-006 added (N5 UI polish + light theme) — Maintained by YUNIE / Harness v2 — KN-005 added (Bug Blindness — Dan Luu)*

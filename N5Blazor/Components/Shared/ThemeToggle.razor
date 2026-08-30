@@ -1,0 +1,37 @@
+@rendermode InteractiveServer
+@inject IJSRuntime JS
+
+<button class="theme-toggle" @onclick="Toggle" aria-label="Chuyển giao diện sáng/tối" title="Đổi giao diện sáng/tối">@(theme == "light" ? "🌙" : "☀️")</button>
+
+@code {
+    private string theme = "dark";
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            try
+            {
+                var t = await JS.InvokeAsync<string?>("n5Theme.get");
+                if (string.IsNullOrEmpty(t)) t = await JS.InvokeAsync<string>("n5Theme.init");
+                theme = t == "light" ? "light" : "dark";
+                StateHasChanged();
+            }
+            catch { }
+        }
+    }
+
+    private async Task Toggle()
+    {
+        try
+        {
+            var next = await JS.InvokeAsync<string>("n5Theme.toggle");
+            theme = next == "light" ? "light" : "dark";
+        }
+        catch
+        {
+            theme = theme == "dark" ? "light" : "dark";
+            try { await JS.InvokeVoidAsync("n5Theme.apply", theme); } catch { }
+        }
+    }
+}

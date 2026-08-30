@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Thi thử N5 — Practice | N5 Blazor</title>
+<script>(function(){try{var t=localStorage.getItem('n5-theme');if(!t)t=(window.matchMedia&&window.matchMedia('(prefers-color-scheme: light)').matches)?'light':'dark';document.documentElement.setAttribute('data-theme',t);}catch(e){document.documentElement.setAttribute('data-theme','dark');}})();</script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+JP:wght@400;500;700&family=Zen+Maru+Gothic:wght@500;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="./app.css"/>
+</head>
+<body>
+<a class="skip-link" href="#main">Bỏ qua tới nội dung</a>
+<div class="page">
+  <aside class="sidebar" aria-label="Điều hướng chính">
+    <div style="padding:16px 14px 8px; display:flex; align-items:center; gap:10px; border-bottom:1px solid var(--glass-border)">
+      <div class="brand-mark">N5</div>
+      <div><div style="font-weight:800; letter-spacing:-0.02em; line-height:1">N5 Blazor</div><div style="font-size:11px; color:var(--text-muted); letter-spacing:0.08em; text-transform:uppercase">JLPT N5 • Liquid Glass</div></div>
+    </div>
+    <nav class="nav" aria-label="Menu chính">
+      <div class="nav-section">🏠 Tổng quan</div>
+      <a class="nav-link" href="index.html"><span class="nav-icon">🏠</span><span style="flex:1">Trang chủ</span><span class="badge" style="font-size:10px">Home</span></a>
+      <div class="nav-section">📖 Học tập — N5 cơ bản</div>
+      <a class="nav-link" href="kana.html"><span class="nav-icon">あ</span><span style="flex:1">Kana</span><span class="badge" style="font-size:10px">92 chữ</span></a>
+      <a class="nav-link" href="kanji.html"><span class="nav-icon">漢</span><span style="flex:1">Kanji</span><span class="badge" style="font-size:10px">36 chữ</span></a>
+      <a class="nav-link" href="vocab.html"><span class="nav-icon">📚</span><span style="flex:1">Từ vựng</span><span class="badge" style="font-size:10px">40 từ</span></a>
+      <a class="nav-link" href="grammar.html"><span class="nav-icon">📝</span><span style="flex:1">Ngữ pháp</span><span class="badge" style="font-size:10px">15 mẫu</span></a>
+      <div class="nav-section">🧪 Luyện tập &amp; Đánh giá</div>
+      <a class="nav-link" href="practice.html"><span class="nav-icon">🧪</span><span style="flex:1">Thi thử</span><span class="badge badge-primary" style="font-size:10px">20 câu</span></a>
+      <a class="nav-link" href="progress.html"><span class="nav-icon">📊</span><span style="flex:1">Tiến độ</span><span class="badge badge-success" style="font-size:10px">Streak</span></a>
+      <div class="nav-section">⚙️ Hệ thống</div>
+      <div style="padding:8px 10px; display:flex; flex-direction:column; gap:8px">
+        <div class="glass" style="padding:12px; border-radius:12px; font-size:12px; line-height:1.6; color:var(--text-muted)">
+          <div style="font-weight:700; color:var(--text); font-size:13px; margin-bottom:6px; display:flex; align-items:center; gap:6px">💡 Static <span class="badge badge-primary" style="font-size:10px">Pages</span></div>
+          <div style="display:flex; flex-direction:column; gap:4px; font-size:11px">
+            <span>✓ 100% static — chạy trên GitHub Pages</span>
+            <span>✓ localStorage • speechSynthesis</span>
+            <span>✓ Liquid Glass • Rainbow</span>
+          </div>
+        </div>
+      </div>
+    </nav>
+    <div class="nav-footer">
+      <div class="progress-mini"><span id="miniStreak">🔥 0 ngày</span><div class="progress-mini-bar"><div id="miniBar" class="progress-mini-fill" style="width:0%"></div></div><span id="miniPct">0%</span></div>
+      <div style="font-size:11px; color:var(--text-dim); margin-top:8px">Static • Pages • Glass + Rainbow</div>
+    </div>
+  </aside>
+  <div class="main">
+    <header class="topbar">
+      <div class="topbar-left">
+        <button class="mobile-toggle" id="mobileToggle" aria-label="Mở menu">☰</button>
+        <a class="brand" href="index.html"><span class="brand-mark" style="width:32px;height:32px;font-size:14px">N5</span><span>N5 Blazor <small>JLPT N5 cho người mới</small></span></a>
+      </div>
+      <div class="topbar-actions">
+        <span class="badge badge-primary" style="font-size:12px">✨ Liquid Glass</span>
+        <span class="badge" style="font-size:12px">🌈 Rainbow</span>
+        <button class="theme-toggle" id="themeToggle" aria-label="Chuyển giao diện sáng/tối" title="Đổi giao diện sáng/tối">☀️</button>
+        <a class="btn btn-glass btn-sm" href="progress.html">📊 Tiến độ</a>
+      </div>
+    </header>
+    <main id="main" class="content">
+      <div id="helper"></div>
+      <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:16px">
+        <div><h1 style="margin:0;font-size:24px;font-weight:800">🧪 Thi thử N5</h1><p class="muted" style="margin:4px 0 0;font-size:13px">Chọn đề, làm bài, chấm điểm — có giải thích chi tiết</p></div>
+        <div id="quizHeader" style="display:flex;gap:8px;align-items:center"></div>
+      </div>
+      <div id="setup"></div>
+      <div id="quiz" style="display:none"></div>
+      <div id="result" style="display:none"></div>
+    </main>
+    <footer style="padding:16px 24px; text-align:center; color:var(--text-dim); font-size:12px; border-top:1px solid rgba(255,255,255,0.06); margin-top:24px">N5 Blazor Static • <a href="index.html">Trang chủ</a> • <a href="../index.html">YUNIE STATUS</a></footer>
+  </div>
+</div>
+<div id="mobileDrawer" class="mobile-drawer"><div class="mobile-drawer-backdrop"></div><div class="mobile-drawer-panel"><div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px"><div style="font-weight:800">Menu</div><button class="btn btn-glass btn-sm" onclick="document.getElementById('mobileDrawer').classList.remove('open')">✕</button></div>
+<nav class="nav"><a class="nav-link" href="index.html"><span class="nav-icon">🏠</span> Trang chủ</a><a class="nav-link" href="kana.html"><span class="nav-icon">あ</span> Kana</a><a class="nav-link" href="kanji.html"><span class="nav-icon">漢</span> Kanji</a><a class="nav-link" href="vocab.html"><span class="nav-icon">📚</span> Từ vựng</a><a class="nav-link" href="grammar.html"><span class="nav-icon">📝</span> Ngữ pháp</a><a class="nav-link" href="practice.html"><span class="nav-icon">🧪</span> Thi thử</a><a class="nav-link" href="progress.html"><span class="nav-icon">📊</span> Tiến độ</a></nav>
+</div></div>
+<script src="./app.js"></script>
+<script src="./data.js"></script>
+<script src="./site.js"></script>
+<script>
+document.getElementById('helper').innerHTML = renderHelper({
+  title:"Thi thử — Practice Test",
+  purpose:"Làm đề thi thử N5 10-20 câu trắc nghiệm (kana/kanji/vocab/grammar), chấm điểm, xem giải thích, lưu điểm cao nhất. Giúp đánh giá trình độ trước khi thi thật.",
+  structure:"Route 'practice.html' — Chọn category + số câu, bấm Bắt đầu → render từng câu với radio, Next/Prev, Submit → Result + Review.",
+  techniques:"Static JS: shuffle Array.sort(random), radio group, state current/answers, timer setInterval, localStorage quizScores.",
+  features:"Chọn category (all/kana/kanji/vocab/grammar), chọn 10/15/20 câu, làm bài từng câu, chấm điểm, xem giải thích, lưu điểm cao, làm lại.",
+  route:"practice.html", component:"practice.html",
+  bulletsTech:["Array.sort(()=>Math.random()-0.5) — shuffle","radio group — bind đáp án","setInterval — timer","localStorage quizScores — lưu điểm cao nhất"],
+  bulletsFeat:["Chọn category + số câu (10/15/20)","Làm bài từng câu, Next/Prev","Chấm điểm + % + giải thích","Lưu điểm cao nhất vào Progress"]
+});
+let category=null, count=10, questions=[], answers={}, current=0, started=false, finished=false, score=0, elapsed=0, timer=null;
+const cats=[{label:"Tất cả",value:null},{label:"Kana",value:"kana"},{label:"Kanji",value:"kanji"},{label:"Vocab",value:"vocab"},{label:"Grammar",value:"grammar"}];
+function renderSetup(){
+  const p=N5.get();
+  const scores = Object.entries(p.quizScores).map(([k,v])=>`<span class="badge badge-success">${esc(k)}: ${v} điểm cao nhất</span>`).join(' ');
+  document.getElementById('setup').innerHTML = `
+    <div class="glass card" style="margin-bottom:16px">
+      <h3 style="margin:0 0 12px;font-size:15px;font-weight:800">⚙️ Cấu hình đề</h3>
+      <div style="display:flex;gap:12px;flex-wrap:wrap;align-items:end">
+        <div><label style="font-size:12px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;color:var(--text-muted)">Category</label><div style="display:flex;gap:6px;margin-top:6px;flex-wrap:wrap">${cats.map(c=>`<button class="chip ${category===c.value?'active':''}" data-cat="${c.value||''}">${c.label}</button>`).join('')}</div></div>
+        <div><label style="font-size:12px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;color:var(--text-muted)">Số câu</label><div style="display:flex;gap:6px;margin-top:6px">${[10,15,20].map(n=>`<button class="chip ${count===n?'active':''}" data-count="${n}">${n} câu</button>`).join('')}</div></div>
+        <button class="btn btn-primary" id="startBtn">Bắt đầu làm bài →</button>
+      </div>
+      <div style="margin-top:12px;padding:10px 12px;border-radius:12px;background:rgba(99,102,241,0.08);border:1px solid rgba(99,102,241,0.15);font-size:12px;color:var(--text-muted)">💡 Đề được random từ ngân hàng 20 câu (kana/kanji/vocab/grammar). Chọn đáp án → Tiếp → Nộp bài để chấm điểm.</div>
+      ${scores?`<div style="margin-top:12px;display:flex;gap:8px;flex-wrap:wrap">${scores}</div>`:''}
+    </div>
+    <div class="grid grid-3">
+      <div class="glass card"><div style="font-weight:700;font-size:14px;margin-bottom:4px">📝 Cách làm bài</div><div style="font-size:13px;color:var(--text-muted);line-height:1.6">Chọn đáp án → bấm Tiếp. Có thể quay lại câu trước. Bấm Nộp bài để chấm điểm.</div></div>
+      <div class="glass card"><div style="font-weight:700;font-size:14px;margin-bottom:4px">🎯 Chấm điểm</div><div style="font-size:13px;color:var(--text-muted);line-height:1.6">Mỗi câu 1 điểm. ≥80% là giỏi, ≥60% là đạt. Xem lại giải thích sau khi nộp.</div></div>
+      <div class="glass card"><div style="font-weight:700;font-size:14px;margin-bottom:4px">💾 Lưu tiến độ</div><div style="font-size:13px;color:var(--text-muted);line-height:1.6">Điểm cao nhất được lưu vào <code>localStorage</code> key <code>n5-progress</code>.</div></div>
+    </div>`;
+  document.querySelectorAll('[data-cat]').forEach(b=> b.addEventListener('click', ()=>{ category=b.dataset.cat||null; renderSetup(); }));
+  document.querySelectorAll('[data-count]').forEach(b=> b.addEventListener('click', ()=>{ count=parseInt(b.dataset.count); renderSetup(); }));
+  document.getElementById('startBtn').addEventListener('click', start);
+}
+function start(){
+  let pool = category ? QUIZ.filter(q=>q.cat===category) : QUIZ.slice();
+  pool = pool.sort(()=>Math.random()-0.5).slice(0, count);
+  questions=pool; answers={}; current=0; started=true; finished=false; score=0; elapsed=0;
+  clearInterval(timer); timer=setInterval(()=>{ elapsed++; const h=document.getElementById('quizHeader'); if(h && started && !finished) h.innerHTML=`<span class="badge badge-primary">Câu ${current+1}/${questions.length}</span><span class="badge">⏱ ${elapsed}s</span><button class="btn btn-glass btn-sm" id="quitBtn">Thoát</button>`; },1000);
+  document.getElementById('setup').style.display='none';
+  document.getElementById('quiz').style.display='block';
+  document.getElementById('result').style.display='none';
+  renderQuiz();
+}
+function renderQuiz(){
+  if(!started || finished) return;
+  const q=questions[current];
+  const sel=answers[q.id];
+  document.getElementById('quizHeader').innerHTML=`<span class="badge badge-primary">Câu ${current+1}/${questions.length}</span><span class="badge">⏱ ${elapsed}s</span><button class="btn btn-glass btn-sm" id="quitBtn">Thoát</button>`;
+  document.getElementById('quizHeader').querySelector('#quitBtn').addEventListener('click', quit);
+  const dots = questions.map((qq,i)=>`<button class="chip ${i===current?'active':''}" style="${answers[qq.id]!==undefined && i!==current?'background:rgba(34,197,94,0.12);border-color:rgba(34,197,94,0.25);color:#86efac':''}" data-goto="${i}">${i+1}</button>`).join('');
+  document.getElementById('quiz').innerHTML = `
+    <div class="glass card" style="margin-bottom:16px">
+      <div style="display:flex;gap:8px;margin-bottom:12px;flex-wrap:wrap">${dots}</div>
+      <div style="margin-bottom:8px;display:flex;gap:8px;align-items:center"><span class="badge badge-primary">${q.cat}</span><span class="badge">#${q.id}</span></div>
+      <h3 style="margin:0 0 16px;font-size:16px;font-weight:700;line-height:1.5">${esc(q.q)}</h3>
+      <div style="display:flex;flex-direction:column;gap:10px">${q.opts.map((o,i)=>`<label class="quiz-option ${sel===i?'selected':''}" style="cursor:pointer"><input type="radio" name="ans" value="${i}" ${sel===i?'checked':''}/> <span style="font-weight:600">${String.fromCharCode(65+i)}. ${esc(o)}</span></label>`).join('')}</div>
+      <div style="display:flex;gap:8px;margin-top:16px;flex-wrap:wrap">
+        <button class="btn btn-glass" id="prevBtn" ${current===0?'disabled':''}>← Trước</button>
+        ${current < questions.length-1 ? `<button class="btn btn-primary" id="nextBtn">Tiếp →</button>` : `<button class="btn btn-primary" id="submitBtn">Nộp bài ✓</button>`}
+        <span style="margin-left:auto;font-size:12px;color:var(--text-muted);align-self:center">Đã làm ${Object.keys(answers).length}/${questions.length} câu</span>
+      </div>
+    </div>`;
+  document.querySelectorAll('[data-goto]').forEach(b=> b.addEventListener('click', ()=>{ const v=parseInt(b.dataset.goto); const curQ=questions[current]; const selEl=document.querySelector('input[name="ans"]:checked'); if(selEl) answers[curQ.id]=parseInt(selEl.value); current=v; renderQuiz(); }));
+  document.querySelectorAll('input[name="ans"]').forEach(r=> r.addEventListener('change', ()=>{ answers[q.id]=parseInt(r.value); }));
+  const prev=document.getElementById('prevBtn');
+  if(prev) prev.addEventListener('click', ()=>{
+    const selEl=document.querySelector('input[name="ans"]:checked'); if(selEl) answers[q.id]=parseInt(selEl.value);
+    if(current>0){ current--; renderQuiz(); }
+  });
+  const next=document.getElementById('nextBtn');
+  if(next) next.addEventListener('click', ()=>{
+    const selEl=document.querySelector('input[name="ans"]:checked'); if(selEl) answers[q.id]=parseInt(selEl.value);
+    if(answers[q.id]===undefined){ alert('Hãy chọn một đáp án'); return; }
+    current++; renderQuiz();
+  });
+  const submit=document.getElementById('submitBtn');
+  if(submit) submit.addEventListener('click', ()=>{
+    const selEl=document.querySelector('input[name="ans"]:checked'); if(selEl) answers[q.id]=parseInt(selEl.value);
+    if(answers[q.id]===undefined){ alert('Hãy chọn một đáp án'); return; }
+    doSubmit();
+  });
+}
+function doSubmit(){
+  score=questions.filter(q=>answers[q.id]===q.ans).length;
+  const pct=Math.round(score/questions.length*100)||0;
+  finished=true; clearInterval(timer);
+  const cat=category||'all';
+  N5.recordQuiz(cat, score);
+  document.getElementById('quiz').style.display='none';
+  document.getElementById('quizHeader').innerHTML='';
+  const msg = pct>=80 ? 'Xuất sắc! Bạn đã sẵn sàng cho N5 🎌' : pct>=60 ? 'Khá tốt! Ôn thêm chút nữa nhé 💪' : 'Cố gắng thêm! Xem lại Kana/Kanji/Vocab nhé 📚';
+  document.getElementById('result').style.display='block';
+  document.getElementById('result').innerHTML = `
+    <div class="rainbow-wrap" style="margin-bottom:16px"><div class="glass card" style="text-align:center;padding:24px"><div style="font-size:36px">🎉</div><h2 style="margin:8px 0;font-size:22px;font-weight:800">Kết quả: ${score}/${questions.length} (${pct}%)</h2><p style="color:var(--text-muted);font-size:14px;margin:0 0 12px">${msg}</p><div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap"><button class="btn btn-primary" id="restartBtn">Làm lại</button><button class="btn btn-glass" id="otherBtn">Chọn đề khác</button><a class="btn btn-glass" href="progress.html">📊 Xem tiến độ</a></div></div></div>
+    <div style="display:flex;flex-direction:column;gap:12px">${questions.map(q=>{
+      const ans=answers[q.id]; const correct=ans===q.ans;
+      return `<div class="glass" style="padding:16px;border-left:4px solid ${correct?'var(--success)':'var(--danger)'}">
+        <div style="display:flex;gap:8px;align-items:center;margin-bottom:8px"><span class="badge ${correct?'badge-success':''}" style="${correct?'':'background:rgba(239,68,68,0.12);color:#fca5a5;border-color:rgba(239,68,68,0.25)'}">${correct?'✓ Đúng':'✗ Sai'}</span><span class="badge badge-primary">${q.cat}</span><span style="font-size:13px;font-weight:600">${esc(q.q)}</span></div>
+        <div style="display:flex;flex-direction:column;gap:6px;margin-left:8px">${q.opts.map((o,i)=>{
+          const isAns=ans===i; const isCorrect=q.ans===i;
+          return `<div style="padding:8px 10px;border-radius:8px;font-size:13px;border:1px solid ${isCorrect?'rgba(34,197,94,0.3)':isAns?'rgba(239,68,68,0.3)':'rgba(255,255,255,0.06)'};background:${isCorrect?'rgba(34,197,94,0.10)':isAns?'rgba(239,68,68,0.10)':'rgba(255,255,255,0.03)'}">${String.fromCharCode(65+i)}. ${esc(o)} ${isAns?'← bạn chọn':''} ${isCorrect?'✓ đáp án':''}</div>`;
+        }).join('')}</div>
+        <div style="margin-top:8px;padding:8px 10px;border-radius:8px;background:rgba(99,102,241,0.08);border:1px solid rgba(99,102,241,0.15);font-size:12px;color:var(--text-muted)">💡 ${esc(q.exp)}</div>
+      </div>`;
+    }).join('')}</div>`;
+  document.getElementById('restartBtn').addEventListener('click', ()=>{ document.getElementById('result').style.display='none'; start(); });
+  document.getElementById('otherBtn').addEventListener('click', quit);
+}
+function quit(){
+  started=false; finished=false; clearInterval(timer);
+  document.getElementById('setup').style.display='block';
+  document.getElementById('quiz').style.display='none';
+  document.getElementById('result').style.display='none';
+  document.getElementById('quizHeader').innerHTML='';
+  renderSetup();
+}
+renderSetup();
+</script>
+</body>
+</html>

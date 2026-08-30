@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Tiến độ — Progress | N5 Blazor</title>
+<script>(function(){try{var t=localStorage.getItem('n5-theme');if(!t)t=(window.matchMedia&&window.matchMedia('(prefers-color-scheme: light)').matches)?'light':'dark';document.documentElement.setAttribute('data-theme',t);}catch(e){document.documentElement.setAttribute('data-theme','dark');}})();</script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+JP:wght@400;500;700&family=Zen+Maru+Gothic:wght@500;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="./app.css"/>
+</head>
+<body>
+<a class="skip-link" href="#main">Bỏ qua tới nội dung</a>
+<div class="page">
+  <aside class="sidebar" aria-label="Điều hướng chính">
+    <div style="padding:16px 14px 8px; display:flex; align-items:center; gap:10px; border-bottom:1px solid var(--glass-border)">
+      <div class="brand-mark">N5</div>
+      <div><div style="font-weight:800; letter-spacing:-0.02em; line-height:1">N5 Blazor</div><div style="font-size:11px; color:var(--text-muted); letter-spacing:0.08em; text-transform:uppercase">JLPT N5 • Liquid Glass</div></div>
+    </div>
+    <nav class="nav" aria-label="Menu chính">
+      <div class="nav-section">🏠 Tổng quan</div>
+      <a class="nav-link" href="index.html"><span class="nav-icon">🏠</span><span style="flex:1">Trang chủ</span><span class="badge" style="font-size:10px">Home</span></a>
+      <div class="nav-section">📖 Học tập — N5 cơ bản</div>
+      <a class="nav-link" href="kana.html"><span class="nav-icon">あ</span><span style="flex:1">Kana</span><span class="badge" style="font-size:10px">92 chữ</span></a>
+      <a class="nav-link" href="kanji.html"><span class="nav-icon">漢</span><span style="flex:1">Kanji</span><span class="badge" style="font-size:10px">36 chữ</span></a>
+      <a class="nav-link" href="vocab.html"><span class="nav-icon">📚</span><span style="flex:1">Từ vựng</span><span class="badge" style="font-size:10px">40 từ</span></a>
+      <a class="nav-link" href="grammar.html"><span class="nav-icon">📝</span><span style="flex:1">Ngữ pháp</span><span class="badge" style="font-size:10px">15 mẫu</span></a>
+      <div class="nav-section">🧪 Luyện tập &amp; Đánh giá</div>
+      <a class="nav-link" href="practice.html"><span class="nav-icon">🧪</span><span style="flex:1">Thi thử</span><span class="badge badge-primary" style="font-size:10px">20 câu</span></a>
+      <a class="nav-link" href="progress.html"><span class="nav-icon">📊</span><span style="flex:1">Tiến độ</span><span class="badge badge-success" style="font-size:10px">Streak</span></a>
+      <div class="nav-section">⚙️ Hệ thống</div>
+      <div style="padding:8px 10px; display:flex; flex-direction:column; gap:8px">
+        <div class="glass" style="padding:12px; border-radius:12px; font-size:12px; line-height:1.6; color:var(--text-muted)">
+          <div style="font-weight:700; color:var(--text); font-size:13px; margin-bottom:6px; display:flex; align-items:center; gap:6px">💡 Static <span class="badge badge-primary" style="font-size:10px">Pages</span></div>
+          <div style="display:flex; flex-direction:column; gap:4px; font-size:11px">
+            <span>✓ 100% static — chạy trên GitHub Pages</span>
+            <span>✓ localStorage • speechSynthesis</span>
+            <span>✓ Liquid Glass • Rainbow</span>
+          </div>
+        </div>
+      </div>
+    </nav>
+    <div class="nav-footer">
+      <div class="progress-mini"><span id="miniStreak">🔥 0 ngày</span><div class="progress-mini-bar"><div id="miniBar" class="progress-mini-fill" style="width:0%"></div></div><span id="miniPct">0%</span></div>
+      <div style="font-size:11px; color:var(--text-dim); margin-top:8px">Static • Pages • Glass + Rainbow</div>
+    </div>
+  </aside>
+  <div class="main">
+    <header class="topbar">
+      <div class="topbar-left">
+        <button class="mobile-toggle" id="mobileToggle" aria-label="Mở menu">☰</button>
+        <a class="brand" href="index.html"><span class="brand-mark" style="width:32px;height:32px;font-size:14px">N5</span><span>N5 Blazor <small>JLPT N5 cho người mới</small></span></a>
+      </div>
+      <div class="topbar-actions">
+        <span class="badge badge-primary" style="font-size:12px">✨ Liquid Glass</span>
+        <span class="badge" style="font-size:12px">🌈 Rainbow</span>
+        <button class="theme-toggle" id="themeToggle" aria-label="Chuyển giao diện sáng/tối" title="Đổi giao diện sáng/tối">☀️</button>
+        <a class="btn btn-glass btn-sm" href="progress.html">📊 Tiến độ</a>
+      </div>
+    </header>
+    <main id="main" class="content">
+      <div id="helper"></div>
+      <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:16px">
+        <div><h1 style="margin:0;font-size:24px;font-weight:800">📊 Tiến độ học tập</h1><p class="muted" style="margin:4px 0 0;font-size:13px">Theo dõi hành trình N5 của bạn • Lưu tự động vào localStorage</p></div>
+        <div style="display:flex;gap:8px"><button class="btn btn-glass btn-sm" id="exportBtn">⬇ Export JSON</button><button class="btn btn-glass btn-sm" id="resetBtn" style="color:var(--danger);border-color:rgba(239,68,68,0.25)">🗑 Reset</button></div>
+      </div>
+      <div class="grid grid-4" style="margin-bottom:16px" id="rings"></div>
+      <div class="grid grid-2" style="margin-bottom:16px">
+        <div class="glass card">
+          <h3 style="margin:0 0 12px;font-size:15px;font-weight:800">🔥 Streak &amp; Tổng quan</h3>
+          <div style="display:flex;gap:12px;align-items:center;margin-bottom:12px">
+            <div style="width:56px;height:56px;border-radius:14px;display:grid;place-items:center;background:linear-gradient(135deg, #f59e0b, #ef4444);color:white;font-size:24px;font-weight:800" id="streakNum">0</div>
+            <div><div style="font-weight:800;font-size:16px" id="streakText">0 ngày streak</div><div style="font-size:12px;color:var(--text-muted)" id="lastDate">Lần học cuối: chưa có</div></div>
+          </div>
+          <div style="display:grid;grid-template-columns:repeat(7,1fr);gap:6px" id="week"></div>
+          <div style="display:flex;gap:6px;margin-top:8px;justify-content:center"><span style="font-size:10px;color:var(--text-dim);width:100%;text-align:center">T2</span><span style="font-size:10px;color:var(--text-dim);width:100%;text-align:center">T3</span><span style="font-size:10px;color:var(--text-dim);width:100%;text-align:center">T4</span><span style="font-size:10px;color:var(--text-dim);width:100%;text-align:center">T5</span><span style="font-size:10px;color:var(--text-dim);width:100%;text-align:center">T6</span><span style="font-size:10px;color:var(--text-dim);width:100%;text-align:center">T7</span><span style="font-size:10px;color:var(--text-dim);width:100%;text-align:center">CN</span></div>
+          <div style="margin-top:12px;padding:10px 12px;border-radius:12px;background:rgba(99,102,241,0.08);border:1px solid rgba(99,102,241,0.15);font-size:12px;color:var(--text-muted)">💡 Streak tăng khi bạn học mỗi ngày. Dữ liệu lưu trong <code>localStorage</code> key <code>n5-progress</code>.</div>
+        </div>
+        <div class="glass card">
+          <h3 style="margin:0 0 12px;font-size:15px;font-weight:800">🏆 Điểm thi thử</h3>
+          <div id="scores"></div>
+          <div style="margin-top:12px;display:flex;gap:8px"><a class="btn btn-glass btn-sm" href="practice.html">🧪 Thi thử</a><a class="btn btn-glass btn-sm" href="kana.html">あ Kana</a><a class="btn btn-glass btn-sm" href="kanji.html">漢 Kanji</a></div>
+        </div>
+      </div>
+      <div class="grid grid-2">
+        <div class="glass card">
+          <h3 style="margin:0 0 12px;font-size:15px;font-weight:800">🔖 Bookmark</h3>
+          <div id="bookmarks"></div>
+        </div>
+        <div class="glass card">
+          <h3 style="margin:0 0 12px;font-size:15px;font-weight:800">📦 Dữ liệu &amp; Kỹ thuật</h3>
+          <div style="font-size:13px;line-height:1.6;color:var(--text-muted)">
+            <p style="margin:0 0 8px">Tiến độ được lưu bằng <code>localStorage</code> key <code>n5-progress</code>. Mỗi lần đánh dấu đã thuộc/bookmark/quiz đều lưu + dispatch <code>n5:progress</code> để layout cập nhật.</p>
+            <ul style="margin:8px 0;padding-left:16px">
+              <li><code>Set learnedKana</code> — 92 chữ</li>
+              <li><code>Set learnedKanji</code> — 36 kanji</li>
+              <li><code>Set learnedVocabIds</code> — 40 từ</li>
+              <li><code>Set learnedGrammarIds</code> — 15 mẫu</li>
+              <li><code>Object quizScores</code> — điểm cao nhất</li>
+            </ul>
+            <p style="margin:8px 0 0">Export sẽ tải file <code>n5-progress.json</code> chứa toàn bộ JSON.</p>
+          </div>
+          <div style="display:flex;gap:8px;margin-top:12px"><button class="btn btn-primary btn-sm" id="exportBtn2">⬇ Export JSON</button><button class="btn btn-glass btn-sm" id="copyBtn">📋 Copy JSON</button></div>
+          <div id="msg" style="display:none;margin-top:8px;padding:8px 10px;border-radius:8px;background:rgba(34,197,94,0.12);border:1px solid rgba(34,197,94,0.25);font-size:12px"></div>
+        </div>
+      </div>
+    </main>
+    <footer style="padding:16px 24px; text-align:center; color:var(--text-dim); font-size:12px; border-top:1px solid rgba(255,255,255,0.06); margin-top:24px">N5 Blazor Static • <a href="index.html">Trang chủ</a> • <a href="../index.html">YUNIE STATUS</a></footer>
+  </div>
+</div>
+<div id="mobileDrawer" class="mobile-drawer"><div class="mobile-drawer-backdrop"></div><div class="mobile-drawer-panel"><div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px"><div style="font-weight:800">Menu</div><button class="btn btn-glass btn-sm" onclick="document.getElementById('mobileDrawer').classList.remove('open')">✕</button></div>
+<nav class="nav"><a class="nav-link" href="index.html"><span class="nav-icon">🏠</span> Trang chủ</a><a class="nav-link" href="kana.html"><span class="nav-icon">あ</span> Kana</a><a class="nav-link" href="kanji.html"><span class="nav-icon">漢</span> Kanji</a><a class="nav-link" href="vocab.html"><span class="nav-icon">📚</span> Từ vựng</a><a class="nav-link" href="grammar.html"><span class="nav-icon">📝</span> Ngữ pháp</a><a class="nav-link" href="practice.html"><span class="nav-icon">🧪</span> Thi thử</a><a class="nav-link" href="progress.html"><span class="nav-icon">📊</span> Tiến độ</a></nav>
+</div></div>
+<script src="./app.js"></script>
+<script src="./data.js"></script>
+<script src="./site.js"></script>
+<script>
+document.getElementById('helper').innerHTML = renderHelper({
+  title:"Tiến độ — Progress Dashboard",
+  purpose:"Xem tổng quan tiến độ học: % hoàn thành từng mảng, streak, bookmark, điểm thi thử, và xuất dữ liệu. Giúp người học thấy mình đã đi được bao xa và cần ôn gì.",
+  structure:"Route 'progress.html' — Gồm 4 ProgressRing, streak calendar, bookmark list, quiz scores, nút Export JSON và Reset.",
+  techniques:"Static JS: localStorage n5-progress, dispatch n5:progress event, progressRing SVG, export JSON via data URI.",
+  features:"4 vòng tròn tiến độ, streak, danh sách bookmark, điểm cao nhất, export JSON, reset tiến độ, responsive grid.",
+  route:"progress.html", component:"progress.html",
+  bulletsTech:["localStorage n5-progress — load/save","n5:progress event — cập nhật layout","progressRing SVG — stroke-dashoffset","data URI — export JSON"],
+  bulletsFeat:["4 ProgressRing (Kana/Kanji/Vocab/Grammar)","Streak + bookmark list","Quiz scores + export JSON","Reset tiến độ"]
+});
+function render(){
+  const p=N5.get();
+  const kanaPct=Math.round(p.learnedKana.size/92*100)||0;
+  const kanjiPct=Math.round(p.learnedKanji.size/36*100)||0;
+  const vocabPct=Math.round(p.learnedVocabIds.size/40*100)||0;
+  const grammarPct=Math.round(p.learnedGrammarIds.size/15*100)||0;
+  document.getElementById('rings').innerHTML = `
+    <div class="glass" style="padding:16px;text-align:center">${progressRing(kanaPct,'Kana',96)}<div style="margin-top:8px;font-weight:700">${p.learnedKana.size} / 92 chữ</div><div style="font-size:12px;color:var(--text-muted)">Hiragana + Katakana</div></div>
+    <div class="glass" style="padding:16px;text-align:center">${progressRing(kanjiPct,'Kanji',96)}<div style="margin-top:8px;font-weight:700">${p.learnedKanji.size} / 36 kanji</div><div style="font-size:12px;color:var(--text-muted)">36 kanji mẫu</div></div>
+    <div class="glass" style="padding:16px;text-align:center">${progressRing(vocabPct,'Vocab',96)}<div style="margin-top:8px;font-weight:700">${p.learnedVocabIds.size} / 40 từ</div><div style="font-size:12px;color:var(--text-muted)">40 từ mẫu</div></div>
+    <div class="glass" style="padding:16px;text-align:center">${progressRing(grammarPct,'Grammar',96)}<div style="margin-top:8px;font-weight:700">${p.learnedGrammarIds.size} / 15 mẫu</div><div style="font-size:12px;color:var(--text-muted)">15 mẫu N5</div></div>`;
+  document.getElementById('streakNum').textContent=p.streakDays;
+  document.getElementById('streakText').textContent=p.streakDays+' ngày streak';
+  document.getElementById('lastDate').textContent='Lần học cuối: '+(p.lastStudyDate||'chưa có');
+  const week=document.getElementById('week');
+  week.innerHTML='';
+  for(let i=6;i>=0;i--){
+    const d=new Date(Date.now()-i*86400000);
+    const iso=d.toISOString().slice(0,10);
+    const active = p.lastStudyDate===iso || (i===0 && p.streakDays>0);
+    const div=document.createElement('div');
+    div.style.cssText=`aspect-ratio:1;border-radius:8px;display:grid;place-items:center;font-size:11px;font-weight:700;background:${active?'linear-gradient(135deg, var(--primary), var(--secondary))':'rgba(255,255,255,0.06)'};color:${active?'white':'var(--text-muted)'};border:1px solid ${active?'rgba(99,102,241,0.3)':'var(--glass-border)'}`;
+    div.textContent=d.getDate();
+    week.appendChild(div);
+  }
+  const scores=document.getElementById('scores');
+  const entries=Object.entries(p.quizScores).sort((a,b)=>b[1]-a[1]);
+  if(entries.length){
+    scores.innerHTML = entries.map(([k,v])=>`<div style="display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.06);margin-bottom:8px"><span class="badge badge-primary">${esc(k)}</span><div style="flex:1;height:8px;background:rgba(255,255,255,0.08);border-radius:9999px;overflow:hidden"><div style="height:100%;width:${Math.min(v*10,100)}%;background:linear-gradient(90deg, var(--primary), var(--secondary));border-radius:9999px"></div></div><span style="font-weight:800">${v}</span></div>`).join('');
+  } else {
+    scores.innerHTML = `<div class="empty" style="padding:20px"><div class="empty-icon">🧪</div><div style="font-size:13px">Chưa có điểm thi thử</div><a class="btn btn-primary btn-sm" style="margin-top:8px" href="practice.html">Làm bài ngay →</a></div>`;
+  }
+  const bm=document.getElementById('bookmarks');
+  const list=[...p.bookmarks];
+  if(list.length){
+    bm.innerHTML = `<div style="display:flex;flex-direction:column;gap:6px;max-height:260px;overflow:auto">${list.map(b=>`<div style="display:flex;align-items:center;justify-content:space-between;gap:8px;padding:8px 10px;border-radius:10px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.06);font-size:13px"><span>${esc(b)}</span><button class="btn btn-glass btn-sm" data-rm="${esc(b)}">✕</button></div>`).join('')}</div>`;
+    bm.querySelectorAll('[data-rm]').forEach(btn=> btn.addEventListener('click', ()=>{ N5.toggleBookmark(btn.dataset.rm); render(); }));
+  } else {
+    bm.innerHTML = `<div class="empty" style="padding:16px"><div style="font-size:13px;color:var(--text-muted)">Chưa có bookmark. Bấm ☆ ở Kana/Kanji/Vocab/Grammar để ghim.</div></div>`;
+  }
+}
+function showMsg(t){ const m=document.getElementById('msg'); m.textContent=t; m.style.display='block'; setTimeout(()=> m.style.display='none', 2500); }
+function doExport(){
+  const json=N5.exportJSON();
+  const b64=btoa(unescape(encodeURIComponent(json)));
+  const a=document.createElement('a'); a.href='data:application/json;base64,'+b64; a.download='n5-progress.json'; a.click();
+  showMsg('Đã export n5-progress.json ✓');
+}
+document.getElementById('exportBtn').addEventListener('click', doExport);
+document.getElementById('exportBtn2').addEventListener('click', doExport);
+document.getElementById('copyBtn').addEventListener('click', async ()=>{
+  try{ await navigator.clipboard.writeText(N5.exportJSON()); showMsg('Đã copy JSON vào clipboard ✓'); }catch{ showMsg('Không copy được — hãy dùng Export JSON'); }
+});
+document.getElementById('resetBtn').addEventListener('click', ()=>{
+  if(!confirm('Xóa toàn bộ tiến độ?')) return;
+  N5.reset(); render(); showMsg('Đã reset tiến độ ✓');
+});
+render();
+document.addEventListener('n5:progress', render);
+</script>
+</body>
+</html>

@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Kana — Hiragana & Katakana | N5 Blazor</title>
+<script>(function(){try{var t=localStorage.getItem('n5-theme');if(!t)t=(window.matchMedia&&window.matchMedia('(prefers-color-scheme: light)').matches)?'light':'dark';document.documentElement.setAttribute('data-theme',t);}catch(e){document.documentElement.setAttribute('data-theme','dark');}})();</script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+JP:wght@400;500;700&family=Zen+Maru+Gothic:wght@500;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="./app.css"/>
+</head>
+<body>
+<a class="skip-link" href="#main">Bỏ qua tới nội dung</a>
+<div class="page">
+  <aside class="sidebar" aria-label="Điều hướng chính">
+    <div style="padding:16px 14px 8px; display:flex; align-items:center; gap:10px; border-bottom:1px solid var(--glass-border)">
+      <div class="brand-mark">N5</div>
+      <div><div style="font-weight:800; letter-spacing:-0.02em; line-height:1">N5 Blazor</div><div style="font-size:11px; color:var(--text-muted); letter-spacing:0.08em; text-transform:uppercase">JLPT N5 • Liquid Glass</div></div>
+    </div>
+    <nav class="nav" aria-label="Menu chính">
+      <div class="nav-section">🏠 Tổng quan</div>
+      <a class="nav-link" href="index.html"><span class="nav-icon">🏠</span><span style="flex:1">Trang chủ</span><span class="badge" style="font-size:10px">Home</span></a>
+      <div class="nav-section">📖 Học tập — N5 cơ bản</div>
+      <a class="nav-link" href="kana.html"><span class="nav-icon">あ</span><span style="flex:1">Kana</span><span class="badge" style="font-size:10px">92 chữ</span></a>
+      <a class="nav-link" href="kanji.html"><span class="nav-icon">漢</span><span style="flex:1">Kanji</span><span class="badge" style="font-size:10px">36 chữ</span></a>
+      <a class="nav-link" href="vocab.html"><span class="nav-icon">📚</span><span style="flex:1">Từ vựng</span><span class="badge" style="font-size:10px">40 từ</span></a>
+      <a class="nav-link" href="grammar.html"><span class="nav-icon">📝</span><span style="flex:1">Ngữ pháp</span><span class="badge" style="font-size:10px">15 mẫu</span></a>
+      <div class="nav-section">🧪 Luyện tập &amp; Đánh giá</div>
+      <a class="nav-link" href="practice.html"><span class="nav-icon">🧪</span><span style="flex:1">Thi thử</span><span class="badge badge-primary" style="font-size:10px">20 câu</span></a>
+      <a class="nav-link" href="progress.html"><span class="nav-icon">📊</span><span style="flex:1">Tiến độ</span><span class="badge badge-success" style="font-size:10px">Streak</span></a>
+      <div class="nav-section">⚙️ Hệ thống</div>
+      <div style="padding:8px 10px; display:flex; flex-direction:column; gap:8px">
+        <div class="glass" style="padding:12px; border-radius:12px; font-size:12px; line-height:1.6; color:var(--text-muted)">
+          <div style="font-weight:700; color:var(--text); font-size:13px; margin-bottom:6px; display:flex; align-items:center; gap:6px">💡 Static <span class="badge badge-primary" style="font-size:10px">Pages</span></div>
+          <div style="display:flex; flex-direction:column; gap:4px; font-size:11px">
+            <span>✓ 100% static — chạy trên GitHub Pages</span>
+            <span>✓ localStorage • speechSynthesis</span>
+            <span>✓ Liquid Glass • Rainbow</span>
+          </div>
+        </div>
+      </div>
+    </nav>
+    <div class="nav-footer">
+      <div class="progress-mini"><span id="miniStreak">🔥 0 ngày</span><div class="progress-mini-bar"><div id="miniBar" class="progress-mini-fill" style="width:0%"></div></div><span id="miniPct">0%</span></div>
+      <div style="font-size:11px; color:var(--text-dim); margin-top:8px">Static • Pages • Glass + Rainbow</div>
+    </div>
+  </aside>
+  <div class="main">
+    <header class="topbar">
+      <div class="topbar-left">
+        <button class="mobile-toggle" id="mobileToggle" aria-label="Mở menu">☰</button>
+        <a class="brand" href="index.html"><span class="brand-mark" style="width:32px;height:32px;font-size:14px">N5</span><span>N5 Blazor <small>JLPT N5 cho người mới</small></span></a>
+      </div>
+      <div class="topbar-actions">
+        <span class="badge badge-primary" style="font-size:12px">✨ Liquid Glass</span>
+        <span class="badge" style="font-size:12px">🌈 Rainbow</span>
+        <button class="theme-toggle" id="themeToggle" aria-label="Chuyển giao diện sáng/tối" title="Đổi giao diện sáng/tối">☀️</button>
+        <a class="btn btn-glass btn-sm" href="progress.html">📊 Tiến độ</a>
+      </div>
+    </header>
+    <main id="main" class="content">
+      <div id="helper"></div>
+      <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:16px">
+        <div><h1 style="margin:0;font-size:24px;font-weight:800;letter-spacing:-0.02em">あ Kana</h1><p class="muted" style="margin:4px 0 0;font-size:13px">Hiragana &amp; Katakana — 92 chữ cơ bản • Bấm vào chữ để xem chi tiết &amp; nghe phát âm</p></div>
+        <div style="display:flex;gap:8px;align-items:center"><div id="ring"></div><button class="btn btn-glass" id="quizBtn">🧪 Quiz 10 câu</button></div>
+      </div>
+      <div id="quizBox" style="display:none"></div>
+      <div class="toolbar">
+        <div style="display:flex;gap:8px">
+          <button class="chip active" id="btnHira">あ Hiragana (46)</button>
+          <button class="chip" id="btnKata">ア Katakana (46)</button>
+        </div>
+        <input class="input" id="search" placeholder="Tìm romaji... (vd: ka, shi)" style="min-width:180px"/>
+        <div style="display:flex;gap:6px;flex-wrap:wrap" id="rowChips"></div>
+        <button class="btn btn-glass btn-sm" id="speakAll">🔊 Đọc hàng</button>
+      </div>
+      <div class="kana-grid" id="grid"></div>
+      <div id="empty" class="glass empty" style="display:none;margin-top:16px"><div class="empty-icon">🔍</div><div>Không tìm thấy chữ nào</div></div>
+      <div id="modal" style="display:none;position:fixed;inset:0;z-index:50;display:none;place-items:center;padding:16px">
+        <div style="position:absolute;inset:0;background:rgba(0,0,0,0.5);backdrop-filter:blur(6px)" id="modalBg"></div>
+        <div class="glass glass-strong" style="position:relative;max-width:420px;width:100%;padding:24px;text-align:center">
+          <button class="btn btn-glass btn-sm" style="position:absolute;top:12px;right:12px" id="modalClose" aria-label="Đóng">✕</button>
+          <div class="jp" style="font-size:72px;font-weight:800;line-height:1;margin-bottom:8px" id="mChar"></div>
+          <div style="font-family:'JetBrains Mono',monospace;font-size:18px;font-weight:700;color:var(--primary)" id="mRomaji"></div>
+          <div style="font-size:12px;color:var(--text-muted);margin-top:4px" id="mMeta"></div>
+          <div style="display:flex;gap:8px;justify-content:center;margin-top:16px;flex-wrap:wrap">
+            <button class="btn btn-primary btn-sm" id="mSpeak">🔊 Nghe</button>
+            <button class="btn btn-glass btn-sm" id="mLearn">Đánh dấu đã thuộc</button>
+          </div>
+          <div style="margin-top:12px;font-size:12px;color:var(--text-dim)">Bấm ngoài để đóng • ESC</div>
+        </div>
+      </div>
+    </main>
+    <footer style="padding:16px 24px; text-align:center; color:var(--text-dim); font-size:12px; border-top:1px solid rgba(255,255,255,0.06); margin-top:24px">N5 Blazor Static • <a href="index.html">Trang chủ</a> • <a href="../index.html">YUNIE STATUS</a></footer>
+  </div>
+</div>
+<div id="mobileDrawer" class="mobile-drawer"><div class="mobile-drawer-backdrop"></div><div class="mobile-drawer-panel"><div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px"><div style="font-weight:800">Menu</div><button class="btn btn-glass btn-sm" onclick="document.getElementById('mobileDrawer').classList.remove('open')">✕</button></div>
+<nav class="nav"><a class="nav-link" href="index.html"><span class="nav-icon">🏠</span> Trang chủ</a><a class="nav-link" href="kana.html"><span class="nav-icon">あ</span> Kana</a><a class="nav-link" href="kanji.html"><span class="nav-icon">漢</span> Kanji</a><a class="nav-link" href="vocab.html"><span class="nav-icon">📚</span> Từ vựng</a><a class="nav-link" href="grammar.html"><span class="nav-icon">📝</span> Ngữ pháp</a><a class="nav-link" href="practice.html"><span class="nav-icon">🧪</span> Thi thử</a><a class="nav-link" href="progress.html"><span class="nav-icon">📊</span> Tiến độ</a></nav>
+</div></div>
+<script src="./app.js"></script>
+<script src="./data.js"></script>
+<script src="./site.js"></script>
+<script>
+document.getElementById('helper').innerHTML = renderHelper({
+  title:"Kana — Bảng chữ cái",
+  purpose:"Học 46 Hiragana + 46 Katakana — nền tảng bắt buộc trước khi vào Kanji. Người mới cần nhớ mặt chữ, romaji, phát âm và thứ tự nét.",
+  structure:"Route 'kana.html' — Tabs Hira/Kata, filter theo hàng (a/ka/sa...), grid 46 ô, modal chi tiết, chế độ Quiz lật thẻ, nút đánh dấu đã thuộc.",
+  techniques:"Static JS: filter/search với Array.filter, modal với fixed overlay, speechSynthesis ja-JP, localStorage HashSet, quiz random.",
+  features:"Grid Kana với hover lift + rainbow khi learned, modal chi tiết (chữ lớn + romaji + audio), quiz ngẫu nhiên 10 câu, đánh dấu đã thuộc, progress ring, search theo romaji.",
+  route:"kana.html", component:"kana.html",
+  bulletsTech:["Array.filter — live search/filter","speechSynthesis ja-JP — cancel trước khi speak","localStorage n5-progress — Set learnedKana","Quiz random 10 câu — shuffle"],
+  bulletsFeat:["Tabs Hiragana/Katakana + filter hàng a/ka/sa...","Grid 46 ô, click mở modal chi tiết","Quiz 10 câu ngẫu nhiên, chấm điểm","Đánh dấu đã thuộc + lưu tiến độ"]
+});
+let type='hiragana', rowFilter=null, search='', quizMode=false, quizQs=[], quizIdx=0, quizScore=0, quizSel=null, selected=null;
+const rows=["a","ka","sa","ta","na","ha","ma","ya","ra","wa"];
+function renderRowChips(){
+  const c=document.getElementById('rowChips');
+  c.innerHTML = `<button class="chip ${!rowFilter?'active':''}" data-row="">Tất cả</button>` + rows.map(r=>`<button class="chip ${rowFilter===r?'active':''}" data-row="${r}">${r}</button>`).join('');
+  c.querySelectorAll('button').forEach(b=> b.addEventListener('click', ()=>{ rowFilter=b.dataset.row||null; renderRowChips(); renderGrid(); }));
+}
+function filtered(){
+  let q=KANA.filter(k=>k.type===type);
+  if(rowFilter) q=q.filter(k=>k.row===rowFilter);
+  if(search) q=q.filter(k=>k.romaji.includes(search.toLowerCase()));
+  return q;
+}
+function renderRing(){
+  const p=N5.get(); const pct=Math.round(p.learnedKana.size/92*100)||0;
+  document.getElementById('ring').innerHTML = progressRing(pct,'Đã thuộc',64);
+}
+function renderGrid(){
+  const list=filtered();
+  const p=N5.get();
+  const grid=document.getElementById('grid');
+  const empty=document.getElementById('empty');
+  if(!list.length){ grid.innerHTML=''; empty.style.display='block'; return; }
+  empty.style.display='none';
+  grid.innerHTML = list.map(k=>{
+    const learned=p.learnedKana.has(k.char);
+    return `<button class="kana-cell ${learned?'learned':''}" data-char="${k.char}" aria-label="${k.char} ${k.romaji}" title="${k.char} — ${k.romaji}">
+      ${learned?'<span class="kana-dot" aria-hidden="true"></span>':''}
+      <span class="kana-char">${k.char}</span><span class="kana-romaji">${k.romaji}</span>
+    </button>`;
+  }).join('');
+  grid.querySelectorAll('.kana-cell').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      const ch=btn.dataset.char;
+      const k=KANA.find(x=>x.char===ch);
+      openModal(k);
+    });
+  });
+}
+function openModal(k){
+  selected=k;
+  document.getElementById('mChar').textContent=k.char;
+  document.getElementById('mRomaji').textContent=k.romaji;
+  document.getElementById('mMeta').textContent=k.type+' • hàng '+k.row;
+  const p=N5.get(); const learned=p.learnedKana.has(k.char);
+  const btn=document.getElementById('mLearn');
+  btn.textContent = learned ? '✓ Đã thuộc' : 'Đánh dấu đã thuộc';
+  btn.className = learned ? 'btn btn-primary btn-sm' : 'btn btn-glass btn-sm';
+  const modal=document.getElementById('modal');
+  modal.style.display='grid';
+}
+function closeModal(){ document.getElementById('modal').style.display='none'; selected=null; }
+document.getElementById('modalBg').addEventListener('click', closeModal);
+document.getElementById('modalClose').addEventListener('click', closeModal);
+document.addEventListener('keydown', e=>{ if(e.key==='Escape') closeModal(); });
+document.getElementById('mSpeak').addEventListener('click', ()=>{ if(selected) speak(selected.char); });
+document.getElementById('mLearn').addEventListener('click', ()=>{
+  if(!selected) return;
+  const had=N5.get().learnedKana.has(selected.char);
+  if(had){ N5.get().learnedKana.delete(selected.char); N5.save(); } else { N5.addKana(selected.char); }
+  renderGrid(); renderRing();
+  const btn=document.getElementById('mLearn');
+  const learned=N5.get().learnedKana.has(selected.char);
+  btn.textContent = learned ? '✓ Đã thuộc' : 'Đánh dấu đã thuộc';
+  btn.className = learned ? 'btn btn-primary btn-sm' : 'btn btn-glass btn-sm';
+});
+document.getElementById('btnHira').addEventListener('click', ()=>{ type='hiragana'; document.getElementById('btnHira').classList.add('active'); document.getElementById('btnKata').classList.remove('active'); if(quizMode) startQuiz(); renderGrid(); });
+document.getElementById('btnKata').addEventListener('click', ()=>{ type='katakana'; document.getElementById('btnKata').classList.add('active'); document.getElementById('btnHira').classList.remove('active'); if(quizMode) startQuiz(); renderGrid(); });
+document.getElementById('search').addEventListener('input', e=>{ search=e.target.value; renderGrid(); });
+document.getElementById('speakAll').addEventListener('click', async ()=>{
+  const list=filtered().slice(0,5);
+  for(const k of list){ speak(k.char); await new Promise(r=>setTimeout(r,700)); }
+});
+function startQuiz(){
+  const pool=KANA.filter(k=>k.type===type).sort(()=>Math.random()-0.5).slice(0,10);
+  quizQs=pool.map(k=>{
+    const opts=KANA.filter(x=>x.type===type && x.romaji!==k.romaji).sort(()=>Math.random()-0.5).slice(0,3).map(x=>x.romaji).concat(k.romaji).sort(()=>Math.random()-0.5);
+    return {char:k.char, romaji:k.romaji, opts};
+  });
+  quizIdx=0; quizScore=0; quizSel=null;
+  renderQuiz();
+}
+function renderQuiz(){
+  const box=document.getElementById('quizBox');
+  if(!quizMode){ box.style.display='none'; return; }
+  box.style.display='block';
+  if(!quizQs.length){ box.innerHTML='<div class="glass card">Đang tạo quiz...</div>'; return; }
+  if(quizIdx >= quizQs.length){
+    box.innerHTML = `<div class="glass card" style="text-align:center;padding:20px"><div style="font-size:32px">🎉</div><h3 style="margin:8px 0">Hoàn thành! ${quizScore}/${quizQs.length}</h3><p class="muted" style="font-size:13px">${quizScore>=8?'Xuất sắc!':quizScore>=5?'Khá tốt, luyện thêm nhé!':'Cố gắng thêm!'}</p><div style="display:flex;gap:8px;justify-content:center;margin-top:12px"><button class="btn btn-primary" id="rq">Làm lại</button><button class="btn btn-glass" id="exq">Về grid</button></div></div>`;
+    box.querySelector('#rq').addEventListener('click', startQuiz);
+    box.querySelector('#exq').addEventListener('click', ()=>{ quizMode=false; document.getElementById('quizBtn').textContent='🧪 Quiz 10 câu'; renderQuiz(); });
+    return;
+  }
+  const q=quizQs[quizIdx];
+  box.innerHTML = `<div class="glass card">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px"><span class="badge badge-primary">Câu ${quizIdx+1}/${quizQs.length}</span><span class="badge">Điểm: ${quizScore}</span></div>
+    <div style="text-align:center;padding:16px"><div class="jp" style="font-size:48px;font-weight:800;margin-bottom:8px">${q.char}</div><div style="font-size:14px;color:var(--text-muted)">Chữ này đọc là gì?</div></div>
+    <div class="grid grid-2">${q.opts.map(o=>`<button class="quiz-option ${quizSel===o?(o===q.romaji?'correct':'wrong'):''}" data-opt="${o}" ${quizSel?'disabled':''}><span style="font-family:'JetBrains Mono',monospace;font-weight:700">${o}</span></button>`).join('')}</div>
+    ${quizSel?`<div style="margin-top:12px;padding:10px 12px;border-radius:12px;background:${quizSel===q.romaji?'rgba(34,197,94,0.12)':'rgba(239,68,68,0.12)'};border:1px solid ${quizSel===q.romaji?'rgba(34,197,94,0.25)':'rgba(239,68,68,0.25)'};font-size:13px">${quizSel===q.romaji?'✅ Đúng!':'❌ Sai — đáp án: '+q.romaji} <button class="btn btn-primary btn-sm" style="margin-left:8px" id="nextQ">Tiếp →</button></div>`:''}
+  </div>`;
+  box.querySelectorAll('.quiz-option').forEach(b=>{
+    b.addEventListener('click', ()=>{
+      if(quizSel) return;
+      quizSel=b.dataset.opt;
+      if(quizSel===q.romaji) quizScore++;
+      renderQuiz();
+    });
+  });
+  const n=box.querySelector('#nextQ');
+  if(n) n.addEventListener('click', ()=>{ quizIdx++; quizSel=null; renderQuiz(); });
+}
+document.getElementById('quizBtn').addEventListener('click', ()=>{
+  quizMode=!quizMode;
+  document.getElementById('quizBtn').textContent = quizMode ? 'Thoát Quiz' : '🧪 Quiz 10 câu';
+  document.getElementById('quizBtn').className = quizMode ? 'btn btn-primary' : 'btn btn-glass';
+  if(quizMode) startQuiz();
+  renderQuiz();
+});
+renderRowChips(); renderGrid(); renderRing();
+document.addEventListener('n5:progress', ()=>{ renderGrid(); renderRing(); });
+</script>
+</body>
+</html>
