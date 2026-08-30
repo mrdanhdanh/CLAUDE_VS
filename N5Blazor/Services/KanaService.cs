@@ -32,4 +32,5 @@ public class KanaService : IKanaService
     public IReadOnlyList<Kana> GetAll() => _all;
     public IReadOnlyList<Kana> GetByType(KanaType type) => _all.Where(k => k.Type == type).ToList();
     public IReadOnlyList<string> GetRows() => new[] { "a","ka","sa","ta","na","ha","ma","ya","ra","wa" };
+    public IReadOnlyList<Kana> GetByRow(string row) => string.IsNullOrEmpty(row) ? Array.Empty<Kana>() : _all.Where(k => k.Row == row).ToList();
 }

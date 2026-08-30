@@ -1,6 +1,6 @@
 using N5Blazor.Models;
 namespace N5Blazor.Services;
-public interface IVocabService { IReadOnlyList<Vocab> GetAll(); IReadOnlyList<Vocab> Search(string q); IReadOnlyList<string> GetTopics(); IReadOnlyList<Vocab> GetByTopic(string topic); }
+public interface IVocabService { IReadOnlyList<Vocab> GetAll(); Vocab? GetById(int id); IReadOnlyList<Vocab> Search(string q); IReadOnlyList<string> GetTopics(); IReadOnlyList<Vocab> GetByTopic(string topic); }
 public class VocabService : IVocabService
 {
     private readonly List<Vocab> _all = new()
@@ -47,6 +47,7 @@ public class VocabService : IVocabService
         new(40,"高い","たかい","đắt/cao","takai","adj","daily","高い山","Núi cao"),
     };
     public IReadOnlyList<Vocab> GetAll() => _all;
+    public Vocab? GetById(int id) => _all.FirstOrDefault(v => v.Id == id);
     public IReadOnlyList<Vocab> Search(string q)
     {
         if (string.IsNullOrWhiteSpace(q)) return _all;
