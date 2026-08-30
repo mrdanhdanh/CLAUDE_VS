@@ -25,6 +25,7 @@
 | KN-001 | 2026-08-29 | *Ví dụ: Modal không đóng khi bấm ESC* | Thiếu listener `keydown` + focus trap | Mọi overlay/modal phải có ESC + focus trap + aria | `ui` `a11y` |
 | KN-002 | 2026-08-29 | Trang STATUS www/ giao diện chưa hợp lý — registry sai, responsive vỡ, thiếu a11y | status.json array vs app.js object mismatch + không audit product-quality | Dashboard phải có single source of truth (registry.json → status.json) và polish responsive/a11y ngay từ đầu | `ui` `css` `a11y` `responsive` `data` |
 | KN-003 | 2026-08-30 | Rainbow border GlassUI không xoay (animated) ở một số browser | Detect `@property` sai (`CSS.supports('syntax')`) + `::before` dùng `var(--rainbow)` lồng không re-resolve `--angle` + fallback per-element bị UI reset | Animate custom property: dùng gradient trực tiếp tại `::before`, detect `@property` bằng `CSS.registerProperty`, fallback class ở `<html>` | `ui` `css` `animation` |
+| KN-004 | 2026-08-30 | `www/` grid-2 thừa khoảng cách + rainbow border index.html không xoay khi hover | `.grid-2` không có `margin` + `.section` con là grid item không collapse → margin kép 48px; `::before`/`::after` dùng `var(--rainbow)` lồng (lặp KN-003) → `--angle` không re-resolve | Wrapper `.grid-2` tự mang `margin:24px 0`, con `.section` đặt `margin:0`; animate `--angle` dùng `conic-gradient(from var(--angle), ...)` trực tiếp | `ui` `css` `animation` `spacing` |
 
 > Dòng ví dụ trên sẽ bị thay khi có bug thật đầu tiên — giữ format.
 
@@ -78,6 +79,21 @@
 - **Tags:** `ui` `css` `animation`
 - **Người ghi:** YUNIE / fixbug
 
+### KN-004 — grid-2 thừa khoảng cách + rainbow border index.html không xoay khi hover
+
+- **Ngày:** 2026-08-30
+- **Bug report:** `.agent/bugs/2026-08-30-grid2-rainbow-hover/bug.md`
+- **Severity:** minor
+- **Triệu chứng:** (1) Hai khối `<div class="grid-2">` (Presets+Plans, Health+Pages) cách phần trên ~48px thay vì 24px → lệch nhịp. (2) Viền cầu vồng hiện khi hover nhưng đứng yên, không xoay.
+- **Nguyên nhân gốc:** (1) `.grid-2` không có `margin`, trong khi `.section` con có `margin:24px 0`; vì grid item không collapse margin → cộng dồn 24+24=48px. (2) `::before`/`::after` dùng `background:var(--rainbow)` mà `--rainbow` là `conic-gradient(from var(--angle), ...)` định nghĩa tại `:root` → lặp lại anti-pattern KN-003, `--angle` thay đổi không re-resolve ở một số engine → tĩnh 0deg.
+- **Cách sửa:** `.grid-2{margin:24px 0}` + `.grid-2 > .section{margin:0}` (nhịp 24px đồng nhất); thay `background:var(--rainbow)` → `background:conic-gradient(from var(--angle,0deg), #ff3b30, #ff9500, #ffcc02, #34c759, #007aff, #af52de, #ff3b30)` trực tiếp tại `::before`/`::after` trong `www/styles.css`.
+- **Cách phòng tránh:**
+  - Wrapper grid (`.grid-2`, `.grid-3`) luôn tự mang `margin`, con `.section` đặt `margin:0` để tránh doubling.
+  - Animate custom property: luôn dùng giá trị trực tiếp tại property đích, không qua biến lồng `var()` chứa `var()` (KN-003).
+  - Khi copy pattern rainbow từ `glassui` sang `www`, nhớ bê cả cách dùng gradient trực tiếp, không copy `--rainbow`.
+- **Tags:** `ui` `css` `animation` `spacing`
+- **Người ghi:** YUNIE / fixbug
+
 <!-- Thêm bài học mới theo template dưới — copy block này -->
 
 <!--
@@ -120,4 +136,4 @@
 ---
 
 *File này do `/fixbug` tự động cập nhật. Mọi luồng khác phải đọc để không lặp lại lỗi cũ.*
-*UpdatedAt: 2026-08-30T12:00:00Z — Maintained by YUNIE / Harness v2 — KN-003 added (rainbow animated root cause + verify)*
+*UpdatedAt: 2026-08-30T14:30:00Z — Maintained by YUNIE / Harness v2 — KN-004 added (grid-2 spacing + www rainbow hover rotate)*
