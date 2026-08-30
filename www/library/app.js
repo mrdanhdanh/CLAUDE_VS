@@ -324,7 +324,7 @@ function estimatePage(idx, total, pages){
 // ---------- Parsers ----------
 async function parsePDF(file){
   if(typeof pdfjsLib === 'undefined'){
-    throw new Error('PDF.js chưa tải được (mất mạng?). Thử lại hoặc dùng TXT/MD.');
+    throw new Error('PDF.js chưa tải (cần online lần đầu để tải từ cdnjs). Đang offline? Thử TXT/MD hoặc bật mạng rồi reload.');
   }
   const buf = await file.arrayBuffer();
   const pdf = await pdfjsLib.getDocument({ data: buf }).promise;
@@ -345,7 +345,7 @@ async function parsePDF(file){
 }
 async function parseDOCX(file){
   if(typeof mammoth === 'undefined'){
-    throw new Error('Mammoth chưa tải được (mất mạng?). Thử lại.');
+    throw new Error('Mammoth chưa tải (cần online lần đầu để tải từ unpkg). Đang offline? Thử TXT/MD hoặc bật mạng rồi reload.');
   }
   const buf = await file.arrayBuffer();
   const res = await mammoth.extractRawText({ arrayBuffer: buf });

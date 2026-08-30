@@ -26,6 +26,7 @@
 | KN-002 | 2026-08-29 | Trang STATUS www/ giao diện chưa hợp lý — registry sai, responsive vỡ, thiếu a11y | status.json array vs app.js object mismatch + không audit product-quality | Dashboard phải có single source of truth (registry.json → status.json) và polish responsive/a11y ngay từ đầu | `ui` `css` `a11y` `responsive` `data` |
 | KN-003 | 2026-08-30 | Rainbow border GlassUI không xoay (animated) ở một số browser | Detect `@property` sai (`CSS.supports('syntax')`) + `::before` dùng `var(--rainbow)` lồng không re-resolve `--angle` + fallback per-element bị UI reset | Animate custom property: dùng gradient trực tiếp tại `::before`, detect `@property` bằng `CSS.registerProperty`, fallback class ở `<html>` | `ui` `css` `animation` |
 | KN-004 | 2026-08-30 | `www/` grid-2 thừa khoảng cách + rainbow border index.html không xoay khi hover | `.grid-2` không có `margin` + `.section` con là grid item không collapse → margin kép 48px; `::before`/`::after` dùng `var(--rainbow)` lồng (lặp KN-003) → `--angle` không re-resolve | Wrapper `.grid-2` tự mang `margin:24px 0`, con `.section` đặt `margin:0`; animate `--angle` dùng `conic-gradient(from var(--angle), ...)` trực tiếp | `ui` `css` `animation` `spacing` |
+| KN-005 | 2026-08-30 | Bug Blindness — dev không thấy bug do workaround vô thức + fan bias (Dan Luu) | Habitual mitigations (tự bù lỗi không nhận ra) + quality blindness + fan bias → dev nghĩ sản phẩm xịn dù user không dùng được | Chữa mù bug: fresh eyes, test như user mới, chỉ ra bug liên tục, không workaround vô thức, dogfooding có ý thức | `process` `quality` `ux` `perf` `a11y` |
 
 > Dòng ví dụ trên sẽ bị thay khi có bug thật đầu tiên — giữ format.
 
@@ -94,6 +95,33 @@
 - **Tags:** `ui` `css` `animation` `spacing`
 - **Người ghi:** YUNIE / fixbug
 
+### KN-005 — Bug Blindness — mù bug do workaround vô thức + fan bias
+
+- **Ngày:** 2026-08-30
+- **Bug report:** `.agent/bugs/2026-08-30-bug-blindness/bug.md` (tham chiếu Dan Luu — https://danluu.com/bug-blind/)
+- **Severity:** major
+- **Triệu chứng:** Dev/tester không thấy bug dù sản phẩm lỗi nặng (user không dùng được nếu không làm chuỗi workaround phức tạp). Internal comments vẫn "great, works well" trong khi launch ra user gặp đúng lỗi đó và fail. Ví dụ: Blackboard bị 93% hate nhưng nhân viên tưởng được yêu; Kagi trả toàn SEO spam nhưng fan vẫn bảo "kết quả xịn"; Discourse cheat LCP để qua metric nhưng thực tế chậm; Google Docs có hàng chục workaround mà dev quên đó là bug.
+- **Nguyên nhân gốc (5 Whys):**
+  - Why1: Dev không báo bug → vì không nhận ra đó là bug.
+  - Why2: Không nhận ra → vì đã tự tạo habitual mitigations (thói quen workaround vô thức) — như chuột bi bẩn phải quơ tay loạn xạ, mở Google Docs phải đợi 2s mới gõ title, tắt WiFi trước khi login ở Microsoft.
+  - Why3: Workaround thành vô thức → vì lặp lại hàng ngày, não tự bù lỗi và quên mất đó là lỗi (Betriebsblindheit — mù do ở trong hệ thống quá lâu).
+  - Why4: Không có fresh eyes → vì chỉ dogfooding kiểu dev (giỏi workaround) thay vì test như user mới, không có người ngoài chỉ ra.
+  - Why5 (Root): Thiếu cơ chế phát hiện quality blindness + fan bias (yêu sản phẩm nên auto mù nhược điểm) + không đo quality bằng trải nghiệm user thực.
+- **Cách sửa:**
+  - Chữa mù bug bằng cách **chỉ ra bug liên tục** — Dan Luu đã làm với bạn bè, vài tuần sau họ tự thấy bug khắp nơi.
+  - Test như **user mới / LLM act as normal user** — không dùng workaround, không đọc manual trang 43, thử nhiều scenario khác nhau.
+  - Dogfooding **có ý thức**: ghi lại mọi workaround mình đang làm, tự hỏi "user mới có biết làm vậy không?".
+  - Fresh eyes: nhờ người ngoài team, người chưa dùng bao giờ thử và quan sát không gợi ý.
+  - Với coding agent hiện nay: vừa dễ tạo app dỏm hàng loạt, vừa dễ fix cho xịn — nhưng phải **actually notice** rằng quality có thể cải thiện (https://danluu.com/p95-skill/).
+- **Cách phòng tránh:**
+  - Trước khi ship: checklist "user mới có dùng được không nếu không biết workaround nào?" — nếu cần >1 bước không trực quan → là bug.
+  - Ghi lại mọi habitual mitigation thành bug report thay vì để thành thói quen.
+  - Thêm phase **Polish + Verify với fresh eyes** trong Harness — responsive 375/768/1280, empty/loading/error states, a11y, perf — không bỏ.
+  - Dùng LLM / người ngoài làm "normal user" để reproduce, không chỉ dev tự test.
+  - Văn hóa team: khuyến khích chỉ ra flaw, không fan bias — "yêu sản phẩm nhưng vẫn soi lỗi".
+- **Tags:** `process` `quality` `ux` `perf` `a11y`
+- **Người ghi:** YUNIE — tổng hợp từ Dan Luu "Bug Blindness" (2026-08-26) + Hacker News discussion
+
 <!-- Thêm bài học mới theo template dưới — copy block này -->
 
 <!--
@@ -124,6 +152,10 @@
 - ❌ Detect `@property` bằng `CSS.supports('syntax: ...')` (luôn false) → ép JS fallback sai (KN-003).
 - ❌ Animate custom property qua biến lồng `var()` chứa `var()` → một số engine không re-resolve (KN-003).
 - ❌ Gắn fallback class per-element rồi để UI reset `className` → mất animation (KN-003).
+- ❌ Tự workaround bug thành thói quen vô thức rồi quên đó là bug — habitual mitigations (KN-005).
+- ❌ Fan bias: yêu sản phẩm nên auto mù nhược điểm, bảo "xịn mà" dù user không dùng được (KN-005).
+- ❌ Chỉ dev tự dogfooding (giỏi workaround) thay vì test như user mới / fresh eyes (KN-005).
+- ❌ Nghĩ "dễ mà, chỉ cần làm [chuỗi 7 bước phức tạp]" — user thường bó tay (KN-005).
 
 ## Checklist phòng tránh chung
 
@@ -132,8 +164,11 @@
 - [ ] Đã fix ở gốc, không chỉ patch UI?
 - [ ] Đã test lại case cũ + case biên?
 - [ ] Đã ghi `docs/knowleged.md` + `.agent/bugs/<slug>/bug.md`?
+- [ ] Đã test như **user mới** (không dùng workaround, không đọc manual) — fresh eyes / LLM as normal user? (KN-005)
+- [ ] Đã liệt kê mọi habitual mitigation mình đang làm và biến thành bug report? (KN-005)
+- [ ] Đã nhờ người ngoài team thử không gợi ý? (KN-005)
 
 ---
 
 *File này do `/fixbug` tự động cập nhật. Mọi luồng khác phải đọc để không lặp lại lỗi cũ.*
-*UpdatedAt: 2026-08-30T14:30:00Z — Maintained by YUNIE / Harness v2 — KN-004 added (grid-2 spacing + www rainbow hover rotate)*
+*UpdatedAt: 2026-08-30T15:00:00Z — Maintained by YUNIE / Harness v2 — KN-005 added (Bug Blindness — Dan Luu)*

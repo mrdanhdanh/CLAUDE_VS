@@ -259,7 +259,7 @@
     const search = f.search.trim().toLowerCase();
     return tasks.filter(t => {
       if (search) {
-        const hay = (t.title + ' ' + (t.description || '')).toLowerCase();
+        const hay = (t.title + ' ' + (t.description || '') + ' ' + (t.tags||[]).join(' ')).toLowerCase();
         if (!hay.includes(search)) return false;
       }
       if (f.status !== 'all' && t.status !== f.status) return false;
@@ -341,11 +341,25 @@
     // count badge
     els.countBadge.textContent = `${sorted.length} công việc${filtered.length !== state.tasks.length ? ` / ${state.tasks.length}` : ''}`;
 
-    // empty
+    // empty — KN-005: gợi ý clear filter khi đang lọc
     if (sorted.length === 0) {
       els.taskGrid.innerHTML = '';
       els.taskGrid.hidden = true;
       els.emptyState.hidden = false;
+      const isFiltering = state.filters.search || state.filters.status!=='all' || state.filters.priority!=='all' || state.filters.tag!=='all' || state.filters.overdueOnly;
+      const emptyDesc = els.emptyState.querySelector('.empty-desc');
+      const emptyTitle = els.emptyState.querySelector('.empty-title');
+      if(isFiltering && state.tasks.length>0){
+        if(emptyTitle) emptyTitle.textContent = 'Không có kết quả với bộ lọc hiện tại';
+        if(emptyDesc) emptyDesc.textContent = `Đang lọc ${state.tasks.length} việc — thử đổi từ khóa hoặc bấm “Xóa bộ lọc”.`;
+        const btn = els.emptyState.querySelector('#btn-empty-add');
+        if(btn){ btn.textContent = '↺ Xóa bộ lọc'; btn.onclick = ()=> els.btnClearFilters.click(); }
+      } else {
+        if(emptyTitle) emptyTitle.textContent = 'Chưa có công việc phù hợp';
+        if(emptyDesc) emptyDesc.textContent = 'Thử đổi bộ lọc hoặc tạo công việc mới để bắt đầu.';
+        const btn = els.emptyState.querySelector('#btn-empty-add');
+        if(btn){ btn.textContent = '＋ Thêm việc đầu tiên'; btn.onclick = ()=> openModal(null); }
+      }
       return;
     }
     els.emptyState.hidden = true;
@@ -494,9 +508,22 @@
     });
     document.body.style.overflow = 'hidden';
     setTimeout(() => els.fieldTitle.focus(), 100);
+    // KN-005: focus trap + ESC
+    document.addEventListener('keydown', trapModalFocus);
   }
 
+  function trapModalFocus(e){
+    if(els.modal.hidden) return;
+    if(e.key==='Escape'){ e.preventDefault(); closeModal(); return; }
+    if(e.key!=='Tab') return;
+    const focusable = [...els.modal.querySelectorAll('button, input, select, textarea, [tabindex]:not([tabindex=\"-1\"])')].filter(el=> !el.disabled && el.offsetParent!==null);
+    if(!focusable.length) return;
+    const first = focusable[0], last = focusable[focusable.length-1];
+    if(e.shiftKey && document.activeElement===first){ e.preventDefault(); last.focus(); }
+    else if(!e.shiftKey && document.activeElement===last){ e.preventDefault(); first.focus(); }
+  }
   function closeModal() {
+    document.removeEventListener('keydown', trapModalFocus);
     els.modal.classList.remove('is-open');
     els.modalBackdrop.classList.remove('is-open');
     setTimeout(() => {

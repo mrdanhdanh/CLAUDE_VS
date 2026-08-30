@@ -14,7 +14,10 @@
 | Ngày | Slug | Severity | KN | Tóm tắt |
 |------|------|----------|----|---------|
 | 2026-08-29 | `_template` | — | — | Template chuẩn — không phải bug thật |
-| _Thêm dòng mới sau mỗi bug_ | | | | |
+| 2026-08-29 | `2026-08-29-status-ui` | major | KN-002 | Trang STATUS www/ giao diện chưa hợp lý — registry sai, responsive vỡ, thiếu a11y |
+| 2026-08-29 | `2026-08-29-rainbow-animated` | major | KN-003 | Rainbow border GlassUI không xoay ở một số browser |
+| 2026-08-30 | `2026-08-30-grid2-rainbow-hover` | minor | KN-004 | grid-2 thừa khoảng cách + rainbow border www không xoay khi hover |
+| 2026-08-30 | `2026-08-30-bug-blindness` | major | KN-005 | Bug Blindness — mù bug do workaround vô thức + fan bias (Dan Luu) |
 
 ## Cách tạo bug mới (thủ công nếu không dùng /fixbug)
 

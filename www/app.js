@@ -597,6 +597,11 @@ function renderYunie(data){
 // ---------- Boot ----------
 async function boot(){
   const statsEl = $('#stats');
+  // KN-005 fresh eyes: file:// detect — user mới double-click index.html sẽ thấy ngay
+  if(location.protocol === 'file:'){
+    toast('⚠️ Đang mở bằng file:// — hãy chạy npx serve www rồi mở http://localhost:3000');
+    console.warn('file:// detected — fetch status.json sẽ bị CORS. Chạy npx serve www');
+  }
   try{
     const data = await loadStatus();
     renderHero(data);

@@ -36,7 +36,7 @@ Read Knowledge → Reproduce → Locate & Root Cause → Fix → Verify → Lear
 ### Phase 0: READ KNOWLEDGE (BẮT BUỘC — đầu tiên)
 
 1. `read_file docs/knowleged.md` — đọc toàn bộ, đặc biệt **Bảng tóm tắt** + **Anti-patterns** + **Checklist phòng tránh chung**.
-2. Scan xem bug hiện tại có chạm pattern đã từng lỗi không → ghi chú áp dụng ngay.
+2. Scan xem bug hiện tại có chạm pattern đã từng lỗi không → ghi chú áp dụng ngay. Đặc biệt check **KN-005 Bug Blindness**: bug có đang bị "mù" do habitual mitigations / fan bias không?
 3. Nếu chưa có file hoặc file rỗng → vẫn tiếp tục nhưng sẽ tạo KN đầu tiên ở Phase 5.
 
 ### Phase 1: REPRODUCE
@@ -46,6 +46,7 @@ Read Knowledge → Reproduce → Locate & Root Cause → Fix → Verify → Lear
 - Ghi **Steps to Reproduce** (1-2-3), **Expected** vs **Actual**, **Evidence** (log, screenshot, test fail).
 - Nếu không reproduce được → hỏi user thêm info (`vscode_askQuestions` max 2 câu) — không đoán.
 - Tạo folder `.agent/bugs/<slug>/` với `slug = YYYY-MM-DD-<short-slug>` (vd: `2026-08-29-modal-esc`) và khởi tạo `bug.md` từ template `.agent/bugs/_template/bug.md`.
+- ⚠️ **Bug Blindness check (KN-005):** Reproduce như **user mới** — không dùng workaround quen tay, không đọc manual trang 43. Liệt kê mọi habitual mitigation mình đang làm (vd: đợi 2s mới gõ, tắt WiFi trước login) và coi đó là bug, không phải "cách dùng đúng". Nếu có thể, dùng LLM / người ngoài act as normal user để reproduce.
 
 ### Phase 2: LOCATE & ROOT CAUSE
 
@@ -70,6 +71,7 @@ Read Knowledge → Reproduce → Locate & Root Cause → Fix → Verify → Lear
 - Test **edge cases** + **regression** (các case liên quan).
 - Chạy `get_errors` (all files) + `run_in_terminal` lint/build/test nếu có (loop fix max 3 lần/check).
 - Nếu bug là UI → audit nhanh theo `product-quality.instructions.md` (responsive, states, a11y) — không cần full Polish.
+- **Fresh eyes verify (KN-005):** Nhờ người ngoài team / LLM đóng vai user mới thử lại không gợi ý workaround. Hỏi: "user mới có dùng được không nếu không biết trick nào?" Nếu cần >1 bước không trực quan → vẫn là bug.
 - Ghi kết quả vào `bug.md` → **Verification**.
 
 ### Phase 5: LEARN (BẮT BUỘC — không bỏ)
@@ -105,10 +107,11 @@ Mỗi `bug.md` phải có: Title, Date, Severity, Reproduce, Root Cause (5 Whys)
 
 ## Quy tắc
 
-- Không bỏ **Reproduce** — không reproduce = không được fix.
+- Không bỏ **Reproduce** — không reproduce = không được fix. Reproduce phải như **user mới**, không workaround vô thức (KN-005).
 - Không bỏ **Learn** — fix xong không ghi `knowleged.md` = chưa xong.
-- Không fix triệu chứng — phải root cause.
+- Không fix triệu chứng — phải root cause (đào tới habitual mitigation / fan bias nếu có).
 - Mọi edit phải `get_errors` ngay.
 - `docs/knowleged.md` là source of truth — mọi luồng `/harness`, `/implement`, `/fixbug` đều đọc.
+- **Chống Bug Blindness (KN-005):** Liệt kê mọi workaround đang làm thành bug report; không nói "dễ mà, chỉ cần làm [7 bước phức tạp]"; luôn test fresh eyes trước khi Done.
 
 > Tham chiếu: `.github/instructions/knowleged.instructions.md` + `docs/knowleged.md` + `.agent/bugs/_template/bug.md`

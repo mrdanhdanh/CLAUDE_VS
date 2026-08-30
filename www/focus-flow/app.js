@@ -355,8 +355,12 @@ function renderTasks() {
       focusBtn.className = 'btn-icon-sm' + (task.id === state.focusedId ? ' is-active' : '');
       focusBtn.type = 'button';
       focusBtn.setAttribute('aria-label', task.id === state.focusedId ? 'Đang focus' : 'Focus task này');
-      focusBtn.textContent = '◎';
-      focusBtn.title = 'Focus';
+      focusBtn.textContent = task.id === state.focusedId ? '● Focus' : '◎ Focus';
+      focusBtn.title = task.id === state.focusedId ? 'Đang focus — bấm để bỏ' : 'Focus task này';
+      focusBtn.style.width = 'auto';
+      focusBtn.style.padding = '0 10px';
+      focusBtn.style.fontSize = '12px';
+      focusBtn.style.fontWeight = '600';
       focusBtn.addEventListener('click', () => setFocused(task.id));
 
       const del = document.createElement('button');
@@ -612,7 +616,13 @@ function bindEvents() {
   els.taskForm.addEventListener('submit', (e) => {
     e.preventDefault();
     const v = els.taskInput.value;
-    if (!v.trim()) return;
+    if (!v.trim()){
+      toast('Nhập tên task đã sếp ơi ✏️', 'error');
+      els.taskInput.focus();
+      els.taskInput.style.borderColor = 'var(--danger)';
+      setTimeout(()=> els.taskInput.style.borderColor='', 1200);
+      return;
+    }
     addTask(v);
     els.taskInput.value = '';
     els.taskInput.focus();

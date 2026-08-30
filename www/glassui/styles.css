@@ -74,6 +74,14 @@ pre code{background:none; border:none; padding:0; font-size:12px; line-height:1.
 .container{max-width:1120px; margin:0 auto; padding:0 16px}
 @media(min-width:768px){.container{padding:0 24px}}
 
+/* Fallback khi backdrop-filter không hỗ trợ — KN-005 fresh eyes */
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))){
+  .glass{ background: rgba(255,255,255,.88) !important; -webkit-backdrop-filter:none !important; backdrop-filter:none !important; }
+  .glass-rainbow{ background: rgba(255,255,255,.92) !important; -webkit-backdrop-filter:none !important; backdrop-filter:none !important; }
+}
+/* Fallback tint rgba cho Safari 14 */
+.glass[style*="--glass-tint: rgb("]{ /* modern syntax, keep */ }
+
 /* Glass base */
 .glass{
   background: linear-gradient(var(--glass-tint), var(--glass-tint)), var(--glass-fill);
