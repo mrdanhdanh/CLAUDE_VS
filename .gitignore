@@ -1,0 +1,14 @@
+# ===== Library RAG — Local only, NEVER commit documents =====
+# Source documents (PDF/DOCX/TXT/MD) — local, avoid leakage
+books/
+# Exported chunks (registry + full text) — local, gitignored
+www/library/export.json
+www/library/library-export-*.json
+www/library/export.full.json
+
+# ===== Common =====
+node_modules/
+.DS_Store
+*.log
+dist/
+build/

@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-30T03:15:32.759Z",
+  "generatedAt": "2026-08-30T09:42:00.000Z",
   "generatedBy": "YUNIE",
   "version": 1,
   "counts": {
@@ -205,14 +205,17 @@
   "health": {
     "errors": 0,
     "status": "ok",
-    "lastCheck": "2026-08-30T03:15:32.759Z",
+    "lastCheck": "2026-08-30T09:42:00.000Z",
     "checks": [
       "get_errors: pass (0 errors)",
       "registry: 8 instructions (library-rag moi) - 6 skills - 7 agents - 7 prompts - 1 hook — all enabled",
       "www: polished — responsive 375/768/1280, a11y, states, animation 150-300ms",
-      "workflow: www/** -> Pages (upload-artifact path: www)",
-      "library: www/library/ (PDF/DOCX/TXT/MD, BM25 <100ms, thao lap) + search.mjs CLI + mcp-server.mjs + export.json + library-rag instruction cho harness",
-      "harness bridge: /harness tu search thu vien o Explore — node www/library/search.mjs query --json -> citation"
+      "workflow: www/** -> Pages (upload-artifact path: www) — exists: true",
+      "library: www/library/ (PDF/DOCX/TXT/MD, BM25 <100ms, thao lap) + mcp-server.mjs + export.json + library-rag instruction cho harness",
+      "library security: books/ + export.json GITIGNORED (da git rm --cached) — tai lieu KHONG len git, tranh ro ri",
+      "library access: AI /harness CHI qua MCP (search_library/list_books/get_book/get_status) — CAM read_file/grep/search.mjs tren export.json/books",
+      "mcp test: get_status OK -> {total:1, enabled:1, chunks:1} qua stdio, khong cham file",
+      "mcp config: .vscode/mcp.json da tao (server library) — can Reload Window de Copilot doc"
     ]
   },
   "pages": {
@@ -266,11 +269,11 @@
       },
       {
         "path": "library/export.json",
-        "title": "Library Export — export.json",
+        "title": "Library Export — export.json (GITIGNORED, local only)",
         "type": "data"
       }
     ],
-    "note": "Copy file mới vào www/ là tự deploy lên GitHub Pages (workflow upload toàn bộ www)."
+    "note": "Copy file mới vào www/ là tự deploy lên GitHub Pages (workflow upload toàn bộ www). Lưu ý: books/ và library/export.json đã gitignore — tài liệu local không lên git."
   },
   "yunie": {
     "name": "YUNIE",

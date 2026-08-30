@@ -5,7 +5,9 @@ applyTo: "**"
 
 # Library RAG — Harness trích xuất từ sách
 
-> **Thư viện:** `www/library/` — Local 0đ, BM25 <100ms, tháo lắp như plugin. Sách lưu `localStorage` + `IndexedDB`, export ra `www/library/export.json` cho harness đọc.
+> **Thư viện:** `www/library/` — Local 0đ, BM25 <100ms, tháo lắp như plugin. Sách lưu `localStorage` + `IndexedDB`, export ra `www/library/export.json` (chỉ local, **đã gitignore, cấm up git**).
+>
+> ⛔ **QUY TẮC CẤM (BẮT BUỘC):** AI/model dùng `/harness` **KHÔNG ĐƯỢC** đọc trực tiếp nội dung file hay JSON (`export.json`, `books/*.pdf`, `library-export-*.json`, ...). Phải truy cập qua **MCP API** (`mcp-server.mjs`) — là lớp API duy nhất. Xem mục "Truy cập qua MCP (BẮT BUỘC)".
 
 ## Khi nào áp dụng
 
@@ -15,27 +17,26 @@ applyTo: "**"
 
 ## Quy tắc cho harness (BẮT BUỘC ở phase Explore)
 
-### 1. Kiểm tra thư viện có sách không
+### 1. Kiểm tra thư viện có sách không (qua MCP)
 
-```bash
-node www/library/search.mjs --status
-node www/library/search.mjs --list
-```
+Gọi MCP tool (không đọc file):
+- `get_status()` → `{total, enabled, read, chunks, enabledChunks}`
+- `list_books()` → `[{id, name, type, enabled, read, progress, chunks}]`
 
 - Nếu `total: 0` hoặc `export.json` chưa có → báo user: **"Mở www/library/index.html → bấm Xuất để tạo export.json"** rồi mới tiếp tục.
 - Nếu có sách nhưng `enabled: 0` → báo: **"Không có sách đang gắn — vào thư viện bấm Gắn"**.
 
-### 2. Search trước khi code (Explore phase)
+### 2. Search trước khi code (Explore phase — qua MCP)
 
-```bash
-# Tìm kiến thức liên quan tới task
-node www/library/search.mjs "từ khóa liên quan tới task" --top_k 5 --json
-node www/library/search.mjs "điều khoản thanh toán chương 5" --top_k 5 --json
+Gọi MCP tool (không đọc file/json):
+```
+search_library({ query: "từ khóa liên quan tới task", top_k: 5, enabled_only: true })
+search_library({ query: "điều khoản thanh toán chương 5", top_k: 5 })
 ```
 
 - **Top_k:** 5 là đủ cho PRD, 10 nếu task rộng.
-- **Chỉ tìm trong sách đang gắn** (mặc định). Dùng `--all` nếu muốn cả sách đã tháo.
-- **Kết quả:** `hits: [{bookName, chunkId, page, text, snippet, score}]` — dùng làm context cho PRD/Design/Implement.
+- **enabled_only:** mặc định `true` (chỉ sách đang gắn). Set `false` nếu muốn cả sách đã tháo.
+- **Kết quả:** `[{bookName, chunkId, index, page, text, snippet, score}]` — dùng làm context cho PRD/Design/Implement.
 
 ### 3. Đưa vào PRD/Design/Plan
 
@@ -57,23 +58,14 @@ Theo "Machine Learning - Andrew Ng" (chunk #42, trang 15, score 2.34):
 - Nếu search **không ra** → nói rõ **"Không tìm thấy trong thư viện"**, không bịa.
 - Nếu sách không liên quan → bỏ qua, không ép.
 
-## CLI Reference
+## CLI Reference (⛔ CHỈ DÀNH CHO DEV — AI CẤM DÙNG)
+
+> `search.mjs` dump JSON ra stdout = **đọc nội dung JSON trực tiếp** → vi phạm quy tắc cấm. Chỉ dev chạy để debug. AI/model PHẢI dùng MCP (mục dưới).
 
 ```bash
-# Search (cho harness parse JSON)
+# Dev-only — debug, KHÔNG dùng trong /harness
 node www/library/search.mjs "query" --top_k 5 --json
-node www/library/search.mjs --query "query" --top_k 5 --json
-node www/library/search.mjs "query" --all --json   # cả sách đã tháo
-
-# List & Status
-node www/library/search.mjs --list --json
-node www/library/search.mjs --status --json
-
-# Chỉ định file export
-node www/library/search.mjs "query" --file ./www/library/export.json --json
-
-# Help
-node www/library/search.mjs --help
+node www/library/search.mjs --status
 ```
 
 ## API trong browser (nếu harness chạy trong webview)
@@ -84,24 +76,41 @@ window.LibrarySearch.listBooks()
 window.LibrarySearch.getStatus()
 ```
 
-## MCP (cho Copilot/Claude Code)
+## Truy cập qua MCP (BẮT BUỘC cho AI)
 
+> Đây là **lớp API duy nhất** được phép. MCP server đọc `export.json` nội bộ, AI chỉ gọi tool — không chạm file/json.
+
+**Bước 1 — Thêm vào `.vscode/mcp.json`:**
 ```json
-// .vscode/mcp.json
-{ "servers": { "library": { "command": "node", "args": ["./www/library/mcp-server.mjs"] } } }
-// Tools: search_library, list_books, get_book, get_status
+{
+  "servers": {
+    "library": { "command": "node", "args": ["./www/library/mcp-server.mjs"] }
+  }
+}
 ```
+> Nếu muốn chỉ định file export cụ thể: `"args": ["./www/library/mcp-server.mjs", "--file", "./www/library/export.json"]`
+
+**Bước 2 — AI gọi tools (thay cho read_file/grep/search.mjs):**
+- `search_library({query, top_k, enabled_only})` — tìm BM25
+- `list_books()` — danh sách sách
+- `get_book({id, include_chunks})` — lấy 1 sách (có thể kèm chunks)
+- `get_status()` — tổng quan thư viện
+
+**⛔ CẤM:** `read_file` `export.json` / `books/*.pdf`, `grep_search` trên `export.json`, hoặc chạy `search.mjs` để lấy JSON. Mọi truy cập nội dung tài liệu = qua MCP.
 
 ## Checklist cho agent (tự kiểm)
 
-- [ ] Đã `node www/library/search.mjs --status` để biết thư viện có gì?
-- [ ] Đã `search.mjs "keywords" --json` trước khi viết PRD?
+- [ ] Đã gọi MCP `get_status()` để biết thư viện có gì? (KHÔNG read_file export.json)
+- [ ] Đã gọi MCP `search_library("keywords")` trước khi viết PRD?
+- [ ] KHÔNG dùng `read_file`/`grep`/`search.mjs` lên `export.json` hay `books/`?
 - [ ] Đã ghi citation (bookName · chunk · page · score) vào PRD/Plan?
 - [ ] Nếu không tìm thấy → đã báo rõ, không bịa?
 
 ## Liên kết
 
 - Thư viện: `www/library/index.html` + `www/library/README.md`
-- CLI: `www/library/search.mjs` + `www/library/mcp-server.mjs`
-- Data: `www/library/export.json` (do UI nút Xuất tạo, gitignored)
+- API (dùng cho AI): `www/library/mcp-server.mjs` (MCP) — **lớp duy nhất đọc được nội dung**
+- CLI (dev-only): `www/library/search.mjs` — **AI cấm dùng**
+- Data: `www/library/export.json` (do UI nút Xuất tạo, **đã gitignore — cấm commit**)
+- Source docs: `books/` — **đã gitignore — cấm commit** (tránh rò rỉ)
 - PRD: `.agent/plans/library-rag/prd.md`

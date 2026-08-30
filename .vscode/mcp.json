@@ -1,0 +1,8 @@
+{
+  "servers": {
+    "library": {
+      "command": "node",
+      "args": ["./www/library/mcp-server.mjs"]
+    }
+  }
+}
