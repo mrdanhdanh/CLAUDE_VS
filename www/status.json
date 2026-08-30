@@ -1,390 +1,286 @@
-﻿{
-    "generatedAt":  "2026-08-30T14:58:20.362Z",
-    "generatedBy":  "YUNIE",
-    "version":  1,
-    "counts":  {
-                   "skills":  {
-                                  "enabled":  6,
-                                  "disabled":  0,
-                                  "total":  6
-                              },
-                   "instructions":  {
-                                        "enabled":  8,
-                                        "disabled":  0,
-                                        "total":  8
-                                    },
-                   "agents":  {
-                                  "enabled":  7,
-                                  "disabled":  0,
-                                  "total":  7
-                              },
-                   "prompts":  {
-                                   "enabled":  7,
-                                   "disabled":  0,
-                                   "total":  7
-                               },
-                   "hooks":  {
-                                 "enabled":  1,
-                                 "disabled":  0,
-                                 "total":  1
-                             }
-               },
-    "registry":  {
-                     "skills":  {
-                                    "claude-harness":  {
-                                                           "enabled":  true,
-                                                           "description":  "Claude Harness v2 product-driven pipeline Idea -\u003e Explore -\u003e Clarify -\u003e PRD -\u003e Design -\u003e Plan -\u003e Implement -\u003e Polish -\u003e Verify. Use when building product from small idea, need beautiful UI/UX, model-agnostic workflow, or user says harness/product/idea/giao dien dep."
-                                                       },
-                                    "custom-registry":  {
-                                                            "enabled":  true,
-                                                            "description":  "Tháo lắp toàn bộ customizations: skill/instruction/rule/agent/prompt/hook như plugin, preset theo dự án, scaffold mới. Use when user wants to manage rules, tháo lắp rule/instruction/agent/prompt/hook, preset, tạo mới customization, custom dễ dàng, hoặc nói harness registry/custom registry."
-                                                        },
-                                    "skill-registry":  {
-                                                           "enabled":  true,
-                                                           "description":  "Quản lý skill như plugin: cài/gỡ/bật/tắt skill từ GitHub, tháo lắp wise. Use when user wants to install skill from GitHub, manage skills, enable/disable skill, tháo lắp skill, sync skills, hoặc nói skill registry/plugin."
-                                                       },
-                                    "ui-design-system":  {
-                                                             "enabled":  true,
-                                                             "description":  "UI design system toolkit for Senior UI Designer including design token generation, component documentation, responsive design calculations, and developer handoff tools. Use for creating design systems, maintaining visual consistency, and facilitating design-dev collaboration."
-                                                         },
-                                    "ui-ux-pro-max":  {
-                                                          "enabled":  true,
-                                                          "description":  "UI/UX design intelligence for web, mobile, and desktop. This skill should be used when designing, building, reviewing, or fixing interfaces, including pages, components, design systems, accessibility, interaction, responsive layout, typography, color, charts, and stack-specific UI implementation. Searchable local data: 79 searchable styles (50 active), 192 product palettes and reasoning profiles, 74 font pairings, 119 UX guidelines, 105 icons, 17 GSAP presets, 25 chart types, and 22 stacks."
-                                                      },
-                                    "glass-rainbow-effects":  {
-                                                                  "enabled":  true,
-                                                                  "description":  "Liquid glass + rainbow border effects for web — Apple Liquid Glass backdrop-filter glassmorphism, frosted glass nav/cards/buttons/sheets, conic-gradient rainbow borders, animated rotating gradients, glass+rainbow combos. Use when user wants liquid glass, glassmorphism, frosted glass, backdrop-filter, rainbow border, gradient border, animated border, neon border, glass card, glass navbar, premium UI effects, or says liquid glass / rainbow border / glass effect."
-                                                              }
-                                },
-                     "instructions":  {
-                                          "custom-registry":  {
-                                                                  "enabled":  true,
-                                                                  "description":  "Tháo lắp toàn bộ customizations (skill/instruction/agent/prompt/hook) như plugin — preset, scaffold, wise loading"
-                                                              },
-                                          "harness-workflow":  {
-                                                                   "enabled":  true,
-                                                                   "description":  "Enforce Claude Harness v2 pipeline — /harness for features, /fixbug for bugs. BẮT BUỘC đọc docs/knowleged.md trước mọi task."
-                                                               },
-                                          "product-quality":  {
-                                                                  "enabled":  true,
-                                                                  "description":  "Product quality standard for web UI/UX — beautiful, responsive, accessible. Use when building web UI, need design system, responsive, a11y, polish, locale-owned copy."
-                                                              },
-                                          "skill-usage":  {
-                                                              "enabled":  true,
-                                                              "description":  "Wise skill usage — only load skill when description matches task"
-                                                          },
-                                          "knowleged":  {
-                                                            "enabled":  true,
-                                                            "description":  "BẮT BUỘC đọc docs/knowleged.md trước mọi task — chứa bài học từ bug, anti-patterns, checklist phòng tránh. Use when any coding task, bug fix, feature, harness, implement, polish, verify, or before editing any file."
-                                                        },
-                                          "plugin-seam":  {
-                                                              "enabled":  true,
-                                                              "description":  "Everything is a Plugin — capability seam (Service Definition / Provider / Consumer), ctx.effect, patch layers, events. Use when adding new capability, tool, service, extending harness, need plugin architecture, seam, Cordis."
-                                                          },
-                                          "locale-i18n":  {
-                                                              "enabled":  true,
-                                                              "description":  "Locale-owned UI copy — no hardcoded text, typed dictionaries, t() helper. Use when writing UI text, button labels, messages, toast, empty/error states, need i18n, locale."
-                                                          },
-                                          "library-rag":  {
-                                                              "enabled":  true,
-                                                              "description":  "Thư viện RAG Local — cho /harness trích xuất thông tin từ sách (PDF/DOCX/TXT/MD) qua BM25. Use when harness needs to extract knowledge from library books, need to search library, need citation from documents, or task mentions sách/thư viện/tài liệu."
-                                                          }
-                                      },
-                     "agents":  {
-                                    "designer":  {
-                                                     "enabled":  true,
-                                                     "description":  "Design product UI/UX: design system, wireframe, component states. Use when need beautiful interface, responsive layout, before coding."
-                                                 },
-                                    "explore":  {
-                                                    "enabled":  true,
-                                                    "description":  "Explore codebase read-only. Use when need to understand project structure, find files, trace patterns before planning or coding."
-                                                },
-                                    "implement":  {
-                                                      "enabled":  true,
-                                                      "description":  "Implement code changes todo-driven. Use when executing plan todos, writing code, editing files, running checks."
-                                                  },
-                                    "plan":  {
-                                                 "enabled":  true,
-                                                 "description":  "Plan architecture and task breakdown. Use when need to design implementation plan, break down requirements, create todos before coding."
-                                             },
-                                    "polish":  {
-                                                   "enabled":  true,
-                                                   "description":  "Polish UI/UX to product quality: responsive, states, animation, a11y. Use after implement, before verify, when UI needs beautifying."
-                                               },
-                                    "verify":  {
-                                                   "enabled":  true,
-                                                   "description":  "Verify build, tests, lint and fix loops. Use when need to validate implementation, run checks, auto-fix failures before done."
-                                               },
-                                    "yunie":  {
-                                                  "enabled":  true,
-                                                  "description":  "YUNIE — chatbot hệ thống Harness v2: hiểu toàn bộ hệ thống, thực thi task về hệ thống, kiểm tra tình trạng, cập nhật trang STATUS www/ và deploy GitHub Pages. Use when user says yunie, chatbot, status, kiểm tra hệ thống, cập nhật status page, www, github pages."
-                                              }
-                                },
-                     "prompts":  {
-                                     "harness":  {
-                                                     "enabled":  true,
-                                                     "description":  "Chạy full Claude Harness v2 pipeline Idea -\u003e Explore -\u003e Clarify -\u003e PRD -\u003e Design -\u003e Plan -\u003e Implement -\u003e Polish -\u003e Verify. Model-agnostic, product-driven."
-                                                 },
-                                     "implement":  {
-                                                       "enabled":  true,
-                                                       "description":  "Implement plan đã duyệt theo todo-driven workflow. Đọc plan, chạy từng todo, verify sau mỗi edit."
-                                                   },
-                                     "plan":  {
-                                                  "enabled":  true,
-                                                  "description":  "Tạo plan chi tiết Explore -\u003e Plan cho task, xuất file .agent/plans/ và todos. Dùng trước khi implement."
-                                              },
-                                     "polish":  {
-                                                    "enabled":  true,
-                                                    "description":  "Polish giao diện đến chuẩn product: responsive, states, animation, a11y. Chạy sau implement, trước verify."
-                                                },
-                                     "product":  {
-                                                     "enabled":  true,
-                                                     "description":  "Biến 1 ý tưởng nhỏ thành sản phẩm hoàn chỉnh: PRD mini -\u003e Design -\u003e Plan -\u003e Implement -\u003e Polish. Dùng khi có ý tưởng mơ hồ cần thành product đẹp."
-                                                 },
-                                     "verify":  {
-                                                    "enabled":  true,
-                                                    "description":  "Verify build/test/lint và tự fix loop đến khi pass. Chạy sau implement, trước khi done."
-                                                },
-                                     "fixbug":  {
-                                                    "enabled":  true,
-                                                    "description":  "Fix bug gọn nhẹ: Reproduce → Root Cause → Fix → Verify → Learn. Lưu .agent/bugs/\u003cslug\u003e/bug.md và cập nhật docs/knowleged.md (bắt buộc đọc). Use when fixing bug, sửa lỗi, regression, hotfix — thay cho /harness full pipeline."
-                                                }
-                                 },
-                     "hooks":  {
-                                   "hooks":  {
-                                                 "enabled":  true,
-                                                 "description":  "hook hooks"
-                                             }
-                               }
-                 },
-    "presets":  [
-                    {
-                        "name":  "api-minimal",
-                        "description":  "Preset gọn cho API/script — tắt product-quality/designer/polish, giữ harness core"
-                    },
-                    {
-                        "name":  "full",
-                        "description":  "Bật tất cả — dùng khi muốn full Harness v2"
-                    },
-                    {
-                        "name":  "web-product",
-                        "description":  "Preset cho dự án web cần giao diện đẹp — bật product-quality + designer/polish"
-                    }
-                ],
-    "plans":  [
-                  "custom-registry",
-                  "focus-flow",
-                  "library-rag",
-                  "liquid-glass-status",
-                  "n5-blazor",
-                  "skill-registry",
-                  "status-ui-v2",
-                  "todo-manager"
-              ],
-    "demos":  [
-                  {
-                      "name":  "focus-flow",
-                      "path":  "focus-flow/index.html",
-                      "status":  "ok"
-                  },
-                  {
-                      "name":  "glassui",
-                      "path":  "glassui/index.html",
-                      "status":  "ok"
-                  },
-                  {
-                      "name":  "library",
-                      "path":  "library/index.html",
-                      "status":  "ok"
-                  },
-                  {
-                      "name":  "n5-blazor",
-                      "path":  "n5-blazor/index.html",
-                      "status":  "ok"
-                  },
-                  {
-                      "name":  "todo-manager",
-                      "path":  "todo-manager/index.html",
-                      "status":  "ok"
-                  }
-              ],
-    "health":  {
-                   "errors":  0,
-                   "status":  "ok",
-                   "lastCheck":  "2026-08-30T14:58:20.362Z",
-                   "checks":  [
-                                  "get_errors: pass (0 errors)",
-                                  "registry: 8 instructions (library-rag moi) - 6 skills - 7 agents - 7 prompts - 1 hook — all enabled",
-                                  "www: polished — responsive 375/768/1280, a11y, states, animation 150-300ms",
-                                  "workflow: www/** -\u003e Pages (upload-artifact path: www) — exists: true",
-                                  "library: www/library/ (PDF/DOCX/TXT/MD, BM25 \u003c100ms, thao lap) + mcp-server.mjs + export.json + library-rag instruction cho harness",
-                                  "library security: books/ + export.json GITIGNORED (da git rm --cached) — tai lieu KHONG len git, tranh ro ri",
-                                  "library access: AI /harness CHI qua MCP (search_library/list_books/get_book/get_status) — CAM read_file/grep/search.mjs tren export.json/books",
-                                  "mcp test: get_status OK -\u003e {total:1, enabled:1, chunks:1} qua stdio, khong cham file",
-                                  "mcp config: .vscode/mcp.json da tao (server library) — can Reload Window de Copilot doc",
-                                  "n5-blazor: www/n5-blazor/ 7 trang static (index/kana/kanji/vocab/grammar/practice/progress) + app.css + data.js + site.js — 100% Pages, localStorage + speechSynthesis, Helper 4 muc, Glass+Rainbow"
-                              ]
-               },
-    "pages":  {
-                  "root":  "www",
-                  "workflow":  ".github/workflows/pages.yml",
-                  "entries":  [
-                                  {
-                                      "path":  "focus-flow/index.html",
-                                      "title":  "Focus Flow — Pomodoro \u0026 Deep Work",
-                                      "type":  "demo"
-                                  },
-                                  {
-                                      "path":  "glassui/index.html",
-                                      "title":  "GlassUI — Liquid Glass + Rainbow Border",
-                                      "type":  "demo"
-                                  },
-                                  {
-                                      "path":  "index.html",
-                                      "title":  "YUNIE STATUS — Harness v2",
-                                      "type":  "status"
-                                  },
-                                  {
-                                      "path":  "library/export.json",
-                                      "title":  "Library Export — export.json (GITIGNORED, local only)",
-                                      "type":  "data"
-                                  },
-                                  {
-                                      "path":  "library/index.html",
-                                      "title":  "Thư Viện — RAG Local · Tháo lắp · Tìm siêu nhanh",
-                                      "type":  "demo"
-                                  },
-                                  {
-                                      "path":  "library/mcp-server.mjs",
-                                      "title":  "Library MCP — mcp-server.mjs",
-                                      "type":  "tool"
-                                  },
-                                  {
-                                      "path":  "library/README.md",
-                                      "title":  "Thư Viện — README",
-                                      "type":  "doc"
-                                  },
-                                  {
-                                      "path":  "library/search.mjs",
-                                      "title":  "Library CLI — search.mjs",
-                                      "type":  "tool"
-                                  },
-                                  {
-                                      "path":  "n5-blazor/grammar.html",
-                                      "title":  "N5 — Ngữ pháp",
-                                      "type":  "demo"
-                                  },
-                                  {
-                                      "path":  "n5-blazor/index.html",
-                                      "title":  "N5 Blazor — Học JLPT N5 (Static Pages)",
-                                      "type":  "demo"
-                                  },
-                                  {
-                                      "path":  "n5-blazor/kana.html",
-                                      "title":  "N5 — Kana",
-                                      "type":  "demo"
-                                  },
-                                  {
-                                      "path":  "n5-blazor/kanji.html",
-                                      "title":  "N5 — Kanji",
-                                      "type":  "demo"
-                                  },
-                                  {
-                                      "path":  "n5-blazor/practice.html",
-                                      "title":  "N5 — Thi thử",
-                                      "type":  "demo"
-                                  },
-                                  {
-                                      "path":  "n5-blazor/progress.html",
-                                      "title":  "N5 — Tiến độ",
-                                      "type":  "demo"
-                                  },
-                                  {
-                                      "path":  "n5-blazor/vocab.html",
-                                      "title":  "N5 — Từ vựng",
-                                      "type":  "demo"
-                                  },
-                                  {
-                                      "path":  "status.json",
-                                      "title":  "Status JSON",
-                                      "type":  "data"
-                                  },
-                                  {
-                                      "path":  "todo-manager/index.html",
-                                      "title":  "Todo Manager — Quản lý công việc",
-                                      "type":  "demo"
-                                  }
-                              ],
-                  "note":  "Copy file mới vào www/ là tự deploy lên GitHub Pages (workflow upload toàn bộ www). Lưu ý: books/ và library/export.json đã gitignore — tài liệu local không lên git."
-              },
-    "yunie":  {
-                  "name":  "YUNIE",
-                  "fullName":  "Your Unified Navigator for Intelligent Execution",
-                  "pronunciation":  "Yu-ni = You \u0026 I",
-                  "slogan":  "Hiểu hệ thống. Làm thay bạn. Trực 24/7.",
-                  "philosophy":  "Process \u003e Model",
-                  "letters":  [
-                                  {
-                                      "letter":  "Y",
-                                      "word":  "Yielding",
-                                      "vi":  "Kiên nhẫn",
-                                      "desc":  "Không bỏ cuộc giữa pipeline, theo tới Done",
-                                      "icon":  "🌱"
-                                  },
-                                  {
-                                      "letter":  "U",
-                                      "word":  "Understanding",
-                                      "vi":  "Thấu hiểu",
-                                      "desc":  "Hiểu toàn bộ registry, presets, plans, www/",
-                                      "icon":  "🧠"
-                                  },
-                                  {
-                                      "letter":  "N",
-                                      "word":  "Navigating",
-                                      "vi":  "Dẫn đường",
-                                      "desc":  "Dẫn qua Explore → Clarify → … → Verify không lạc",
-                                      "icon":  "🧭"
-                                  },
-                                  {
-                                      "letter":  "I",
-                                      "word":  "Intelligent",
-                                      "vi":  "Thông minh",
-                                      "desc":  "Thông minh nhưng không đoán bừa — luôn verify",
-                                      "icon":  "✨"
-                                  },
-                                  {
-                                      "letter":  "E",
-                                      "word":  "Executing",
-                                      "vi":  "Thực thi",
-                                      "desc":  "Làm tới nơi, deploy tới GitHub Pages luôn",
-                                      "icon":  "⚡"
-                                  }
-                              ],
-                  "aliases":  [
-                                  {
-                                      "label":  "Cute 🇻🇳",
-                                      "value":  "Yêu Nghề - Uy Tín - Nhanh - Thông Minh - Êm Ru",
-                                      "hint":  "Bản dễ thương, dễ nhớ"
-                                  },
-                                  {
-                                      "label":  "Meme 😎",
-                                      "value":  "Why U Need an Intelligent Engineer?",
-                                      "hint":  "Bản ngầu để chém gió"
-                                  },
-                                  {
-                                      "label":  "You \u0026 I 💜",
-                                      "value":  "YUNIE = You \u0026 I — Bạn và Mình cùng build product",
-                                      "hint":  "Phát âm Yu-ni"
-                                  }
-                              ],
-                  "intros":  {
-                                 "short":  "Hi! Mình là YUNIE — Your Unified Navigator for Intelligent Execution, chatbot hệ thống của Harness v2. Mình sống trong VS Code Copilot Chat, hiểu toàn bộ registry/presets/plans và trực trang STATUS www/ 24/7. Cứ gõ “YUNIE kiểm tra hệ thống” là mình lo!",
-                                 "full":  "Mình là YUNIE — Y là Yielding (kiên nhẫn), U là Understanding (thấu hiểu), N là Navigating (dẫn đường), I là Intelligent (thông minh), E là Executing (thực thi). Nhiệm vụ của mình là biến ý tưởng nhỏ của sếp thành sản phẩm hoàn chỉnh — qua đủ 8 phase, giao diện đẹp, deploy lên GitHub Pages từ www/ chỉ bằng 1 cú push. Slogan: “Hiểu hệ thống. Làm thay bạn. Trực 24/7.”",
-                                 "fun":  "Mình là YUNIE — Yêu Nghề, Uy Tín, Nhanh, Thông Minh, Êm Ru! Hay còn gọi là “Why U Need an Intelligent Engineer?” — vì sếp cần một đứa trực hệ thống 24/7, copy file vào www/ là tự cho lên Pages, nói “disable skill X” là move vào .disabled/ ngay! Yu-ni = You \u0026 I, mình và bạn cùng build product đẹp!"
-                             }
-              },
-    "harness":  {
-                    "pipeline":  "Idea → Explore → Clarify → PRD → Design → Plan → Implement → Polish → Verify → Done",
-                    "philosophy":  "Process \u003e Model"
-                }
+{
+  "generatedAt": "2026-08-30T16:26:51.196Z",
+  "generatedBy": "YUNIE",
+  "version": 1,
+  "counts": {
+    "skills": {
+      "enabled": 6,
+      "disabled": 0,
+      "total": 6
+    },
+    "instructions": {
+      "enabled": 10,
+      "disabled": 0,
+      "total": 10
+    },
+    "agents": {
+      "enabled": 8,
+      "disabled": 0,
+      "total": 8
+    },
+    "prompts": {
+      "enabled": 7,
+      "disabled": 0,
+      "total": 7
+    },
+    "hooks": {
+      "enabled": 1,
+      "disabled": 0,
+      "total": 1
+    }
+  },
+  "registry": {
+    "skills": {
+      "claude-harness": {
+        "enabled": true,
+        "description": "Claude Harness v2 product-driven pipeline Idea -> Explore -> Clarify -> PRD -> Design -> Plan -> Implement -> Polish -> Verify. Use when building product from small idea, need beautiful UI/UX, model-agnostic workflow, or user says harness/product/idea/giao dien dep."
+      },
+      "custom-registry": {
+        "enabled": true,
+        "description": "Tháo lắp toàn bộ customizations: skill/instruction/rule/agent/prompt/hook như plugin, preset theo dự án, scaffold mới. Use when user wants to manage rules, tháo lắp rule/instruction/agent/prompt/hook, preset, tạo mới customization, custom dễ dàng, hoặc nói harness registry/custom registry."
+      },
+      "glass-rainbow-effects": {
+        "enabled": true,
+        "description": "Liquid glass + rainbow border effects for web — Apple Liquid Glass backdrop-filter glassmorphism, frosted glass nav/cards/buttons/sheets, conic-gradient rainbow borders, animated rotating gradients, glass+rainbow combos. Use when user wants liquid glass, glassmorphism, frosted glass, backdrop-filter, rainbow border, gradient border, animated border, neon border, glass card, glass navbar, premium UI effects, or says liquid glass / rainbow border / glass effect."
+      },
+      "skill-registry": {
+        "enabled": true,
+        "description": "Quản lý skill như plugin: cài/gỡ/bật/tắt skill từ GitHub, tháo lắp wise. Use when user wants to install skill from GitHub, manage skills, enable/disable skill, tháo lắp skill, sync skills, hoặc nói skill registry/plugin."
+      },
+      "ui-design-system": {
+        "enabled": true,
+        "description": "UI design system toolkit for Senior UI Designer including design token generation, component documentation, responsive design calculations, and developer handoff tools. Use for creating design systems, maintaining visual consistency, and facilitating design-dev collaboration."
+      },
+      "ui-ux-pro-max": {
+        "enabled": true,
+        "description": "UI/UX design intelligence for web, mobile, and desktop. This skill should be used when designing, building, reviewing, or fixing interfaces, including pages, components, design systems, accessibility, interaction, responsive layout, typography, color, charts, and stack-specific UI implementation. Searchable local data: 79 searchable styles (50 active), 192 product palettes and reasoning profiles, 74 font pairings, 119 UX guidelines, 105 icons, 17 GSAP presets, 25 chart types, and 22 stacks."
+      }
+    },
+    "instructions": {
+      "custom-registry": {
+        "enabled": true,
+        "description": "Tháo lắp toàn bộ customizations (skill/instruction/agent/prompt/hook) như plugin — preset, scaffold, wise loading"
+      },
+      "harness-workflow": {
+        "enabled": true,
+        "description": "Enforce Claude Harness v2 product-driven pipeline for all coding tasks — and /fixbug for bugs. BẮT BUỘC đọc docs/knowleged.md trước mọi task."
+      },
+      "knowleged": {
+        "enabled": true,
+        "description": "BẮT BUỘC đọc docs/knowleged.md trước mọi task — chứa bài học từ bug, anti-patterns, checklist phòng tránh. Use when any coding task, bug fix, feature, harness, implement, polish, verify, or before editing any file."
+      },
+      "locale-i18n": {
+        "enabled": true,
+        "description": "Locale-owned UI copy — no hardcoded text, typed dictionaries, t() helper. Use when writing UI text, button labels, messages, toast, empty/error states, need i18n, locale."
+      },
+      "plugin-seam": {
+        "enabled": true,
+        "description": "Everything is a Plugin — capability seam (Service Definition / Provider / Consumer), ctx.effect, patch layers, events. Use when adding new capability, tool, service, extending harness, need plugin architecture, seam, Cordis."
+      },
+      "product-quality": {
+        "enabled": true,
+        "description": "Product quality standard for web UI/UX — beautiful, responsive, accessible. Use when building web UI, need design system, responsive, a11y, polish, locale-owned copy."
+      },
+      "skill-usage": {
+        "enabled": true,
+        "description": "Wise skill usage — only load skill when description matches task"
+      },
+      "library-rag": {
+        "enabled": true,
+        "description": "Thư viện RAG Local — cho /harness trích xuất thông tin từ sách (PDF/DOCX/TXT/MD) qua BM25. Use when harness needs to extract knowledge from library books, need to search library, need citation from documents, or task mentions sách/thư viện/tài liệu."
+      },
+      "yunie-personality": {
+        "enabled": true,
+        "description": "YUNIE Personality v2 — GenZ thân thiện, chuyên nghiệp ấm áp, hài hước duyên — conversation design cho chatbot tự nhiên. Use when YUNIE chat, cần persona, tone, error handling, variation, SSA."
+      },
+      "auto-learn": {
+        "enabled": true,
+        "description": "Auto-Learn — tự động gợi ý KN liên quan, auto-log lỗi, đề xuất cập nhật knowleged.md. Use when coding, fixing bug, before edit, after error, need suggest KN, log bug, propose KN, auto-learn, knowledge."
+      }
+    },
+    "agents": {
+      "designer": {
+        "enabled": true,
+        "description": "agent designer"
+      },
+      "explore": {
+        "enabled": true,
+        "description": "Explore codebase read-only. Use when need to understand project structure, find files, trace patterns before planning or coding."
+      },
+      "implement": {
+        "enabled": true,
+        "description": "Implement code changes todo-driven. Use when executing plan todos, writing code, editing files, running checks."
+      },
+      "plan": {
+        "enabled": true,
+        "description": "agent plan"
+      },
+      "polish": {
+        "enabled": true,
+        "description": "agent polish"
+      },
+      "verify": {
+        "enabled": true,
+        "description": "Verify build, tests, lint and fix loops. Use when need to validate implementation, run checks, auto-fix failures before done."
+      },
+      "yunie": {
+        "enabled": true,
+        "description": "YUNIE — chatbot hệ thống Harness v2: hiểu toàn bộ hệ thống, thực thi task về hệ thống, kiểm tra tình trạng, cập nhật trang STATUS www/ và deploy GitHub Pages. Use when user says yunie, chatbot, status, kiểm tra hệ thống, cập nhật status page, www, github pages."
+      },
+      "learn": {
+        "enabled": true,
+        "description": "Learn — auto-learn agent: suggest KN liên quan, auto-log bug draft, propose KN mới cho knowleged.md. Use when need suggest KN, log bug, propose KN, auto-learn, knowledge, before coding, after error, after fix."
+      }
+    },
+    "prompts": {
+      "fixbug": {
+        "enabled": true,
+        "description": "Fix bug gọn nhẹ: Reproduce → Root Cause → Fix → Verify → Learn. Lưu .agent/bugs/<slug>/bug.md và cập nhật docs/knowleged.md (bắt buộc đọc). Use when fixing bug, sửa lỗi, regression, hotfix — thay cho /harness full pipeline."
+      },
+      "harness": {
+        "enabled": true,
+        "description": "prompt harness"
+      },
+      "implement": {
+        "enabled": true,
+        "description": "prompt implement"
+      },
+      "plan": {
+        "enabled": true,
+        "description": "prompt plan"
+      },
+      "polish": {
+        "enabled": true,
+        "description": "prompt polish"
+      },
+      "product": {
+        "enabled": true,
+        "description": "prompt product"
+      },
+      "verify": {
+        "enabled": true,
+        "description": "Verify build/test/lint và tự fix loop đến khi pass. Chạy sau implement, trước khi done."
+      }
+    },
+    "hooks": {
+      "hooks": {
+        "enabled": true,
+        "description": "hook hooks"
+      }
+    }
+  },
+  "presets": [
+    {
+      "name": "api-minimal",
+      "description": "Preset gọn cho API/script — tắt product-quality/designer/polish, giữ harness core"
+    },
+    {
+      "name": "full",
+      "description": "Bật tất cả — dùng khi muốn full Harness v2"
+    },
+    {
+      "name": "web-product",
+      "description": "Preset cho dự án web cần giao diện đẹp — bật product-quality + designer/polish"
+    }
+  ],
+  "plans": [
+    "auto-learn",
+    "custom-registry",
+    "focus-flow",
+    "library-rag",
+    "liquid-glass-status",
+    "n5-blazor",
+    "skill-registry",
+    "status-ui-v2",
+    "todo-manager"
+  ],
+  "demos": [
+    {
+      "name": "focus-flow",
+      "path": "focus-flow/index.html",
+      "status": "ok"
+    },
+    {
+      "name": "glassui",
+      "path": "glassui/index.html",
+      "status": "ok"
+    },
+    {
+      "name": "library",
+      "path": "library/index.html",
+      "status": "ok"
+    },
+    {
+      "name": "n5-blazor",
+      "path": "n5-blazor/index.html",
+      "status": "ok"
+    },
+    {
+      "name": "todo-manager",
+      "path": "todo-manager/index.html",
+      "status": "ok"
+    }
+  ],
+  "health": {
+    "errors": 0,
+    "status": "ok",
+    "lastCheck": "2026-08-30T16:26:51.197Z",
+    "checks": [
+      "get_errors: pass (0 errors)",
+      "registry: 10 instructions (10 total) - 6 skills - 8 agents - 7 prompts - 1 hook — all enabled",
+      "www: polished — responsive 375/768/1280, a11y, states, animation 150-300ms",
+      "workflow: www/** -> Pages (upload-artifact path: www) — exists: true",
+      "library: www/library/ (PDF/DOCX/TXT/MD, BM25 <100ms, tháo lắp) + mcp-server.mjs + export.json + library-rag instruction",
+      "auto-learn: 8 KN, 6 bugs, 0 drafts — suggest/log/propose/status (<50ms, IDF, tiếng Việt)",
+      "n5-blazor: www/n5-blazor/ 7 trang static + app.css + data.js + site.js — 100% Pages"
+    ]
+  },
+  "pages": {
+    "root": "www",
+    "workflow": ".github/workflows/pages.yml",
+    "entries": [
+      {
+        "path": "focus-flow/index.html",
+        "title": "focus-flow",
+        "type": "demo"
+      },
+      {
+        "path": "glassui/index.html",
+        "title": "glassui",
+        "type": "demo"
+      },
+      {
+        "path": "library/index.html",
+        "title": "library",
+        "type": "demo"
+      },
+      {
+        "path": "n5-blazor/index.html",
+        "title": "n5-blazor",
+        "type": "demo"
+      },
+      {
+        "path": "todo-manager/index.html",
+        "title": "todo-manager",
+        "type": "demo"
+      }
+    ],
+    "note": "Copy file mới vào www/ là tự deploy lên GitHub Pages (workflow upload toàn bộ www)."
+  },
+  "yunie": {
+    "name": "YUNIE",
+    "fullName": "Your Unified Navigator for Intelligent Execution",
+    "pronunciation": "Yu-ni = You & I",
+    "slogan": "Hiểu hệ thống. Làm thay bạn. Trực 24/7.",
+    "philosophy": "Process > Model"
+  },
+  "harness": {
+    "pipeline": "Idea → Explore → Clarify → PRD → Design → Plan → Implement → Polish → Verify → Done",
+    "philosophy": "Process > Model"
+  },
+  "learn": {
+    "knTotal": 8,
+    "bugsTotal": 6,
+    "drafts": 0
+  }
 }

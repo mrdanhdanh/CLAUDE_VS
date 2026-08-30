@@ -3,17 +3,23 @@
   "description": "Preset gọn cho API/script — tắt product-quality/designer/polish, giữ harness core",
   "skills": {
     "claude-harness": true,
+    "custom-registry": true,
+    "glass-rainbow-effects": true,
     "skill-registry": true,
-    "custom-registry": true
+    "ui-design-system": true,
+    "ui-ux-pro-max": true
   },
   "instructions": {
+    "custom-registry": true,
     "harness-workflow": true,
+    "knowleged": true,
+    "locale-i18n": false,
+    "plugin-seam": false,
     "product-quality": false,
     "skill-usage": true,
-    "custom-registry": true,
-    "plugin-seam": false,
-    "locale-i18n": false,
-    "knowleged": true
+    "library-rag": true,
+    "yunie-personality": true,
+    "auto-learn": true
   },
   "agents": {
     "designer": false,
@@ -22,9 +28,11 @@
     "plan": true,
     "polish": false,
     "verify": true,
-    "yunie": true
+    "yunie": true,
+    "learn": true
   },
   "prompts": {
+    "fixbug": true,
     "harness": true,
     "implement": true,
     "plan": true,

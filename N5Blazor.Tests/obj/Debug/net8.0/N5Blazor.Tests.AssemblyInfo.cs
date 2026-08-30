@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("N5Blazor.Tests")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+85c0a21146d4d530ac8c593f9e00f7434caef44a")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+3a9571c433f28de384068ae2fa9cfc7538cf9b5f")]
 [assembly: System.Reflection.AssemblyProductAttribute("N5Blazor.Tests")]
 [assembly: System.Reflection.AssemblyTitleAttribute("N5Blazor.Tests")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

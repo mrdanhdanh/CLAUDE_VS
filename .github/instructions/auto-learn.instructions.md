@@ -1,0 +1,79 @@
+---
+description: "Auto-Learn — tự động gợi ý KN liên quan, auto-log lỗi, đề xuất cập nhật knowleged.md. Use when coding, fixing bug, before edit, after error, need suggest KN, log bug, propose KN, auto-learn, knowledge."
+applyTo: "**"
+---
+
+# Auto-Learn — Hệ thống tự học hỏi tự động
+
+> Mỗi lỗi đều tự log, mỗi lần code đều được gợi ý KN liên quan, mỗi lần fix xong đều đề xuất KN mới — không cần nhớ tay.
+
+## Khi nào áp dụng
+- Trước khi code/edit: gợi ý KN liên quan (tránh lặp bug cũ)
+- Khi `get_errors` / `build` / `test` fail: auto-log bug draft
+- Sau khi fix bug: propose KN draft để dán vào `docs/knowleged.md`
+- Khi review / plan: check KN liên quan để áp dụng Cách phòng tránh
+
+## Quy tắc (BẮT BUỘC)
+
+### 1. Trước khi code — Suggest
+```bash
+node .github/harness/scripts/auto-learn.mjs suggest "mô tả task / lỗi / từ khóa" --top 3
+# Ví dụ: suggest "rainbow border không xoay" → KN-003, KN-004
+#        suggest "theme sáng contrast" → KN-006
+#        suggest "status.json array" → KN-002
+```
+- Nếu có KN liên quan (score >0) → đọc `docs/knowleged.md` chi tiết KN đó và áp dụng **Cách phòng tránh** ngay.
+- Nếu không có → tiếp tục, nhưng ghi chú để sau này tạo KN mới nếu phát hiện pattern.
+
+### 2. Khi có lỗi — Log
+```bash
+node .github/harness/scripts/auto-learn.mjs log --error "thông báo lỗi" --file "path/to/file" --title "tên ngắn gọn"
+# Tạo .agent/bugs/YYYY-MM-DD-<slug>/bug.md từ template
+```
+- Tự động tạo draft bug.md — điền Reproduce + Root Cause (5 Whys) ngay khi còn nóng.
+- Không để lỗi trôi — log ngay, fix sau.
+
+### 3. Sau khi fix — Propose
+```bash
+node .github/harness/scripts/auto-learn.mjs propose --bug <slug>
+# Sinh KN-XXX draft: bảng tóm tắt + chi tiết + anti-pattern
+# Copy dán vào docs/knowleged.md (Bảng tóm tắt + Chi tiết + Anti-patterns + Checklist)
+```
+- Không tự ghi `knowleged.md` — chỉ propose, dev duyệt rồi dán.
+- Cập nhật `UpdatedAt` và commit cả `bug.md` + `knowleged.md`.
+
+### 4. Kiểm tra sức khỏe học hỏi
+```bash
+node .github/harness/scripts/auto-learn.mjs status
+# → KN: 6, Bugs: 5, Drafts: 0, top tags: ui(5), a11y(4)...
+```
+
+## Checklist cho agent (tự kiểm trước khi code)
+- [ ] Đã `suggest "<từ khóa task>"` và scan KN liên quan?
+- [ ] Nếu có KN liên quan → đã áp dụng **Cách phòng tránh**?
+- [ ] Nếu gặp lỗi → đã `log --error` tạo bug draft?
+- [ ] Sau khi fix → đã `propose --bug` và đề xuất cập nhật `knowleged.md`?
+- [ ] Đã `status` để kiểm tra health?
+
+## Ví dụ
+```bash
+# Trước khi sửa CSS animation
+node .github/harness/scripts/auto-learn.mjs suggest "conic-gradient animation"
+# → [KN-003] Rainbow border không xoay — dùng gradient trực tiếp, không qua var() lồng
+
+# Khi build fail
+node .github/harness/scripts/auto-learn.mjs log --error "RZ9986 Techniques Blazor" --file "N5Blazor/Components/Pages/Home.razor" --title "mất dấu tiếng Việt"
+
+# Sau khi fix
+node .github/harness/scripts/auto-learn.mjs propose --bug 2026-08-30-mat-dau-tieng-viet
+```
+
+## Liên kết
+- Script: `.github/harness/scripts/auto-learn.mjs` (Node 18+, no deps, <50ms)
+- Knowledge: `docs/knowleged.md` (6 KN hiện tại)
+- Bugs: `.agent/bugs/<slug>/bug.md` + `_template/bug.md`
+- Agent: `learn` (delegate khi cần suggest/log/propose)
+- Status: `node auto-learn.mjs status --json` cho YUNIE/www
+
+---
+*Instruction: auto-learn — enforce bởi Harness v2. Không disable nếu chưa có thay thế. Wise loading: applyTo ** nên luôn load khi code/fix.*

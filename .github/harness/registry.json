@@ -120,6 +120,22 @@
       "description": "Thư viện RAG Local — cho /harness trích xuất thông tin từ sách (PDF/DOCX/TXT/MD) qua BM25. Use when harness needs to extract knowledge from library books, need to search library, need citation from documents, or task mentions sách/thư viện/tài liệu.",
       "applyTo": "**",
       "installedAt": "2026-08-29T16:16:30.393Z"
+    },
+    "yunie-personality": {
+      "source": "local",
+      "file": "yunie-personality.instructions.md",
+      "enabled": true,
+      "description": "YUNIE Personality v2 — GenZ thân thiện, chuyên nghiệp ấm áp, hài hước duyên — conversation design cho chatbot tự nhiên. Use when YUNIE chat, cần persona, tone, error handling, variation, SSA.",
+      "applyTo": "**",
+      "installedAt": "2026-08-30T16:08:47.640Z"
+    },
+    "auto-learn": {
+      "source": "local",
+      "file": "auto-learn.instructions.md",
+      "enabled": true,
+      "description": "Auto-Learn — tự động gợi ý KN liên quan, auto-log lỗi, đề xuất cập nhật knowleged.md. Use when coding, fixing bug, before edit, after error, need suggest KN, log bug, propose KN, auto-learn, knowledge.",
+      "applyTo": "**",
+      "installedAt": "2026-08-30T16:08:47.651Z"
     }
   },
   "agents": {
@@ -171,6 +187,13 @@
       "enabled": true,
       "description": "YUNIE — chatbot hệ thống Harness v2: hiểu toàn bộ hệ thống, thực thi task về hệ thống, kiểm tra tình trạng, cập nhật trang STATUS www/ và deploy GitHub Pages. Use when user says yunie, chatbot, status, kiểm tra hệ thống, cập nhật status page, www, github pages.",
       "installedAt": "2026-08-29T15:13:36.606Z"
+    },
+    "learn": {
+      "source": "local",
+      "file": "learn.agent.md",
+      "enabled": true,
+      "description": "Learn — auto-learn agent: suggest KN liên quan, auto-log bug draft, propose KN mới cho knowleged.md. Use when need suggest KN, log bug, propose KN, auto-learn, knowledge, before coding, after error, after fix.",
+      "installedAt": "2026-08-30T16:08:47.747Z"
     }
   },
   "prompts": {

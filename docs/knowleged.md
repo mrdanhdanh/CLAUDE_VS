@@ -28,6 +28,8 @@
 | KN-004 | 2026-08-30 | `www/` grid-2 thừa khoảng cách + rainbow border index.html không xoay khi hover | `.grid-2` không có `margin` + `.section` con là grid item không collapse → margin kép 48px; `::before`/`::after` dùng `var(--rainbow)` lồng (lặp KN-003) → `--angle` không re-resolve | Wrapper `.grid-2` tự mang `margin:24px 0`, con `.section` đặt `margin:0`; animate `--angle` dùng `conic-gradient(from var(--angle), ...)` trực tiếp | `ui` `css` `animation` `spacing` |
 | KN-006 | 2026-08-30 | N5 Blazor thieu theme sang, tieng Viet mat dau, menu chua polish, contrast chua test light | Chi co dark variables, khong co [data-theme="light"] + fix encoding xoa dau + NavMenu minimal | Design system phai co 2 theme tu dau (CSS variables + toggle persist + early init) va i18n giu UTF-8 chuan | `ui` `css` `a11y` `i18n` `theme` `contrast` |
 | KN-005 | 2026-08-30 | Bug Blindness — dev không thấy bug do workaround vô thức + fan bias (Dan Luu) | Habitual mitigations (tự bù lỗi không nhận ra) + quality blindness + fan bias → dev nghĩ sản phẩm xịn dù user không dùng được | Chữa mù bug: fresh eyes, test như user mới, chỉ ra bug liên tục, không workaround vô thức, dogfooding có ý thức | `process` `quality` `ux` `perf` `a11y` |
+| KN-007 | 2026-08-30 | Thiếu hệ thống tự học hỏi tự động — phải suggest/log/propose tay, dễ quên, lặp bug cũ | Không có script BM25-lite, không có instruction enforce, không có hooks reminder → dev quên check KN trước khi code, quên log khi lỗi, quên propose sau fix | Mỗi task phải auto suggest KN (BM25-lite + IDF), mỗi lỗi auto log draft, mỗi fix auto propose KN — không để trôi | `process` `knowledge` `automation` `dx` |
+| KN-008 | 2026-08-30 | dotnet build fail MSB3027/MSB3021 do file lock — N5Blazor.exe đang chạy (dotnet run chưa tắt) | dotnet run giữ handle N5Blazor.exe (PID 28232, LISTENING 5251) → build không copy được apphost.exe → retry 10 lần (17s) rồi fail | Trước khi build/test luôn tắt dotnet run đang giữ file — nếu gặp MSB3027 thì Stop-Process PID trên 5251 rồi build lại | `build` `process` `dx` `dotnet` |
 
 > Dòng ví dụ trên sẽ bị thay khi có bug thật đầu tiên — giữ format.
 
@@ -139,6 +141,69 @@
 - **Tags:** `ui` `css` `a11y` `i18n` `theme` `contrast`
 - **Người ghi:** YUNIE / fixbug
 
+### KN-007 — Thiếu hệ thống tự học hỏi tự động — phải làm tay, dễ quên
+
+- **Ngày:** 2026-08-30
+- **Bug report:** `.agent/bugs/auto-learn/bug.md` (feature, không phải bug — hệ thống tự học)
+- **Severity:** major
+- **Triệu chứng:** Trước đây mỗi lần code phải nhớ tay `read_file docs/knowleged.md`, mỗi lần lỗi phải nhớ tạo `.agent/bugs/<slug>/bug.md`, mỗi lần fix xong phải nhớ cập nhật `knowleged.md` — dễ quên, dễ lặp bug cũ (KN-002..006 lặp lại vì không check).
+- **Nguyên nhân gốc:**
+  - Why1: Dev quên check KN → vì không có tool gợi ý tự động.
+  - Why2: Không có tool → vì chỉ có instruction "bắt buộc đọc" nhưng không enforce bằng lệnh.
+  - Why3: Không enforce → vì hooks chỉ echo chung chung, không có BM25-lite suggest.
+  - Why4: Không có BM25-lite → vì chưa có script parse `knowleged.md` + scoring.
+  - Why5 (Root): Thiếu **hệ thống tự học hỏi tự động** — 3 bước suggest/log/propose chưa thành CLI + instruction + agent + hooks.
+- **Cách sửa:** Tạo `.github/harness/scripts/auto-learn.mjs` (Node 18+, no deps, <50ms):
+  - `suggest "từ khóa" --top 3` — parse KN (split robust, handle \r\n, em dash), tokenize tiếng Việt có dấu, IDF weighting, trả top 3 KN + score + snippet.
+  - `log --error "msg" --file "path" --title "tên"` — tạo `.agent/bugs/YYYY-MM-DD-<slug>/bug.md` từ template, handle duplicate slug.
+  - `propose --bug <slug>` — đọc bug.md → next KN id → sinh markdown draft (bảng + chi tiết + anti-pattern) để copy-paste.
+  - `status` — KN total, bugs, drafts, top tags, health.
+  - Tạo `auto-learn.instructions.md` (applyTo **) enforce 4 quy tắc + checklist.
+  - Tạo `learn.agent.md` delegate khi cần suggest/log/propose.
+  - Cập nhật `hooks.json` thêm PostToolUse/Stop reminders.
+  - Cập nhật presets `full/web-product/api-minimal` để bật auto-learn + learn.
+- **Cách phòng tránh:**
+  - Trước khi code: luôn `suggest "<mô tả task>"` — nếu có KN liên quan → áp dụng Cách phòng tránh ngay.
+  - Khi lỗi: luôn `log --error` ngay khi còn nóng — không để trôi.
+  - Sau khi fix: luôn `propose --bug` → dán vào `knowleged.md` (Bảng + Chi tiết + Anti-patterns + Checklist) + cập nhật UpdatedAt.
+  - Hooks tự nhắc: PostToolUse gợi ý suggest, Stop nhắc status/propose.
+  - Verify: `node auto-learn.mjs status` + `suggest "test"` trước khi commit.
+- **Tags:** `process` `knowledge` `automation` `dx`
+- **Người ghi:** YUNIE / auto-learn
+
+### KN-008 — dotnet build fail MSB3027/MSB3021 do file lock — N5Blazor.exe đang chạy
+
+- **Ngày:** 2026-08-30
+- **Bug report:** `.agent/bugs/2026-08-30-dotnet-build-fail-do-file-lock-n5blazor-exe-ang-ch/bug.md`
+- **Severity:** major
+- **Triệu chứng:** `dotnet build N5Blazor` và `dotnet test` đều fail sau 17s với 10 warnings + 2 errors:
+  ```
+  warning MSB3026: Could not copy "...apphost.exe" to "bin/Debug/net8.0/N5Blazor.exe" — file locked by: "N5Blazor (28232)"
+  error MSB3027: Could not copy ... Exceeded retry count of 10. Failed.
+  error MSB3021: Unable to copy file ... The process cannot access the file ... because it is being used by another process.
+  ```
+  Trong khi `dotnet run --project N5Blazor` vẫn đang chạy ở terminal khác (LISTENING 127.0.0.1:5251, PID 28232).
+- **Nguyên nhân gốc (5 Whys):**
+  - Why1: Build không copy được `apphost.exe` → `N5Blazor.exe` vì file đang bị khóa.
+  - Why2: File bị khóa vì process `N5Blazor (28232)` vẫn giữ handle (từ `dotnet run` trước đó).
+  - Why3: `dotnet run` không được tắt trước khi `dotnet build` — terminal cũ vẫn LISTENING trên 5251.
+  - Why4: Không có pre-build check / warning — dev quên tắt app, build cứ retry 10 lần vô ích (17s).
+  - Why5 (Root): Thiếu quy trình **stop-before-build** + thiếu auto-log cho lỗi build (chưa dùng `auto-learn log` ngay khi build fail).
+- **Cách sửa:** Dừng process đang khóa file trước khi build — không sửa code, chỉ quản lý process:
+  ```powershell
+  Stop-Process -Id 28232 -Force; Start-Sleep 2
+  dotnet build N5Blazor --nologo  # → Build succeeded 0 Warning 0 Error (2.32s)
+  dotnet test N5Blazor.Tests --nologo  # → Passed 25/25
+  ```
+  Đã verify: build pass, test 25 passed, www/status.json valid, get_errors 0.
+- **Cách phòng tránh:**
+  - Trước khi `dotnet build/test`: kiểm tra `Get-Process N5Blazor` hoặc `netstat -ano | findstr 5251` — nếu còn thì `Stop-Process -Force`.
+  - Khi build fail với MSB3027/MSB3021 → chạy ngay `node .github/harness/scripts/auto-learn.mjs log --error "MSB3027 ..." --file "N5Blazor/N5Blazor.csproj" --title "file lock"` để lưu context.
+  - Thêm checklist vào `docs/knowleged.md` (KN-008) và cân nhắc script prebuild `taskkill /F /IM N5Blazor.exe 2>nul` nếu hay quên.
+  - Dùng `auto-learn suggest "file lock MSB3027"` trước khi debug build — sẽ ra KN này.
+- **Tags:** `build` `process` `dx` `dotnet`
+- **Người ghi:** YUNIE / auto-learn
+
 <!-- Thêm bài học mới theo template dưới — copy block này -->
 
 <!--
@@ -177,6 +242,13 @@
 - ❌ Fix bug encoding bằng cách xóa dấu tiếng Việt — phải giữ UTF-8 chuẩn (KN-006).
 - ❌ Dùng PowerShell here-string cho file UTF-8 tiếng Việt → corrupt (KN-006).
 - ❌ NavMenu minimal không có badge/grouping/aria-label (KN-006).
+- ❌ Code mà không `suggest` KN liên quan trước — dễ lặp bug cũ (KN-007).
+- ❌ Gặp lỗi mà không `log` ngay — để trôi, mất context (KN-007).
+- ❌ Fix xong mà không `propose` KN mới — bài học không được lưu (KN-007).
+- ❌ Tự ghi `knowleged.md` tay không qua propose — sai format, thiếu ID (KN-007).
+- ❌ Để `dotnet run` chạy rồi `dotnet build` ngay — file lock MSB3027/MSB3021, tốn 17s retry vô ích (KN-008).
+- ❌ Gặp MSB3027/MSB3021 mà tưởng lỗi code — không check `Get-Process` / `netstat 5251` (KN-008).
+- ❌ Build fail mà không `log` ngay — mất context PID/port (KN-008).
 
 ## Checklist phòng tránh chung
 
@@ -192,8 +264,14 @@
 - [ ] Đã test contrast ≥4.5:1 cả 2 theme (dark/light)? (KN-006)
 - [ ] Đã giữ tiếng Việt có dấu chuẩn UTF-8 (không xóa dấu khi fix bug)? (KN-006)
 - [ ] Đã polish menu với badge/grouping/aria-label? (KN-006)
+- [ ] Đã `suggest "<từ khóa>"` và áp dụng KN liên quan trước khi code? (KN-007)
+- [ ] Nếu gặp lỗi → đã `log --error` tạo bug draft ngay? (KN-007)
+- [ ] Sau khi fix → đã `propose --bug` và đề xuất cập nhật `knowleged.md`? (KN-007)
+- [ ] Đã `status` kiểm tra health (KN total, drafts)? (KN-007)
+- [ ] Trước khi `dotnet build/test` đã tắt `dotnet run` đang giữ file chưa? (KN-008)
+- [ ] Nếu gặp MSB3027/MSB3021 đã `Stop-Process` PID trên 5251 và `log` ngay chưa? (KN-008)
 
 ---
 
 *File này do `/fixbug` tự động cập nhật. Mọi luồng khác phải đọc để không lặp lại lỗi cũ.*
-*UpdatedAt: 2026-08-30T16:30:00Z — Maintained by YUNIE / Harness v2 — KN-006 added (N5 UI polish + light theme) — Maintained by YUNIE / Harness v2 — KN-005 added (Bug Blindness — Dan Luu)*
+*UpdatedAt: 2026-08-30T16:25:00Z — Maintained by YUNIE / Harness v2 — KN-008 added (dotnet build file lock MSB3027) — KN-007 added (Auto-Learn) — KN-006 added (N5 UI polish) — KN-005 added (Bug Blindness)*

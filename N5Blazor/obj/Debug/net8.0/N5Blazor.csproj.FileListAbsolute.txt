@@ -28,3 +28,9 @@ D:\CLAUDE_VS\N5Blazor\obj\Debug\net8.0\refint\N5Blazor.dll
 D:\CLAUDE_VS\N5Blazor\obj\Debug\net8.0\N5Blazor.pdb
 D:\CLAUDE_VS\N5Blazor\obj\Debug\net8.0\N5Blazor.genruntimeconfig.cache
 D:\CLAUDE_VS\N5Blazor\obj\Debug\net8.0\ref\N5Blazor.dll
+D:\CLAUDE_VS\N5Blazor\bin\Debug\net8.0\publish\web.config
+D:\CLAUDE_VS\N5Blazor\bin\Debug\net8.0\publish\appsettings.Development.json
+D:\CLAUDE_VS\N5Blazor\bin\Debug\net8.0\publish\appsettings.json
+D:\CLAUDE_VS\N5Blazor\bin\Debug\net8.0\publish\N5Blazor.deps.json
+D:\CLAUDE_VS\N5Blazor\bin\Debug\net8.0\publish\N5Blazor.runtimeconfig.json
+D:\CLAUDE_VS\N5Blazor\bin\Debug\net8.0\publish\N5Blazor.staticwebassets.endpoints.json

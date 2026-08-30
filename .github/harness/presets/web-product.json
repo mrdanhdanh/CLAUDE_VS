@@ -3,17 +3,23 @@
   "description": "Preset cho dự án web cần giao diện đẹp — bật product-quality + designer/polish",
   "skills": {
     "claude-harness": true,
+    "custom-registry": true,
+    "glass-rainbow-effects": true,
     "skill-registry": true,
-    "custom-registry": true
+    "ui-design-system": true,
+    "ui-ux-pro-max": true
   },
   "instructions": {
+    "custom-registry": true,
     "harness-workflow": true,
+    "knowleged": true,
+    "locale-i18n": true,
+    "plugin-seam": true,
     "product-quality": true,
     "skill-usage": true,
-    "custom-registry": true,
-    "plugin-seam": true,
-    "locale-i18n": true,
-    "knowleged": true
+    "library-rag": true,
+    "yunie-personality": true,
+    "auto-learn": true
   },
   "agents": {
     "designer": true,
@@ -22,9 +28,11 @@
     "plan": true,
     "polish": true,
     "verify": true,
-    "yunie": true
+    "yunie": true,
+    "learn": true
   },
   "prompts": {
+    "fixbug": true,
     "harness": true,
     "implement": true,
     "plan": true,
