@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-29T16:20:46.904Z",
+  "generatedAt": "2026-08-30T03:15:32.759Z",
   "generatedBy": "YUNIE",
   "version": 1,
   "counts": {
@@ -9,9 +9,9 @@
       "total": 6
     },
     "instructions": {
-      "enabled": 7,
+      "enabled": 8,
       "disabled": 0,
-      "total": 7
+      "total": 8
     },
     "agents": {
       "enabled": 7,
@@ -84,6 +84,10 @@
       "locale-i18n": {
         "enabled": true,
         "description": "Locale-owned UI copy — no hardcoded text, typed dictionaries, t() helper. Use when writing UI text, button labels, messages, toast, empty/error states, need i18n, locale."
+      },
+      "library-rag": {
+        "enabled": true,
+        "description": "Thư viện RAG Local — cho /harness trích xuất thông tin từ sách (PDF/DOCX/TXT/MD) qua BM25. Use when harness needs to extract knowledge from library books, need to search library, need citation from documents, or task mentions sách/thư viện/tài liệu."
       }
     },
     "agents": {
@@ -170,10 +174,11 @@
   "plans": [
     "custom-registry",
     "focus-flow",
+    "library-rag",
+    "liquid-glass-status",
     "skill-registry",
     "status-ui-v2",
-    "todo-manager",
-    "library-rag"
+    "todo-manager"
   ],
   "demos": [
     {
@@ -200,7 +205,7 @@
   "health": {
     "errors": 0,
     "status": "ok",
-    "lastCheck": "2026-08-29T16:20:46.905Z",
+    "lastCheck": "2026-08-30T03:15:32.759Z",
     "checks": [
       "get_errors: pass (0 errors)",
       "registry: 8 instructions (library-rag moi) - 6 skills - 7 agents - 7 prompts - 1 hook — all enabled",
@@ -223,6 +228,16 @@
         "path": "status.json",
         "title": "Status JSON",
         "type": "data"
+      },
+      {
+        "path": "focus-flow/index.html",
+        "title": "Focus Flow — Pomodoro & Deep Work",
+        "type": "demo"
+      },
+      {
+        "path": "todo-manager/index.html",
+        "title": "Todo Manager — Quản lý công việc",
+        "type": "demo"
       },
       {
         "path": "glassui/index.html",
