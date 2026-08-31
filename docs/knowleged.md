@@ -31,6 +31,7 @@
 | KN-007 | 2026-08-30 | Thiếu hệ thống tự học hỏi tự động — phải suggest/log/propose tay, dễ quên, lặp bug cũ | Không có script BM25-lite, không có instruction enforce, không có hooks reminder → dev quên check KN trước khi code, quên log khi lỗi, quên propose sau fix | Mỗi task phải auto suggest KN (BM25-lite + IDF), mỗi lỗi auto log draft, mỗi fix auto propose KN — không để trôi | `process` `knowledge` `automation` `dx` |
 | KN-008 | 2026-08-30 | dotnet build fail MSB3027/MSB3021 do file lock — N5Blazor.exe đang chạy (dotnet run chưa tắt) | dotnet run giữ handle N5Blazor.exe (PID 28232, LISTENING 5251) → build không copy được apphost.exe → retry 10 lần (17s) rồi fail | Trước khi build/test luôn tắt dotnet run đang giữ file — nếu gặp MSB3027 thì Stop-Process PID trên 5251 rồi build lại | `build` `process` `dx` `dotnet` |
 | KN-010 | 2026-08-31 | AAR pattern từ Anthropic — propose 3 methods, benchmark, keep best, $4/h vs $150/h human | Thiếu benchmark loop chặt chẽ — fix ngẫu hiên thay vì so sánh có hệ thống → không biến nào tốt nhất, reward hacking khi chỉ check WHETHER không check HOW | Áp dụng AAR pattern: propose 3 → implement → benchmark → keep best → log KN. 3-fix limit vẫn áp dụng. Check HOW not WHETHER | `process` `self-improving` `benchmark` `aar` `automation` |
+| KN-011 | 2026-08-31 | Random làm disable nút ▶ Bước tiếp theo (Bài 004 & 005) | `hideAll()` disable `stepBtn` rồi `handleRandom()` không re-enable → user không thể step sau Random | Không disable stepBtn trong hàm reset chung — quản lý button state tập trung, re-enable sau Random | `ui` `state` `ux` `button` |
 
 > Dòng ví dụ trên sẽ bị thay khi có bug thật đầu tiên — giữ format.
 
@@ -246,6 +247,26 @@
 - **Tags:** `process` `self-improving` `benchmark` `aar` `automation`
 - **Người ghi:** YUNIE / auto-researcher
 
+### KN-011 — Random làm disable nút ▶ Bước tiếp theo (Bài 004 & 005)
+
+- **Ngày:** 2026-08-31
+- **Bug report:** `.agent/bugs/2026-08-31-random-step-btn-disabled/bug.md`
+- **Severity:** major
+- **Triệu chứng:** Sau khi click **🎲 Random** ở Bài 004 (Bubble Sort) hoặc Bài 005 (Binary Search), nút **▶ Bước tiếp theo** bị disabled (xám, không click được) — user không thể chạy từng bước sau khi Random.
+- **Nguyên nhân gốc (5 Whys):**
+  - Why1: Nút Step bị disabled sau Random → vì `handleRandom()` gọi `hideAll()` và `hideAll()` set `stepBtn.disabled = true`
+  - Why2: `hideAll()` disable stepBtn → vì được viết để reset state, nhưng không phân biệt context (Random vs Reset vs Start)
+  - Why3: Không phân biệt context → vì `hideAll()` là hàm chung, được reuse cho nhiều caller mà không có tham số
+  - Why4: Thiếu quản lý state rõ ràng → vì `stepBtn.disabled` được set ở nhiều nơi (hideAll, handleStart, startAutoRun, handleReset) không nhất quán
+  - Why5 (Root): Thiếu single source of truth cho button state — mỗi hàm tự set disabled mà không có hàm `updateButtonState()` tập trung
+- **Cách sửa:** Minimal fix — `handleRandom()` sau khi gọi `hideAll()` thì re-enable `stepBtn.disabled = false`; `handleReset()` cũng re-enable; `handleStart()` cũng set `stepBtn.disabled = false`. Không đụng `hideAll()` để tránh regression.
+- **Cách phòng tránh:**
+  - Checklist: Mọi hàm `hideAll`/`reset` phải review xem có disable button không — chỉ disable khi thực sự cần
+  - Tạo helper `setStepEnabled(bool)` nếu có nhiều nơi đụng
+  - Test manual: sau mỗi action (Random, Reset, Start) check tất cả button states
+- **Tags:** `ui` `state` `ux` `button`
+- **Người ghi:** YUNIE / fixbug
+
 <!-- Thêm bài học mới theo template dưới — copy block này -->
 
 <!--
@@ -293,6 +314,7 @@
 - ❌ Để `dotnet run` chạy rồi `dotnet build` ngay — file lock MSB3027/MSB3021, tốn 17s retry vô ích (KN-008).
 - ❌ Gặp MSB3027/MSB3021 mà tưởng lỗi code — không check `Get-Process` / `netstat 5251` (KN-008).
 - ❌ Build fail mà không `log` ngay — mất context PID/port (KN-008).
+- ❌ `hideAll()` disable button rồi caller không re-enable → Random xong không step được (KN-011).
 
 ## Checklist phòng tránh chung
 
@@ -314,8 +336,9 @@
 - [ ] Đã `status` kiểm tra health (KN total, drafts)? (KN-007)
 - [ ] Trước khi `dotnet build/test` đã tắt `dotnet run` đang giữ file chưa? (KN-008)
 - [ ] Nếu gặp MSB3027/MSB3021 đã `Stop-Process` PID trên 5251 và `log` ngay chưa? (KN-008)
+- [ ] Sau Random/Reset đã check tất cả button states (stepBtn enabled)? (KN-011)
 
 ---
 
 *File này do `/fixbug` tự động cập nhật. Mọi luồng khác phải đọc để không lặp lại lỗi cũ.*
-*UpdatedAt: 2026-08-30T18:18:00Z — Maintained by YUNIE / Harness v2 — KN-009 bổ sung detail section (slot máy chủ AI — hardcode config) — KN-008 added (dotnet build file lock MSB3027) — KN-007 added (Auto-Learn) — KN-006 added (N5 UI polish) — KN-005 added (Bug Blindness)*
+*UpdatedAt: 2026-08-31T12:00:00Z — Maintained by YUNIE / Harness v2 — KN-011 added (Random disable Step button) — KN-010 added (AAR pattern) — KN-009 bổ sung detail section (slot máy chủ AI — hardcode config) — KN-008 added (dotnet build file lock MSB3027) — KN-007 added (Auto-Learn) — KN-006 added (N5 UI polish) — KN-005 added (Bug Blindness)*

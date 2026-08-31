@@ -1,0 +1,708 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>10 Bài Thuật Toán — Visualizer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <a href="#main" class="skip-link">Nội dung chính</a>
+
+  <div class="app">
+    <!-- Sidebar -->
+    <aside class="sidebar" aria-label="Danh sách bài thuật toán">
+      <div class="sidebar-header">
+        <h1 class="sidebar-title">10 Bài Thuật Toán</h1>
+        <p class="sidebar-subtitle">Visualizer</p>
+      </div>
+      <nav class="nav" id="nav">
+        <button class="nav-item active" data-bai="001" aria-current="page">
+          <span class="nav-badge">001</span>
+          <span class="nav-text">Tìm số lớn nhất</span>
+          <span class="nav-diff">⭐</span>
+        </button>
+        <button class="nav-item" data-bai="002">
+          <span class="nav-badge">002</span>
+          <span class="nav-text">Đếm số lần xuất hiện</span>
+          <span class="nav-diff">⭐⭐</span>
+        </button>
+        <button class="nav-item" data-bai="003">
+          <span class="nav-badge">003</span>
+          <span class="nav-text">Linear Search</span>
+          <span class="nav-diff">⭐⭐</span>
+        </button>
+        <button class="nav-item" data-bai="004">
+          <span class="nav-badge">004</span>
+          <span class="nav-text">Bubble Sort</span>
+          <span class="nav-diff">⭐⭐⭐</span>
+        </button>
+        <button class="nav-item" data-bai="005">
+          <span class="nav-badge">005</span>
+          <span class="nav-text">Binary Search</span>
+          <span class="nav-diff">⭐⭐⭐</span>
+        </button>
+        <button class="nav-item" data-bai="006">
+          <span class="nav-badge">006</span>
+          <span class="nav-text">Two Pointers</span>
+          <span class="nav-diff">⭐⭐⭐⭐</span>
+        </button>
+        <button class="nav-item" data-bai="007">
+          <span class="nav-badge">007</span>
+          <span class="nav-text">Sliding Window</span>
+          <span class="nav-diff">⭐⭐⭐⭐</span>
+        </button>
+        <button class="nav-item" data-bai="008">
+          <span class="nav-badge">008</span>
+          <span class="nav-text">Kiểm tra dấu ngoặc</span>
+          <span class="nav-diff">⭐⭐⭐⭐</span>
+        </button>
+        <button class="nav-item" data-bai="009">
+          <span class="nav-badge">009</span>
+          <span class="nav-text">Maze Solver — BFS</span>
+          <span class="nav-diff">⭐⭐⭐⭐⭐</span>
+        </button>
+        <button class="nav-item" data-bai="010">
+          <span class="nav-badge">010</span>
+          <span class="nav-text">Leo cầu thang — DP</span>
+          <span class="nav-diff">⭐⭐⭐⭐⭐</span>
+        </button>
+      </nav>
+    </aside>
+
+    <!-- Main -->
+    <main id="main" class="main">
+      <!-- Bài 001 -->
+      <section class="bai-section active" id="bai-001" aria-labelledby="bai-001-title">
+        <header class="bai-header">
+          <span class="bai-badge">Bài 001</span>
+          <h2 id="bai-001-title" class="bai-title">Tìm số lớn nhất</h2>
+          <p class="bai-desc">Thuật toán duyệt mảng (Linear Scan) — O(n)</p>
+        </header>
+
+        <div class="card">
+          <h3 class="card-title">Nhập dãy số</h3>
+          <label for="001-input" class="input-label">Nhập các số, phân cách bằng dấu phẩy</label>
+          <input type="text" id="001-input" class="input-field" placeholder="Ví dụ: 12, 5, 28, 7, 19" autocomplete="off" aria-describedby="001-hint 001-error">
+          <p id="001-hint" class="input-hint">Chấp nhận số âm và số thập phân. Phải nhập ít nhất 2 số.</p>
+          <p id="001-error" class="input-error" role="alert" aria-live="polite"></p>
+          <div class="btn-row">
+            <button class="btn btn-primary" id="001-find-btn" type="button">Tìm số lớn nhất</button>
+            <button class="btn btn-secondary" id="001-random-btn" type="button">🎲 Random</button>
+          </div>
+        </div>
+
+        <div class="card" id="001-viz-card" hidden>
+          <h3 class="card-title">Mảng số</h3>
+          <div class="array-viz" id="001-array-viz"></div>
+          <div class="viz-legend">
+            <span class="legend-item"><span class="legend-dot current"></span> Đang kiểm tra</span>
+            <span class="legend-item"><span class="legend-dot max"></span> Max hiện tại</span>
+            <span class="legend-item"><span class="legend-dot done"></span> Đã duyệt</span>
+          </div>
+        </div>
+
+        <div class="card result-card" id="001-result-card" hidden>
+          <h3 class="card-title">Kết quả</h3>
+          <p class="result-value" id="001-result-value"></p>
+        </div>
+
+        <div class="card steps-card" id="001-steps-card" hidden>
+          <h3 class="card-title">Quá trình xử lý</h3>
+          <ol class="steps-list" id="001-steps-list"></ol>
+        </div>
+      </section>
+
+      <!-- Bài 002 -->
+      <section class="bai-section" id="bai-002" aria-labelledby="bai-002-title" hidden>
+        <header class="bai-header">
+          <span class="bai-badge">Bài 002</span>
+          <h2 id="bai-002-title" class="bai-title">Đếm số lần xuất hiện</h2>
+          <p class="bai-desc">Thuật toán duyệt mảng + đếm (Counting) — O(n)</p>
+        </header>
+
+        <div class="card">
+          <h3 class="card-title">Nhập dữ liệu</h3>
+          <label for="002-input" class="input-label">Nhập dãy số (phân cách bằng dấu phẩy)</label>
+          <input type="text" id="002-input" class="input-field" placeholder="Ví dụ: 5, 2, 5, 8, 5, 3, 2" autocomplete="off" aria-describedby="002-hint 002-error">
+          <p id="002-hint" class="input-hint">Phải nhập ít nhất 2 số.</p>
+
+          <label for="002-target" class="input-label" style="margin-top:16px">Số cần tìm</label>
+          <input type="text" id="002-target" class="input-field" placeholder="Ví dụ: 5" autocomplete="off" aria-describedby="002-error">
+
+          <p id="002-error" class="input-error" role="alert" aria-live="polite"></p>
+          <div class="btn-row">
+            <button class="btn btn-primary" id="002-count-btn" type="button">Đếm</button>
+            <button class="btn btn-secondary" id="002-random-btn" type="button">🎲 Random</button>
+          </div>
+        </div>
+
+        <div class="card" id="002-viz-card" hidden>
+          <h3 class="card-title">Mảng số</h3>
+          <div class="array-viz" id="002-array-viz"></div>
+          <div class="viz-legend">
+            <span class="legend-item"><span class="legend-dot current"></span> Đang kiểm tra</span>
+            <span class="legend-item"><span class="legend-dot found"></span> Tìm thấy</span>
+            <span class="legend-item"><span class="legend-dot skip"></span> Bỏ qua</span>
+          </div>
+          <p class="target-display">Số cần tìm: <strong id="002-target-display"></strong></p>
+        </div>
+
+        <div class="card result-card" id="002-result-card" hidden>
+          <h3 class="card-title">Kết quả</h3>
+          <p class="result-value" id="002-result-value"></p>
+        </div>
+
+        <div class="card steps-card" id="002-steps-card" hidden>
+          <h3 class="card-title">Quá trình xử lý</h3>
+          <ol class="steps-list" id="002-steps-list"></ol>
+        </div>
+      </section>
+
+      <!-- Bài 003 -->
+      <section class="bai-section" id="bai-003" aria-labelledby="bai-003-title" hidden>
+        <header class="bai-header">
+          <span class="bai-badge">Bài 003</span>
+          <h2 id="bai-003-title" class="bai-title">Linear Search</h2>
+          <p class="bai-desc">Thuật toán tìm kiếm tuyến tính — O(n)</p>
+        </header>
+
+        <div class="card">
+          <h3 class="card-title">Nhập dữ liệu</h3>
+          <label for="003-input" class="input-label">Nhập dãy số (phân cách bằng dấu phẩy)</label>
+          <input type="text" id="003-input" class="input-field" placeholder="Ví dụ: 12, 7, 25, 9, 18" autocomplete="off" aria-describedby="003-hint 003-error">
+          <p id="003-hint" class="input-hint">Phải nhập ít nhất 2 số.</p>
+
+          <label for="003-target" class="input-label" style="margin-top:16px">Số cần tìm</label>
+          <input type="text" id="003-target" class="input-field" placeholder="Ví dụ: 25" autocomplete="off" aria-describedby="003-error">
+
+          <p id="003-error" class="input-error" role="alert" aria-live="polite"></p>
+          <div class="btn-row">
+            <button class="btn btn-primary" id="003-search-btn" type="button">Tìm kiếm</button>
+            <button class="btn btn-secondary" id="003-random-btn" type="button">🎲 Random</button>
+          </div>
+          <div class="btn-row" style="margin-top:12px">
+            <button class="btn btn-step" id="003-step-btn" type="button">▶ Chạy từng bước</button>
+            <button class="btn btn-secondary" id="003-reset-btn" type="button">↺ Reset</button>
+          </div>
+        </div>
+
+        <div class="card" id="003-viz-card" hidden>
+          <h3 class="card-title">Mảng số</h3>
+          <div class="array-viz" id="003-array-viz"></div>
+          <div class="viz-legend">
+            <span class="legend-item"><span class="legend-dot current"></span> Đang kiểm tra</span>
+            <span class="legend-item"><span class="legend-dot found"></span> Tìm thấy</span>
+            <span class="legend-item"><span class="legend-dot skip"></span> Bỏ qua</span>
+          </div>
+          <p class="target-display">Số cần tìm: <strong id="003-target-display"></strong></p>
+          <p class="check-count">Số lần kiểm tra: <strong id="003-check-count">0</strong></p>
+        </div>
+
+        <div class="card result-card" id="003-result-card" hidden>
+          <h3 class="card-title">Kết quả</h3>
+          <p class="result-value" id="003-result-value"></p>
+        </div>
+
+        <div class="card steps-card" id="003-steps-card" hidden>
+          <h3 class="card-title">Quá trình xử lý</h3>
+          <ol class="steps-list" id="003-steps-list"></ol>
+        </div>
+      </section>
+
+      <!-- Bài 004 -->
+      <section class="bai-section" id="bai-004" aria-labelledby="bai-004-title" hidden>
+        <header class="bai-header">
+          <span class="bai-badge">Bài 004</span>
+          <h2 id="bai-004-title" class="bai-title">Bubble Sort Visualizer</h2>
+          <p class="bai-desc">Thuật toán sắp xếp nổi bọt — O(n²)</p>
+        </header>
+
+        <div class="card">
+          <h3 class="card-title">Nhập dãy số</h3>
+          <label for="004-input" class="input-label">Nhập các số, phân cách bằng dấu phẩy</label>
+          <input type="text" id="004-input" class="input-field" placeholder="Ví dụ: 8, 3, 5, 1, 9" autocomplete="off" aria-describedby="004-hint 004-error">
+          <p id="004-hint" class="input-hint">Phải nhập ít nhất 2 số.</p>
+          <p id="004-error" class="input-error" role="alert" aria-live="polite"></p>
+
+          <div class="speed-control">
+            <label for="004-speed" class="input-label">Tốc độ</label>
+            <input type="range" id="004-speed" min="100" max="2000" value="800" step="100" aria-describedby="004-speed-val">
+            <span id="004-speed-val" class="speed-val">800ms</span>
+          </div>
+
+          <div class="btn-row">
+            <button class="btn btn-primary" id="004-start-btn" type="button">Bắt đầu</button>
+            <button class="btn btn-secondary" id="004-random-btn" type="button">🎲 Random</button>
+          </div>
+          <div class="btn-row" style="margin-top:12px">
+            <button class="btn btn-step" id="004-step-btn" type="button">▶ Bước tiếp theo</button>
+            <button class="btn btn-secondary" id="004-reset-btn" type="button">↺ Đặt lại</button>
+          </div>
+        </div>
+
+        <div class="card" id="004-viz-card" hidden>
+          <h3 class="card-title">Mảng số</h3>
+          <div class="array-viz" id="004-array-viz"></div>
+          <div class="viz-legend">
+            <span class="legend-item"><span class="legend-dot comparing"></span> Đang so sánh</span>
+            <span class="legend-item"><span class="legend-dot swapping"></span> Hoán đổi</span>
+            <span class="legend-item"><span class="legend-dot sorted"></span> Đã sắp xếp</span>
+          </div>
+          <div class="stats-row">
+            <p class="stat-item">Vòng lặp: <strong id="004-outer-loop">0</strong></p>
+            <p class="stat-item">Vị trí: <strong id="004-pos">0</strong></p>
+            <p class="stat-item">So sánh: <strong id="004-comparisons">0</strong></p>
+            <p class="stat-item">Hoán đổi: <strong id="004-swaps">0</strong></p>
+          </div>
+        </div>
+
+        <div class="card result-card" id="004-result-card" hidden>
+          <h3 class="card-title">Kết quả</h3>
+          <p class="result-value" id="004-result-value"></p>
+        </div>
+
+        <div class="card steps-card" id="004-steps-card" hidden>
+          <h3 class="card-title">Quá trình xử lý</h3>
+          <ol class="steps-list" id="004-steps-list"></ol>
+        </div>
+      </section>
+
+      <!-- Bài 005 -->
+      <section class="bai-section" id="bai-005" aria-labelledby="bai-005-title" hidden>
+        <header class="bai-header">
+          <span class="bai-badge">Bài 005</span>
+          <h2 id="bai-005-title" class="bai-title">Binary Search Visualizer</h2>
+          <p class="bai-desc">Thuật toán tìm kiếm nhị phân — O(log n)</p>
+        </header>
+
+        <div class="card">
+          <h3 class="card-title">Nhập dữ liệu</h3>
+          <label for="005-input" class="input-label">Nhập mảng đã sắp xếp tăng dần (phân cách bằng dấu phẩy)</label>
+          <input type="text" id="005-input" class="input-field" placeholder="Ví dụ: 2, 5, 8, 12, 16, 23, 38, 45, 51" autocomplete="off" aria-describedby="005-hint 005-error">
+          <p id="005-hint" class="input-hint">Mảng phải được sắp xếp tăng dần. Phải có ít nhất 2 số.</p>
+
+          <label for="005-target" class="input-label" style="margin-top:16px">Số cần tìm</label>
+          <input type="text" id="005-target" class="input-field" placeholder="Ví dụ: 23" autocomplete="off" aria-describedby="005-error">
+
+          <p id="005-error" class="input-error" role="alert" aria-live="polite"></p>
+          <div class="btn-row">
+            <button class="btn btn-primary" id="005-search-btn" type="button">Tìm kiếm</button>
+            <button class="btn btn-secondary" id="005-random-btn" type="button">🎲 Random</button>
+          </div>
+          <div class="btn-row" style="margin-top:12px">
+            <button class="btn btn-step" id="005-step-btn" type="button">▶ Bước tiếp theo</button>
+            <button class="btn btn-secondary" id="005-reset-btn" type="button">↺ Đặt lại</button>
+          </div>
+        </div>
+
+        <div class="card" id="005-viz-card" hidden>
+          <h3 class="card-title">Mảng số</h3>
+          <div class="array-viz" id="005-array-viz"></div>
+          <div class="viz-legend">
+            <span class="legend-item"><span class="legend-dot left"></span> Left</span>
+            <span class="legend-item"><span class="legend-dot mid"></span> Mid</span>
+            <span class="legend-item"><span class="legend-dot right"></span> Right</span>
+            <span class="legend-item"><span class="legend-dot found"></span> Tìm thấy</span>
+            <span class="legend-item"><span class="legend-dot eliminated"></span> Loại bỏ</span>
+          </div>
+          <div class="stats-row">
+            <p class="stat-item">Left: <strong id="005-left-val">0</strong></p>
+            <p class="stat-item">Mid: <strong id="005-mid-val">0</strong></p>
+            <p class="stat-item">Right: <strong id="005-right-val">0</strong></p>
+            <p class="stat-item">So sánh: <strong id="005-comparisons">0</strong></p>
+          </div>
+        </div>
+
+        <div class="card result-card" id="005-result-card" hidden>
+          <h3 class="card-title">Kết quả</h3>
+          <p class="result-value" id="005-result-value"></p>
+        </div>
+
+        <div class="card steps-card" id="005-steps-card" hidden>
+          <h3 class="card-title">Quá trình xử lý</h3>
+          <ol class="steps-list" id="005-steps-list"></ol>
+        </div>
+
+        <!-- Comparison Section -->
+        <div class="card comparison-card" id="005-comparison-card" hidden>
+          <h3 class="card-title">So sánh: Linear Search vs Binary Search</h3>
+          <p class="comparison-desc">Chọn kích thước mảng để so sánh số lần kiểm tra:</p>
+          <div class="comparison-controls">
+            <label for="005-array-size" class="input-label">Kích thước mảng</label>
+            <select id="005-array-size" class="select-field">
+              <option value="10">10 phần tử</option>
+              <option value="100">100 phần tử</option>
+              <option value="1000" selected>1.000 phần tử</option>
+              <option value="10000">10.000 phần tử</option>
+              <option value="100000">100.000 phần tử</option>
+            </select>
+            <button class="btn btn-primary" id="005-compare-btn" type="button">Chạy so sánh</button>
+          </div>
+          <div class="comparison-result" id="005-comparison-result" hidden>
+            <div class="comparison-bars">
+              <div class="comparison-row">
+                <span class="comparison-label">Linear Search</span>
+                <div class="comparison-bar-container">
+                  <div class="comparison-bar linear-bar" id="005-linear-bar"></div>
+                  <span class="comparison-count" id="005-linear-count">0</span>
+                </div>
+              </div>
+              <div class="comparison-row">
+                <span class="comparison-label">Binary Search</span>
+                <div class="comparison-bar-container">
+                  <div class="comparison-bar binary-bar" id="005-binary-bar"></div>
+                  <span class="comparison-count" id="005-binary-count">0</span>
+                </div>
+              </div>
+            </div>
+            <p class="comparison-winner" id="005-comparison-winner"></p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Bài 006 -->
+      <section class="bai-section" id="bai-006" aria-labelledby="bai-006-title" hidden>
+        <header class="bai-header">
+          <span class="bai-badge">Bài 006</span>
+          <h2 id="bai-006-title" class="bai-title">Two Pointers Visualizer</h2>
+          <p class="bai-desc">Thuật toán hai con trỏ — O(n)</p>
+        </header>
+
+        <div class="card">
+          <h3 class="card-title">Nhập dữ liệu</h3>
+          <label for="006-input" class="input-label">Nhập mảng đã sắp xếp tăng dần (phân cách bằng dấu phẩy)</label>
+          <input type="text" id="006-input" class="input-field" placeholder="Ví dụ: 1, 2, 3, 4, 6, 8, 9" autocomplete="off" aria-describedby="006-hint 006-error">
+          <p id="006-hint" class="input-hint">Mảng phải được sắp xếp tăng dần. Phải có ít nhất 2 số.</p>
+
+          <label for="006-target" class="input-label" style="margin-top:16px">Target (tổng cần tìm)</label>
+          <input type="text" id="006-target" class="input-field" placeholder="Ví dụ: 10" autocomplete="off" aria-describedby="006-error">
+
+          <p id="006-error" class="input-error" role="alert" aria-live="polite"></p>
+          <div class="btn-row">
+            <button class="btn btn-primary" id="006-search-btn" type="button">Tìm cặp</button>
+            <button class="btn btn-secondary" id="006-random-btn" type="button">🎲 Random</button>
+          </div>
+          <div class="btn-row" style="margin-top:12px">
+            <button class="btn btn-step" id="006-step-btn" type="button">▶ Bước tiếp theo</button>
+            <button class="btn btn-secondary" id="006-auto-btn" type="button">▶ Chạy tự động</button>
+            <button class="btn btn-secondary" id="006-reset-btn" type="button">↺ Đặt lại</button>
+          </div>
+        </div>
+
+        <div class="card" id="006-viz-card" hidden>
+          <h3 class="card-title">Mảng số</h3>
+          <div class="array-viz" id="006-array-viz"></div>
+          <div class="viz-legend">
+            <span class="legend-item"><span class="legend-dot left"></span> Left</span>
+            <span class="legend-item"><span class="legend-dot right"></span> Right</span>
+            <span class="legend-item"><span class="legend-dot pair-found"></span> Cặp tìm thấy</span>
+            <span class="legend-item"><span class="legend-dot eliminated"></span> Đã loại</span>
+          </div>
+          <div class="stats-row">
+            <p class="stat-item">Left: <strong id="006-left-val">0</strong></p>
+            <p class="stat-item">Right: <strong id="006-right-val">0</strong></p>
+            <p class="stat-item">Sum: <strong id="006-sum-val">0</strong></p>
+            <p class="stat-item">Kiểm tra: <strong id="006-comparisons">0</strong></p>
+          </div>
+          <div class="pairs-found" id="006-pairs-found" hidden>
+            <h4 class="pairs-title">Các cặp tìm được:</h4>
+            <ul class="pairs-list" id="006-pairs-list"></ul>
+          </div>
+        </div>
+
+        <div class="card result-card" id="006-result-card" hidden>
+          <h3 class="card-title">Kết quả</h3>
+          <p class="result-value" id="006-result-value"></p>
+        </div>
+
+        <div class="card steps-card" id="006-steps-card" hidden>
+          <h3 class="card-title">Quá trình xử lý</h3>
+          <ol class="steps-list" id="006-steps-list"></ol>
+        </div>
+
+        <!-- Comparison Section -->
+        <div class="card comparison-card" id="006-comparison-card" hidden>
+          <h3 class="card-title">So sánh: Two Pointers vs Brute Force</h3>
+          <p class="comparison-desc">Chọn kích thước mảng để so sánh số lần kiểm tra:</p>
+          <div class="comparison-controls">
+            <label for="006-array-size" class="input-label">Kích thước mảng</label>
+            <select id="006-array-size" class="select-field">
+              <option value="10">10 phần tử</option>
+              <option value="100">100 phần tử</option>
+              <option value="1000" selected>1.000 phần tử</option>
+              <option value="10000">10.000 phần tử</option>
+            </select>
+            <button class="btn btn-primary" id="006-compare-btn" type="button">Chạy so sánh</button>
+          </div>
+          <div class="comparison-result" id="006-comparison-result" hidden>
+            <div class="comparison-bars">
+              <div class="comparison-row">
+                <span class="comparison-label">Brute Force O(n²)</span>
+                <div class="comparison-bar-container">
+                  <div class="comparison-bar linear-bar" id="006-brute-bar"></div>
+                  <span class="comparison-count" id="006-brute-count">0</span>
+                </div>
+              </div>
+              <div class="comparison-row">
+                <span class="comparison-label">Two Pointers O(n)</span>
+                <div class="comparison-bar-container">
+                  <div class="comparison-bar binary-bar" id="006-twoptr-bar"></div>
+                  <span class="comparison-count" id="006-twoptr-count">0</span>
+                </div>
+              </div>
+            </div>
+            <p class="comparison-winner" id="006-comparison-winner"></p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Bài 007 -->
+      <section class="bai-section" id="bai-007" aria-labelledby="bai-007-title" hidden>
+        <header class="bai-header">
+          <span class="bai-badge">Bài 007</span>
+          <h2 id="bai-007-title" class="bai-title">Sliding Window Visualizer</h2>
+          <p class="bai-desc">Thuật toán cửa sổ trượt — O(n)</p>
+        </header>
+
+        <div class="card">
+          <h3 class="card-title">Nhập dữ liệu</h3>
+          <label for="007-input" class="input-label">Nhập mảng số (phân cách bằng dấu phẩy)</label>
+          <input type="text" id="007-input" class="input-field" placeholder="Ví dụ: 2, 1, 5, 1, 3, 2" autocomplete="off" aria-describedby="007-hint 007-error">
+          <p id="007-hint" class="input-hint">Có thể là số âm. Phải có ít nhất 2 số.</p>
+
+          <label for="007-k" class="input-label" style="margin-top:16px">K (số phần tử liên tiếp)</label>
+          <input type="text" id="007-k" class="input-field" placeholder="Ví dụ: 3" autocomplete="off" aria-describedby="007-error">
+
+          <fieldset class="mode-selector" aria-label="Chọn chế độ">
+            <legend class="input-label">Chế độ</legend>
+            <label class="radio-label"><input type="radio" name="007-mode" value="max" checked> Tổng lớn nhất</label>
+            <label class="radio-label"><input type="radio" name="007-mode" value="min"> Tổng nhỏ nhất</label>
+            <label class="radio-label"><input type="radio" name="007-mode" value="avg"> Trung bình lớn nhất</label>
+          </fieldset>
+
+          <p id="007-error" class="input-error" role="alert" aria-live="polite"></p>
+          <div class="btn-row">
+            <button class="btn btn-primary" id="007-search-btn" type="button">Tìm tổng</button>
+            <button class="btn btn-secondary" id="007-random-btn" type="button">🎲 Random</button>
+          </div>
+          <div class="btn-row" style="margin-top:12px">
+            <button class="btn btn-step" id="007-step-btn" type="button">▶ Bước tiếp theo</button>
+            <button class="btn btn-secondary" id="007-auto-btn" type="button">▶ Chạy tự động</button>
+            <button class="btn btn-secondary" id="007-reset-btn" type="button">↺ Đặt lại</button>
+          </div>
+        </div>
+
+        <div class="card" id="007-viz-card" hidden>
+          <h3 class="card-title">Mảng số</h3>
+          <div class="array-viz" id="007-array-viz"></div>
+          <div class="viz-legend">
+            <span class="legend-item"><span class="legend-dot window-active"></span> Cửa sổ hiện tại</span>
+            <span class="legend-item"><span class="legend-dot window-best"></span> Tốt nhất</span>
+            <span class="legend-item"><span class="legend-dot window-outside"></span> Ngoài cửa sổ</span>
+          </div>
+          <div class="stats-row">
+            <p class="stat-item">Left: <strong id="007-left-val">0</strong></p>
+            <p class="stat-item">Right: <strong id="007-right-val">0</strong></p>
+            <p class="stat-item">Tổng: <strong id="007-sum-val">0</strong></p>
+            <p class="stat-item">Tốt nhất: <strong id="007-best-val">0</strong></p>
+            <p class="stat-item">Kiểm tra: <strong id="007-comparisons">0</strong></p>
+          </div>
+        </div>
+
+        <div class="card" id="007-chart-card" hidden>
+          <h3 class="card-title">Biểu đồ các cửa sổ</h3>
+          <div class="chart-container" id="007-chart"></div>
+        </div>
+
+        <div class="card result-card" id="007-result-card" hidden>
+          <h3 class="card-title">Kết quả</h3>
+          <p class="result-value" id="007-result-value"></p>
+        </div>
+
+        <div class="card steps-card" id="007-steps-card" hidden>
+          <h3 class="card-title">Quá trình xử lý</h3>
+          <ol class="steps-list" id="007-steps-list"></ol>
+        </div>
+      </section>
+
+      <!-- Bài 008 -->
+      <section class="bai-section" id="bai-008" aria-labelledby="bai-008-title" hidden>
+        <header class="bai-header">
+          <span class="bai-badge">Bài 008</span>
+          <h2 id="bai-008-title" class="bai-title">Kiểm tra dấu ngoặc</h2>
+          <p class="bai-desc">Thuật toán Stack — O(n)</p>
+        </header>
+
+        <div class="card">
+          <h3 class="card-title">Nhập chuỗi</h3>
+          <label for="008-input" class="input-label">Nhập chuỗi chứa dấu ngoặc (), [], {}</label>
+          <input type="text" id="008-input" class="input-field" placeholder="Ví dụ: {[()]}" autocomplete="off" aria-describedby="008-hint 008-error">
+          <p id="008-hint" class="input-hint">Chỉ xử lý (), [], {}. Các ký tự khác sẽ bị bỏ qua.</p>
+          <p id="008-error" class="input-error" role="alert" aria-live="polite"></p>
+          <div class="btn-row">
+            <button class="btn btn-primary" id="008-check-btn" type="button">Kiểm tra</button>
+            <button class="btn btn-secondary" id="008-random-btn" type="button">🎲 Random</button>
+          </div>
+          <div class="btn-row" style="margin-top:12px">
+            <button class="btn btn-step" id="008-step-btn" type="button">▶ Bước tiếp theo</button>
+            <button class="btn btn-secondary" id="008-auto-btn" type="button">▶ Chạy tự động</button>
+            <button class="btn btn-secondary" id="008-reset-btn" type="button">↺ Đặt lại</button>
+          </div>
+        </div>
+
+        <div class="card" id="008-viz-card" hidden>
+          <h3 class="card-title">Chuỗi</h3>
+          <div class="string-viz" id="008-string-viz"></div>
+          <div class="stack-viz-wrapper">
+            <h4 class="stack-title">Stack <span class="stack-top-label">TOP ↓</span></h4>
+            <div class="stack-viz" id="008-stack-viz">
+              <p class="stack-empty">Stack rỗng</p>
+            </div>
+          </div>
+          <div class="stats-row">
+            <p class="stat-item">Vị trí: <strong id="008-pos">0</strong></p>
+            <p class="stat-item">Ký tự: <strong id="008-char">-</strong></p>
+            <p class="stat-item">Stack size: <strong id="008-stack-size">0</strong></p>
+          </div>
+        </div>
+
+        <div class="card result-card" id="008-result-card" hidden>
+          <h3 class="card-title">Kết quả</h3>
+          <p class="result-value" id="008-result-value"></p>
+          <p class="result-detail" id="008-result-detail"></p>
+        </div>
+
+        <div class="card steps-card" id="008-steps-card" hidden>
+          <h3 class="card-title">Quá trình xử lý</h3>
+          <ol class="steps-list" id="008-steps-list"></ol>
+        </div>
+      </section>
+
+      <!-- Bài 009 -->
+      <section class="bai-section" id="bai-009" aria-labelledby="bai-009-title" hidden>
+        <header class="bai-header">
+          <span class="bai-badge">Bài 009</span>
+          <h2 id="bai-009-title" class="bai-title">Maze Solver — BFS</h2>
+          <p class="bai-desc">Thuật toán tìm đường ngắn nhất — BFS O(V+E)</p>
+        </header>
+
+        <div class="card">
+          <h3 class="card-title">Điều khiển</h3>
+          <div class="btn-row">
+            <button class="btn btn-primary" id="009-generate-btn" type="button">🎲 Tạo mê cung</button>
+            <button class="btn btn-secondary" id="009-size-btn" type="button">📐 Đổi kích thước</button>
+          </div>
+          <fieldset class="mode-selector" aria-label="Chọn thuật toán">
+            <legend class="input-label">Thuật toán</legend>
+            <label class="radio-label"><input type="radio" name="009-algo" value="bfs" checked> BFS (ngắn nhất)</label>
+            <label class="radio-label"><input type="radio" name="009-algo" value="dfs"> DFS (sâu)</label>
+          </fieldset>
+          <p class="input-hint">Click vào ô để: Trống → Tường → Start → End. Kéo để vẽ tường.</p>
+          <div class="btn-row" style="margin-top:12px">
+            <button class="btn btn-primary" id="009-solve-btn" type="button">🔍 Tìm đường</button>
+            <button class="btn btn-step" id="009-step-btn" type="button">▶ Bước tiếp theo</button>
+            <button class="btn btn-secondary" id="009-auto-btn" type="button">▶ Tự động</button>
+            <button class="btn btn-secondary" id="009-reset-btn" type="button">↺ Đặt lại</button>
+          </div>
+        </div>
+
+        <div class="card" id="009-maze-card">
+          <h3 class="card-title">Mê cung</h3>
+          <div class="maze-grid" id="009-maze-grid" role="grid" aria-label="Mê cung"></div>
+          <div class="viz-legend">
+            <span class="legend-item"><span class="legend-dot maze-start"></span> Start</span>
+            <span class="legend-item"><span class="legend-dot maze-end"></span> End</span>
+            <span class="legend-item"><span class="legend-dot maze-wall"></span> Tường</span>
+            <span class="legend-item"><span class="legend-dot maze-visited"></span> Đã duyệt</span>
+            <span class="legend-item"><span class="legend-dot maze-path"></span> Đường đi</span>
+            <span class="legend-item"><span class="legend-dot maze-current"></span> Đang xét</span>
+          </div>
+          <div class="stats-row">
+            <p class="stat-item">Đã duyệt: <strong id="009-visited-count">0</strong></p>
+            <p class="stat-item">Độ dài đường: <strong id="009-path-length">0</strong></p>
+            <p class="stat-item">Bước: <strong id="009-step-count">0</strong></p>
+            <p class="stat-item">Trạng thái: <strong id="009-status">Sẵn sàng</strong></p>
+          </div>
+        </div>
+
+        <div class="card result-card" id="009-result-card" hidden>
+          <h3 class="card-title">Kết quả</h3>
+          <p class="result-value" id="009-result-value"></p>
+        </div>
+
+        <div class="card steps-card" id="009-steps-card" hidden>
+          <h3 class="card-title">Quá trình BFS</h3>
+          <ol class="steps-list" id="009-steps-list"></ol>
+        </div>
+      </section>
+
+      <!-- Bài 010 -->
+      <section class="bai-section" id="bai-010" aria-labelledby="bai-010-title" hidden>
+        <header class="bai-header">
+          <span class="bai-badge">Bài 010</span>
+          <h2 id="bai-010-title" class="bai-title">Leo cầu thang — DP</h2>
+          <p class="bai-desc">Thuật toán Dynamic Programming — O(n)</p>
+        </header>
+
+        <div class="card">
+          <h3 class="card-title">Nhập dữ liệu</h3>
+          <label for="010-n" class="input-label">Số bậc thang N (1 → 50)</label>
+          <input type="text" id="010-n" class="input-field" placeholder="Ví dụ: 6" autocomplete="off" aria-describedby="010-hint 010-error">
+          <p id="010-hint" class="input-hint">Nhập số nguyên từ 1 đến 50.</p>
+
+          <label class="input-label" style="margin-top:16px">
+            <input type="checkbox" id="010-cost-toggle"> Thử thách: Chi phí mỗi bậc (tìm chi phí nhỏ nhất)
+          </label>
+          <div id="010-cost-input-wrapper" hidden>
+            <label for="010-cost" class="input-label" style="margin-top:12px">Chi phí mỗi bậc (phân cách dấu phẩy, N số)</label>
+            <input type="text" id="010-cost" class="input-field" placeholder="Ví dụ: 10, 15, 20, 5, 8" autocomplete="off" aria-describedby="010-error">
+            <p class="input-hint">Ví dụ: N=5, chi phí [10,15,20,5,8] → tìm đường có tổng chi phí nhỏ nhất.</p>
+          </div>
+
+          <p id="010-error" class="input-error" role="alert" aria-live="polite"></p>
+          <div class="btn-row">
+            <button class="btn btn-primary" id="010-calc-btn" type="button">Tính toán</button>
+            <button class="btn btn-secondary" id="010-random-btn" type="button">🎲 Random</button>
+          </div>
+          <div class="btn-row" style="margin-top:12px">
+            <button class="btn btn-step" id="010-step-btn" type="button">▶ Bước tiếp theo</button>
+            <button class="btn btn-secondary" id="010-auto-btn" type="button">▶ Chạy tự động</button>
+            <button class="btn btn-secondary" id="010-reset-btn" type="button">↺ Đặt lại</button>
+          </div>
+        </div>
+
+        <div class="card" id="010-viz-card" hidden>
+          <h3 class="card-title">Cầu thang</h3>
+          <div class="staircase-viz" id="010-staircase-viz"></div>
+          <div class="dp-table-wrapper">
+            <h4 class="dp-table-title">Bảng DP</h4>
+            <div class="dp-table" id="010-dp-table"></div>
+          </div>
+          <div class="stats-row">
+            <p class="stat-item">Bậc hiện tại: <strong id="010-current-step">0</strong></p>
+            <p class="stat-item">dp[i]: <strong id="010-dp-val">0</strong></p>
+            <p class="stat-item">Phép tính: <strong id="010-ops">0</strong></p>
+          </div>
+        </div>
+
+        <div class="card result-card" id="010-result-card" hidden>
+          <h3 class="card-title">Kết quả</h3>
+          <p class="result-value" id="010-result-value"></p>
+          <p class="result-detail" id="010-result-detail"></p>
+        </div>
+
+        <div class="card steps-card" id="010-steps-card" hidden>
+          <h3 class="card-title">Quá trình DP</h3>
+          <ol class="steps-list" id="010-steps-list"></ol>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
