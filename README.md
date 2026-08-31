@@ -9,6 +9,7 @@ Harness biến VS Code Copilot Chat thành **Claude Code Extension**: tự độ
 ## Mục lục
 
 - [Nhanh — 30s](#nhanh--30s)
+- [Claude Code (export)](#claude-code-export)
 - [Sơ đồ /harness](#sơ-đồ-harness)
 - [Khả năng](#khả-năng)
 - [Tháo lắp & Preset](#tháo-lắp--preset)
@@ -49,7 +50,32 @@ node .github/harness/scripts/harness-manager.mjs preset apply api-minimal   # AP
 
 # Tạo mới từ template
 node .github/harness/scripts/harness-manager.mjs create instruction my-rule
+
+# Sinh assets cho Claude Code (.claude/ + CLAUDE.md) từ .github/
+node .github/harness/scripts/harness-manager.mjs export-claude
+node .github/harness/scripts/harness-manager.mjs export-claude --check   # dry-run cho CI
 ```
+
+---
+
+## Claude Code (export)
+
+`.github/` là **source of truth** cho cả Copilot lẫn Claude Code. Lệnh `export-claude` sinh **một chiều** `.github → .claude/` + `CLAUDE.md`:
+
+| Nguồn (`.github/`) | Đích Claude Code |
+|---|---|
+| `copilot-instructions.md` | `CLAUDE.md` (root) |
+| `agents/*.agent.md` | `.claude/agents/*.md` |
+| `prompts/*.prompt.md` | `.claude/commands/*.md` (`${input:...}` → `$ARGUMENTS`) |
+| `instructions/*.instructions.md` (`applyTo`) | `.claude/rules/*.md` (`paths:`; `"**"` → always-load) |
+| `skills/<name>/` | `.claude/skills/<name>/` (giữ nguyên `scripts/ data/ references/`) |
+| `hooks/hooks.json` | merge vào `.claude/settings.json` (schema nested) |
+
+- **Idempotent**: chạy lại không đổi gì nếu `.github/` không đổi; manifest orphan ở `.claude/harness-export.json`.
+- **Tool names** tự dịch Copilot → Claude (`get_errors`→IDE diagnostics, `manage_todo_list`→TodoWrite, `vscode_askQuestions`→AskUserQuestion, ...).
+- Chạy lại sau mỗi `enable`/`disable`/`create`/`preset apply`. **Commit** cả `.claude/` + `CLAUDE.md`.
+- File generated có marker `DO NOT EDIT` — sửa ở `.github/` rồi export lại.
+- Trong Claude Code: hooks từ `.claude/settings.json` cần **accept workspace trust** mới chạy.
 
 ---
 

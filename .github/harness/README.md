@@ -33,6 +33,10 @@ node .github/harness/scripts/harness-manager.mjs preset save my-preset
 
 # Sau khi clone repo
 node .github/harness/scripts/harness-manager.mjs sync
+
+# Sinh assets cho Claude Code (.claude/ + CLAUDE.md) — một chiều .github → .claude
+node .github/harness/scripts/harness-manager.mjs export-claude
+node .github/harness/scripts/harness-manager.mjs export-claude --check   # dry-run, exit 1 nếu lệch (CI)
 ```
 
 ## Cấu trúc
@@ -47,6 +51,9 @@ node .github/harness/scripts/harness-manager.mjs sync
 
 .github/skills/registry.json  # v1 compat (auto-sync từ harness registry)
 .github/*/ .disabled/         # nơi chứa đồ đã disable (không load)
+
+.claude/ + CLAUDE.md          # GENERATED bởi export-claude — DO NOT EDIT (có marker từng file)
+.claude/harness-export.json   # manifest file đã sinh + hook commands (phục vụ orphan cleanup)
 ```
 
 ## Presets sẵn

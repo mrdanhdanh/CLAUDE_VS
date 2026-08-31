@@ -44,16 +44,16 @@
       "enabled": true,
       "description": "UI design system toolkit for Senior UI Designer including design token generation, component documentation, responsive design calculations, and developer handoff tools. Use for creating design systems, maintaining visual consistency, and facilitating design-dev collaboration.",
       "file": "ui-design-system/SKILL.md",
-      "installedAt": "2026-08-29T15:13:36.596Z"
+      "installedAt": "2026-08-30T18:34:37.871Z"
     },
     "ui-ux-pro-max": {
       "source": "nextlevelbuilder/ui-ux-pro-max-skill",
       "path": ".claude/skills/ui-ux-pro-max",
       "ref": "main",
       "enabled": true,
-      "description": "UI/UX design intelligence for web, mobile, and desktop. This skill should be used when designing, building, reviewing, or fixing interfaces, including pages, components, design systems, accessibility, interaction, responsive layout, typography, color, charts, and stack-specific UI implementation. Searchable local data: 79 searchable styles (50 active), 192 product palettes and reasoning profiles, 74 font pairings, 119 UX guidelines, 105 icons, 17 GSAP presets, 25 chart types, and 22 stacks.",
+      "description": "UI/UX design intelligence for web, mobile, and desktop. This skill should be used when designing, building, reviewing, or fixing interfaces, including pages, components, design systems, accessibility, interaction, responsive layout, typography, color, charts, and stack-specific UI implementation. Se",
       "file": "ui-ux-pro-max/SKILL.md",
-      "installedAt": "2026-08-29T15:13:36.596Z"
+      "installedAt": "2026-08-30T18:35:09.724Z"
     },
     "tdd-gate": {
       "source": "local",
@@ -72,6 +72,14 @@
       "description": "Systematic debugging 4-phase — root cause first, no guessing. Use when bug, test failure, build failure, unexpected behavior, before proposing fixes. Enforces evidence gathering, pattern analysis, single hypothesis, TDD fix, 3-fix limit. Inspired by obra/superpowers systematic-debugging.",
       "file": "systematic-debugging/SKILL.md",
       "installedAt": "2026-08-31T00:00:00.000Z"
+    },
+    "auto-researcher": {
+      "source": "local",
+      "file": "auto-researcher/SKILL.md",
+      "enabled": true,
+      "description": "AAR Automated Researcher self-improving AI — search knowleged + library BM25, propose 3 methods, benchmark 30m, keep best. Use when harness needs auto-research, need to search knowleged/library, propose methods, benchmark, keep best, or user says AAR/auto-researcher/self-improving/Tier 2",
+      "installedAt": "2026-08-30T18:32:38.885Z",
+      "path": "skills/auto-researcher"
     }
   },
   "instructions": {

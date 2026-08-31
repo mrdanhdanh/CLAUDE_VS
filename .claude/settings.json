@@ -1,0 +1,38 @@
+{
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Edit|Write|MultiEdit|NotebookEdit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "echo [Harness] PostToolUse: check IDE diagnostics after edits",
+            "timeout": 5
+          },
+          {
+            "type": "command",
+            "command": "echo [Auto-Learn] Gợi ý: node .github/harness/scripts/auto-learn.mjs suggest \"<từ khóa task>\" --top 3 để tránh lặp bug cũ",
+            "timeout": 5
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "echo [Harness] Stop: ensure verify passed before kết thúc task",
+            "timeout": 5
+          },
+          {
+            "type": "command",
+            "command": "echo [Auto-Learn] Kiểm tra: node .github/harness/scripts/auto-learn.mjs status — nếu vừa fix bug thì propose KN mới",
+            "timeout": 5
+          }
+        ]
+      }
+    ]
+  }
+}

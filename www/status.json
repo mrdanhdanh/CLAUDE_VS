@@ -1,12 +1,12 @@
 {
-  "generatedAt": "2026-08-30T18:17:18.123Z",
+  "generatedAt": "2026-08-30T18:36:43.750Z",
   "generatedBy": "YUNIE",
   "version": 1,
   "counts": {
     "skills": {
-      "enabled": 8,
+      "enabled": 9,
       "disabled": 0,
-      "total": 8
+      "total": 9
     },
     "instructions": {
       "enabled": 10,
@@ -53,7 +53,7 @@
       },
       "ui-ux-pro-max": {
         "enabled": true,
-        "description": "UI/UX design intelligence for web, mobile, and desktop. This skill should be used when designing, building, reviewing, or fixing interfaces, including pages, components, design systems, accessibility, interaction, responsive layout, typography, color, charts, and stack-specific UI implementation. Searchable local data: 79 searchable styles (50 active), 192 product palettes and reasoning profiles, 74 font pairings, 119 UX guidelines, 105 icons, 17 GSAP presets, 25 chart types, and 22 stacks."
+        "description": "UI/UX design intelligence for web, mobile, and desktop. This skill should be used when designing, building, reviewing, or fixing interfaces, including pages, components, design systems, accessibility, interaction, responsive layout, typography, color, charts, and stack-specific UI implementation. Se"
       },
       "tdd-gate": {
         "enabled": true,
@@ -62,6 +62,10 @@
       "systematic-debugging": {
         "enabled": true,
         "description": "Systematic debugging 4-phase — root cause first, no guessing. Use when bug, test failure, build failure, unexpected behavior, before proposing fixes. Enforces evidence gathering, pattern analysis, single hypothesis, TDD fix, 3-fix limit. Inspired by obra/superpowers systematic-debugging."
+      },
+      "auto-researcher": {
+        "enabled": true,
+        "description": "AAR Automated Researcher self-improving AI — search knowleged + library BM25, propose 3 methods, benchmark 30m, keep best. Use when harness needs auto-research, need to search knowleged/library, propose methods, benchmark, keep best, or user says AAR/auto-researcher/self-improving/Tier 2"
       }
     },
     "instructions": {
@@ -192,6 +196,7 @@
     }
   ],
   "plans": [
+    "aar-harness",
     "auto-learn",
     "custom-registry",
     "focus-flow",
@@ -232,10 +237,10 @@
   "health": {
     "errors": 0,
     "status": "ok",
-    "lastCheck": "2026-08-30T18:17:18.124Z",
+    "lastCheck": "2026-08-30T18:36:43.751Z",
     "checks": [
       "get_errors: pass (0 errors)",
-      "registry: 10 instructions (10 total) - 8 skills - 8 agents - 7 prompts - 1 hook — all enabled",
+      "registry: 10 instructions (10 total) - 9 skills - 8 agents - 7 prompts - 1 hook — all enabled",
       "www: polished — responsive 375/768/1280, a11y, states, animation 150-300ms",
       "workflow: www/** -> Pages (upload-artifact path: www) — exists: true",
       "library: www/library/ (PDF/DOCX/TXT/MD, BM25 <100ms, tháo lắp) + mcp-server.mjs + export.json + library-rag instruction",
