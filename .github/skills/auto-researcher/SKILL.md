@@ -14,16 +14,56 @@ user-invocable: true
 - Cần propose 3 methods và benchmark để chọn best (Tier 2)
 - Muốn áp paper Anthropic vào hệ thống hiện tại
 
-## Workflow (5 bước — như paper)
+## Workflow (5 bước — AAR pattern nâng cao)
 
-1. **Suggest (knowleged.md):** `node auto-learn.mjs suggest "<task>" --top 3` — BM25-lite + IDF, reuse `docs/knowleged.md` (9 KN hiện tại)
-2. **Library Search:** `node www/library/search.mjs "<task>" --top_k 3` hoặc `mcp-server.mjs search_library` — BM25 local 303 chunks, <100ms
-3. **Propose 3 Methods (template-based, no LLM required):**
-   - **A — Minimal fix:** Áp **Cách phòng tránh** từ KN top1 (tránh lặp bug cũ)
-   - **B — Polish + a11y:** Theo `product-quality` (responsive 375/768/1280, contrast ≥4.5:1, states, animation 150-300ms)
-   - **C — Library-inspired:** Dùng snippet từ library hit (nếu có) hoặc alternative approach
-4. **Benchmark (30m loop stub):** `dotnet build + dotnet test + get_errors + a11y/responsive checklist` — phải check **HOW** not just **WHETHER** (học từ OpenAI HF incident 26/08/2026). Keep best, discard rest.
-5. **Report:** Sinh markdown tại `.agent/plans/aar-harness/report-<slug>.md` + stdout — có citation `bookName · chunk # · score`
+### Step 1: Suggest (knowleged.md)
+```bash
+node auto-learn.mjs suggest "<task>" --top 3  # BM25-lite + IDF, reuse docs/knowleged.md
+```
+
+### Step 2: Library Search
+```bash
+node www/library/search.mjs "<task>" --top_k 3  # BM25 local, <100ms
+# hoặc MCP: search_library({query: "<task>", top_k: 3, enabled_only: true})
+```
+
+### Step 3: Propose 3 Methods (template-based, no LLM required)
+- **A — Minimal fix:** Áp **Cách phòng tránh** từ KN top1 (tránh lặp bug cũ)
+- **B — Polish + a11y:** Theo `product-quality` (responsive 375/768/1280, contrast ≥4.5:1, states, animation 150-300ms)
+- **C — Library-inspired:** Dùng snippet từ library hit (nếu có) hoặc alternative approach
+
+### Step 4: Benchmark Loop (AAR-style — chặt chẽ)
+> Học từ Anthropic AAR paper: mỗi method phải **implement → benchmark → so sánh → keep best**
+
+```
+FOR each method A, B, C:
+  1. Implement minimal change (scope control — single fix)
+  2. Run benchmark suite:
+     - dotnet build + dotnet test (nếu .NET project)
+     - get_errors (0 errors required)
+     - responsive check 375/768/1280 (nếu UI)
+     - contrast ≥4.5:1 + a11y (nếu UI)
+     - animation: đo --angle trước/sau 500ms (nếu animation)
+  3. Score: pass rate + time + simplicity
+  4. Log result vào .agent/benchmarks/<task>-<method>.md
+
+COMPARE scores → Keep best method, discard rest
+Nếu tất cả fail → escalate, không force (học từ systematic-debugging 3-fix limit)
+```
+
+**Benchmark Checklist (học từ HF warning shot):**
+- [ ] `dotnet build` pass (không MSB3027 file lock — KN-008)
+- [ ] `dotnet test` pass
+- [ ] `get_errors` 0
+- [ ] Nếu UI: responsive 375/768/1280 không vỡ (KN-002/KN-004)
+- [ ] Nếu UI: contrast ≥4.5:1, keyboard, aria-label (KN-006)
+- [ ] Nếu animation: đo `--angle` bằng Playwright trước/sau 500ms (KN-003/KN-004)
+- [ ] Không reward hacking — grader check **HOW** (cách làm) không chỉ **WHETHER** (có pass không)
+
+### Step 5: Report + Learn
+- Sinh markdown tại `.agent/plans/aar-harness/report-<slug>.md`
+- Nếu method tốt → `auto-learn propose --bug <slug>` → cập nhật `docs/knowleged.md`
+- Citation: `bookName · chunk # · score` (nếu dùng library)
 
 ## CLI
 

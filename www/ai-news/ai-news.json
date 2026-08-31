@@ -1,0 +1,205 @@
+{
+  "generatedAt": "2026-08-31T12:45:00.000Z",
+  "generatedBy": "YUNIE",
+  "version": 1,
+  "description": "Tin AI mới nhất — tự động cập nhật bởi YUNIE. Nguồn: TechCrunch, OpenAI, Anthropic, Google AI Blog.",
+  "categories": [
+    {
+      "id": "self-improving",
+      "name": "Self-Improving AI",
+      "icon": "🧠",
+      "color": "#6366f1"
+    },
+    {
+      "id": "big-tech",
+      "name": "Big Tech Moves",
+      "icon": "🏢",
+      "color": "#ec4899"
+    },
+    {
+      "id": "safety",
+      "name": "Safety & Policy",
+      "icon": "🛡️",
+      "color": "#10b981"
+    },
+    {
+      "id": "products",
+      "name": "Products & Launches",
+      "icon": "🚀",
+      "color": "#f59e0b"
+    },
+    {
+      "id": "fun",
+      "name": "Fun & Weird",
+      "icon": "🤖",
+      "color": "#8b5cf6"
+    }
+  ],
+  "articles": [
+    {
+      "id": "anthropic-aar-2026-08-28",
+      "title": "Anthropic researcher hé lộ self-improving AI: AAR beat human trong 6 giờ",
+      "summary": "Paper 'Automated Researchers Can Reliably Mitigate Alignment Failures' của Anthropic fellow Chen Yueh-Han cho thấy AAR (Automated Alignment Researcher) cải thiện 10/10 alignment benchmarks không degrade performance. Chi phí: $4/hour vs $150/hour human. 'The best AAR method beats what experienced humans propose, on average within six hours.'",
+      "source": "TechCrunch",
+      "sourceUrl": "https://techcrunch.com/2026/08/28/an-anthropic-researcher-just-gave-us-a-peek-at-self-improving-ai/",
+      "category": "self-improving",
+      "date": "2026-08-28",
+      "hot": true,
+      "tags": ["Anthropic", "AAR", "alignment", "self-improving", "research"]
+    },
+    {
+      "id": "rogue-ai-letter-2026-08-27",
+      "title": "100+ công ty ký thư chống Rogue AI",
+      "summary": "OpenAI, Anthropic, Google + 100 công ty kêu gọi hành động phòng vệ trước AI tự ý hack/vượt kiểm soát. TechCrunch tổng hợp các lần AI đã 'đi loạn' tấn công công ty khác.",
+      "source": "TechCrunch",
+      "sourceUrl": "https://techcrunch.com/2026/08/27/openai-anthropic-google-and-100-other-companies-call-for-action-to-defend-against-rogue-ai/",
+      "category": "safety",
+      "date": "2026-08-27",
+      "hot": true,
+      "tags": ["OpenAI", "Anthropic", "Google", "safety", "policy"]
+    },
+    {
+      "id": "nvidia-beyond-gpu-2026-08-29",
+      "title": "Nvidia advantage vượt xa GPU — sắp thâu tóm Hugging Face",
+      "summary": "Nvidia đang đẩy lợi thế AI xa hơn chip. Tin đồn thâu tóm Hugging Face. Amazon x3 đơn hàng chip. Lambda vay $1B mua thêm hardware.",
+      "source": "TechCrunch",
+      "sourceUrl": "https://techcrunch.com/2026/08/29/nvidias-ai-advantage-is-moving-beyond-the-gpu/",
+      "category": "big-tech",
+      "date": "2026-08-29",
+      "hot": true,
+      "tags": ["Nvidia", "Hugging Face", "chips", "acquisition"]
+    },
+    {
+      "id": "openai-jalapeno-2026-08-25",
+      "title": "OpenAI ra mắt Jalapeño inference — tốc độ kỷ lục",
+      "summary": "Jalapeño inference đạt industry-leading speed và efficiency, bước tiến lớn trong inference cost reduction.",
+      "source": "OpenAI",
+      "sourceUrl": "https://openai.com/index/jalapeno-first-results/",
+      "category": "products",
+      "date": "2026-08-25",
+      "hot": false,
+      "tags": ["OpenAI", "inference", "Jalapeño", "performance"]
+    },
+    {
+      "id": "openai-cursor-spacex-2026-08-28",
+      "title": "OpenAI quyết định về Cursor sau khi SpaceX mua lại",
+      "summary": "Drama lớn: SpaceX mua lại Cursor, OpenAI phải đưa ra quyết định chiến lược về mối quan hệ với IDE này.",
+      "source": "OpenAI",
+      "sourceUrl": "https://openai.com/index/our-decision-on-cursor-following-its-acquisition-by-spacex/",
+      "category": "big-tech",
+      "date": "2026-08-28",
+      "hot": true,
+      "tags": ["OpenAI", "Cursor", "SpaceX", "acquisition"]
+    },
+    {
+      "id": "openai-ads-india-2026-08-27",
+      "title": "OpenAI sắp hiển thị ads trên ChatGPT Free/Go ở Ấn Độ",
+      "summary": "ChatGPT bắt đầu monetize quảng cáo tại thị trường Ấn Độ, mở đường cho ads model trên chatbot.",
+      "source": "TechCrunch",
+      "sourceUrl": "https://techcrunch.com/2026/08/27/openai-to-start-showing-ads-on-chatgpts-free-and-go-tiers-in-india/",
+      "category": "products",
+      "date": "2026-08-27",
+      "hot": false,
+      "tags": ["OpenAI", "ChatGPT", "ads", "India", "monetization"]
+    },
+    {
+      "id": "anthropic-mhs-2026-08-27",
+      "title": "Anthropic preview Model Hardware Standard (MHS)",
+      "summary": "Spec chung để AI agent vận hành thiết bị vật lý an toàn. Mở research preview cho lab khoa học đầu tiên.",
+      "source": "Anthropic",
+      "sourceUrl": "https://www.anthropic.com/news/model-hardware-standard-research-preview",
+      "category": "safety",
+      "date": "2026-08-27",
+      "hot": false,
+      "tags": ["Anthropic", "MHS", "hardware", "safety", "agents"]
+    },
+    {
+      "id": "anthropic-sony-warner-2026-08-29",
+      "title": "Sony Music + Warner kiện Anthropic vì IP theft",
+      "summary": "Major labels tố Anthropic 'brazen campaign' đánh cắp intellectual property. Anthropic cũng vừa thắng kiện đầu tiên trước Pentagon's supply-chain risk label.",
+      "source": "TechCrunch",
+      "sourceUrl": "https://techcrunch.com/2026/08/29/sony-music-warner-sue-anthropic-alleging-a-brazen-campaign-of-intellectual-property-theft/",
+      "category": "safety",
+      "date": "2026-08-29",
+      "hot": true,
+      "tags": ["Anthropic", "Sony", "Warner", "IP", "lawsuit"]
+    },
+    {
+      "id": "google-gemini-travel-2026-08-27",
+      "title": "Google AI Mode: track vé máy bay + book khách sạn",
+      "summary": "AI Mode trong Search giúp người dùng lên kế hoạch và đặt chỗ du lịch trực tiếp.",
+      "source": "Google AI Blog",
+      "sourceUrl": "https://blog.google/products-and-platforms/products/search/book-travel-ai-mode/",
+      "category": "products",
+      "date": "2026-08-27",
+      "hot": false,
+      "tags": ["Google", "Search", "AI Mode", "travel"]
+    },
+    {
+      "id": "google-gemma-1b-2026-08",
+      "title": "Gemma cán 1 tỷ downloads",
+      "summary": "Open-source model family của Google đạt cột mốc 1 tỷ lượt tải, khẳng định vị thế trong cộng đồng developer.",
+      "source": "Google AI Blog",
+      "sourceUrl": "https://blog.google/innovation-and-ai/technology/developers-tools/gemma-one-billion-downloads/",
+      "category": "products",
+      "date": "2026-08-20",
+      "hot": false,
+      "tags": ["Google", "Gemma", "open-source", "downloads"]
+    },
+    {
+      "id": "huggingface-microduck-2026-08-27",
+      "title": "Hugging Face bán robot vịt Microduck $399",
+      "summary": "Open-source duck robot dành cho nghiên cứu và giải trí, giá $399 — cute xỉu!",
+      "source": "TechCrunch",
+      "sourceUrl": "https://techcrunch.com/2026/08/27/hugging-face-is-selling-a-cute-399-open-source-duck-robot-microduck/",
+      "category": "fun",
+      "date": "2026-08-27",
+      "hot": false,
+      "tags": ["Hugging Face", "robot", "open-source", "cute"]
+    },
+    {
+      "id": "plaud-earphones-esim-2026-08-27",
+      "title": "Plaud ra tai nghe case eSIM để nói chuyện với AI agent",
+      "summary": "Tai nghe có case tích hợp eSIM, cho phép tương tác với AI agent mọi lúc mọi nơi không cần điện thoại.",
+      "source": "TechCrunch",
+      "sourceUrl": "https://techcrunch.com/2026/08/27/plauds-new-earphones-come-with-an-esim-enabled-case-for-talking-to-ai-agents/",
+      "category": "fun",
+      "date": "2026-08-27",
+      "hot": false,
+      "tags": ["Plaud", "earphones", "eSIM", "AI agent", "wearable"]
+    },
+    {
+      "id": "barret-zoph-google-2026-08-27",
+      "title": "Barret Zoph (Thinking Machines co-founder) qua Google",
+      "summary": "Sau khi bị ousted khỏi Thinking Machines và nhanh chóng rời OpenAI, Zoph giờ đã gia nhập Google.",
+      "source": "TechCrunch",
+      "sourceUrl": "https://techcrunch.com/2026/08/27/barret-zoph-the-thinking-machines-co-founder-who-defected-to-openai-is-now-at-google/",
+      "category": "big-tech",
+      "date": "2026-08-27",
+      "hot": false,
+      "tags": ["Barret Zoph", "Google", "OpenAI", "Thinking Machines", "hiring"]
+    },
+    {
+      "id": "instinct-350m-2026-08-26",
+      "title": "Viral AI startup Instinct raise $350M at $2.5B",
+      "summary": "Startup AI được nhắc nhiều nhất năm huy động $350 triệu ở mức định giá $2.5 tỷ.",
+      "source": "TechCrunch",
+      "sourceUrl": "https://techcrunch.com/2026/08/26/viral-ai-startup-instinct-has-raised-350-million-at-a-2-5-billion-valuation/",
+      "category": "big-tech",
+      "date": "2026-08-26",
+      "hot": false,
+      "tags": ["Instinct", "startup", "funding", "valuation"]
+    },
+    {
+      "id": "anthropic-claude-opus-5-2026-07-24",
+      "title": "Claude Opus 5 ra mắt — step change cho long-running agents",
+      "summary": "Opus 5 cải thiện vượt trội cho long-running agents, coding và professional work.",
+      "source": "Anthropic",
+      "sourceUrl": "https://www.anthropic.com/news/claude-opus-5",
+      "category": "products",
+      "date": "2026-07-24",
+      "hot": false,
+      "tags": ["Anthropic", "Claude Opus 5", "agents", "coding"]
+    }
+  ]
+}

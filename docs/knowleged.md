@@ -30,6 +30,7 @@
 | KN-005 | 2026-08-30 | Bug Blindness — dev không thấy bug do workaround vô thức + fan bias (Dan Luu) | Habitual mitigations (tự bù lỗi không nhận ra) + quality blindness + fan bias → dev nghĩ sản phẩm xịn dù user không dùng được | Chữa mù bug: fresh eyes, test như user mới, chỉ ra bug liên tục, không workaround vô thức, dogfooding có ý thức | `process` `quality` `ux` `perf` `a11y` |
 | KN-007 | 2026-08-30 | Thiếu hệ thống tự học hỏi tự động — phải suggest/log/propose tay, dễ quên, lặp bug cũ | Không có script BM25-lite, không có instruction enforce, không có hooks reminder → dev quên check KN trước khi code, quên log khi lỗi, quên propose sau fix | Mỗi task phải auto suggest KN (BM25-lite + IDF), mỗi lỗi auto log draft, mỗi fix auto propose KN — không để trôi | `process` `knowledge` `automation` `dx` |
 | KN-008 | 2026-08-30 | dotnet build fail MSB3027/MSB3021 do file lock — N5Blazor.exe đang chạy (dotnet run chưa tắt) | dotnet run giữ handle N5Blazor.exe (PID 28232, LISTENING 5251) → build không copy được apphost.exe → retry 10 lần (17s) rồi fail | Trước khi build/test luôn tắt dotnet run đang giữ file — nếu gặp MSB3027 thì Stop-Process PID trên 5251 rồi build lại | `build` `process` `dx` `dotnet` |
+| KN-010 | 2026-08-31 | AAR pattern từ Anthropic — propose 3 methods, benchmark, keep best, $4/h vs $150/h human | Thiếu benchmark loop chặt chẽ — fix ngẫu hiên thay vì so sánh có hệ thống → không biến nào tốt nhất, reward hacking khi chỉ check WHETHER không check HOW | Áp dụng AAR pattern: propose 3 → implement → benchmark → keep best → log KN. 3-fix limit vẫn áp dụng. Check HOW not WHETHER | `process` `self-improving` `benchmark` `aar` `automation` |
 
 > Dòng ví dụ trên sẽ bị thay khi có bug thật đầu tiên — giữ format.
 
@@ -219,6 +220,32 @@
 - **Tags:** `config` `api` `build` `dx`
 - **Người ghi:** YUNIE / harness
 
+### KN-010 — AAR pattern từ Anthropic — propose 3 methods, benchmark, keep best
+
+- **Ngày:** 2026-08-31
+- **Bug report:** _(pattern, không phải bug — feature improvement cho auto-researcher + systematic-debugging)_
+- **Severity:** major
+- **Triệu chứng:** Trước đây khi có nhiều cách fix/solve, dev chọn ngẫu hiên hoặc theo cảm tính → không biết cách nào tốt nhất, dễ reward hacking (chỉ check WHETHER pass không check HOW).
+- **Nguyên nhân gốc (5 Whys):**
+  - Why1: Dev chọn fix ngẫu hiên → vì không có benchmark loop chặt chẽ.
+  - Why2: Không có benchmark loop → vì thiếu pattern "propose 3 → benchmark → keep best".
+  - Why3: Thiếu pattern → vì chưa có skill auto-researcher AAR-style.
+  - Why4: Chưa có auto-researcher → vì chưa tích hợp paper Anthropic AAR vào Harness.
+  - Why5 (Root): Thiếu **hệ thống tự học hỏi có benchmark** — auto-learn suggest/log/propose chưa đủ, cần thêm benchmark loop.
+- **Cách sửa:** Áp dụng AAR pattern (Anthropic paper 28/08/2026):
+  - Nâng cấp `auto-researcher` skill: thêm benchmark loop (propose 3 → implement → benchmark → keep best).
+  - Nâng cấp `systematic-debugging` skill: thêm AAR-style fix benchmark (3 cách fix → benchmark → keep best).
+  - Tạo demo page `www/aar.html` so sánh AAR vs Harness v2.
+  - Chi phí: $0 (local scripts) thay vì $4/hour (AAR API inference).
+- **Cách phòng tránh:**
+  - Khi có nhiều cách fix/solve (≥2): luôn áp dụng AAR pattern — propose 3 → benchmark → keep best.
+  - 3-fix limit vẫn áp dụng (học từ systematic-debugging): nếu cả 3 cách fail → STOP, question architecture.
+  - Check **HOW** (cách làm) không chỉ **WHETHER** (pass/fail) — tránh reward hacking.
+  - Log benchmark results vào `.agent/benchmarks/<slug>-benchmark.md`.
+  - `auto-researcher.mjs --task "xxx" --report` để chạy full AAR loop.
+- **Tags:** `process` `self-improving` `benchmark` `aar` `automation`
+- **Người ghi:** YUNIE / auto-researcher
+
 <!-- Thêm bài học mới theo template dưới — copy block này -->
 
 <!--
@@ -247,6 +274,8 @@
 - ❌ Không test responsive 375/768/1280 trước khi commit `www/` (KN-002).
 - ❌ Hardcode màu/spacing không dùng CSS variables (KN-002).
 - ❌ Detect `@property` bằng `CSS.supports('syntax: ...')` (luôn false) → ép JS fallback sai (KN-003).
+- ❌ Chọn fix ngẫu hiên khi có nhiều cách → áp dụng AAR pattern: propose 3 → benchmark → keep best (KN-010).
+- ❌ Check WHETHER (pass/fail) mà không check HOW (cách làm) → reward hacking (KN-010).
 - ❌ Animate custom property qua biến lồng `var()` chứa `var()` → một số engine không re-resolve (KN-003).
 - ❌ Gắn fallback class per-element rồi để UI reset `className` → mất animation (KN-003).
 - ❌ Tự workaround bug thành thói quen vô thức rồi quên đó là bug — habitual mitigations (KN-005).

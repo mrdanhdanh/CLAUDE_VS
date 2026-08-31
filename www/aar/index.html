@@ -1,0 +1,308 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AAR vs Harness v2 — YUNIE STATUS</title>
+  <meta name="description" content="So sánh Anthropic AAR (Automated Alignment Researcher) với Harness v2 — cách tích hợp pattern self-improving vào product builder." />
+  <meta name="color-scheme" content="light" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../styles.css" />
+  <link rel="stylesheet" href="./aar.css" />
+</head>
+<body>
+  <noscript><div style="background:#fef3c7;border:1px solid #fde68a;color:#92400e;padding:12px 16px;text-align:center;font:500 13px Inter,system-ui,sans-serif">⚠️ Trang này cần JavaScript để tải dữ liệu.</div></noscript>
+  <a class="skip-link" href="#main">Bỏ qua đến nội dung chính</a>
+
+  <header class="header" role="banner">
+    <div class="container header-inner">
+      <a class="brand" href="../index.html" aria-label="Quay về YUNIE STATUS">
+        <div class="brand-mark" aria-hidden="true">Y</div>
+        <div class="brand-text">
+          <strong>AAR vs HARNESS <span class="badge badge-live"><i aria-hidden="true"></i> So sánh</span></strong>
+          <span>Anthropic AAR · Harness v2 · Tích hợp self-improving</span>
+        </div>
+      </a>
+      <nav class="header-actions" aria-label="Thao tác nhanh">
+        <a class="btn btn-ghost btn-icon" href="./index.html" aria-label="Quay về trang chủ">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+          <span class="btn-text-full">Trang chủ</span>
+        </a>
+        <a class="btn btn-ghost btn-icon" href="../ai-news/index.html" aria-label="Xem AI News">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 20H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v1m2 13a2 2 0 0 1-2-2V7m2 13a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-2"/><path d="M7 8h6"/><path d="M7 12h6"/><path d="M7 16h6"/></svg>
+          <span class="btn-text-full">AI News</span>
+        </a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main" class="container" role="main">
+    <!-- Hero -->
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="hero-grid">
+        <div class="hero-card">
+          <div class="eyebrow">🧠 AAR · 🔧 Harness v2 · ✨ Tích hợp</div>
+          <h1 id="hero-title">AAR vs Harness v2 — <span style="color:var(--color-primary)">Self-Improving AI</span></h1>
+          <p>Anthropic vừa công bố paper <em>"Automated Researchers Can Reliably Mitigate Alignment Failures"</em> (28/08/2026). Harness v2 đã có sẵn pattern tương tự — đây là cách tích hợp chúng.</p>
+          <div class="hero-meta">
+            <span class="meta-pill">📅 31/08/2026</span>
+            <span class="meta-pill">🧠 AAR paper: 28/08/2026</span>
+            <span class="meta-pill">💰 $4/h vs $150/h</span>
+            <span class="meta-pill">⏱️ 6h thắng human</span>
+          </div>
+        </div>
+        <div class="hero-side">
+          <div class="mini-card">
+            <div class="mini-card-icon">🧠</div>
+            <div>
+              <h3>AAR (Anthropic)</h3>
+              <p>Automated Alignment Researcher — AI tự search literature, propose method, train 30m, iterate. Cải thiện 10/10 alignment benchmarks.</p>
+            </div>
+          </div>
+          <div class="mini-card">
+            <div class="mini-card-icon">🔧</div>
+            <div>
+              <h3>Harness v2 (mình)</h3>
+              <p>Product builder — Explore → Clarify → PRD → Design → Plan → Implement → Polish → Verify. Tự học qua auto-learn + auto-researcher.</p>
+            </div>
+          </div>
+          <div class="mini-card mini-card-row">
+            <div>
+              <h3>Điểm chạm</h3>
+              <p>Search → Propose → Benchmark → Keep best → Learn</p>
+            </div>
+            <span class="tag tag-accent">Pattern match</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- So sánh bảng -->
+    <section class="section" aria-labelledby="compare-title">
+      <div class="section-head">
+        <div>
+          <h2 id="compare-title">📊 So sánh trực tiếp</h2>
+          <p>AAR (research) vs Harness v2 (product) — cùng pattern, khác mục đích</p>
+        </div>
+      </div>
+      <div class="compare-table-wrap">
+        <table class="compare-table" role="table" aria-label="So sánh AAR vs Harness v2">
+          <thead>
+            <tr>
+              <th scope="col">Khía cạnh</th>
+              <th scope="col">🧠 AAR (Anthropic)</th>
+              <th scope="col">🔧 Harness v2 (mình)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th>Mục đích</th>
+              <td>Cải thiện alignment của model</td>
+              <td>Build product từ ý tưởng</td>
+            </tr>
+            <tr>
+              <th>Pipeline</th>
+              <td>Search → Propose → Train 30m → Iterate</td>
+              <td>Explore → Clarify → PRD → Design → Plan → Implement → Polish → Verify</td>
+            </tr>
+            <tr>
+              <th>Benchmark</th>
+              <td>10 alignment benchmarks</td>
+              <td>Product quality (responsive, a11y, states, animation)</td>
+            </tr>
+            <tr>
+              <th>Chi phí</th>
+              <td>$4/hour (API inference)</td>
+              <td>$0 (local scripts, không cần API)</td>
+            </tr>
+            <tr>
+              <th>Đầu ra</th>
+              <td>Model alignment tốt hơn</td>
+              <td>Sản phẩm web hoàn chỉnh</td>
+            </tr>
+            <tr>
+              <th>Tự học</th>
+              <td>Iterate trên literature</td>
+              <td>auto-learn (KN, bugs, propose) + auto-researcher</td>
+            </tr>
+            <tr>
+              <th>Compute</th>
+              <td>Cần GPU cluster train 30m/benchmark</td>
+              <td>Laptop là đủ (Node scripts)</td>
+            </tr>
+            <tr>
+              <th>Code public</th>
+              <td>Chưa (paper only)</td>
+              <td>Có — auto-learn.mjs + auto-researcher.mjs + generate-status.mjs</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Pattern mapping -->
+    <section class="section" aria-labelledby="pattern-title">
+      <div class="section-head">
+        <div>
+          <h2 id="pattern-title">🔄 Pattern Mapping</h2>
+          <p>AAR iterate ↔ Harness loop — cùng DNA, khác ngữ cảnh</p>
+        </div>
+      </div>
+      <div class="pattern-grid">
+        <div class="pattern-card">
+          <div class="pattern-num">1</div>
+          <h3>Search Literature</h3>
+          <div class="pattern-row">
+            <span class="pattern-aar">AAR: search papers</span>
+            <span class="pattern-arrow">→</span>
+            <span class="pattern-harness">auto-learn suggest + library search</span>
+          </div>
+        </div>
+        <div class="pattern-card">
+          <div class="pattern-num">2</div>
+          <h3>Propose Method</h3>
+          <div class="pattern-row">
+            <span class="pattern-aar">AAR: propose training method</span>
+            <span class="pattern-arrow">→</span>
+            <span class="pattern-harness">auto-researcher: propose 3 methods</span>
+          </div>
+        </div>
+        <div class="pattern-card">
+          <div class="pattern-num">3</div>
+          <h3>Train / Implement</h3>
+          <div class="pattern-row">
+            <span class="pattern-aar">AAR: train model 30m</span>
+            <span class="pattern-arrow">→</span>
+            <span class="pattern-harness">implement: code theo plan</span>
+          </div>
+        </div>
+        <div class="pattern-card">
+          <div class="pattern-num">4</div>
+          <h3>Benchmark</h3>
+          <div class="pattern-row">
+            <span class="pattern-aar">AAR: benchmark alignment</span>
+            <span class="pattern-arrow">→</span>
+            <span class="pattern-harness">verify: build/test/lint + visual</span>
+          </div>
+        </div>
+        <div class="pattern-card">
+          <div class="pattern-num">5</div>
+          <h3>Keep / Discard</h3>
+          <div class="pattern-row">
+            <span class="pattern-aar">AAR: keep best method</span>
+            <span class="pattern-arrow">→</span>
+            <span class="pattern-harness">learn: ghi KN, log bug, propose</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Tích hợp -->
+    <section class="section" aria-labelledby="integrate-title">
+      <div class="section-head">
+        <div>
+          <h2 id="integrate-title">🚀 Tích hợp AAR vào Harness v2</h2>
+          <p>4 option đã thực hiện — nâng cấp hệ thống theo pattern AAR</p>
+        </div>
+      </div>
+      <div class="integrate-grid">
+        <div class="integrate-card">
+          <div class="integrate-icon">1️⃣</div>
+          <h3>auto-researcher nâng cao</h3>
+          <p>Thêm AAR-style benchmark loop: propose 3 → benchmark → keep best. Chi phí $0 thay vì $4/h.</p>
+          <span class="tag tag-on">✅ Done</span>
+        </div>
+        <div class="integrate-card">
+          <div class="integrate-icon">2️⃣</div>
+          <h3>systematic-debugging AAR loop</h3>
+          <p>Khi có nhiều cách fix: liệt kê 3 → implement → benchmark → keep best. 3-fix limit vẫn áp dụng.</p>
+          <span class="tag tag-on">✅ Done</span>
+        </div>
+        <div class="integrate-card">
+          <div class="integrate-icon">3️⃣</div>
+          <h3>Demo page (trang này)</h3>
+          <p>So sánh AAR vs Harness v2 + pattern mapping + integration guide. Deploy lên GitHub Pages.</p>
+          <span class="tag tag-on">✅ Done</span>
+        </div>
+        <div class="integrate-card">
+          <div class="integrate-icon">4️⃣</div>
+          <h3>KN-009 AAR pattern</h3>
+          <p>Bài học mới trong docs/knowleged.md: pattern AAR + cách áp dụng vào Harness v2.</p>
+          <span class="tag tag-on">✅ Done</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Limitations -->
+    <section class="section" aria-labelledby="limits-title">
+      <div class="section-head">
+        <div>
+          <h2 id="limits-title">⚠️ Giới hạn</h2>
+          <p>AAR KHÔNG THỂ tích hợp trực tiếp — chỉ lấy pattern</p>
+        </div>
+      </div>
+      <div class="limits-grid">
+        <div class="limit-card">
+          <h3>🔬 AAR là research tool</h3>
+          <p>Train model, benchmark alignment. Harness build web apps — không train model.</p>
+        </div>
+        <div class="limit-card">
+          <h3>⚡ AAR cần compute</h3>
+          <p>Train model 30 phút/benchmark. Mình chỉ có laptop, không có GPU cluster.</p>
+        </div>
+        <div class="limit-card">
+          <h3>📦 AAR chưa public code</h3>
+          <p>Chỉ có paper nghiên cứu, không có implementation để import.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Sources -->
+    <section class="section" aria-labelledby="sources-title">
+      <div class="section-head">
+        <div>
+          <h2 id="sources-title">📎 Nguồn</h2>
+        </div>
+      </div>
+      <div class="sources-list">
+        <a class="source-link" href="https://techcrunch.com/2026/08/28/an-anthropic-researcher-just-gave-us-a-peek-at-self-improving-ai/" target="_blank" rel="noopener">
+          <span class="source-icon">📰</span>
+          <span><strong>TechCrunch</strong> — An Anthropic researcher just gave us a peek at self-improving AI (28/08/2026)</span>
+        </a>
+        <a class="source-link" href="https://www.anthropic.com/research/automated-researchers-mitigate-alignment-failures" target="_blank" rel="noopener">
+          <span class="source-icon">🧠</span>
+          <span><strong>Anthropic Paper</strong> — Automated Researchers Can Reliably Mitigate Alignment Failures (Chen Yueh-Han, 2026)</span>
+        </a>
+        <a class="source-link" href="https://openai.com/index/hugging-face-incident-and-the-road-ahead/" target="_blank" rel="noopener">
+          <span class="source-icon">⚠️</span>
+          <span><strong>OpenAI</strong> — The Hugging Face incident and the road ahead (26/08/2026) — warning shot</span>
+        </a>
+        <a class="source-link" href="https://danluu.com/bug-blind/" target="_blank" rel="noopener">
+          <span class="source-icon">👁️</span>
+          <span><strong>Dan Luu</strong> — Bug Blindness (tham chiếu KN-005)</span>
+        </a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer" role="contentinfo">
+    <div class="container footer-inner">
+      <div>
+        <strong>YUNIE</strong> — Your Unified Navigator for Intelligent Execution
+        <br />
+        <span class="muted small">Harness v2 · Process &gt; Model · Trực 24/7</span>
+      </div>
+      <div class="footer-links">
+        <a href="./index.html">Trang chủ</a>
+        <a href="./ai-news.html">AI News</a>
+        <a href="./status.json">status.json</a>
+      </div>
+    </div>
+  </footer>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <script src="./aar.js"></script>
+</body>
+</html>

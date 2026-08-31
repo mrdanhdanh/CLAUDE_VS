@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AI News — YUNIE STATUS</title>
+  <meta name="description" content="Tin AI mới nhất được tổng hợp bởi YUNIE. Self-improving AI, Big Tech moves, Safety & Policy, Products, Fun & Weird." />
+  <meta name="color-scheme" content="light" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../styles.css" />
+  <link rel="stylesheet" href="./ai-news.css" />
+</head>
+<body>
+  <noscript><div style="background:#fef3c7;border:1px solid #fde68a;color:#92400e;padding:12px 16px;text-align:center;font:500 13px Inter,system-ui,sans-serif">⚠️ Trang này cần JavaScript để tải <code>ai-news.json</code>. Hãy bật JavaScript hoặc chạy <code>npx serve www</code> rồi mở <code>http://localhost:3000/ai-news.html</code>.</div></noscript>
+  <a class="skip-link" href="#main">Bỏ qua đến nội dung chính</a>
+
+  <header class="header" role="banner">
+    <div class="container header-inner">
+      <a class="brand" href="../index.html" aria-label="Quay về YUNIE STATUS">
+        <div class="brand-mark" aria-hidden="true" title="YUNIE = Your Unified Navigator for Intelligent Execution">Y</div>
+        <div class="brand-text">
+          <strong>AI NEWS <span class="badge badge-live" title="Dữ liệu trực tiếp từ ai-news.json"><i aria-hidden="true"></i> Trực tiếp</span></strong>
+          <span title="Tin AI mới nhất · Tổng hợp bởi YUNIE">Harness v2 · YUNIE · Process &gt; Model</span>
+        </div>
+      </a>
+      <nav class="header-actions" aria-label="Thao tác nhanh">
+        <a class="btn btn-ghost btn-icon" href="./index.html" aria-label="Quay về trang chủ">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+          <span class="btn-text-full">Trang chủ</span>
+        </a>
+        <button class="btn btn-ghost btn-icon" id="btnRefresh" type="button" aria-label="Làm mới dữ liệu">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a9 9 0 1 1-2.64-6.36"/><path d="M21 3v6h-6"/></svg>
+          <span class="btn-text-full">Làm mới</span>
+        </button>
+        <a class="btn btn-ghost btn-icon" href="./ai-news.json" target="_blank" rel="noopener" aria-label="Mở tệp ai-news.json">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M10 13H8"/><path d="M16 17H8"/><path d="M13 13h3"/></svg>
+          <span class="btn-text-full">JSON</span>
+        </a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main" class="container" role="main">
+    <!-- Hero -->
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="hero-grid">
+        <div class="hero-card">
+          <div class="eyebrow">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2l3 7h7l-5.5 4 2 7L12 16l-6.5 4 2-7L2 9h7z"/></svg>
+            AI NEWS · YUNIE
+          </div>
+          <h1 id="hero-title">Tin AI <span style="color:var(--color-primary)">mới nhất</span></h1>
+          <p>Tổng hợp tin tức AI từ TechCrunch, OpenAI, Anthropic, Google AI Blog. Được cập nhật bởi <span class="kbd">YUNIE</span> — mỗi lần sếp gọi <code>yunie tìm tin AI</code> là mình làm mới <span class="kbd">ai-news.json</span>.</p>
+          <div class="hero-meta" id="heroMeta" aria-label="Thông tin cập nhật">
+            <span class="meta-pill">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>
+              Cập nhật <strong id="metaGenerated" style="font-weight:600;margin-left:4px">—</strong>
+            </span>
+            <span class="meta-pill">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8z"/><path d="M4 20a8 8 0 0 1 16 0"/></svg>
+              Tổng hợp bởi <strong id="metaBy" style="font-weight:600;margin-left:4px">YUNIE</strong>
+            </span>
+            <span class="meta-pill">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M10 13H8"/><path d="M16 17H8"/><path d="M13 13h3"/></svg>
+              <span id="metaCount">0 bài</span>
+            </span>
+          </div>
+        </div>
+        <div class="hero-side" aria-label="Thông tin bổ sung">
+          <div class="mini-card">
+            <div class="mini-card-icon" aria-hidden="true">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M10 13H8"/><path d="M16 17H8"/><path d="M13 13h3"/></svg>
+            </div>
+            <div>
+              <h3>Dữ liệu từ ai-news.json</h3>
+              <p>Trang này fetch <span class="kbd">./ai-news.json</span> để render. YUNIE cập nhật JSON mỗi lần sếp yêu cầu "tìm tin AI".</p>
+            </div>
+          </div>
+          <div class="mini-card">
+            <div class="mini-card-icon" aria-hidden="true">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+            </div>
+            <div>
+              <h3>GỌI YUNIE cập nhật tin</h3>
+              <p><span class="kbd">YUNIE ơi, tìm tin AI mới</span> — mình sẽ fetch web, tổng hợp, rồi regenerate <span class="kbd">ai-news.json</span>.</p>
+            </div>
+          </div>
+          <div class="mini-card mini-card-row">
+            <div>
+              <h3>5 chuyên mục</h3>
+              <p>Self-Improving · Big Tech · Safety · Products · Fun</p>
+            </div>
+            <span class="tag tag-accent" aria-label="Nguồn">4 nguồn</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Filter -->
+    <section class="section" aria-label="Bộ lọc chuyên mục">
+      <div class="filter-bar" id="filterBar" role="tablist" aria-label="Lọc theo chuyên mục">
+        <button class="filter-chip active" data-filter="all" role="tab" aria-selected="true">
+          <span>Tất cả</span>
+        </button>
+      </div>
+    </section>
+
+    <!-- Hot News -->
+    <section class="section" aria-labelledby="hot-title" id="hotSection">
+      <div class="section-head">
+        <div>
+          <h2 id="hot-title">🔥 Tin nổi bật</h2>
+          <p id="hotSub">Bài được đánh dấu hot — đáng đọc nhất tuần</p>
+        </div>
+      </div>
+      <div class="news-grid" id="hotGrid">
+        <div class="empty-state">
+          <div class="empty-icon">📰</div>
+          <p>Đang tải tin AI…</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- All News -->
+    <section class="section" aria-labelledby="all-title" id="allSection">
+      <div class="section-head">
+        <div>
+          <h2 id="all-title">📰 Tất cả tin</h2>
+          <p id="allSub">Danh sách đầy đủ — mới nhất lên đầu</p>
+        </div>
+      </div>
+      <div class="news-grid" id="allGrid">
+        <div class="empty-state">
+          <div class="empty-icon">📰</div>
+          <p>Đang tải tin AI…</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer" role="contentinfo">
+    <div class="container footer-inner">
+      <div>
+        <strong>YUNIE</strong> — Your Unified Navigator for Intelligent Execution
+        <br />
+        <span class="muted small">Harness v2 · Process &gt; Model · Trực 24/7</span>
+      </div>
+      <div class="footer-links">
+        <a href="./index.html">Trang chủ</a>
+        <a href="./status.json">status.json</a>
+        <a href="./ai-news.json">ai-news.json</a>
+      </div>
+    </div>
+  </footer>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <script src="./ai-news.js"></script>
+</body>
+</html>

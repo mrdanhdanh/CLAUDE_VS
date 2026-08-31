@@ -150,7 +150,29 @@ node .github/harness/scripts/auto-learn.mjs propose --bug <slug>  # Phase 5 Lear
    - If < 3: Return to Phase 1, re-analyze với new information
    - If ≥ 3: **STOP and question architecture** (step 5) — DON'T attempt Fix #4 without discussion
 
-5. **If 3+ Fixes Failed: Question Architecture**
+5. **AAR-Style Fix Benchmark (nếu nhiều cách fix)**
+   > Học từ Anthropic AAR paper (28/08/2026): propose 3 methods → benchmark → keep best
+   
+   Khi có nhiều cách fix khả thi (≥2), đừng chọn ngẫu hiên:
+   ```
+   1. Liệt kê 3 phương pháp fix (A, B, C)
+   2. Implement từng cái (minimal change, scope control)
+   3. Benchmark mỗi cái: build + test + get_errors + edge cases
+   4. So sánh scores → Keep best, discard rest
+   5. Log benchmark vào .agent/benchmarks/<slug>-benchmark.md
+   ```
+   
+   **Benchmark checklist:**
+   - `dotnet build` pass (không MSB3027 — KN-008)
+   - `dotnet test` pass
+   - `get_errors` 0
+   - Edge cases pass
+   - Không regression (chạy lại test suite)
+   - Đo **HOW** (cách làm) không chỉ **WHETHER** (pass/fail)
+   
+   **3-fix limit vẫn áp dụng:** Nếu cả 3 cách đều fail → STOP, question architecture (step 5)
+
+6. **If 3+ Fixes Failed: Question Architecture**
 
    Pattern indicating architectural problem:
    - Mỗi fix reveals new shared state/coupling/problem ở different place

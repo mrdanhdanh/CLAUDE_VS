@@ -1,0 +1,228 @@
+/* AAR vs Harness — styles for aar.html */
+
+/* Compare table */
+.compare-table-wrap {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.compare-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
+.compare-table th,
+.compare-table td {
+  padding: 12px 16px;
+  text-align: left;
+  border-bottom: 1px solid var(--color-border, #e5e7eb);
+  vertical-align: top;
+}
+
+.compare-table thead th {
+  background: var(--color-bg, #f9fafb);
+  font-weight: 700;
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.compare-table tbody tr:hover {
+  background: var(--color-bg, #f9fafb);
+}
+
+.compare-table td {
+  color: var(--color-text, #374151);
+}
+
+.compare-table th {
+  color: var(--color-text, #111827);
+  font-weight: 600;
+}
+
+@media (max-width: 768px) {
+  .compare-table {
+    font-size: 13px;
+  }
+  .compare-table th,
+  .compare-table td {
+    padding: 10px 12px;
+  }
+}
+
+/* Pattern grid */
+.pattern-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 16px;
+}
+
+@media (max-width: 768px) {
+  .pattern-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.pattern-card {
+  background: var(--color-surface, #fff);
+  border: 1px solid var(--color-border, #e5e7eb);
+  border-radius: 12px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  transition: all 200ms ease;
+}
+
+.pattern-card:hover {
+  border-color: var(--color-primary, #6366f1);
+  box-shadow: 0 4px 12px rgba(99, 102, 241, 0.08);
+}
+
+.pattern-num {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--color-primary, #6366f1);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 14px;
+}
+
+.pattern-card h3 {
+  font: 600 15px Inter, system-ui, sans-serif;
+  margin: 0;
+}
+
+.pattern-row {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 13px;
+}
+
+.pattern-aar {
+  color: #6366f1;
+  font-weight: 500;
+}
+
+.pattern-arrow {
+  color: var(--color-muted, #6b7280);
+  font-weight: 600;
+}
+
+.pattern-harness {
+  color: #10b981;
+  font-weight: 500;
+}
+
+/* Integrate grid */
+.integrate-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 16px;
+}
+
+@media (max-width: 768px) {
+  .integrate-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.integrate-card {
+  background: var(--color-surface, #fff);
+  border: 1px solid var(--color-border, #e5e7eb);
+  border-radius: 12px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  transition: all 200ms ease;
+}
+
+.integrate-card:hover {
+  border-color: #10b981;
+  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.08);
+}
+
+.integrate-icon {
+  font-size: 28px;
+}
+
+.integrate-card h3 {
+  font: 600 14px Inter, system-ui, sans-serif;
+  margin: 0;
+}
+
+.integrate-card p {
+  font: 400 13px/1.5 Inter, system-ui, sans-serif;
+  color: var(--color-muted, #6b7280);
+  margin: 0;
+  flex: 1;
+}
+
+/* Limits */
+.limits-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 16px;
+}
+
+@media (max-width: 768px) {
+  .limits-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.limit-card {
+  background: #fffbeb;
+  border: 1px solid #fde68a;
+  border-radius: 12px;
+  padding: 16px;
+}
+
+.limit-card h3 {
+  font: 600 14px Inter, system-ui, sans-serif;
+  margin: 0 0 6px 0;
+}
+
+.limit-card p {
+  font: 400 13px/1.5 Inter, system-ui, sans-serif;
+  color: #92400e;
+  margin: 0;
+}
+
+/* Sources */
+.sources-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.source-link {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  background: var(--color-surface, #fff);
+  border: 1px solid var(--color-border, #e5e7eb);
+  border-radius: 10px;
+  text-decoration: none;
+  color: var(--color-text, #111827);
+  font-size: 14px;
+  transition: all 150ms ease;
+}
+
+.source-link:hover {
+  border-color: var(--color-primary, #6366f1);
+  color: var(--color-primary, #6366f1);
+}
+
+.source-icon {
+  font-size: 20px;
+  flex-shrink: 0;
+}
