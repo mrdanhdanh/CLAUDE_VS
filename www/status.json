@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-02T14:12:35.752Z",
+  "generatedAt": "2026-09-02T14:26:48.048Z",
   "generatedBy": "YUNIE",
   "version": 1,
   "counts": {
@@ -257,7 +257,7 @@
   "health": {
     "errors": 0,
     "status": "ok",
-    "lastCheck": "2026-09-02T14:12:35.753Z",
+    "lastCheck": "2026-09-02T14:26:48.048Z",
     "checks": [
       "get_errors: pass (0 errors)",
       "registry: 10 instructions (10 total) - 10 skills - 8 agents - 7 prompts - 1 hook — all enabled",
@@ -273,29 +273,9 @@
     "workflow": ".github/workflows/pages.yml",
     "entries": [
       {
-        "path": "focus-flow/index.html",
-        "title": "focus-flow",
-        "type": "demo"
-      },
-      {
-        "path": "glassui/index.html",
-        "title": "glassui",
-        "type": "demo"
-      },
-      {
-        "path": "library/index.html",
-        "title": "library",
-        "type": "demo"
-      },
-      {
-        "path": "n5-blazor/index.html",
-        "title": "n5-blazor",
-        "type": "demo"
-      },
-      {
-        "path": "todo-manager/index.html",
-        "title": "todo-manager",
-        "type": "demo"
+        "path": "aar/index.html",
+        "title": "AAR vs Harness v2",
+        "type": "so sánh"
       },
       {
         "path": "ai-news/index.html",
@@ -303,9 +283,34 @@
         "type": "tin AI"
       },
       {
-        "path": "aar/index.html",
-        "title": "AAR vs Harness v2",
-        "type": "so sánh"
+        "path": "focus-flow/index.html",
+        "title": "Focus Flow",
+        "type": "demo"
+      },
+      {
+        "path": "glassui/index.html",
+        "title": "GlassUI",
+        "type": "demo"
+      },
+      {
+        "path": "library/index.html",
+        "title": "Thư Viện",
+        "type": "demo"
+      },
+      {
+        "path": "n5-blazor/index.html",
+        "title": "N5 Blazor",
+        "type": "demo"
+      },
+      {
+        "path": "todo-manager/index.html",
+        "title": "Todo Manager",
+        "type": "demo"
+      },
+      {
+        "path": "web-thuat-toan/index.html",
+        "title": "10 Bài Thuật Toán",
+        "type": "demo"
       }
     ],
     "note": "Copy file mới vào www/ là tự deploy lên GitHub Pages (workflow upload toàn bộ www)."

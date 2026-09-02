@@ -91,9 +91,25 @@ async function main() {
     `n5-blazor: www/n5-blazor/ 7 trang static + app.css + data.js + site.js — 100% Pages`,
   ];
 
-  // read existing status to preserve yunie/harness/pages if exists
+  // read existing status to preserve yunie/harness if exists
   let existing = {};
   try { existing = JSON.parse(await fs.readFile(STATUS_PATH, 'utf8')); } catch {}
+
+  // Build pages.entries from demos with proper titles/types — always sync, not preserve old
+  const pageMeta = {
+    'aar': { title: 'AAR vs Harness v2', type: 'so sánh' },
+    'ai-news': { title: 'AI News', type: 'tin AI' },
+    'focus-flow': { title: 'Focus Flow', type: 'demo' },
+    'glassui': { title: 'GlassUI', type: 'demo' },
+    'library': { title: 'Thư Viện', type: 'demo' },
+    'n5-blazor': { title: 'N5 Blazor', type: 'demo' },
+    'todo-manager': { title: 'Todo Manager', type: 'demo' },
+    'web-thuat-toan': { title: '10 Bài Thuật Toán', type: 'demo' },
+  };
+  const pagesEntries = demos.map(d => {
+    const meta = pageMeta[d.name] || { title: d.name, type: 'demo' };
+    return { path: d.path, title: meta.title, type: meta.type };
+  });
 
   const out = {
     generatedAt: new Date().toISOString(),
@@ -110,11 +126,11 @@ async function main() {
       lastCheck: new Date().toISOString(),
       checks: healthChecks
     },
-    pages: existing.pages || {
+    pages: {
       root: 'www',
       workflow: '.github/workflows/pages.yml',
-      entries: demos.map(d=>({ path: d.path, title: d.name, type: 'demo' })),
-      note: 'Copy file mới vào www/ là tự deploy lên GitHub Pages (workflow upload toàn bộ www).'
+      entries: pagesEntries,
+      note: existing.pages?.note || 'Copy file mới vào www/ là tự deploy lên GitHub Pages (workflow upload toàn bộ www).'
     },
     yunie: existing.yunie || {
       name: 'YUNIE',
