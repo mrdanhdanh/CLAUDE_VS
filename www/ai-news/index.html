@@ -98,6 +98,41 @@
       </div>
     </section>
 
+    <!-- Search -->
+    <section class="section search-section" aria-label="Tìm kiếm tin AI">
+      <div class="search-card">
+        <div class="search-row">
+          <label class="search-input-wrap" for="searchInput">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
+            <input id="searchInput" type="search" placeholder="Nhập từ khoá: AI agents, Gemini, self-improving..." autocomplete="off" aria-label="Từ khoá tìm kiếm" />
+          </label>
+          <button class="btn btn-primary btn-icon" id="btnSearch" type="button" aria-label="Tìm kiếm">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
+            <span class="btn-text-full">Tìm</span>
+          </button>
+          <button class="btn btn-ghost" id="btnResetSearch" type="button" aria-label="Xoá tìm kiếm">Xoá</button>
+        </div>
+        <div class="search-meta">
+          <div class="time-chips" role="group" aria-label="Khoảng thời gian">
+            <span class="time-label">Thời gian:</span>
+            <button type="button" class="time-chip" data-days="7" aria-pressed="false">7 ngày</button>
+            <button type="button" class="time-chip active" data-days="30" aria-pressed="true">30 ngày</button>
+            <button type="button" class="time-chip" data-days="90" aria-pressed="false">3 tháng</button>
+            <button type="button" class="time-chip" data-days="180" aria-pressed="false">6 tháng</button>
+            <button type="button" class="time-chip" data-days="0" aria-pressed="false">Không giới hạn</button>
+          </div>
+          <div class="search-hints" aria-label="Gợi ý từ khoá">
+            <span class="hints-label">Gợi ý:</span>
+            <button type="button" class="hint-chip" data-hint="AI agents">AI agents</button>
+            <button type="button" class="hint-chip" data-hint="Gemini">Gemini</button>
+            <button type="button" class="hint-chip" data-hint="self-improving">self-improving</button>
+            <button type="button" class="hint-chip" data-hint="OpenAI">OpenAI</button>
+          </div>
+        </div>
+        <div id="searchStatus" class="search-status" aria-live="polite" hidden></div>
+      </div>
+    </section>
+
     <!-- Filter -->
     <section class="section" aria-label="Bộ lọc chuyên mục">
       <div class="filter-bar" id="filterBar" role="tablist" aria-label="Lọc theo chuyên mục">

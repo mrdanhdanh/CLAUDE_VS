@@ -72,9 +72,12 @@ function liveCategorize(title, summary) {
 }
 function fmtDateShort(d) { return new Date(d).toISOString().slice(0,10); }
 
-async function fetchLiveHN(topic = 'AI') {
-  const since = Math.floor(Date.now()/1000) - 30*24*60*60;
-  const url = `https://hn.algolia.com/api/v1/search_by_date?query=${encodeURIComponent(topic)}&tags=story&hitsPerPage=20&numericFilters=created_at_i>${since}`;
+async function fetchLiveHN(topic = 'AI', days = 30) {
+  let url = `https://hn.algolia.com/api/v1/search_by_date?query=${encodeURIComponent(topic)}&tags=story&hitsPerPage=20`;
+  if (days > 0) {
+    const since = Math.floor(Date.now()/1000) - days*24*60*60;
+    url += `&numericFilters=created_at_i>${since}`;
+  }
   const res = await fetch(url, { headers: { 'Accept': 'application/json' } });
   if (!res.ok) throw new Error(`HN ${res.status}`);
   const data = await res.json();
@@ -91,9 +94,13 @@ async function fetchLiveHN(topic = 'AI') {
     score: h.points||0,
   }));
 }
-async function fetchLiveGitHub() {
-  const since = fmtDateShort(Date.now() - 30*24*60*60*1000);
-  const url = `https://api.github.com/search/repositories?q=AI+created:>${since}&sort=stars&order=desc&per_page=10`;
+async function fetchLiveGitHub(topic = 'AI', days = 30) {
+  let q = encodeURIComponent(topic);
+  if (days > 0) {
+    const since = fmtDateShort(Date.now() - days*24*60*60*1000);
+    q += `+created:>${since}`;
+  }
+  const url = `https://api.github.com/search/repositories?q=${q}&sort=stars&order=desc&per_page=10`;
   const res = await fetch(url, { headers: { 'Accept': 'application/vnd.github.v3+json' } });
   if (!res.ok) throw new Error(`GitHub ${res.status}`);
   const data = await res.json();
@@ -111,6 +118,12 @@ async function fetchLiveGitHub() {
   }));
 }
 let isLiveFetching = false;
+let isSearching = false;
+let searchKeyword = '';
+let searchDays = 30;
+let originalData = null;
+const SEARCH_COOLDOWN_MS = 30 * 1000;
+const LS_SEARCH_LAST = 'ai-news-search-last';
 
 // ── Cooldown 1 giờ ──
 const COOLDOWN_MS = 60 * 60 * 1000; // 1 giờ
@@ -199,7 +212,7 @@ async function handleLiveRefresh() {
   if (hotGrid) hotGrid.innerHTML = '<div class="empty-state"><div class="empty-icon">⏳</div><p>Đang fetch trực tiếp từ Hacker News + GitHub…</p><p class="small muted" style="font-size:12px;margin-top:6px">Chạy ngay trên trình duyệt, không cần VS Code</p></div>';
   if (allGrid) allGrid.innerHTML = '';
   try {
-    const [hn, gh] = await Promise.all([fetchLiveHN('AI'), fetchLiveGitHub().catch(()=>[])]);
+    const [hn, gh] = await Promise.all([fetchLiveHN('AI', 30), fetchLiveGitHub('AI', 30).catch(()=>[])]);
     const seen = new Set();
     const merged = [...hn, ...gh].filter(a => {
       const k = a.title.toLowerCase().slice(0,40);
@@ -267,6 +280,223 @@ async function handleLiveRefresh() {
   }
 }
 
+function escapeRegExp(s) { return s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); }
+function highlightKeyword(text, keyword) {
+  if (!keyword || !text) return escapeHtml(text);
+  const esc = escapeHtml(text);
+  const kw = escapeRegExp(keyword.trim());
+  if (!kw) return esc;
+  try {
+    const re = new RegExp(`(${kw})`, 'gi');
+    return esc.replace(re, '<mark class="hl">$1</mark>');
+  } catch { return esc; }
+}
+function getSearchDays() {
+  const active = document.querySelector('.time-chip.active');
+  if (active) { const d = parseInt(active.dataset.days, 10); if (!isNaN(d)) return d; }
+  return 30;
+}
+function setSearchDays(days) {
+  $$('.time-chip').forEach(btn => {
+    const isActive = parseInt(btn.dataset.days, 10) === days;
+    btn.classList.toggle('active', isActive);
+    btn.setAttribute('aria-pressed', isActive ? 'true' : 'false');
+  });
+  searchDays = days;
+}
+function getSearchRemainingMs() {
+  try {
+    const v = localStorage.getItem(LS_SEARCH_LAST);
+    if (!v) return 0;
+    const n = parseInt(v, 10);
+    if (isNaN(n) || n <= 0) return 0;
+    return Math.max(0, SEARCH_COOLDOWN_MS - (Date.now() - n));
+  } catch { return 0; }
+}
+function updateSearchStatusUI() {
+  const el = $('#searchStatus');
+  if (!el) return;
+  if (!searchKeyword) { el.hidden = true; el.textContent = ''; return; }
+  const daysLabel = searchDays === 0 ? 'không giới hạn' : `${searchDays} ngày`;
+  const total = (data.articles||[]).length;
+  const hotCount = (data.articles||[]).filter(a=>a.hot).length;
+  el.hidden = false;
+  el.textContent = `Kết quả: ${total} bài cho "${searchKeyword}" trong ${daysLabel} · ${hotCount} hot`;
+}
+async function handleSearch() {
+  const input = $('#searchInput');
+  const btn = $('#btnSearch');
+  const kw = (input?.value || '').trim();
+  if (!kw) { toast('Nhập từ khoá đã sếp ơi ✍️', 2500); input?.focus(); return; }
+  if (isSearching || isLiveFetching) return;
+  const remain = getSearchRemainingMs();
+  if (remain > 0) {
+    const s = Math.ceil(remain/1000);
+    toast(`⏳ Đợi ${s}s nữa rồi tìm tiếp nhé sếp`, 2500);
+    return;
+  }
+  const days = getSearchDays();
+  searchKeyword = kw;
+  searchDays = days;
+  isSearching = true;
+  if (btn) { btn.disabled = true; btn.style.opacity = '0.6'; }
+  toast(`Đang tìm "${kw}" trong ${days===0?'không giới hạn':days+' ngày'}… ⏳`, 3000);
+  const hotGrid = $('#hotGrid'), allGrid = $('#allGrid');
+  if (hotGrid) hotGrid.innerHTML = '<div class="empty-state"><div class="empty-icon">🔍</div><p>Đang tìm tin hot cho "' + escapeHtml(kw) + '"…</p><p class="small muted" style="font-size:12px;margin-top:6px">HN Algolia + GitHub · giữ chuẩn hot như Cập nhật</p></div>';
+  if (allGrid) allGrid.innerHTML = '';
+  const statusEl = $('#searchStatus');
+  if (statusEl) { statusEl.hidden = false; statusEl.textContent = `Đang tìm "${kw}"…`; }
+  try {
+    const [hn, gh] = await Promise.all([
+      fetchLiveHN(kw, days),
+      fetchLiveGitHub(kw, days).catch(()=>[])
+    ]);
+    const seen = new Set();
+    const merged = [...hn, ...gh].filter(a => {
+      const k = a.title.toLowerCase().slice(0,40);
+      if (seen.has(k)) return false;
+      seen.add(k); return true;
+    });
+    merged.sort((a,b) => (new Date(b.date) - new Date(a.date)) || (b.hot - a.hot) || (b.score - a.score));
+    let articles = merged.slice(0, 15);
+    if (articles.filter(a=>a.hot).length===0 && articles.length>0) { articles[0].hot=true; if(articles[1]) articles[1].hot=true; }
+    if (articles.length === 0) {
+      const daysLabel = days===0?'không giới hạn':`${days} ngày`;
+      if (hotGrid) hotGrid.innerHTML = '';
+      if (allGrid) allGrid.innerHTML = `<div class="empty-state"><div class="empty-icon">🔍</div><p>Không tìm thấy tin nào cho "${escapeHtml(kw)}" trong ${escapeHtml(daysLabel)}.</p><p class="small muted" style="font-size:12px;margin-top:6px">Thử từ khoá khác hoặc chọn "Không giới hạn"</p></div>`;
+      data = { ...data, articles: [], meta: { ...(data.meta||{}), topic: kw, total: 0, hot: 0 } };
+      updateSearchStatusUI();
+      // update counts to 0
+      $$('.filter-chip', $('#filterBar')).forEach(btn => {
+        if (btn.dataset.filter === 'all') return;
+        const c = btn.querySelector('.count'); if (c) c.textContent = '0';
+      });
+      const countEl = $('#metaCount'); if (countEl) countEl.textContent = '0 bài';
+      toast(`Không có kết quả cho "${kw}"`, 3000);
+      try { localStorage.setItem(LS_SEARCH_LAST, String(Date.now())); } catch {}
+      return;
+    }
+    // save original on first search
+    if (!originalData) {
+      try { originalData = JSON.parse(JSON.stringify(data)); } catch { originalData = { ...data, articles: [...(data.articles||[])] }; }
+      // also try to keep a copy from initial load if available
+      if (!originalData.articles?.length) {
+        try { const cached = JSON.parse(localStorage.getItem('ai-news-live')||'null'); if (cached?.data) originalData = cached.data; } catch {}
+      }
+    }
+    data = {
+      ...data,
+      generatedAt: new Date().toISOString(),
+      generatedBy: `YUNIE × Tìm kiếm "${kw}"`,
+      articles: articles.map(a=>({ id:a.id, title:a.title, summary:a.summary, source:a.source, sourceUrl:a.sourceUrl, category:a.category, date:a.date, hot:!!a.hot, tags:(a.tags||[]).slice(0,5) })),
+      meta: { fetchedAt: new Date().toISOString(), topic: kw, total: articles.length, hot: articles.filter(a=>a.hot).length, sources:[...new Set(articles.map(a=>a.source))] },
+      last30days: { ...(data.last30days||{}), topic: kw, since: days===0 ? 'không giới hạn' : fmtDateShort(Date.now()-days*24*60*60*1000), sources:['Hacker News (live)','GitHub (live)'], engine:'Tìm kiếm live — HN Algolia + GitHub, giữ chuẩn hot' }
+    };
+    const genEl = $('#metaGenerated'); if (genEl) genEl.textContent = fmtDate(data.generatedAt);
+    const byEl = $('#metaBy'); if (byEl) byEl.textContent = data.generatedBy;
+    // update filter counts
+    const bar = $('#filterBar');
+    if (bar) {
+      $$('.filter-chip', bar).forEach(btn => {
+        const fid = btn.dataset.filter;
+        if (fid === 'all') return;
+        const cnt = data.articles.filter(a=>a.category===fid).length;
+        const countEl = btn.querySelector('.count');
+        if (countEl) countEl.textContent = cnt;
+        else if (cnt>0) { const s=document.createElement('span'); s.className='count'; s.textContent=cnt; btn.appendChild(s); }
+      });
+    }
+    // reset filter to all to show results
+    activeFilter = 'all';
+    $$('.filter-chip').forEach(btn => {
+      const isActive = btn.dataset.filter === 'all';
+      btn.classList.toggle('active', isActive);
+      btn.setAttribute('aria-selected', isActive ? 'true' : 'false');
+    });
+    renderNews();
+    updateSearchStatusUI();
+    const oldBadge = document.getElementById('last30daysBadge');
+    if (oldBadge) oldBadge.remove();
+    renderLast30DaysBadge(data);
+    toast(`Tìm thấy ${articles.length} tin cho "${kw}" ✅`, 3000);
+    try { localStorage.setItem(LS_SEARCH_LAST, String(Date.now())); } catch {}
+    try { localStorage.setItem('ai-news-last-search', JSON.stringify({ kw, days, at: Date.now() })); } catch {}
+  } catch (e) {
+    console.error('Search failed', e);
+    toast(`Lỗi tìm kiếm: ${e.message}`, 4000);
+    if (statusEl) statusEl.textContent = `Lỗi: ${e.message}`;
+  } finally {
+    isSearching = false;
+    if (btn) { btn.disabled = false; btn.style.opacity = ''; }
+  }
+}
+async function handleResetSearch() {
+  const input = $('#searchInput');
+  if (input) input.value = '';
+  searchKeyword = '';
+  searchDays = 30;
+  setSearchDays(30);
+  const statusEl = $('#searchStatus');
+  if (statusEl) { statusEl.hidden = true; statusEl.textContent = ''; }
+  // restore original data if we have it, else reload json
+  if (originalData && originalData.articles?.length) {
+    data = JSON.parse(JSON.stringify(originalData));
+    originalData = null;
+    const genEl = $('#metaGenerated'); if (genEl) genEl.textContent = fmtDate(data.generatedAt);
+    const byEl = $('#metaBy'); if (byEl) byEl.textContent = data.generatedBy || 'YUNIE';
+    const bar = $('#filterBar');
+    if (bar) {
+      $$('.filter-chip', bar).forEach(btn => {
+        const fid = btn.dataset.filter;
+        if (fid === 'all') return;
+        const cnt = data.articles.filter(a=>a.category===fid).length;
+        const c = btn.querySelector('.count'); if (c) c.textContent = cnt;
+      });
+    }
+    activeFilter = 'all';
+    $$('.filter-chip').forEach(btn => {
+      const isActive = btn.dataset.filter === 'all';
+      btn.classList.toggle('active', isActive);
+      btn.setAttribute('aria-selected', isActive ? 'true' : 'false');
+    });
+    renderNews();
+    const oldBadge = document.getElementById('last30daysBadge');
+    if (oldBadge) oldBadge.remove();
+    renderLast30DaysBadge(data);
+    toast('Đã xoá tìm kiếm — về danh sách gốc ✅', 2500);
+    try { localStorage.removeItem('ai-news-last-search'); } catch {}
+  } else {
+    try {
+      data = await loadNews();
+      const genEl = $('#metaGenerated'); if (genEl) genEl.textContent = fmtDate(data.generatedAt);
+      const byEl = $('#metaBy'); if (byEl) byEl.textContent = data.generatedBy || 'YUNIE';
+      // re-render filter counts
+      const bar = $('#filterBar');
+      if (bar) {
+        $$('.filter-chip', bar).forEach(btn => {
+          const fid = btn.dataset.filter;
+          if (fid === 'all') return;
+          const cnt = data.articles.filter(a=>a.category===fid).length;
+          const c = btn.querySelector('.count'); if (c) c.textContent = cnt;
+        });
+      }
+      activeFilter = 'all';
+      $$('.filter-chip').forEach(btn => {
+        const isActive = btn.dataset.filter === 'all';
+        btn.classList.toggle('active', isActive);
+        btn.setAttribute('aria-selected', isActive ? 'true' : 'false');
+      });
+      renderNews();
+      const oldBadge = document.getElementById('last30daysBadge');
+      if (oldBadge) oldBadge.remove();
+      renderLast30DaysBadge(data);
+      toast('Đã xoá tìm kiếm ✅', 2500);
+    } catch (e) {
+      toast('Lỗi khôi phục: ' + e.message, 3000);
+    }
+  }
+}
+
 function renderCategoryFilters(data) {
   const bar = $('#filterBar');
   if (!bar) return;
@@ -309,6 +539,8 @@ function createCard(article, isHot = false) {
   const moreCount = (article.tags || []).length - 3;
   const moreHtml = moreCount > 0 ? `<span class="news-tag more">+${moreCount}</span>` : '';
   const fresh = freshnessInfo(article.date);
+  const titleHtml = searchKeyword ? highlightKeyword(article.title, searchKeyword) : escapeHtml(article.title);
+  const summaryHtml = searchKeyword ? highlightKeyword(article.summary, searchKeyword) : escapeHtml(article.summary);
 
   card.innerHTML = `
     <div class="news-card-header">
@@ -316,8 +548,8 @@ function createCard(article, isHot = false) {
       <span class="fresh-badge ${fresh.cls}">${escapeHtml(fresh.label)}</span>
       <span class="news-date">${fmtDate(article.date)}</span>
     </div>
-    <h3 class="news-title"><a href="${escapeHtml(article.sourceUrl)}" target="_blank" rel="noopener" aria-label="${escapeHtml(article.title)} — mở nguồn">${escapeHtml(article.title)}</a></h3>
-    <p class="news-summary">${escapeHtml(article.summary)}</p>
+    <h3 class="news-title"><a href="${escapeHtml(article.sourceUrl)}" target="_blank" rel="noopener" aria-label="${escapeHtml(article.title)} — mở nguồn">${titleHtml}</a></h3>
+    <p class="news-summary">${summaryHtml}</p>
     <div class="news-footer">
       <span class="news-source">${escapeHtml(article.source)}</span>
       <div class="news-tags">${tagsHtml}${moreHtml}</div>
@@ -392,6 +624,28 @@ async function init() {
   try {
     data = await loadNews();
 
+    // ── Restore live cache so F5 keeps updated content (per-browser) ──
+    // Browser không ghi được ai-news.json trên server (GitHub Pages là static).
+    // Nên sau khi bấm Cập nhật, mình lưu vào localStorage và khôi phục khi F5.
+    // Để lưu vĩnh viễn cho mọi người: chạy `node www/ai-news/fetch.mjs` local rồi push,
+    // hoặc bấm Run workflow trên GitHub (Actions → AI News — Daily Auto Update).
+    try {
+      const cached = JSON.parse(localStorage.getItem('ai-news-live') || 'null');
+      if (cached?.data?.articles?.length && cached.at) {
+        const serverTime = data.generatedAt ? new Date(data.generatedAt).getTime() : 0;
+        const cachedTime = cached.at;
+        const isCachedNewer = !serverTime || isNaN(serverTime) || cachedTime > serverTime;
+        const ageMs = Date.now() - cachedTime;
+        const maxAgeMs = 24 * 60 * 60 * 1000; // giữ cache 24h
+        if (isCachedNewer && ageMs < maxAgeMs) {
+          data = cached.data;
+          console.log('[ai-news] restored live cache from', new Date(cachedTime).toLocaleString('vi-VN'));
+        } else if (!isCachedNewer) {
+          console.log('[ai-news] server is newer than cache — using server data');
+        }
+      }
+    } catch (e) { console.warn('restore cache failed', e); }
+
     // Hero meta
     const genEl = $('#metaGenerated');
     if (genEl) genEl.textContent = fmtDate(data.generatedAt);
@@ -423,15 +677,51 @@ async function init() {
       if (getRemainingMs() > 0) startCooldownTicker();
     }
 
-    // Keyboard: / focus filter
+    // Search wiring
+    const searchInput = $('#searchInput');
+    const btnSearch = $('#btnSearch');
+    const btnReset = $('#btnResetSearch');
+    if (btnSearch) btnSearch.addEventListener('click', handleSearch);
+    if (btnReset) btnReset.addEventListener('click', handleResetSearch);
+    if (searchInput) {
+      searchInput.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') { e.preventDefault(); handleSearch(); }
+        if (e.key === 'Escape') { e.preventDefault(); handleResetSearch(); }
+      });
+    }
+    $$('.time-chip').forEach(btn => {
+      btn.addEventListener('click', () => setSearchDays(parseInt(btn.dataset.days, 10)));
+    });
+    $$('.hint-chip').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const hint = btn.dataset.hint || btn.textContent;
+        if (searchInput) searchInput.value = hint;
+        handleSearch();
+      });
+    });
+    // restore last search hint (optional)
+    try {
+      const last = JSON.parse(localStorage.getItem('ai-news-last-search')||'null');
+      if (last?.kw && searchInput && !searchInput.value) {
+        // don't auto-search, just hint placeholder
+        searchInput.placeholder = `Thử: ${last.kw} — hoặc nhập từ khoá mới...`;
+      }
+    } catch {}
+
+    // Keyboard: / focus filter (skip when typing in search)
     document.addEventListener('keydown', (e) => {
       if (e.key === '/' && !e.ctrlKey && !e.metaKey && !e.altKey) {
         const active = document.activeElement;
-        if (active && active.tagName !== 'INPUT' && active.tagName !== 'TEXTAREA') {
-          e.preventDefault();
-          const firstFilter = $('.filter-chip');
-          if (firstFilter) firstFilter.focus();
-        }
+        if (active && (active.tagName === 'INPUT' || active.tagName === 'TEXTAREA')) return;
+        e.preventDefault();
+        const firstFilter = $('.filter-chip');
+        if (firstFilter) firstFilter.focus();
+      }
+      if (e.key === 'Escape' && searchKeyword) {
+        // Esc anywhere clears search if active
+        const active = document.activeElement;
+        if (active && active.id === 'searchInput') return; // already handled
+        handleResetSearch();
       }
     });
 

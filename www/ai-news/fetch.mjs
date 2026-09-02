@@ -1,10 +1,11 @@
 #!/usr/bin/env node
 /**
  * YUNIE × Last30Days — AI News Fetcher (Node.js bridge)
- * Fetches AI news from last 30 days via free APIs (no keys) and updates ai-news.json
+ * Fetches AI news via free APIs (no keys) and updates ai-news.json
  * Works with Node 18+ (fetch built-in), no Python 3.12 needed.
- * Sources: HN Algolia (free), GitHub Trending (free), TechCrunch RSS (free)
- * Usage: node www/ai-news/fetch.mjs [--dry] [--topic "AI agents"]
+ * Sources: HN Algolia (free), GitHub Trending (free)
+ * Usage: node www/ai-news/fetch.mjs [--dry] [--topic "AI agents"] [--days 7|30|90|180|0]
+ *   --days 0 = không giới hạn (bỏ filter thời gian)
  */
 import fs from 'node:fs/promises';
 import path from 'node:path';
@@ -13,10 +14,24 @@ import { fileURLToPath } from 'node:url';
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const JSON_PATH = path.join(__dirname, 'ai-news.json');
 const DRY = process.argv.includes('--dry');
-const TOPIC = process.argv.find((a, i, arr) => arr[i-1] === '--topic') || 'AI';
-
-// 30 days ago timestamp
-const THIRTY_DAYS_AGO = Math.floor(Date.now() / 1000) - 30 * 24 * 60 * 60;
+const TOPIC = (() => {
+  const idx = process.argv.indexOf('--topic');
+  if (idx !== -1 && process.argv[idx+1]) return process.argv[idx+1];
+  return 'AI';
+})();
+const DAYS_RAW = (() => {
+  const idx = process.argv.indexOf('--days');
+  if (idx !== -1 && process.argv[idx+1] != null) {
+    const n = parseInt(process.argv[idx+1], 10);
+    if (!isNaN(n) && n >= 0) return n;
+  }
+  return 30;
+})();
+const DAYS = DAYS_RAW;
+function fmtDate(d) {
+  return new Date(d).toISOString().slice(0,10);
+}
+const SINCE_LABEL = DAYS === 0 ? 'không giới hạn' : `${DAYS} ngày (từ ${fmtDate(Date.now() - DAYS*24*60*60*1000)})`;
 
 const CATEGORIES = [
   { id: 'self-improving', name: 'Self-Improving AI', icon: '🧠', color: '#6366f1', keywords: ['self-improving','AAR','alignment','self-training','auto-researcher','self-evolving'] },
@@ -38,13 +53,13 @@ function categorize(title, summary) {
   return best;
 }
 
-function fmtDate(d) {
-  return new Date(d).toISOString().slice(0,10);
-}
-
-async function fetchHN(topic = 'AI') {
+async function fetchHN(topic = 'AI', days = DAYS) {
   const q = encodeURIComponent(topic);
-  const url = `https://hn.algolia.com/api/v1/search_by_date?query=${q}&tags=story&hitsPerPage=20&numericFilters=created_at_i>${THIRTY_DAYS_AGO}`;
+  let url = `https://hn.algolia.com/api/v1/search_by_date?query=${q}&tags=story&hitsPerPage=20`;
+  if (days > 0) {
+    const since = Math.floor(Date.now()/1000) - days*24*60*60;
+    url += `&numericFilters=created_at_i>${since}`;
+  }
   console.log(`[HN] fetching ${url}`);
   try {
     const res = await fetch(url, { headers: { 'User-Agent': 'YUNIE-last30days/1.0' } });
@@ -71,9 +86,13 @@ async function fetchHN(topic = 'AI') {
   }
 }
 
-async function fetchGitHubTrendingAI() {
-  // Use GitHub search API (no key, rate limited but ok for 1 call)
-  const url = `https://api.github.com/search/repositories?q=AI+created:>${fmtDate(THIRTY_DAYS_AGO*1000)}&sort=stars&order=desc&per_page=10`;
+async function fetchGitHubTrendingAI(topic = TOPIC, days = DAYS) {
+  let q = encodeURIComponent(topic);
+  if (days > 0) {
+    const since = fmtDate(Date.now() - days*24*60*60*1000);
+    q += `+created:>${since}`;
+  }
+  const url = `https://api.github.com/search/repositories?q=${q}&sort=stars&order=desc&per_page=10`;
   console.log(`[GitHub] fetching ${url}`);
   try {
     const res = await fetch(url, { headers: { 'User-Agent': 'YUNIE-last30days/1.0', 'Accept': 'application/vnd.github.v3+json' } });
@@ -100,10 +119,10 @@ async function fetchGitHubTrendingAI() {
 }
 
 async function main() {
-  console.log(`🌐 YUNIE × Last30Days — fetching "${TOPIC}" (last 30 days, since ${fmtDate(THIRTY_DAYS_AGO*1000)})`);
+  console.log(`🌐 YUNIE × Last30Days — fetching "${TOPIC}" (${SINCE_LABEL})`);
   const [hn, gh] = await Promise.all([
-    fetchHN(TOPIC),
-    fetchGitHubTrendingAI(),
+    fetchHN(TOPIC, DAYS),
+    fetchGitHubTrendingAI(TOPIC, DAYS),
   ]);
 
   // Merge and dedupe by title
@@ -145,11 +164,12 @@ async function main() {
     generatedAt: new Date().toISOString(),
     generatedBy: 'YUNIE × Last30Days',
     version: 2,
-    description: `Tin AI mới nhất — tổng hợp từ Last30Days (HN, GitHub, Web) trong 30 ngày qua. Chủ đề: ${TOPIC}. Tự động cập nhật bởi YUNIE.`,
+    description: `Tin AI mới nhất — tổng hợp từ Last30Days (HN, GitHub, Web) trong ${DAYS===0?'không giới hạn':DAYS+' ngày'} qua. Chủ đề: ${TOPIC}. Tự động cập nhật bởi YUNIE.`,
     last30days: {
       enabled: true,
       topic: TOPIC,
-      since: fmtDate(THIRTY_DAYS_AGO*1000),
+      since: DAYS===0 ? 'không giới hạn' : fmtDate(Date.now() - DAYS*24*60*60*1000),
+      days: DAYS,
       sources: ['Hacker News (Algolia, free)', 'GitHub Search (free)', 'Web (Brave/Perplexity when key)'],
       engine: 'Node.js bridge (no Python 3.12 needed) — HN Algolia + GitHub API, scored by upvotes/stars',
       skill: 'mvanhorn/last30days-skill v3.23.0 (61k ⭐)',
