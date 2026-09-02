@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-02T14:07:30.309Z",
+  "generatedAt": "2026-09-02T16:07:20.815Z",
   "generatedBy": "YUNIE × Last30Days",
   "version": 2,
   "description": "Tin AI mới nhất — tổng hợp từ Last30Days (HN, GitHub, Web) trong 30 ngày qua. Chủ đề: AI. Tự động cập nhật bởi YUNIE.",
@@ -49,84 +49,6 @@
     }
   ],
   "articles": [
-    {
-      "id": "gh-1331135699",
-      "title": "guillaumemeyer/watermarks-remover — A privacy-first app that strips AI watermarks from content you own.",
-      "summary": "A privacy-first app that strips AI watermarks from content you own. ⭐ 20010 stars, Python. agent-skill, ai, anthropic",
-      "source": "GitHub",
-      "sourceUrl": "https://github.com/guillaumemeyer/watermarks-remover",
-      "category": "products",
-      "date": "2026-08-11",
-      "hot": true,
-      "tags": [
-        "GitHub",
-        "Python",
-        "agent-skill",
-        "ai"
-      ]
-    },
-    {
-      "id": "gh-1336502227",
-      "title": "CopilotKit/OpenBot — Open-source AI coworkers that each get a computer of their own: a browser, files",
-      "summary": "Open-source AI coworkers that each get a computer of their own: a browser, files and tools, with every action decided before it happens and recorded after. Bring any AG-UI agent. ⭐ 3847 stars, TypeScript. ag-ui, agent-go",
-      "source": "GitHub",
-      "sourceUrl": "https://github.com/CopilotKit/OpenBot",
-      "category": "products",
-      "date": "2026-08-17",
-      "hot": true,
-      "tags": [
-        "GitHub",
-        "TypeScript",
-        "ag-ui",
-        "agent-governance"
-      ]
-    },
-    {
-      "id": "gh-1336933337",
-      "title": "yetone/cumora — Where agent teams gather. Cross-platform team chat where AI agents are first-cla",
-      "summary": "Where agent teams gather. Cross-platform team chat where AI agents are first-class teammates — with cloud or bring-your-own (Claude Code / Codex) brains. ⭐ 3416 stars, TypeScript. ",
-      "source": "GitHub",
-      "sourceUrl": "https://github.com/yetone/cumora",
-      "category": "products",
-      "date": "2026-08-17",
-      "hot": true,
-      "tags": [
-        "GitHub",
-        "TypeScript"
-      ]
-    },
-    {
-      "id": "gh-1323511527",
-      "title": "KKKKhazix/human-writing — 让 AI 写的中文读起来像一个具体的人在说话。通用创作与改稿 Skill，开箱即用。",
-      "summary": "让 AI 写的中文读起来像一个具体的人在说话。通用创作与改稿 Skill，开箱即用。 ⭐ 3383 stars, Python. agent-skills, chinese-writing, creative-writing",
-      "source": "GitHub",
-      "sourceUrl": "https://github.com/KKKKhazix/human-writing",
-      "category": "products",
-      "date": "2026-08-05",
-      "hot": true,
-      "tags": [
-        "GitHub",
-        "Python",
-        "agent-skills",
-        "chinese-writing"
-      ]
-    },
-    {
-      "id": "gh-1322651268",
-      "title": "fuxicodex/Fuxi — FuXi is a fast, self-contained AI coding agent that lives in your terminal — edi",
-      "summary": "FuXi is a fast, self-contained AI coding agent that lives in your terminal — edit code, run commands, and drive tools, with cost-aware routing across LLM providers. ⭐ 3245 stars, Python. agent, ai, ai-agent",
-      "source": "GitHub",
-      "sourceUrl": "https://github.com/fuxicodex/Fuxi",
-      "category": "products",
-      "date": "2026-08-04",
-      "hot": true,
-      "tags": [
-        "GitHub",
-        "Python",
-        "agent",
-        "ai"
-      ]
-    },
     {
       "id": "hn-49535284",
       "title": "Mistral now trains on user input by default, except on enterprise tier",
@@ -286,16 +208,95 @@
         "story",
         "author_TawResearch"
       ]
+    },
+    {
+      "id": "gh-1336502227",
+      "title": "CopilotKit/OpenBot — Open-source AI coworkers that each get a computer of their own: a browser, files",
+      "summary": "Open-source AI coworkers that each get a computer of their own: a browser, files and tools, with every action decided before it happens and recorded after. Bring any AG-UI agent. ⭐ 3847 stars, TypeScript. ag-ui, agent-go",
+      "source": "GitHub",
+      "sourceUrl": "https://github.com/CopilotKit/OpenBot",
+      "category": "products",
+      "date": "2026-08-17",
+      "hot": true,
+      "tags": [
+        "GitHub",
+        "TypeScript",
+        "ag-ui",
+        "agent-governance"
+      ]
+    },
+    {
+      "id": "gh-1336933337",
+      "title": "yetone/cumora — Where agent teams gather. Cross-platform team chat where AI agents are first-cla",
+      "summary": "Where agent teams gather. Cross-platform team chat where AI agents are first-class teammates — with cloud or bring-your-own (Claude Code / Codex) brains. ⭐ 3416 stars, TypeScript. ",
+      "source": "GitHub",
+      "sourceUrl": "https://github.com/yetone/cumora",
+      "category": "products",
+      "date": "2026-08-17",
+      "hot": true,
+      "tags": [
+        "GitHub",
+        "TypeScript"
+      ]
+    },
+    {
+      "id": "gh-1331135699",
+      "title": "guillaumemeyer/watermarks-remover — A privacy-first app that strips AI watermarks from content you own.",
+      "summary": "A privacy-first app that strips AI watermarks from content you own. ⭐ 20010 stars, Python. agent-skill, ai, anthropic",
+      "source": "GitHub",
+      "sourceUrl": "https://github.com/guillaumemeyer/watermarks-remover",
+      "category": "products",
+      "date": "2026-08-11",
+      "hot": true,
+      "tags": [
+        "GitHub",
+        "Python",
+        "agent-skill",
+        "ai"
+      ]
+    },
+    {
+      "id": "gh-1323511527",
+      "title": "KKKKhazix/human-writing — 让 AI 写的中文读起来像一个具体的人在说话。通用创作与改稿 Skill，开箱即用。",
+      "summary": "让 AI 写的中文读起来像一个具体的人在说话。通用创作与改稿 Skill，开箱即用。 ⭐ 3383 stars, Python. agent-skills, chinese-writing, creative-writing",
+      "source": "GitHub",
+      "sourceUrl": "https://github.com/KKKKhazix/human-writing",
+      "category": "products",
+      "date": "2026-08-05",
+      "hot": true,
+      "tags": [
+        "GitHub",
+        "Python",
+        "agent-skills",
+        "chinese-writing"
+      ]
+    },
+    {
+      "id": "gh-1322651268",
+      "title": "fuxicodex/Fuxi — FuXi is a fast, self-contained AI coding agent that lives in your terminal — edi",
+      "summary": "FuXi is a fast, self-contained AI coding agent that lives in your terminal — edit code, run commands, and drive tools, with cost-aware routing across LLM providers. ⭐ 3245 stars, Python. agent, ai, ai-agent",
+      "source": "GitHub",
+      "sourceUrl": "https://github.com/fuxicodex/Fuxi",
+      "category": "products",
+      "date": "2026-08-04",
+      "hot": true,
+      "tags": [
+        "GitHub",
+        "Python",
+        "agent",
+        "ai"
+      ]
     }
   ],
   "meta": {
-    "fetchedAt": "2026-09-02T14:07:30.309Z",
+    "fetchedAt": "2026-09-02T16:07:20.815Z",
     "topic": "AI",
     "total": 15,
     "hot": 5,
     "sources": [
       "GitHub",
       "Hacker News"
-    ]
+    ],
+    "sortedBy": "date-desc-hot-score"
   }
 }

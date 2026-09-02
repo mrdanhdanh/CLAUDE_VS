@@ -115,8 +115,8 @@ async function main() {
     return true;
   });
 
-  // Sort: hot first, then by score/date
-  merged.sort((a,b) => (b.hot - a.hot) || (b.score - a.score) || (new Date(b.date) - new Date(a.date)));
+  // Sort: newest first (freshness), then hot, then score — so today’s HN always on top
+  merged.sort((a,b) => (new Date(b.date) - new Date(a.date)) || (b.hot - a.hot) || (b.score - a.score));
 
   // Keep top 15
   const fresh = merged.slice(0, 15);

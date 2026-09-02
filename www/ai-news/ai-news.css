@@ -110,6 +110,43 @@
   white-space: nowrap;
 }
 
+/* Freshness badge */
+.fresh-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 8px;
+  border-radius: 999px;
+  font: 600 10px Inter, system-ui, sans-serif;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+  border: 1px solid transparent;
+}
+.fresh-today {
+  background: #ecfdf5;
+  color: #065f46;
+  border-color: #a7f3d0;
+}
+.fresh-yesterday {
+  background: #eff6ff;
+  color: #1e40af;
+  border-color: #bfdbfe;
+}
+.fresh-week {
+  background: #fef3c7;
+  color: #92400e;
+  border-color: #fde68a;
+}
+.fresh-month {
+  background: #f3f4f6;
+  color: #6b7280;
+  border-color: #e5e7eb;
+}
+.fresh-old {
+  background: #f9fafb;
+  color: #9ca3af;
+  border-color: #e5e7eb;
+}
+
 .news-title {
   font: 600 15px/1.4 Inter, system-ui, sans-serif;
   color: var(--color-text, #111827);

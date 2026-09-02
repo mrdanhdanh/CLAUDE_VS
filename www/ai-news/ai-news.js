@@ -19,6 +19,22 @@ function fmtDate(iso) {
   } catch { return iso || '—'; }
 }
 
+function freshnessInfo(dateStr) {
+  try {
+    const d = new Date(dateStr + 'T12:00:00');
+    if (isNaN(d.getTime())) return { label: dateStr || '—', cls: 'fresh-old' };
+    const now = new Date();
+    const diffMs = now - d;
+    const diffDays = Math.floor(diffMs / (1000 * 60 * 60 * 24));
+    if (diffDays <= 0) return { label: 'Hôm nay', cls: 'fresh-today' };
+    if (diffDays === 1) return { label: 'Hôm qua', cls: 'fresh-yesterday' };
+    if (diffDays <= 3) return { label: `${diffDays} ngày trước`, cls: 'fresh-week' };
+    if (diffDays <= 7) return { label: `${diffDays} ngày trước`, cls: 'fresh-week' };
+    if (diffDays <= 30) return { label: `${diffDays} ngày trước`, cls: 'fresh-month' };
+    return { label: fmtDate(dateStr), cls: 'fresh-old' };
+  } catch { return { label: dateStr || '—', cls: 'fresh-old' }; }
+}
+
 async function loadNews() {
   const res = await fetch('./ai-news.json', { cache: 'no-store' });
   if (!res.ok) throw new Error(`ai-news.json ${res.status} ${res.statusText}`);
@@ -190,7 +206,7 @@ async function handleLiveRefresh() {
       if (seen.has(k)) return false;
       seen.add(k); return true;
     });
-    merged.sort((a,b) => (b.hot - a.hot) || (b.score - a.score) || (new Date(b.date) - new Date(a.date)));
+    merged.sort((a,b) => (new Date(b.date) - new Date(a.date)) || (b.hot - a.hot) || (b.score - a.score));
     let articles = merged.slice(0,15);
     if (articles.length < 5 && data.articles?.length) {
       const ids = new Set(articles.map(a=>a.id));
@@ -292,10 +308,12 @@ function createCard(article, isHot = false) {
   ).join('');
   const moreCount = (article.tags || []).length - 3;
   const moreHtml = moreCount > 0 ? `<span class="news-tag more">+${moreCount}</span>` : '';
+  const fresh = freshnessInfo(article.date);
 
   card.innerHTML = `
     <div class="news-card-header">
       <span class="news-category" style="background:${catColor}">${escapeHtml(catName)}</span>
+      <span class="fresh-badge ${fresh.cls}">${escapeHtml(fresh.label)}</span>
       <span class="news-date">${fmtDate(article.date)}</span>
     </div>
     <h3 class="news-title"><a href="${escapeHtml(article.sourceUrl)}" target="_blank" rel="noopener" aria-label="${escapeHtml(article.title)} — mở nguồn">${escapeHtml(article.title)}</a></h3>
