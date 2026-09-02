@@ -354,6 +354,81 @@
       </div>
     </section>
 
+    <!-- Governance — Audit + Policy + Credentials (học OpenBot) -->
+    <section class="section" id="governance" aria-labelledby="governance-title">
+      <div class="section-head">
+        <div>
+          <h2 id="governance-title">🛡️ Governance — Audit · Policy · Credentials</h2>
+          <p>Học OpenBot: gateway duy nhất, deny trước allow, fail-closed, audit trail, credentials mã hóa</p>
+        </div>
+        <span class="tag" id="governanceTag" aria-live="polite">—</span>
+      </div>
+      <div class="grid-3" id="governanceCards" style="margin:0">
+        <div class="card card-pad" id="govAuditCard" aria-label="Audit trail">
+          <div class="skeleton" style="height:16px;margin-bottom:8px"></div>
+          <div class="skeleton" style="height:16px"></div>
+        </div>
+        <div class="card card-pad" id="govPolicyCard" aria-label="Policy">
+          <div class="skeleton" style="height:16px;margin-bottom:8px"></div>
+          <div class="skeleton" style="height:16px"></div>
+        </div>
+        <div class="card card-pad" id="govCredCard" aria-label="Credentials">
+          <div class="skeleton" style="height:16px;margin-bottom:8px"></div>
+          <div class="skeleton" style="height:16px"></div>
+        </div>
+      </div>
+      <div class="card" id="govTailCard" style="margin-top:16px">
+        <div style="padding:12px 16px;border-bottom:1px solid var(--color-neutral-200);display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap">
+          <strong style="font:700 13px var(--font-sans)">Audit tail — 5 gần nhất</strong>
+          <span class="tag" id="govTailTag">—</span>
+        </div>
+        <div class="table-wrap" id="govTailWrap">
+          <table aria-label="Audit tail">
+            <thead><tr><th>Thời gian</th><th>Quyết định</th><th>Tool</th><th>Target</th><th>Rule</th></tr></thead>
+            <tbody id="govTailBody"><tr><td colspan="5"><div class="skeleton" style="height:16px"></div></td></tr></tbody>
+          </table>
+        </div>
+        <div class="registry-cards" id="govTailCards" aria-label="Audit tail mobile"></div>
+        <div id="govTailEmpty" style="display:none;padding:16px"><div class="empty">Chưa có audit — chạy <span class="kbd">node .agent/scripts/audit.mjs log --tool read --target "www/status.json" --decision permitted</span></div></div>
+        <div style="padding:12px 16px;border-top:1px solid #f1f5f9;display:flex;gap:8px;flex-wrap:wrap">
+          <span class="mono small" style="color:var(--color-neutral-500)">CLI: <span class="kbd">audit.mjs tail --n 20</span> · <span class="kbd">policy-check.mjs --tool shell --target "rm -rf /"</span> · <span class="kbd">credentials.mjs list</span></span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Platform — AG-UI + MCP + Components + Routines (học OpenBot Phase 2) -->
+    <section class="section" id="platform" aria-labelledby="platform-title">
+      <div class="section-head">
+        <div>
+          <h2 id="platform-title">🧩 Platform — AG-UI · MCP · Components · Routines</h2>
+          <p>Bring your own agent, governed MCP, generative UI, scheduled routines — học OpenBot</p>
+        </div>
+        <span class="tag" id="platformTag" aria-live="polite">—</span>
+      </div>
+      <div class="grid-3" id="platformCards" style="margin:0">
+        <div class="card card-pad" id="platAgentCard" aria-label="AG-UI agents">
+          <div class="skeleton" style="height:16px;margin-bottom:8px"></div>
+          <div class="skeleton" style="height:16px"></div>
+        </div>
+        <div class="card card-pad" id="platMcpCard" aria-label="MCP">
+          <div class="skeleton" style="height:16px;margin-bottom:8px"></div>
+          <div class="skeleton" style="height:16px"></div>
+        </div>
+        <div class="card card-pad" id="platCompCard" aria-label="Components">
+          <div class="skeleton" style="height:16px;margin-bottom:8px"></div>
+          <div class="skeleton" style="height:16px"></div>
+        </div>
+        <div class="card card-pad" id="platRoutineCard" aria-label="Routines">
+          <div class="skeleton" style="height:16px;margin-bottom:8px"></div>
+          <div class="skeleton" style="height:16px"></div>
+        </div>
+      </div>
+      <div style="margin-top:12px;display:flex;gap:8px;flex-wrap:wrap">
+        <a class="btn btn-ghost btn-sm" href="./components/playground.html">🎨 Playground</a>
+        <span class="mono small" style="color:var(--color-neutral-500)">CLI: <span class="kbd">agent-registry.mjs list</span> · <span class="kbd">mcp-check.mjs --tool google-drive --agent general</span> · <span class="kbd">component-check.mjs --component hello</span> · <span class="kbd">routine.mjs add --cron "0 9 * * *"</span></span>
+      </div>
+    </section>
+
     <!-- Presets + Plans -->
     <div class="grid-2">
       <section class="section" aria-labelledby="preset-title">

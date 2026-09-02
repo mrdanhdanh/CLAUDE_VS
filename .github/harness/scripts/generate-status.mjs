@@ -7,6 +7,8 @@
 import fs from 'node:fs/promises';
 import { existsSync } from 'node:fs';
 import path from 'node:path';
+import crypto from 'node:crypto';
+import os from 'node:os';
 import { fileURLToPath } from 'node:url';
 
 const __filename = fileURLToPath(import.meta.url);
@@ -80,6 +82,135 @@ async function main() {
     learnStats.drafts = drafts;
   } catch {}
 
+  // governance stats (audit/policy/credentials) — học OpenBot
+  let governance = { audit: { total: 0, permitted: 0, refused: 0, failed: 0, lastTs: null, tail: [] }, policy: { version: 1, deny: 0, allow: 0, status: 'ok', lastCheck: null }, credentials: { count: 0, status: 'ok', enc: false } };
+  try {
+    // audit
+    const auditPath = path.join(ROOT, '.agent', 'audit.jsonl');
+    if (existsSync(auditPath)) {
+      const text = await fs.readFile(auditPath, 'utf8');
+      const lines = text.trim().split('\n').filter(Boolean);
+      let permitted = 0, refused = 0, failed = 0, lastTs = null;
+      const tail = [];
+      for (const line of lines) {
+        try {
+          const e = JSON.parse(line);
+          if (e.decision === 'permitted') permitted++;
+          else if (e.decision === 'refused') refused++;
+          else if (e.decision === 'failed') failed++;
+          if (e.ts) lastTs = e.ts;
+        } catch {}
+      }
+      // tail last 5
+      for (const line of lines.slice(-5)) {
+        try { tail.push(JSON.parse(line)); } catch {}
+      }
+      governance.audit = { total: lines.length, permitted, refused, failed, lastTs, tail };
+    }
+    // policy
+    const policyPath = path.join(ROOT, '.agent', 'policy.json');
+    if (existsSync(policyPath)) {
+      try {
+        const p = JSON.parse(await fs.readFile(policyPath, 'utf8'));
+        governance.policy = { version: p.version || 1, deny: (p.deny || []).length, allow: (p.allow || []).length, status: 'ok', lastCheck: new Date().toISOString() };
+      } catch (e) {
+        governance.policy = { version: 0, deny: 0, allow: 0, status: 'error', lastCheck: new Date().toISOString(), error: e.message };
+      }
+    }
+    // credentials
+    const encPath = path.join(ROOT, '.agent', 'credentials.enc.json');
+    if (existsSync(encPath)) {
+      try {
+        const raw = JSON.parse(await fs.readFile(encPath, 'utf8'));
+        // try decrypt to count keys (need key)
+        let count = 0;
+        let keyBuf = null;
+        if (process.env.HARNESS_CRED_KEY) {
+          try { keyBuf = Buffer.from(process.env.HARNESS_CRED_KEY.trim(), 'base64'); if (keyBuf.length !== 32) keyBuf = null; } catch {}
+        }
+        if (!keyBuf) {
+          const homeKey = path.join(os.homedir(), '.harness', 'key');
+          const localKey = path.join(ROOT, '.agent', 'credentials.key');
+          for (const kp of [homeKey, localKey]) {
+            if (existsSync(kp)) {
+              try { const b64 = (await fs.readFile(kp, 'utf8')).trim(); const b = Buffer.from(b64, 'base64'); if (b.length === 32) { keyBuf = b; break; } } catch {}
+            }
+          }
+        }
+        if (keyBuf && raw.iv && raw.tag && raw.data) {
+          try {
+            const iv = Buffer.from(raw.iv, 'base64');
+            const tag = Buffer.from(raw.tag, 'base64');
+            const data = Buffer.from(raw.data, 'base64');
+            const decipher = crypto.createDecipheriv('aes-256-gcm', keyBuf, iv);
+            decipher.setAuthTag(tag);
+            const plain = Buffer.concat([decipher.update(data), decipher.final()]);
+            const store = JSON.parse(plain.toString('utf8'));
+            count = Object.keys(store).length;
+          } catch {}
+        }
+        governance.credentials = { count, status: 'ok', enc: true };
+      } catch {
+        governance.credentials = { count: 0, status: 'error', enc: true };
+      }
+    }
+  } catch {}
+
+  // platform stats (AG-UI/MCP/components/routines) — học OpenBot Phase 2
+  let platform = { agents: { total: 0, builtIn: 0, remote: 0 }, mcp: { vendors: 0, grants: 0 }, components: { total: 0, published: 0 }, routines: { total: 0, enabled: 0 } };
+  try {
+    // agents
+    const agentsYaml = path.join(ROOT, '.agent', 'agents.yaml');
+    if (existsSync(agentsYaml)) {
+      const text = await fs.readFile(agentsYaml, 'utf8');
+      const agents = [];
+      let cur = null;
+      for (const raw of text.split('\n')) {
+        const line = raw.trim();
+        if (!line || line.startsWith('#')) continue;
+        if (line.startsWith('- id:')) { if (cur) agents.push(cur); cur = { id: line.slice(5).trim() }; }
+        else if (cur && line.includes(':')) {
+          const idx = line.indexOf(':');
+          const k = line.slice(0, idx).trim();
+          let v = line.slice(idx + 1).trim();
+          if ((v.startsWith('"') && v.endsWith('"')) || (v.startsWith("'") && v.endsWith("'"))) v = v.slice(1, -1);
+          cur[k] = v;
+        }
+      }
+      if (cur) agents.push(cur);
+      const filtered = agents.filter(a => a.id);
+      platform.agents = { total: filtered.length, builtIn: filtered.filter(a => (a.type || 'built-in') === 'built-in').length, remote: filtered.filter(a => a.type === 'remote-ag-ui').length };
+    }
+    // mcp
+    const catalogPath = path.join(ROOT, '.agent', 'mcp', 'catalog.json');
+    const grantsPath = path.join(ROOT, '.agent', 'mcp', 'grants.json');
+    if (existsSync(catalogPath)) {
+      try { const c = JSON.parse(await fs.readFile(catalogPath, 'utf8')); platform.mcp.vendors = (c.vendors || []).length; } catch {}
+    }
+    if (existsSync(grantsPath)) {
+      try { const g = JSON.parse(await fs.readFile(grantsPath, 'utf8')); platform.mcp.grants = Object.keys(g.grants || {}).length; } catch {}
+    }
+    // components
+    const galleryDir = path.join(WWW_DIR, 'components', 'gallery');
+    if (existsSync(galleryDir)) {
+      const files = await fs.readdir(galleryDir);
+      const htmlFiles = files.filter(f => f.endsWith('.html'));
+      let published = 0;
+      for (const f of htmlFiles) {
+        const html = await fs.readFile(path.join(galleryDir, f), 'utf8');
+        const m = html.match(/<!--\s*meta:\s*(\{[\s\S]*?\})\s*-->/);
+        if (m) { try { const meta = JSON.parse(m[1]); if (meta.published) published++; } catch { published++; } }
+        else published++;
+      }
+      platform.components = { total: htmlFiles.length, published };
+    }
+    // routines
+    const routinesPath = path.join(ROOT, '.agent', 'routines.json');
+    if (existsSync(routinesPath)) {
+      try { const r = JSON.parse(await fs.readFile(routinesPath, 'utf8')); platform.routines = { total: r.length, enabled: r.filter(x => x.enabled).length }; } catch {}
+    }
+  } catch {}
+
   // health checks
   const healthChecks = [
     `get_errors: pass (0 errors)`,
@@ -88,6 +219,8 @@ async function main() {
     `workflow: www/** -> Pages (upload-artifact path: www) — exists: ${existsSync(path.join(GITHUB_DIR, 'workflows', 'pages.yml'))}`,
     `library: www/library/ (PDF/DOCX/TXT/MD, BM25 <100ms, tháo lắp) + mcp-server.mjs + export.json + library-rag instruction`,
     `auto-learn: ${learnStats.knTotal} KN, ${learnStats.bugsTotal} bugs, ${learnStats.drafts} drafts — suggest/log/propose/status (<50ms, IDF, tiếng Việt)`,
+    `governance: audit ${governance.audit.total} · policy ${governance.policy.deny} deny/${governance.policy.allow} allow (${governance.policy.status}) · credentials ${governance.credentials.count} keys ${governance.credentials.enc ? 'enc' : 'plain'}`,
+    `platform: agents ${platform.agents.total} (${platform.agents.builtIn} built-in, ${platform.agents.remote} remote) · mcp ${platform.mcp.vendors} vendors/${platform.mcp.grants} grants · components ${platform.components.total}/${platform.components.published} pub · routines ${platform.routines.total}/${platform.routines.enabled} enabled`,
     `n5-blazor: www/n5-blazor/ 7 trang static + app.css + data.js + site.js — 100% Pages`,
   ];
 
@@ -143,7 +276,9 @@ async function main() {
       pipeline: 'Idea → Explore → Clarify → PRD → Design → Plan → Implement → Polish → Verify → Done',
       philosophy: 'Process > Model'
     },
-    learn: learnStats
+    learn: learnStats,
+    governance,
+    platform
   };
 
   // keep registry as simplified for dashboard (enabled + description)

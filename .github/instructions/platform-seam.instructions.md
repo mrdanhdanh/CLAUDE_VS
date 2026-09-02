@@ -1,0 +1,78 @@
+---
+description: "Platform seam — AG-UI + MCP + Components + Routines (học OpenBot). Bring your own agent, governed MCP, generative UI, scheduled routines. Use when adding agent, MCP, component, routine, or platform capability."
+applyTo: "**"
+---
+
+# Platform Seam — AG-UI + MCP + Components + Routines (học OpenBot)
+
+> Bring your own agent (AG-UI), governed MCP, components instead of prose, routines on schedule — như OpenBot nhưng file-based, 0 deps.
+
+## Khi nào áp dụng
+- Thêm agent ngoài (LangGraph/Mastra/CrewAI) → `agents.yaml`
+- Thêm MCP vendor/grant → `mcp/catalog.json` + `grants.json`
+- Thêm component → `www/components/gallery/` + `component-check.mjs`
+- Thêm routine → `routines.json` + `routine.mjs`
+
+## Quy tắc (BẮT BUỘC)
+
+### 1. AG-UI — Bring your own agent
+```bash
+# Khai báo trong .agent/agents.yaml
+# - id: custom
+#   type: remote-ag-ui
+#   endpoint: https://agents.internal/custom
+
+node .agent/scripts/agent-registry.mjs list
+node .agent/scripts/agent-registry.mjs validate --id custom
+# Private host phải có trong AGENT_ENDPOINT_ALLOWED_HOSTS (exact match, no wildcard)
+```
+- `built-in` = system prompt, `remote-ag-ui` = endpoint AG-UI.
+- Private host (`10.*`, `192.168.*`, `localhost`, `*.internal`) → phải list trong `AGENT_ENDPOINT_ALLOWED_HOSTS`, không thì refused.
+- Public host → allowed.
+
+### 2. Governed MCP — catalog + grants
+```bash
+node .agent/scripts/mcp-check.mjs --list
+node .agent/scripts/mcp-check.mjs --tool google-drive --agent general
+# → ✅ PERMITTED nếu agent holds vendor, else ⛔ REFUSED
+# Unknown vendor → treated as write → refused (fail-closed)
+```
+- `catalog.json` = vendors this deployment stands behind (review trước khi add).
+- `grants.json` = per-agent grants. Bot chỉ được gọi vendor đã grant.
+- Unknown tool → refused (như OpenBot: unknown tools are writes).
+
+### 3. Components — published + withheld
+```bash
+node .agent/scripts/component-check.mjs --list
+node .agent/scripts/component-check.mjs --component hello --agent general
+# → check published && not withheld from that agent
+```
+- Mỗi component: `<!-- meta: {"id","published":true,"withheld":[]} -->` trong HTML.
+- `published: false` → refused. `withheld: ["risk"]` → refused for that agent.
+- Gallery: `www/components/gallery/*.html`, playground: `www/components/playground.html`.
+
+### 4. Routines — schedule
+```bash
+node .agent/scripts/routine.mjs add --cron "0 9 * * *" --prompt "check status" --agent general
+node .agent/scripts/routine.mjs list
+node .agent/scripts/routine.mjs run --id a1b2c3
+```
+- Floor 15m (cron <15m → refused), cap 20 enabled, 10 fails → off (như OpenBot).
+- Lưu `routines.json`, `generate-status.mjs` đếm vào `platform.routines`.
+
+## Checklist cho agent (tự kiểm)
+- [ ] Agent endpoint đã validate với `AGENT_ENDPOINT_ALLOWED_HOSTS`?
+- [ ] MCP tool đã check grant trước khi gọi?
+- [ ] Component đã check published/withheld trước khi trả?
+- [ ] Routine cron ≥15m và enabled <20?
+
+## Liên kết
+- Agents: `.agent/agents.yaml` + `.agent/scripts/agent-registry.mjs`
+- MCP: `.agent/mcp/catalog.json` + `grants.json` + `mcp-check.mjs`
+- Components: `www/components/gallery/` + `playground.html` + `component-check.mjs`
+- Routines: `.agent/routines.json` + `routine.mjs`
+- Status: `www/status.json` → `platform: {agents, mcp, components, routines}`
+- Gốc: `CopilotKit/OpenBot` — AG-UI, governed MCP, components, routines
+
+---
+*Instruction: platform-seam — enforce bởi Harness v2. Học OpenBot, 0 deps, Node 18+.*

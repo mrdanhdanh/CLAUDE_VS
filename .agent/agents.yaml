@@ -1,0 +1,31 @@
+# Agents — bring your own agent (AG-UI) — học OpenBot
+# type: built-in (system prompt) hoặc remote-ag-ui (endpoint)
+# endpoint phải pass AGENT_ENDPOINT_ALLOWED_HOSTS (exact match, no wildcard)
+agents:
+  - id: general
+    name: General Assistant
+    title: Everyday work
+    type: built-in
+    prompt: "You are a helpful assistant for everyday work."
+    visibility: public
+
+  - id: knowledge
+    name: Knowledge
+    title: Company questions
+    type: built-in
+    prompt: "You are a knowledge assistant for company questions."
+    visibility: public
+
+  - id: risk
+    name: Risk Analyst
+    title: Risk and compliance
+    type: built-in
+    prompt: "You are a risk analyst for risk and compliance."
+    visibility: public
+
+# Example remote agent (uncomment to use):
+# - id: custom
+#   name: Custom Agent
+#   type: remote-ag-ui
+#   endpoint: https://agents.internal/custom
+#   visibility: private

@@ -601,6 +601,236 @@ function renderYunie(data){
   setIntro(activeIntro);
 }
 
+// ---------- Governance (học OpenBot) ----------
+function renderGovernance(data){
+  const g = data.governance || { audit:{total:0,permitted:0,refused:0,failed:0,lastTs:null,tail:[]}, policy:{version:1,deny:0,allow:0,status:'ok'}, credentials:{count:0,status:'ok',enc:false} };
+  const audit = g.audit || {total:0,permitted:0,refused:0,failed:0,lastTs:null,tail:[]};
+  const policy = g.policy || {version:1,deny:0,allow:0,status:'ok'};
+  const cred = g.credentials || {count:0,status:'ok',enc:false};
+
+  const tag = $('#governanceTag');
+  if(tag){
+    const total = audit.total || 0;
+    const refused = audit.refused || 0;
+    const status = policy.status === 'error' ? 'lỗi policy' : refused ? `${refused} refused` : `${total} events`;
+    tag.textContent = `audit ${total} · policy ${policy.deny}/${policy.allow} · ${cred.count} keys`;
+    tag.title = status;
+  }
+
+  const auditCard = $('#govAuditCard');
+  if(auditCard){
+    const last = audit.lastTs ? fmtTime(audit.lastTs) : '—';
+    auditCard.innerHTML = `
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
+        <span style="width:32px;height:32px;border-radius:10px;display:grid;place-items:center;background:#6366f1;color:white;flex-shrink:0">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M10 13H8"/><path d="M16 17H8"/></svg>
+        </span>
+        <div style="min-width:0">
+          <div style="font:700 13px var(--font-sans)">Audit Trail</div>
+          <div style="font:500 11px var(--font-sans);color:var(--color-neutral-500)">append-only JSONL</div>
+        </div>
+        <span class="tag ${audit.total?'tag-on':''}" style="margin-left:auto">${audit.total} events</span>
+      </div>
+      <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:8px">
+        <span class="tag tag-on">● ${audit.permitted||0} permitted</span>
+        <span class="tag ${audit.refused?'tag-warn':''}">● ${audit.refused||0} refused</span>
+        <span class="tag ${audit.failed?'tag-off':''}">● ${audit.failed||0} failed</span>
+      </div>
+      <div style="font:500 11px var(--font-mono);color:var(--color-neutral-500)">last: ${escapeHtml(last)}</div>
+      <div style="margin-top:10px;display:flex;gap:6px;flex-wrap:wrap">
+        <span class="kbd">audit.mjs stats</span>
+        <span class="kbd">audit.mjs tail</span>
+      </div>
+    `;
+  }
+
+  const policyCard = $('#govPolicyCard');
+  if(policyCard){
+    const ok = policy.status === 'ok';
+    policyCard.innerHTML = `
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
+        <span style="width:32px;height:32px;border-radius:10px;display:grid;place-items:center;background:${ok?'#16a34a':'#dc2626'};color:white;flex-shrink:0">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22a7 7 0 0 0 7-7c0-3.5-2.5-6-7-10-4.5 4-7 6.5-7 10a7 7 0 0 0 7 7z"/></svg>
+        </span>
+        <div style="min-width:0">
+          <div style="font:700 13px var(--font-sans)">Policy Gate</div>
+          <div style="font:500 11px var(--font-sans);color:var(--color-neutral-500)">deny trước allow · fail-closed</div>
+        </div>
+        <span class="tag ${ok?'tag-on':'tag-off'}" style="margin-left:auto">${ok?'● ok':'● lỗi'}</span>
+      </div>
+      <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:8px">
+        <span class="tag tag-warn">${policy.deny||0} deny</span>
+        <span class="tag tag-on">${policy.allow||0} allow</span>
+        <span class="tag">v${policy.version||1}</span>
+      </div>
+      <div style="font:500 11px var(--font-mono);color:var(--color-neutral-500)">${policy.error ? escapeHtml(policy.error.slice(0,80)) : 'CEL-lite · 4 vars: tool/target/actor/intent'}</div>
+      <div style="margin-top:10px;display:flex;gap:6px;flex-wrap:wrap">
+        <span class="kbd">policy-check.mjs --check</span>
+      </div>
+    `;
+  }
+
+  const credCard = $('#govCredCard');
+  if(credCard){
+    const ok = cred.status === 'ok';
+    credCard.innerHTML = `
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
+        <span style="width:32px;height:32px;border-radius:10px;display:grid;place-items:center;background:${ok?'#0ea5e9':'#dc2626'};color:white;flex-shrink:0">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="11" width="18" height="10" rx="2"/><path d="M7 11V7a3 3 0 0 1 5-3 3 3 0 0 1 5 3v4"/><circle cx="12" cy="16" r="1" fill="white" stroke="none"/></svg>
+        </span>
+        <div style="min-width:0">
+          <div style="font:700 13px var(--font-sans)">Credentials</div>
+          <div style="font:500 11px var(--font-sans);color:var(--color-neutral-500)">AES-256-GCM · never logged</div>
+        </div>
+        <span class="tag ${ok?'tag-on':'tag-off'}" style="margin-left:auto">${cred.enc?'● enc':'● plain'}</span>
+      </div>
+      <div style="font:700 22px var(--font-display);letter-spacing:-.02em">${cred.count||0}</div>
+      <div style="font:600 11px var(--font-sans);letter-spacing:.06em;text-transform:uppercase;color:var(--color-neutral-500)">keys · redacted in audit</div>
+      <div style="margin-top:10px;display:flex;gap:6px;flex-wrap:wrap">
+        <span class="kbd">credentials.mjs list</span>
+      </div>
+    `;
+  }
+
+  // tail
+  const tail = audit.tail || [];
+  const tailBody = $('#govTailBody');
+  const tailCards = $('#govTailCards');
+  const tailEmpty = $('#govTailEmpty');
+  const tailTag = $('#govTailTag');
+  const tailWrap = $('#govTailWrap');
+  if(tailTag) tailTag.textContent = tail.length ? `${tail.length} dòng` : '0 dòng';
+  if(!tail.length){
+    if(tailBody) tailBody.innerHTML = `<tr><td colspan="5"><div class="empty" style="border:none;padding:12px">Chưa có audit — chạy <span class="kbd">audit.mjs log</span></div></td></tr>`;
+    if(tailCards) tailCards.innerHTML = '';
+    if(tailEmpty) tailEmpty.style.display = 'block';
+    if(tailWrap) tailWrap.style.display = 'none';
+  } else {
+    if(tailEmpty) tailEmpty.style.display = 'none';
+    if(tailWrap) tailWrap.style.display = '';
+    if(tailBody){
+      tailBody.innerHTML = tail.map(e=>{
+        const dec = e.decision === 'permitted' ? '<span class="tag tag-on">permitted</span>' : e.decision === 'refused' ? '<span class="tag tag-warn">refused</span>' : '<span class="tag tag-off">failed</span>';
+        const rule = e.rule ? `<span class="mono" style="font-size:11px">${escapeHtml(e.rule)}</span>` : '<span style="color:var(--color-neutral-400)">—</span>';
+        return `<tr><td class="mono" style="font-size:11px;white-space:nowrap">${escapeHtml(fmtTime(e.ts))}</td><td>${dec}</td><td class="mono" style="font-size:11px">${escapeHtml(e.tool||'')}</td><td class="mono" style="font-size:11px;max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" title="${escapeHtml(e.target||'')}">${escapeHtml((e.target||'').slice(0,40))}</td><td>${rule}</td></tr>`;
+      }).join('');
+    }
+    if(tailCards){
+      tailCards.innerHTML = tail.map(e=>{
+        const dec = e.decision === 'permitted' ? 'tag-on' : e.decision === 'refused' ? 'tag-warn' : 'tag-off';
+        return `<div class="reg-card" tabindex="0" role="article" aria-label="${escapeHtml(e.decision)} ${escapeHtml(e.tool)}">
+          <div style="display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:6px">
+            <span class="tag ${dec}">${escapeHtml(e.decision)}</span>
+            <span class="mono" style="font-size:11px;color:var(--color-neutral-500)">${escapeHtml(fmtTime(e.ts))}</span>
+          </div>
+          <div style="font:600 12px var(--font-mono)">${escapeHtml(e.tool||'')} → ${escapeHtml((e.target||'').slice(0,40))}</div>
+          <div style="font:500 11px var(--font-mono);color:var(--color-neutral-500);margin-top:4px">rule: ${e.rule ? escapeHtml(e.rule) : '—'} · ${escapeHtml(e.actor||'')}</div>
+        </div>`;
+      }).join('');
+    }
+  }
+}
+
+// ---------- Platform (học OpenBot Phase 2) ----------
+function renderPlatform(data){
+  const p = data.platform || { agents:{total:0,builtIn:0,remote:0}, mcp:{vendors:0,grants:0}, components:{total:0,published:0}, routines:{total:0,enabled:0} };
+  const agents = p.agents || {total:0,builtIn:0,remote:0};
+  const mcp = p.mcp || {vendors:0,grants:0};
+  const comps = p.components || {total:0,published:0};
+  const routines = p.routines || {total:0,enabled:0};
+
+  const tag = $('#platformTag');
+  if(tag) tag.textContent = `${agents.total} agents · ${mcp.vendors} mcp · ${comps.total} comps · ${routines.total} routines`;
+
+  const agentCard = $('#platAgentCard');
+  if(agentCard){
+    agentCard.innerHTML = `
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
+        <span style="width:32px;height:32px;border-radius:10px;display:grid;place-items:center;background:#6366f1;color:white;flex-shrink:0">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="11" width="18" height="10" rx="2"/><path d="M12 11V7a3 3 0 0 1 3-3h1"/><path d="M12 7a3 3 0 0 0-3-3H8"/></svg>
+        </span>
+        <div style="min-width:0">
+          <div style="font:700 13px var(--font-sans)">AG-UI Agents</div>
+          <div style="font:500 11px var(--font-sans);color:var(--color-neutral-500)">bring your own agent</div>
+        </div>
+        <span class="tag tag-on" style="margin-left:auto">${agents.total} agents</span>
+      </div>
+      <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:8px">
+        <span class="tag tag-on">${agents.builtIn||0} built-in</span>
+        <span class="tag ${agents.remote?'tag-warn':''}">${agents.remote||0} remote</span>
+      </div>
+      <div style="font:500 11px var(--font-mono);color:var(--color-neutral-500)">agents.yaml · AGENT_ENDPOINT_ALLOWED_HOSTS</div>
+      <div style="margin-top:10px"><span class="kbd">agent-registry.mjs list</span></div>
+    `;
+  }
+
+  const mcpCard = $('#platMcpCard');
+  if(mcpCard){
+    mcpCard.innerHTML = `
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
+        <span style="width:32px;height:32px;border-radius:10px;display:grid;place-items:center;background:#0ea5e9;color:white;flex-shrink:0">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22a7 7 0 0 0 7-7c0-3.5-2.5-6-7-10-4.5 4-7 6.5-7 10a7 7 0 0 0 7 7z"/></svg>
+        </span>
+        <div style="min-width:0">
+          <div style="font:700 13px var(--font-sans)">Governed MCP</div>
+          <div style="font:500 11px var(--font-sans);color:var(--color-neutral-500)">catalog + grants per agent</div>
+        </div>
+        <span class="tag tag-on" style="margin-left:auto">${mcp.vendors||0} vendors</span>
+      </div>
+      <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:8px">
+        <span class="tag">${mcp.vendors||0} vendors</span>
+        <span class="tag tag-on">${mcp.grants||0} grants</span>
+      </div>
+      <div style="font:500 11px var(--font-mono);color:var(--color-neutral-500)">unknown tool = write → refused</div>
+      <div style="margin-top:10px"><span class="kbd">mcp-check.mjs --tool google-drive</span></div>
+    `;
+  }
+
+  const compCard = $('#platCompCard');
+  if(compCard){
+    compCard.innerHTML = `
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
+        <span style="width:32px;height:32px;border-radius:10px;display:grid;place-items:center;background:#f59e0b;color:white;flex-shrink:0">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18"/><path d="M9 21V9"/></svg>
+        </span>
+        <div style="min-width:0">
+          <div style="font:700 13px var(--font-sans)">Components</div>
+          <div style="font:500 11px var(--font-sans);color:var(--color-neutral-500)">generative UI · gallery</div>
+        </div>
+        <span class="tag tag-on" style="margin-left:auto">${comps.total||0} comps</span>
+      </div>
+      <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:8px">
+        <span class="tag tag-on">${comps.published||0} published</span>
+        <span class="tag">${(comps.total||0)-(comps.published||0)} draft</span>
+      </div>
+      <div style="font:500 11px var(--font-mono);color:var(--color-neutral-500)">published + not withheld</div>
+      <div style="margin-top:10px;display:flex;gap:6px;flex-wrap:wrap"><a class="kbd" href="./components/playground.html" style="text-decoration:none">playground.html</a> <span class="kbd">component-check.mjs</span></div>
+    `;
+  }
+
+  const routineCard = $('#platRoutineCard');
+  if(routineCard){
+    routineCard.innerHTML = `
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
+        <span style="width:32px;height:32px;border-radius:10px;display:grid;place-items:center;background:#16a34a;color:white;flex-shrink:0">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>
+        </span>
+        <div style="min-width:0">
+          <div style="font:700 13px var(--font-sans)">Routines</div>
+          <div style="font:500 11px var(--font-sans);color:var(--color-neutral-500)">schedule · floor 15m · cap 20</div>
+        </div>
+        <span class="tag ${routines.enabled?'tag-on':''}" style="margin-left:auto">${routines.total||0} routines</span>
+      </div>
+      <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:8px">
+        <span class="tag tag-on">${routines.enabled||0} enabled</span>
+        <span class="tag">${(routines.total||0)-(routines.enabled||0)} disabled</span>
+      </div>
+      <div style="font:500 11px var(--font-mono);color:var(--color-neutral-500)">10 fails → off</div>
+      <div style="margin-top:10px"><span class="kbd">routine.mjs add --cron "0 9 * * *"</span></div>
+    `;
+  }
+}
+
 // ---------- Boot ----------
 async function boot(){
   const statsEl = $('#stats');
@@ -618,6 +848,8 @@ async function boot(){
     renderPlans(data);
     renderHealth(data);
     renderPages(data);
+    renderGovernance(data);
+    renderPlatform(data);
     renderYunie(data);
   }catch(e){
     console.error(e);

@@ -20,6 +20,12 @@ TestResults/
 *.dbmdl
 *.jfm
 
+# ===== Governance — audit + credentials (never commit) =====
+.agent/audit.jsonl
+.agent/credentials.enc.json
+.agent/credentials.key
+.agent/credentials.key.bak
+
 # ===== Common =====
 node_modules/
 .DS_Store

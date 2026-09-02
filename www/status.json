@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-02T14:26:48.048Z",
+  "generatedAt": "2026-09-02T15:13:47.580Z",
   "generatedBy": "YUNIE",
   "version": 1,
   "counts": {
@@ -9,9 +9,9 @@
       "total": 10
     },
     "instructions": {
-      "enabled": 10,
+      "enabled": 11,
       "disabled": 0,
-      "total": 10
+      "total": 11
     },
     "agents": {
       "enabled": 8,
@@ -112,6 +112,10 @@
       "auto-learn": {
         "enabled": true,
         "description": "Auto-Learn — tự động gợi ý KN liên quan, auto-log lỗi, đề xuất cập nhật knowleged.md. Use when coding, fixing bug, before edit, after error, need suggest KN, log bug, propose KN, auto-learn, knowledge."
+      },
+      "agent-governance": {
+        "enabled": true,
+        "description": "Governance — audit + policy + credentials (học OpenBot). Mọi tool call phải qua policy gate (deny trước allow, fail-closed) và ghi audit; credentials mã hóa at-rest, never logged. Use when any tool call, shell, file, MCP, or credentials."
       }
     },
     "agents": {
@@ -207,6 +211,8 @@
     "library-rag",
     "liquid-glass-status",
     "n5-blazor",
+    "openbot-governance",
+    "openbot-governance-phase2",
     "skill-registry",
     "status-ui-v2",
     "todo-manager",
@@ -257,14 +263,16 @@
   "health": {
     "errors": 0,
     "status": "ok",
-    "lastCheck": "2026-09-02T14:26:48.048Z",
+    "lastCheck": "2026-09-02T15:13:47.580Z",
     "checks": [
       "get_errors: pass (0 errors)",
-      "registry: 10 instructions (10 total) - 10 skills - 8 agents - 7 prompts - 1 hook — all enabled",
+      "registry: 11 instructions (11 total) - 10 skills - 8 agents - 7 prompts - 1 hook — all enabled",
       "www: polished — responsive 375/768/1280, a11y, states, animation 150-300ms",
       "workflow: www/** -> Pages (upload-artifact path: www) — exists: true",
       "library: www/library/ (PDF/DOCX/TXT/MD, BM25 <100ms, tháo lắp) + mcp-server.mjs + export.json + library-rag instruction",
       "auto-learn: 11 KN, 7 bugs, 0 drafts — suggest/log/propose/status (<50ms, IDF, tiếng Việt)",
+      "governance: audit 2 · policy 4 deny/2 allow (ok) · credentials 0 keys plain",
+      "platform: agents 3 (3 built-in, 0 remote) · mcp 2 vendors/3 grants · components 3/3 pub · routines 1/1 enabled",
       "n5-blazor: www/n5-blazor/ 7 trang static + app.css + data.js + site.js — 100% Pages"
     ]
   },
@@ -330,5 +338,71 @@
     "knTotal": 11,
     "bugsTotal": 7,
     "drafts": 0
+  },
+  "governance": {
+    "audit": {
+      "total": 2,
+      "permitted": 1,
+      "refused": 1,
+      "failed": 0,
+      "lastTs": "2026-09-02T15:13:47.540Z",
+      "tail": [
+        {
+          "ts": "2026-09-02T15:13:47.506Z",
+          "actor": "YUNIE",
+          "tool": "read",
+          "target": "www/index.html",
+          "decision": "permitted",
+          "rule": "allow-read-www",
+          "durationMs": null,
+          "error": null,
+          "intent": null,
+          "requestId": "6f3e57"
+        },
+        {
+          "ts": "2026-09-02T15:13:47.540Z",
+          "actor": "YUNIE",
+          "tool": "read",
+          "target": ".env",
+          "decision": "refused",
+          "rule": "deny-env-read",
+          "durationMs": null,
+          "error": null,
+          "intent": null,
+          "requestId": "f2ec06"
+        }
+      ]
+    },
+    "policy": {
+      "version": 1,
+      "deny": 4,
+      "allow": 2,
+      "status": "ok",
+      "lastCheck": "2026-09-02T15:13:47.578Z"
+    },
+    "credentials": {
+      "count": 0,
+      "status": "ok",
+      "enc": false
+    }
+  },
+  "platform": {
+    "agents": {
+      "total": 3,
+      "builtIn": 3,
+      "remote": 0
+    },
+    "mcp": {
+      "vendors": 2,
+      "grants": 3
+    },
+    "components": {
+      "total": 3,
+      "published": 3
+    },
+    "routines": {
+      "total": 1,
+      "enabled": 1
+    }
   }
 }

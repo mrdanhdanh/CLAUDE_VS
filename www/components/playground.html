@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Components Playground — Harness v2</title>
+  <link rel="stylesheet" href="../styles.css" />
+  <style>
+    .playground-grid{display:grid;gap:16px;margin:16px 0}
+    @media(min-width:768px){.playground-grid{grid-template-columns:repeat(2,1fr)}}
+    .playground-frame{border:1px solid #e2e8f0;border-radius:12px;overflow:hidden;background:white}
+    .playground-frame header{padding:10px 14px;background:#f8fafc;border-bottom:1px solid #e2e8f0;display:flex;align-items:center;justify-content:space-between;gap:8px}
+    .playground-frame header strong{font:700 12px Inter}
+    .playground-frame .body{padding:16px}
+    iframe{width:100%;height:200px;border:none;background:white}
+  </style>
+</head>
+<body>
+  <div class="container" style="padding:24px 16px">
+    <a href="../index.html" class="btn btn-ghost btn-sm" style="margin-bottom:16px">← STATUS</a>
+    <h1 style="font:800 22px Plus Jakarta Sans">Components Playground</h1>
+    <p style="color:#64748b;font:400 13px Inter">Gallery: <code>www/components/gallery/</code> — mỗi component là HTML với <code>&lt;!-- meta: {"id","published","withheld"} --&gt;</code>. Check: <code>node .agent/scripts/component-check.mjs --component hello --agent general</code></p>
+    <div class="playground-grid" id="grid"></div>
+  </div>
+  <script>
+    const comps = ['hello','stats','audit'];
+    const grid = document.getElementById('grid');
+    comps.forEach(id => {
+      const card = document.createElement('div');
+      card.className = 'playground-frame';
+      card.innerHTML = `<header><strong>${id}</strong><span class="tag">gallery/${id}.html</span></header><div class="body"><iframe src="./gallery/${id}.html" title="${id}"></iframe></div>`;
+      grid.appendChild(card);
+    });
+  </script>
+</body>
+</html>

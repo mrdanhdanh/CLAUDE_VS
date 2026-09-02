@@ -1,0 +1,11 @@
+[
+  {
+    "id": "86931b",
+    "cron": "0 9 * * *",
+    "prompt": "check status",
+    "agent": "general",
+    "enabled": true,
+    "fails": 0,
+    "createdAt": "2026-09-02T15:13:40.298Z"
+  }
+]

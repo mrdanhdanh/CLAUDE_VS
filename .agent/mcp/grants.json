@@ -1,0 +1,9 @@
+{
+  "version": 1,
+  "description": "MCP grants per agent — which agent holds which connector (học OpenBot)",
+  "grants": {
+    "general": ["google-drive"],
+    "knowledge": ["notion"],
+    "risk": []
+  }
+}

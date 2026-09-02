@@ -1,0 +1,20 @@
+{
+  "version": 1,
+  "description": "MCP catalog — vendors this deployment stands behind (học OpenBot)",
+  "vendors": [
+    {
+      "id": "google-drive",
+      "name": "Google Drive",
+      "description": "Reached as the person asking",
+      "tools": ["read", "write"],
+      "auth": "oauth"
+    },
+    {
+      "id": "notion",
+      "name": "Notion",
+      "description": "Reached as the person asking",
+      "tools": ["read", "write"],
+      "auth": "oauth"
+    }
+  ]
+}

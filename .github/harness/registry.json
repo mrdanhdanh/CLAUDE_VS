@@ -171,6 +171,22 @@
       "description": "Auto-Learn — tự động gợi ý KN liên quan, auto-log lỗi, đề xuất cập nhật knowleged.md. Use when coding, fixing bug, before edit, after error, need suggest KN, log bug, propose KN, auto-learn, knowledge.",
       "applyTo": "**",
       "installedAt": "2026-08-30T16:08:47.651Z"
+    },
+    "agent-governance": {
+      "source": "local",
+      "file": "agent-governance.instructions.md",
+      "enabled": true,
+      "description": "Governance — audit + policy + credentials (học OpenBot). Mọi tool call phải qua policy gate (deny trước allow, fail-closed) và ghi audit; credentials mã hóa at-rest, never logged. Use when any tool call, shell, file, MCP, or credentials.",
+      "applyTo": "**",
+      "installedAt": "2026-09-02T14:38:56.064Z"
+    },
+    "platform-seam": {
+      "source": "local",
+      "file": "platform-seam.instructions.md",
+      "enabled": true,
+      "description": "Platform seam — AG-UI + MCP + Components + Routines (học OpenBot). Bring your own agent, governed MCP, generative UI, scheduled routines. Use when adding agent, MCP, component, routine, or platform capability.",
+      "applyTo": "**",
+      "installedAt": "2026-09-02T15:15:45.072Z"
     }
   },
   "agents": {

@@ -1,0 +1,38 @@
+{
+  "version": 1,
+  "description": "Harness governance — deny before allow, fail-closed (học OpenBot CEL policy)",
+  "deny": [
+    {
+      "id": "deny-rm-rf-root",
+      "when": "tool === 'shell' && target.includes('rm -rf /')",
+      "message": "Refuse rm -rf / — destructive"
+    },
+    {
+      "id": "deny-env-read",
+      "when": "tool === 'read' && target.includes('.env')",
+      "message": "Refuse reading .env — use credentials store"
+    },
+    {
+      "id": "deny-credentials-direct",
+      "when": "target.includes('credentials.enc.json') && tool !== 'credentials'",
+      "message": "Refuse direct read of credentials.enc.json — use credentials.mjs"
+    },
+    {
+      "id": "deny-private-hosts",
+      "when": "tool === 'shell' && (target.includes('curl') || target.includes('wget')) && target.includes('127.0.0.1')",
+      "message": "Refuse private host access via shell — use allowlist"
+    }
+  ],
+  "allow": [
+    {
+      "id": "allow-read-www",
+      "when": "tool === 'read' && target.startsWith('www/')",
+      "message": "Allow reading www/"
+    },
+    {
+      "id": "allow-all",
+      "when": "true",
+      "message": "Allow all other"
+    }
+  ]
+}
