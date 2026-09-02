@@ -831,6 +831,42 @@ function renderPlatform(data){
   }
 }
 
+function bindTabs(){
+  const tabs = $$('.tabs .tab');
+  const panels = $$('.tab-panel');
+  if(!tabs.length || !panels.length) return;
+  tabs.forEach(tab=>{
+    tab.addEventListener('click', ()=>{
+      const target = tab.dataset.tab;
+      tabs.forEach(t=>{
+        const isActive = t.dataset.tab === target;
+        t.classList.toggle('is-active', isActive);
+        t.setAttribute('aria-selected', String(isActive));
+      });
+      panels.forEach(p=>{
+        const isActive = p.id === `tab-${target}`;
+        p.classList.toggle('is-active', isActive);
+        p.hidden = !isActive;
+      });
+    });
+  });
+}
+
+function bindSectionNav(){
+  const links = $$('.section-nav-link');
+  if(!links.length) return;
+  const sections = links.map(a=> document.querySelector(a.getAttribute('href'))).filter(Boolean);
+  const observer = new IntersectionObserver((entries)=>{
+    entries.forEach(entry=>{
+      if(entry.isIntersecting){
+        const id = entry.target.id;
+        links.forEach(a=> a.classList.toggle('is-active', a.getAttribute('href') === `#${id}`));
+      }
+    });
+  }, { rootMargin: '-40% 0px -55% 0px', threshold: 0 });
+  sections.forEach(s=> observer.observe(s));
+}
+
 // ---------- Boot ----------
 async function boot(){
   const statsEl = $('#stats');
@@ -851,6 +887,8 @@ async function boot(){
     renderGovernance(data);
     renderPlatform(data);
     renderYunie(data);
+    bindTabs();
+    bindSectionNav();
   }catch(e){
     console.error(e);
     if(statsEl){
