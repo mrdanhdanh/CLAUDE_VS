@@ -1,0 +1,56 @@
+# YUNIE — AI News Daily Auto-Update
+# Tự động chạy fetch.mjs mỗi ngày 02:00 UTC và commit ai-news.json
+# + cho phép bấm "Run workflow" thủ công trên GitHub (không cần VS Code)
+name: AI News — Daily Auto Update
+
+on:
+  schedule:
+    - cron: "0 2 * * *" # 02:00 UTC mỗi ngày (09:00 VN)
+  workflow_dispatch:
+    inputs:
+      topic:
+        description: "Chủ đề cần fetch (vd: AI, AI agents, LLM)"
+        required: false
+        default: "AI"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: ai-news-update
+  cancel-in-progress: false
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Fetch AI news (Last30Days bridge)
+        run: |
+          TOPIC="${{ inputs.topic || 'AI' }}"
+          echo "Fetching topic: $TOPIC"
+          node www/ai-news/fetch.mjs --topic "$TOPIC"
+          echo "--- ai-news.json head ---"
+          head -n 30 www/ai-news/ai-news.json || true
+          echo "--- validate JSON ---"
+          node -e "JSON.parse(require('fs').readFileSync('www/ai-news/ai-news.json','utf8')); console.log('✅ JSON valid')"
+
+      - name: Commit & push if changed
+        run: |
+          git config user.name "YUNIE Bot"
+          git config user.email "yunie@harness.local"
+          if git diff --quiet -- www/ai-news/ai-news.json; then
+            echo "No changes — skip commit"
+            exit 0
+          fi
+          git add www/ai-news/ai-news.json
+          git commit -m "chore(ai-news): auto-update $(date -u +%Y-%m-%d) [skip ci]"
+          git push
+          echo "✅ Pushed — Pages sẽ tự deploy (www/** trigger)"
