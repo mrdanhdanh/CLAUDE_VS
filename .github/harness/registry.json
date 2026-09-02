@@ -80,6 +80,15 @@
       "description": "AAR Automated Researcher self-improving AI — search knowleged + library BM25, propose 3 methods, benchmark 30m, keep best. Use when harness needs auto-research, need to search knowleged/library, propose methods, benchmark, keep best, or user says AAR/auto-researcher/self-improving/Tier 2",
       "installedAt": "2026-08-30T18:32:38.885Z",
       "path": "skills/auto-researcher"
+    },
+    "last30days": {
+      "source": "mvanhorn/last30days-skill",
+      "path": "skills/last30days",
+      "ref": "main",
+      "enabled": true,
+      "description": "Research what people actually say about any topic in the last 30 days. Pulls posts and engagement from Reddit, X, YouTube, TikTok, Hacker News, Polymarket, GitHub, and the web. Includes a doctor health check to diagnose broken or missing sources.",
+      "file": "last30days/SKILL.md",
+      "installedAt": "2026-09-02T14:05:50.606Z"
     }
   },
   "instructions": {

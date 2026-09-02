@@ -135,6 +135,26 @@ function escapeHtml(str) {
 let data = { articles: [], categories: [] };
 let activeFilter = 'all';
 
+function renderLast30DaysBadge(d) {
+  const meta = d.last30days;
+  if (!meta || !meta.enabled) return;
+  const heroMeta = $('#heroMeta');
+  if (!heroMeta) return;
+  // Avoid duplicate
+  if (document.getElementById('last30daysBadge')) return;
+  const pill = document.createElement('span');
+  pill.className = 'meta-pill';
+  pill.id = 'last30daysBadge';
+  pill.title = `${meta.skill || 'Last30Days'} · ${meta.engine || ''}`;
+  pill.innerHTML = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg> <span style="margin-left:4px">Last30Days · ${escapeHtml(meta.topic||'AI')} · từ ${escapeHtml(meta.since||'30 ngày qua')}</span> <span class="tag tag-accent" style="margin-left:6px;font-size:10px">${escapeHtml((meta.sources||[]).slice(0,2).join(' + ')||'HN+GitHub')}</span>`;
+  heroMeta.appendChild(pill);
+  // Also update hero description if needed
+  const heroDesc = document.querySelector('.hero-card p');
+  if (heroDesc && meta.skill) {
+    heroDesc.innerHTML = `Tổng hợp tin AI 30 ngày qua qua <span class="kbd">Last30Days</span> (${escapeHtml(meta.skill)}) — HN Algolia + GitHub, scored by upvotes/stars. Chạy <span class="kbd">node www/ai-news/fetch.mjs --topic "AI"</span> để làm mới.`;
+  }
+}
+
 async function init() {
   try {
     data = await loadNews();
@@ -147,6 +167,7 @@ async function init() {
 
     renderCategoryFilters(data);
     renderNews();
+    renderLast30DaysBadge(data);
 
     // Refresh button
     $('#btnRefresh')?.addEventListener('click', () => {

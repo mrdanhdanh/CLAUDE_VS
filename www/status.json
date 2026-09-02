@@ -1,12 +1,12 @@
 {
-  "generatedAt": "2026-08-31T13:43:29.456Z",
+  "generatedAt": "2026-09-02T14:12:35.752Z",
   "generatedBy": "YUNIE",
   "version": 1,
   "counts": {
     "skills": {
-      "enabled": 9,
+      "enabled": 10,
       "disabled": 0,
-      "total": 9
+      "total": 10
     },
     "instructions": {
       "enabled": 10,
@@ -66,6 +66,10 @@
       "auto-researcher": {
         "enabled": true,
         "description": "AAR Automated Researcher self-improving AI — search knowleged + library BM25, propose 3 methods, benchmark 30m, keep best. Use when harness needs auto-research, need to search knowleged/library, propose methods, benchmark, keep best, or user says AAR/auto-researcher/self-improving/Tier 2"
+      },
+      "last30days": {
+        "enabled": true,
+        "description": "Research what people actually say about any topic in the last 30 days. Pulls posts and engagement from Reddit, X, YouTube, TikTok, Hacker News, Polymarket, GitHub, and the web. Includes a doctor health check to diagnose broken or missing sources."
       }
     },
     "instructions": {
@@ -205,7 +209,8 @@
     "n5-blazor",
     "skill-registry",
     "status-ui-v2",
-    "todo-manager"
+    "todo-manager",
+    "web-thuat-toan"
   ],
   "demos": [
     {
@@ -242,19 +247,24 @@
       "name": "todo-manager",
       "path": "todo-manager/index.html",
       "status": "ok"
+    },
+    {
+      "name": "web-thuat-toan",
+      "path": "web-thuat-toan/index.html",
+      "status": "ok"
     }
   ],
   "health": {
     "errors": 0,
     "status": "ok",
-    "lastCheck": "2026-08-31T13:43:29.458Z",
+    "lastCheck": "2026-09-02T14:12:35.753Z",
     "checks": [
       "get_errors: pass (0 errors)",
-      "registry: 10 instructions (10 total) - 9 skills - 8 agents - 7 prompts - 1 hook — all enabled",
+      "registry: 10 instructions (10 total) - 10 skills - 8 agents - 7 prompts - 1 hook — all enabled",
       "www: polished — responsive 375/768/1280, a11y, states, animation 150-300ms",
       "workflow: www/** -> Pages (upload-artifact path: www) — exists: true",
       "library: www/library/ (PDF/DOCX/TXT/MD, BM25 <100ms, tháo lắp) + mcp-server.mjs + export.json + library-rag instruction",
-      "auto-learn: 10 KN, 6 bugs, 0 drafts — suggest/log/propose/status (<50ms, IDF, tiếng Việt)",
+      "auto-learn: 11 KN, 7 bugs, 0 drafts — suggest/log/propose/status (<50ms, IDF, tiếng Việt)",
       "n5-blazor: www/n5-blazor/ 7 trang static + app.css + data.js + site.js — 100% Pages"
     ]
   },
@@ -312,8 +322,8 @@
     "philosophy": "Process > Model"
   },
   "learn": {
-    "knTotal": 10,
-    "bugsTotal": 6,
+    "knTotal": 11,
+    "bugsTotal": 7,
     "drafts": 0
   }
 }

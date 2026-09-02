@@ -1,8 +1,21 @@
 {
-  "generatedAt": "2026-08-31T12:45:00.000Z",
-  "generatedBy": "YUNIE",
-  "version": 1,
-  "description": "Tin AI mới nhất — tự động cập nhật bởi YUNIE. Nguồn: TechCrunch, OpenAI, Anthropic, Google AI Blog.",
+  "generatedAt": "2026-09-02T14:07:30.309Z",
+  "generatedBy": "YUNIE × Last30Days",
+  "version": 2,
+  "description": "Tin AI mới nhất — tổng hợp từ Last30Days (HN, GitHub, Web) trong 30 ngày qua. Chủ đề: AI. Tự động cập nhật bởi YUNIE.",
+  "last30days": {
+    "enabled": true,
+    "topic": "AI",
+    "since": "2026-08-03",
+    "sources": [
+      "Hacker News (Algolia, free)",
+      "GitHub Search (free)",
+      "Web (Brave/Perplexity when key)"
+    ],
+    "engine": "Node.js bridge (no Python 3.12 needed) — HN Algolia + GitHub API, scored by upvotes/stars",
+    "skill": "mvanhorn/last30days-skill v3.23.0 (61k ⭐)",
+    "note": "Full Last30Days engine (Reddit/X/YouTube/TikTok/Polymarket) cần Python 3.12 + API keys. Bridge này dùng free sources, đủ cho ai-news. Cài Python 3.12 để chạy full: python3.12 .github/skills/last30days/scripts/last30days.py \"AI\" --emit=json"
+  },
   "categories": [
     {
       "id": "self-improving",
@@ -37,169 +50,252 @@
   ],
   "articles": [
     {
-      "id": "anthropic-aar-2026-08-28",
-      "title": "Anthropic researcher hé lộ self-improving AI: AAR beat human trong 6 giờ",
-      "summary": "Paper 'Automated Researchers Can Reliably Mitigate Alignment Failures' của Anthropic fellow Chen Yueh-Han cho thấy AAR (Automated Alignment Researcher) cải thiện 10/10 alignment benchmarks không degrade performance. Chi phí: $4/hour vs $150/hour human. 'The best AAR method beats what experienced humans propose, on average within six hours.'",
-      "source": "TechCrunch",
-      "sourceUrl": "https://techcrunch.com/2026/08/28/an-anthropic-researcher-just-gave-us-a-peek-at-self-improving-ai/",
-      "category": "self-improving",
-      "date": "2026-08-28",
+      "id": "gh-1331135699",
+      "title": "guillaumemeyer/watermarks-remover — A privacy-first app that strips AI watermarks from content you own.",
+      "summary": "A privacy-first app that strips AI watermarks from content you own. ⭐ 20010 stars, Python. agent-skill, ai, anthropic",
+      "source": "GitHub",
+      "sourceUrl": "https://github.com/guillaumemeyer/watermarks-remover",
+      "category": "products",
+      "date": "2026-08-11",
       "hot": true,
-      "tags": ["Anthropic", "AAR", "alignment", "self-improving", "research"]
+      "tags": [
+        "GitHub",
+        "Python",
+        "agent-skill",
+        "ai"
+      ]
     },
     {
-      "id": "rogue-ai-letter-2026-08-27",
-      "title": "100+ công ty ký thư chống Rogue AI",
-      "summary": "OpenAI, Anthropic, Google + 100 công ty kêu gọi hành động phòng vệ trước AI tự ý hack/vượt kiểm soát. TechCrunch tổng hợp các lần AI đã 'đi loạn' tấn công công ty khác.",
-      "source": "TechCrunch",
-      "sourceUrl": "https://techcrunch.com/2026/08/27/openai-anthropic-google-and-100-other-companies-call-for-action-to-defend-against-rogue-ai/",
+      "id": "gh-1336502227",
+      "title": "CopilotKit/OpenBot — Open-source AI coworkers that each get a computer of their own: a browser, files",
+      "summary": "Open-source AI coworkers that each get a computer of their own: a browser, files and tools, with every action decided before it happens and recorded after. Bring any AG-UI agent. ⭐ 3847 stars, TypeScript. ag-ui, agent-go",
+      "source": "GitHub",
+      "sourceUrl": "https://github.com/CopilotKit/OpenBot",
+      "category": "products",
+      "date": "2026-08-17",
+      "hot": true,
+      "tags": [
+        "GitHub",
+        "TypeScript",
+        "ag-ui",
+        "agent-governance"
+      ]
+    },
+    {
+      "id": "gh-1336933337",
+      "title": "yetone/cumora — Where agent teams gather. Cross-platform team chat where AI agents are first-cla",
+      "summary": "Where agent teams gather. Cross-platform team chat where AI agents are first-class teammates — with cloud or bring-your-own (Claude Code / Codex) brains. ⭐ 3416 stars, TypeScript. ",
+      "source": "GitHub",
+      "sourceUrl": "https://github.com/yetone/cumora",
+      "category": "products",
+      "date": "2026-08-17",
+      "hot": true,
+      "tags": [
+        "GitHub",
+        "TypeScript"
+      ]
+    },
+    {
+      "id": "gh-1323511527",
+      "title": "KKKKhazix/human-writing — 让 AI 写的中文读起来像一个具体的人在说话。通用创作与改稿 Skill，开箱即用。",
+      "summary": "让 AI 写的中文读起来像一个具体的人在说话。通用创作与改稿 Skill，开箱即用。 ⭐ 3383 stars, Python. agent-skills, chinese-writing, creative-writing",
+      "source": "GitHub",
+      "sourceUrl": "https://github.com/KKKKhazix/human-writing",
+      "category": "products",
+      "date": "2026-08-05",
+      "hot": true,
+      "tags": [
+        "GitHub",
+        "Python",
+        "agent-skills",
+        "chinese-writing"
+      ]
+    },
+    {
+      "id": "gh-1322651268",
+      "title": "fuxicodex/Fuxi — FuXi is a fast, self-contained AI coding agent that lives in your terminal — edi",
+      "summary": "FuXi is a fast, self-contained AI coding agent that lives in your terminal — edit code, run commands, and drive tools, with cost-aware routing across LLM providers. ⭐ 3245 stars, Python. agent, ai, ai-agent",
+      "source": "GitHub",
+      "sourceUrl": "https://github.com/fuxicodex/Fuxi",
+      "category": "products",
+      "date": "2026-08-04",
+      "hot": true,
+      "tags": [
+        "GitHub",
+        "Python",
+        "agent",
+        "ai"
+      ]
+    },
+    {
+      "id": "hn-49535284",
+      "title": "Mistral now trains on user input by default, except on enterprise tier",
+      "summary": "Mistral now trains on user input by default, except on enterprise tier — 31 points, 14 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://help.mistral.ai/en/articles/455207-can-i-opt-out-of-my-input-or-output-data-being-used-for-training",
+      "category": "products",
+      "date": "2026-09-02",
+      "hot": false,
+      "tags": [
+        "HN",
+        "AI",
+        "story",
+        "author_teekert"
+      ]
+    },
+    {
+      "id": "hn-49535163",
+      "title": "Show HN: Windrunner – AI-powered project collaboration workspace",
+      "summary": "Show HN: Windrunner – AI-powered project collaboration workspace — 7 points, 3 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://shzlw.github.io/windrunner/",
+      "category": "products",
+      "date": "2026-09-02",
+      "hot": false,
+      "tags": [
+        "HN",
+        "AI",
+        "story",
+        "author_yuegui"
+      ]
+    },
+    {
+      "id": "hn-49535300",
+      "title": "Show HN: Local Personal Financial Assistant",
+      "summary": "I built an IOS personal financial app to help user analyze their financial situation. User can easily import their bank statement from their banking app, CFO(this app) will analyze and show  charts by categories, find po — 5 points, 0 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://apps.apple.com/us/app/linggen/id6798304906",
       "category": "safety",
-      "date": "2026-08-27",
-      "hot": true,
-      "tags": ["OpenAI", "Anthropic", "Google", "safety", "policy"]
+      "date": "2026-09-02",
+      "hot": false,
+      "tags": [
+        "HN",
+        "AI",
+        "story",
+        "author_linggen"
+      ]
     },
     {
-      "id": "nvidia-beyond-gpu-2026-08-29",
-      "title": "Nvidia advantage vượt xa GPU — sắp thâu tóm Hugging Face",
-      "summary": "Nvidia đang đẩy lợi thế AI xa hơn chip. Tin đồn thâu tóm Hugging Face. Amazon x3 đơn hàng chip. Lambda vay $1B mua thêm hardware.",
-      "source": "TechCrunch",
-      "sourceUrl": "https://techcrunch.com/2026/08/29/nvidias-ai-advantage-is-moving-beyond-the-gpu/",
-      "category": "big-tech",
-      "date": "2026-08-29",
-      "hot": true,
-      "tags": ["Nvidia", "Hugging Face", "chips", "acquisition"]
-    },
-    {
-      "id": "openai-jalapeno-2026-08-25",
-      "title": "OpenAI ra mắt Jalapeño inference — tốc độ kỷ lục",
-      "summary": "Jalapeño inference đạt industry-leading speed và efficiency, bước tiến lớn trong inference cost reduction.",
-      "source": "OpenAI",
-      "sourceUrl": "https://openai.com/index/jalapeno-first-results/",
+      "id": "hn-49536375",
+      "title": "Three sites made 215,128 \"best software\" pages for AI. Perplexity cites them",
+      "summary": "Three sites made 215,128 \"best software\" pages for AI. Perplexity cites them — 3 points, 0 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://trellner.com/reports/manufactured-sources-behind-ai-recommendations/",
       "category": "products",
-      "date": "2026-08-25",
+      "date": "2026-09-02",
       "hot": false,
-      "tags": ["OpenAI", "inference", "Jalapeño", "performance"]
+      "tags": [
+        "HN",
+        "AI",
+        "story",
+        "author_jakobgreenfeld"
+      ]
     },
     {
-      "id": "openai-cursor-spacex-2026-08-28",
-      "title": "OpenAI quyết định về Cursor sau khi SpaceX mua lại",
-      "summary": "Drama lớn: SpaceX mua lại Cursor, OpenAI phải đưa ra quyết định chiến lược về mối quan hệ với IDE này.",
-      "source": "OpenAI",
-      "sourceUrl": "https://openai.com/index/our-decision-on-cursor-following-its-acquisition-by-spacex/",
-      "category": "big-tech",
-      "date": "2026-08-28",
-      "hot": true,
-      "tags": ["OpenAI", "Cursor", "SpaceX", "acquisition"]
-    },
-    {
-      "id": "openai-ads-india-2026-08-27",
-      "title": "OpenAI sắp hiển thị ads trên ChatGPT Free/Go ở Ấn Độ",
-      "summary": "ChatGPT bắt đầu monetize quảng cáo tại thị trường Ấn Độ, mở đường cho ads model trên chatbot.",
-      "source": "TechCrunch",
-      "sourceUrl": "https://techcrunch.com/2026/08/27/openai-to-start-showing-ads-on-chatgpts-free-and-go-tiers-in-india/",
-      "category": "products",
-      "date": "2026-08-27",
-      "hot": false,
-      "tags": ["OpenAI", "ChatGPT", "ads", "India", "monetization"]
-    },
-    {
-      "id": "anthropic-mhs-2026-08-27",
-      "title": "Anthropic preview Model Hardware Standard (MHS)",
-      "summary": "Spec chung để AI agent vận hành thiết bị vật lý an toàn. Mở research preview cho lab khoa học đầu tiên.",
-      "source": "Anthropic",
-      "sourceUrl": "https://www.anthropic.com/news/model-hardware-standard-research-preview",
-      "category": "safety",
-      "date": "2026-08-27",
-      "hot": false,
-      "tags": ["Anthropic", "MHS", "hardware", "safety", "agents"]
-    },
-    {
-      "id": "anthropic-sony-warner-2026-08-29",
-      "title": "Sony Music + Warner kiện Anthropic vì IP theft",
-      "summary": "Major labels tố Anthropic 'brazen campaign' đánh cắp intellectual property. Anthropic cũng vừa thắng kiện đầu tiên trước Pentagon's supply-chain risk label.",
-      "source": "TechCrunch",
-      "sourceUrl": "https://techcrunch.com/2026/08/29/sony-music-warner-sue-anthropic-alleging-a-brazen-campaign-of-intellectual-property-theft/",
-      "category": "safety",
-      "date": "2026-08-29",
-      "hot": true,
-      "tags": ["Anthropic", "Sony", "Warner", "IP", "lawsuit"]
-    },
-    {
-      "id": "google-gemini-travel-2026-08-27",
-      "title": "Google AI Mode: track vé máy bay + book khách sạn",
-      "summary": "AI Mode trong Search giúp người dùng lên kế hoạch và đặt chỗ du lịch trực tiếp.",
-      "source": "Google AI Blog",
-      "sourceUrl": "https://blog.google/products-and-platforms/products/search/book-travel-ai-mode/",
-      "category": "products",
-      "date": "2026-08-27",
-      "hot": false,
-      "tags": ["Google", "Search", "AI Mode", "travel"]
-    },
-    {
-      "id": "google-gemma-1b-2026-08",
-      "title": "Gemma cán 1 tỷ downloads",
-      "summary": "Open-source model family của Google đạt cột mốc 1 tỷ lượt tải, khẳng định vị thế trong cộng đồng developer.",
-      "source": "Google AI Blog",
-      "sourceUrl": "https://blog.google/innovation-and-ai/technology/developers-tools/gemma-one-billion-downloads/",
-      "category": "products",
-      "date": "2026-08-20",
-      "hot": false,
-      "tags": ["Google", "Gemma", "open-source", "downloads"]
-    },
-    {
-      "id": "huggingface-microduck-2026-08-27",
-      "title": "Hugging Face bán robot vịt Microduck $399",
-      "summary": "Open-source duck robot dành cho nghiên cứu và giải trí, giá $399 — cute xỉu!",
-      "source": "TechCrunch",
-      "sourceUrl": "https://techcrunch.com/2026/08/27/hugging-face-is-selling-a-cute-399-open-source-duck-robot-microduck/",
+      "id": "hn-49536310",
+      "title": "Don’t Believe Robotics Demo Videos",
+      "summary": "Don’t Believe Robotics Demo Videos — 3 points, 0 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://secondthoughts.ai/p/14-reasons-robotics-is-hard",
       "category": "fun",
-      "date": "2026-08-27",
+      "date": "2026-09-02",
       "hot": false,
-      "tags": ["Hugging Face", "robot", "open-source", "cute"]
+      "tags": [
+        "HN",
+        "AI",
+        "story",
+        "author_gk1"
+      ]
     },
     {
-      "id": "plaud-earphones-esim-2026-08-27",
-      "title": "Plaud ra tai nghe case eSIM để nói chuyện với AI agent",
-      "summary": "Tai nghe có case tích hợp eSIM, cho phép tương tác với AI agent mọi lúc mọi nơi không cần điện thoại.",
-      "source": "TechCrunch",
-      "sourceUrl": "https://techcrunch.com/2026/08/27/plauds-new-earphones-come-with-an-esim-enabled-case-for-talking-to-ai-agents/",
-      "category": "fun",
-      "date": "2026-08-27",
+      "id": "hn-49535465",
+      "title": "Show HN: Serverless reverse geocoding for WebMCP, ESP32, and RP2040",
+      "summary": "I built Galuchat, a compact reverse-geocoding system that works without an external geocoding server or API.<p>The same basic approach can be used in:<p>Browsers\nWebMCP\nESP32\nRP2040 &#x2F; RP2350\nJavaScript &#x2F; C++ &# — 3 points, 0 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://nyatla.github.io/galuchat/",
+      "category": "safety",
+      "date": "2026-09-02",
       "hot": false,
-      "tags": ["Plaud", "earphones", "eSIM", "AI agent", "wearable"]
+      "tags": [
+        "HN",
+        "AI",
+        "story",
+        "author_nyatla"
+      ]
     },
     {
-      "id": "barret-zoph-google-2026-08-27",
-      "title": "Barret Zoph (Thinking Machines co-founder) qua Google",
-      "summary": "Sau khi bị ousted khỏi Thinking Machines và nhanh chóng rời OpenAI, Zoph giờ đã gia nhập Google.",
-      "source": "TechCrunch",
-      "sourceUrl": "https://techcrunch.com/2026/08/27/barret-zoph-the-thinking-machines-co-founder-who-defected-to-openai-is-now-at-google/",
-      "category": "big-tech",
-      "date": "2026-08-27",
-      "hot": false,
-      "tags": ["Barret Zoph", "Google", "OpenAI", "Thinking Machines", "hiring"]
-    },
-    {
-      "id": "instinct-350m-2026-08-26",
-      "title": "Viral AI startup Instinct raise $350M at $2.5B",
-      "summary": "Startup AI được nhắc nhiều nhất năm huy động $350 triệu ở mức định giá $2.5 tỷ.",
-      "source": "TechCrunch",
-      "sourceUrl": "https://techcrunch.com/2026/08/26/viral-ai-startup-instinct-has-raised-350-million-at-a-2-5-billion-valuation/",
-      "category": "big-tech",
-      "date": "2026-08-26",
-      "hot": false,
-      "tags": ["Instinct", "startup", "funding", "valuation"]
-    },
-    {
-      "id": "anthropic-claude-opus-5-2026-07-24",
-      "title": "Claude Opus 5 ra mắt — step change cho long-running agents",
-      "summary": "Opus 5 cải thiện vượt trội cho long-running agents, coding và professional work.",
-      "source": "Anthropic",
-      "sourceUrl": "https://www.anthropic.com/news/claude-opus-5",
+      "id": "hn-49535390",
+      "title": "Xfinlab – a financial intelligence API with an MCP server for AI agents",
+      "summary": "Xfinlab – a financial intelligence API with an MCP server for AI agents — 3 points, 0 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://github.com/lnanology/Xfinlab",
       "category": "products",
-      "date": "2026-07-24",
+      "date": "2026-09-02",
       "hot": false,
-      "tags": ["Anthropic", "Claude Opus 5", "agents", "coding"]
+      "tags": [
+        "HN",
+        "AI",
+        "story",
+        "author_lnanology"
+      ]
+    },
+    {
+      "id": "hn-49535289",
+      "title": "Autopsy of an N=1 Cybernetic Therapy: Multimodal AI for Grief (Case Report)",
+      "summary": "Autopsy of an N=1 Cybernetic Therapy: Multimodal AI for Grief (Case Report) — 3 points, 0 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://zenodo.org/records/22169978",
+      "category": "products",
+      "date": "2026-09-02",
+      "hot": false,
+      "tags": [
+        "HN",
+        "AI",
+        "story",
+        "author_poejionkyo"
+      ]
+    },
+    {
+      "id": "hn-49535272",
+      "title": "Ask HN: Where do you get your AI (technology) news?",
+      "summary": "Business&#x2F;company&#x2F;product wise is readily available.<p>I&#x27;m curious where HN gets their news for (new) AI technology.<p>It feels like every day every concept is already old, so would be nice to have 1 or a f — 3 points, 0 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://news.ycombinator.com/item?id=49535272",
+      "category": "products",
+      "date": "2026-09-02",
+      "hot": false,
+      "tags": [
+        "HN",
+        "AI",
+        "story",
+        "author_BtM909"
+      ]
+    },
+    {
+      "id": "hn-49536322",
+      "title": "Heides, deterministic code harness giving AI agents senses and judgment",
+      "summary": "Heides, deterministic code harness giving AI agents senses and judgment — 2 points, 0 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://github.com/AbduljabbarBXR/heides",
+      "category": "products",
+      "date": "2026-09-02",
+      "hot": false,
+      "tags": [
+        "HN",
+        "AI",
+        "story",
+        "author_TawResearch"
+      ]
     }
-  ]
+  ],
+  "meta": {
+    "fetchedAt": "2026-09-02T14:07:30.309Z",
+    "topic": "AI",
+    "total": 15,
+    "hot": 5,
+    "sources": [
+      "GitHub",
+      "Hacker News"
+    ]
+  }
 }

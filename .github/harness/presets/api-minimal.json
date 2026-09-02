@@ -9,7 +9,9 @@
     "systematic-debugging": true,
     "tdd-gate": true,
     "ui-design-system": true,
-    "ui-ux-pro-max": true
+    "ui-ux-pro-max": true,
+    "auto-researcher": true,
+    "last30days": true
   },
   "instructions": {
     "custom-registry": true,
