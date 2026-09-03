@@ -1,0 +1,56 @@
+{
+  "version": 1,
+  "updatedAt": "2026-09-03",
+  "tasks": [
+    {
+      "id": "seed-js-001",
+      "title": "Học JavaScript",
+      "description": "Học Array và Object, làm bài tập 010",
+      "priority": "high",
+      "status": "todo",
+      "dueDate": "",
+      "createdAt": "2026-09-01T08:00:00.000Z",
+      "tags": ["javascript", "study"]
+    },
+    {
+      "id": "seed-design-002",
+      "title": "Thiết kế giao diện TaskBoard",
+      "description": "Hoàn thiện dashboard và card, responsive 375/768/1280",
+      "priority": "high",
+      "status": "doing",
+      "dueDate": "",
+      "createdAt": "2026-09-02T08:00:00.000Z",
+      "tags": ["design", "ui"]
+    },
+    {
+      "id": "seed-report-003",
+      "title": "Viết báo cáo tuần",
+      "description": "Tổng hợp tiến độ và kế hoạch tuần tới",
+      "priority": "medium",
+      "status": "todo",
+      "dueDate": "",
+      "createdAt": "2026-09-02T10:00:00.000Z",
+      "tags": ["work"]
+    },
+    {
+      "id": "seed-shop-004",
+      "title": "Mua sắm cuối tuần",
+      "description": "Siêu thị, chuẩn bị đồ cho tuần mới",
+      "priority": "low",
+      "status": "done",
+      "dueDate": "",
+      "createdAt": "2026-08-31T08:00:00.000Z",
+      "tags": ["personal"]
+    },
+    {
+      "id": "seed-css-005",
+      "title": "Ôn lại CSS Grid & Flexbox",
+      "description": "Làm lại layout toolbar và card grid",
+      "priority": "medium",
+      "status": "todo",
+      "dueDate": "",
+      "createdAt": "2026-09-03T08:00:00.000Z",
+      "tags": ["css", "study"]
+    }
+  ]
+}

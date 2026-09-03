@@ -128,8 +128,18 @@
         <div class="toolbar-right">
           <button class="btn btn-ghost btn-sm" id="btn-clear-filters">Xóa bộ lọc</button>
           <button class="btn btn-ghost btn-sm" id="btn-seed" title="Thêm dữ liệu mẫu">Seed mẫu</button>
+          <button class="btn btn-primary btn-sm" id="btn-sync" title="Đẩy tasks hiện tại lên tasks.json trên GitHub">☁ Lưu lên GitHub</button>
+          <button class="btn btn-ghost btn-sm" id="btn-github-settings" title="Cài đặt đồng bộ GitHub">⚙ GitHub</button>
+          <button class="btn btn-ghost btn-sm" id="btn-export" title="Tải file backup JSON">⬇ Xuất</button>
+          <button class="btn btn-ghost btn-sm" id="btn-import" title="Khôi phục từ file backup JSON">⬆ Nhập</button>
+          <input type="file" id="file-import" accept="application/json,.json" hidden aria-label="Chọn file backup JSON" />
         </div>
       </div>
+      <div class="sync-bar">
+        <span class="sync-status" id="sync-status" role="status" aria-live="polite">Chưa kết nối GitHub</span>
+        <span class="sync-sub" id="sync-sub">Thêm / sửa task sẽ tự đẩy lên <code>tasks.json</code> sau khi kết nối.</span>
+      </div>
+      <p class="persist-hint">Lưu nhanh ở trình duyệt (localStorage). Sau khi bấm <strong>⚙ GitHub</strong> nhập token 1 lần, mọi thêm / sửa / xóa sẽ tự cập nhật <code>tasks.json</code> trên GitHub.</p>
     </section>
 
     <!-- Task list -->
@@ -142,12 +152,6 @@
         <h3 class="empty-title">Chưa có công việc phù hợp</h3>
         <p class="empty-desc">Thử đổi bộ lọc hoặc tạo công việc mới để bắt đầu.</p>
         <button class="btn btn-primary" id="btn-empty-add">＋ Thêm việc đầu tiên</button>
-      </div>
-
-      <div id="skeleton" class="task-grid" hidden aria-hidden="true">
-        <div class="card skeleton"></div>
-        <div class="card skeleton"></div>
-        <div class="card skeleton"></div>
       </div>
     </section>
   </main>
@@ -209,6 +213,51 @@
 
   <!-- Toast stack -->
   <div id="toast-stack" class="toast-stack" aria-live="polite" aria-atomic="true"></div>
+
+  <!-- GitHub sync settings -->
+  <div id="github-backdrop" class="modal-backdrop" hidden></div>
+  <div id="github-modal" class="modal" role="dialog" aria-modal="true" aria-labelledby="github-title" hidden>
+    <div class="modal-panel">
+      <div class="modal-head">
+        <h2 id="github-title" class="modal-title">Đồng bộ GitHub</h2>
+        <button class="btn btn-ghost btn-icon" id="btn-close-github" aria-label="Đóng">✕</button>
+      </div>
+      <p class="modal-desc">Nhập 1 lần — token chỉ lưu ở trình duyệt này. Cần quyền <code>repo → Contents: read &amp; write</code> (classic token: tick <code>repo</code>).</p>
+      <div class="form-grid">
+        <label class="field">
+          <span class="field-label">Owner</span>
+          <input id="gh-owner" class="input" type="text" placeholder="VD: mrdanhdanh" autocomplete="off" />
+        </label>
+        <label class="field">
+          <span class="field-label">Repo</span>
+          <input id="gh-repo" class="input" type="text" placeholder="VD: CLAUDE_VS" autocomplete="off" />
+        </label>
+        <label class="field">
+          <span class="field-label">Branch</span>
+          <input id="gh-branch" class="input" type="text" placeholder="main" autocomplete="off" />
+        </label>
+        <label class="field">
+          <span class="field-label">Đường dẫn file</span>
+          <input id="gh-path" class="input" type="text" placeholder="www/todo-manager/tasks.json" autocomplete="off" />
+        </label>
+        <label class="field field-full">
+          <span class="field-label">Token <span class="req">*</span></span>
+          <input id="gh-token" class="input" type="password" placeholder="ghp_... / github_pat_..." autocomplete="off" />
+          <span class="field-hint">Tạo ở GitHub → Settings → Developer settings → Personal access tokens. Không chia sẻ token.</span>
+          <span class="field-error" id="err-github" role="alert"></span>
+        </label>
+        <label class="field field-full check-row">
+          <input type="checkbox" id="gh-autosync" checked />
+          <span>Tự đẩy lên GitHub sau mỗi lần thêm / sửa / xóa</span>
+        </label>
+      </div>
+      <div class="modal-actions">
+        <button type="button" class="btn btn-ghost" id="btn-github-disconnect">Ngắt kết nối</button>
+        <button type="button" class="btn btn-ghost" id="btn-github-cancel">Hủy</button>
+        <button type="button" class="btn btn-primary" id="btn-github-save">Kết nối &amp; đồng bộ</button>
+      </div>
+    </div>
+  </div>
 
   <footer class="site-footer">
     <div class="container footer-inner">

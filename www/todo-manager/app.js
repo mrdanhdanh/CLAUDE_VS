@@ -3,6 +3,16 @@
   'use strict';
 
   const STORAGE_KEY = 'todo-manager:v1';
+  const TASKS_JSON_URL = './tasks.json';
+  const GITHUB_CONFIG_KEY = 'todo-manager:github:v1';
+  const GITHUB_DEFAULTS = {
+    owner: 'mrdanhdanh',
+    repo: 'CLAUDE_VS',
+    branch: 'main',
+    path: 'www/todo-manager/tasks.json',
+    token: '',
+    autosync: true
+  };
 
   // ---------- Helpers ----------
   const $ = (s, r = document) => r.querySelector(s);
@@ -85,6 +95,26 @@
     emptyState: $('#empty-state'),
     btnClearFilters: $('#btn-clear-filters'),
     btnSeed: $('#btn-seed'),
+    btnSync: $('#btn-sync'),
+    btnGithubSettings: $('#btn-github-settings'),
+    btnExport: $('#btn-export'),
+    btnImport: $('#btn-import'),
+    fileImport: $('#file-import'),
+    syncStatus: $('#sync-status'),
+    syncSub: $('#sync-sub'),
+    githubModal: $('#github-modal'),
+    githubBackdrop: $('#github-backdrop'),
+    ghOwner: $('#gh-owner'),
+    ghRepo: $('#gh-repo'),
+    ghBranch: $('#gh-branch'),
+    ghPath: $('#gh-path'),
+    ghToken: $('#gh-token'),
+    ghAutosync: $('#gh-autosync'),
+    errGithub: $('#err-github'),
+    btnCloseGithub: $('#btn-close-github'),
+    btnGithubCancel: $('#btn-github-cancel'),
+    btnGithubSave: $('#btn-github-save'),
+    btnGithubDisconnect: $('#btn-github-disconnect'),
     btnOpenAdd: $('#btn-open-add'),
     btnEmptyAdd: $('#btn-empty-add'),
     modal: $('#modal'),
@@ -106,7 +136,211 @@
     footerDate: $('#footer-date')
   };
 
-  // ---------- LocalStorage ----------
+  // ---------- LocalStorage + tasks.json + GitHub API ----------
+  // Pages la static hosting: muon trinh duyet tu ghi tasks.json len repo thi phai goi GitHub Contents API.
+  // Chien luoc: localStorage de dung nhanh + tasks.json la ban mac dinh theo repo + GitHub API de auto-push sau them/sua/xoa.
+  function getGithubConfig() {
+    try {
+      const raw = localStorage.getItem(GITHUB_CONFIG_KEY);
+      if (!raw) return { ...GITHUB_DEFAULTS };
+      const parsed = JSON.parse(raw);
+      return {
+        owner: (parsed.owner || GITHUB_DEFAULTS.owner).trim(),
+        repo: (parsed.repo || GITHUB_DEFAULTS.repo).trim(),
+        branch: (parsed.branch || GITHUB_DEFAULTS.branch).trim() || 'main',
+        path: (parsed.path || GITHUB_DEFAULTS.path).trim() || GITHUB_DEFAULTS.path,
+        token: (parsed.token || '').trim(),
+        autosync: parsed.autosync !== false
+      };
+    } catch {
+      return { ...GITHUB_DEFAULTS };
+    }
+  }
+
+  function saveGithubConfig(cfg) {
+    try {
+      localStorage.setItem(GITHUB_CONFIG_KEY, JSON.stringify({
+        owner: cfg.owner,
+        repo: cfg.repo,
+        branch: cfg.branch,
+        path: cfg.path,
+        token: cfg.token,
+        autosync: !!cfg.autosync
+      }));
+    } catch (e) {
+      console.warn('saveGithubConfig failed', e);
+    }
+  }
+
+  function isGithubConnected() {
+    const cfg = getGithubConfig();
+    return !!(cfg.owner && cfg.repo && cfg.token);
+  }
+
+  function setSyncStatus(mode, text, sub) {
+    if (els.syncStatus) {
+      els.syncStatus.textContent = text;
+      els.syncStatus.className = 'sync-status' + (mode ? ' ' + mode : '');
+    }
+    if (sub !== undefined && els.syncSub) {
+      els.syncSub.innerHTML = sub;
+    }
+    if (els.btnSync) {
+      els.btnSync.disabled = mode === 'is-busy';
+    }
+  }
+
+  function refreshSyncStatus() {
+    const cfg = getGithubConfig();
+    if (!cfg.token) {
+      setSyncStatus('', 'Chưa kết nối GitHub', 'Thêm / sửa task sẽ tự đẩy lên <code>tasks.json</code> sau khi kết nối.');
+      return;
+    }
+    const last = localStorage.getItem('todo-manager:github:lastSync');
+    setSyncStatus('is-ok', 'Đã kết nối GitHub ●', last ? ('Lần đẩy gần nhất: ' + last + ' → <code>' + escapeHtml(cfg.path) + '</code>') : ('Sẵn sàng đẩy lên <code>' + escapeHtml(cfg.path) + '</code>'));
+  }
+
+  function encodeBase64Unicode(str) {
+    try {
+      return btoa(unescape(encodeURIComponent(str)));
+    } catch {
+      const bytes = new TextEncoder().encode(str);
+      let bin = '';
+      bytes.forEach(b => { bin += String.fromCharCode(b); });
+      return btoa(bin);
+    }
+  }
+
+  function decodeBase64Unicode(b64) {
+    try {
+      const bin = atob(b64.replace(/\n/g, ''));
+      try {
+        return decodeURIComponent(escape(bin));
+      } catch {
+        const bytes = Uint8Array.from(bin, c => c.charCodeAt(0));
+        return new TextDecoder().decode(bytes);
+      }
+    } catch {
+      return '';
+    }
+  }
+
+  async function githubGetFile() {
+    const cfg = getGithubConfig();
+    const url = 'https://api.github.com/repos/' + encodeURIComponent(cfg.owner) + '/' + encodeURIComponent(cfg.repo) + '/contents/' + cfg.path.split('/').map(encodeURIComponent).join('/') + '?ref=' + encodeURIComponent(cfg.branch);
+    const res = await fetch(url, {
+      headers: {
+        'Accept': 'application/vnd.github+json',
+        'Authorization': 'Bearer ' + cfg.token
+      }
+    });
+    if (res.status === 404) return { exists: false, sha: null, tasks: null };
+    if (!res.ok) {
+      const txt = await res.text().catch(() => '');
+      throw new Error('GitHub GET ' + res.status + ' ' + txt.slice(0, 200));
+    }
+    const data = await res.json();
+    let tasks = null;
+    try {
+      const content = decodeBase64Unicode(data.content || '');
+      const parsed = JSON.parse(content);
+      tasks = sanitizeTasks(parsed.tasks || parsed);
+    } catch {
+      tasks = null;
+    }
+    return { exists: true, sha: data.sha || null, tasks };
+  }
+
+  let githubSyncTimer = null;
+  let githubSyncing = false;
+
+  function scheduleGithubSync(reason) {
+    const cfg = getGithubConfig();
+    if (!cfg.token || !cfg.autosync) return;
+    if (githubSyncTimer) clearTimeout(githubSyncTimer);
+    githubSyncTimer = setTimeout(() => { pushTasksToGitHub(reason || 'cap-nhat-task'); }, 1200);
+  }
+
+  async function pushTasksToGitHub(reason, opts) {
+    opts = opts || {};
+    const cfg = getGithubConfig();
+    if (!cfg.owner || !cfg.repo) {
+      showToast('Thieu owner/repo GitHub - bam Nut GitHub de cau hinh', 'success');
+      return false;
+    }
+    if (!cfg.token) {
+      if (!opts.silent) showToast('Chua ket noi GitHub - bam Nut GitHub de nhap token', 'success');
+      openGithubModal();
+      return false;
+    }
+    if (githubSyncing) return false;
+    githubSyncing = true;
+    setSyncStatus('is-busy', 'Đang đẩy lên GitHub…', 'Đang cập nhật <code>' + escapeHtml(cfg.path) + '</code>…');
+    try {
+      let sha = null;
+      try {
+        const current = await githubGetFile();
+        sha = current.sha;
+      } catch (e) {
+        if (String(e.message).includes('401')) throw new Error('Token sai / het han (401). Tao token moi co quyen Contents read & write.');
+        if (String(e.message).includes('404')) throw new Error('Khong tim thay repo/branch. Kiem tra owner/repo/branch.');
+        throw e;
+      }
+      const payload = buildBackupPayload();
+      const json = JSON.stringify(payload, null, 2) + '\n';
+      const body = {
+        message: (reason || 'cap-nhat-task') + ' (' + state.tasks.length + ' tasks, ' + new Date().toISOString() + ')',
+        content: encodeBase64Unicode(json),
+        branch: cfg.branch
+      };
+      if (sha) body.sha = sha;
+      const putUrl = 'https://api.github.com/repos/' + encodeURIComponent(cfg.owner) + '/' + encodeURIComponent(cfg.repo) + '/contents/' + cfg.path.split('/').map(encodeURIComponent).join('/');
+      let res = await fetch(putUrl, {
+        method: 'PUT',
+        headers: {
+          'Accept': 'application/vnd.github+json',
+          'Authorization': 'Bearer ' + cfg.token,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(body)
+      });
+      // Conflict (sha cu) -> lay sha moi roi thu lai 1 lan
+      if (res.status === 409) {
+        const fresh = await githubGetFile();
+        if (fresh.sha) body.sha = fresh.sha;
+        res = await fetch(putUrl, {
+          method: 'PUT',
+          headers: {
+            'Accept': 'application/vnd.github+json',
+            'Authorization': 'Bearer ' + cfg.token,
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(body)
+        });
+      }
+      if (res.status === 401) throw new Error('Token sai / het han (401).');
+      if (res.status === 403) throw new Error('Bi tu choi (403) - token thieu quyen Contents write hoac vuot rate limit.');
+      if (res.status === 404) throw new Error('Khong tim thay repo/file (404). Kiem tra owner/repo/path/branch.');
+      if (!res.ok) {
+        const txt = await res.text().catch(() => '');
+        throw new Error('GitHub PUT ' + res.status + ' ' + txt.slice(0, 300));
+      }
+      const stamp = new Date().toLocaleString('vi-VN');
+      try { localStorage.setItem('todo-manager:github:lastSync', stamp); } catch {}
+      refreshSyncStatus();
+      setSyncStatus('is-ok', 'Đã lưu lên GitHub ●', 'Vừa đẩy ' + state.tasks.length + ' việc lúc ' + stamp + '. Pages sẽ deploy lại 1-2 phút.');
+      if (!opts.quiet) showToast('Da day ' + state.tasks.length + ' viec len GitHub', 'success');
+      return true;
+    } catch (e) {
+      console.warn('pushTasksToGitHub failed', e);
+      setSyncStatus('is-error', 'Đẩy GitHub thất bại', escapeHtml(e.message || 'Loi khong xac dinh'));
+      showToast('Day GitHub that bai: ' + (e.message || 'loi'), 'success');
+      return false;
+    } finally {
+      githubSyncing = false;
+    }
+  }
+
   function loadData() {
     try {
       const raw = localStorage.getItem(STORAGE_KEY);
@@ -132,6 +366,90 @@
     } catch (e) {
       console.warn('saveData failed', e);
     }
+  }
+
+  function normalizeTask(t) {
+    if (!t || typeof t.title !== 'string' || !t.title.trim()) return null;
+    const prio = ['low', 'medium', 'high'].includes(t.priority) ? t.priority : 'medium';
+    const status = ['todo', 'doing', 'done'].includes(t.status) ? t.status : 'todo';
+    return {
+      id: typeof t.id === 'string' && t.id ? t.id : uid(),
+      title: t.title.trim().slice(0, 80),
+      description: typeof t.description === 'string' ? t.description.trim().slice(0, 2000) : '',
+      priority: prio,
+      status,
+      dueDate: typeof t.dueDate === 'string' ? t.dueDate : '',
+      createdAt: typeof t.createdAt === 'string' && !isNaN(Date.parse(t.createdAt)) ? t.createdAt : new Date().toISOString(),
+      tags: Array.isArray(t.tags) ? [...new Set(t.tags.map(x => String(x).trim().toLowerCase()).filter(Boolean))].slice(0, 10) : []
+    };
+  }
+
+  function sanitizeTasks(arr) {
+    if (!Array.isArray(arr)) return [];
+    return arr.map(normalizeTask).filter(Boolean);
+  }
+
+  async function loadDefaultTasks() {
+    try {
+      const res = await fetch(TASKS_JSON_URL, { cache: 'no-store' });
+      if (!res.ok) return null;
+      const data = await res.json();
+      const list = sanitizeTasks(data.tasks || data);
+      return list.length ? list : null;
+    } catch {
+      return null;
+    }
+  }
+
+  function buildBackupPayload() {
+    return {
+      version: 1,
+      updatedAt: new Date().toISOString(),
+      tasks: state.tasks
+    };
+  }
+
+  function exportBackup() {
+    try {
+      const payload = buildBackupPayload();
+      const blob = new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      const stamp = new Date().toISOString().slice(0, 10);
+      a.href = url;
+      a.download = 'tasks-backup-' + stamp + '.json';
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      setTimeout(() => URL.revokeObjectURL(url), 1000);
+      showToast('Da xuat file backup - ghi de tasks.json roi push de giu tren Pages', 'success');
+    } catch (e) {
+      console.warn('export failed', e);
+      showToast('Xuat backup that bai', 'success');
+    }
+  }
+
+  function importBackupFile(file) {
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = () => {
+      try {
+        const data = JSON.parse(String(reader.result || '{}'));
+        const list = sanitizeTasks(data.tasks || data);
+        if (!list.length) {
+          showToast('File khong co cong viec hop le', 'success');
+          return;
+        }
+        state.tasks = list;
+        saveData();
+        render();
+        scheduleGithubSync('nhap-backup');
+        showToast('Da nhap ' + list.length + ' cong viec', 'success');
+      } catch {
+        showToast('File JSON khong hop le', 'success');
+      }
+    };
+    reader.readAsText(file);
   }
 
   // ---------- Seed ----------
@@ -197,7 +515,13 @@
     ];
   }
 
-  // ---------- CRUD (chỉ thao tác state) ----------
+  // ---------- CRUD (thao tac state + auto-push GitHub) ----------
+  function afterMutation(reason) {
+    saveData();
+    render();
+    scheduleGithubSync(reason);
+  }
+
   function addTask(data) {
     const task = {
       id: uid(),
@@ -210,8 +534,7 @@
       tags: parseTags(data.tagsRaw || '')
     };
     state.tasks.unshift(task);
-    saveData();
-    render();
+    afterMutation('them-task');
     showToast(`Đã thêm "${task.title}"`, 'success');
   }
 
@@ -228,8 +551,7 @@
       dueDate: data.dueDate || '',
       tags: parseTags(data.tagsRaw || '')
     };
-    saveData();
-    render();
+    afterMutation('sua-task');
     showToast(`Đã cập nhật "${state.tasks[idx].title}"`, 'success');
   }
 
@@ -241,15 +563,21 @@
     state.tasks.splice(idx, 1);
     saveData();
     render();
+    scheduleGithubSync('xoa-task');
     showUndoToast(task, idx);
+  }
+
+  function restoreTask(task, originalIndex) {
+    const insertAt = Math.min(originalIndex, state.tasks.length);
+    state.tasks.splice(insertAt, 0, task);
+    afterMutation('hoan-tac-xoa-task');
   }
 
   function cycleStatus(id) {
     const t = state.tasks.find(x => x.id === id);
     if (!t) return;
     t.status = nextStatus(t.status);
-    saveData();
-    render();
+    afterMutation('doi-trang-thai');
     showToast(`"${t.title}" → ${statusLabel(t.status)}`, 'success');
   }
 
@@ -462,10 +790,7 @@
     const undo = () => {
       if (closed) return;
       // restore at original index (clamp)
-      const insertAt = Math.min(originalIndex, state.tasks.length);
-      state.tasks.splice(insertAt, 0, task);
-      saveData();
-      render();
+      restoreTask(task, originalIndex);
       cleanup();
       showToast(`Đã khôi phục "${task.title}"`, 'success');
     };
@@ -565,6 +890,71 @@
     closeModal();
   }
 
+  // ---------- GitHub settings modal ----------
+  function openGithubModal() {
+    const cfg = getGithubConfig();
+    if (els.ghOwner) els.ghOwner.value = cfg.owner || '';
+    if (els.ghRepo) els.ghRepo.value = cfg.repo || '';
+    if (els.ghBranch) els.ghBranch.value = cfg.branch || 'main';
+    if (els.ghPath) els.ghPath.value = cfg.path || GITHUB_DEFAULTS.path;
+    if (els.ghToken) els.ghToken.value = cfg.token || '';
+    if (els.ghAutosync) els.ghAutosync.checked = cfg.autosync !== false;
+    if (els.errGithub) els.errGithub.textContent = '';
+    if (!els.githubModal || !els.githubBackdrop) return;
+    els.githubModal.hidden = false;
+    els.githubBackdrop.hidden = false;
+    requestAnimationFrame(() => {
+      els.githubModal.classList.add('is-open');
+      els.githubBackdrop.classList.add('is-open');
+    });
+    setTimeout(() => { if (els.ghToken) els.ghToken.focus(); }, 100);
+  }
+
+  function closeGithubModal() {
+    if (!els.githubModal || !els.githubBackdrop) return;
+    els.githubModal.classList.remove('is-open');
+    els.githubBackdrop.classList.remove('is-open');
+    setTimeout(() => {
+      els.githubModal.hidden = true;
+      els.githubBackdrop.hidden = true;
+    }, 200);
+  }
+
+  async function handleGithubSave() {
+    const cfg = {
+      owner: els.ghOwner ? els.ghOwner.value.trim() : '',
+      repo: els.ghRepo ? els.ghRepo.value.trim() : '',
+      branch: els.ghBranch ? els.ghBranch.value.trim() || 'main' : 'main',
+      path: els.ghPath ? els.ghPath.value.trim() || GITHUB_DEFAULTS.path : GITHUB_DEFAULTS.path,
+      token: els.ghToken ? els.ghToken.value.trim() : '',
+      autosync: els.ghAutosync ? !!els.ghAutosync.checked : true
+    };
+    if (!cfg.owner || !cfg.repo) {
+      if (els.errGithub) els.errGithub.textContent = 'Nhap owner va repo';
+      return;
+    }
+    if (!cfg.token) {
+      if (els.errGithub) els.errGithub.textContent = 'Token la bat buoc';
+      if (els.ghToken) els.ghToken.focus();
+      return;
+    }
+    saveGithubConfig(cfg);
+    if (els.errGithub) els.errGithub.textContent = '';
+    closeGithubModal();
+    refreshSyncStatus();
+    showToast('Da ket noi GitHub - dang dong bo...', 'success');
+    await pushTasksToGitHub('ket-noi-github-lan-dau');
+  }
+
+  function handleGithubDisconnect() {
+    try { localStorage.removeItem(GITHUB_CONFIG_KEY); } catch {}
+    try { localStorage.removeItem('todo-manager:github:lastSync'); } catch {}
+    if (els.ghToken) els.ghToken.value = '';
+    closeGithubModal();
+    refreshSyncStatus();
+    showToast('Da ngat ket noi GitHub', 'success');
+  }
+
   // ---------- Events ----------
   function bindEvents() {
     // toolbar
@@ -618,10 +1008,31 @@
       if (state.tasks.length > 0 && !confirm('Thêm dữ liệu mẫu? (sẽ giữ việc hiện có)')) return;
       const seeds = seedData();
       state.tasks.push(...seeds);
-      saveData();
-      render();
+      afterMutation('seed-mau');
       showToast(`Đã thêm ${seeds.length} việc mẫu`, 'success');
     });
+    if (els.btnSync) {
+      els.btnSync.addEventListener('click', () => pushTasksToGitHub('day-thu-cong'));
+    }
+    if (els.btnGithubSettings) {
+      els.btnGithubSettings.addEventListener('click', openGithubModal);
+    }
+    if (els.btnCloseGithub) els.btnCloseGithub.addEventListener('click', closeGithubModal);
+    if (els.btnGithubCancel) els.btnGithubCancel.addEventListener('click', closeGithubModal);
+    if (els.githubBackdrop) els.githubBackdrop.addEventListener('click', closeGithubModal);
+    if (els.btnGithubSave) els.btnGithubSave.addEventListener('click', handleGithubSave);
+    if (els.btnGithubDisconnect) els.btnGithubDisconnect.addEventListener('click', handleGithubDisconnect);
+    if (els.btnExport) {
+      els.btnExport.addEventListener('click', exportBackup);
+    }
+    if (els.btnImport && els.fileImport) {
+      els.btnImport.addEventListener('click', () => els.fileImport.click());
+      els.fileImport.addEventListener('change', (e) => {
+        const file = e.target.files && e.target.files[0];
+        importBackupFile(file);
+        e.target.value = '';
+      });
+    }
 
     // modal triggers
     els.btnOpenAdd.addEventListener('click', () => openModal(null));
@@ -663,6 +1074,9 @@
       if (e.key === 'Escape' && !els.modal.hidden) {
         closeModal();
       }
+      if (e.key === 'Escape' && els.githubModal && !els.githubModal.hidden) {
+        closeGithubModal();
+      }
     });
 
     // footer date
@@ -672,40 +1086,46 @@
   }
 
   // ---------- Init ----------
-  function init() {
+  function applyLoadedState(saved) {
+    state.tasks = Array.isArray(saved.tasks) ? sanitizeTasks(saved.tasks) : [];
+    if (saved.filters) {
+      state.filters = {
+        search: saved.filters.search || '',
+        status: saved.filters.status || 'all',
+        priority: saved.filters.priority || 'all',
+        tag: saved.filters.tag || 'all',
+        overdueOnly: !!saved.filters.overdueOnly
+      };
+    }
+    if (saved.sortBy) state.sortBy = saved.sortBy;
+    // sync UI
+    els.searchInput.value = state.filters.search;
+    els.filterStatus.value = state.filters.status;
+    els.filterPriority.value = state.filters.priority;
+    els.filterOverdue.checked = state.filters.overdueOnly;
+    els.sortBy.value = state.sortBy;
+  }
+
+  async function init() {
     const saved = loadData();
     if (saved) {
-      state.tasks = Array.isArray(saved.tasks) ? saved.tasks : [];
-      if (saved.filters) {
-        state.filters = {
-          search: saved.filters.search || '',
-          status: saved.filters.status || 'all',
-          priority: saved.filters.priority || 'all',
-          tag: saved.filters.tag || 'all',
-          overdueOnly: !!saved.filters.overdueOnly
-        };
-      }
-      if (saved.sortBy) state.sortBy = saved.sortBy;
-      // sync UI
-      els.searchInput.value = state.filters.search;
-      els.filterStatus.value = state.filters.status;
-      els.filterPriority.value = state.filters.priority;
-      els.filterOverdue.checked = state.filters.overdueOnly;
-      els.sortBy.value = state.sortBy;
+      applyLoadedState(saved);
     } else {
-      state.tasks = seedData();
+      const defaults = await loadDefaultTasks();
+      state.tasks = defaults && defaults.length ? defaults : seedData();
       saveData();
     }
 
     // ensure tag filter reflects saved tag
     bindEvents();
     render();
+    refreshSyncStatus();
   }
 
   // Expose for debugging / rubric check
   window.TaskBoard = {
     get state() { return state; },
-    addTask, updateTask, deleteTask, filterTasks, sortTasks, renderTasks, renderDashboard, saveData, loadData
+    addTask, updateTask, deleteTask, restoreTask, filterTasks, sortTasks, renderTasks, renderDashboard, saveData, loadData, exportBackup, importBackupFile, loadDefaultTasks, pushTasksToGitHub, getGithubConfig
   };
 
   document.addEventListener('DOMContentLoaded', init);
