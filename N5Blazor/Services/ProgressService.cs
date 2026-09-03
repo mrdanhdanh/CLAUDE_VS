@@ -15,6 +15,8 @@ public interface IProgressService
     Task ToggleBookmark(string key);
     Task RecordQuiz(string category, int score);
     Task UpdateStreakAsync();
+    Task ImportJsonAsync(string json, bool merge = false);
+    string ExportJson();
     event Action? OnChange;
 }
 
@@ -75,6 +77,28 @@ public class ProgressService : IProgressService
         Progress.QuizScores[category] = Math.Max(Progress.QuizScores.GetValueOrDefault(category), score);
         await SaveAsync();
     }
+    public async Task ImportJsonAsync(string json, bool merge = false)
+    {
+        if (string.IsNullOrWhiteSpace(json)) throw new ArgumentException("JSON rỗng");
+        var incoming = JsonSerializer.Deserialize<UserProgress>(json) ?? throw new InvalidOperationException("JSON không hợp lệ");
+        if (merge)
+        {
+            foreach (var x in incoming.LearnedKana) Progress.LearnedKana.Add(x);
+            foreach (var x in incoming.LearnedKanji) Progress.LearnedKanji.Add(x);
+            foreach (var x in incoming.LearnedVocabIds) Progress.LearnedVocabIds.Add(x);
+            foreach (var x in incoming.LearnedGrammarIds) Progress.LearnedGrammarIds.Add(x);
+            foreach (var x in incoming.Bookmarks) Progress.Bookmarks.Add(x);
+            foreach (var kv in incoming.QuizScores) Progress.QuizScores[kv.Key] = Math.Max(Progress.QuizScores.GetValueOrDefault(kv.Key), kv.Value);
+            if (incoming.StreakDays > Progress.StreakDays) Progress.StreakDays = incoming.StreakDays;
+            if (incoming.LastStudyDate != null && (Progress.LastStudyDate == null || incoming.LastStudyDate > Progress.LastStudyDate)) Progress.LastStudyDate = incoming.LastStudyDate;
+        }
+        else
+        {
+            Progress = incoming;
+        }
+        await SaveAsync();
+    }
+    public string ExportJson() => JsonSerializer.Serialize(Progress, new JsonSerializerOptions { WriteIndented = true });
     public async Task UpdateStreakAsync()
     {
         var today = DateTime.Today;

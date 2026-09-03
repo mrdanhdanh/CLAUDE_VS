@@ -72,7 +72,7 @@
       <div id="tableView" class="table-wrap glass" style="display:none;overflow:auto"><table><thead><tr><th>Từ</th><th>Reading</th><th>Nghĩa</th><th>Loại</th><th>Chủ đề</th><th></th></tr></thead><tbody id="tbody"></tbody></table></div>
       <div id="empty" class="glass empty" style="display:none;margin-top:16px"><div class="empty-icon">🔍</div><div>Không tìm thấy từ nào</div><button class="btn btn-glass btn-sm" style="margin-top:8px" id="clearFilter">Xóa bộ lọc</button></div>
     </main>
-    <footer style="padding:16px 24px; text-align:center; color:var(--text-dim); font-size:12px; border-top:1px solid rgba(255,255,255,0.06); margin-top:24px">N5 Blazor Static • <a href="index.html">Trang chủ</a> • <a href="../index.html">YUNIE STATUS</a></footer>
+    <footer style="padding:16px 24px; text-align:center; color:var(--text-dim); font-size:12px; margin-top:24px">N5 Blazor Static • <a href="index.html">Trang chủ</a> • <a href="../index.html">YUNIE STATUS</a></footer>
   </div>
 </div>
 <div id="mobileDrawer" class="mobile-drawer"><div class="mobile-drawer-backdrop"></div><div class="mobile-drawer-panel"><div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px"><div style="font-weight:800">Menu</div><button class="btn btn-glass btn-sm" onclick="document.getElementById('mobileDrawer').classList.remove('open')">✕</button></div>
@@ -94,9 +94,11 @@ document.getElementById('helper').innerHTML = renderHelper({
 });
 let search='', topic=null, onlyLearned=false, view='grid', flipped=new Set();
 const topics=[...new Set(VOCAB.map(v=>v.topic))].sort();
+const topicLabels={greeting:'Chào hỏi',family:'Gia đình',school:'Trường học',daily:'Hàng ngày',time:'Thời gian',number:'Số đếm',place:'Địa điểm'};
+const typeLabels={pronoun:'Đại từ',greeting:'Chào hỏi',noun:'Danh từ',verb:'Động từ',adj:'Tính từ',number:'Số từ'};
 function renderChips(){
   const c=document.getElementById('topicChips');
-  c.innerHTML = `<button class="chip ${!topic?'active':''}" data-t="">Tất cả</button>` + topics.map(t=>`<button class="chip ${topic===t?'active':''}" data-t="${t}">${t}</button>`).join('');
+  c.innerHTML = `<button class="chip ${!topic?'active':''}" data-t="">Tất cả</button>` + topics.map(t=>`<button class="chip ${topic===t?'active':''}" data-t="${t}">${topicLabels[t]||t}</button>`).join('');
   c.querySelectorAll('button').forEach(b=> b.addEventListener('click', ()=>{ topic=b.dataset.t||null; renderChips(); render(); }));
 }
 function filtered(){
@@ -132,7 +134,7 @@ function render(){
           ${!isFlipped?`
             <div class="vocab-word jp">${esc(v.word)}</div>
             <div class="vocab-reading">${esc(v.reading)} • ${esc(v.romaji)}</div>
-            <div style="display:flex;gap:6px;margin-top:4px"><span class="badge">${esc(v.type)}</span><span class="badge badge-primary">${esc(v.topic)}</span></div>
+            <div style="display:flex;gap:6px;margin-top:4px"><span class="badge">${esc(typeLabels[v.type]||v.type)}</span><span class="badge badge-primary">${esc(topicLabels[v.topic]||v.topic)}</span></div>
             <div style="font-size:11px;color:var(--text-dim);margin-top:8px">Bấm để lật → xem nghĩa</div>
           `:`
             <div class="vocab-meaning" style="font-size:16px;font-weight:700">${esc(v.meaning)}</div>
@@ -166,9 +168,9 @@ function render(){
         <td class="jp" style="font-weight:700">${esc(v.word)}</td>
         <td class="mono" style="font-size:12px">${esc(v.reading)}</td>
         <td>${esc(v.meaning)}</td>
-        <td><span class="badge">${esc(v.type)}</span></td>
-        <td><span class="badge badge-primary">${esc(v.topic)}</span></td>
-        <td style="display:flex;gap:6px"><button class="btn btn-glass btn-sm" data-speak2="${v.id}">🔊</button><button class="btn ${learned?'btn-primary':'btn-glass'} btn-sm" data-learn2="${v.id}">${learned?'✓':'+'}</button></td>
+        <td><span class="badge">${esc(typeLabels[v.type]||v.type)}</span></td>
+        <td><span class="badge badge-primary">${esc(topicLabels[v.topic]||v.topic)}</span></td>
+        <td><div class="table-actions"><button class="btn btn-glass btn-sm" data-speak2="${v.id}">🔊</button><button class="btn ${learned?'btn-primary':'btn-glass'} btn-sm" data-learn2="${v.id}">${learned?'✓':'+'}</button></div></td>
       </tr>`;
     }).join('');
     tbody.querySelectorAll('[data-speak2]').forEach(b=> b.addEventListener('click', ()=>{ const v=VOCAB.find(x=>x.id==b.dataset.speak2); speak(v.word); }));
@@ -177,10 +179,16 @@ function render(){
 }
 document.getElementById('search').addEventListener('input', e=>{ search=e.target.value; render(); });
 document.getElementById('onlyLearned').addEventListener('change', e=>{ onlyLearned=e.target.checked; render(); });
-document.getElementById('btnGrid').addEventListener('click', ()=>{ view='grid'; document.getElementById('btnGrid').classList.add('btn-primary'); document.getElementById('btnGrid').classList.remove('btn-glass'); document.getElementById('btnTable').classList.remove('btn-primary'); document.getElementById('btnTable').classList.add('btn-glass'); render(); });
-document.getElementById('btnTable').addEventListener('click', ()=>{ view='table'; document.getElementById('btnTable').classList.add('btn-primary'); document.getElementById('btnTable').classList.remove('btn-glass'); document.getElementById('btnGrid').classList.remove('btn-primary'); document.getElementById('btnGrid').classList.add('btn-glass'); render(); });
+function syncViewBtns(){
+  const g=document.getElementById('btnGrid'), t=document.getElementById('btnTable');
+  const isGrid=view==='grid';
+  g.classList.toggle('btn-primary', isGrid); g.classList.toggle('btn-glass', !isGrid); g.setAttribute('aria-pressed', isGrid?'true':'false');
+  t.classList.toggle('btn-primary', !isGrid); t.classList.toggle('btn-glass', isGrid); t.setAttribute('aria-pressed', !isGrid?'true':'false');
+}
+document.getElementById('btnGrid').addEventListener('click', ()=>{ view='grid'; syncViewBtns(); render(); });
+document.getElementById('btnTable').addEventListener('click', ()=>{ view='table'; syncViewBtns(); render(); });
 document.getElementById('clearFilter').addEventListener('click', ()=>{ search=''; topic=null; onlyLearned=false; document.getElementById('search').value=''; document.getElementById('onlyLearned').checked=false; renderChips(); render(); });
-document.getElementById('btnGrid').classList.add('btn-primary');
+syncViewBtns();
 renderChips(); render(); renderRing();
 document.addEventListener('n5:progress', ()=>{ render(); renderRing(); });
 </script>

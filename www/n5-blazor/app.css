@@ -1,5 +1,5 @@
 /* N5 Blazor — Liquid Glass + Glowing Rainbow Border — Design System */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+JP:wght@400;500;700&family=Zen+Maru+Gothic:wght@500;700&family=JetBrains+Mono:wght@400;600&display=swap');
+/* Fonts loaded via <link> in HTML — no @import to avoid double fetch */
 
 :root{
   --bg-0:#070b1a;
@@ -194,7 +194,7 @@ a:hover{ text-decoration:underline; }
   .mobile-toggle{ display:grid; }
   .mobile-drawer.open{ display:block; position:fixed; inset:0; z-index:40; }
   .mobile-drawer-backdrop{ position:absolute; inset:0; background: rgba(0,0,0,0.5); backdrop-filter: blur(4px); }
-  .mobile-drawer-panel{ position:absolute; left:0; top:0; bottom:0; width:280px; background: rgba(15,23,42,0.96); backdrop-filter: blur(20px); border-right:1px solid var(--glass-border); overflow:auto; padding:16px 12px; }
+  .mobile-drawer-panel{ position:absolute; left:0; top:0; bottom:0; width:280px; background: var(--surface); backdrop-filter: blur(20px); border-right:1px solid var(--glass-border); overflow:auto; padding:16px 12px; }
   .content{ padding:16px; }
   .topbar{ padding:10px 14px; }
 }
@@ -235,10 +235,14 @@ a:hover{ text-decoration:underline; }
   padding:14px 16px; cursor:pointer; user-select:none;
   background: rgba(99,102,241,0.08); border-bottom:1px solid var(--glass-border);
 }
-.helper-header h3{ margin:0; font-size:13px; font-weight:700; letter-spacing:0.06em; text-transform:uppercase; color: var(--primary); display:flex; align-items:center; gap:8px; }
-.helper-toggle{ width:28px; height:28px; border-radius:8px; display:grid; place-items:center; background: rgba(255,255,255,0.06); border:1px solid var(--glass-border); color:var(--text-muted); transition: transform 200ms; }
+.helper-header h3{ margin:0; font-size:13px; font-weight:700; letter-spacing:0.06em; text-transform:uppercase; color:#a5b4fc; display:flex; align-items:center; gap:8px; }
+[data-theme="light"] .helper-header h3{ color:#4f46e5; }
+.helper-toggle{ width:28px; height:28px; border-radius:8px; display:grid; place-items:center; background: rgba(255,255,255,0.06); border:1px solid var(--glass-border); color:var(--text-muted); transition: transform 200ms; line-height:1; }
+.helper-toggle svg{ display:block; width:14px; height:14px; }
 .helper.open .helper-toggle{ transform: rotate(180deg); }
 .helper-body{ padding:16px; display:grid; gap:16px; }
+.helper:not(.open) .helper-body{ display:none; }
+.helper:not(.open) .helper-header{ border-bottom:none; }
 .helper-grid{ display:grid; grid-template-columns: repeat(2,1fr); gap:14px; }
 @media (max-width: 640px){ .helper-grid{ grid-template-columns: 1fr; } }
 .helper-section{ background: rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.06); border-radius:12px; padding:14px; }
@@ -308,7 +312,7 @@ a:hover{ text-decoration:underline; }
 .progress-ring{ position:relative; width:120px; height:120px; }
 .progress-ring svg{ transform: rotate(-90deg); }
 .progress-ring-bg{ fill:none; stroke: rgba(255,255,255,0.08); stroke-width:8; }
-.progress-ring-fill{ fill:none; stroke: url(#grad); stroke-width:8; stroke-linecap:round; transition: stroke-dashoffset 600ms ease; }
+.progress-ring-fill{ fill:none; stroke-width:8; stroke-linecap:round; transition: stroke-dashoffset 600ms ease; }
 
 /* Search & filter */
 .toolbar{ display:flex; gap:10px; flex-wrap:wrap; align-items:center; margin-bottom:16px; }
@@ -319,7 +323,10 @@ a:hover{ text-decoration:underline; }
 }
 .input::placeholder{ color:var(--text-dim); }
 .input:focus{ border-color: rgba(99,102,241,0.4); box-shadow: 0 0 0 3px rgba(99,102,241,0.15); }
-.select{ composes: input; }
+.select{
+  background: rgba(255,255,255,0.06); border:1px solid var(--glass-border); color:var(--text);
+  padding:10px 14px; border-radius:12px; font-size:14px; outline:none; min-width:220px;
+}
 .chip{
   padding:6px 12px; border-radius:9999px; font-size:13px; font-weight:600;
   background: rgba(255,255,255,0.06); border:1px solid var(--glass-border); color:var(--text-muted); cursor:pointer;
@@ -415,9 +422,58 @@ tr:hover td{ background: rgba(255,255,255,0.03); }
 .theme-toggle:active{ transform: scale(0.96); }
 .theme-toggle:focus-visible{ outline:2px solid var(--primary); outline-offset:2px; }
 
-/* Reduced motion */
+/* Reduced motion — tôn trọng người dùng nhạy cảm chuyển động */
 @media (prefers-reduced-motion: reduce){
   .rainbow-wrap{ animation:none; }
   .flashcard-inner{ transition:none; }
+  .skeleton{ animation:none; }
+  .progress-ring-fill{ transition:none; }
+  .progress-mini-fill{ transition:none; }
+  .hero-orb{ display:none; }
   *{ scroll-behavior:auto !important; }
 }
+
+/* Token classes thay inline hardcode — dùng cho pill/formation/soft-card */
+.pill{
+  display:inline-flex; align-items:center; gap:8px;
+  background:rgba(99,102,241,0.12); border:1px solid rgba(99,102,241,0.25);
+  padding:6px 12px; border-radius:9999px; font-size:12px; font-weight:700;
+  letter-spacing:0.06em; text-transform:uppercase; color:#a5b4fc;
+}
+[data-theme="light"] .pill{ color:#4f46e5; background:rgba(99,102,241,0.08); }
+.formation{
+  font-family:'JetBrains Mono', monospace; font-size:13px; color:#a5b4fc;
+  background:rgba(99,102,241,0.10); padding:6px 10px; border-radius:8px; display:inline-block;
+}
+[data-theme="light"] .formation{ color:#4338ca; background:rgba(99,102,241,0.08); }
+.soft-card{
+  padding:12px; border-radius:12px;
+  background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.06);
+}
+[data-theme="light"] .soft-card{ background:rgba(15,23,42,0.03); border-color:var(--glass-border); }
+.quiz-done{
+  background:rgba(34,197,94,0.12) !important; border-color:rgba(34,197,94,0.25) !important;
+  color:var(--text) !important;
+}
+footer{ border-top:1px solid var(--glass-border) !important; }
+.table-actions{ display:flex; gap:6px; white-space:nowrap; }
+
+/* Topbar gọn trên mobile — ẩn badges trang trí */
+@media (max-width: 640px){
+  .topbar-actions .badge{ display:none; }
+  .hero{ padding:20px; }
+  .hero h1{ font-size:26px; }
+  .brand small{ display:none; }
+}
+/* Drawer dùng token — sáng/tối đều đẹp */
+.mobile-drawer-panel{ background:var(--surface); }
+[data-theme="dark"] .mobile-drawer-panel{ background:rgba(15,23,42,0.96); }
+[data-theme="light"] .helper-badge{ background:rgba(99,102,241,0.10); color:#4f46e5; border-color:rgba(99,102,241,0.18); }
+.badge-danger{ background:rgba(239,68,68,0.12); color:#fca5a5; border-color:rgba(239,68,68,0.25); }
+[data-theme="light"] .badge-danger{ background:rgba(239,68,68,0.08); color:#b91c1c; border-color:rgba(239,68,68,0.2); }
+.warn{ margin-top:12px; padding:10px 12px; border-radius:12px; background:rgba(239,68,68,0.1); border:1px solid rgba(239,68,68,0.25); font-size:13px; color:var(--text); }
+.explain{ margin-top:8px; padding:8px 10px; border-radius:8px; background:rgba(99,102,241,0.08); border:1px solid rgba(99,102,241,0.15); font-size:12px; color:var(--text-muted); }
+.review-ok{ border:1px solid rgba(34,197,94,0.3); background:rgba(34,197,94,0.1); }
+.review-bad{ border:1px solid rgba(239,68,68,0.3); background:rgba(239,68,68,0.1); }
+.review-mid{ border:1px solid var(--glass-border); background:rgba(255,255,255,0.03); }
+[data-theme="light"] .review-mid{ background:rgba(15,23,42,0.02); }

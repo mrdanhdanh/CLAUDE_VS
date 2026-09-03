@@ -74,8 +74,8 @@
         <button class="btn btn-glass btn-sm" id="speakAll">🔊 Đọc hàng</button>
       </div>
       <div class="kana-grid" id="grid"></div>
-      <div id="empty" class="glass empty" style="display:none;margin-top:16px"><div class="empty-icon">🔍</div><div>Không tìm thấy chữ nào</div></div>
-      <div id="modal" style="display:none;position:fixed;inset:0;z-index:50;display:none;place-items:center;padding:16px">
+      <div id="empty" class="glass empty" style="display:none;margin-top:16px"><div class="empty-icon">🔍</div><div>Không tìm thấy chữ nào</div><button class="btn btn-glass btn-sm" style="margin-top:8px" id="clearFilter">Xóa bộ lọc</button></div>
+      <div id="modal" style="display:none;position:fixed;inset:0;z-index:50;place-items:center;padding:16px" role="dialog" aria-modal="true" aria-label="Chi tiết kana">
         <div style="position:absolute;inset:0;background:rgba(0,0,0,0.5);backdrop-filter:blur(6px)" id="modalBg"></div>
         <div class="glass glass-strong" style="position:relative;max-width:420px;width:100%;padding:24px;text-align:center">
           <button class="btn btn-glass btn-sm" style="position:absolute;top:12px;right:12px" id="modalClose" aria-label="Đóng">✕</button>
@@ -90,7 +90,7 @@
         </div>
       </div>
     </main>
-    <footer style="padding:16px 24px; text-align:center; color:var(--text-dim); font-size:12px; border-top:1px solid rgba(255,255,255,0.06); margin-top:24px">N5 Blazor Static • <a href="index.html">Trang chủ</a> • <a href="../index.html">YUNIE STATUS</a></footer>
+    <footer style="padding:16px 24px; text-align:center; color:var(--text-dim); font-size:12px; margin-top:24px">N5 Blazor Static • <a href="index.html">Trang chủ</a> • <a href="../index.html">YUNIE STATUS</a></footer>
   </div>
 </div>
 <div id="mobileDrawer" class="mobile-drawer"><div class="mobile-drawer-backdrop"></div><div class="mobile-drawer-panel"><div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px"><div style="font-weight:800">Menu</div><button class="btn btn-glass btn-sm" onclick="document.getElementById('mobileDrawer').classList.remove('open')">✕</button></div>
@@ -153,13 +153,14 @@ function openModal(k){
   selected=k;
   document.getElementById('mChar').textContent=k.char;
   document.getElementById('mRomaji').textContent=k.romaji;
-  document.getElementById('mMeta').textContent=k.type+' • hàng '+k.row;
+  document.getElementById('mMeta').textContent=(k.type==='hiragana'?'Hiragana':'Katakana')+' • hàng '+k.row;
   const p=N5.get(); const learned=p.learnedKana.has(k.char);
   const btn=document.getElementById('mLearn');
   btn.textContent = learned ? '✓ Đã thuộc' : 'Đánh dấu đã thuộc';
   btn.className = learned ? 'btn btn-primary btn-sm' : 'btn btn-glass btn-sm';
   const modal=document.getElementById('modal');
   modal.style.display='grid';
+  const c=document.getElementById('modalClose'); if(c) c.focus();
 }
 function closeModal(){ document.getElementById('modal').style.display='none'; selected=null; }
 document.getElementById('modalBg').addEventListener('click', closeModal);
@@ -179,6 +180,8 @@ document.getElementById('mLearn').addEventListener('click', ()=>{
 document.getElementById('btnHira').addEventListener('click', ()=>{ type='hiragana'; document.getElementById('btnHira').classList.add('active'); document.getElementById('btnKata').classList.remove('active'); if(quizMode) startQuiz(); renderGrid(); });
 document.getElementById('btnKata').addEventListener('click', ()=>{ type='katakana'; document.getElementById('btnKata').classList.add('active'); document.getElementById('btnHira').classList.remove('active'); if(quizMode) startQuiz(); renderGrid(); });
 document.getElementById('search').addEventListener('input', e=>{ search=e.target.value; renderGrid(); });
+const cf=document.getElementById('clearFilter');
+if(cf) cf.addEventListener('click', ()=>{ search=''; rowFilter=null; const s=document.getElementById('search'); if(s) s.value=''; renderRowChips(); renderGrid(); });
 document.getElementById('speakAll').addEventListener('click', async ()=>{
   const list=filtered().slice(0,5);
   for(const k of list){ speak(k.char); await new Promise(r=>setTimeout(r,700)); }
@@ -221,10 +224,12 @@ function renderQuiz(){
   const n=box.querySelector('#nextQ');
   if(n) n.addEventListener('click', ()=>{ quizIdx++; quizSel=null; renderQuiz(); });
 }
-document.getElementById('quizBtn').addEventListener('click', ()=>{
+document.getElementById('quizBtn').addEventListener('click', (e)=>{
   quizMode=!quizMode;
-  document.getElementById('quizBtn').textContent = quizMode ? 'Thoát Quiz' : '🧪 Quiz 10 câu';
-  document.getElementById('quizBtn').className = quizMode ? 'btn btn-primary' : 'btn btn-glass';
+  const b=e.currentTarget;
+  b.textContent = quizMode ? 'Thoát Quiz' : '🧪 Quiz 10 câu';
+  b.className = quizMode ? 'btn btn-primary' : 'btn btn-glass';
+  b.setAttribute('aria-pressed', quizMode?'true':'false');
   if(quizMode) startQuiz();
   renderQuiz();
 });

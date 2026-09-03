@@ -236,7 +236,8 @@ a:hover{ text-decoration:underline; }
   background: rgba(99,102,241,0.08); border-bottom:1px solid var(--glass-border);
 }
 .helper-header h3{ margin:0; font-size:13px; font-weight:700; letter-spacing:0.06em; text-transform:uppercase; color: var(--primary); display:flex; align-items:center; gap:8px; }
-.helper-toggle{ width:28px; height:28px; border-radius:8px; display:grid; place-items:center; background: rgba(255,255,255,0.06); border:1px solid var(--glass-border); color:var(--text-muted); transition: transform 200ms; }
+.helper-toggle{ width:28px; height:28px; border-radius:8px; display:grid; place-items:center; background: rgba(255,255,255,0.06); border:1px solid var(--glass-border); color:var(--text-muted); transition: transform 200ms; line-height:1; }
+.helper-toggle svg{ display:block; width:14px; height:14px; }
 .helper.open .helper-toggle{ transform: rotate(180deg); }
 .helper-body{ padding:16px; display:grid; gap:16px; }
 .helper-grid{ display:grid; grid-template-columns: repeat(2,1fr); gap:14px; }

@@ -68,9 +68,9 @@
         <div style="display:flex;gap:6px" id="filterChips"></div>
       </div>
       <div style="display:flex;flex-direction:column;gap:12px" id="list"></div>
-      <div id="empty" class="glass empty" style="display:none;margin-top:16px"><div class="empty-icon">🔍</div><div>Không tìm thấy mẫu nào</div></div>
+      <div id="empty" class="glass empty" style="display:none;margin-top:16px"><div class="empty-icon">🔍</div><div>Không tìm thấy mẫu nào</div><button class="btn btn-glass btn-sm" style="margin-top:8px" id="clearFilter2">Xóa bộ lọc</button></div>
     </main>
-    <footer style="padding:16px 24px; text-align:center; color:var(--text-dim); font-size:12px; border-top:1px solid rgba(255,255,255,0.06); margin-top:24px">N5 Blazor Static • <a href="index.html">Trang chủ</a> • <a href="../index.html">YUNIE STATUS</a></footer>
+    <footer style="padding:16px 24px; text-align:center; color:var(--text-dim); font-size:12px; margin-top:24px">N5 Blazor Static • <a href="index.html">Trang chủ</a> • <a href="../index.html">YUNIE STATUS</a></footer>
   </div>
 </div>
 <div id="mobileDrawer" class="mobile-drawer"><div class="mobile-drawer-backdrop"></div><div class="mobile-drawer-panel"><div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px"><div style="font-weight:800">Menu</div><button class="btn btn-glass btn-sm" onclick="document.getElementById('mobileDrawer').classList.remove('open')">✕</button></div>
@@ -135,18 +135,18 @@ function renderList(){
               ${learned?'<span class="badge badge-success">✓ Đã học</span>':''}
               ${bm?'<span class="badge">🔖</span>':''}
             </div>
-            <div style="font-family:'JetBrains Mono',monospace;font-size:13px;color:#a5b4fc;background:rgba(99,102,241,0.10);padding:6px 10px;border-radius:8px;display:inline-block">${esc(g.formation)}</div>
+            <div class="formation">${esc(g.formation)}</div>
             <div style="font-size:13px;color:var(--text-muted);margin-top:6px">${esc(g.meaning)}</div>
           </div>
-          <span class="helper-toggle" style="flex-shrink:0;transform:${isExp?'rotate(180deg)':'rotate(0)'}">⌄</span>
+          <span class="helper-toggle" style="flex-shrink:0;transform:${isExp?'rotate(180deg)':'rotate(0)'}" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 6l5 5 5-5"/></svg></span>
         </div>
         ${isExp?`
           <div style="padding:0 16px 16px;border-top:1px solid rgba(255,255,255,0.06)">
             <p style="font-size:13px;line-height:1.6;color:var(--text-muted);margin:12px 0">${esc(g.explain)}</p>
             <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:12px">
-              ${g.ex.map((ex,i)=>`<div style="padding:10px 12px;border-radius:10px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.06);display:flex;justify-content:space-between;gap:8px;align-items:center"><div><div class="jp" style="font-size:14px;font-weight:600">${esc(ex)}</div><div style="font-size:12px;color:var(--text-muted)">${esc(g.exMean[i])}</div></div><button class="btn btn-glass btn-sm" data-speak="${g.id}-${i}">🔊</button></div>`).join('')}
+              ${g.ex.map((ex,i)=>`<div class="soft-card" style="display:flex;justify-content:space-between;gap:8px;align-items:center"><div><div class="jp" style="font-size:14px;font-weight:600">${esc(ex)}</div><div style="font-size:12px;color:var(--text-muted)">${esc(g.exMean[i])}</div></div><button class="btn btn-glass btn-sm" data-speak="${g.id}-${i}">🔊</button></div>`).join('')}
             </div>
-            <div style="padding:12px;border-radius:12px;background:rgba(245,158,11,0.06);border:1px solid rgba(245,158,11,0.15)">
+            <div class="soft-card" style="border-color:rgba(245,158,11,0.15);background:rgba(245,158,11,0.06)">
               <div style="font-weight:700;font-size:13px;margin-bottom:6px">✏️ Bài tập mini</div>
               <div style="font-size:13px;color:var(--text-muted);margin-bottom:8px">Điền trợ từ đúng: <span class="jp">${esc(g.ex[0].replace('は','___').replace('を','___').replace('に','___'))}</span></div>
               <div style="display:flex;gap:8px"><input class="input" placeholder="Nhập đáp án..." data-ans="${g.id}" value="${esc(answers[g.id]||'')}" style="flex:1;min-width:120px"/><button class="btn btn-primary btn-sm" data-check="${g.id}">Kiểm tra</button></div>
@@ -166,11 +166,28 @@ function renderList(){
   el.querySelectorAll('[data-speak]').forEach(b=> b.addEventListener('click', e=>{ e.stopPropagation(); const [gid, idx]=b.dataset.speak.split('-'); const g=GRAMMAR.find(x=>x.id==gid); speak(g.ex[parseInt(idx)]); }));
   el.querySelectorAll('[data-speak2]').forEach(b=> b.addEventListener('click', e=>{ e.stopPropagation(); const g=GRAMMAR.find(x=>x.id==b.dataset.speak2); speak(g.ex[0]); }));
   el.querySelectorAll('[data-ans]').forEach(inp=> inp.addEventListener('input', e=>{ answers[inp.dataset.ans]=e.target.value; }));
-  el.querySelectorAll('[data-check]').forEach(b=> b.addEventListener('click', e=>{ e.stopPropagation(); const id=b.dataset.check; results[id]=!!(answers[id]&&answers[id].trim()); renderList(); }));
+  el.querySelectorAll('[data-check]').forEach(b=> b.addEventListener('click', e=>{
+    e.stopPropagation(); const id=b.dataset.check;
+    const g=GRAMMAR.find(x=>x.id==id);
+    const raw=(answers[id]||'').trim();
+    if(!raw){ results[id]=false; renderList(); return; }
+    // expected particle is the one replaced in ex[0]
+    let expected='';
+    if(g.ex[0].includes('は')) expected='は';
+    else if(g.ex[0].includes('を')) expected='を';
+    else if(g.ex[0].includes('に')) expected='に';
+    else if(g.ex[0].includes('へ')) expected='へ';
+    else if(g.ex[0].includes('で')) expected='で';
+    else if(g.ex[0].includes('が')) expected='が';
+    else expected=g.formation.split(' ')[0]||'は';
+    results[id]= raw===expected || raw.includes(expected);
+    renderList();
+  }));
   el.querySelectorAll('[data-learn]').forEach(b=> b.addEventListener('click', e=>{ e.stopPropagation(); const id=parseInt(b.dataset.learn); const p=N5.get(); if(p.learnedGrammarIds.has(id)) p.learnedGrammarIds.delete(id); else p.learnedGrammarIds.add(id); N5.save(); renderList(); renderRing(); }));
   el.querySelectorAll('[data-book]').forEach(b=> b.addEventListener('click', e=>{ e.stopPropagation(); N5.toggleBookmark('grammar:'+b.dataset.book); renderList(); }));
 }
 document.getElementById('search').addEventListener('input', e=>{ search=e.target.value; renderList(); });
+document.getElementById('clearFilter2').addEventListener('click', ()=>{ search=''; filter=null; document.getElementById('search').value=''; renderChips(); renderList(); });
 renderChips(); renderList(); renderRing();
 document.addEventListener('n5:progress', ()=>{ renderList(); renderRing(); });
 </script>

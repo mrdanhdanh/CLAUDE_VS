@@ -16,10 +16,11 @@ const N5 = (() => {
         quizScores: p.quizScores||{}
       }; } else cache = {...def(), learnedKana:new Set(), learnedKanji:new Set(), learnedVocabIds:new Set(), learnedGrammarIds:new Set(), bookmarks:new Set(), quizScores:{}};
     }catch{ cache = {...def(), learnedKana:new Set(), learnedKanji:new Set(), learnedVocabIds:new Set(), learnedGrammarIds:new Set(), bookmarks:new Set(), quizScores:{}}; }
-    // streak
-    const today = new Date().toISOString().slice(0,10);
+    // streak — dùng ngày local (không UTC) để không lệch múi giờ VN
+    const fmtLocal = (d)=> d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
+    const today = fmtLocal(new Date());
     if(cache.lastStudyDate !== today){
-      const yest = new Date(Date.now()-86400000).toISOString().slice(0,10);
+      const yest = fmtLocal(new Date(Date.now()-86400000));
       if(cache.lastStudyDate === yest) cache.streakDays = (cache.streakDays||0)+1;
       else if(!cache.lastStudyDate) cache.streakDays = 1;
       else if(cache.lastStudyDate !== today) cache.streakDays = 1;
@@ -53,19 +54,75 @@ const N5 = (() => {
     toggleVocab(id){ return toggleSet(load().learnedVocabIds, id); },
     toggleGrammar(id){ return toggleSet(load().learnedGrammarIds, id); },
     toggleBookmark(key){ return toggleSet(load().bookmarks, key); },
-    recordQuiz(cat, score){ const c=load(); c.quizScores[cat]=Math.max(c.quizScores[cat]||0, score); save(); },
+    recordQuiz(cat, score, total){ const c=load(); const pct = total ? Math.round(score/total*100) : score*10; const cur=c.quizScores[cat]; const curPct = typeof cur==='object' ? cur.pct : (cur?cur*10:0); if(pct > curPct) c.quizScores[cat]={score, total: total||10, pct}; else if(typeof cur==='number' && pct>cur*10) c.quizScores[cat]={score, total: total||10, pct}; save(); },
     exportJSON(){ const c=load(); return JSON.stringify({learnedKana:[...c.learnedKana],learnedKanji:[...c.learnedKanji],learnedVocabIds:[...c.learnedVocabIds],learnedGrammarIds:[...c.learnedGrammarIds],bookmarks:[...c.bookmarks],streakDays:c.streakDays,lastStudyDate:c.lastStudyDate,quizScores:c.quizScores}, null, 2); },
+    importJSON(jsonStr, opts={}){
+      const mode = opts.mode || 'replace';
+      let data;
+      try{ data = JSON.parse(jsonStr); }catch(e){ throw new Error('JSON không hợp lệ'); }
+      if(!data || typeof data!=='object' || Array.isArray(data)) throw new Error('JSON phải là object');
+      const hasKnown = ['learnedKana','learnedKanji','learnedVocabIds','learnedGrammarIds','bookmarks','quizScores','streakDays','lastStudyDate'].some(k=> k in data);
+      if(!hasKnown) throw new Error('File không phải n5-progress.json');
+      const normArr = (v)=> Array.isArray(v) ? v : [];
+      const normScores = (v)=>{
+        if(!v || typeof v!=='object' || Array.isArray(v)) return {};
+        const out={};
+        for(const [k,val] of Object.entries(v)){
+          if(val && typeof val==='object' && 'score' in val) out[k]={score:Number(val.score)||0, total:Number(val.total)||10, pct:Number(val.pct)||0};
+          else if(typeof val==='number') out[k]={score:val, total:10, pct:Math.min(val*10,100)};
+        }
+        return out;
+      };
+      const incoming = {
+        learnedKana: new Set(normArr(data.learnedKana).filter(x=> typeof x==='string')),
+        learnedKanji: new Set(normArr(data.learnedKanji).filter(x=> typeof x==='string')),
+        learnedGrammarIds: new Set(normArr(data.learnedGrammarIds).map(Number).filter(n=> !isNaN(n))),
+        learnedVocabIds: new Set(normArr(data.learnedVocabIds).map(Number).filter(n=> !isNaN(n))),
+        bookmarks: new Set(normArr(data.bookmarks).filter(x=> typeof x==='string')),
+        quizScores: normScores(data.quizScores),
+        streakDays: Number(data.streakDays)||0,
+        lastStudyDate: typeof data.lastStudyDate==='string' ? data.lastStudyDate : null
+      };
+      const c=load();
+      if(mode==='merge'){
+        for(const k of ['learnedKana','learnedKanji','learnedVocabIds','learnedGrammarIds','bookmarks']){
+          for(const v of incoming[k]) c[k].add(v);
+        }
+        for(const [k,v] of Object.entries(incoming.quizScores)){
+          const cur=c.quizScores[k];
+          const curPct = cur && typeof cur==='object' ? (cur.pct||0) : (typeof cur==='number' ? cur*10 : 0);
+          if(!cur || v.pct > curPct) c.quizScores[k]=v;
+        }
+        if(incoming.streakDays > (c.streakDays||0)) c.streakDays=incoming.streakDays;
+        if(incoming.lastStudyDate && (!c.lastStudyDate || incoming.lastStudyDate > c.lastStudyDate)) c.lastStudyDate=incoming.lastStudyDate;
+      } else {
+        c.learnedKana=incoming.learnedKana;
+        c.learnedKanji=incoming.learnedKanji;
+        c.learnedVocabIds=incoming.learnedVocabIds;
+        c.learnedGrammarIds=incoming.learnedGrammarIds;
+        c.bookmarks=incoming.bookmarks;
+        c.quizScores=incoming.quizScores;
+        c.streakDays=incoming.streakDays;
+        c.lastStudyDate=incoming.lastStudyDate;
+      }
+      save();
+      return c;
+    },
     reset(){ cache={...def(), learnedKana:new Set(), learnedKanji:new Set(), learnedVocabIds:new Set(), learnedGrammarIds:new Set(), bookmarks:new Set(), quizScores:{}}; save(); }
   };
 })();
 
 // Helper component
+function toggleHelper(el){
+  const open = el.parentElement.classList.toggle('open');
+  el.setAttribute('aria-expanded', open ? 'true' : 'false');
+}
 function renderHelper({title, purpose, structure, techniques, features, route, component, bulletsTech, bulletsFeat, extra}){
   const id = 'h'+Math.random().toString(36).slice(2,6);
   return `<div class="glass helper open" id="${id}">
-    <div class="helper-header" onclick="this.parentElement.classList.toggle('open')" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' ')this.click()" aria-expanded="true">
+    <div class="helper-header" onclick="toggleHelper(this)" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleHelper(this);}" aria-expanded="true">
       <h3>🧭 Helper — ${title}</h3>
-      <div style="display:flex;align-items:center;gap:8px"><span class="helper-badge">Static • Glass • Helper</span><span class="helper-toggle">⌄</span></div>
+      <div style="display:flex;align-items:center;gap:8px"><span class="helper-badge">Static • Glass • Helper</span><span class="helper-toggle" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 6l5 5 5-5"/></svg></span></div>
     </div>
     <div class="helper-body">
       <div class="helper-grid">
@@ -81,12 +138,13 @@ function renderHelper({title, purpose, structure, techniques, features, route, c
 function progressRing(value, label, size=96){
   const r=52, C=2*Math.PI*r, off=C*(1-Math.max(0,Math.min(100,value))/100);
   const id='g'+Math.random().toString(36).slice(2,6);
+  const vFont=Math.max(14, Math.round(size*0.26)), lFont=Math.max(9, Math.round(size*0.13));
   return `<div class="progress-ring" style="width:${size}px;height:${size}px">
     <svg width="${size}" height="${size}" viewBox="0 0 120 120" role="img" aria-label="${label} ${value}%">
       <defs><linearGradient id="grad-${id}" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#6366f1"/><stop offset="100%" stop-color="#0ea5e9"/></linearGradient></defs>
       <circle class="progress-ring-bg" cx="60" cy="60" r="${r}"/><circle class="progress-ring-fill" cx="60" cy="60" r="${r}" stroke="url(#grad-${id})" stroke-dasharray="${C}" stroke-dashoffset="${off}"/>
     </svg>
-    <div style="position:absolute;inset:0;display:grid;place-items:center;text-align:center"><div><div style="font-size:22px;font-weight:800;line-height:1">${value}%</div><div style="font-size:11px;color:var(--text-muted);font-weight:600;letter-spacing:0.06em;text-transform:uppercase">${label}</div></div></div>
+    <div style="position:absolute;inset:0;display:grid;place-items:center;text-align:center"><div><div style="font-size:${vFont}px;font-weight:800;line-height:1">${value}%</div><div style="font-size:${lFont}px;color:var(--text-muted);font-weight:600;letter-spacing:0.06em;text-transform:uppercase">${label}</div></div></div>
   </div>`;
 }
 function speak(text){
@@ -128,7 +186,7 @@ document.addEventListener('DOMContentLoaded', ()=>{
   // progress mini
   function updMini(){
     const p=N5.get();
-    const pct = Math.round(((p.learnedKanji.size/36)+(p.learnedVocabIds.size/40))/2*100)||0;
+    const pct = Math.round(((p.learnedKana.size/92)+(p.learnedKanji.size/36)+(p.learnedVocabIds.size/40)+(p.learnedGrammarIds.size/15))/4*100)||0;
     const el=document.getElementById('miniPct'); if(el) el.textContent=pct+'%';
     const bar=document.getElementById('miniBar'); if(bar) bar.style.width=pct+'%';
     const streak=document.getElementById('miniStreak'); if(streak) streak.textContent='🔥 '+p.streakDays+' ngày';
