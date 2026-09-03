@@ -450,14 +450,24 @@ node .github/harness/scripts/harness-manager.mjs create agent my-agent
       <div class="modal-header">
         <div>
           <h2 id="pipelineTitle">Quy trình Harness v2</h2>
-          <p id="pipelineDesc">8 bước từ ý tưởng đến sản phẩm hoàn chỉnh — Process &gt; Model</p>
+          <p id="pipelineDesc">2 pipeline + gates + skills — Process &gt; Model · Bắt đầu từ Knowledge First</p>
         </div>
         <button class="btn btn-ghost btn-icon" id="btnClosePipeline" type="button" aria-label="Đóng">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6L6 18"/><path d="M6 6l12 12"/></svg>
         </button>
       </div>
       <div class="modal-body">
+        <div class="ptabs" role="tablist" aria-label="Chọn pipeline">
+          <button class="ptab is-active" role="tab" aria-selected="true" data-ptab="harness" type="button">🚀 /harness Feature</button>
+          <button class="ptab" role="tab" aria-selected="false" data-ptab="fixbug" type="button">🐞 /fixbug Bug</button>
+          <button class="ptab" role="tab" aria-selected="false" data-ptab="system" type="button">🧩 Gates &amp; Skills</button>
+        </div>
+        <div class="ptab-panels">
+          <div class="ptab-panel is-active" id="ptab-harness" role="tabpanel" aria-label="/harness pipeline">
         <div class="pipeline-intro">
+          <div class="knowledge-banner" role="note" aria-label="Bước 0 bắt buộc">
+            <strong>Bước 0 — Knowledge First (bắt buộc):</strong> đọc <span class="kbd">docs/knowleged.md</span> + <span class="kbd">auto-learn suggest</span> trước mọi task. Chạm pattern cũ → áp dụng <strong>Cách phòng tránh</strong> ngay.
+          </div>
           <div class="pipeline-flow" aria-label="Luồng tổng quan">
             <span class="flow-step">Idea</span>
             <span class="flow-arrow" aria-hidden="true">→</span>
@@ -490,7 +500,12 @@ node .github/harness/scripts/harness-manager.mjs create agent my-agent
             </div>
             <div class="step-content">
               <h3>Explore — Khám phá</h3>
-              <p>Hiểu codebase, đọc README, package.json, tìm pattern liên quan bằng grep.</p>
+              <p>Hiểu codebase + context: stack, file liên quan, pattern. Đọc <span class="kbd">README</span>, <span class="kbd">package.json</span>, <span class="kbd">registry.json</span> + <span class="kbd">grep_search</span>. Cần kiến thức sách → <span class="kbd">search_library top_k 5</span> qua MCP.</p>
+              <ul class="step-detail">
+                <li><strong>Input:</strong> Idea + workspace</li>
+                <li><strong>Output:</strong> Tóm tắt stack + file chạm tới</li>
+                <li><strong>Gate:</strong> ❌ không bỏ · mini: quick</li>
+              </ul>
               <div class="step-meta">
                 <span class="tag"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg> Tóm tắt stack</span>
                 <span class="mono">Explore subagent</span>
@@ -504,7 +519,12 @@ node .github/harness/scripts/harness-manager.mjs create agent my-agent
             </div>
             <div class="step-content">
               <h3>Clarify — Làm rõ</h3>
-              <p>Nếu ý tưởng còn mơ hồ, hỏi tối đa 3 câu có lựa chọn và chốt giả định.</p>
+              <p>Mơ hồ → hỏi tối đa 3 câu có options, chốt giả định ghi vào PRD. Rõ → chốt assumption, rút gọn còn 1 câu.</p>
+              <ul class="step-detail">
+                <li><strong>Input:</strong> Idea + kết quả Explore</li>
+                <li><strong>Output:</strong> Câu hỏi + giả định đã chốt</li>
+                <li><strong>Gate:</strong> Rút gọn nếu rõ, không đoán bừa</li>
+              </ul>
               <div class="step-meta">
                 <span class="tag">Câu hỏi + giả định</span>
                 <span class="mono">vscode_askQuestions</span>
@@ -518,7 +538,11 @@ node .github/harness/scripts/harness-manager.mjs create agent my-agent
             </div>
             <div class="step-content">
               <h3>PRD — Đặc tả</h3>
-              <p>Biến ý tưởng thành đặc tả: tầm nhìn, user stories P0/P1, phạm vi, tiêu chí thành công.</p>
+              <p>Vision, user stories P0/P1, Scope In/Out, Non-Goals, Metrics. Trang <span class="kbd">www/</span> phải có <span class="kbd">Persistence · F5 · Scope</span>. YAGNI gate: liệt kê CẮT trước GIỮ.</p>
+              <ul class="step-detail">
+                <li><strong>Output:</strong> <span class="kbd">.agent/plans/&lt;slug&gt;/prd.md</span> (mini 5 dòng cũng phải có)</li>
+                <li><strong>Gate:</strong> ❌ không bỏ · Nguồn thư viện có citation nếu dùng sách</li>
+              </ul>
               <div class="step-meta">
                 <span class="tag">.agent/plans/&lt;slug&gt;/prd.md</span>
                 <span class="mono">Plan agent</span>
@@ -532,7 +556,11 @@ node .github/harness/scripts/harness-manager.mjs create agent my-agent
             </div>
             <div class="step-content">
               <h3>Design — Thiết kế</h3>
-              <p>Định nghĩa hệ thống thiết kế: bảng màu, typography, wireframe 375/768/1280, trạng thái.</p>
+              <p>Palette 3–5 màu, typography 1–2 font, spacing 4/8, wireframe 375/768/1280, states đầy đủ, animation 150–300ms, a11y ≥4.5:1. Native-first, không thêm dep nếu chưa chứng minh cần.</p>
+              <ul class="step-detail">
+                <li><strong>Output:</strong> <span class="kbd">.agent/plans/&lt;slug&gt;/design.md</span></li>
+                <li><strong>Gate:</strong> ❌ không bỏ · Không hardcode hex/px lẻ</li>
+              </ul>
               <div class="step-meta">
                 <span class="tag">.agent/plans/&lt;slug&gt;/design.md</span>
                 <span class="mono">Designer agent</span>
@@ -546,7 +574,11 @@ node .github/harness/scripts/harness-manager.mjs create agent my-agent
             </div>
             <div class="step-content">
               <h3>Plan — Lập kế hoạch</h3>
-              <p>Chia nhỏ công việc thành todos, liệt kê tệp thay đổi, rủi ro và cách kiểm tra.</p>
+              <p>5–10 todos (3–7 từ/todo), File Changes, Risks, cách kiểm tra. Phức tạp → hỏi user confirm trước khi code.</p>
+              <ul class="step-detail">
+                <li><strong>Output:</strong> <span class="kbd">plan.md</span> + <span class="kbd">manage_todo_list</span></li>
+                <li><strong>Gate:</strong> ❌ không bỏ · 1 <span class="kbd">in-progress</span> tại 1 thời điểm</li>
+              </ul>
               <div class="step-meta">
                 <span class="tag">.agent/plans/&lt;slug&gt;/plan.md + todos</span>
                 <span class="mono">Plan agent</span>
@@ -560,7 +592,11 @@ node .github/harness/scripts/harness-manager.mjs create agent my-agent
             </div>
             <div class="step-content">
               <h3>Implement — Thực thi</h3>
-              <p>Làm theo từng todo, mỗi lần chỉ một todo ở trạng thái đang làm, kiểm tra lỗi sau mỗi lần sửa.</p>
+              <p>Todo-driven + <strong>TDD gate</strong> (RED trước) + <strong>root cause trước</strong> + <strong>ladder 7 nấc</strong> (YAGNI → reuse → stdlib → native → dep đã cài → 1 dòng → tối thiểu). <span class="kbd">get_errors</span> sau mỗi edit.</p>
+              <ul class="step-detail">
+                <li><strong>Output:</strong> Code tối thiểu chạy được</li>
+                <li><strong>Gate:</strong> Không production code nếu chưa có test fail</li>
+              </ul>
               <div class="step-meta">
                 <span class="tag">Mã nguồn</span>
                 <span class="mono">Implement agent · get_errors</span>
@@ -574,7 +610,11 @@ node .github/harness/scripts/harness-manager.mjs create agent my-agent
             </div>
             <div class="step-content">
               <h3>Polish — Hoàn thiện</h3>
-              <p>Rà soát giao diện: responsive, trạng thái, animation 150–300ms, accessibility.</p>
+              <p>Audit <strong>product-quality</strong>: responsive không vỡ, đủ states (hover/focus/active/disabled/loading + loading/empty/error/success), animation transform/opacity, contrast, keyboard, aria, locale-owned copy.</p>
+              <ul class="step-detail">
+                <li><strong>Gate:</strong> ❌ không bỏ · Xấu = chưa xong</li>
+                <li><strong>Verify animation:</strong> đo <span class="kbd">--angle</span> bằng Playwright, không nhìn mắt</li>
+              </ul>
               <div class="step-meta">
                 <span class="tag">Chuẩn product-quality</span>
                 <span class="mono">Polish agent</span>
@@ -588,7 +628,11 @@ node .github/harness/scripts/harness-manager.mjs create agent my-agent
             </div>
             <div class="step-content">
               <h3>Verify — Kiểm định</h3>
-              <p>Chạy build/test/lint, kiểm tra trực quan, lặp lại sửa lỗi tối đa 3 lần cho đến khi đạt.</p>
+              <p>build/test/lint + visual + <strong>bằng chứng Pages runtime</strong> (<span class="kbd">curl</span> CORS + <span class="kbd">addEventListener</span> + test F5). Fresh evidence, loop max 3 lần/check. FAIL → Implement, Blocked → báo human.</p>
+              <ul class="step-detail">
+                <li><strong>Gate:</strong> PASS mới Done · Không dùng kết quả cũ</li>
+                <li><strong>Fresh-eyes:</strong> REQUIRED (UX) · RECOMMENDED (regression) · OPTIONAL (deterministic)</li>
+              </ul>
               <div class="step-meta">
                 <span class="tag tag-on">PASS → Done</span>
                 <span class="mono">Verify agent · loop fix</span>
@@ -603,14 +647,149 @@ node .github/harness/scripts/harness-manager.mjs create agent my-agent
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
               Rút gọn cho tác vụ nhỏ
             </h4>
-            <p>Explore (nhanh) → Clarify (1 câu) → PRD mini → Design mini → Plan (3 todos) → Implement → Polish → Verify. Không bỏ Polish.</p>
+            <p>Explore (nhanh) → Clarify (1 câu) → PRD mini (5 dòng) → Design mini → Plan (3 todos) → Implement → Polish → Verify. <strong>Không bỏ Polish</strong> — giao diện xấu = chưa xong.</p>
           </div>
           <div class="extra-card">
             <h4>
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a9 9 0 1 1-2.64-6.36"/><path d="M21 3v6h-6"/></svg>
               Vòng lặp kiểm định
             </h4>
-            <p>Nếu Verify chưa đạt → quay lại Implement để sửa → Polish lại → Verify lại. Chỉ khi PASS mới hoàn tất.</p>
+            <p>Verify FAIL → Implement sửa → Polish lại → Verify lại (max 3 lần/check). Blocked → báo human. Chỉ PASS + fresh evidence mới Done.</p>
+          </div>
+          <div class="extra-card">
+            <h4>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 6h13"/><path d="M8 12h13"/><path d="M8 18h13"/><path d="M3 6h.01"/><path d="M3 12h.01"/><path d="M3 18h.01"/></svg>
+              Todo-driven + trace
+            </h4>
+            <p>5–10 todos, 1 <span class="kbd">in-progress</span> tại 1 thời điểm, <span class="kbd">get_errors</span> sau mỗi edit. PRD/Design/Plan lưu tại <span class="kbd">.agent/plans/&lt;slug&gt;/</span> để trace.</p>
+          </div>
+          <div class="extra-card is-warn">
+            <h4>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 9v4"/><path d="M12 17h.01"/><path d="M10.3 3.9L1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/></svg>
+              Anti-patterns (CẤM)
+            </h4>
+            <p>Code ngay không PRD/Design · Bỏ Polish · Không todo · In code chờ copy · Đoán thay vì hỏi · Pin <span class="kbd">model:</span> · Sửa <span class="kbd">status.json</span> tay · Verify animation bằng mắt.</p>
+          </div>
+        </div>
+          </div>
+          <div class="ptab-panel" id="ptab-fixbug" role="tabpanel" aria-label="/fixbug pipeline" hidden>
+            <div class="pipeline-intro">
+              <div class="knowledge-banner is-bug" role="note" aria-label="Bounded repair loop">
+                <strong>Bounded repair loop — không phải /harness thu nhỏ:</strong> không tạo PRD/Design dài, chỉ 3–5 todos, tập trung root cause + Learn. Confidence &lt; MEDIUM → không close.
+              </div>
+              <div class="pipeline-flow" aria-label="Luồng fixbug">
+                <span class="flow-step">Knowledge</span>
+                <span class="flow-arrow" aria-hidden="true">→</span>
+                <span class="flow-step">Reproduce</span>
+                <span class="flow-arrow" aria-hidden="true">→</span>
+                <span class="flow-step">Root Cause</span>
+                <span class="flow-arrow" aria-hidden="true">→</span>
+                <span class="flow-step">Fix</span>
+                <span class="flow-arrow" aria-hidden="true">→</span>
+                <span class="flow-step is-accent">Verify</span>
+                <span class="flow-arrow" aria-hidden="true">→</span>
+                <span class="flow-step">Learn</span>
+                <span class="flow-arrow" aria-hidden="true">→</span>
+                <span class="flow-step is-done">Done</span>
+              </div>
+              <p class="pipeline-note">Không dùng <strong>/harness cho bug</strong> — sẽ tạo PRD/Design thừa. Không bỏ <strong>Reproduce</strong> và <strong>Learn</strong> — fix xong không ghi knowledge = chưa xong.</p>
+            </div>
+            <ol class="pipeline-steps" aria-label="Chi tiết 7 phase fixbug">
+              <li class="pipeline-step">
+                <div class="step-num" aria-hidden="true">0</div>
+                <div class="step-icon" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg></div>
+                <div class="step-content">
+                  <h3>Read Knowledge — Đọc bài học cũ</h3>
+                  <p>Đọc <span class="kbd">docs/knowleged.md</span> + <span class="kbd">auto-learn suggest</span>. Chạm pattern cũ → áp dụng Cách phòng tránh ngay.</p>
+                  <ul class="step-detail"><li><strong>Gate:</strong> ❌ không bỏ · Knowledge Gate</li><li><strong>Output:</strong> Đã đọc + KN liên quan</li></ul>
+                  <div class="step-meta"><span class="tag">knowleged.md</span><span class="mono">auto-learn suggest</span></div>
+                </div>
+              </li>
+              <li class="pipeline-step">
+                <div class="step-num" aria-hidden="true">1</div>
+                <div class="step-icon" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg></div>
+                <div class="step-content">
+                  <h3>Reproduce — Tái hiện có bằng chứng</h3>
+                  <p>Steps + Expected/Actual + evidence (log, ảnh, file:line). Bug nhỏ dùng <span class="kbd">grep</span>/<span class="kbd">read</span> trực tiếp, bug rộng mới delegate Explore.</p>
+                  <ul class="step-detail"><li><strong>Gate:</strong> FAIL → ask/stop, không đoán fix</li><li><strong>Output:</strong> Repro steps + evidence</li></ul>
+                  <div class="step-meta"><span class="tag">Reproduce Gate</span><span class="mono">systematic-debugging p1</span></div>
+                </div>
+              </li>
+              <li class="pipeline-step">
+                <div class="step-num" aria-hidden="true">2</div>
+                <div class="step-icon" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7a4 4 0 0 1 4 4c0 2-2 3-2 3"/><path d="M12 17h.01"/></svg></div>
+                <div class="step-content">
+                  <h3>Root Cause — file:line + 5 Whys</h3>
+                  <p>Single hypothesis, evidence first. Uncertain → investigate thêm / escalate, không fix bừa.</p>
+                  <ul class="step-detail"><li><strong>Gate:</strong> uncertain → investigate/escalate</li><li><strong>Output:</strong> Root cause + file:line</li></ul>
+                  <div class="step-meta"><span class="tag">Root Cause Gate</span><span class="mono">5 Whys</span></div>
+                </div>
+              </li>
+              <li class="pipeline-step">
+                <div class="step-num" aria-hidden="true">3</div>
+                <div class="step-icon" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M10 13l2 2 4-4"/></svg></div>
+                <div class="step-content">
+                  <h3>Fix — Sửa ở gốc, bounded</h3>
+                  <p>Minimal fix + scope control + TDD (RED trước) + ladder. <span class="kbd">get_errors</span> affected files. Chỉ audit Polish nhanh nếu bug là UI.</p>
+                  <ul class="step-detail"><li><strong>Gate:</strong> Minimal Fix · Confidence HIGH/MEDIUM/LOW (LOW → STOP)</li><li><strong>Output:</strong> Code + get_errors pass</li></ul>
+                  <div class="step-meta"><span class="tag">tdd-gate</span><span class="mono">minimal-ladder</span></div>
+                </div>
+              </li>
+              <li class="pipeline-step is-verify">
+                <div class="step-num" aria-hidden="true">4</div>
+                <div class="step-icon" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg></div>
+                <div class="step-content">
+                  <h3>Verify — Không regression</h3>
+                  <p>Re-test + edge + regression + build/lint full scope. Fresh evidence, không dùng kết quả cũ.</p>
+                  <ul class="step-detail"><li><strong>Gate:</strong> Verification Gate · Fresh-eyes tiered</li><li><strong>Output:</strong> PASS full scope</li></ul>
+                  <div class="step-meta"><span class="tag tag-on">PASS → Learn</span><span class="mono">Verify agent</span></div>
+                </div>
+              </li>
+              <li class="pipeline-step">
+                <div class="step-num" aria-hidden="true">5</div>
+                <div class="step-icon" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/></svg></div>
+                <div class="step-content">
+                  <h3>Learn — Biến bug thành knowledge</h3>
+                  <p>Lưu <span class="kbd">.agent/bugs/&lt;slug&gt;/bug.md</span> + thêm KN-XXX vào <span class="kbd">docs/knowleged.md</span> (bảng + chi tiết + anti-pattern).</p>
+                  <ul class="step-detail"><li><strong>Gate:</strong> ❌ không bỏ · Learning Gate</li><li><strong>Output:</strong> bug.md + KN mới</li></ul>
+                  <div class="step-meta"><span class="tag">auto-learn propose</span><span class="mono">learn agent</span></div>
+                </div>
+              </li>
+              <li class="pipeline-step is-verify">
+                <div class="step-num" aria-hidden="true">6</div>
+                <div class="step-icon" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></div>
+                <div class="step-content">
+                  <h3>Done — Đóng vòng</h3>
+                  <p>Tóm tắt + KN + files changed. Confidence ≥ MEDIUM mới close.</p>
+                  <div class="step-meta"><span class="tag tag-on">DONE</span><span class="mono">report</span></div>
+                </div>
+              </li>
+            </ol>
+            <div class="pipeline-extras">
+              <div class="extra-card"><h4>📦 Storage</h4><p><span class="kbd">.agent/bugs/YYYY-MM-DD-&lt;slug&gt;/bug.md</span> (copy từ <span class="kbd">_template/bug.md</span>) + <span class="kbd">docs/knowleged.md</span> KN-XXX.</p></div>
+              <div class="extra-card"><h4>🛡️ Verifier immutable</h4><p><span class="kbd">*.Tests.*</span>, <span class="kbd">*.test.*</span>, <span class="kbd">ai-news.json</span> — FAIL chỉ fix bằng production code (KN-012).</p></div>
+            </div>
+          </div>
+          <div class="ptab-panel" id="ptab-system" role="tabpanel" aria-label="Gates và skills" hidden>
+            <div class="pipeline-intro">
+              <div class="knowledge-banner is-system" role="note" aria-label="Hệ thống phức tạp">
+                <strong>Quy trình thật = pipeline + gates + skills + governance.</strong> Modal cũ chỉ liệt kê 8 bước — thiếu Knowledge First, TDD, ladder, RAG, policy, verify bằng chứng.
+              </div>
+            </div>
+            <div class="sys-grid">
+              <div class="extra-card"><h4>🧠 Knowledge First + Auto-Learn</h4><p><span class="kbd">suggest</span> KN trước code · <span class="kbd">log</span> khi lỗi · <span class="kbd">propose</span> sau fix · <span class="kbd">status</span> health. Hooks PostToolUse/Stop nhắc tự động.</p></div>
+              <div class="extra-card"><h4>🛡️ Governance (fail-closed)</h4><p>Policy v2: 7 deny + 2 allow · deny trước allow · audit hash-chain + redact secret · credentials AES-256-GCM · Take the Wheel khi refused.</p></div>
+              <div class="extra-card"><h4>🪜 Minimal Ladder (7 nấc)</h4><p>YAGNI → reuse → stdlib → native → dep đã cài → 1 dòng → tối thiểu. PRD có YAGNI gate, Verify grep dead-code + scoreboard. Không cắt validation/security/a11y.</p></div>
+              <div class="extra-card"><h4>📚 Library RAG (MCP duy nhất)</h4><p><span class="kbd">search_library top_k 5</span> qua <span class="kbd">mcp-server.mjs</span>. Citation <span class="kbd">book · chunk # · page · score</span>. Cấm đọc <span class="kbd">export.json</span> trực tiếp. Không thấy → nói rõ, không bịa.</p></div>
+              <div class="extra-card"><h4>🔴 TDD Gate + Debugging</h4><p><span class="kbd">tdd-gate</span>: RED-GREEN-REFACTOR, không production code nếu chưa có test fail. <span class="kbd">systematic-debugging</span>: evidence → single hypothesis → fix → 3-fix limit.</p></div>
+              <div class="extra-card"><h4>🧰 Tool Priority</h4><p>Task &gt;2 bước → <span class="kbd">manage_todo_list</span> · Mơ hồ → hỏi max 3 câu · Multi-file → <span class="kbd">multi_replace</span> · Sau edit → <span class="kbd">get_errors</span> · Verify → terminal sync.</p></div>
+              <div class="extra-card"><h4>🎨 Product Quality</h4><p>Palette 3–5 màu, spacing 4/8, responsive 375/768/1280, states đầy đủ, animation 150–300ms (transform/opacity), contrast ≥4.5:1, keyboard + aria, locale-owned copy.</p></div>
+              <div class="extra-card"><h4>📦 Presets (4)</h4><p><span class="kbd">full</span> (tất cả) · <span class="kbd">web-product</span> (đẹp) · <span class="kbd">api-minimal</span> (gọn) · <span class="kbd">lean-product</span> (ladder + tắt UI nặng).</p></div>
+            </div>
+            <div class="pipeline-extras">
+              <div class="extra-card"><h4>🔍 Verify animation đúng cách</h4><p>CSS <span class="kbd">conic-gradient</span>/<span class="kbd">--angle</span> phải đo bằng Playwright <span class="kbd">getComputedStyle --angle</span> trước/sau 500ms (KN-003/KN-004), không nhìn mắt.</p></div>
+              <div class="extra-card"><h4>📄 STATUS là generated</h4><p><span class="kbd">www/status.json</span> do <span class="kbd">generate-status.mjs</span> sinh từ <span class="kbd">registry.json</span> — không sửa tay. Verify <span class="kbd">JSON.parse</span> + <span class="kbd">serve www</span> 200 (KN-002).</p></div>
+            </div>
           </div>
         </div>
       </div>

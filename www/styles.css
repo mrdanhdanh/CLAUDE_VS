@@ -574,7 +574,7 @@ details[open] .chev{transform:rotate(90deg)}
   position:relative;z-index:1;
   background:var(--color-surface);border:1px solid var(--color-neutral-200);
   border-radius:var(--radius-xl);box-shadow:var(--shadow-lg);
-  width:100%;max-width:720px;max-height:85vh;
+  width:100%;max-width:860px;max-height:88vh;
   display:flex;flex-direction:column;overflow:hidden;
   animation:modalIn .2s ease;
 }
@@ -675,6 +675,28 @@ details[open] .chev{transform:rotate(90deg)}
 }
 .extra-card h4 svg{color:var(--color-primary);flex-shrink:0}
 .extra-card p{margin:0;color:var(--color-neutral-500);font-size:12px;line-height:1.6}
+.extra-card.is-warn{background:#fef2f2;border-color:var(--color-danger-border)}
+.extra-card.is-warn h4 svg{color:var(--color-danger)}
+/* Pipeline tabs */
+.ptabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px}
+.ptab{padding:8px 14px;border-radius:var(--radius-full);border:1px solid var(--color-neutral-200);background:white;font:600 12px var(--font-sans);color:var(--color-neutral-700);cursor:pointer;transition:all .15s ease;white-space:nowrap}
+.ptab:hover{border-color:var(--color-neutral-400);transform:translateY(-1px)}
+.ptab.is-active{background:var(--color-primary);color:white;border-color:var(--color-primary);box-shadow:var(--shadow-sm)}
+.ptab-panel{animation:fadeIn .15s ease}
+.ptab-panel[hidden]{display:none !important}
+.knowledge-banner{margin:0 0 12px;padding:10px 12px;border-radius:10px;font-size:12px;line-height:1.6;color:var(--color-neutral-700);background:var(--color-primary-50);border:1px solid #e0e7ff}
+.knowledge-banner strong{color:var(--color-primary)}
+.knowledge-banner.is-bug{background:#fef3c7;border-color:#fde68a}
+.knowledge-banner.is-bug strong{color:#92400e}
+.knowledge-banner.is-system{background:#f0fdf4;border-color:var(--color-success-border)}
+.knowledge-banner.is-system strong{color:var(--color-success-text)}
+.step-detail{margin:8px 0 0;padding:0;list-style:none;display:grid;gap:4px}
+.step-detail li{font-size:11.5px;line-height:1.5;color:var(--color-neutral-500);padding:6px 8px;background:var(--color-neutral-50);border:1px solid #f1f5f9;border-radius:8px}
+.step-detail strong{color:var(--color-neutral-700)}
+.step-detail .kbd{font-size:10px}
+.sys-grid{display:grid;gap:12px;margin-top:4px}
+@media(min-width:640px){.sys-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:375px){.ptabs{gap:4px}.ptab{padding:6px 10px;font-size:11px}.step-detail li{font-size:11px}}
 
 /* ========== YUNIE Lore ========== */
 .yunie-section{scroll-margin-top:72px}

@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-03T10:47:50.959Z",
+  "generatedAt": "2026-09-03T12:19:27.302Z",
   "generatedBy": "YUNIE",
   "version": 1,
   "counts": {
@@ -9,9 +9,9 @@
       "total": 10
     },
     "instructions": {
-      "enabled": 12,
+      "enabled": 13,
       "disabled": 0,
-      "total": 12
+      "total": 13
     },
     "agents": {
       "enabled": 8,
@@ -120,6 +120,10 @@
       "platform-seam": {
         "enabled": true,
         "description": "Platform seam — AG-UI + MCP + Components + Routines (học OpenBot). Bring your own agent, governed MCP, generative UI, scheduled routines. Use when adding agent, MCP, component, routine, or platform capability."
+      },
+      "minimal-ladder": {
+        "enabled": true,
+        "description": "Ponytail-inspired minimal ladder — YAGNI gate, reuse-first, native-first, dead-code grep + scoreboard. Use when implementing feature, fixing bug, reviewing over-engineering, need minimal code, YAGNI, dead code, native platform, or user says ponytail/ladder/minimal/lean."
       }
     },
     "agents": {
@@ -203,6 +207,10 @@
       "description": "Bật tất cả — dùng khi muốn full Harness v2"
     },
     {
+      "name": "lean-product",
+      "description": "Preset lean cho product — bật minimal-ladder, tắt UI nặng (glass/ui-ux-pro-max), giữ core + TDD + debugging"
+    },
+    {
       "name": "web-product",
       "description": "Preset cho dự án web cần giao diện đẹp — bật product-quality + designer/polish"
     }
@@ -216,6 +224,7 @@
     "library-rag",
     "liquid-glass-status",
     "n5-blazor",
+    "n5-blazor-ladder",
     "openbot-governance",
     "openbot-governance-phase2",
     "skill-registry",
@@ -264,15 +273,15 @@
   "health": {
     "errors": 0,
     "status": "ok",
-    "lastCheck": "2026-09-03T10:47:50.959Z",
+    "lastCheck": "2026-09-03T12:19:27.302Z",
     "checks": [
       "get_errors: pass (0 errors)",
-      "registry: 12 instructions (12 total) - 10 skills - 8 agents - 7 prompts - 1 hook — all enabled",
+      "registry: 13 instructions (13 total) - 10 skills - 8 agents - 7 prompts - 1 hook — all enabled",
       "www: polished — responsive 375/768/1280, a11y, states, animation 150-300ms",
       "workflow: www/** -> Pages (upload-artifact path: www) — exists: true",
       "library: www/library/ (PDF/DOCX/TXT/MD, BM25 <100ms, tháo lắp) + mcp-server.mjs + export.json + library-rag instruction",
-      "auto-learn: 12 KN, 8 bugs, 0 drafts — suggest/log/propose/status (<50ms, IDF, tiếng Việt)",
-      "governance: audit 4 · policy 7 deny/2 allow (ok) · credentials 0 keys enc",
+      "auto-learn: 13 KN, 10 bugs, 0 drafts — suggest/log/propose/status (<50ms, IDF, tiếng Việt)",
+      "governance: audit 15 · policy 7 deny/2 allow (ok) · credentials 0 keys enc",
       "platform: agents 3 (3 built-in, 0 remote) · mcp 2 vendors/3 grants · components 3/3 pub · routines 1/1 enabled",
       "n5-blazor: www/n5-blazor/ 7 trang static + app.css + data.js + site.js — 100% Pages"
     ]
@@ -331,67 +340,87 @@
     "philosophy": "Process > Model"
   },
   "learn": {
-    "knTotal": 12,
-    "bugsTotal": 8,
+    "knTotal": 13,
+    "bugsTotal": 10,
     "drafts": 0
   },
   "governance": {
     "audit": {
-      "total": 4,
-      "permitted": 2,
+      "total": 15,
+      "permitted": 13,
       "refused": 2,
       "failed": 0,
-      "lastTs": "2026-09-03T10:43:45.353Z",
+      "lastTs": "2026-09-03T11:17:28.186Z",
       "tail": [
         {
-          "ts": "2026-09-02T15:13:47.506Z",
-          "actor": "YUNIE",
-          "tool": "read",
-          "target": "www/index.html",
-          "decision": "permitted",
-          "rule": "allow-read-www",
-          "durationMs": null,
-          "error": null,
-          "intent": null,
-          "requestId": "6f3e57"
-        },
-        {
-          "ts": "2026-09-02T15:13:47.540Z",
-          "actor": "YUNIE",
-          "tool": "read",
-          "target": ".env",
-          "decision": "refused",
-          "rule": "deny-env-read",
-          "durationMs": null,
-          "error": null,
-          "intent": null,
-          "requestId": "f2ec06"
-        },
-        {
-          "ts": "2026-09-02T15:21:31.095Z",
+          "ts": "2026-09-03T11:17:20.924Z",
           "actor": "YUNIE",
           "tool": "shell",
-          "target": "npm install",
+          "target": "harness-manager create instruction minimal-ladder + lean-product preset",
           "decision": "permitted",
           "rule": "allow-all",
           "durationMs": null,
           "error": null,
           "intent": null,
-          "requestId": "9af705"
+          "requestId": "21b298",
+          "prevHash": "154867d407340e0c",
+          "hash": "14c13eabcf542136"
         },
         {
-          "ts": "2026-09-03T10:43:45.353Z",
-          "actor": "Implement",
+          "ts": "2026-09-03T11:17:28.082Z",
+          "actor": "YUNIE",
           "tool": "edit",
-          "target": "N5Blazor.Tests/ServiceTests.cs",
-          "decision": "refused",
-          "rule": "deny-test-mutate",
+          "target": "www/library/app.js",
+          "decision": "permitted",
+          "rule": "allow-all",
           "durationMs": null,
           "error": null,
-          "intent": "guard-test",
-          "requestId": "e242cd",
-          "prevHash": "GENESIS",
-          "hash": "5ae6e08c02bb505b"
+          "intent": null,
+          "requestId": "6bdbad",
+          "prevHash": "14c13eabcf542136",
+          "hash": "4560fc2b5af9678d"
+        },
+        {
+          "ts": "2026-09-03T11:17:28.116Z",
+          "actor": "YUNIE",
+          "tool": "edit",
+          "target": "www/library/search.mjs",
+          "decision": "permitted",
+          "rule": "allow-all",
+          "durationMs": null,
+          "error": null,
+          "intent": null,
+          "requestId": "4ba614",
+          "prevHash": "4560fc2b5af9678d",
+          "hash": "edf4a6a85fb56507"
+        },
+        {
+          "ts": "2026-09-03T11:17:28.151Z",
+          "actor": "YUNIE",
+          "tool": "edit",
+          "target": "www/library/mcp-server.mjs",
+          "decision": "permitted",
+          "rule": "allow-all",
+          "durationMs": null,
+          "error": null,
+          "intent": null,
+          "requestId": "c0238b",
+          "prevHash": "edf4a6a85fb56507",
+          "hash": "ab6c76aa07c9c96a"
+        },
+        {
+          "ts": "2026-09-03T11:17:28.186Z",
+          "actor": "YUNIE",
+          "tool": "edit",
+          "target": "www/library/index.html",
+          "decision": "permitted",
+          "rule": "allow-all",
+          "durationMs": null,
+          "error": null,
+          "intent": null,
+          "requestId": "d253bb",
+          "prevHash": "ab6c76aa07c9c96a",
+          "hash": "5c01c9f5a177bac6"
         }
       ]
     },
@@ -400,7 +429,7 @@
       "deny": 7,
       "allow": 2,
       "status": "ok",
-      "lastCheck": "2026-09-03T10:47:50.956Z"
+      "lastCheck": "2026-09-03T12:19:27.298Z"
     },
     "credentials": {
       "count": 0,

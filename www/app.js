@@ -472,6 +472,29 @@ function bindPipeline(){
   if(btnClose) btnClose.addEventListener('click', closePipeline);
   if(btnClose2) btnClose2.addEventListener('click', closePipeline);
   if(overlay) overlay.addEventListener('click', closePipeline);
+  // pipeline tabs: /harness · /fixbug · Gates & Skills
+  const ptabs = $$('.ptab', modal || document);
+  const ppanels = $$('.ptab-panel', modal || document);
+  if(ptabs.length && ppanels.length && !bindPipeline._ptabsBound){
+    ptabs.forEach(tab=>{
+      tab.addEventListener('click', ()=>{
+        const target = tab.dataset.ptab;
+        ptabs.forEach(t=>{
+          const isActive = t.dataset.ptab === target;
+          t.classList.toggle('is-active', isActive);
+          t.setAttribute('aria-selected', String(isActive));
+        });
+        ppanels.forEach(p=>{
+          const isActive = p.id === `ptab-${target}`;
+          p.classList.toggle('is-active', isActive);
+          if(isActive) p.removeAttribute('hidden');
+          else p.setAttribute('hidden', '');
+        });
+      });
+    });
+    bindPipeline._ptabsBound = true;
+  }
+  if(overlay) overlay.addEventListener('click', closePipeline);
   // close on overlay click via data-close
   if(modal){
     modal.addEventListener('click', (e)=>{
