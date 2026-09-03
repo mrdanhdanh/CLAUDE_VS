@@ -34,6 +34,7 @@
 | KN-010 | 2026-08-31 | AAR pattern từ Anthropic — propose 3 methods, benchmark, keep best, $4/h vs $150/h human | Thiếu benchmark loop chặt chẽ — fix ngẫu hiên thay vì so sánh có hệ thống → không biến nào tốt nhất, reward hacking khi chỉ check WHETHER không check HOW | Áp dụng AAR pattern: propose 3 → implement → benchmark → keep best → log KN. 3-fix limit vẫn áp dụng. Check HOW not WHETHER | `process` `self-improving` `benchmark` `aar` `automation` |
 | KN-011 | 2026-08-31 | Random làm disable nút ▶ Bước tiếp theo (Bài 004 & 005) | `hideAll()` disable `stepBtn` rồi `handleRandom()` không re-enable → user không thể step sau Random | Không disable stepBtn trong hàm reset chung — quản lý button state tập trung, re-enable sau Random | `ui` `state` `ux` `button` |
 | KN-012 | 2026-09-03 | Agent tự sửa test để pass (reward hacking) — CI xanh giả | Governance v1 chỉ chặn shell/secret, không gate edit trên test paths + audit không có hash-chain → agent mutate verifier được | 3 lớp BTP-lite: deny-test-mutate (chỉ verify/takeover được sửa test) + deny SQL/destructive + audit hash-chain + verify | `process` `governance` `tdd` `safety` `reward-hacking` |
+| KN-013 | 2026-09-03 | Tích hợp Ponytail ladder vào Harness — thiếu YAGNI gate, dead code sống sót, N5Blazor trial bị revert | Harness thiên mở rộng (8 phase, UI đẹp) nhưng không có ladder thu gọn; trial N5Blazor xóa GlassCard/RainbowCard/bootstrap + fix Kana toggle nhưng bị revert vì thiếu .NET 8 SDK để verify | Thêm instruction `minimal-ladder` (7 nấc + YAGNI + native-first + dead-code grep) + preset `lean-product` + bật ladder ở full/web-product/api-minimal; trial artifacts giữ ở `.agent/bugs/` + `.agent/plans/n5-blazor-ladder/` | `process` `minimal` `ponytail` `yagni` `dx` |
 
 > Dòng ví dụ trên sẽ bị thay khi có bug thật đầu tiên — giữ format.
 
@@ -285,6 +286,28 @@
 - **Tags:** `process` `governance` `tdd` `safety` `reward-hacking`
 - **Người ghi:** YUNIE / harness
 
+### KN-013 — Tích hợp Ponytail ladder vào Harness v2 (minimal-ladder + lean-product)
+
+- **Ngày:** 2026-09-03
+- **Bug report:** `.agent/bugs/2026-09-03-n5blazor-ladder-trial-dead-code/bug.md` (trial, confidence MEDIUM)
+- **Severity:** minor
+- **Triệu chứng:** Harness v2 thiên mở rộng (8 phase Explore→Verify, UI đẹp) nên dễ over-build: N5Blazor có `GlassCard`/`RainbowCard` 0 usage + `bootstrap/` ~598KB 0 reference + Kana toggle chỉ add không remove. Trial đã fix nhưng bị revert (thiếu .NET 8 SDK để verify build/test).
+- **Nguyên nhân gốc:** PRD không có YAGNI gate ("Does this need to exist?"); Design không có native-first (stdlib/native trước dep mới); Verify không grep dead-code + scoreboard. Ponytail (`DietrichGebert/ponytail`, MIT, 122k stars) đã giải bài này bằng ladder 7 nấc + benchmark LOC -54%.
+- **Cách sửa:** Tích hợp qua plugin-seam, không sửa core:
+  - Instruction `minimal-ladder` (`.github/instructions/minimal-ladder.instructions.md`, applyTo `**`): ladder 7 nấc + YAGNI gate ở PRD + native-first ở Design + dead-code grep/scoreboard ở Verify + never-cut (validation/security/a11y/test).
+  - Preset `lean-product` (`.github/harness/presets/lean-product.json`): bật ladder, tắt UI nặng (`glass-rainbow-effects`, `ui-design-system`, `ui-ux-pro-max`, `last30days`), giữ core + TDD + debugging.
+  - Bật `minimal-ladder: true` ở presets `full`, `web-product`, `api-minimal`.
+  - Registry sync qua `harness-manager install --local --force` (tránh cache description template cũ).
+  - Trial artifacts giữ nguyên để trace: `.agent/bugs/2026-09-03-n5blazor-ladder-trial-dead-code/bug.md` + `.agent/plans/n5-blazor-ladder/prd.md|design.md`.
+- **Cách phòng tránh:**
+  - Mọi task Implement/Fix: chạy ladder sau khi đọc code, dừng ở nấc đầu tiên đúng.
+  - PRD luôn có dòng CẮT (YAGNI) trước dòng GIỮ.
+  - Verify luôn grep tên component/css mới + ghi diff stat vào bug/plan.
+  - Không cắt validation/security/a11y/test để giảm LOC (lazy, not negligent).
+  - Khi `create` instruction xong rồi sửa description: chạy `install --local --force` để refresh registry (tránh stale cache).
+- **Tags:** `process` `minimal` `ponytail` `yagni` `dx`
+- **Người ghi:** YUNIE / harness
+
 <!-- Thêm bài học mới theo template dưới — copy block này -->
 
 <!--
@@ -336,6 +359,10 @@
 - ❌ Sửa test để pass thay vì sửa production code — reward hacking, CI xanh giả (KN-012).
 - ❌ Gate policy mà không cover test paths (`Tests`, `.test.`, `.spec.`) → agent mutate verifier được (KN-012).
 - ❌ Audit append-only nhưng không hash-chain → sửa/xóa log không phát hiện được (KN-012).
+- ❌ PRD không có YAGNI gate → dead code/component/css sống sót (KN-013).
+- ❌ Verify không grep dead-code + không ghi scoreboard → over-build lọt (KN-013).
+- ❌ Cắt validation/security/a11y/test để giảm LOC — lazy sai chỗ (KN-013).
+- ❌ Sửa instruction xong không refresh registry → description stale cache template cũ (KN-013).
 
 ## Checklist phòng tránh chung
 
@@ -361,8 +388,12 @@
 - [ ] Test FAIL có sửa production code thay vì sửa test không? (KN-012)
 - [ ] Trước khi edit test paths đã `policy-check` và được PERMITTED chưa? (KN-012)
 - [ ] `audit.mjs verify` có chain OK không? (KN-012)
+- [ ] PRD có dòng CẮT (YAGNI gate) không? (KN-013)
+- [ ] Design có native-first (stdlib/native trước dep mới) không? (KN-013)
+- [ ] Verify có grep dead-code + scoreboard diff stat không? (KN-013)
+- [ ] Có cắt validation/security/a11y/test để giảm LOC không? Nếu có → STOP (KN-013)
 
 ---
 
 *File này do `/fixbug` tự động cập nhật. Mọi luồng khác phải đọc để không lặp lại lỗi cũ.*
-*UpdatedAt: 2026-09-02T14:00:00Z — Maintained by YUNIE / Harness v2 — Fix: Bảng tóm tắt reorder KN-005↔KN-006 + thêm KN-009 (đã có detail nhưng thiếu ở bảng) — Presets bổ sung auto-researcher (đồng bộ registry) — KN-011 added (Random disable Step button) — KN-010 added (AAR pattern) — KN-009 bổ sung detail section (slot máy chủ AI — hardcode config) — KN-008 added (dotnet build file lock MSB3027) — KN-007 added (Auto-Learn) — KN-006 added (N5 UI polish) — KN-005 added (Bug Blindness)*
+*UpdatedAt: 2026-09-03T11:30:00Z — Maintained by YUNIE / Harness v2 — KN-013 added (Ponytail ladder integration: minimal-ladder + lean-product) — Fix: Bảng tóm tắt reorder KN-005↔KN-006 + thêm KN-009 (đã có detail nhưng thiếu ở bảng) — Presets bổ sung auto-researcher (đồng bộ registry) — KN-011 added (Random disable Step button) — KN-010 added (AAR pattern) — KN-009 bổ sung detail section (slot máy chủ AI — hardcode config) — KN-008 added (dotnet build file lock MSB3027) — KN-007 added (Auto-Learn) — KN-006 added (N5 UI polish) — KN-005 added (Bug Blindness)*

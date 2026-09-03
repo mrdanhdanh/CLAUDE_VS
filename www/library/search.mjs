@@ -86,6 +86,9 @@ function findExportFile(){
     path.join(__dirname, 'export.json'),
     path.join(process.cwd(), 'export.json'),
     path.join(__dirname, '..', 'library', 'export.json'),
+    // seed fallback — RAG không bao giờ rỗng (chatbot quality grounding)
+    path.join(process.cwd(), 'www', 'library', 'seed.json'),
+    path.join(__dirname, 'seed.json'),
   ];
   for(const p of candidates){
     if(fs.existsSync(p)) return p;
@@ -96,6 +99,17 @@ function findExportFile(){
 function loadData(){
   const file = findExportFile();
   if(!fs.existsSync(file)){
+    // seed fallback — nếu không có export nào, dùng seed.json cùng folder
+    const seedFallback = [path.join(__dirname, 'seed.json'), path.join(process.cwd(), 'www', 'library', 'seed.json')].find(p => fs.existsSync(p));
+    if(seedFallback){
+      try{
+        const raw = fs.readFileSync(seedFallback, 'utf8');
+        const j = JSON.parse(raw);
+        return { registry: j.registry || {}, chunks: j.chunks || [], _file: seedFallback, _seed: true };
+      }catch(e){
+        return { registry:{}, chunks:[], _file: seedFallback, _error: e.message };
+      }
+    }
     return { registry:{}, chunks:[], _file:file, _missing:true };
   }
   try{
@@ -103,7 +117,8 @@ function loadData(){
     const j = JSON.parse(raw);
     const registry = j.registry || {};
     const chunks = j.chunks || [];
-    return { registry, chunks, _file:file, _missing:false };
+    const isSeed = path.basename(file) === 'seed.json';
+    return { registry, chunks, _file:file, _missing:false, ...(isSeed ? {_seed:true} : {}) };
   }catch(e){
     return { registry:{}, chunks:[], _file:file, _error:e.message };
   }

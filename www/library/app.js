@@ -753,18 +753,25 @@ async function doExport(){
     registry,
     chunks
   };
-  const blob = new Blob([JSON.stringify(data, null, 2)], {type:'application/json'});
+  const json = JSON.stringify(data, null, 2);
+  const blob = new Blob([json], {type:'application/json'});
   const url = URL.createObjectURL(blob);
   const a = document.createElement('a');
   a.href = url;
-  a.download = `library-export-${new Date().toISOString().slice(0,10)}.json`;
+  // MCP-ready name — lưu thẳng vào www/library/export.json để search/mcp chạy ngay
+  a.download = `export.json`;
+  document.body.appendChild(a);
   a.click();
+  a.remove();
   URL.revokeObjectURL(url);
-  // also save export.json for MCP (via localStorage, user can copy)
+  // also save full export for debugging + stale check
   try{
+    localStorage.setItem('library:export:full', json);
+    localStorage.setItem('library:export:preview', JSON.stringify({ exportedAt: data.exportedAt, total: Object.keys(registry).length, chunks: chunks.length }));
     localStorage.setItem('library:export:chunks', JSON.stringify(chunks.slice(0,5)));
   }catch{}
-  toast('Đã xuất file JSON');
+  checkExportStale().catch(()=>{});
+  toast(`Đã xuất export.json (${Object.keys(registry).length} sách, ${chunks.length} chunks) — lưu vào www/library/ để MCP chạy`);
 }
 async function doImport(file){
   try{

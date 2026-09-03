@@ -1,17 +1,17 @@
 {
-  "name": "full",
-  "description": "Bật tất cả — dùng khi muốn full Harness v2",
+  "name": "lean-product",
+  "description": "Preset lean cho product — bật minimal-ladder, tắt UI nặng (glass/ui-ux-pro-max), giữ core + TDD + debugging",
   "skills": {
     "claude-harness": true,
     "custom-registry": true,
-    "glass-rainbow-effects": true,
+    "glass-rainbow-effects": false,
     "skill-registry": true,
-    "systematic-debugging": true,
+    "ui-design-system": false,
+    "ui-ux-pro-max": false,
     "tdd-gate": true,
-    "ui-design-system": true,
-    "ui-ux-pro-max": true,
+    "systematic-debugging": true,
     "auto-researcher": true,
-    "last30days": true
+    "last30days": false
   },
   "instructions": {
     "custom-registry": true,

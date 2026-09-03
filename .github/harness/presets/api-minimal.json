@@ -23,7 +23,10 @@
     "skill-usage": true,
     "library-rag": true,
     "yunie-personality": true,
-    "auto-learn": true
+    "auto-learn": true,
+    "agent-governance": true,
+    "platform-seam": false,
+    "minimal-ladder": true
   },
   "agents": {
     "designer": false,

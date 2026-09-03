@@ -24,11 +24,14 @@ function findExportFile() {
   }
   if (process.env.LIBRARY_EXPORT) return path.resolve(process.env.LIBRARY_EXPORT);
   // default: www/library/export.json relative to this file
+  // + seed.json fallback — RAG không bao giờ rỗng (chatbot quality grounding)
   const candidates = [
     path.join(__dirname, 'export.json'),
     path.join(__dirname, '..', 'library', 'export.json'),
     path.join(process.cwd(), 'www', 'library', 'export.json'),
     path.join(process.cwd(), 'export.json'),
+    path.join(__dirname, 'seed.json'),
+    path.join(process.cwd(), 'www', 'library', 'seed.json'),
   ];
   for (const p of candidates) {
     if (fs.existsSync(p)) return p;
@@ -47,7 +50,8 @@ function loadData() {
     // support both {registry, chunks} and {registry: {id: {...}}} shapes
     const registry = j.registry || {};
     const chunks = j.chunks || [];
-    return { registry, chunks, _file: file, _missing: false };
+    const isSeed = path.basename(file) === 'seed.json';
+    return { registry, chunks, _file: file, _missing: false, ...(isSeed ? { _seed: true } : {}) };
   } catch (e) {
     return { registry: {}, chunks: [], _file: file, _error: e.message };
   }

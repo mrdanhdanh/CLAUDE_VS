@@ -187,6 +187,14 @@
       "description": "Platform seam — AG-UI + MCP + Components + Routines (học OpenBot). Bring your own agent, governed MCP, generative UI, scheduled routines. Use when adding agent, MCP, component, routine, or platform capability.",
       "applyTo": "**",
       "installedAt": "2026-09-02T15:15:45.072Z"
+    },
+    "minimal-ladder": {
+      "source": "local",
+      "file": "minimal-ladder.instructions.md",
+      "enabled": true,
+      "description": "Ponytail-inspired minimal ladder — YAGNI gate, reuse-first, native-first, dead-code grep + scoreboard. Use when implementing feature, fixing bug, reviewing over-engineering, need minimal code, YAGNI, dead code, native platform, or user says ponytail/ladder/minimal/lean.",
+      "applyTo": "**",
+      "installedAt": "2026-09-03T11:20:09.424Z"
     }
   },
   "agents": {
