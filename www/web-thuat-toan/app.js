@@ -1,4236 +1,1535 @@
 /**
- * 10 Bài Thuật Toán — Visualizer
- * Single-page app với navigation, animation, và từng bài thuật toán
+ * 10 Thuật Toán Nâng Cao — Visualizer v2
+ * Kadane, TopK, Rotated, QuickSort, Bounds, Container, Substring, NGE, Dijkstra, Knapsack
  */
+(function(){
+'use strict';
 
-(function () {
-  'use strict';
-
-  // ============================================
-  // Navigation
-  // ============================================
-
-  var nav = document.getElementById('nav');
-  var sections = document.querySelectorAll('.bai-section');
-
-  function switchBai(baiId) {
-    // Update nav buttons
-    var buttons = nav.querySelectorAll('.nav-item');
-    buttons.forEach(function (btn) {
-      if (btn.getAttribute('data-bai') === baiId) {
-        btn.classList.add('active');
-        btn.setAttribute('aria-current', 'page');
-      } else {
-        btn.classList.remove('active');
-        btn.removeAttribute('aria-current');
-      }
-    });
-
-    // Show/hide sections
-    sections.forEach(function (section) {
-      if (section.id === 'bai-' + baiId) {
-        section.hidden = false;
-      } else {
-        section.hidden = true;
-      }
-    });
-  }
-
-  nav.addEventListener('click', function (e) {
-    var btn = e.target.closest('.nav-item');
-    if (!btn || btn.disabled) return;
-    var baiId = btn.getAttribute('data-bai');
-    switchBai(baiId);
+// Navigation
+var nav=document.getElementById('nav');
+var sections=document.querySelectorAll('.bai-section');
+function switchBai(id){
+  nav.querySelectorAll('.nav-item').forEach(function(b){
+    if(b.getAttribute('data-bai')===id){b.classList.add('active');b.setAttribute('aria-current','page');}
+    else{b.classList.remove('active');b.removeAttribute('aria-current');}
   });
+  sections.forEach(function(s){ s.hidden = s.id !== 'bai-'+id; });
+}
+nav.addEventListener('click',function(e){
+  var b=e.target.closest('.nav-item'); if(!b) return;
+  switchBai(b.getAttribute('data-bai'));
+});
 
-  // ============================================
-  // Shared utilities
-  // ============================================
-
-  /**
-   * Parse chuỗi input thành mảng số
-   * @param {string} raw - Chuỗi input thô
-   * @returns {{ valid: boolean, numbers: number[], error: string }}
-   */
-  function parseNumbers(raw) {
-    if (!raw || !raw.trim()) {
-      return { valid: false, numbers: [], error: 'Vui lòng nhập dãy số.' };
-    }
-
-    var parts = raw.split(',').map(function (s) { return s.trim(); });
-    var numbers = [];
-
-    for (var i = 0; i < parts.length; i++) {
-      var part = parts[i];
-      if (part === '') {
-        return { valid: false, numbers: [], error: 'Có ô trống giữa các số — kiểm tra lại dấu phẩy.' };
-      }
-      var num = Number(part);
-      if (isNaN(num) || !isFinite(num)) {
-        return { valid: false, numbers: [], error: '"' + part + '" không phải số hợp lệ.' };
-      }
-      numbers.push(num);
-    }
-
-    if (numbers.length < 2) {
-      return { valid: false, numbers: [], error: 'Phải nhập ít nhất 2 số.' };
-    }
-
-    return { valid: true, numbers: numbers, error: '' };
+// Shared utils
+function parseNumbers(raw){
+  if(!raw||!raw.trim()) return {valid:false,numbers:[],error:'Vui lòng nhập dãy số.'};
+  var parts=raw.split(',').map(function(s){return s.trim();});
+  var nums=[];
+  for(var i=0;i<parts.length;i++){
+    if(parts[i]==='') return {valid:false,numbers:[],error:'Có ô trống giữa các số — kiểm tra dấu phẩy.'};
+    var n=Number(parts[i]); if(isNaN(n)||!isFinite(n)) return {valid:false,numbers:[],error:'"'+parts[i]+'" không phải số hợp lệ.'};
+    nums.push(n);
   }
+  if(nums.length<1) return {valid:false,numbers:[],error:'Phải nhập ít nhất 1 số.'};
+  return {valid:true,numbers:nums,error:''};
+}
+function sleep(ms){ return new Promise(function(r){setTimeout(r,ms);}); }
+function highlightPseudo(id,line){
+  var el=document.getElementById(id); if(!el) return;
+  el.querySelectorAll('span').forEach(function(s){ s.classList.remove('pseudo-active'); });
+  if(line){ var t=el.querySelector('[data-line="'+line+'"]'); if(t) t.classList.add('pseudo-active'); }
+}
+function clearPseudo(id){ highlightPseudo(id,null); }
 
-  /**
-   * Generate random test data
-   * @returns {string} Chuỗi số phân cách dấu phẩy
-   */
-  function generateRandomData() {
-    var length = Math.floor(Math.random() * 6) + 5; // 5-10 số
-    var numbers = [];
-    for (var i = 0; i < length; i++) {
-      var num = Math.floor(Math.random() * 200) - 100; // -100 đến 99
-      numbers.push(num);
-    }
-    return numbers.join(', ');
+// ============================================
+// 001 Kadane
+// ============================================
+(function(){
+  var input=document.getElementById('001-input');
+  var runBtn=document.getElementById('001-run-btn'), randomBtn=document.getElementById('001-random-btn');
+  var stepBtn=document.getElementById('001-step-btn'), autoBtn=document.getElementById('001-auto-btn'), resetBtn=document.getElementById('001-reset-btn');
+  var speed=document.getElementById('001-speed'), speedVal=document.getElementById('001-speed-val');
+  var err=document.getElementById('001-error'), vizCard=document.getElementById('001-viz-card'), viz=document.getElementById('001-array-viz');
+  var curEl=document.getElementById('001-cur'), maxEl=document.getElementById('001-max'), idxEl=document.getElementById('001-idx');
+  var resCard=document.getElementById('001-result-card'), resVal=document.getElementById('001-result-value'), resDet=document.getElementById('001-result-detail');
+  var stepsCard=document.getElementById('001-steps-card'), stepsList=document.getElementById('001-steps-list');
+  var cmpCard=document.getElementById('001-compare-card');
+  var presets=[
+    {v:'-2, 1, -3, 4, -1, 2, 1, -5, 4', label:'Cơ bản'},
+    {v:'5, -2, 3, -1, 2, -4, 6, -1', label:'Âm dương lẫn'},
+    {v:'-5, -2, -8, -1, -9', label:'Toàn âm'}
+  ];
+  var state=null, autoTimer=null, isAuto=false;
+  function getSpeed(){ return parseInt(speed.value,10); }
+  speed.addEventListener('input',function(){ speedVal.textContent=getSpeed()+'ms'; });
+  document.getElementById('001-presets').addEventListener('click',function(e){
+    var b=e.target.closest('.preset-pill'); if(!b) return;
+    var idx=parseInt(b.getAttribute('data-preset'),10);
+    input.value=presets[idx].v; clearErr(); hideAll();
+    document.querySelectorAll('#001-presets .preset-pill').forEach(function(x){x.classList.remove('active');});
+    b.classList.add('active');
+  });
+  function showErr(m){ err.textContent=m; input.classList.add('input-error-border'); }
+  function clearErr(){ err.textContent=''; input.classList.remove('input-error-border'); }
+  function hideAll(){
+    vizCard.hidden=true; resCard.hidden=true; stepsCard.hidden=true; cmpCard.hidden=true;
+    viz.innerHTML=''; stepsList.innerHTML=''; clearPseudo('001-pseudo');
+    curEl.textContent='0'; maxEl.textContent='0'; idxEl.textContent='0';
+    if(autoTimer){clearTimeout(autoTimer);autoTimer=null;} isAuto=false; autoBtn.textContent='▶ Tự động';
+    state=null;
   }
-
-  /**
-   * Sleep helper for animation
-   * @param {number} ms
-   * @returns {Promise}
-   */
-  function sleep(ms) {
-    return new Promise(function (resolve) { setTimeout(resolve, ms); });
+  function render(arr,curIdx,curL,bestL,bestR){
+    viz.innerHTML='';
+    arr.forEach(function(n,i){
+      var cell=document.createElement('div'); cell.className='array-cell';
+      var v=document.createElement('div'); v.className='array-value'; v.textContent=n;
+      if(i===curIdx) v.classList.add('current');
+      else if(i>=bestL && i<=bestR && bestL!==-1) v.classList.add('max');
+      else if(i>=curL && i<=curIdx) v.classList.add('window-active');
+      else if(i<curIdx) v.classList.add('done');
+      var idx=document.createElement('span'); idx.className='array-index'; idx.textContent='['+i+']';
+      cell.appendChild(v); cell.appendChild(idx); viz.appendChild(cell);
+    });
   }
-
-  // ============================================
-  // Bài 001 — Tìm số lớn nhất (Linear Scan)
-  // ============================================
-
-  (function initBai001() {
-    var input = document.getElementById('001-input');
-    var findBtn = document.getElementById('001-find-btn');
-    var randomBtn = document.getElementById('001-random-btn');
-    var errorEl = document.getElementById('001-error');
-    var vizCard = document.getElementById('001-viz-card');
-    var arrayViz = document.getElementById('001-array-viz');
-    var resultCard = document.getElementById('001-result-card');
-    var resultValue = document.getElementById('001-result-value');
-    var stepsCard = document.getElementById('001-steps-card');
-    var stepsList = document.getElementById('001-steps-list');
-
-    var isAnimating = false;
-
-    function showError(message) {
-      errorEl.textContent = message;
-      input.classList.add('input-error-border');
-      input.setAttribute('aria-invalid', 'true');
+  function validate(){
+    var p=parseNumbers(input.value); if(!p.valid){showErr(p.error); return null;} return p.numbers;
+  }
+  function buildState(arr){
+    return {arr:arr.slice(), n:arr.length, i:1, cur:arr[0], maxSum:arr[0], curL:0, bestL:0, bestR:0, done:false, steps:[]};
+  }
+  function doStep(){
+    if(!state||state.done) return true;
+    var arr=state.arr, i=state.i;
+    if(i>=arr.length){ state.done=true; return true; }
+    highlightPseudo('001-pseudo','3');
+    var prevCur=state.cur;
+    if(state.cur + arr[i] > arr[i]){ state.cur = state.cur + arr[i]; }
+    else { state.cur = arr[i]; state.curL = i; }
+    highlightPseudo('001-pseudo','4');
+    if(state.cur > state.maxSum){ state.maxSum=state.cur; state.bestL=state.curL; state.bestR=i; }
+    var stepTxt='i='+i+': cur=max('+arr[i]+', '+prevCur+'+'+arr[i]+')='+state.cur+' | maxSum='+state.maxSum;
+    if(state.curL!==state.bestL || i!==state.bestR) stepTxt+=' | best ['+state.bestL+','+state.bestR+']';
+    state.steps.push(stepTxt);
+    var li=document.createElement('li'); li.textContent=stepTxt; stepsList.appendChild(li); stepsCard.hidden=false;
+    curEl.textContent=state.cur; maxEl.textContent=state.maxSum; idxEl.textContent=i;
+    render(arr,i,state.curL,state.bestL,state.bestR);
+    state.i++;
+    if(state.i>=arr.length) state.done=true;
+    return state.done;
+  }
+  function finish(){
+    highlightPseudo('001-pseudo','5');
+    var arr=state.arr;
+    render(arr,arr.length-1,state.curL,state.bestL,state.bestR);
+    var bestArr=arr.slice(state.bestL,state.bestR+1);
+    resVal.textContent='Max Sum = '+state.maxSum;
+    resDet.textContent='Đoạn ['+state.bestL+', '+state.bestR+'] → ['+bestArr.join(', ')+']';
+    resCard.hidden=false;
+    // comparison
+    var bruteOps=0; var bruteMax=-Infinity;
+    for(var a=0;a<arr.length;a++){ var s=0; for(var b=a;b<arr.length;b++){ s+=arr[b]; bruteOps++; if(s>bruteMax) bruteMax=s; } }
+    var kadaneOps=arr.length;
+    cmpCard.hidden=false;
+    var maxOps=Math.max(bruteOps,kadaneOps);
+    document.getElementById('001-brute-bar').style.width=Math.round(bruteOps/maxOps*100)+'%';
+    document.getElementById('001-kadane-bar').style.width=Math.max(5,Math.round(kadaneOps/maxOps*100))+'%';
+    document.getElementById('001-brute-count').textContent=bruteOps+' ops';
+    document.getElementById('001-kadane-count').textContent=kadaneOps+' ops';
+    document.getElementById('001-compare-winner').textContent='🏆 Kadane nhanh hơn '+(bruteOps/kadaneOps).toFixed(1)+' lần! O(n) vs O(n²)';
+  }
+  async function handleRun(){
+    clearErr(); hideAll();
+    var arr=validate(); if(!arr) return;
+    state=buildState(arr);
+    vizCard.hidden=false;
+    highlightPseudo('001-pseudo','1');
+    curEl.textContent=state.cur; maxEl.textContent=state.maxSum;
+    render(arr,0,0,0,0);
+    await sleep(400);
+    for(var k=1;k<arr.length;k++){
+      doStep();
+      await sleep(getSpeed());
     }
-
-    function clearError() {
-      errorEl.textContent = '';
-      input.classList.remove('input-error-border');
-      input.removeAttribute('aria-invalid');
+    finish();
+  }
+  function handleStep(){
+    if(!state){
+      clearErr(); hideAll();
+      var arr=validate(); if(!arr) return;
+      state=buildState(arr); vizCard.hidden=false;
+      render(state.arr,0,0,0,0);
+      curEl.textContent=state.cur; maxEl.textContent=state.maxSum;
+      highlightPseudo('001-pseudo','1');
+      return;
     }
-
-    function hideAll() {
-      vizCard.hidden = true;
-      resultCard.hidden = true;
-      stepsCard.hidden = true;
-      arrayViz.innerHTML = '';
-      stepsList.innerHTML = '';
+    var done=doStep();
+    if(done) finish();
+  }
+  function handleAuto(){
+    if(isAuto){ clearTimeout(autoTimer); isAuto=false; autoBtn.textContent='▶ Tự động'; return; }
+    if(!state){ handleStep(); if(!state) return; }
+    isAuto=true; autoBtn.textContent='⏸ Dừng';
+    function tick(){
+      if(!state||state.done){ isAuto=false; autoBtn.textContent='▶ Tự động'; if(state&&state.done) finish(); return; }
+      var done=doStep();
+      if(done){ isAuto=false; autoBtn.textContent='▶ Tự động'; finish(); return; }
+      autoTimer=setTimeout(tick,getSpeed());
     }
+    autoTimer=setTimeout(tick,getSpeed());
+  }
+  function handleRandom(){
+    var len=Math.floor(Math.random()*6)+5;
+    var a=[]; for(var i=0;i<len;i++) a.push(Math.floor(Math.random()*21)-10);
+    input.value=a.join(', '); clearErr(); hideAll();
+  }
+  runBtn.addEventListener('click',handleRun);
+  stepBtn.addEventListener('click',handleStep);
+  autoBtn.addEventListener('click',handleAuto);
+  resetBtn.addEventListener('click',hideAll);
+  randomBtn.addEventListener('click',handleRandom);
+  input.addEventListener('input',clearErr);
+})();
 
-    function renderArray(arr, currentIndex, maxIndex) {
-      arrayViz.innerHTML = '';
-      arr.forEach(function (num, i) {
-        var cell = document.createElement('div');
-        cell.className = 'array-cell';
-
-        var value = document.createElement('div');
-        value.className = 'array-value';
-        value.textContent = num;
-
-        if (i === currentIndex) {
-          value.classList.add('current');
-        } else if (i === maxIndex && i <= currentIndex) {
-          value.classList.add('max');
-        } else if (i < currentIndex) {
-          value.classList.add('done');
-        }
-
-        var index = document.createElement('span');
-        index.className = 'array-index';
-        index.textContent = '[' + i + ']';
-
-        cell.appendChild(value);
-        cell.appendChild(index);
-        arrayViz.appendChild(cell);
-      });
-    }
-
-    async function handleFind() {
-      if (isAnimating) return;
-
-      clearError();
-      hideAll();
-
-      var raw = input.value;
-      var parsed = parseNumbers(raw);
-
-      if (!parsed.valid) {
-        showError(parsed.error);
-        input.focus();
-        return;
-      }
-
-      isAnimating = true;
-      findBtn.disabled = true;
-      randomBtn.disabled = true;
-
-      var arr = parsed.numbers;
-      var max = arr[0];
-      var maxIndex = 0;
-      var steps = [];
-
-      steps.push('Bắt đầu: max = ' + max);
-
-      // Show initial array
-      vizCard.hidden = false;
-      renderArray(arr, 0, 0);
-      await sleep(600);
-
-      for (var i = 1; i < arr.length; i++) {
-        renderArray(arr, i, maxIndex);
-        await sleep(500);
-
-        if (arr[i] > max) {
-          steps.push('So sánh ' + arr[i] + ' với ' + max + ' → max = ' + arr[i]);
-          max = arr[i];
-          maxIndex = i;
-          renderArray(arr, i, maxIndex);
-        } else {
-          steps.push('So sánh ' + arr[i] + ' với ' + max + ' → ' + max + ' lớn hơn');
-          renderArray(arr, i, maxIndex);
-        }
-
-        await sleep(400);
-      }
-
-      steps.push('Kết quả: ' + max);
-
-      // Final render
-      arr.forEach(function (_, i) {
-        var cells = arrayViz.querySelectorAll('.array-value');
-        if (cells[i]) {
-          cells[i].className = 'array-value done';
-        }
-      });
-
-      // Show result
-      resultValue.textContent = 'Số lớn nhất: ' + max;
-      resultCard.hidden = false;
-
-      // Show steps
-      stepsList.innerHTML = '';
-      steps.forEach(function (step, index) {
-        var li = document.createElement('li');
-        li.textContent = step;
-        if (index === steps.length - 1) {
-          li.classList.add('step-final');
-        }
-        stepsList.appendChild(li);
-      });
-      stepsCard.hidden = false;
-
-      isAnimating = false;
-      findBtn.disabled = false;
-      randomBtn.disabled = false;
-    }
-
-    function handleRandom() {
-      var data = generateRandomData();
-      input.value = data;
-      clearError();
-      hideAll();
-    }
-
-    findBtn.addEventListener('click', handleFind);
-    randomBtn.addEventListener('click', handleRandom);
-
-    input.addEventListener('keydown', function (e) {
-      if (e.key === 'Enter') {
-        handleFind();
-      }
+// ============================================
+// 002 Top K
+// ============================================
+(function(){
+  var input=document.getElementById('002-input'), kInput=document.getElementById('002-k');
+  var runBtn=document.getElementById('002-run-btn'), randomBtn=document.getElementById('002-random-btn');
+  var stepBtn=document.getElementById('002-step-btn'), autoBtn=document.getElementById('002-auto-btn'), resetBtn=document.getElementById('002-reset-btn');
+  var err=document.getElementById('002-error'), vizCard=document.getElementById('002-viz-card');
+  var freqViz=document.getElementById('002-freq-viz'), heapViz=document.getElementById('002-heap-viz');
+  var heapSizeEl=document.getElementById('002-heap-size'), curEl=document.getElementById('002-cur');
+  var resCard=document.getElementById('002-result-card'), resVal=document.getElementById('002-result-value');
+  var stepsCard=document.getElementById('002-steps-card'), stepsList=document.getElementById('002-steps-list');
+  var presets=[
+    {v:'1, 1, 1, 2, 2, 3',k:'2'},
+    {v:'4, 4, 4, 4, 2, 2, 3, 3, 3, 1',k:'2'},
+    {v:'5, 5, 5, 5, 5',k:'1'}
+  ];
+  var state=null, autoTimer=null, isAuto=false;
+  document.getElementById('002-presets').addEventListener('click',function(e){
+    var b=e.target.closest('.preset-pill'); if(!b) return;
+    var idx=parseInt(b.getAttribute('data-preset'),10);
+    input.value=presets[idx].v; kInput.value=presets[idx].k; clearErr(); hideAll();
+    document.querySelectorAll('#002-presets .preset-pill').forEach(function(x){x.classList.remove('active');}); b.classList.add('active');
+  });
+  function showErr(m){ err.textContent=m; }
+  function clearErr(){ err.textContent=''; }
+  function hideAll(){
+    vizCard.hidden=true; resCard.hidden=true; stepsCard.hidden=true;
+    freqViz.innerHTML=''; heapViz.innerHTML=''; stepsList.innerHTML='';
+    heapSizeEl.textContent='0'; curEl.textContent='-'; clearPseudo('002-pseudo');
+    if(autoTimer){clearTimeout(autoTimer);autoTimer=null;} isAuto=false; autoBtn.textContent='▶ Tự động'; state=null;
+  }
+  function renderFreq(freq,heap,curKey){
+    freqViz.innerHTML='';
+    var maxCnt=0; freq.forEach(function(v){ if(v.cnt>maxCnt) maxCnt=v.cnt; });
+    freq.forEach(function(entry){
+      var d=document.createElement('div'); d.className='freq-item';
+      if(entry.key===curKey) d.classList.add('freq-current');
+      var inHeap=heap.some(function(h){return h.key===entry.key;});
+      if(inHeap) d.classList.add('freq-in-heap');
+      var num=document.createElement('div'); num.className='freq-num'; num.textContent=entry.key;
+      var cnt=document.createElement('div'); cnt.className='freq-count'; cnt.textContent='×'+entry.cnt;
+      var bar=document.createElement('div'); bar.className='freq-bar-mini'; bar.style.width=Math.round(entry.cnt/maxCnt*100)+'%';
+      d.appendChild(num); d.appendChild(cnt); d.appendChild(bar); freqViz.appendChild(d);
     });
-
-    input.addEventListener('input', function () {
-      if (input.classList.contains('input-error-border')) {
-        clearError();
-      }
+    heapViz.innerHTML='';
+    heap.slice().sort(function(a,b){return a.cnt-b.cnt;}).forEach(function(h,i){
+      var el=document.createElement('div'); el.className='heap-item'; if(i===0) el.classList.add('heap-top');
+      el.textContent=h.key+'('+h.cnt+')'; heapViz.appendChild(el);
     });
-  })();
-
-  // ============================================
-  // Bài 002 — Đếm số lần xuất hiện (Counting)
-  // ============================================
-
-  (function initBai002() {
-    var input = document.getElementById('002-input');
-    var targetInput = document.getElementById('002-target');
-    var countBtn = document.getElementById('002-count-btn');
-    var randomBtn = document.getElementById('002-random-btn');
-    var errorEl = document.getElementById('002-error');
-    var vizCard = document.getElementById('002-viz-card');
-    var arrayViz = document.getElementById('002-array-viz');
-    var targetDisplay = document.getElementById('002-target-display');
-    var resultCard = document.getElementById('002-result-card');
-    var resultValue = document.getElementById('002-result-value');
-    var stepsCard = document.getElementById('002-steps-card');
-    var stepsList = document.getElementById('002-steps-list');
-
-    var isAnimating = false;
-
-    function showError(message) {
-      errorEl.textContent = message;
-      input.classList.add('input-error-border');
-      input.setAttribute('aria-invalid', 'true');
+    heapSizeEl.textContent=heap.length;
+    curEl.textContent=curKey!==null?curKey:'-';
+  }
+  function validate(){
+    var p=parseNumbers(input.value); if(!p.valid){showErr(p.error); return null;}
+    var kRaw=kInput.value.trim(); if(kRaw===''){showErr('Vui lòng nhập K.'); return null;}
+    var k=Number(kRaw); if(!Number.isInteger(k)||k<1){showErr('K phải là số nguyên ≥1.'); return null;}
+    var distinct=new Set(p.numbers).size;
+    if(k>distinct){showErr('K='+k+' lớn hơn số phần tử distinct ('+distinct+').'); return null;}
+    return {arr:p.numbers,k:k};
+  }
+  function buildState(arr,k){
+    var freqMap={}; arr.forEach(function(n){ freqMap[n]=(freqMap[n]||0)+1; });
+    var freqArr=[]; for(var key in freqMap){ freqArr.push({key:Number(key),cnt:freqMap[key]}); }
+    freqArr.sort(function(a,b){return b.cnt-a.cnt;});
+    return {arr:arr,k:k,freq:freqArr,heap:[],idx:0,done:false};
+  }
+  function doStep(){
+    if(!state||state.done) return true;
+    var entry=state.freq[state.idx];
+    if(!entry){ state.done=true; return true; }
+    highlightPseudo('002-pseudo','4');
+    state.heap.push(entry);
+    state.heap.sort(function(a,b){return a.cnt-b.cnt;});
+    var msg='Xét '+entry.key+' (×'+entry.cnt+') → push heap ['+state.heap.map(function(h){return h.key+'('+h.cnt+')';}).join(', ')+']';
+    if(state.heap.length>state.k){
+      highlightPseudo('002-pseudo','5');
+      var popped=state.heap.shift();
+      msg+=' → pop '+popped.key+' (nhỏ nhất)';
     }
-
-    function clearError() {
-      errorEl.textContent = '';
-      input.classList.remove('input-error-border');
-      input.removeAttribute('aria-invalid');
+    var li=document.createElement('li'); li.textContent=msg; stepsList.appendChild(li); stepsCard.hidden=false;
+    renderFreq(state.freq,state.heap,entry.key);
+    state.idx++;
+    if(state.idx>=state.freq.length) state.done=true;
+    return state.done;
+  }
+  function finish(){
+    highlightPseudo('002-pseudo','6');
+    var topK=state.heap.slice().sort(function(a,b){return b.cnt-a.cnt;}).map(function(h){return h.key;});
+    resVal.textContent='Top '+state.k+': ['+topK.join(', ')+']';
+    resCard.hidden=false;
+  }
+  async function handleRun(){
+    clearErr(); hideAll();
+    var v=validate(); if(!v) return;
+    state=buildState(v.arr,v.k); vizCard.hidden=false;
+    highlightPseudo('002-pseudo','1');
+    renderFreq(state.freq,state.heap,null);
+    await sleep(300);
+    while(!state.done){ doStep(); await sleep(700); }
+    finish();
+  }
+  function handleStep(){
+    if(!state){
+      clearErr(); hideAll();
+      var v=validate(); if(!v) return;
+      state=buildState(v.arr,v.k); vizCard.hidden=false;
+      renderFreq(state.freq,state.heap,null);
+      highlightPseudo('002-pseudo','1');
+      return;
     }
-
-    function hideAll() {
-      vizCard.hidden = true;
-      resultCard.hidden = true;
-      stepsCard.hidden = true;
-      arrayViz.innerHTML = '';
-      stepsList.innerHTML = '';
+    var done=doStep(); if(done) finish();
+  }
+  function handleAuto(){
+    if(isAuto){clearTimeout(autoTimer);isAuto=false;autoBtn.textContent='▶ Tự động';return;}
+    if(!state){handleStep(); if(!state) return;}
+    isAuto=true; autoBtn.textContent='⏸ Dừng';
+    function tick(){
+      if(!state||state.done){isAuto=false;autoBtn.textContent='▶ Tự động'; if(state&&state.done) finish(); return;}
+      var done=doStep(); if(done){isAuto=false;autoBtn.textContent='▶ Tự động'; finish(); return;}
+      autoTimer=setTimeout(tick,700);
     }
+    autoTimer=setTimeout(tick,700);
+  }
+  function handleRandom(){
+    var len=Math.floor(Math.random()*6)+5;
+    var a=[]; for(var i=0;i<len;i++) a.push(Math.floor(Math.random()*5)+1);
+    input.value=a.join(', ');
+    var distinct=new Set(a).size;
+    kInput.value=Math.min(2,distinct);
+    clearErr(); hideAll();
+  }
+  runBtn.addEventListener('click',handleRun);
+  stepBtn.addEventListener('click',handleStep);
+  autoBtn.addEventListener('click',handleAuto);
+  resetBtn.addEventListener('click',hideAll);
+  randomBtn.addEventListener('click',handleRandom);
+})();
 
-    function renderArray(arr, currentIndex, foundIndices, skipIndices) {
-      arrayViz.innerHTML = '';
-      arr.forEach(function (num, i) {
-        var cell = document.createElement('div');
-        cell.className = 'array-cell';
-
-        var value = document.createElement('div');
-        value.className = 'array-value';
-        value.textContent = num;
-
-        if (i === currentIndex) {
-          value.classList.add('current');
-        } else if (foundIndices.indexOf(i) !== -1) {
-          value.classList.add('found');
-        } else if (skipIndices.indexOf(i) !== -1) {
-          value.classList.add('skip');
-        }
-
-        var index = document.createElement('span');
-        index.className = 'array-index';
-        index.textContent = '[' + i + ']';
-
-        cell.appendChild(value);
-        cell.appendChild(index);
-        arrayViz.appendChild(cell);
-      });
-    }
-
-    async function handleCount() {
-      if (isAnimating) return;
-
-      clearError();
-      hideAll();
-
-      var raw = input.value;
-      var parsed = parseNumbers(raw);
-
-      if (!parsed.valid) {
-        showError(parsed.error);
-        input.focus();
-        return;
-      }
-
-      var targetRaw = targetInput.value.trim();
-      if (targetRaw === '') {
-        showError('Vui lòng nhập số cần tìm.');
-        targetInput.focus();
-        return;
-      }
-
-      var target = Number(targetRaw);
-      if (isNaN(target)) {
-        showError('Số cần tìm không hợp lệ.');
-        targetInput.focus();
-        return;
-      }
-
-      isAnimating = true;
-      countBtn.disabled = true;
-      randomBtn.disabled = true;
-
-      var arr = parsed.numbers;
-      var count = 0;
-      var steps = [];
-      var foundIndices = [];
-      var skipIndices = [];
-
-      targetDisplay.textContent = target;
-      vizCard.hidden = false;
-
-      renderArray(arr, 0, foundIndices, skipIndices);
-      await sleep(600);
-
-      for (var i = 0; i < arr.length; i++) {
-        renderArray(arr, i, foundIndices, skipIndices);
-        await sleep(500);
-
-        if (arr[i] === target) {
-          count++;
-          foundIndices.push(i);
-          steps.push(arr[i] + ' → tìm thấy → count = ' + count);
-          renderArray(arr, i, foundIndices, skipIndices);
-        } else {
-          skipIndices.push(i);
-          steps.push(arr[i] + ' → bỏ qua');
-          renderArray(arr, i, foundIndices, skipIndices);
-        }
-
-        await sleep(300);
-      }
-
-      steps.push('Kết quả: ' + target + ' xuất hiện ' + count + ' lần');
-
-      // Highlight all found positions
-      if (foundIndices.length > 0) {
-        steps.push('Highlight tất cả vị trí tìm thấy...');
-        // Clear and re-render with highlight-all
-        arrayViz.innerHTML = '';
-        arr.forEach(function (num, i) {
-          var cell = document.createElement('div');
-          cell.className = 'array-cell';
-
-          var value = document.createElement('div');
-          value.className = 'array-value';
-          value.textContent = num;
-
-          if (foundIndices.indexOf(i) !== -1) {
-            value.classList.add('highlight-all');
-          } else {
-            value.classList.add('skip');
-          }
-
-          var index = document.createElement('span');
-          index.className = 'array-index';
-          index.textContent = '[' + i + ']';
-
-          cell.appendChild(value);
-          cell.appendChild(index);
-          arrayViz.appendChild(cell);
-        });
-        await sleep(800);
-      }
-
-      // Show result
-      resultValue.textContent = target + ' xuất hiện ' + count + ' lần';
-      resultCard.hidden = false;
-
-      // Show steps
-      stepsList.innerHTML = '';
-      steps.forEach(function (step, index) {
-        var li = document.createElement('li');
-        li.textContent = step;
-        if (index === steps.length - 1) {
-          li.classList.add('step-final');
-        }
-        stepsList.appendChild(li);
-      });
-      stepsCard.hidden = false;
-
-      isAnimating = false;
-      countBtn.disabled = false;
-      randomBtn.disabled = false;
-    }
-
-    function handleRandom() {
-      var data = generateRandomData();
-      input.value = data;
-      // Pick a random element from the array as target
-      var nums = data.split(',').map(function (s) { return Number(s.trim()); });
-      var randomTarget = nums[Math.floor(Math.random() * nums.length)];
-      targetInput.value = randomTarget;
-      clearError();
-      hideAll();
-    }
-
-    countBtn.addEventListener('click', handleCount);
-    randomBtn.addEventListener('click', handleRandom);
-
-    input.addEventListener('keydown', function (e) {
-      if (e.key === 'Enter') {
-        handleCount();
-      }
+// ============================================
+// 003 Rotated Search
+// ============================================
+(function(){
+  var input=document.getElementById('003-input'), targetInput=document.getElementById('003-target');
+  var runBtn=document.getElementById('003-run-btn'), randomBtn=document.getElementById('003-random-btn');
+  var stepBtn=document.getElementById('003-step-btn'), autoBtn=document.getElementById('003-auto-btn'), resetBtn=document.getElementById('003-reset-btn');
+  var err=document.getElementById('003-error'), vizCard=document.getElementById('003-viz-card'), viz=document.getElementById('003-array-viz');
+  var lEl=document.getElementById('003-l'), midEl=document.getElementById('003-mid'), rEl=document.getElementById('003-r'), cmpEl=document.getElementById('003-cmp');
+  var resCard=document.getElementById('003-result-card'), resVal=document.getElementById('003-result-value');
+  var stepsCard=document.getElementById('003-steps-card'), stepsList=document.getElementById('003-steps-list');
+  var presets=[
+    {v:'4, 5, 6, 7, 0, 1, 2',t:'0'},
+    {v:'1, 2, 3, 4, 5, 6',t:'3'},
+    {v:'2, 3, 4, 5, 6, 7, 0, 1',t:'5'}
+  ];
+  var state=null, autoTimer=null, isAuto=false;
+  document.getElementById('003-presets').addEventListener('click',function(e){
+    var b=e.target.closest('.preset-pill'); if(!b) return;
+    var idx=parseInt(b.getAttribute('data-preset'),10);
+    input.value=presets[idx].v; targetInput.value=presets[idx].t; clearErr(); hideAll();
+    document.querySelectorAll('#003-presets .preset-pill').forEach(function(x){x.classList.remove('active');}); b.classList.add('active');
+  });
+  function showErr(m){ err.textContent=m; }
+  function clearErr(){ err.textContent=''; }
+  function hideAll(){
+    vizCard.hidden=true; resCard.hidden=true; stepsCard.hidden=true;
+    viz.innerHTML=''; stepsList.innerHTML=''; lEl.textContent='0'; midEl.textContent='0'; rEl.textContent='0'; cmpEl.textContent='0';
+    clearPseudo('003-pseudo'); if(autoTimer){clearTimeout(autoTimer);autoTimer=null;} isAuto=false; autoBtn.textContent='▶ Tự động'; state=null;
+  }
+  function render(arr,l,mid,r,elim,found){
+    viz.innerHTML='';
+    arr.forEach(function(n,i){
+      var cell=document.createElement('div'); cell.className='array-cell';
+      var v=document.createElement('div'); v.className='array-value'; v.textContent=n;
+      if(i===found) v.classList.add('found');
+      else if(elim[i]) v.classList.add('eliminated');
+      else if(i===mid) v.classList.add('mid-pointer');
+      else if(i===l) v.classList.add('left-pointer');
+      else if(i===r) v.classList.add('right-pointer');
+      var idx=document.createElement('span'); idx.className='array-index'; idx.textContent='['+i+']';
+      cell.appendChild(v); cell.appendChild(idx); viz.appendChild(cell);
     });
-
-    targetInput.addEventListener('keydown', function (e) {
-      if (e.key === 'Enter') {
-        handleCount();
-      }
-    });
-
-    input.addEventListener('input', function () {
-      if (input.classList.contains('input-error-border')) {
-        clearError();
-      }
-    });
-  })();
-
-  // ============================================
-  // Bài 003 — Linear Search
-  // ============================================
-
-  (function initBai003() {
-    var input = document.getElementById('003-input');
-    var targetInput = document.getElementById('003-target');
-    var searchBtn = document.getElementById('003-search-btn');
-    var randomBtn = document.getElementById('003-random-btn');
-    var stepBtn = document.getElementById('003-step-btn');
-    var resetBtn = document.getElementById('003-reset-btn');
-    var errorEl = document.getElementById('003-error');
-    var vizCard = document.getElementById('003-viz-card');
-    var arrayViz = document.getElementById('003-array-viz');
-    var targetDisplay = document.getElementById('003-target-display');
-    var checkCountEl = document.getElementById('003-check-count');
-    var resultCard = document.getElementById('003-result-card');
-    var resultValue = document.getElementById('003-result-value');
-    var stepsCard = document.getElementById('003-steps-card');
-    var stepsList = document.getElementById('003-steps-list');
-
-    var isAnimating = false;
-    var searchState = null; // For step-by-step mode
-
-    function showError(message) {
-      errorEl.textContent = message;
-      input.classList.add('input-error-border');
-      input.setAttribute('aria-invalid', 'true');
-    }
-
-    function clearError() {
-      errorEl.textContent = '';
-      input.classList.remove('input-error-border');
-      input.removeAttribute('aria-invalid');
-    }
-
-    function hideAll() {
-      vizCard.hidden = true;
-      resultCard.hidden = true;
-      stepsCard.hidden = true;
-      arrayViz.innerHTML = '';
-      stepsList.innerHTML = '';
-      checkCountEl.textContent = '0';
-      stepBtn.disabled = true;
-      searchState = null;
-    }
-
-    function renderArray(arr, currentIndex, foundIndex, checkedIndices) {
-      arrayViz.innerHTML = '';
-      arr.forEach(function (num, i) {
-        var cell = document.createElement('div');
-        cell.className = 'array-cell';
-
-        var value = document.createElement('div');
-        value.className = 'array-value';
-        value.textContent = num;
-
-        if (i === currentIndex) {
-          value.classList.add('current');
-        } else if (i === foundIndex) {
-          value.classList.add('found');
-        } else if (checkedIndices.indexOf(i) !== -1) {
-          value.classList.add('skip');
-        }
-
-        var index = document.createElement('span');
-        index.className = 'array-index';
-        index.textContent = '[' + i + ']';
-
-        cell.appendChild(value);
-        cell.appendChild(index);
-        arrayViz.appendChild(cell);
-      });
-    }
-
-    function validateInput() {
-      var raw = input.value;
-      var parsed = parseNumbers(raw);
-
-      if (!parsed.valid) {
-        showError(parsed.error);
-        input.focus();
-        return null;
-      }
-
-      var targetRaw = targetInput.value.trim();
-      if (targetRaw === '') {
-        showError('Vui lòng nhập số cần tìm.');
-        targetInput.focus();
-        return null;
-      }
-
-      var target = Number(targetRaw);
-      if (isNaN(target)) {
-        showError('Số cần tìm không hợp lệ.');
-        targetInput.focus();
-        return null;
-      }
-
-      return { numbers: parsed.numbers, target: target };
-    }
-
-    async function handleSearch() {
-      if (isAnimating) return;
-
-      clearError();
-      hideAll();
-
-      var validated = validateInput();
-      if (!validated) return;
-
-      isAnimating = true;
-      searchBtn.disabled = true;
-      randomBtn.disabled = true;
-      stepBtn.disabled = true;
-
-      var arr = validated.numbers;
-      var target = validated.target;
-      var steps = [];
-      var checkedIndices = [];
-      var checkCount = 0;
-      var result = -1;
-
-      targetDisplay.textContent = target;
-      vizCard.hidden = false;
-
-      renderArray(arr, 0, -1, checkedIndices);
-      await sleep(600);
-
-      for (var i = 0; i < arr.length; i++) {
-        renderArray(arr, i, -1, checkedIndices);
-        checkCount++;
-        checkCountEl.textContent = checkCount;
-        await sleep(500);
-
-        if (arr[i] === target) {
-          result = i;
-          steps.push(arr[i] + ' = ' + target + ' → TÌM THẤY tại vị trí ' + i);
-          renderArray(arr, i, i, checkedIndices);
-          break;
-        } else {
-          checkedIndices.push(i);
-          steps.push(arr[i] + ' ≠ ' + target + ' → tiếp tục');
-          renderArray(arr, i, -1, checkedIndices);
-        }
-
-        await sleep(300);
-      }
-
-      if (result === -1) {
-        steps.push('Không tìm thấy ' + target);
-        resultValue.textContent = 'Không tìm thấy';
+  }
+  function validate(){
+    var p=parseNumbers(input.value); if(!p.valid){showErr(p.error); return null;}
+    var tRaw=targetInput.value.trim(); if(tRaw===''){showErr('Vui lòng nhập target.'); return null;}
+    var t=Number(tRaw); if(isNaN(t)){showErr('Target không hợp lệ.'); return null;}
+    return {arr:p.numbers,target:t};
+  }
+  function buildState(arr,target){
+    return {arr:arr,target:target,l:0,r:arr.length-1,elim:{},cmp:0,done:false,found:-1};
+  }
+  function doStep(){
+    if(!state||state.done) return true;
+    var arr=state.arr, target=state.target;
+    if(state.l>state.r){ state.done=true; return true; }
+    var mid=Math.floor((state.l+state.r)/2);
+    state.cmp++; cmpEl.textContent=state.cmp; lEl.textContent=state.l; midEl.textContent=mid; rEl.textContent=state.r;
+    highlightPseudo('003-pseudo','3');
+    render(arr,state.l,mid,state.r,state.elim,-1);
+    var msg='';
+    if(arr[mid]===target){
+      highlightPseudo('003-pseudo','4');
+      msg='arr['+mid+']='+arr[mid]+' == '+target+' → FOUND tại '+mid;
+      state.found=mid; state.done=true;
+      render(arr,state.l,mid,state.r,state.elim,mid);
+    } else if(arr[state.l]<=arr[mid]){
+      highlightPseudo('003-pseudo','5');
+      msg='Left sorted ['+state.l+','+mid+']='+arr.slice(state.l,mid+1).join(',')+' | ';
+      if(target>=arr[state.l] && target<arr[mid]){
+        highlightPseudo('003-pseudo','6');
+        msg+='target in left → r=mid-1='+(mid-1);
+        for(var i=mid;i<=state.r;i++) state.elim[i]=true;
+        state.r=mid-1;
       } else {
-        resultValue.textContent = 'Tìm thấy ' + target + ' tại vị trí ' + result + '\nSố lần kiểm tra: ' + checkCount;
+        msg+='target not in left → l=mid+1='+(mid+1);
+        for(var i=state.l;i<=mid;i++) state.elim[i]=true;
+        state.l=mid+1;
       }
-
-      resultCard.hidden = false;
-
-      stepsList.innerHTML = '';
-      steps.forEach(function (step, index) {
-        var li = document.createElement('li');
-        li.textContent = step;
-        if (index === steps.length - 1) {
-          li.classList.add('step-final');
-        }
-        stepsList.appendChild(li);
-      });
-      stepsCard.hidden = false;
-
-      isAnimating = false;
-      searchBtn.disabled = false;
-      randomBtn.disabled = false;
-    }
-
-    function initStepMode() {
-      clearError();
-      hideAll();
-
-      var validated = validateInput();
-      if (!validated) return;
-
-      searchState = {
-        arr: validated.numbers,
-        target: validated.target,
-        currentIndex: 0,
-        checkedIndices: [],
-        checkCount: 0,
-        result: -1,
-        done: false
-      };
-
-      targetDisplay.textContent = validated.target;
-      vizCard.hidden = false;
-      renderArray(searchState.arr, 0, -1, []);
-      stepBtn.disabled = false;
-      searchBtn.disabled = true;
-      randomBtn.disabled = true;
-    }
-
-    function handleStep() {
-      if (!searchState || searchState.done) return;
-
-      var arr = searchState.arr;
-      var target = searchState.target;
-      var i = searchState.currentIndex;
-
-      if (i >= arr.length) {
-        // Not found
-        searchState.done = true;
-        stepBtn.disabled = true;
-
-        var steps = [];
-        if (searchState.result === -1) {
-          steps.push('Không tìm thấy ' + target);
-          resultValue.textContent = 'Không tìm thấy';
-        }
-
-        resultCard.hidden = false;
-
-        if (steps.length > 0) {
-          stepsList.innerHTML = '';
-          steps.forEach(function (step) {
-            var li = document.createElement('li');
-            li.textContent = step;
-            li.classList.add('step-final');
-            stepsList.appendChild(li);
-          });
-          stepsCard.hidden = false;
-        }
-
-        searchBtn.disabled = false;
-        randomBtn.disabled = false;
-        return;
-      }
-
-      // Check current element
-      searchState.checkCount++;
-      checkCountEl.textContent = searchState.checkCount;
-
-      if (arr[i] === target) {
-        searchState.result = i;
-        searchState.done = true;
-        stepBtn.disabled = true;
-
-        renderArray(arr, i, i, searchState.checkedIndices);
-
-        var step = arr[i] + ' = ' + target + ' → TÌM THẤY tại vị trí ' + i;
-        var li = document.createElement('li');
-        li.textContent = step;
-        li.classList.add('step-final');
-        stepsList.appendChild(li);
-        stepsCard.hidden = false;
-
-        resultValue.textContent = 'Tìm thấy ' + target + ' tại vị trí ' + i + '\nSố lần kiểm tra: ' + searchState.checkCount;
-        resultCard.hidden = false;
-
-        searchBtn.disabled = false;
-        randomBtn.disabled = false;
+    } else {
+      highlightPseudo('003-pseudo','7');
+      msg='Right sorted ['+mid+','+state.r+'] | ';
+      if(target>arr[mid] && target<=arr[state.r]){
+        highlightPseudo('003-pseudo','8');
+        msg+='target in right → l=mid+1='+(mid+1);
+        for(var i=state.l;i<=mid;i++) state.elim[i]=true;
+        state.l=mid+1;
       } else {
-        searchState.checkedIndices.push(i);
-        renderArray(arr, i, -1, searchState.checkedIndices);
-
-        var step = arr[i] + ' ≠ ' + target + ' → tiếp tục';
-        var li = document.createElement('li');
-        li.textContent = step;
-        stepsList.appendChild(li);
-        stepsCard.hidden = false;
-
-        searchState.currentIndex++;
+        msg+='target not in right → r=mid-1='+(mid-1);
+        for(var i=mid;i<=state.r;i++) state.elim[i]=true;
+        state.r=mid-1;
       }
     }
-
-    function handleReset() {
-      hideAll();
-      stepBtn.disabled = false;
-      searchBtn.disabled = false;
-      randomBtn.disabled = false;
+    var li=document.createElement('li'); li.textContent=msg; if(state.done) li.classList.add('step-final'); stepsList.appendChild(li); stepsCard.hidden=false;
+    if(state.l>state.r && !state.done){ state.done=true; }
+    return state.done;
+  }
+  function finish(){
+    if(state.found!==-1){ resVal.textContent='Tìm thấy '+state.target+' tại index '+state.found+' ('+state.cmp+' lần so sánh)'; }
+    else { resVal.textContent='Không tìm thấy '+state.target+' ('+state.cmp+' lần so sánh)'; }
+    resCard.hidden=false;
+  }
+  async function handleRun(){
+    clearErr(); hideAll();
+    var v=validate(); if(!v) return;
+    state=buildState(v.arr,v.target); vizCard.hidden=false;
+    render(state.arr,state.l,-1,state.r,{},-1);
+    await sleep(400);
+    while(!state.done){ doStep(); await sleep(800); }
+    finish();
+  }
+  function handleStep(){
+    if(!state){
+      clearErr(); hideAll();
+      var v=validate(); if(!v) return;
+      state=buildState(v.arr,v.target); vizCard.hidden=false;
+      render(state.arr,state.l,-1,state.r,{},-1);
+      return;
     }
-
-    function handleRandom() {
-      var data = generateRandomData();
-      input.value = data;
-      var nums = data.split(',').map(function (s) { return Number(s.trim()); });
-      var randomTarget = nums[Math.floor(Math.random() * nums.length)];
-      targetInput.value = randomTarget;
-      clearError();
-      hideAll();
-      stepBtn.disabled = false;
+    var done=doStep(); if(done) finish();
+  }
+  function handleAuto(){
+    if(isAuto){clearTimeout(autoTimer);isAuto=false;autoBtn.textContent='▶ Tự động';return;}
+    if(!state){handleStep(); if(!state) return;}
+    isAuto=true; autoBtn.textContent='⏸ Dừng';
+    function tick(){
+      if(!state||state.done){isAuto=false;autoBtn.textContent='▶ Tự động'; if(state&&state.done) finish(); return;}
+      var done=doStep(); if(done){isAuto=false;autoBtn.textContent='▶ Tự động'; finish(); return;}
+      autoTimer=setTimeout(tick,800);
     }
+    autoTimer=setTimeout(tick,800);
+  }
+  function handleRandom(){
+    var n=Math.floor(Math.random()*4)+5;
+    var sorted=[]; var cur=Math.floor(Math.random()*10);
+    for(var i=0;i<n;i++){ cur+=Math.floor(Math.random()*5)+1; sorted.push(cur); }
+    var rot=Math.floor(Math.random()*n);
+    var arr=sorted.slice(rot).concat(sorted.slice(0,rot));
+    input.value=arr.join(', ');
+    targetInput.value=arr[Math.floor(Math.random()*arr.length)];
+    clearErr(); hideAll();
+  }
+  runBtn.addEventListener('click',handleRun);
+  stepBtn.addEventListener('click',handleStep);
+  autoBtn.addEventListener('click',handleAuto);
+  resetBtn.addEventListener('click',hideAll);
+  randomBtn.addEventListener('click',handleRandom);
+})();
 
-    searchBtn.addEventListener('click', handleSearch);
-    randomBtn.addEventListener('click', handleRandom);
-    stepBtn.addEventListener('click', function () {
-      if (!searchState) {
-        initStepMode();
-      } else if (!searchState.done) {
-        handleStep();
-      }
+// ============================================
+// 004 QuickSort
+// ============================================
+(function(){
+  var input=document.getElementById('004-input');
+  var runBtn=document.getElementById('004-run-btn'), randomBtn=document.getElementById('004-random-btn');
+  var stepBtn=document.getElementById('004-step-btn'), autoBtn=document.getElementById('004-auto-btn'), resetBtn=document.getElementById('004-reset-btn');
+  var speed=document.getElementById('004-speed'), speedVal=document.getElementById('004-speed-val');
+  var err=document.getElementById('004-error'), vizCard=document.getElementById('004-viz-card'), viz=document.getElementById('004-array-viz');
+  var pivotEl=document.getElementById('004-pivot'), iEl=document.getElementById('004-i'), jEl=document.getElementById('004-j'), cmpEl=document.getElementById('004-cmp'), swapsEl=document.getElementById('004-swaps');
+  var recEl=document.getElementById('004-recursion');
+  var resCard=document.getElementById('004-result-card'), resVal=document.getElementById('004-result-value');
+  var stepsCard=document.getElementById('004-steps-card'), stepsList=document.getElementById('004-steps-list');
+  var presets=[
+    {v:'8, 3, 5, 1, 9, 2'},
+    {v:'1, 2, 3, 5, 4, 6'},
+    {v:'9, 8, 7, 6, 5, 4'}
+  ];
+  var state=null, autoTimer=null, isAuto=false;
+  function getSpeed(){ return parseInt(speed.value,10); }
+  speed.addEventListener('input',function(){ speedVal.textContent=getSpeed()+'ms'; });
+  document.getElementById('004-presets').addEventListener('click',function(e){
+    var b=e.target.closest('.preset-pill'); if(!b) return;
+    var idx=parseInt(b.getAttribute('data-preset'),10);
+    input.value=presets[idx].v; clearErr(); hideAll();
+    document.querySelectorAll('#004-presets .preset-pill').forEach(function(x){x.classList.remove('active');}); b.classList.add('active');
+  });
+  function showErr(m){ err.textContent=m; }
+  function clearErr(){ err.textContent=''; }
+  function hideAll(){
+    vizCard.hidden=true; resCard.hidden=true; stepsCard.hidden=true;
+    viz.innerHTML=''; stepsList.innerHTML=''; recEl.textContent='';
+    pivotEl.textContent='-'; iEl.textContent='0'; jEl.textContent='0'; cmpEl.textContent='0'; swapsEl.textContent='0';
+    clearPseudo('004-pseudo'); if(autoTimer){clearTimeout(autoTimer);autoTimer=null;} isAuto=false; autoBtn.textContent='▶ Tự động'; state=null;
+  }
+  function render(arr,lo,hi,pivotIdx,i,j,swapPair,sortedSet){
+    viz.innerHTML='';
+    arr.forEach(function(n,idx){
+      var cell=document.createElement('div'); cell.className='array-cell';
+      var v=document.createElement('div'); v.className='array-value'; v.textContent=n;
+      if(sortedSet && sortedSet[idx]) v.classList.add('sorted');
+      else if(swapPair && (idx===swapPair[0]||idx===swapPair[1])) v.classList.add('swapping');
+      else if(idx===pivotIdx) v.classList.add('pivot');
+      else if(idx===i) v.classList.add('left-pointer');
+      else if(idx===j) v.classList.add('comparing');
+      if(idx<lo||idx>hi) v.classList.add('done');
+      var id=document.createElement('span'); id.className='array-index'; id.textContent='['+idx+']';
+      cell.appendChild(v); cell.appendChild(id); viz.appendChild(cell);
     });
-    resetBtn.addEventListener('click', handleReset);
-
-    input.addEventListener('keydown', function (e) {
-      if (e.key === 'Enter') {
-        handleSearch();
-      }
-    });
-
-    targetInput.addEventListener('keydown', function (e) {
-      if (e.key === 'Enter') {
-        handleSearch();
-      }
-    });
-
-    input.addEventListener('input', function () {
-      if (input.classList.contains('input-error-border')) {
-        clearError();
-      }
-    });
-  })();
-
-  // ============================================
-  // Bài 004 — Bubble Sort Visualizer
-  // ============================================
-
-  (function initBai004() {
-    var input = document.getElementById('004-input');
-    var startBtn = document.getElementById('004-start-btn');
-    var randomBtn = document.getElementById('004-random-btn');
-    var stepBtn = document.getElementById('004-step-btn');
-    var resetBtn = document.getElementById('004-reset-btn');
-    var speedSlider = document.getElementById('004-speed');
-    var speedVal = document.getElementById('004-speed-val');
-    var errorEl = document.getElementById('004-error');
-    var vizCard = document.getElementById('004-viz-card');
-    var arrayViz = document.getElementById('004-array-viz');
-    var outerLoopEl = document.getElementById('004-outer-loop');
-    var posEl = document.getElementById('004-pos');
-    var comparisonsEl = document.getElementById('004-comparisons');
-    var swapsEl = document.getElementById('004-swaps');
-    var resultCard = document.getElementById('004-result-card');
-    var resultValue = document.getElementById('004-result-value');
-    var stepsCard = document.getElementById('004-steps-card');
-    var stepsList = document.getElementById('004-steps-list');
-
-    var isAnimating = false;
-    var sortState = null;
-    var autoRunTimer = null;
-    var stepMode = false; // Track if user switched to step mode
-
-    function showError(message) {
-      errorEl.textContent = message;
-      input.classList.add('input-error-border');
-      input.setAttribute('aria-invalid', 'true');
+  }
+  function validate(){
+    var p=parseNumbers(input.value); if(!p.valid){showErr(p.error); return null;} return p.numbers;
+  }
+  function buildState(arr){
+    return {arr:arr.slice(), stack:[[0,arr.length-1]], cur:null, sorted:{}, cmp:0, swaps:0, done:false};
+  }
+  function nextPartition(){
+    while(state.stack.length>0){
+      var range=state.stack[state.stack.length-1];
+      var lo=range[0], hi=range[1];
+      if(lo>=hi){ state.sorted[lo]=true; if(lo===hi) state.sorted[hi]=true; state.stack.pop(); continue; }
+      return range;
     }
-
-    function clearError() {
-      errorEl.textContent = '';
-      input.classList.remove('input-error-border');
-      input.removeAttribute('aria-invalid');
+    return null;
+  }
+  function doStep(){
+    if(!state||state.done) return true;
+    if(!state.cur){
+      var range=nextPartition();
+      if(!range){ state.done=true; return true; }
+      var lo=range[0], hi=range[1];
+      state.cur={lo:lo,hi:hi,pivot:state.arr[hi],i:lo,j:lo};
+      highlightPseudo('004-pseudo','2');
+      pivotEl.textContent=state.cur.pivot; iEl.textContent=state.cur.i; jEl.textContent=state.cur.j;
+      recEl.textContent='Partition ['+lo+','+hi+'] pivot='+state.cur.pivot;
+      render(state.arr,lo,hi,hi,state.cur.i,state.cur.j,null,state.sorted);
+      var li=document.createElement('li'); li.textContent='Partition ['+lo+','+hi+'] pivot='+state.cur.pivot; stepsList.appendChild(li); stepsCard.hidden=false;
+      return false;
     }
-
-    function hideAll() {
-      vizCard.hidden = true;
-      resultCard.hidden = true;
-      stepsCard.hidden = true;
-      arrayViz.innerHTML = '';
-      stepsList.innerHTML = '';
-      outerLoopEl.textContent = '0';
-      posEl.textContent = '0';
-      comparisonsEl.textContent = '0';
-      swapsEl.textContent = '0';
-      stepBtn.disabled = true;
-      sortState = null;
-      stopAutoRun();
+    var cur=state.cur;
+    if(cur.j >= cur.hi){
+      // final swap
+      highlightPseudo('004-pseudo','5');
+      var tmp=state.arr[cur.i]; state.arr[cur.i]=state.arr[cur.hi]; state.arr[cur.hi]=tmp;
+      state.swaps++; swapsEl.textContent=state.swaps;
+      var pIdx=cur.i;
+      state.sorted[pIdx]=true;
+      render(state.arr,cur.lo,cur.hi,pIdx,-1,-1,[cur.i,cur.hi],state.sorted);
+      var li=document.createElement('li'); li.textContent='swap pivot → vị trí '+pIdx+' | arr=['+state.arr.join(', ')+']'; stepsList.appendChild(li);
+      // push sub-ranges
+      state.stack.pop();
+      // right then left (so left processed first)
+      if(pIdx+1 < cur.hi) state.stack.push([pIdx+1, cur.hi]);
+      if(cur.lo < pIdx-1) state.stack.push([cur.lo, pIdx-1]);
+      recEl.textContent='Pivot '+pIdx+' done | stack: '+state.stack.map(function(r){return '['+r[0]+','+r[1]+']';}).join(' ');
+      state.cur=null;
+      if(state.stack.length===0){ state.done=true; return true; }
+      return false;
     }
-
-    function getSpeed() {
-      return parseInt(speedSlider.value, 10);
-    }
-
-    function updateSpeedDisplay() {
-      speedVal.textContent = getSpeed() + 'ms';
-    }
-
-    function renderArray(arr, comparingIdx, sortedIdx, swapIdx) {
-      arrayViz.innerHTML = '';
-      arr.forEach(function (num, i) {
-        var cell = document.createElement('div');
-        cell.className = 'array-cell';
-
-        var value = document.createElement('div');
-        value.className = 'array-value';
-        value.textContent = num;
-
-        if (swapIdx !== -1 && (i === swapIdx || i === swapIdx + 1)) {
-          value.classList.add('swapping');
-        } else if (comparingIdx !== -1 && (i === comparingIdx || i === comparingIdx + 1)) {
-          value.classList.add('comparing');
-        } else if (sortedIdx !== -1 && i >= sortedIdx) {
-          value.classList.add('sorted');
-        }
-
-        var index = document.createElement('span');
-        index.className = 'array-index';
-        index.textContent = '[' + i + ']';
-
-        cell.appendChild(value);
-        cell.appendChild(index);
-        arrayViz.appendChild(cell);
-      });
-    }
-
-    function validateInput() {
-      var raw = input.value;
-      var parsed = parseNumbers(raw);
-
-      if (!parsed.valid) {
-        showError(parsed.error);
-        input.focus();
-        return null;
-      }
-
-      return parsed.numbers;
-    }
-
-    function initSortState(arr) {
-      return {
-        arr: arr.slice(), // Copy array
-        n: arr.length,
-        outerI: 0,
-        innerJ: 0,
-        comparisons: 0,
-        swaps: 0,
-        done: false,
-        sortedFrom: arr.length, // Index from which array is sorted
-        swappedThisPass: false
-      };
-    }
-
-    function handleStart() {
-      if (isAnimating) return;
-
-      clearError();
-      hideAll();
-
-      var arr = validateInput();
-      if (!arr) return;
-
-      sortState = initSortState(arr);
-      vizCard.hidden = false;
-      startBtn.disabled = true;
-      stepBtn.disabled = false;
-      renderArray(sortState.arr, -1, sortState.sortedFrom, -1);
-    }
-
-    function initStepMode() {
-      clearError();
-      hideAll();
-
-      var arr = validateInput();
-      if (!arr) return;
-
-      sortState = initSortState(arr);
-      vizCard.hidden = false;
-      stepBtn.disabled = false;
-      renderArray(sortState.arr, -1, sortState.sortedFrom, -1);
-    }
-
-    function handleStep() {
-      if (!sortState || sortState.done || isAnimating) return;
-
-      performSingleStep();
-    }
-
-    function performSingleStep() {
-      var arr = sortState.arr;
-      var n = sortState.n;
-
-      if (sortState.outerI >= n - 1) {
-        // Sorting complete
-        sortState.done = true;
-        stepBtn.disabled = true;
-        stopAutoRun();
-
-        // Mark all as sorted
-        renderArray(arr, -1, 0, -1);
-
-        var steps = [];
-        steps.push('Hoàn thành! Mảng đã được sắp xếp.');
-        steps.push('Tổng số lần so sánh: ' + sortState.comparisons);
-        steps.push('Tổng số lần hoán đổi: ' + sortState.swaps);
-
-        resultValue.textContent = arr.join(', ');
-        resultCard.hidden = false;
-
-        stepsList.innerHTML = '';
-        steps.forEach(function (step, index) {
-          var li = document.createElement('li');
-          li.textContent = step;
-          if (index === steps.length - 1) {
-            li.classList.add('step-final');
-          }
-          stepsList.appendChild(li);
-        });
-        stepsCard.hidden = false;
-
-        startBtn.disabled = false;
-        randomBtn.disabled = false;
-        return;
-      }
-
-      // Perform one comparison
-      var j = sortState.innerJ;
-      var comparingIdx = j;
-      sortState.comparisons++;
-      comparisonsEl.textContent = sortState.comparisons;
-      outerLoopEl.textContent = sortState.outerI + 1;
-      posEl.textContent = j;
-
-      renderArray(arr, comparingIdx, sortState.sortedFrom, -1);
-
-      var step = 'Vòng ' + (sortState.outerI + 1) + ': So sánh arr[' + j + ']=' + arr[j] + ' với arr[' + (j + 1) + ']=' + arr[j + 1];
-
-      if (arr[j] > arr[j + 1]) {
-        // Swap
-        step += ' → ' + arr[j] + ' > ' + arr[j + 1] + ' → Hoán đổi';
-        var temp = arr[j];
-        arr[j] = arr[j + 1];
-        arr[j + 1] = temp;
-        sortState.swaps++;
-        swapsEl.textContent = sortState.swaps;
-        sortState.swappedThisPass = true;
-
-        renderArray(arr, -1, sortState.sortedFrom, j);
+    // compare arr[j] <= pivot
+    highlightPseudo('004-pseudo','4');
+    state.cmp++; cmpEl.textContent=state.cmp;
+    jEl.textContent=cur.j; iEl.textContent=cur.i;
+    var doSwap = state.arr[cur.j] <= cur.pivot;
+    var msg='j='+cur.j+' arr[j]='+state.arr[cur.j]+' '+(doSwap?'≤':' >')+' pivot '+cur.pivot;
+    if(doSwap){
+      if(cur.i!==cur.j){
+        var tmp=state.arr[cur.i]; state.arr[cur.i]=state.arr[cur.j]; state.arr[cur.j]=tmp;
+        state.swaps++; swapsEl.textContent=state.swaps;
+        msg+=' → swap i='+cur.i+' j='+cur.j;
+        render(state.arr,cur.lo,cur.hi,cur.hi,cur.i,cur.j,[cur.i,cur.j],state.sorted);
       } else {
-        step += ' → ' + arr[j] + ' ≤ ' + arr[j + 1] + ' → Giữ nguyên';
+        msg+=' → i++ (no swap)';
+        render(state.arr,cur.lo,cur.hi,cur.hi,cur.i,cur.j,null,state.sorted);
       }
-
-      var li = document.createElement('li');
-      li.textContent = step;
-      stepsList.appendChild(li);
-      stepsCard.hidden = false;
-
-      // Move to next position
-      sortState.innerJ++;
-
-      // Check if inner loop is complete
-      if (sortState.innerJ >= n - sortState.outerI - 1) {
-        sortState.sortedFrom = n - sortState.outerI - 1;
-        sortState.outerI++;
-        sortState.innerJ = 0;
-
-        // Check if no swaps were made in this pass
-        if (!sortState.swappedThisPass) {
-          sortState.done = true;
-          stepBtn.disabled = true;
-          stopAutoRun();
-
-          // Mark all as sorted
-          renderArray(arr, -1, 0, -1);
-
-          var steps = [];
-          steps.push('Mảng đã được sắp xếp sớm tại vòng ' + sortState.outerI + '!');
-          steps.push('Tổng số lần so sánh: ' + sortState.comparisons);
-          steps.push('Tổng số lần hoán đổi: ' + sortState.swaps);
-
-          resultValue.textContent = arr.join(', ');
-          resultCard.hidden = false;
-
-          stepsList.innerHTML = '';
-          steps.forEach(function (step, index) {
-            var li = document.createElement('li');
-            li.textContent = step;
-            if (index === steps.length - 1) {
-              li.classList.add('step-final');
-            }
-            stepsList.appendChild(li);
-          });
-          stepsCard.hidden = false;
-
-          startBtn.disabled = false;
-          randomBtn.disabled = false;
-          return;
-        }
-
-        sortState.swappedThisPass = false;
-      }
-
-      renderArray(arr, -1, sortState.sortedFrom, -1);
+      cur.i++;
+    } else {
+      msg+=' → skip';
+      render(state.arr,cur.lo,cur.hi,cur.hi,cur.i,cur.j,null,state.sorted);
     }
-
-    function startAutoRun() {
-      if (isAnimating) return;
-      isAnimating = true;
-      startBtn.disabled = true;
-      randomBtn.disabled = true;
-      // Keep stepBtn enabled so user can switch to step mode
-
-      function tick() {
-        if (!sortState || sortState.done) {
-          isAnimating = false;
-          startBtn.disabled = false;
-          randomBtn.disabled = false;
-          return;
-        }
-
-        performSingleStep();
-        autoRunTimer = setTimeout(tick, getSpeed());
-      }
-
-      tick();
+    var li=document.createElement('li'); li.textContent=msg; stepsList.appendChild(li); stepsCard.hidden=false;
+    cur.j++;
+    return false;
+  }
+  function finish(){
+    highlightPseudo('004-pseudo','7');
+    // mark all sorted
+    for(var i=0;i<state.arr.length;i++) state.sorted[i]=true;
+    render(state.arr,0,state.arr.length-1,-1,-1,-1,null,state.sorted);
+    resVal.textContent='['+state.arr.join(', ')+'] — '+state.cmp+' so sánh, '+state.swaps+' swap';
+    resCard.hidden=false;
+  }
+  async function handleRun(){
+    clearErr(); hideAll();
+    var arr=validate(); if(!arr) return;
+    state=buildState(arr); vizCard.hidden=false;
+    while(!state.done){ doStep(); await sleep(getSpeed()); }
+    finish();
+  }
+  function handleStep(){
+    if(!state){
+      clearErr(); hideAll();
+      var arr=validate(); if(!arr) return;
+      state=buildState(arr); vizCard.hidden=false;
+      doStep(); return;
     }
-
-    function stopAutoRun() {
-      if (autoRunTimer) {
-        clearTimeout(autoRunTimer);
-        autoRunTimer = null;
-      }
-      isAnimating = false;
+    var done=doStep(); if(done) finish();
+  }
+  function handleAuto(){
+    if(isAuto){clearTimeout(autoTimer);isAuto=false;autoBtn.textContent='▶ Tự động';return;}
+    if(!state){handleStep(); if(!state) return;}
+    isAuto=true; autoBtn.textContent='⏸ Dừng';
+    function tick(){
+      if(!state||state.done){isAuto=false;autoBtn.textContent='▶ Tự động'; if(state&&state.done) finish(); return;}
+      var done=doStep(); if(done){isAuto=false;autoBtn.textContent='▶ Tự động'; finish(); return;}
+      autoTimer=setTimeout(tick,getSpeed());
     }
+    autoTimer=setTimeout(tick,getSpeed());
+  }
+  function handleRandom(){
+    var len=Math.floor(Math.random()*4)+5;
+    var a=[]; for(var i=0;i<len;i++) a.push(Math.floor(Math.random()*20)+1);
+    input.value=a.join(', '); clearErr(); hideAll();
+  }
+  runBtn.addEventListener('click',handleRun);
+  stepBtn.addEventListener('click',handleStep);
+  autoBtn.addEventListener('click',handleAuto);
+  resetBtn.addEventListener('click',hideAll);
+  randomBtn.addEventListener('click',handleRandom);
+})();
 
-    function handleReset() {
-      hideAll();
-      stepBtn.disabled = false;
-      startBtn.disabled = false;
-      randomBtn.disabled = false;
-      stepMode = false;
-    }
-
-    function handleRandom() {
-      var data = generateRandomData();
-      input.value = data;
-      clearError();
-      hideAll();
-      stepBtn.disabled = false;
-    }
-
-    startBtn.addEventListener('click', function () {
-      if (stepMode) return; // Don't auto-run if in step mode
-      if (sortState && !sortState.done) {
-        startAutoRun();
-      } else {
-        handleStart();
-        startAutoRun();
-      }
+// ============================================
+// 005 Bounds
+// ============================================
+(function(){
+  var input=document.getElementById('005-input'), targetInput=document.getElementById('005-target');
+  var runBtn=document.getElementById('005-run-btn'), randomBtn=document.getElementById('005-random-btn');
+  var stepBtn=document.getElementById('005-step-btn'), autoBtn=document.getElementById('005-auto-btn'), resetBtn=document.getElementById('005-reset-btn');
+  var err=document.getElementById('005-error'), vizCard=document.getElementById('005-viz-card'), viz=document.getElementById('005-array-viz');
+  var phaseEl=document.getElementById('005-phase'), lEl=document.getElementById('005-l'), midEl=document.getElementById('005-mid'), rEl=document.getElementById('005-r');
+  var resCard=document.getElementById('005-result-card'), resVal=document.getElementById('005-result-value'), resDet=document.getElementById('005-result-detail');
+  var stepsCard=document.getElementById('005-steps-card'), stepsList=document.getElementById('005-steps-list');
+  var presets=[
+    {v:'1, 2, 2, 2, 3, 4',t:'2'},
+    {v:'1, 2, 3, 4, 5',t:'6'},
+    {v:'2, 2, 2, 2, 2',t:'2'}
+  ];
+  var state=null, autoTimer=null, isAuto=false;
+  document.getElementById('005-presets').addEventListener('click',function(e){
+    var b=e.target.closest('.preset-pill'); if(!b) return;
+    var idx=parseInt(b.getAttribute('data-preset'),10);
+    input.value=presets[idx].v; targetInput.value=presets[idx].t; clearErr(); hideAll();
+    document.querySelectorAll('#005-presets .preset-pill').forEach(function(x){x.classList.remove('active');}); b.classList.add('active');
+  });
+  function showErr(m){ err.textContent=m; }
+  function clearErr(){ err.textContent=''; }
+  function hideAll(){
+    vizCard.hidden=true; resCard.hidden=true; stepsCard.hidden=true;
+    viz.innerHTML=''; stepsList.innerHTML=''; phaseEl.textContent='-'; lEl.textContent='0'; midEl.textContent='0'; rEl.textContent='0';
+    clearPseudo('005-pseudo'); if(autoTimer){clearTimeout(autoTimer);autoTimer=null;} isAuto=false; autoBtn.textContent='▶ Tự động'; state=null;
+  }
+  function render(arr,l,mid,r,foundRange){
+    viz.innerHTML='';
+    arr.forEach(function(n,i){
+      var cell=document.createElement('div'); cell.className='array-cell';
+      var v=document.createElement('div'); v.className='array-value'; v.textContent=n;
+      if(foundRange && i>=foundRange[0] && i<=foundRange[1]) v.classList.add('window-best');
+      else if(i===mid) v.classList.add('mid-pointer');
+      else if(i===l) v.classList.add('left-pointer');
+      else if(i===r) v.classList.add('right-pointer');
+      var idx=document.createElement('span'); idx.className='array-index'; idx.textContent='['+i+']';
+      cell.appendChild(v); cell.appendChild(idx); viz.appendChild(cell);
     });
-
-    randomBtn.addEventListener('click', handleRandom);
-    stepBtn.addEventListener('click', function () {
-      if (!sortState) {
-        initStepMode();
-        stepMode = true;
-      } else if (isAnimating) {
-        stopAutoRun();
-        stepMode = true;
-        stepBtn.disabled = false;
-        startBtn.disabled = false;
-        randomBtn.disabled = false;
-      } else if (!sortState.done) {
-        handleStep();
+  }
+  function validate(){
+    var p=parseNumbers(input.value); if(!p.valid){showErr(p.error); return null;}
+    for(var i=1;i<p.numbers.length;i++) if(p.numbers[i]<p.numbers[i-1]){showErr('Mảng phải sorted tăng dần.'); return null;}
+    var tRaw=targetInput.value.trim(); if(tRaw===''){showErr('Vui lòng nhập target.'); return null;}
+    var t=Number(tRaw); if(isNaN(t)){showErr('Target không hợp lệ.'); return null;}
+    return {arr:p.numbers,target:t};
+  }
+  function buildState(arr,target){
+    return {arr:arr,target:target,phase:0,l:0,r:arr.length,mid:-1,first:-1,last:-1,done:false};
+  }
+  function doStep(){
+    if(!state||state.done) return true;
+    var arr=state.arr, target=state.target;
+    if(state.phase===0){
+      // lowerBound
+      if(state.l>=state.r){
+        state.first=state.l;
+        state.phase=1; state.l=0; state.r=arr.length;
+        phaseEl.textContent='upperBound';
+        var li=document.createElement('li'); li.textContent='lowerBound done → first='+state.first; stepsList.appendChild(li);
+        return false;
       }
+      var mid=Math.floor((state.l+state.r)/2);
+      state.mid=mid; lEl.textContent=state.l; midEl.textContent=mid; rEl.textContent=state.r; phaseEl.textContent='lowerBound';
+      highlightPseudo('005-pseudo','3');
+      render(arr,state.l,mid,state.r,null);
+      var msg='lower: mid='+mid+' arr[mid]='+arr[mid]+' '+(arr[mid]<target?'<':'≥')+' '+target;
+      if(arr[mid]<target){ state.l=mid+1; msg+=' → l=mid+1'; } else { state.r=mid; msg+=' → r=mid'; }
+      var li=document.createElement('li'); li.textContent=msg; stepsList.appendChild(li); stepsCard.hidden=false;
+      return false;
+    } else if(state.phase===1){
+      if(state.l>=state.r){
+        state.last=state.l-1;
+        state.done=true;
+        var li=document.createElement('li'); li.textContent='upperBound done → last='+state.last; li.classList.add('step-final'); stepsList.appendChild(li);
+        return true;
+      }
+      var mid=Math.floor((state.l+state.r)/2);
+      state.mid=mid; lEl.textContent=state.l; midEl.textContent=mid; rEl.textContent=state.r; phaseEl.textContent='upperBound';
+      highlightPseudo('005-pseudo','6');
+      render(arr,state.l,mid,state.r,null);
+      var msg='upper: mid='+mid+' arr[mid]='+arr[mid]+' '+(arr[mid]<=target?'≤':' >')+' '+target;
+      if(arr[mid]<=target){ state.l=mid+1; msg+=' → l=mid+1'; } else { state.r=mid; msg+=' → r=mid'; }
+      var li=document.createElement('li'); li.textContent=msg; stepsList.appendChild(li);
+      return false;
+    }
+    return true;
+  }
+  function finish(){
+    highlightPseudo('005-pseudo','7');
+    var arr=state.arr, target=state.target;
+    var first=state.first, last=state.last;
+    var valid = first<arr.length && arr[first]===target;
+    if(!valid){ resVal.textContent='[-1, -1] — không tìm thấy '+target; resDet.textContent=''; }
+    else { resVal.textContent='['+first+', '+last+']'; resDet.textContent='Target '+target+' từ index '+first+' đến '+last+' ('+(last-first+1)+' lần)'; render(arr,-1,-1,-1,[first,last]); }
+    resCard.hidden=false;
+  }
+  async function handleRun(){
+    clearErr(); hideAll();
+    var v=validate(); if(!v) return;
+    state=buildState(v.arr,v.target); vizCard.hidden=false; phaseEl.textContent='lowerBound';
+    render(state.arr,state.l,-1,state.r,null);
+    await sleep(300);
+    while(!state.done){ doStep(); await sleep(700); }
+    finish();
+  }
+  function handleStep(){
+    if(!state){
+      clearErr(); hideAll();
+      var v=validate(); if(!v) return;
+      state=buildState(v.arr,v.target); vizCard.hidden=false; phaseEl.textContent='lowerBound';
+      render(state.arr,state.l,-1,state.r,null);
+      return;
+    }
+    var done=doStep(); if(done) finish();
+  }
+  function handleAuto(){
+    if(isAuto){clearTimeout(autoTimer);isAuto=false;autoBtn.textContent='▶ Tự động';return;}
+    if(!state){handleStep(); if(!state) return;}
+    isAuto=true; autoBtn.textContent='⏸ Dừng';
+    function tick(){
+      if(!state||state.done){isAuto=false;autoBtn.textContent='▶ Tự động'; if(state&&state.done) finish(); return;}
+      var done=doStep(); if(done){isAuto=false;autoBtn.textContent='▶ Tự động'; finish(); return;}
+      autoTimer=setTimeout(tick,700);
+    }
+    autoTimer=setTimeout(tick,700);
+  }
+  function handleRandom(){
+    var len=Math.floor(Math.random()*4)+5;
+    var base=Math.floor(Math.random()*5);
+    var a=[]; for(var i=0;i<len;i++){ base+=Math.floor(Math.random()*2); a.push(base); }
+    input.value=a.join(', ');
+    targetInput.value=a[Math.floor(Math.random()*a.length)];
+    clearErr(); hideAll();
+  }
+  runBtn.addEventListener('click',handleRun);
+  stepBtn.addEventListener('click',handleStep);
+  autoBtn.addEventListener('click',handleAuto);
+  resetBtn.addEventListener('click',hideAll);
+  randomBtn.addEventListener('click',handleRandom);
+})();
+
+// ============================================
+// 006 Container
+// ============================================
+(function(){
+  var input=document.getElementById('006-input');
+  var runBtn=document.getElementById('006-run-btn'), randomBtn=document.getElementById('006-random-btn');
+  var stepBtn=document.getElementById('006-step-btn'), autoBtn=document.getElementById('006-auto-btn'), resetBtn=document.getElementById('006-reset-btn');
+  var err=document.getElementById('006-error'), vizCard=document.getElementById('006-viz-card'), viz=document.getElementById('006-water-viz');
+  var lEl=document.getElementById('006-l'), rEl=document.getElementById('006-r'), areaEl=document.getElementById('006-area'), bestEl=document.getElementById('006-best');
+  var resCard=document.getElementById('006-result-card'), resVal=document.getElementById('006-result-value'), resDet=document.getElementById('006-result-detail');
+  var stepsCard=document.getElementById('006-steps-card'), stepsList=document.getElementById('006-steps-list');
+  var presets=[
+    {v:'1, 8, 6, 2, 5, 4, 8, 3, 7'},
+    {v:'1, 2, 3, 4, 5, 6'},
+    {v:'5, 4, 3, 2, 1, 5'}
+  ];
+  var state=null, autoTimer=null, isAuto=false;
+  document.getElementById('006-presets').addEventListener('click',function(e){
+    var b=e.target.closest('.preset-pill'); if(!b) return;
+    var idx=parseInt(b.getAttribute('data-preset'),10);
+    input.value=presets[idx].v; clearErr(); hideAll();
+    document.querySelectorAll('#006-presets .preset-pill').forEach(function(x){x.classList.remove('active');}); b.classList.add('active');
+  });
+  function showErr(m){ err.textContent=m; }
+  function clearErr(){ err.textContent=''; }
+  function hideAll(){
+    vizCard.hidden=true; resCard.hidden=true; stepsCard.hidden=true;
+    viz.innerHTML=''; stepsList.innerHTML=''; lEl.textContent='0'; rEl.textContent='0'; areaEl.textContent='0'; bestEl.textContent='0';
+    clearPseudo('006-pseudo'); if(autoTimer){clearTimeout(autoTimer);autoTimer=null;} isAuto=false; autoBtn.textContent='▶ Tự động'; state=null;
+  }
+  function render(arr,l,r,bestPair){
+    viz.innerHTML='';
+    var maxH=Math.max.apply(null,arr);
+    arr.forEach(function(h,i){
+      var wrap=document.createElement('div'); wrap.className='water-bar-wrapper';
+      var bar=document.createElement('div'); bar.className='water-bar';
+      bar.style.height=Math.round(h/maxH*120)+'px';
+      if(bestPair && i>=bestPair[0] && i<=bestPair[1]) bar.classList.add('water-best');
+      if(i===l) bar.classList.add('water-left');
+      else if(i===r) bar.classList.add('water-right');
+      else if(i>l && i<r) bar.classList.add('water-current');
+      // water fill for current pair
+      if(i>l && i<r && bestPair){
+        // no fill
+      }
+      var val=document.createElement('span'); val.className='water-value'; val.textContent=h;
+      var lab=document.createElement('span'); lab.className='water-label'; lab.textContent='['+i+']';
+      wrap.appendChild(val); wrap.appendChild(bar); wrap.appendChild(lab); viz.appendChild(wrap);
     });
-    resetBtn.addEventListener('click', handleReset);
-    speedSlider.addEventListener('input', updateSpeedDisplay);
+  }
+  function validate(){
+    var p=parseNumbers(input.value); if(!p.valid){showErr(p.error); return null;}
+    if(p.numbers.length<2){showErr('Cần ít nhất 2 cột.'); return null;}
+    for(var i=0;i<p.numbers.length;i++) if(p.numbers[i]<0){showErr('Chiều cao phải ≥0.'); return null;}
+    return p.numbers;
+  }
+  function buildState(arr){
+    return {arr:arr,l:0,r:arr.length-1,best:0,bestPair:[-1,-1],done:false};
+  }
+  function doStep(){
+    if(!state||state.done) return true;
+    var arr=state.arr;
+    if(state.l>=state.r){ state.done=true; return true; }
+    highlightPseudo('006-pseudo','3');
+    var area=Math.min(arr[state.l],arr[state.r])*(state.r-state.l);
+    highlightPseudo('006-pseudo','4');
+    var isBest=false;
+    if(area>state.best){ state.best=area; state.bestPair=[state.l,state.r]; isBest=true; }
+    lEl.textContent=state.l; rEl.textContent=state.r; areaEl.textContent=area; bestEl.textContent=state.best;
+    render(arr,state.l,state.r,state.bestPair[0]!==-1?state.bestPair:null);
+    var msg='l='+state.l+'('+arr[state.l]+') r='+state.r+'('+arr[state.r]+') → area=min('+arr[state.l]+','+arr[state.r]+')×'+(state.r-state.l)+'='+area+(isBest?' ★ BEST':'');
+    var li=document.createElement('li'); li.textContent=msg; if(isBest) li.classList.add('step-final'); stepsList.appendChild(li); stepsCard.hidden=false;
+    highlightPseudo('006-pseudo','5');
+    if(arr[state.l] < arr[state.r]) state.l++; else state.r--;
+    if(state.l>=state.r) state.done=true;
+    return state.done;
+  }
+  function finish(){
+    highlightPseudo('006-pseudo','6');
+    render(state.arr,state.bestPair[0],state.bestPair[1],state.bestPair);
+    resVal.textContent='Max Water = '+state.best;
+    resDet.textContent='Cột '+state.bestPair[0]+' ('+state.arr[state.bestPair[0]]+') và '+state.bestPair[1]+' ('+state.arr[state.bestPair[1]]+')';
+    resCard.hidden=false;
+  }
+  async function handleRun(){
+    clearErr(); hideAll();
+    var arr=validate(); if(!arr) return;
+    state=buildState(arr); vizCard.hidden=false;
+    render(arr,state.l,state.r,null);
+    await sleep(300);
+    while(!state.done){ doStep(); await sleep(700); }
+    finish();
+  }
+  function handleStep(){
+    if(!state){
+      clearErr(); hideAll();
+      var arr=validate(); if(!arr) return;
+      state=buildState(arr); vizCard.hidden=false;
+      render(arr,state.l,state.r,null);
+      return;
+    }
+    var done=doStep(); if(done) finish();
+  }
+  function handleAuto(){
+    if(isAuto){clearTimeout(autoTimer);isAuto=false;autoBtn.textContent='▶ Tự động';return;}
+    if(!state){handleStep(); if(!state) return;}
+    isAuto=true; autoBtn.textContent='⏸ Dừng';
+    function tick(){
+      if(!state||state.done){isAuto=false;autoBtn.textContent='▶ Tự động'; if(state&&state.done) finish(); return;}
+      var done=doStep(); if(done){isAuto=false;autoBtn.textContent='▶ Tự động'; finish(); return;}
+      autoTimer=setTimeout(tick,700);
+    }
+    autoTimer=setTimeout(tick,700);
+  }
+  function handleRandom(){
+    var len=Math.floor(Math.random()*4)+6;
+    var a=[]; for(var i=0;i<len;i++) a.push(Math.floor(Math.random()*10)+1);
+    input.value=a.join(', '); clearErr(); hideAll();
+  }
+  runBtn.addEventListener('click',handleRun);
+  stepBtn.addEventListener('click',handleStep);
+  autoBtn.addEventListener('click',handleAuto);
+  resetBtn.addEventListener('click',hideAll);
+  randomBtn.addEventListener('click',handleRandom);
+})();
 
-    input.addEventListener('keydown', function (e) {
-      if (e.key === 'Enter') {
-        handleStart();
-      }
+// ============================================
+// 007 Longest Substring
+// ============================================
+(function(){
+  var input=document.getElementById('007-input');
+  var runBtn=document.getElementById('007-run-btn'), randomBtn=document.getElementById('007-random-btn');
+  var stepBtn=document.getElementById('007-step-btn'), autoBtn=document.getElementById('007-auto-btn'), resetBtn=document.getElementById('007-reset-btn');
+  var err=document.getElementById('007-error'), vizCard=document.getElementById('007-viz-card'), viz=document.getElementById('007-string-viz');
+  var lEl=document.getElementById('007-l'), rEl=document.getElementById('007-r'), setEl=document.getElementById('007-set'), bestEl=document.getElementById('007-best');
+  var resCard=document.getElementById('007-result-card'), resVal=document.getElementById('007-result-value'), resDet=document.getElementById('007-result-detail');
+  var stepsCard=document.getElementById('007-steps-card'), stepsList=document.getElementById('007-steps-list');
+  var presets=['abcabcbb','bbbbb','pwwkew'];
+  var state=null, autoTimer=null, isAuto=false;
+  document.getElementById('007-presets').addEventListener('click',function(e){
+    var b=e.target.closest('.preset-pill'); if(!b) return;
+    var idx=parseInt(b.getAttribute('data-preset'),10);
+    input.value=presets[idx]; clearErr(); hideAll();
+    document.querySelectorAll('#007-presets .preset-pill').forEach(function(x){x.classList.remove('active');}); b.classList.add('active');
+  });
+  function showErr(m){ err.textContent=m; }
+  function clearErr(){ err.textContent=''; }
+  function hideAll(){
+    vizCard.hidden=true; resCard.hidden=true; stepsCard.hidden=true;
+    viz.innerHTML=''; stepsList.innerHTML=''; lEl.textContent='0'; rEl.textContent='0'; setEl.textContent='-'; bestEl.textContent='0';
+    clearPseudo('007-pseudo'); if(autoTimer){clearTimeout(autoTimer);autoTimer=null;} isAuto=false; autoBtn.textContent='▶ Tự động'; state=null;
+  }
+  function render(s,l,r,bestL,bestR,set){
+    viz.innerHTML='';
+    for(var i=0;i<s.length;i++){
+      var ch=document.createElement('div'); ch.className='string-char'; ch.textContent=s[i];
+      if(i>=bestL && i<=bestR && bestL!==-1) ch.classList.add('char-valid');
+      if(i>=l && i<=r) ch.classList.add('window-active');
+      if(i===r) ch.classList.add('char-current');
+      if(i===l) ch.style.borderColor='#3b82f6';
+      viz.appendChild(ch);
+    }
+    lEl.textContent=l; rEl.textContent=r; setEl.textContent=set.size?Array.from(set).join(', '):'-'; bestEl.textContent=(bestR-bestL+1)||0;
+  }
+  function validate(){
+    var s=input.value; if(!s){showErr('Vui lòng nhập chuỗi.'); return null;}
+    return s;
+  }
+  function buildState(s){
+    return {s:s,l:0,r:0,set:new Set(),best:0,bestL:0,bestR:0,done:false,phase:0};
+  }
+  function doStep(){
+    if(!state||state.done) return true;
+    var s=state.s;
+    if(state.r>=s.length){ state.done=true; return true; }
+    var ch=s[state.r];
+    highlightPseudo('007-pseudo','3');
+    if(state.set.has(ch)){
+      // shrink
+      var removed=s[state.l];
+      state.set.delete(removed);
+      var msg='s[r]='+ch+' đã có trong set → remove s[l]='+removed+' l='+state.l+'→'+(state.l+1);
+      state.l++;
+      var li=document.createElement('li'); li.textContent=msg; stepsList.appendChild(li); stepsCard.hidden=false;
+      render(s,state.l,state.r,state.bestL,state.bestR,state.set);
+      return false;
+    }
+    highlightPseudo('007-pseudo','4');
+    state.set.add(ch);
+    highlightPseudo('007-pseudo','5');
+    var len=state.r-state.l+1;
+    var isBest=false;
+    if(len>state.best){ state.best=len; state.bestL=state.l; state.bestR=state.r; isBest=true; }
+    var msg='r='+state.r+' s[r]='+ch+' → add set | window ['+state.l+','+state.r+'] len='+len+(isBest?' ★ BEST':'');
+    var li=document.createElement('li'); li.textContent=msg; if(isBest) li.classList.add('step-final'); stepsList.appendChild(li); stepsCard.hidden=false;
+    render(s,state.l,state.r,state.bestL,state.bestR,state.set);
+    state.r++;
+    if(state.r>=s.length) state.done=true;
+    return state.done;
+  }
+  function finish(){
+    highlightPseudo('007-pseudo','6');
+    var bestStr=state.s.slice(state.bestL,state.bestR+1);
+    resVal.textContent='Độ dài = '+state.best;
+    resDet.textContent='Chuỗi "'+bestStr+'" tại ['+state.bestL+', '+state.bestR+']';
+    resCard.hidden=false;
+    render(state.s,state.bestL,state.bestR,state.bestL,state.bestR,state.set);
+  }
+  async function handleRun(){
+    clearErr(); hideAll();
+    var s=validate(); if(!s) return;
+    state=buildState(s); vizCard.hidden=false;
+    render(s,0,0,0,0,new Set());
+    await sleep(300);
+    while(!state.done){ doStep(); await sleep(700); }
+    finish();
+  }
+  function handleStep(){
+    if(!state){
+      clearErr(); hideAll();
+      var s=validate(); if(!s) return;
+      state=buildState(s); vizCard.hidden=false;
+      render(s,0,-1,0,0,new Set());
+      return;
+    }
+    var done=doStep(); if(done) finish();
+  }
+  function handleAuto(){
+    if(isAuto){clearTimeout(autoTimer);isAuto=false;autoBtn.textContent='▶ Tự động';return;}
+    if(!state){handleStep(); if(!state) return;}
+    isAuto=true; autoBtn.textContent='⏸ Dừng';
+    function tick(){
+      if(!state||state.done){isAuto=false;autoBtn.textContent='▶ Tự động'; if(state&&state.done) finish(); return;}
+      var done=doStep(); if(done){isAuto=false;autoBtn.textContent='▶ Tự động'; finish(); return;}
+      autoTimer=setTimeout(tick,600);
+    }
+    autoTimer=setTimeout(tick,600);
+  }
+  function handleRandom(){
+    var chars='abcdefghijklmnopqrstuvwxyz';
+    var len=Math.floor(Math.random()*6)+5;
+    var s=''; for(var i=0;i<len;i++) s+=chars[Math.floor(Math.random()*chars.length)];
+    input.value=s; clearErr(); hideAll();
+  }
+  runBtn.addEventListener('click',handleRun);
+  stepBtn.addEventListener('click',handleStep);
+  autoBtn.addEventListener('click',handleAuto);
+  resetBtn.addEventListener('click',hideAll);
+  randomBtn.addEventListener('click',handleRandom);
+})();
+
+// ============================================
+// 008 NGE
+// ============================================
+(function(){
+  var input=document.getElementById('008-input');
+  var runBtn=document.getElementById('008-run-btn'), randomBtn=document.getElementById('008-random-btn');
+  var stepBtn=document.getElementById('008-step-btn'), autoBtn=document.getElementById('008-auto-btn'), resetBtn=document.getElementById('008-reset-btn');
+  var err=document.getElementById('008-error'), vizCard=document.getElementById('008-viz-card');
+  var arrViz=document.getElementById('008-array-viz'), stackViz=document.getElementById('008-stack-viz'), ansViz=document.getElementById('008-ans-viz');
+  var iEl=document.getElementById('008-i'), stackSizeEl=document.getElementById('008-stack-size');
+  var resCard=document.getElementById('008-result-card'), resVal=document.getElementById('008-result-value');
+  var stepsCard=document.getElementById('008-steps-card'), stepsList=document.getElementById('008-steps-list');
+  var presets=[
+    {v:'2, 1, 2, 4, 3'},
+    {v:'5, 4, 3, 2, 1'},
+    {v:'1, 2, 3, 4, 5'}
+  ];
+  var state=null, autoTimer=null, isAuto=false;
+  document.getElementById('008-presets').addEventListener('click',function(e){
+    var b=e.target.closest('.preset-pill'); if(!b) return;
+    var idx=parseInt(b.getAttribute('data-preset'),10);
+    input.value=presets[idx].v; clearErr(); hideAll();
+    document.querySelectorAll('#008-presets .preset-pill').forEach(function(x){x.classList.remove('active');}); b.classList.add('active');
+  });
+  function showErr(m){ err.textContent=m; }
+  function clearErr(){ err.textContent=''; }
+  function hideAll(){
+    vizCard.hidden=true; resCard.hidden=true; stepsCard.hidden=true;
+    arrViz.innerHTML=''; stackViz.innerHTML='<p class="stack-empty">Stack rỗng</p>'; ansViz.innerHTML=''; stepsList.innerHTML='';
+    iEl.textContent='0'; stackSizeEl.textContent='0';
+    clearPseudo('008-pseudo'); if(autoTimer){clearTimeout(autoTimer);autoTimer=null;} isAuto=false; autoBtn.textContent='▶ Tự động'; state=null;
+  }
+  function render(arr,stack,ans,curIdx){
+    arrViz.innerHTML='';
+    arr.forEach(function(n,i){
+      var cell=document.createElement('div'); cell.className='array-cell';
+      var v=document.createElement('div'); v.className='array-value'; v.textContent=n;
+      if(i===curIdx) v.classList.add('current');
+      else if(stack.indexOf(i)!==-1) v.classList.add('window-active');
+      var idx=document.createElement('span'); idx.className='array-index'; idx.textContent='['+i+']';
+      cell.appendChild(v); cell.appendChild(idx); arrViz.appendChild(cell);
     });
-
-    input.addEventListener('input', function () {
-      if (input.classList.contains('input-error-border')) {
-        clearError();
-      }
-    });
-
-    // Initialize speed display
-    updateSpeedDisplay();
-  })();
-
-  // ============================================
-  // Bài 005 — Binary Search
-  // ============================================
-
-  (function initBai005() {
-    var input = document.getElementById('005-input');
-    var targetInput = document.getElementById('005-target');
-    var searchBtn = document.getElementById('005-search-btn');
-    var randomBtn = document.getElementById('005-random-btn');
-    var stepBtn = document.getElementById('005-step-btn');
-    var resetBtn = document.getElementById('005-reset-btn');
-    var errorEl = document.getElementById('005-error');
-    var vizCard = document.getElementById('005-viz-card');
-    var arrayViz = document.getElementById('005-array-viz');
-    var leftValEl = document.getElementById('005-left-val');
-    var midValEl = document.getElementById('005-mid-val');
-    var rightValEl = document.getElementById('005-right-val');
-    var comparisonsEl = document.getElementById('005-comparisons');
-    var resultCard = document.getElementById('005-result-card');
-    var resultValue = document.getElementById('005-result-value');
-    var stepsCard = document.getElementById('005-steps-card');
-    var stepsList = document.getElementById('005-steps-list');
-    var comparisonCard = document.getElementById('005-comparison-card');
-    var arraySizeSelect = document.getElementById('005-array-size');
-    var compareBtn = document.getElementById('005-compare-btn');
-    var comparisonResult = document.getElementById('005-comparison-result');
-    var linearBar = document.getElementById('005-linear-bar');
-    var binaryBar = document.getElementById('005-binary-bar');
-    var linearCount = document.getElementById('005-linear-count');
-    var binaryCount = document.getElementById('005-binary-count');
-    var comparisonWinner = document.getElementById('005-comparison-winner');
-
-    var isAnimating = false;
-    var searchState = null;
-
-    function showError(message) {
-      errorEl.textContent = message;
-      input.classList.add('input-error-border');
-      input.setAttribute('aria-invalid', 'true');
-    }
-
-    function clearError() {
-      errorEl.textContent = '';
-      input.classList.remove('input-error-border');
-      input.removeAttribute('aria-invalid');
-    }
-
-    function hideAll() {
-      vizCard.hidden = true;
-      resultCard.hidden = true;
-      stepsCard.hidden = true;
-      arrayViz.innerHTML = '';
-      stepsList.innerHTML = '';
-      leftValEl.textContent = '0';
-      midValEl.textContent = '0';
-      rightValEl.textContent = '0';
-      comparisonsEl.textContent = '0';
-      stepBtn.disabled = true;
-      searchState = null;
-    }
-
-    function renderArray(arr, left, mid, right, eliminatedSet, foundIndex) {
-      arrayViz.innerHTML = '';
-      arr.forEach(function (num, i) {
-        var cell = document.createElement('div');
-        cell.className = 'array-cell';
-
-        var value = document.createElement('div');
-        value.className = 'array-value';
-        value.textContent = num;
-
-        if (i === foundIndex) {
-          value.classList.add('found');
-        } else if (eliminatedSet[i]) {
-          value.classList.add('eliminated');
-        } else if (i === mid) {
-          value.classList.add('mid-pointer');
-        } else if (i === left) {
-          value.classList.add('left-pointer');
-        } else if (i === right) {
-          value.classList.add('right-pointer');
-        }
-
-        var index = document.createElement('span');
-        index.className = 'array-index';
-        index.textContent = '[' + i + ']';
-
-        cell.appendChild(value);
-        cell.appendChild(index);
-        arrayViz.appendChild(cell);
-      });
-    }
-
-    function validateInput() {
-      var raw = input.value;
-      var parsed = parseNumbers(raw);
-
-      if (!parsed.valid) {
-        showError(parsed.error);
-        input.focus();
-        return null;
-      }
-
-      // Check if array is sorted ascending
-      for (var i = 1; i < parsed.numbers.length; i++) {
-        if (parsed.numbers[i] < parsed.numbers[i - 1]) {
-          showError('Mảng phải được sắp xếp tăng dần. Phần tử ' + parsed.numbers[i] + ' nhỏ hơn ' + parsed.numbers[i - 1] + '.');
-          input.focus();
-          return null;
-        }
-      }
-
-      var targetRaw = targetInput.value.trim();
-      if (targetRaw === '') {
-        showError('Vui lòng nhập số cần tìm.');
-        targetInput.focus();
-        return null;
-      }
-
-      var target = Number(targetRaw);
-      if (isNaN(target) || !isFinite(target)) {
-        showError('Số cần tìm không hợp lệ.');
-        targetInput.focus();
-        return null;
-      }
-
-      return { numbers: parsed.numbers, target: target };
-    }
-
-    async function handleSearch() {
-      if (isAnimating) return;
-
-      clearError();
-      hideAll();
-
-      var validated = validateInput();
-      if (!validated) return;
-
-      isAnimating = true;
-      searchBtn.disabled = true;
-      randomBtn.disabled = true;
-      stepBtn.disabled = true;
-
-      var arr = validated.numbers;
-      var target = validated.target;
-      var steps = [];
-      var eliminatedSet = {};
-      var comparisons = 0;
-      var result = -1;
-
-      var left = 0;
-      var right = arr.length - 1;
-
-      vizCard.hidden = false;
-      comparisonCard.hidden = false;
-
-      renderArray(arr, left, -1, right, eliminatedSet, -1);
-      await sleep(600);
-
-      while (left <= right) {
-        var mid = Math.floor((left + right) / 2);
-        comparisons++;
-        comparisonsEl.textContent = comparisons;
-        leftValEl.textContent = left;
-        midValEl.textContent = mid;
-        rightValEl.textContent = right;
-
-        renderArray(arr, left, mid, right, eliminatedSet, -1);
-        await sleep(500);
-
-        if (arr[mid] === target) {
-          result = mid;
-          steps.push('arr[' + mid + '] = ' + arr[mid] + ' = ' + target + ' → TÌM THẤY tại vị trí ' + mid);
-          renderArray(arr, left, mid, right, eliminatedSet, mid);
-          break;
-        } else if (arr[mid] < target) {
-          steps.push('arr[' + mid + '] = ' + arr[mid] + ' < ' + target + ' → Bỏ nửa bên trái, left = ' + (mid + 1));
-          // Eliminate left half
-          for (var i = left; i <= mid; i++) {
-            eliminatedSet[i] = true;
-          }
-          left = mid + 1;
-        } else {
-          steps.push('arr[' + mid + '] = ' + arr[mid] + ' > ' + target + ' → Bỏ nửa bên phải, right = ' + (mid - 1));
-          // Eliminate right half
-          for (var i = mid; i <= right; i++) {
-            eliminatedSet[i] = true;
-          }
-          right = mid - 1;
-        }
-
-        renderArray(arr, left, -1, right, eliminatedSet, -1);
-        await sleep(400);
-      }
-
-      if (result === -1) {
-        steps.push('Không tìm thấy ' + target);
-        resultValue.textContent = 'Không tìm thấy';
-      } else {
-        resultValue.textContent = 'Tìm thấy ' + target + ' tại vị trí ' + result + '\nSố lần kiểm tra: ' + comparisons;
-      }
-
-      resultCard.hidden = false;
-
-      stepsList.innerHTML = '';
-      steps.forEach(function (step, index) {
-        var li = document.createElement('li');
-        li.textContent = step;
-        if (index === steps.length - 1) {
-          li.classList.add('step-final');
-        }
-        stepsList.appendChild(li);
-      });
-      stepsCard.hidden = false;
-
-      isAnimating = false;
-      searchBtn.disabled = false;
-      randomBtn.disabled = false;
-    }
-
-    function initStepMode() {
-      clearError();
-      hideAll();
-
-      var validated = validateInput();
-      if (!validated) return;
-
-      searchState = {
-        arr: validated.numbers,
-        target: validated.target,
-        left: 0,
-        right: validated.numbers.length - 1,
-        eliminatedSet: {},
-        comparisons: 0,
-        done: false
-      };
-
-      vizCard.hidden = false;
-      comparisonCard.hidden = false;
-      renderArray(searchState.arr, searchState.left, -1, searchState.right, searchState.eliminatedSet, -1);
-      stepBtn.disabled = false;
-      searchBtn.disabled = true;
-      randomBtn.disabled = true;
-    }
-
-    function handleStep() {
-      if (!searchState || searchState.done) return;
-
-      var arr = searchState.arr;
-      var target = searchState.target;
-      var left = searchState.left;
-      var right = searchState.right;
-
-      if (left > right) {
-        // Not found
-        searchState.done = true;
-        stepBtn.disabled = true;
-
-        var step = 'left (' + left + ') > right (' + right + ') → Không tìm thấy ' + target;
-        var li = document.createElement('li');
-        li.textContent = step;
-        li.classList.add('step-final');
-        stepsList.appendChild(li);
-        stepsCard.hidden = false;
-
-        resultValue.textContent = 'Không tìm thấy';
-        resultCard.hidden = false;
-
-        searchBtn.disabled = false;
-        randomBtn.disabled = false;
-        return;
-      }
-
-      // Perform one step of binary search
-      var mid = Math.floor((left + right) / 2);
-      searchState.comparisons++;
-      searchState.mid = mid;
-
-      leftValEl.textContent = left;
-      midValEl.textContent = mid;
-      rightValEl.textContent = right;
-      comparisonsEl.textContent = searchState.comparisons;
-
-      renderArray(arr, left, mid, right, searchState.eliminatedSet, -1);
-
-      var step;
-      if (arr[mid] === target) {
-        searchState.done = true;
-        stepBtn.disabled = true;
-
-        step = 'arr[' + mid + '] = ' + arr[mid] + ' = ' + target + ' → TÌM THẤY tại vị trí ' + mid;
-        var li = document.createElement('li');
-        li.textContent = step;
-        li.classList.add('step-final');
-        stepsList.appendChild(li);
-        stepsCard.hidden = false;
-
-        renderArray(arr, left, mid, right, searchState.eliminatedSet, mid);
-
-        resultValue.textContent = 'Tìm thấy ' + target + ' tại vị trí ' + mid + '\nSố lần kiểm tra: ' + searchState.comparisons;
-        resultCard.hidden = false;
-
-        searchBtn.disabled = false;
-        randomBtn.disabled = false;
-      } else if (arr[mid] < target) {
-        step = 'arr[' + mid + '] = ' + arr[mid] + ' < ' + target + ' → Bỏ nửa bên trái, left = ' + (mid + 1);
-        // Eliminate left half
-        for (var i = left; i <= mid; i++) {
-          searchState.eliminatedSet[i] = true;
-        }
-        searchState.left = mid + 1;
-
-        var li = document.createElement('li');
-        li.textContent = step;
-        stepsList.appendChild(li);
-        stepsCard.hidden = false;
-
-        renderArray(arr, searchState.left, -1, right, searchState.eliminatedSet, -1);
-      } else {
-        step = 'arr[' + mid + '] = ' + arr[mid] + ' > ' + target + ' → Bỏ nửa bên phải, right = ' + (mid - 1);
-        // Eliminate right half
-        for (var i = mid; i <= right; i++) {
-          searchState.eliminatedSet[i] = true;
-        }
-        searchState.right = mid - 1;
-
-        var li = document.createElement('li');
-        li.textContent = step;
-        stepsList.appendChild(li);
-        stepsCard.hidden = false;
-
-        renderArray(arr, left, -1, searchState.right, searchState.eliminatedSet, -1);
-      }
-    }
-
-    function handleReset() {
-      hideAll();
-      stepBtn.disabled = false;
-      searchBtn.disabled = false;
-      randomBtn.disabled = false;
-      comparisonCard.hidden = true;
-      comparisonResult.hidden = true;
-    }
-
-    function handleRandom() {
-      // Generate sorted array
-      var length = Math.floor(Math.random() * 8) + 5; // 5-12 elements
-      var numbers = [];
-      var current = Math.floor(Math.random() * 20) - 10;
-      for (var i = 0; i < length; i++) {
-        current += Math.floor(Math.random() * 10) + 1;
-        numbers.push(current);
-      }
-      input.value = numbers.join(', ');
-      // Pick random target from array
-      var randomTarget = numbers[Math.floor(Math.random() * numbers.length)];
-      targetInput.value = randomTarget;
-      clearError();
-      hideAll();
-      stepBtn.disabled = false;
-    }
-
-    // Comparison: Linear Search vs Binary Search
-    function runComparison() {
-      var size = parseInt(arraySizeSelect.value, 10);
-
-      // Generate sorted array of given size
-      var arr = [];
-      var current = Math.floor(Math.random() * 20) - 10;
-      for (var i = 0; i < size; i++) {
-        current += Math.floor(Math.random() * 10) + 1;
-        arr.push(current);
-      }
-
-      // Pick a random target (worst case: not in array, or last element)
-      var target = arr[Math.floor(Math.random() * arr.length)];
-
-      // Linear Search
-      var linearComparisons = 0;
-      for (var i = 0; i < arr.length; i++) {
-        linearComparisons++;
-        if (arr[i] === target) {
-          break;
-        }
-      }
-
-      // Binary Search
-      var binaryComparisons = 0;
-      var left = 0;
-      var right = arr.length - 1;
-      while (left <= right) {
-        binaryComparisons++;
-        var mid = Math.floor((left + right) / 2);
-        if (arr[mid] === target) {
-          break;
-        } else if (arr[mid] < target) {
-          left = mid + 1;
-        } else {
-          right = mid - 1;
-        }
-      }
-
-      // Display results
-      comparisonResult.hidden = false;
-
-      // Calculate bar widths (logarithmic scale for better visualization)
-      var maxComparisons = Math.max(linearComparisons, binaryComparisons);
-      var linearBarWidth = Math.max(5, Math.round((linearComparisons / maxComparisons) * 100));
-      var binaryBarWidth = Math.max(5, Math.round((binaryComparisons / maxComparisons) * 100));
-
-      linearBar.style.width = linearBarWidth + '%';
-      binaryBar.style.width = binaryBarWidth + '%';
-      linearCount.textContent = linearComparisons + ' lần';
-      binaryCount.textContent = binaryComparisons + ' lần';
-
-      var winnerText = '';
-      if (binaryComparisons < linearComparisons) {
-        var ratio = (linearComparisons / binaryComparisons).toFixed(1);
-        winnerText = '🏆 Binary Search nhanh hơn ' + ratio + ' lần! (O(log n) vs O(n))';
-      } else if (binaryComparisons === linearComparisons) {
-        winnerText = '🤝 Hai thuật toán có số lần kiểm tra bằng nhau';
-      } else {
-        winnerText = 'Linear Search nhanh hơn (trường hợp đặc biệt)';
-      }
-      comparisonWinner.textContent = winnerText;
-    }
-
-    searchBtn.addEventListener('click', handleSearch);
-    randomBtn.addEventListener('click', handleRandom);
-    stepBtn.addEventListener('click', function () {
-      if (!searchState) {
-        initStepMode();
-      } else if (!searchState.done) {
-        handleStep();
-      }
-    });
-    resetBtn.addEventListener('click', handleReset);
-    compareBtn.addEventListener('click', runComparison);
-
-    input.addEventListener('keydown', function (e) {
-      if (e.key === 'Enter') {
-        handleSearch();
-      }
-    });
-
-    targetInput.addEventListener('keydown', function (e) {
-      if (e.key === 'Enter') {
-        handleSearch();
-      }
-    });
-
-    input.addEventListener('input', function () {
-      if (input.classList.contains('input-error-border')) {
-        clearError();
-      }
-    });
-  })();
-
-  // ============================================
-  // Bài 006 — Two Pointers
-  // ============================================
-
-  (function initBai006() {
-    var input = document.getElementById('006-input');
-    var targetInput = document.getElementById('006-target');
-    var searchBtn = document.getElementById('006-search-btn');
-    var randomBtn = document.getElementById('006-random-btn');
-    var stepBtn = document.getElementById('006-step-btn');
-    var autoBtn = document.getElementById('006-auto-btn');
-    var resetBtn = document.getElementById('006-reset-btn');
-    var errorEl = document.getElementById('006-error');
-    var vizCard = document.getElementById('006-viz-card');
-    var arrayViz = document.getElementById('006-array-viz');
-    var leftValEl = document.getElementById('006-left-val');
-    var rightValEl = document.getElementById('006-right-val');
-    var sumValEl = document.getElementById('006-sum-val');
-    var comparisonsEl = document.getElementById('006-comparisons');
-    var pairsFoundEl = document.getElementById('006-pairs-found');
-    var pairsListEl = document.getElementById('006-pairs-list');
-    var resultCard = document.getElementById('006-result-card');
-    var resultValue = document.getElementById('006-result-value');
-    var stepsCard = document.getElementById('006-steps-card');
-    var stepsList = document.getElementById('006-steps-list');
-    var comparisonCard = document.getElementById('006-comparison-card');
-    var arraySizeSelect = document.getElementById('006-array-size');
-    var compareBtn = document.getElementById('006-compare-btn');
-    var comparisonResult = document.getElementById('006-comparison-result');
-    var bruteBar = document.getElementById('006-brute-bar');
-    var twoPtrBar = document.getElementById('006-twoptr-bar');
-    var bruteCount = document.getElementById('006-brute-count');
-    var twoPtrCount = document.getElementById('006-twoptr-count');
-    var comparisonWinner = document.getElementById('006-comparison-winner');
-
-    var isAnimating = false;
-    var autoTimer = null;
-    var searchState = null;
-
-    function showError(message) {
-      errorEl.textContent = message;
-      input.classList.add('input-error-border');
-      input.setAttribute('aria-invalid', 'true');
-    }
-
-    function clearError() {
-      errorEl.textContent = '';
-      input.classList.remove('input-error-border');
-      input.removeAttribute('aria-invalid');
-    }
-
-    function hideAll() {
-      vizCard.hidden = true;
-      resultCard.hidden = true;
-      stepsCard.hidden = true;
-      arrayViz.innerHTML = '';
-      stepsList.innerHTML = '';
-      pairsListEl.innerHTML = '';
-      pairsFoundEl.hidden = true;
-      leftValEl.textContent = '0';
-      rightValEl.textContent = '0';
-      sumValEl.textContent = '0';
-      comparisonsEl.textContent = '0';
-      stepBtn.disabled = false;
-      searchState = null;
-      stopAuto();
-    }
-
-    function stopAuto() {
-      if (autoTimer) {
-        clearTimeout(autoTimer);
-        autoTimer = null;
-      }
-      isAnimating = false;
-      autoBtn.textContent = '▶ Chạy tự động';
-    }
-
-    function renderArray(arr, left, right, foundPairs, eliminatedSet) {
-      arrayViz.innerHTML = '';
-      arr.forEach(function (num, i) {
-        var cell = document.createElement('div');
-        cell.className = 'array-cell';
-
-        var value = document.createElement('div');
-        value.className = 'array-value';
-        value.textContent = num;
-
-        // Check if this index is part of a found pair
-        var isInFoundPair = false;
-        for (var p = 0; p < foundPairs.length; p++) {
-          if (foundPairs[p][0] === i || foundPairs[p][1] === i) {
-            isInFoundPair = true;
-            break;
-          }
-        }
-
-        if (isInFoundPair) {
-          value.classList.add('pair-found');
-        } else if (eliminatedSet && eliminatedSet[i]) {
-          value.classList.add('eliminated');
-        } else if (i === left) {
-          value.classList.add('left-pointer');
-        } else if (i === right) {
-          value.classList.add('right-pointer');
-        }
-
-        var index = document.createElement('span');
-        index.className = 'array-index';
-        index.textContent = '[' + i + ']';
-
-        cell.appendChild(value);
-        cell.appendChild(index);
-        arrayViz.appendChild(cell);
-      });
-    }
-
-    function validateInput() {
-      var raw = input.value;
-      var parsed = parseNumbers(raw);
-
-      if (!parsed.valid) {
-        showError(parsed.error);
-        input.focus();
-        return null;
-      }
-
-      for (var i = 1; i < parsed.numbers.length; i++) {
-        if (parsed.numbers[i] < parsed.numbers[i - 1]) {
-          showError('Mảng phải được sắp xếp tăng dần. Phần tử ' + parsed.numbers[i] + ' nhỏ hơn ' + parsed.numbers[i - 1] + '.');
-          input.focus();
-          return null;
-        }
-      }
-
-      var targetRaw = targetInput.value.trim();
-      if (targetRaw === '') {
-        showError('Vui lòng nhập Target.');
-        targetInput.focus();
-        return null;
-      }
-
-      var target = Number(targetRaw);
-      if (isNaN(target) || !isFinite(target)) {
-        showError('Target không hợp lệ.');
-        targetInput.focus();
-        return null;
-      }
-
-      return { numbers: parsed.numbers, target: target };
-    }
-
-    function updatePairsList(pairs, arr) {
-      pairsListEl.innerHTML = '';
-      pairs.forEach(function (pair) {
-        var li = document.createElement('li');
-        li.textContent = arr[pair[0]] + ' + ' + arr[pair[1]] + ' = ' + (arr[pair[0]] + arr[pair[1]]);
-        pairsListEl.appendChild(li);
-      });
-      if (pairs.length > 0) {
-        pairsFoundEl.hidden = false;
-      }
-    }
-
-    async function handleSearch() {
-      if (isAnimating) return;
-
-      clearError();
-      hideAll();
-
-      var validated = validateInput();
-      if (!validated) return;
-
-      isAnimating = true;
-      searchBtn.disabled = true;
-      randomBtn.disabled = true;
-      stepBtn.disabled = true;
-      autoBtn.disabled = true;
-
-      var arr = validated.numbers;
-      var target = validated.target;
-      var steps = [];
-      var foundPairs = [];
-      var eliminatedSet = {};
-      var comparisons = 0;
-
-      var left = 0;
-      var right = arr.length - 1;
-
-      vizCard.hidden = false;
-      comparisonCard.hidden = false;
-
-      renderArray(arr, left, right, foundPairs, eliminatedSet);
-      await sleep(600);
-
-      while (left < right) {
-        var sum = arr[left] + arr[right];
-        comparisons++;
-        comparisonsEl.textContent = comparisons;
-        leftValEl.textContent = left;
-        rightValEl.textContent = right;
-        sumValEl.textContent = sum;
-
-        renderArray(arr, left, right, foundPairs, eliminatedSet);
-        await sleep(500);
-
-        if (sum === target) {
-          foundPairs.push([left, right]);
-          steps.push(arr[left] + ' + ' + arr[right] + ' = ' + sum + ' = ' + target + ' → Tìm thấy! (' + left + ',' + right + ')');
-          updatePairsList(foundPairs, arr);
-          renderArray(arr, left, right, foundPairs, eliminatedSet);
-          left++;
-          right--;
-        } else if (sum < target) {
-          steps.push(arr[left] + ' + ' + arr[right] + ' = ' + sum + ' < ' + target + ' → left++');
-          left++;
-        } else {
-          steps.push(arr[left] + ' + ' + arr[right] + ' = ' + sum + ' > ' + target + ' → right--');
-          right--;
-        }
-
-        await sleep(400);
-      }
-
-      if (foundPairs.length === 0) {
-        steps.push('Không có cặp nào có tổng bằng ' + target);
-        resultValue.textContent = 'Không có cặp nào';
-      } else {
-        var pairStrs = foundPairs.map(function (p) { return '(' + arr[p[0]] + ',' + arr[p[1]] + ')'; });
-        resultValue.textContent = 'Tìm thấy ' + foundPairs.length + ' cặp: ' + pairStrs.join(', ') + '\nSố lần kiểm tra: ' + comparisons;
-      }
-
-      resultCard.hidden = false;
-
-      stepsList.innerHTML = '';
-      steps.forEach(function (step, index) {
-        var li = document.createElement('li');
-        li.textContent = step;
-        if (index === steps.length - 1) {
-          li.classList.add('step-final');
-        }
-        stepsList.appendChild(li);
-      });
-      stepsCard.hidden = false;
-
-      isAnimating = false;
-      searchBtn.disabled = false;
-      randomBtn.disabled = false;
-      stepBtn.disabled = false;
-      autoBtn.disabled = false;
-    }
-
-    function initStepMode() {
-      clearError();
-      hideAll();
-
-      var validated = validateInput();
-      if (!validated) return;
-
-      searchState = {
-        arr: validated.numbers,
-        target: validated.target,
-        left: 0,
-        right: validated.numbers.length - 1,
-        foundPairs: [],
-        eliminatedSet: {},
-        comparisons: 0,
-        done: false
-      };
-
-      vizCard.hidden = false;
-      comparisonCard.hidden = false;
-      renderArray(searchState.arr, searchState.left, searchState.right, searchState.foundPairs, searchState.eliminatedSet);
-      leftValEl.textContent = searchState.left;
-      rightValEl.textContent = searchState.right;
-      stepBtn.disabled = false;
-      searchBtn.disabled = true;
-      randomBtn.disabled = true;
-      autoBtn.disabled = true;
-    }
-
-    function handleStep() {
-      if (!searchState || searchState.done) return;
-
-      var arr = searchState.arr;
-      var target = searchState.target;
-      var left = searchState.left;
-      var right = searchState.right;
-
-      if (left >= right) {
-        searchState.done = true;
-        stepBtn.disabled = true;
-        autoBtn.disabled = true;
-
-        var step;
-        if (searchState.foundPairs.length === 0) {
-          step = 'left (' + left + ') >= right (' + right + ') → Không có cặp nào';
-          resultValue.textContent = 'Không có cặp nào';
-        } else {
-          var pairStrs = searchState.foundPairs.map(function (p) { return '(' + arr[p[0]] + ',' + arr[p[1]] + ')'; });
-          step = 'Hoàn thành! Tìm thấy ' + searchState.foundPairs.length + ' cặp: ' + pairStrs.join(', ');
-          resultValue.textContent = 'Tìm thấy ' + searchState.foundPairs.length + ' cặp: ' + pairStrs.join(', ') + '\nSố lần kiểm tra: ' + searchState.comparisons;
-        }
-
-        var li = document.createElement('li');
-        li.textContent = step;
-        li.classList.add('step-final');
-        stepsList.appendChild(li);
-        stepsCard.hidden = false;
-        resultCard.hidden = false;
-
-        searchBtn.disabled = false;
-        randomBtn.disabled = false;
-        return;
-      }
-
-      var sum = arr[left] + arr[right];
-      searchState.comparisons++;
-      comparisonsEl.textContent = searchState.comparisons;
-      leftValEl.textContent = left;
-      rightValEl.textContent = right;
-      sumValEl.textContent = sum;
-
-      renderArray(arr, left, right, searchState.foundPairs, searchState.eliminatedSet);
-
-      var step;
-      if (sum === target) {
-        searchState.foundPairs.push([left, right]);
-        step = arr[left] + ' + ' + arr[right] + ' = ' + sum + ' = ' + target + ' → Tìm thấy! (' + left + ',' + right + ')';
-        updatePairsList(searchState.foundPairs, arr);
-        searchState.left++;
-        searchState.right--;
-      } else if (sum < target) {
-        step = arr[left] + ' + ' + arr[right] + ' = ' + sum + ' < ' + target + ' → left++';
-        searchState.left++;
-      } else {
-        step = arr[left] + ' + ' + arr[right] + ' = ' + sum + ' > ' + target + ' → right--';
-        searchState.right--;
-      }
-
-      var li = document.createElement('li');
-      li.textContent = step;
-      stepsList.appendChild(li);
-      stepsCard.hidden = false;
-
-      renderArray(arr, searchState.left, searchState.right, searchState.foundPairs, searchState.eliminatedSet);
-    }
-
-    function handleAuto() {
-      if (isAnimating) {
-        stopAuto();
-        return;
-      }
-
-      if (!searchState) {
-        initStepMode();
-        if (!searchState) return;
-      }
-
-      isAnimating = true;
-      autoBtn.textContent = '⏸ Dừng';
-      searchBtn.disabled = true;
-      randomBtn.disabled = true;
-      stepBtn.disabled = true;
-
-      function tick() {
-        if (!searchState || searchState.done) {
-          stopAuto();
-          searchBtn.disabled = false;
-          randomBtn.disabled = false;
-          stepBtn.disabled = false;
-          return;
-        }
-        handleStep();
-        autoTimer = setTimeout(tick, 600);
-      }
-
-      tick();
-    }
-
-    function handleReset() {
-      hideAll();
-      stepBtn.disabled = false;
-      searchBtn.disabled = false;
-      randomBtn.disabled = false;
-      autoBtn.disabled = false;
-      comparisonCard.hidden = true;
-      comparisonResult.hidden = true;
-    }
-
-    function handleRandom() {
-      var length = Math.floor(Math.random() * 6) + 5;
-      var numbers = [];
-      var current = Math.floor(Math.random() * 20) - 10;
-      for (var i = 0; i < length; i++) {
-        current += Math.floor(Math.random() * 10) + 1;
-        numbers.push(current);
-      }
-      input.value = numbers.join(', ');
-      var target = numbers[Math.floor(Math.random() * numbers.length)] + numbers[Math.floor(Math.random() * numbers.length)];
-      targetInput.value = target;
-      clearError();
-      hideAll();
-      stepBtn.disabled = false;
-    }
-
-    function runComparison() {
-      var size = parseInt(arraySizeSelect.value, 10);
-
-      var arr = [];
-      var current = Math.floor(Math.random() * 20) - 10;
-      for (var i = 0; i < size; i++) {
-        current += Math.floor(Math.random() * 10) + 1;
-        arr.push(current);
-      }
-
-      var target = arr[Math.floor(Math.random() * arr.length)] + arr[Math.floor(Math.random() * arr.length)];
-
-      // Brute Force O(n²)
-      var bruteComparisons = 0;
-      for (var i = 0; i < arr.length; i++) {
-        for (var j = i + 1; j < arr.length; j++) {
-          bruteComparisons++;
-          if (arr[i] + arr[j] === target) {
-            // Don't break — count all
-          }
-        }
-      }
-
-      // Two Pointers O(n)
-      var twoPtrComparisons = 0;
-      var left = 0;
-      var right = arr.length - 1;
-      while (left < right) {
-        twoPtrComparisons++;
-        var sum = arr[left] + arr[right];
-        if (sum === target) {
-          left++;
-          right--;
-        } else if (sum < target) {
-          left++;
-        } else {
-          right--;
-        }
-      }
-
-      comparisonResult.hidden = false;
-
-      var maxComparisons = Math.max(bruteComparisons, twoPtrComparisons);
-      var bruteBarWidth = Math.max(5, Math.round((bruteComparisons / maxComparisons) * 100));
-      var twoPtrBarWidth = Math.max(5, Math.round((twoPtrComparisons / maxComparisons) * 100));
-
-      bruteBar.style.width = bruteBarWidth + '%';
-      twoPtrBar.style.width = twoPtrBarWidth + '%';
-      bruteCount.textContent = bruteComparisons + ' lần';
-      twoPtrCount.textContent = twoPtrComparisons + ' lần';
-
-      var winnerText = '';
-      if (twoPtrComparisons < bruteComparisons) {
-        var ratio = (bruteComparisons / twoPtrComparisons).toFixed(1);
-        winnerText = '🏆 Two Pointers nhanh hơn ' + ratio + ' lần! (O(n) vs O(n²))';
-      } else if (twoPtrComparisons === bruteComparisons) {
-        winnerText = '🤝 Hai thuật toán có số lần kiểm tra bằng nhau';
-      } else {
-        winnerText = 'Brute Force nhanh hơn (trường hợp đặc biệt)';
-      }
-      comparisonWinner.textContent = winnerText;
-    }
-
-    searchBtn.addEventListener('click', handleSearch);
-    randomBtn.addEventListener('click', handleRandom);
-    stepBtn.addEventListener('click', function () {
-      if (!searchState) {
-        initStepMode();
-      } else if (!searchState.done && !isAnimating) {
-        handleStep();
-      }
-    });
-    autoBtn.addEventListener('click', handleAuto);
-    resetBtn.addEventListener('click', handleReset);
-    compareBtn.addEventListener('click', runComparison);
-
-    input.addEventListener('keydown', function (e) {
-      if (e.key === 'Enter') {
-        handleSearch();
-      }
-    });
-
-    targetInput.addEventListener('keydown', function (e) {
-      if (e.key === 'Enter') {
-        handleSearch();
-      }
-    });
-
-    input.addEventListener('input', function () {
-      if (input.classList.contains('input-error-border')) {
-        clearError();
-      }
-    });
-  })();
-
-  // ============================================
-  // Bài 007 — Sliding Window
-  // ============================================
-
-  (function initBai007() {
-    var input = document.getElementById('007-input');
-    var kInput = document.getElementById('007-k');
-    var searchBtn = document.getElementById('007-search-btn');
-    var randomBtn = document.getElementById('007-random-btn');
-    var stepBtn = document.getElementById('007-step-btn');
-    var autoBtn = document.getElementById('007-auto-btn');
-    var resetBtn = document.getElementById('007-reset-btn');
-    var errorEl = document.getElementById('007-error');
-    var vizCard = document.getElementById('007-viz-card');
-    var arrayViz = document.getElementById('007-array-viz');
-    var leftValEl = document.getElementById('007-left-val');
-    var rightValEl = document.getElementById('007-right-val');
-    var sumValEl = document.getElementById('007-sum-val');
-    var bestValEl = document.getElementById('007-best-val');
-    var comparisonsEl = document.getElementById('007-comparisons');
-    var chartCard = document.getElementById('007-chart-card');
-    var chartEl = document.getElementById('007-chart');
-    var resultCard = document.getElementById('007-result-card');
-    var resultValue = document.getElementById('007-result-value');
-    var stepsCard = document.getElementById('007-steps-card');
-    var stepsList = document.getElementById('007-steps-list');
-
-    var isAnimating = false;
-    var autoTimer = null;
-    var searchState = null;
-
-    function getMode() {
-      var checked = document.querySelector('input[name=\"007-mode\"]:checked');
-      return checked ? checked.value : 'max';
-    }
-
-    function showError(message) {
-      errorEl.textContent = message;
-      input.classList.add('input-error-border');
-      input.setAttribute('aria-invalid', 'true');
-    }
-
-    function clearError() {
-      errorEl.textContent = '';
-      input.classList.remove('input-error-border');
-      input.removeAttribute('aria-invalid');
-    }
-
-    function hideAll() {
-      vizCard.hidden = true;
-      chartCard.hidden = true;
-      resultCard.hidden = true;
-      stepsCard.hidden = true;
-      arrayViz.innerHTML = '';
-      chartEl.innerHTML = '';
-      stepsList.innerHTML = '';
-      leftValEl.textContent = '0';
-      rightValEl.textContent = '0';
-      sumValEl.textContent = '0';
-      bestValEl.textContent = '0';
-      comparisonsEl.textContent = '0';
-      stepBtn.disabled = false;
-      searchState = null;
-      stopAuto();
-    }
-
-    function stopAuto() {
-      if (autoTimer) {
-        clearTimeout(autoTimer);
-        autoTimer = null;
-      }
-      isAnimating = false;
-      autoBtn.textContent = '▶ Chạy tự động';
-    }
-
-    function renderArray(arr, windowStart, windowEnd, bestStart, bestEnd) {
-      arrayViz.innerHTML = '';
-      arr.forEach(function (num, i) {
-        var cell = document.createElement('div');
-        cell.className = 'array-cell';
-
-        var value = document.createElement('div');
-        value.className = 'array-value';
-        value.textContent = num;
-
-        var inWindow = i >= windowStart && i <= windowEnd;
-        var inBest = bestStart !== -1 && i >= bestStart && i <= bestEnd;
-
-        if (inBest && inWindow && windowStart === bestStart) {
-          value.classList.add('window-best');
-        } else if (inWindow) {
-          value.classList.add('window-active');
-        } else if (inBest) {
-          value.classList.add('window-best');
-        } else {
-          value.classList.add('window-outside');
-        }
-
-        var index = document.createElement('span');
-        index.className = 'array-index';
-        index.textContent = '[' + i + ']';
-
-        cell.appendChild(value);
-        cell.appendChild(index);
-        arrayViz.appendChild(cell);
-      });
-    }
-
-    function renderChart(windowSums, bestIndex, currentIndex) {
-      chartEl.innerHTML = '';
-      if (windowSums.length === 0) return;
-
-      var maxVal = Math.max.apply(null, windowSums);
-      var minVal = Math.min.apply(null, windowSums);
-      var range = maxVal - minVal || 1;
-
-      windowSums.forEach(function (val, i) {
-        var wrapper = document.createElement('div');
-        wrapper.className = 'chart-bar-wrapper';
-
-        var bar = document.createElement('div');
-        bar.className = 'chart-bar';
-        // Normalize height: 20% to 100%
-        var normalizedHeight = 20 + ((val - minVal) / range) * 80;
-        bar.style.height = normalizedHeight + 'px';
-
-        if (i === bestIndex) {
-          bar.classList.add('chart-bar-best');
-        } else if (i === currentIndex) {
-          bar.classList.add('chart-bar-active');
-        }
-
-        var valueEl = document.createElement('span');
-        valueEl.className = 'chart-value';
-        valueEl.textContent = val;
-
-        var labelEl = document.createElement('span');
-        labelEl.className = 'chart-label';
-        labelEl.textContent = 'W' + (i + 1);
-
-        wrapper.appendChild(valueEl);
-        wrapper.appendChild(bar);
-        wrapper.appendChild(labelEl);
-        chartEl.appendChild(wrapper);
-      });
-    }
-
-    function validateInput() {
-      var raw = input.value;
-      var parsed = parseNumbers(raw);
-
-      if (!parsed.valid) {
-        showError(parsed.error);
-        input.focus();
-        return null;
-      }
-
-      var kRaw = kInput.value.trim();
-      if (kRaw === '') {
-        showError('Vui lòng nhập K.');
-        kInput.focus();
-        return null;
-      }
-
-      var k = Number(kRaw);
-      if (!Number.isInteger(k) || k <= 0) {
-        showError('K phải là số nguyên dương.');
-        kInput.focus();
-        return null;
-      }
-
-      if (k > parsed.numbers.length) {
-        showError('K không được lớn hơn số phần tử (' + parsed.numbers.length + ').');
-        kInput.focus();
-        return null;
-      }
-
-      return { numbers: parsed.numbers, k: k, mode: getMode() };
-    }
-
-    function isBetter(newVal, bestVal, mode) {
-      if (mode === 'max') return newVal > bestVal;
-      if (mode === 'min') return newVal < bestVal;
-      if (mode === 'avg') return newVal > bestVal; // avg: larger sum = larger avg (same K)
-      return newVal > bestVal;
-    }
-
-    function getModeLabel(mode) {
-      if (mode === 'max') return 'lớn nhất';
-      if (mode === 'min') return 'nhỏ nhất';
-      if (mode === 'avg') return 'trung bình lớn nhất';
-      return 'lớn nhất';
-    }
-
-    async function handleSearch() {
-      if (isAnimating) return;
-
-      clearError();
-      hideAll();
-
-      var validated = validateInput();
-      if (!validated) return;
-
-      isAnimating = true;
-      searchBtn.disabled = true;
-      randomBtn.disabled = true;
-      stepBtn.disabled = true;
-      autoBtn.disabled = true;
-
-      var arr = validated.numbers;
-      var k = validated.k;
-      var mode = validated.mode;
-      var steps = [];
-      var windowSums = [];
-      var comparisons = 0;
-
-      // Calculate first window sum
-      var windowSum = 0;
-      for (var i = 0; i < k; i++) {
-        windowSum += arr[i];
-      }
-      var bestSum = windowSum;
-      var bestStart = 0;
-      windowSums.push(windowSum);
-      comparisons++;
-
-      vizCard.hidden = false;
-      chartCard.hidden = false;
-
-      renderArray(arr, 0, k - 1, bestStart, bestStart + k - 1);
-      renderChart(windowSums, 0, 0);
-      leftValEl.textContent = 0;
-      rightValEl.textContent = k - 1;
-      sumValEl.textContent = windowSum;
-      bestValEl.textContent = bestSum;
-      comparisonsEl.textContent = comparisons;
-
-      steps.push('Cửa sổ [0..' + (k - 1) + ']: ' + arr.slice(0, k).join(' + ') + ' = ' + windowSum + ' → best = ' + bestSum);
-      await sleep(600);
-
-      // Slide window
-      for (var i = k; i < arr.length; i++) {
-        // Sliding Window: remove left, add right
-        var removed = arr[i - k];
-        var added = arr[i];
-        windowSum = windowSum - removed + added;
-        windowSums.push(windowSum);
-        comparisons++;
-
-        var windowStart = i - k + 1;
-        var windowEnd = i;
-
-        leftValEl.textContent = windowStart;
-        rightValEl.textContent = windowEnd;
-        sumValEl.textContent = windowSum;
-        comparisonsEl.textContent = comparisons;
-
-        renderArray(arr, windowStart, windowEnd, bestStart, bestStart + k - 1);
-        renderChart(windowSums, windowSums.indexOf(bestSum), windowSums.length - 1);
-        await sleep(500);
-
-        if (isBetter(windowSum, bestSum, mode)) {
-          bestSum = windowSum;
-          bestStart = windowStart;
-          bestValEl.textContent = bestSum;
-          steps.push('Cửa sổ [' + windowStart + '..' + windowEnd + ']: ' + windowSum + ' (' + removed + ' ra, ' + added + ' vào) → best = ' + bestSum + ' ★');
-        } else {
-          steps.push('Cửa sổ [' + windowStart + '..' + windowEnd + ']: ' + windowSum + ' (' + removed + ' ra, ' + added + ' vào) → best vẫn ' + bestSum);
-        }
-
-        renderArray(arr, windowStart, windowEnd, bestStart, bestStart + k - 1);
-        renderChart(windowSums, windowSums.indexOf(bestSum), windowSums.length - 1);
-        await sleep(300);
-      }
-
-      // Final highlight best window
-      renderArray(arr, bestStart, bestStart + k - 1, bestStart, bestStart + k - 1);
-      renderChart(windowSums, windowSums.indexOf(bestSum), -1);
-
-      var modeLabel = getModeLabel(mode);
-      if (mode === 'avg') {
-        var avgVal = (bestSum / k).toFixed(2);
-        resultValue.textContent = 'Tổng ' + modeLabel + ': ' + bestSum + ' (TB: ' + avgVal + ') tại cửa sổ [' + bestStart + '..' + (bestStart + k - 1) + ']\nSố lần tính: ' + comparisons;
-        steps.push('Kết quả: Tổng ' + modeLabel + ' = ' + bestSum + ' (TB: ' + avgVal + ')');
-      } else {
-        resultValue.textContent = 'Tổng ' + modeLabel + ': ' + bestSum + ' tại cửa sổ [' + bestStart + '..' + (bestStart + k - 1) + ']\nSố lần tính: ' + comparisons;
-        steps.push('Kết quả: Tổng ' + modeLabel + ' = ' + bestSum);
-      }
-
-      resultCard.hidden = false;
-
-      stepsList.innerHTML = '';
-      steps.forEach(function (step, index) {
-        var li = document.createElement('li');
-        li.textContent = step;
-        if (index === steps.length - 1) {
-          li.classList.add('step-final');
-        }
-        stepsList.appendChild(li);
-      });
-      stepsCard.hidden = false;
-
-      isAnimating = false;
-      searchBtn.disabled = false;
-      randomBtn.disabled = false;
-      stepBtn.disabled = false;
-      autoBtn.disabled = false;
-    }
-
-    function initStepMode() {
-      clearError();
-      hideAll();
-
-      var validated = validateInput();
-      if (!validated) return;
-
-      var arr = validated.numbers;
-      var k = validated.k;
-
-      // Calculate first window
-      var windowSum = 0;
-      for (var i = 0; i < k; i++) {
-        windowSum += arr[i];
-      }
-
-      searchState = {
-        arr: arr,
-        k: k,
-        mode: validated.mode,
-        windowSums: [windowSum],
-        windowSum: windowSum,
-        bestSum: windowSum,
-        bestStart: 0,
-        currentStart: 0,
-        nextIndex: k,
-        comparisons: 1,
-        done: false
-      };
-
-      vizCard.hidden = false;
-      chartCard.hidden = false;
-      renderArray(arr, 0, k - 1, 0, k - 1);
-      renderChart(searchState.windowSums, 0, 0);
-      leftValEl.textContent = 0;
-      rightValEl.textContent = k - 1;
-      sumValEl.textContent = windowSum;
-      bestValEl.textContent = windowSum;
-      comparisonsEl.textContent = 1;
-
-      var li = document.createElement('li');
-      li.textContent = 'Cửa sổ [0..' + (k - 1) + ']: ' + arr.slice(0, k).join(' + ') + ' = ' + windowSum + ' → best = ' + windowSum;
-      stepsList.appendChild(li);
-      stepsCard.hidden = false;
-
-      stepBtn.disabled = false;
-      searchBtn.disabled = true;
-      randomBtn.disabled = true;
-      autoBtn.disabled = true;
-    }
-
-    function handleStep() {
-      if (!searchState || searchState.done) return;
-
-      var arr = searchState.arr;
-      var k = searchState.k;
-      var mode = searchState.mode;
-
-      if (searchState.nextIndex >= arr.length) {
-        searchState.done = true;
-        stepBtn.disabled = true;
-        autoBtn.disabled = true;
-
-        var modeLabel = getModeLabel(mode);
-        var li = document.createElement('li');
-        if (mode === 'avg') {
-          var avgVal = (searchState.bestSum / k).toFixed(2);
-          li.textContent = 'Kết quả: Tổng ' + modeLabel + ' = ' + searchState.bestSum + ' (TB: ' + avgVal + ') tại [' + searchState.bestStart + '..' + (searchState.bestStart + k - 1) + ']';
-          resultValue.textContent = 'Tổng ' + modeLabel + ': ' + searchState.bestSum + ' (TB: ' + avgVal + ') tại cửa sổ [' + searchState.bestStart + '..' + (searchState.bestStart + k - 1) + ']\nSố lần tính: ' + searchState.comparisons;
-        } else {
-          li.textContent = 'Kết quả: Tổng ' + modeLabel + ' = ' + searchState.bestSum + ' tại [' + searchState.bestStart + '..' + (searchState.bestStart + k - 1) + ']';
-          resultValue.textContent = 'Tổng ' + modeLabel + ': ' + searchState.bestSum + ' tại cửa sổ [' + searchState.bestStart + '..' + (searchState.bestStart + k - 1) + ']\nSố lần tính: ' + searchState.comparisons;
-        }
-        li.classList.add('step-final');
-        stepsList.appendChild(li);
-        resultCard.hidden = false;
-
-        renderArray(arr, searchState.bestStart, searchState.bestStart + k - 1, searchState.bestStart, searchState.bestStart + k - 1);
-        renderChart(searchState.windowSums, searchState.windowSums.indexOf(searchState.bestSum), -1);
-
-        searchBtn.disabled = false;
-        randomBtn.disabled = false;
-        return;
-      }
-
-      var i = searchState.nextIndex;
-      var removed = arr[i - k];
-      var added = arr[i];
-      searchState.windowSum = searchState.windowSum - removed + added;
-      searchState.windowSums.push(searchState.windowSum);
-      searchState.comparisons++;
-
-      var windowStart = i - k + 1;
-      var windowEnd = i;
-      searchState.currentStart = windowStart;
-
-      leftValEl.textContent = windowStart;
-      rightValEl.textContent = windowEnd;
-      sumValEl.textContent = searchState.windowSum;
-      comparisonsEl.textContent = searchState.comparisons;
-
-      var step;
-      if (isBetter(searchState.windowSum, searchState.bestSum, mode)) {
-        searchState.bestSum = searchState.windowSum;
-        searchState.bestStart = windowStart;
-        bestValEl.textContent = searchState.bestSum;
-        step = 'Cửa sổ [' + windowStart + '..' + windowEnd + ']: ' + searchState.windowSum + ' (' + removed + ' ra, ' + added + ' vào) → best = ' + searchState.bestSum + ' ★';
-      } else {
-        step = 'Cửa sổ [' + windowStart + '..' + windowEnd + ']: ' + searchState.windowSum + ' (' + removed + ' ra, ' + added + ' vào) → best vẫn ' + searchState.bestSum;
-      }
-
-      var li = document.createElement('li');
-      li.textContent = step;
-      stepsList.appendChild(li);
-
-      renderArray(arr, windowStart, windowEnd, searchState.bestStart, searchState.bestStart + k - 1);
-      renderChart(searchState.windowSums, searchState.windowSums.indexOf(searchState.bestSum), searchState.windowSums.length - 1);
-
-      searchState.nextIndex++;
-    }
-
-    function handleAuto() {
-      if (isAnimating) {
-        stopAuto();
-        return;
-      }
-
-      if (!searchState) {
-        initStepMode();
-        if (!searchState) return;
-      }
-
-      isAnimating = true;
-      autoBtn.textContent = '⏸ Dừng';
-      searchBtn.disabled = true;
-      randomBtn.disabled = true;
-      stepBtn.disabled = true;
-
-      function tick() {
-        if (!searchState || searchState.done) {
-          stopAuto();
-          searchBtn.disabled = false;
-          randomBtn.disabled = false;
-          stepBtn.disabled = false;
-          return;
-        }
-        handleStep();
-        autoTimer = setTimeout(tick, 600);
-      }
-
-      tick();
-    }
-
-    function handleReset() {
-      hideAll();
-      stepBtn.disabled = false;
-      searchBtn.disabled = false;
-      randomBtn.disabled = false;
-      autoBtn.disabled = false;
-    }
-
-    function handleRandom() {
-      var length = Math.floor(Math.random() * 5) + 5;
-      var numbers = [];
-      for (var i = 0; i < length; i++) {
-        numbers.push(Math.floor(Math.random() * 40) - 10);
-      }
-      input.value = numbers.join(', ');
-      var k = Math.floor(Math.random() * (numbers.length - 1)) + 1;
-      kInput.value = k;
-      clearError();
-      hideAll();
-      stepBtn.disabled = false;
-    }
-
-    searchBtn.addEventListener('click', handleSearch);
-    randomBtn.addEventListener('click', handleRandom);
-    stepBtn.addEventListener('click', function () {
-      if (!searchState) {
-        initStepMode();
-      } else if (!searchState.done && !isAnimating) {
-        handleStep();
-      }
-    });
-    autoBtn.addEventListener('click', handleAuto);
-    resetBtn.addEventListener('click', handleReset);
-
-    input.addEventListener('keydown', function (e) {
-      if (e.key === 'Enter') {
-        handleSearch();
-      }
-    });
-
-    kInput.addEventListener('keydown', function (e) {
-      if (e.key === 'Enter') {
-        handleSearch();
-      }
-    });
-
-    input.addEventListener('input', function () {
-      if (input.classList.contains('input-error-border')) {
-        clearError();
-      }
-    });
-  })();
-
-  // ============================================
-  // Bài 008 — Stack (Kiểm tra dấu ngoặc)
-  // ============================================
-
-  (function initBai008() {
-    var input = document.getElementById('008-input');
-    var checkBtn = document.getElementById('008-check-btn');
-    var randomBtn = document.getElementById('008-random-btn');
-    var stepBtn = document.getElementById('008-step-btn');
-    var autoBtn = document.getElementById('008-auto-btn');
-    var resetBtn = document.getElementById('008-reset-btn');
-    var errorEl = document.getElementById('008-error');
-    var vizCard = document.getElementById('008-viz-card');
-    var stringViz = document.getElementById('008-string-viz');
-    var stackViz = document.getElementById('008-stack-viz');
-    var posEl = document.getElementById('008-pos');
-    var charEl = document.getElementById('008-char');
-    var stackSizeEl = document.getElementById('008-stack-size');
-    var resultCard = document.getElementById('008-result-card');
-    var resultValue = document.getElementById('008-result-value');
-    var resultDetail = document.getElementById('008-result-detail');
-    var stepsCard = document.getElementById('008-steps-card');
-    var stepsList = document.getElementById('008-steps-list');
-
-    var isAnimating = false;
-    var autoTimer = null;
-    var searchState = null;
-
-    var BRACKET_MAP = {
-      '(': ')',
-      '[': ']',
-      '{': '}'
-    };
-    var OPEN_SET = { '(': true, '[': true, '{': true };
-    var CLOSE_SET = { ')': true, ']': true, '}': true };
-    var CLOSE_TO_OPEN = { ')': '(', ']': '[', '}': '{' };
-
-    function showError(message) {
-      errorEl.textContent = message;
-      input.classList.add('input-error-border');
-      input.setAttribute('aria-invalid', 'true');
-    }
-
-    function clearError() {
-      errorEl.textContent = '';
-      input.classList.remove('input-error-border');
-      input.removeAttribute('aria-invalid');
-    }
-
-    function hideAll() {
-      vizCard.hidden = true;
-      resultCard.hidden = true;
-      stepsCard.hidden = true;
-      stringViz.innerHTML = '';
-      stackViz.innerHTML = '<p class="stack-empty">Stack rỗng</p>';
-      stepsList.innerHTML = '';
-      posEl.textContent = '0';
-      charEl.textContent = '-';
-      stackSizeEl.textContent = '0';
-      stepBtn.disabled = false;
-      searchState = null;
-      stopAuto();
-    }
-
-    function stopAuto() {
-      if (autoTimer) {
-        clearTimeout(autoTimer);
-        autoTimer = null;
-      }
-      isAnimating = false;
-      autoBtn.textContent = '▶ Chạy tự động';
-    }
-
-    function renderString(str, currentIndex, validIndices, errorIndex) {
-      stringViz.innerHTML = '';
-      for (var i = 0; i < str.length; i++) {
-        var ch = str[i];
-        var span = document.createElement('span');
-        span.className = 'string-char';
-        span.textContent = ch;
-
-        if (i === errorIndex) {
-          span.classList.add('char-error');
-        } else if (i === currentIndex) {
-          span.classList.add('char-current');
-        } else if (validIndices[i]) {
-          span.classList.add('char-valid');
-        } else if (!OPEN_SET[ch] && !CLOSE_SET[ch]) {
-          span.classList.add('char-ignored');
-        }
-
-        stringViz.appendChild(span);
-      }
-    }
-
-    function renderStack(stack) {
-      stackViz.innerHTML = '';
-      if (stack.length === 0) {
-        stackViz.innerHTML = '<p class="stack-empty">Stack rỗng</p>';
-        return;
-      }
-      // Render from top to bottom (reverse)
-      for (var i = stack.length - 1; i >= 0; i--) {
-        var item = document.createElement('div');
-        item.className = 'stack-item';
-        if (i === stack.length - 1) {
-          item.classList.add('stack-item-top');
-        }
-        item.textContent = stack[i];
+    // stack
+    stackViz.innerHTML='';
+    if(stack.length===0){ stackViz.innerHTML='<p class="stack-empty">Stack rỗng</p>'; }
+    else {
+      for(var s=stack.length-1;s>=0;s--){
+        var item=document.createElement('div'); item.className='stack-item';
+        if(s===stack.length-1) item.classList.add('stack-item-top');
+        item.textContent=arr[stack[s]]+' ['+stack[s]+']';
         stackViz.appendChild(item);
       }
     }
-
-    function validateInput() {
-      var raw = input.value;
-      if (!raw || !raw.trim()) {
-        showError('Vui lòng nhập chuỗi.');
-        input.focus();
-        return null;
-      }
-      // Check if contains at least one bracket
-      var hasBracket = false;
-      for (var i = 0; i < raw.length; i++) {
-        if (OPEN_SET[raw[i]] || CLOSE_SET[raw[i]]) {
-          hasBracket = true;
-          break;
-        }
-      }
-      if (!hasBracket) {
-        showError('Chuỗi phải chứa ít nhất một dấu ngoặc (), [], {}.');
-        input.focus();
-        return null;
-      }
-      return raw;
-    }
-
-    async function handleCheck() {
-      if (isAnimating) return;
-
-      clearError();
-      hideAll();
-
-      var str = validateInput();
-      if (str === null) return;
-
-      isAnimating = true;
-      checkBtn.disabled = true;
-      randomBtn.disabled = true;
-      stepBtn.disabled = true;
-      autoBtn.disabled = true;
-
-      var stack = [];
-      var steps = [];
-      var validIndices = {};
-      var errorIndex = -1;
-      var isValid = true;
-      var errorPos = -1;
-
-      vizCard.hidden = false;
-      renderString(str, 0, validIndices, -1);
-      renderStack(stack);
-      await sleep(600);
-
-      for (var i = 0; i < str.length; i++) {
-        var ch = str[i];
-        posEl.textContent = i;
-        charEl.textContent = ch;
-        stackSizeEl.textContent = stack.length;
-
-        renderString(str, i, validIndices, -1);
-        await sleep(400);
-
-        if (OPEN_SET[ch]) {
-          stack.push(ch);
-          validIndices[i] = true;
-          steps.push('[' + i + '] \'' + ch + '\' → push vào Stack');
-          renderStack(stack);
-          stackSizeEl.textContent = stack.length;
-        } else if (CLOSE_SET[ch]) {
-          if (stack.length === 0) {
-            isValid = false;
-            errorIndex = i;
-            errorPos = i;
-            steps.push('[' + i + '] \'' + ch + '\' → Stack rỗng → Không hợp lệ! Vị trí lỗi: ' + i);
-            renderString(str, i, validIndices, errorIndex);
-            break;
-          }
-
-          var open = stack.pop();
-          var expected = BRACKET_MAP[open];
-
-          if (ch !== expected) {
-            isValid = false;
-            errorIndex = i;
-            errorPos = i;
-            steps.push('[' + i + '] \'' + ch + '\' → pop \'' + open + '\' → \'' + open + '\' không khớp \'' + ch + '\' → Không hợp lệ! Vị trí lỗi: ' + i);
-            renderString(str, i, validIndices, errorIndex);
-            renderStack(stack);
-            stackSizeEl.textContent = stack.length;
-            break;
-          }
-
-          validIndices[i] = true;
-          steps.push('[' + i + '] \'' + ch + '\' → pop \'' + open + '\' → Khớp ✓');
-          renderStack(stack);
-          stackSizeEl.textContent = stack.length;
-        } else {
-          steps.push('[' + i + '] \'' + ch + '\' → bỏ qua (không phải ngoặc)');
-        }
-
-        await sleep(300);
-      }
-
-      // After loop: check if stack still has elements
-      if (isValid && stack.length > 0) {
-        isValid = false;
-        errorPos = str.length;
-        steps.push('Duyệt xong nhưng Stack còn ' + stack.length + ' phần tử → Không hợp lệ!');
-      }
-
-      if (isValid) {
-        steps.push('Stack rỗng → Hợp lệ ✓');
-        resultValue.textContent = 'Hợp lệ ✓';
-        resultValue.style.color = 'var(--color-success)';
-        resultDetail.textContent = '';
-        resultCard.style.borderColor = 'var(--color-success)';
-        resultCard.style.background = 'var(--color-success-light)';
-      } else {
-        resultValue.textContent = 'Không hợp lệ ✗';
-        resultValue.style.color = 'var(--color-error)';
-        resultDetail.textContent = 'Vị trí lỗi: ' + errorPos;
-        resultCard.style.borderColor = 'var(--color-error)';
-        resultCard.style.background = 'var(--color-error-light)';
-        if (errorIndex >= 0) {
-          renderString(str, errorIndex, validIndices, errorIndex);
-        }
-      }
-
-      resultCard.hidden = false;
-
-      stepsList.innerHTML = '';
-      steps.forEach(function (step, index) {
-        var li = document.createElement('li');
-        li.textContent = step;
-        if (index === steps.length - 1) {
-          li.classList.add('step-final');
-        }
-        stepsList.appendChild(li);
-      });
-      stepsCard.hidden = false;
-
-      isAnimating = false;
-      checkBtn.disabled = false;
-      randomBtn.disabled = false;
-      stepBtn.disabled = false;
-      autoBtn.disabled = false;
-    }
-
-    function initStepMode() {
-      clearError();
-      hideAll();
-
-      var str = validateInput();
-      if (str === null) return;
-
-      searchState = {
-        str: str,
-        index: 0,
-        stack: [],
-        validIndices: {},
-        steps: [],
-        errorIndex: -1,
-        isValid: true,
-        errorPos: -1,
-        done: false
-      };
-
-      vizCard.hidden = false;
-      renderString(str, 0, {}, -1);
-      renderStack([]);
-      posEl.textContent = 0;
-      charEl.textContent = str[0] || '-';
-
-      stepBtn.disabled = false;
-      checkBtn.disabled = true;
-      randomBtn.disabled = true;
-      autoBtn.disabled = true;
-    }
-
-    function handleStep() {
-      if (!searchState || searchState.done) return;
-
-      var str = searchState.str;
-      var i = searchState.index;
-
-      // Check if done (past end)
-      if (i >= str.length) {
-        searchState.done = true;
-        stepBtn.disabled = true;
-        autoBtn.disabled = true;
-
-        if (searchState.isValid && searchState.stack.length > 0) {
-          searchState.isValid = false;
-          searchState.errorPos = str.length;
-          var step = 'Duyệt xong nhưng Stack còn ' + searchState.stack.length + ' phần tử → Không hợp lệ!';
-          var li = document.createElement('li');
-          li.textContent = step;
-          li.classList.add('step-final');
-          stepsList.appendChild(li);
-          stepsCard.hidden = false;
-
-          resultValue.textContent = 'Không hợp lệ ✗';
-          resultValue.style.color = 'var(--color-error)';
-          resultDetail.textContent = 'Vị trí lỗi: ' + searchState.errorPos;
-          resultCard.style.borderColor = 'var(--color-error)';
-          resultCard.style.background = 'var(--color-error-light)';
-        } else if (searchState.isValid) {
-          var step = 'Stack rỗng → Hợp lệ ✓';
-          var li = document.createElement('li');
-          li.textContent = step;
-          li.classList.add('step-final');
-          stepsList.appendChild(li);
-          stepsCard.hidden = false;
-
-          resultValue.textContent = 'Hợp lệ ✓';
-          resultValue.style.color = 'var(--color-success)';
-          resultDetail.textContent = '';
-          resultCard.style.borderColor = 'var(--color-success)';
-          resultCard.style.background = 'var(--color-success-light)';
-        } else {
-          resultValue.textContent = 'Không hợp lệ ✗';
-          resultValue.style.color = 'var(--color-error)';
-          resultDetail.textContent = 'Vị trí lỗi: ' + searchState.errorPos;
-          resultCard.style.borderColor = 'var(--color-error)';
-          resultCard.style.background = 'var(--color-error-light)';
-        }
-
-        resultCard.hidden = false;
-        checkBtn.disabled = false;
-        randomBtn.disabled = false;
-        return;
-      }
-
-      var ch = str[i];
-      posEl.textContent = i;
-      charEl.textContent = ch;
-
-      renderString(str, i, searchState.validIndices, -1);
-
-      var step;
-      if (OPEN_SET[ch]) {
-        searchState.stack.push(ch);
-        searchState.validIndices[i] = true;
-        step = '[' + i + '] \'' + ch + '\' → push vào Stack';
-        renderStack(searchState.stack);
-        stackSizeEl.textContent = searchState.stack.length;
-      } else if (CLOSE_SET[ch]) {
-        if (searchState.stack.length === 0) {
-          searchState.isValid = false;
-          searchState.errorIndex = i;
-          searchState.errorPos = i;
-          searchState.done = true;
-          stepBtn.disabled = true;
-          autoBtn.disabled = true;
-          step = '[' + i + '] \'' + ch + '\' → Stack rỗng → Không hợp lệ! Vị trí lỗi: ' + i;
-          renderString(str, i, searchState.validIndices, i);
-
-          var li = document.createElement('li');
-          li.textContent = step;
-          li.classList.add('step-final');
-          stepsList.appendChild(li);
-          stepsCard.hidden = false;
-
-          resultValue.textContent = 'Không hợp lệ ✗';
-          resultValue.style.color = 'var(--color-error)';
-          resultDetail.textContent = 'Vị trí lỗi: ' + i;
-          resultCard.style.borderColor = 'var(--color-error)';
-          resultCard.style.background = 'var(--color-error-light)';
-          resultCard.hidden = false;
-
-          checkBtn.disabled = false;
-          randomBtn.disabled = false;
-          return;
-        }
-
-        var open = searchState.stack.pop();
-        var expected = BRACKET_MAP[open];
-
-        if (ch !== expected) {
-          searchState.isValid = false;
-          searchState.errorIndex = i;
-          searchState.errorPos = i;
-          searchState.done = true;
-          stepBtn.disabled = true;
-          autoBtn.disabled = true;
-          step = '[' + i + '] \'' + ch + '\' → pop \'' + open + '\' → \'' + open + '\' không khớp \'' + ch + '\' → Không hợp lệ! Vị trí lỗi: ' + i;
-          renderString(str, i, searchState.validIndices, i);
-          renderStack(searchState.stack);
-          stackSizeEl.textContent = searchState.stack.length;
-
-          var li = document.createElement('li');
-          li.textContent = step;
-          li.classList.add('step-final');
-          stepsList.appendChild(li);
-          stepsCard.hidden = false;
-
-          resultValue.textContent = 'Không hợp lệ ✗';
-          resultValue.style.color = 'var(--color-error)';
-          resultDetail.textContent = 'Vị trí lỗi: ' + i;
-          resultCard.style.borderColor = 'var(--color-error)';
-          resultCard.style.background = 'var(--color-error-light)';
-          resultCard.hidden = false;
-
-          checkBtn.disabled = false;
-          randomBtn.disabled = false;
-          return;
-        }
-
-        searchState.validIndices[i] = true;
-        step = '[' + i + '] \'' + ch + '\' → pop \'' + open + '\' → Khớp ✓';
-        renderStack(searchState.stack);
-        stackSizeEl.textContent = searchState.stack.length;
-      } else {
-        step = '[' + i + '] \'' + ch + '\' → bỏ qua (không phải ngoặc)';
-      }
-
-      var li = document.createElement('li');
-      li.textContent = step;
-      stepsList.appendChild(li);
-      stepsCard.hidden = false;
-
-      searchState.index++;
-      if (searchState.index < str.length) {
-        renderString(str, searchState.index, searchState.validIndices, -1);
-      }
-    }
-
-    function handleAuto() {
-      if (isAnimating) {
-        stopAuto();
-        return;
-      }
-
-      if (!searchState) {
-        initStepMode();
-        if (!searchState) return;
-      }
-
-      isAnimating = true;
-      autoBtn.textContent = '⏸ Dừng';
-      checkBtn.disabled = true;
-      randomBtn.disabled = true;
-      stepBtn.disabled = true;
-
-      function tick() {
-        if (!searchState || searchState.done) {
-          stopAuto();
-          checkBtn.disabled = false;
-          randomBtn.disabled = false;
-          stepBtn.disabled = false;
-          return;
-        }
-        handleStep();
-        autoTimer = setTimeout(tick, 600);
-      }
-
-      tick();
-    }
-
-    function handleReset() {
-      hideAll();
-      stepBtn.disabled = false;
-      checkBtn.disabled = false;
-      randomBtn.disabled = false;
-      autoBtn.disabled = false;
-    }
-
-    function handleRandom() {
-      var samples = ['()', '([]{})', '{[()]}', '{[(])}', '((()))', '([)]', '(((', '())', '{}', '{[}]', '({[]})', '[({})]', '((())', '(()))', '{[()]}()'];
-      var random = samples[Math.floor(Math.random() * samples.length)];
-      input.value = random;
-      clearError();
-      hideAll();
-      stepBtn.disabled = false;
-    }
-
-    checkBtn.addEventListener('click', handleCheck);
-    randomBtn.addEventListener('click', handleRandom);
-    stepBtn.addEventListener('click', function () {
-      if (!searchState) {
-        initStepMode();
-      } else if (!searchState.done && !isAnimating) {
-        handleStep();
-      }
+    // ans
+    ansViz.innerHTML='';
+    ans.forEach(function(val,i){
+      var cell=document.createElement('div'); cell.className='array-cell';
+      var v=document.createElement('div'); v.className='array-value'; v.textContent=val===-1?'-1':val;
+      if(val!==-1) v.classList.add('found');
+      var idx=document.createElement('span'); idx.className='array-index'; idx.textContent='['+i+']';
+      cell.appendChild(v); cell.appendChild(idx); ansViz.appendChild(cell);
     });
-    autoBtn.addEventListener('click', handleAuto);
-    resetBtn.addEventListener('click', handleReset);
-
-    input.addEventListener('keydown', function (e) {
-      if (e.key === 'Enter') {
-        handleCheck();
-      }
-    });
-
-    input.addEventListener('input', function () {
-      if (input.classList.contains('input-error-border')) {
-        clearError();
-      }
-    });
-  })();
-
-  // ============================================
-  // Bài 009 — Maze Solver (BFS / DFS)
-  // ============================================
-
-  (function initBai009() {
-    var generateBtn = document.getElementById('009-generate-btn');
-    var sizeBtn = document.getElementById('009-size-btn');
-    var solveBtn = document.getElementById('009-solve-btn');
-    var stepBtn = document.getElementById('009-step-btn');
-    var autoBtn = document.getElementById('009-auto-btn');
-    var resetBtn = document.getElementById('009-reset-btn');
-    var mazeGrid = document.getElementById('009-maze-grid');
-    var visitedCountEl = document.getElementById('009-visited-count');
-    var pathLengthEl = document.getElementById('009-path-length');
-    var stepCountEl = document.getElementById('009-step-count');
-    var statusEl = document.getElementById('009-status');
-    var resultCard = document.getElementById('009-result-card');
-    var resultValue = document.getElementById('009-result-value');
-    var stepsCard = document.getElementById('009-steps-card');
-    var stepsList = document.getElementById('009-steps-list');
-
-    var ROWS = 7;
-    var COLS = 7;
-    var grid = [];
-    var startPos = { r: 0, c: 0 };
-    var endPos = { r: 6, c: 6 };
-    var isAnimating = false;
-    var autoTimer = null;
-    var bfsState = null;
-    var isDragging = false;
-    var dragMode = null;
-
-    // Cell types: 0 = empty, 1 = wall, 2 = start, 3 = end
-
-    function getAlgo() {
-      var checked = document.querySelector('input[name=\"009-algo\"]:checked');
-      return checked ? checked.value : 'bfs';
+    iEl.textContent=curIdx; stackSizeEl.textContent=stack.length;
+  }
+  function validate(){
+    var p=parseNumbers(input.value); if(!p.valid){showErr(p.error); return null;} return p.numbers;
+  }
+  function buildState(arr){
+    return {arr:arr,stack:[],ans:arr.map(function(){return -1;}),i:0,done:false};
+  }
+  function doStep(){
+    if(!state||state.done) return true;
+    var arr=state.arr;
+    if(state.i>=arr.length){ state.done=true; return true; }
+    highlightPseudo('008-pseudo','3');
+    var curVal=arr[state.i];
+    var popped=[];
+    while(state.stack.length>0 && arr[state.stack[state.stack.length-1]] < curVal){
+      highlightPseudo('008-pseudo','4');
+      var idx=state.stack.pop();
+      state.ans[idx]=curVal;
+      popped.push(idx);
     }
+    highlightPseudo('008-pseudo','5');
+    state.stack.push(state.i);
+    var msg='i='+state.i+' val='+curVal;
+    if(popped.length>0) msg+=' → pop ['+popped.join(',')+'] ans['+popped.join(',')+']='+curVal;
+    msg+=' → push '+state.i+' | stack ['+state.stack.join(',')+']';
+    var li=document.createElement('li'); li.textContent=msg; stepsList.appendChild(li); stepsCard.hidden=false;
+    render(arr,state.stack,state.ans,state.i);
+    state.i++;
+    if(state.i>=arr.length) state.done=true;
+    return state.done;
+  }
+  function finish(){
+    highlightPseudo('008-pseudo','6');
+    resVal.textContent='['+state.ans.join(', ')+']';
+    resCard.hidden=false;
+    render(state.arr,state.stack,state.ans,state.arr.length-1);
+  }
+  async function handleRun(){
+    clearErr(); hideAll();
+    var arr=validate(); if(!arr) return;
+    state=buildState(arr); vizCard.hidden=false;
+    render(arr,[],state.ans,-1);
+    await sleep(300);
+    while(!state.done){ doStep(); await sleep(700); }
+    finish();
+  }
+  function handleStep(){
+    if(!state){
+      clearErr(); hideAll();
+      var arr=validate(); if(!arr) return;
+      state=buildState(arr); vizCard.hidden=false;
+      render(arr,[],state.ans,-1);
+      return;
+    }
+    var done=doStep(); if(done) finish();
+  }
+  function handleAuto(){
+    if(isAuto){clearTimeout(autoTimer);isAuto=false;autoBtn.textContent='▶ Tự động';return;}
+    if(!state){handleStep(); if(!state) return;}
+    isAuto=true; autoBtn.textContent='⏸ Dừng';
+    function tick(){
+      if(!state||state.done){isAuto=false;autoBtn.textContent='▶ Tự động'; if(state&&state.done) finish(); return;}
+      var done=doStep(); if(done){isAuto=false;autoBtn.textContent='▶ Tự động'; finish(); return;}
+      autoTimer=setTimeout(tick,700);
+    }
+    autoTimer=setTimeout(tick,700);
+  }
+  function handleRandom(){
+    var len=Math.floor(Math.random()*4)+5;
+    var a=[]; for(var i=0;i<len;i++) a.push(Math.floor(Math.random()*10)+1);
+    input.value=a.join(', '); clearErr(); hideAll();
+  }
+  runBtn.addEventListener('click',handleRun);
+  stepBtn.addEventListener('click',handleStep);
+  autoBtn.addEventListener('click',handleAuto);
+  resetBtn.addEventListener('click',hideAll);
+  randomBtn.addEventListener('click',handleRandom);
+})();
 
-    function createEmptyGrid(rows, cols) {
-      var g = [];
-      for (var r = 0; r < rows; r++) {
-        g[r] = [];
-        for (var c = 0; c < cols; c++) {
-          g[r][c] = 0;
+// ============================================
+// 009 Dijkstra
+// ============================================
+(function(){
+  var genBtn=document.getElementById('009-generate-btn'), sizeBtn=document.getElementById('009-size-btn');
+  var solveBtn=document.getElementById('009-solve-btn'), stepBtn=document.getElementById('009-step-btn'), autoBtn=document.getElementById('009-auto-btn'), resetBtn=document.getElementById('009-reset-btn');
+  var gridEl=document.getElementById('009-maze-grid');
+  var visitedEl=document.getElementById('009-visited'), costEl=document.getElementById('009-cost'), pqEl=document.getElementById('009-pq'), statusEl=document.getElementById('009-status');
+  var resCard=document.getElementById('009-result-card'), resVal=document.getElementById('009-result-value');
+  var stepsCard=document.getElementById('009-steps-card'), stepsList=document.getElementById('009-steps-list');
+  var presets=[5,7,5];
+  var sizeIdx=0, gridSize=5, grid=[], state=null, autoTimer=null, isAuto=false;
+  document.getElementById('009-presets').addEventListener('click',function(e){
+    var b=e.target.closest('.preset-pill'); if(!b) return;
+    var idx=parseInt(b.getAttribute('data-preset'),10);
+    if(idx===0) gridSize=5;
+    else if(idx===1) gridSize=7;
+    else gridSize=5;
+    generateGrid(idx===2?0.35:0.2);
+    document.querySelectorAll('#009-presets .preset-pill').forEach(function(x){x.classList.remove('active');}); b.classList.add('active');
+  });
+  function generateGrid(wallProb){
+    wallProb = wallProb==null?0.2:wallProb;
+    grid=[];
+    for(var r=0;r<gridSize;r++){
+      var row=[];
+      for(var c=0;c<gridSize;c++){
+        if((r===0&&c===0)||(r===gridSize-1&&c===gridSize-1)) row.push({w:1,wall:false});
+        else if(Math.random()<wallProb) row.push({w:0,wall:true});
+        else row.push({w:Math.floor(Math.random()*9)+1,wall:false});
+      }
+      grid.push(row);
+    }
+    renderGrid();
+    resetState();
+  }
+  function renderGrid(highlight){
+    gridEl.innerHTML='';
+    gridEl.style.gridTemplateColumns='repeat('+gridSize+', 36px)';
+    for(var r=0;r<gridSize;r++){
+      for(var c=0;c<gridSize;c++){
+        var cell=document.createElement('div');
+        cell.className='maze-cell';
+        cell.setAttribute('role','gridcell');
+        cell.setAttribute('data-r',r); cell.setAttribute('data-c',c);
+        var g=grid[r][c];
+        if(r===0&&c===0) cell.classList.add('maze-start');
+        else if(r===gridSize-1&&c===gridSize-1) cell.classList.add('maze-end');
+        else if(g.wall) cell.classList.add('maze-wall');
+        if(highlight){
+          var key=r+','+c;
+          if(highlight.path && highlight.path[key]) cell.classList.add('maze-path');
+          else if(highlight.visited && highlight.visited[key]) cell.classList.add('maze-visited');
+          else if(highlight.current && highlight.current[0]===r && highlight.current[1]===c) cell.classList.add('maze-current');
+          else if(highlight.queued && highlight.queued[key]) cell.classList.add('maze-queued');
         }
-      }
-      return g;
-    }
-
-    function generateMaze() {
-      grid = createEmptyGrid(ROWS, COLS);
-      startPos = { r: 0, c: 0 };
-      endPos = { r: ROWS - 1, c: COLS - 1 };
-      grid[startPos.r][startPos.c] = 2;
-      grid[endPos.r][endPos.c] = 3;
-
-      // Random walls (30% density, avoid start/end)
-      for (var r = 0; r < ROWS; r++) {
-        for (var c = 0; c < COLS; c++) {
-          if ((r === startPos.r && c === startPos.c) || (r === endPos.r && c === endPos.c)) continue;
-          if (Math.random() < 0.3) {
-            grid[r][c] = 1;
-          }
-        }
-      }
-
-      // Ensure at least one path exists by clearing a random path
-      // Simple: clear a corridor from start
-      var cr = startPos.r, cc = startPos.c;
-      while (cr < ROWS - 1 || cc < COLS - 1) {
-        if (cr < ROWS - 1 && cc < COLS - 1) {
-          if (Math.random() < 0.5) cr++; else cc++;
-        } else if (cr < ROWS - 1) {
-          cr++;
-        } else {
-          cc++;
-        }
-        if (grid[cr][cc] === 1) grid[cr][cc] = 0;
-      }
-
-      renderGrid();
-      resetSearch();
-    }
-
-    function renderGrid(highlights) {
-      highlights = highlights || {};
-      // highlights: { 'r,c': 'visited'|'current'|'path'|'queued' }
-
-      mazeGrid.style.gridTemplateColumns = 'repeat(' + COLS + ', 36px)';
-      mazeGrid.style.gridTemplateRows = 'repeat(' + ROWS + ', 36px)';
-      mazeGrid.innerHTML = '';
-
-      for (var r = 0; r < ROWS; r++) {
-        for (var c = 0; c < COLS; c++) {
-          var cell = document.createElement('div');
-          cell.className = 'maze-cell';
-          cell.setAttribute('role', 'gridcell');
-          cell.setAttribute('data-r', r);
-          cell.setAttribute('data-c', c);
-          cell.setAttribute('aria-label', 'Ô ' + r + ',' + c);
-
-          var key = r + ',' + c;
-          var hl = highlights[key];
-
-          if (grid[r][c] === 2) {
-            cell.classList.add('maze-start');
-            cell.textContent = 'S';
-          } else if (grid[r][c] === 3) {
-            cell.classList.add('maze-end');
-            cell.textContent = 'E';
-          } else if (grid[r][c] === 1) {
-            cell.classList.add('maze-wall');
-          } else if (hl === 'path') {
-            cell.classList.add('maze-path');
-            cell.textContent = '●';
-          } else if (hl === 'current') {
-            cell.classList.add('maze-current');
-          } else if (hl === 'visited') {
-            cell.classList.add('maze-visited');
-          } else if (hl === 'queued') {
-            cell.classList.add('maze-queued');
-          }
-
-          mazeGrid.appendChild(cell);
-        }
+        if(g.wall) cell.textContent='█';
+        else if(r===0&&c===0) cell.textContent='S';
+        else if(r===gridSize-1&&c===gridSize-1) cell.textContent='E';
+        else cell.textContent=g.w;
+        gridEl.appendChild(cell);
       }
     }
-
-    function resetSearch() {
-      resultCard.hidden = true;
-      stepsCard.hidden = true;
-      stepsList.innerHTML = '';
-      visitedCountEl.textContent = '0';
-      pathLengthEl.textContent = '0';
-      stepCountEl.textContent = '0';
-      statusEl.textContent = 'Sẵn sàng';
-      bfsState = null;
-      stopAuto();
-      stepBtn.disabled = false;
-      solveBtn.disabled = false;
-      renderGrid();
-    }
-
-    function stopAuto() {
-      if (autoTimer) {
-        clearTimeout(autoTimer);
-        autoTimer = null;
+  }
+  function resetState(){
+    state=null; visitedEl.textContent='0'; costEl.textContent='0'; pqEl.textContent='0'; statusEl.textContent='Sẵn sàng';
+    resCard.hidden=true; stepsCard.hidden=true; stepsList.innerHTML='';
+    clearPseudo('009-pseudo');
+    if(autoTimer){clearTimeout(autoTimer);autoTimer=null;} isAuto=false; autoBtn.textContent='▶ Tự động';
+  }
+  gridEl.addEventListener('click',function(e){
+    var cell=e.target.closest('.maze-cell'); if(!cell) return;
+    var r=parseInt(cell.getAttribute('data-r'),10), c=parseInt(cell.getAttribute('data-c'),10);
+    if((r===0&&c===0)||(r===gridSize-1&&c===gridSize-1)) return;
+    grid[r][c].wall=!grid[r][c].wall;
+    if(!grid[r][c].wall) grid[r][c].w=Math.floor(Math.random()*9)+1;
+    renderGrid(state?{visited:state.visited,queued:state.queued,current:state.current,path:state.path}:null);
+  });
+  function buildState(){
+    var dist={}, parent={}, visited={}, queued={};
+    for(var r=0;r<gridSize;r++) for(var c=0;c<gridSize;c++) dist[r+','+c]=Infinity;
+    dist['0,0']=0;
+    return {dist:dist,parent:parent,visited:visited,queued:{'0,0':true},pq:[{r:0,c:0,d:0}],current:null,path:{},done:false,visitedCount:0,found:false};
+  }
+  function pqPop(){
+    if(!state.pq.length) return null;
+    state.pq.sort(function(a,b){return a.d-b.d;});
+    return state.pq.shift();
+  }
+  function doStep(){
+    if(!state||state.done) return true;
+    if(state.pq.length===0){ state.done=true; statusEl.textContent='Không tìm thấy đường'; return true; }
+    highlightPseudo('009-pseudo','3');
+    var cur=pqPop();
+    if(!cur){ state.done=true; return true; }
+    var key=cur.r+','+cur.c;
+    if(state.visited[key]) return false;
+    state.visited[key]=true; state.visitedCount++; state.current=[cur.r,cur.c];
+    delete state.queued[key];
+    visitedEl.textContent=state.visitedCount; pqEl.textContent=state.pq.length;
+    if(cur.r===gridSize-1&&cur.c===gridSize-1){
+      state.found=true; state.done=true;
+      // trace path
+      var pr=cur.r, pc=cur.c;
+      while(pr!=null){
+        state.path[pr+','+pc]=true;
+        var par=state.parent[pr+','+pc];
+        if(!par) break;
+        pr=par[0]; pc=par[1];
       }
-      isAnimating = false;
-      autoBtn.textContent = '▶ Tự động';
-    }
-
-    function isValidCell(r, c, visited) {
-      if (r < 0 || r >= ROWS || c < 0 || c >= COLS) return false;
-      if (grid[r][c] === 1) return false;
-      if (visited[r + ',' + c]) return false;
+      costEl.textContent=cur.d;
+      statusEl.textContent='Tìm thấy! Cost='+cur.d;
+      renderGrid({visited:state.visited,path:state.path,current:state.current});
+      var li=document.createElement('li'); li.textContent='Đến E ('+cur.r+','+cur.c+') cost='+cur.d+' ★'; li.classList.add('step-final'); stepsList.appendChild(li);
       return true;
     }
-
-    function reconstructPath(parent, end) {
-      var path = [];
-      var cur = end.r + ',' + end.c;
-      var startKey = startPos.r + ',' + startPos.c;
-      while (cur !== startKey) {
-        path.push(cur);
-        cur = parent[cur];
-        if (!cur) break;
-      }
-      path.reverse();
-      return path;
-    }
-
-    // BFS / DFS core
-    function createSearchState(algo) {
-      return {
-        algo: algo,
-        queue: [startPos.r + ',' + startPos.c],
-        visited: {},
-        parent: {},
-        highlights: {},
-        visitedCount: 0,
-        stepCount: 0,
-        found: false,
-        done: false,
-        path: []
-      };
-    }
-
-    function doOneStep(state) {
-      if (state.done) return;
-
-      var key = state.algo === 'bfs' ? state.queue.shift() : state.queue.pop();
-      if (key === undefined) {
-        state.done = true;
-        state.found = false;
-        return;
-      }
-
-      if (state.visited[key]) {
-        // Already visited, skip (can happen with DFS duplicates)
-        return doOneStep(state);
-      }
-
-      state.visited[key] = true;
-      state.visitedCount++;
-      state.stepCount++;
-      state.highlights[key] = 'visited';
-
-      var parts = key.split(',');
-      var r = parseInt(parts[0], 10);
-      var c = parseInt(parts[1], 10);
-
-      // Check if reached end
-      if (r === endPos.r && c === endPos.c) {
-        state.found = true;
-        state.done = true;
-        state.path = reconstructPath(state.parent, endPos);
-        // Mark path
-        for (var i = 0; i < state.path.length; i++) {
-          var pk = state.path[i];
-          if (pk !== startPos.r + ',' + startPos.c && pk !== endPos.r + ',' + endPos.c) {
-            state.highlights[pk] = 'path';
-          }
-        }
-        return;
-      }
-
-      // Explore 4 directions
-      var dirs = [[-1, 0], [1, 0], [0, -1], [0, 1]];
-      for (var d = 0; d < dirs.length; d++) {
-        var nr = r + dirs[d][0];
-        var nc = c + dirs[d][1];
-        var nkey = nr + ',' + nc;
-        if (isValidCell(nr, nc, state.visited) && state.queue.indexOf(nkey) === -1) {
-          state.parent[nkey] = key;
-          state.queue.push(nkey);
-          if (!state.highlights[nkey]) {
-            state.highlights[nkey] = 'queued';
-          }
-        }
-      }
-
-      // Mark current
-      state.highlights[key] = 'current';
-
-      // Check if queue empty and not found
-      if (state.queue.length === 0) {
-        state.done = true;
-        state.found = false;
+    highlightPseudo('009-pseudo','4');
+    var dirs=[[1,0],[-1,0],[0,1],[0,-1]];
+    var added=0;
+    for(var i=0;i<dirs.length;i++){
+      var nr=cur.r+dirs[i][0], nc=cur.c+dirs[i][1];
+      if(nr<0||nr>=gridSize||nc<0||nc>=gridSize) continue;
+      if(grid[nr][nc].wall) continue;
+      var nkey=nr+','+nc;
+      if(state.visited[nkey]) continue;
+      highlightPseudo('009-pseudo','5');
+      var nd=cur.d+grid[nr][nc].w;
+      if(nd < state.dist[nkey]){
+        state.dist[nkey]=nd; state.parent[nkey]=[cur.r,cur.c];
+        state.pq.push({r:nr,c:nc,d:nd}); state.queued[nkey]=true; added++;
       }
     }
+    highlightPseudo('009-pseudo','6');
+    pqEl.textContent=state.pq.length;
+    renderGrid({visited:state.visited,queued:state.queued,current:state.current,path:state.path});
+    var li=document.createElement('li'); li.textContent='Visit ('+cur.r+','+cur.c+') d='+cur.d+' → thêm '+added+' neighbor'; stepsList.appendChild(li); stepsCard.hidden=false;
+    return false;
+  }
+  function finish(){
+    if(state.found){
+      resVal.textContent='Tìm thấy đường! Cost = '+state.dist[(gridSize-1)+','+(gridSize-1)];
+    } else {
+      resVal.textContent='Không tìm thấy đường từ S đến E.';
+    }
+    resCard.hidden=false;
+  }
+  async function handleSolve(){
+    resetState();
+    state=buildState(); statusEl.textContent='Đang chạy...'; stepsCard.hidden=false;
+    highlightPseudo('009-pseudo','1');
+    renderGrid({visited:state.visited,queued:state.queued});
+    await sleep(300);
+    while(!state.done){ doStep(); await sleep(500); }
+    finish();
+  }
+  function handleStep(){
+    if(!state){
+      resetState();
+      state=buildState(); statusEl.textContent='Step mode'; stepsCard.hidden=false;
+      highlightPseudo('009-pseudo','1');
+      renderGrid({visited:state.visited,queued:state.queued});
+      return;
+    }
+    var done=doStep(); if(done) finish();
+  }
+  function handleAuto(){
+    if(isAuto){clearTimeout(autoTimer);isAuto=false;autoBtn.textContent='▶ Tự động';return;}
+    if(!state){handleStep(); if(!state) return;}
+    isAuto=true; autoBtn.textContent='⏸ Dừng';
+    function tick(){
+      if(!state||state.done){isAuto=false;autoBtn.textContent='▶ Tự động'; if(state&&state.done) finish(); return;}
+      var done=doStep(); if(done){isAuto=false;autoBtn.textContent='▶ Tự động'; finish(); return;}
+      autoTimer=setTimeout(tick,500);
+    }
+    autoTimer=setTimeout(tick,500);
+  }
+  genBtn.addEventListener('click',function(){ generateGrid(0.2); });
+  sizeBtn.addEventListener('click',function(){
+    gridSize=gridSize===5?7:gridSize===7?10:5;
+    generateGrid(0.2);
+  });
+  solveBtn.addEventListener('click',handleSolve);
+  stepBtn.addEventListener('click',handleStep);
+  autoBtn.addEventListener('click',handleAuto);
+  resetBtn.addEventListener('click',function(){ renderGrid(); resetState(); });
+  // init
+  generateGrid(0.2);
+})();
 
-    function updateStats(state) {
-      visitedCountEl.textContent = state.visitedCount;
-      stepCountEl.textContent = state.stepCount;
-      if (state.found) {
-        pathLengthEl.textContent = state.path.length + 1;
-        statusEl.textContent = 'Tìm thấy!';
-      } else if (state.done) {
-        pathLengthEl.textContent = '0';
-        statusEl.textContent = 'Không có đường';
-      } else {
-        statusEl.textContent = 'Đang tìm...';
+// ============================================
+// 010 Knapsack
+// ============================================
+(function(){
+  var wInput=document.getElementById('010-w'), vInput=document.getElementById('010-v'), capInput=document.getElementById('010-cap');
+  var runBtn=document.getElementById('010-run-btn'), randomBtn=document.getElementById('010-random-btn');
+  var stepBtn=document.getElementById('010-step-btn'), autoBtn=document.getElementById('010-auto-btn'), resetBtn=document.getElementById('010-reset-btn');
+  var err=document.getElementById('010-error'), vizCard=document.getElementById('010-viz-card'), tableEl=document.getElementById('010-dp-table');
+  var iEl=document.getElementById('010-i'), wEl=document.getElementById('010-w-val'), dpValEl=document.getElementById('010-dp-val');
+  var pickedEl=document.getElementById('010-picked'), pickedList=document.getElementById('010-picked-list');
+  var resCard=document.getElementById('010-result-card'), resVal=document.getElementById('010-result-value'), resDet=document.getElementById('010-result-detail');
+  var stepsCard=document.getElementById('010-steps-card'), stepsList=document.getElementById('010-steps-list');
+  var presets=[
+    {w:'2, 3, 4, 5',v:'3, 4, 5, 6',c:'5'},
+    {w:'1, 2, 3, 4, 5',v:'1, 4, 4, 5, 7',c:'7'},
+    {w:'3, 4, 5, 6',v:'10, 12, 15, 18',c:'10'}
+  ];
+  var state=null, autoTimer=null, isAuto=false;
+  document.getElementById('010-presets').addEventListener('click',function(e){
+    var b=e.target.closest('.preset-pill'); if(!b) return;
+    var idx=parseInt(b.getAttribute('data-preset'),10);
+    wInput.value=presets[idx].w; vInput.value=presets[idx].v; capInput.value=presets[idx].c; clearErr(); hideAll();
+    document.querySelectorAll('#010-presets .preset-pill').forEach(function(x){x.classList.remove('active');}); b.classList.add('active');
+  });
+  function showErr(m){ err.textContent=m; }
+  function clearErr(){ err.textContent=''; }
+  function hideAll(){
+    vizCard.hidden=true; resCard.hidden=true; stepsCard.hidden=true; pickedEl.hidden=true;
+    tableEl.innerHTML=''; stepsList.innerHTML=''; pickedList.innerHTML='';
+    iEl.textContent='0'; wEl.textContent='0'; dpValEl.textContent='0';
+    clearPseudo('010-pseudo'); if(autoTimer){clearTimeout(autoTimer);autoTimer=null;} isAuto=false; autoBtn.textContent='▶ Tự động'; state=null;
+  }
+  function renderTable(dp,n,W,curI,curW){
+    tableEl.innerHTML='';
+    tableEl.style.gridTemplateColumns='repeat('+(W+1)+', 48px)';
+    // header row
+    for(var w=0;w<=W;w++){
+      var h=document.createElement('div'); h.style.cssText='font-size:0.7rem;color:#64748b;text-align:center;font-weight:600;';
+      h.textContent=w===0?'w\\i':w; tableEl.appendChild(h);
+    }
+    for(var i=0;i<=n;i++){
+      for(var w=0;w<=W;w++){
+        var cell=document.createElement('div');
+        cell.style.cssText='width:48px;height:32px;display:flex;align-items:center;justify-content:center;border-radius:6px;font-family:JetBrains Mono,monospace;font-size:0.8rem;font-weight:700;border:2px solid #cbd5e1;background:#f1f5f9;color:#334155;';
+        cell.textContent=dp[i][w];
+        if(i===curI && w===curW){ cell.style.background='#fef3c7'; cell.style.borderColor='#f59e0b'; cell.style.color='#92400e'; cell.style.transform='scale(1.1)'; }
+        else if(i<curI || (i===curI && w<curW)) { cell.style.background='#d1fae5'; cell.style.borderColor='#10b981'; cell.style.color='#065f46'; }
+        tableEl.appendChild(cell);
       }
     }
-
-    function logStep(state, stepNum) {
-      var li = document.createElement('li');
-      var queueStr = state.queue.length > 0 ? 'Queue: [' + state.queue.slice(0, 5).join(', ') + (state.queue.length > 5 ? '...' : '') + ']' : 'Queue rỗng';
-      li.textContent = 'Bước ' + stepNum + ': ' + queueStr + ' | Đã duyệt: ' + state.visitedCount;
-      if (state.done) {
-        li.classList.add('step-final');
-      }
-      stepsList.appendChild(li);
-      stepsCard.hidden = false;
+  }
+  function validate(){
+    var wp=parseNumbers(wInput.value); if(!wp.valid){showErr('Weights: '+wp.error); return null;}
+    var vp=parseNumbers(vInput.value); if(!vp.valid){showErr('Values: '+vp.error); return null;}
+    if(wp.numbers.length!==vp.numbers.length){showErr('Weights và Values phải cùng độ dài.'); return null;}
+    var cRaw=capInput.value.trim(); if(cRaw===''){showErr('Vui lòng nhập Capacity W.'); return null;}
+    var W=Number(cRaw); if(!Number.isInteger(W)||W<1||W>30){showErr('W phải là số nguyên 1-30.'); return null;}
+    for(var i=0;i<wp.numbers.length;i++) if(!Number.isInteger(wp.numbers[i])||wp.numbers[i]<1){showErr('Weight phải là số nguyên ≥1.'); return null;}
+    return {w:wp.numbers,v:vp.numbers,W:W,n:wp.numbers.length};
+  }
+  function buildState(w,v,W,n){
+    var dp=[]; for(var i=0;i<=n;i++){ dp[i]=[]; for(var ww=0;ww<=W;ww++) dp[i][ww]=0; }
+    return {w:w,v:v,W:W,n:n,dp:dp,i:1,ww:0,done:false,picked:[]};
+  }
+  function doStep(){
+    if(!state||state.done) return true;
+    var w=state.w, v=state.v, W=state.W, n=state.n, dp=state.dp;
+    if(state.i>n){ state.done=true; return true; }
+    var i=state.i, ww=state.ww;
+    highlightPseudo('010-pseudo', w[i-1]>ww?'4':'5');
+    if(w[i-1] > ww){
+      dp[i][ww]=dp[i-1][ww];
+    } else {
+      dp[i][ww]=Math.max(dp[i-1][ww], dp[i-1][ww-w[i-1]]+v[i-1]);
     }
-
-    async function handleSolve() {
-      if (isAnimating) return;
-
-      resetSearch();
-      var algo = getAlgo();
-      bfsState = createSearchState(algo);
-      isAnimating = true;
-      solveBtn.disabled = true;
-      stepBtn.disabled = true;
-      autoBtn.disabled = true;
-      statusEl.textContent = 'Đang tìm...';
-
-      var stepNum = 0;
-      while (!bfsState.done) {
-        doOneStep(bfsState);
-        stepNum++;
-        updateStats(bfsState);
-        renderGrid(bfsState.highlights);
-        logStep(bfsState, stepNum);
-        await sleep(300);
-      }
-
-      // Final render with path
-      renderGrid(bfsState.highlights);
-      updateStats(bfsState);
-
-      if (bfsState.found) {
-        resultValue.textContent = 'Tìm thấy đường! Độ dài: ' + (bfsState.path.length + 1) + ' ô';
-        resultValue.style.color = 'var(--color-success)';
-        resultCard.style.borderColor = 'var(--color-success)';
-        resultCard.style.background = 'var(--color-success-light)';
-      } else {
-        resultValue.textContent = 'Không tìm thấy đường';
-        resultValue.style.color = 'var(--color-error)';
-        resultCard.style.borderColor = 'var(--color-error)';
-        resultCard.style.background = 'var(--color-error-light)';
-      }
-      resultCard.hidden = false;
-
-      isAnimating = false;
-      solveBtn.disabled = false;
-      stepBtn.disabled = false;
-      autoBtn.disabled = false;
-    }
-
-    function initStepMode() {
-      resetSearch();
-      var algo = getAlgo();
-      bfsState = createSearchState(algo);
-      statusEl.textContent = 'Chế độ từng bước (' + algo.toUpperCase() + ')';
-      renderGrid(bfsState.highlights);
-      stepBtn.disabled = false;
-      solveBtn.disabled = true;
-      autoBtn.disabled = true;
-    }
-
-    function handleStep() {
-      if (!bfsState || bfsState.done) return;
-
-      doOneStep(bfsState);
-      updateStats(bfsState);
-      renderGrid(bfsState.highlights);
-      logStep(bfsState, bfsState.stepCount);
-
-      if (bfsState.done) {
-        stepBtn.disabled = true;
-        autoBtn.disabled = true;
-
-        if (bfsState.found) {
-          resultValue.textContent = 'Tìm thấy đường! Độ dài: ' + (bfsState.path.length + 1) + ' ô';
-          resultValue.style.color = 'var(--color-success)';
-          resultCard.style.borderColor = 'var(--color-success)';
-          resultCard.style.background = 'var(--color-success-light)';
-        } else {
-          resultValue.textContent = 'Không tìm thấy đường';
-          resultValue.style.color = 'var(--color-error)';
-          resultCard.style.borderColor = 'var(--color-error)';
-          resultCard.style.background = 'var(--color-error-light)';
-        }
-        resultCard.hidden = false;
-        solveBtn.disabled = false;
+    iEl.textContent=i; wEl.textContent=ww; dpValEl.textContent=dp[i][ww];
+    renderTable(dp,n,W,i,ww);
+    var msg='dp['+i+']['+ww+'] w='+w[i-1]+' v='+v[i-1]+' → '+(w[i-1]>ww?'không lấy = dp['+(i-1)+']['+ww+']='+dp[i][ww]:'max('+dp[i-1][ww]+', '+(dp[i-1][ww-w[i-1]])+'+'+v[i-1]+')='+dp[i][ww]);
+    var li=document.createElement('li'); li.textContent=msg; stepsList.appendChild(li); stepsCard.hidden=false;
+    state.ww++;
+    if(state.ww>W){ state.ww=0; state.i++; }
+    if(state.i>n) state.done=true;
+    return state.done;
+  }
+  function finish(){
+    highlightPseudo('010-pseudo','6');
+    var dp=state.dp, n=state.n, W=state.W, w=state.w, v=state.v;
+    var best=dp[n][W];
+    // traceback
+    var picked=[], ww=W;
+    for(var i=n;i>=1;i--){
+      if(dp[i][ww]!==dp[i-1][ww]){
+        picked.push(i-1);
+        ww-=w[i-1];
       }
     }
-
-    function handleAuto() {
-      if (isAnimating) {
-        stopAuto();
-        return;
-      }
-
-      if (!bfsState) {
-        initStepMode();
-        if (!bfsState) return;
-      }
-
-      isAnimating = true;
-      autoBtn.textContent = '⏸ Dừng';
-      solveBtn.disabled = true;
-      stepBtn.disabled = true;
-
-      function tick() {
-        if (!bfsState || bfsState.done) {
-          stopAuto();
-          solveBtn.disabled = false;
-          stepBtn.disabled = false;
-          return;
-        }
-        handleStep();
-        autoTimer = setTimeout(tick, 400);
-      }
-
-      tick();
-    }
-
-    function handleReset() {
-      resetSearch();
-      solveBtn.disabled = false;
-      stepBtn.disabled = false;
-      autoBtn.disabled = false;
-    }
-
-    function cycleCell(r, c) {
-      if (grid[r][c] === 0) {
-        grid[r][c] = 1;
-      } else if (grid[r][c] === 1) {
-        // Wall -> Start (move start)
-        grid[startPos.r][startPos.c] = 0;
-        grid[r][c] = 2;
-        startPos = { r: r, c: c };
-      } else if (grid[r][c] === 2) {
-        // Start -> End (move end)
-        grid[r][c] = 0;
-        grid[endPos.r][endPos.c] = 0;
-        grid[r][c] = 3;
-        endPos = { r: r, c: c };
-        // Restore start
-        grid[startPos.r][startPos.c] = 2;
-        // Need to handle: start was at r,c, now we want end at r,c
-        // Actually: grid[r][c] was 2 (start), we set it to 3 (end), and old end to 0
-        // But we already set grid[r][c]=0 above, so fix:
-        grid[r][c] = 3;
-        endPos = { r: r, c: c };
-      } else if (grid[r][c] === 3) {
-        grid[r][c] = 0;
-      }
-      renderGrid(bfsState ? bfsState.highlights : {});
-    }
-
-    // Click handling
-    mazeGrid.addEventListener('click', function (e) {
-      if (isAnimating) return;
-      var cell = e.target.closest('.maze-cell');
-      if (!cell) return;
-      var r = parseInt(cell.getAttribute('data-r'), 10);
-      var c = parseInt(cell.getAttribute('data-c'), 10);
-
-      // Simple cycle: empty -> wall -> empty (keep S/E fixed unless explicitly moved)
-      if (grid[r][c] === 2 || grid[r][c] === 3) {
-        // Don't allow overwriting S/E via simple click — use drag or dedicated
-        return;
-      }
-      grid[r][c] = grid[r][c] === 0 ? 1 : 0;
-      renderGrid(bfsState ? bfsState.highlights : {});
+    picked.reverse();
+    state.picked=picked;
+    pickedList.innerHTML='';
+    picked.forEach(function(idx){
+      var li=document.createElement('li'); li.textContent='Vật '+idx+' (w='+w[idx]+', v='+v[idx]+')'; pickedList.appendChild(li);
     });
-
-    // Drag to draw walls
-    mazeGrid.addEventListener('mousedown', function (e) {
-      isDragging = true;
-      var cell = e.target.closest('.maze-cell');
-      if (cell) {
-        var r = parseInt(cell.getAttribute('data-r'), 10);
-        var c = parseInt(cell.getAttribute('data-c'), 10);
-        if (grid[r][c] !== 2 && grid[r][c] !== 3) {
-          dragMode = grid[r][c] === 0 ? 1 : 0;
-          grid[r][c] = dragMode;
-          renderGrid(bfsState ? bfsState.highlights : {});
-        }
-      }
-    });
-
-    mazeGrid.addEventListener('mouseover', function (e) {
-      if (!isDragging) return;
-      var cell = e.target.closest('.maze-cell');
-      if (!cell) return;
-      var r = parseInt(cell.getAttribute('data-r'), 10);
-      var c = parseInt(cell.getAttribute('data-c'), 10);
-      if (grid[r][c] !== 2 && grid[r][c] !== 3) {
-        grid[r][c] = dragMode;
-        renderGrid(bfsState ? bfsState.highlights : {});
-      }
-    });
-
-    document.addEventListener('mouseup', function () {
-      isDragging = false;
-      dragMode = null;
-    });
-
-    // Size toggle
-    sizeBtn.addEventListener('click', function () {
-      if (ROWS === 7) {
-        ROWS = 10; COLS = 10;
-      } else if (ROWS === 10) {
-        ROWS = 5; COLS = 5;
-      } else {
-        ROWS = 7; COLS = 7;
-      }
-      sizeBtn.textContent = '📐 ' + ROWS + 'x' + COLS;
-      generateMaze();
-    });
-
-    generateBtn.addEventListener('click', generateMaze);
-    solveBtn.addEventListener('click', handleSolve);
-    stepBtn.addEventListener('click', function () {
-      if (!bfsState) {
-        initStepMode();
-      } else if (!bfsState.done && !isAnimating) {
-        handleStep();
-      }
-    });
-    autoBtn.addEventListener('click', handleAuto);
-    resetBtn.addEventListener('click', handleReset);
-
-    // Init
-    generateMaze();
-  })();
-
-  // ============================================
-  // Bài 010 — DP Leo cầu thang
-  // ============================================
-
-  (function initBai010() {
-    var nInput = document.getElementById('010-n');
-    var costToggle = document.getElementById('010-cost-toggle');
-    var costWrapper = document.getElementById('010-cost-input-wrapper');
-    var costInput = document.getElementById('010-cost');
-    var calcBtn = document.getElementById('010-calc-btn');
-    var randomBtn = document.getElementById('010-random-btn');
-    var stepBtn = document.getElementById('010-step-btn');
-    var autoBtn = document.getElementById('010-auto-btn');
-    var resetBtn = document.getElementById('010-reset-btn');
-    var errorEl = document.getElementById('010-error');
-    var vizCard = document.getElementById('010-viz-card');
-    var staircaseViz = document.getElementById('010-staircase-viz');
-    var dpTable = document.getElementById('010-dp-table');
-    var currentStepEl = document.getElementById('010-current-step');
-    var dpValEl = document.getElementById('010-dp-val');
-    var opsEl = document.getElementById('010-ops');
-    var resultCard = document.getElementById('010-result-card');
-    var resultValue = document.getElementById('010-result-value');
-    var resultDetail = document.getElementById('010-result-detail');
-    var stepsCard = document.getElementById('010-steps-card');
-    var stepsList = document.getElementById('010-steps-list');
-
-    var isAnimating = false;
-    var autoTimer = null;
-    var dpState = null;
-
-    costToggle.addEventListener('change', function () {
-      costWrapper.hidden = !costToggle.checked;
-    });
-
-    function showError(message) {
-      errorEl.textContent = message;
-      nInput.classList.add('input-error-border');
-      nInput.setAttribute('aria-invalid', 'true');
+    if(picked.length>0) pickedEl.hidden=false;
+    resVal.textContent='Max Value = '+best;
+    resDet.textContent=picked.length?('Chọn '+picked.length+' vật: ['+picked.join(', ')+']'):'Không chọn vật nào';
+    resCard.hidden=false;
+    renderTable(dp,n,W,n,W);
+  }
+  async function handleRun(){
+    clearErr(); hideAll();
+    var val=validate(); if(!val) return;
+    state=buildState(val.w,val.v,val.W,val.n); vizCard.hidden=false;
+    highlightPseudo('010-pseudo','2');
+    renderTable(state.dp,val.n,val.W,0,0);
+    await sleep(300);
+    while(!state.done){ doStep(); await sleep(300); }
+    finish();
+  }
+  function handleStep(){
+    if(!state){
+      clearErr(); hideAll();
+      var val=validate(); if(!val) return;
+      state=buildState(val.w,val.v,val.W,val.n); vizCard.hidden=false;
+      renderTable(state.dp,val.n,val.W,0,0);
+      highlightPseudo('010-pseudo','2');
+      return;
     }
-
-    function clearError() {
-      errorEl.textContent = '';
-      nInput.classList.remove('input-error-border');
-      nInput.removeAttribute('aria-invalid');
+    var done=doStep(); if(done) finish();
+  }
+  function handleAuto(){
+    if(isAuto){clearTimeout(autoTimer);isAuto=false;autoBtn.textContent='▶ Tự động';return;}
+    if(!state){handleStep(); if(!state) return;}
+    isAuto=true; autoBtn.textContent='⏸ Dừng';
+    function tick(){
+      if(!state||state.done){isAuto=false;autoBtn.textContent='▶ Tự động'; if(state&&state.done) finish(); return;}
+      var done=doStep(); if(done){isAuto=false;autoBtn.textContent='▶ Tự động'; finish(); return;}
+      autoTimer=setTimeout(tick,300);
     }
+    autoTimer=setTimeout(tick,300);
+  }
+  function handleRandom(){
+    var n=Math.floor(Math.random()*3)+3;
+    var w=[], v=[];
+    for(var i=0;i<n;i++){ w.push(Math.floor(Math.random()*5)+1); v.push(Math.floor(Math.random()*10)+1); }
+    var W=Math.floor(Math.random()*8)+5;
+    wInput.value=w.join(', '); vInput.value=v.join(', '); capInput.value=W;
+    clearErr(); hideAll();
+  }
+  runBtn.addEventListener('click',handleRun);
+  stepBtn.addEventListener('click',handleStep);
+  autoBtn.addEventListener('click',handleAuto);
+  resetBtn.addEventListener('click',hideAll);
+  randomBtn.addEventListener('click',handleRandom);
+})();
 
-    function hideAll() {
-      vizCard.hidden = true;
-      resultCard.hidden = true;
-      stepsCard.hidden = true;
-      staircaseViz.innerHTML = '';
-      dpTable.innerHTML = '';
-      stepsList.innerHTML = '';
-      currentStepEl.textContent = '0';
-      dpValEl.textContent = '0';
-      opsEl.textContent = '0';
-      stepBtn.disabled = false;
-      dpState = null;
-      stopAuto();
-    }
-
-    function stopAuto() {
-      if (autoTimer) {
-        clearTimeout(autoTimer);
-        autoTimer = null;
-      }
-      isAnimating = false;
-      autoBtn.textContent = '▶ Chạy tự động';
-    }
-
-    function validateInput() {
-      var nRaw = nInput.value.trim();
-      if (nRaw === '') {
-        showError('Vui lòng nhập N.');
-        nInput.focus();
-        return null;
-      }
-
-      var n = Number(nRaw);
-      if (!Number.isInteger(n) || n < 1 || n > 50) {
-        showError('N phải là số nguyên từ 1 đến 50.');
-        nInput.focus();
-        return null;
-      }
-
-      if (costToggle.checked) {
-        var costRaw = costInput.value.trim();
-        if (costRaw === '') {
-          showError('Vui lòng nhập chi phí mỗi bậc.');
-          costInput.focus();
-          return null;
-        }
-        var costParts = costRaw.split(',').map(function (s) { return s.trim(); });
-        if (costParts.length !== n) {
-          showError('Chi phí phải có đúng ' + n + ' số (hiện có ' + costParts.length + ').');
-          costInput.focus();
-          return null;
-        }
-        var costs = [];
-        for (var i = 0; i < costParts.length; i++) {
-          var c = Number(costParts[i]);
-          if (isNaN(c) || !isFinite(c)) {
-            showError('Chi phí \"' + costParts[i] + '\" không hợp lệ.');
-            costInput.focus();
-            return null;
-          }
-          costs.push(c);
-        }
-        return { n: n, costs: costs, mode: 'cost' };
-      }
-
-      return { n: n, costs: null, mode: 'ways' };
-    }
-
-    function renderStaircase(n, dp, currentI, bestI) {
-      staircaseViz.innerHTML = '';
-      for (var i = 0; i <= n; i++) {
-        var step = document.createElement('div');
-        step.className = 'stair-step';
-
-        var block = document.createElement('div');
-        block.className = 'stair-block';
-        // Height proportional to step index
-        block.style.height = (24 + i * 6) + 'px';
-        block.textContent = i;
-
-        if (i === currentI) {
-          block.classList.add('stair-current');
-        } else if (i === bestI) {
-          block.classList.add('stair-best');
-        } else if (dp[i] !== undefined) {
-          block.classList.add('stair-done');
-        }
-
-        var label = document.createElement('span');
-        label.className = 'stair-label';
-        label.textContent = 'Bậc ' + i;
-
-        var value = document.createElement('span');
-        value.className = 'stair-value';
-        value.textContent = dp[i] !== undefined ? dp[i] : '-';
-
-        step.appendChild(block);
-        step.appendChild(label);
-        step.appendChild(value);
-        staircaseViz.appendChild(step);
-      }
-    }
-
-    function renderDPTable(n, dp, currentI) {
-      dpTable.innerHTML = '';
-      for (var i = 0; i <= n; i++) {
-        var cell = document.createElement('div');
-        cell.className = 'dp-cell';
-
-        var header = document.createElement('span');
-        header.className = 'dp-cell-header';
-        header.textContent = 'dp[' + i + ']';
-
-        var value = document.createElement('div');
-        value.className = 'dp-cell-value';
-        value.textContent = dp[i] !== undefined ? dp[i] : '-';
-
-        if (i === currentI) {
-          value.classList.add('dp-current');
-        } else if (dp[i] !== undefined) {
-          value.classList.add('dp-done');
-        }
-
-        cell.appendChild(header);
-        cell.appendChild(value);
-        dpTable.appendChild(cell);
-      }
-    }
-
-    async function handleCalc() {
-      if (isAnimating) return;
-
-      clearError();
-      hideAll();
-
-      var validated = validateInput();
-      if (!validated) return;
-
-      isAnimating = true;
-      calcBtn.disabled = true;
-      randomBtn.disabled = true;
-      stepBtn.disabled = true;
-      autoBtn.disabled = true;
-
-      var n = validated.n;
-      var costs = validated.costs;
-      var mode = validated.mode;
-
-      if (mode === 'cost') {
-        await runCostDP(n, costs);
-      } else {
-        await runWaysDP(n);
-      }
-
-      isAnimating = false;
-      calcBtn.disabled = false;
-      randomBtn.disabled = false;
-      stepBtn.disabled = false;
-      autoBtn.disabled = false;
-    }
-
-    async function runWaysDP(n) {
-      var dp = [];
-      var steps = [];
-      var ops = 0;
-
-      dp[0] = 1;
-      dp[1] = 1;
-      ops += 0;
-
-      vizCard.hidden = false;
-      renderStaircase(n, dp, 0, -1);
-      renderDPTable(n, dp, 0);
-      currentStepEl.textContent = 0;
-      dpValEl.textContent = dp[0];
-      opsEl.textContent = ops;
-      steps.push('dp[0] = 1 (1 cách đứng tại bậc 0)');
-      if (n >= 1) {
-        steps.push('dp[1] = 1 (1 cách lên bậc 1)');
-      }
-      await sleep(600);
-
-      if (n >= 1) {
-        renderStaircase(n, dp, 1, -1);
-        renderDPTable(n, dp, 1);
-        currentStepEl.textContent = 1;
-        dpValEl.textContent = dp[1];
-        await sleep(400);
-      }
-
-      for (var i = 2; i <= n; i++) {
-        dp[i] = dp[i - 1] + dp[i - 2];
-        ops++;
-        currentStepEl.textContent = i;
-        dpValEl.textContent = dp[i];
-        opsEl.textContent = ops;
-
-        renderStaircase(n, dp, i, -1);
-        renderDPTable(n, dp, i);
-        steps.push('dp[' + i + '] = dp[' + (i - 1) + '] + dp[' + (i - 2) + '] = ' + dp[i - 1] + ' + ' + dp[i - 2] + ' = ' + dp[i]);
-        await sleep(500);
-      }
-
-      // Final highlight
-      renderStaircase(n, dp, n, n);
-      renderDPTable(n, dp, n);
-
-      resultValue.textContent = dp[n] + ' cách';
-      resultDetail.textContent = 'dp[' + n + '] = ' + dp[n] + ' | Phép tính: ' + ops;
-      resultCard.hidden = false;
-
-      steps.push('Kết quả: ' + dp[n] + ' cách leo ' + n + ' bậc');
-      stepsList.innerHTML = '';
-      steps.forEach(function (step, index) {
-        var li = document.createElement('li');
-        li.textContent = step;
-        if (index === steps.length - 1) {
-          li.classList.add('step-final');
-        }
-        stepsList.appendChild(li);
-      });
-      stepsCard.hidden = false;
-    }
-
-    async function runCostDP(n, costs) {
-      // dp[i] = min cost to reach step i
-      // dp[0] = 0, dp[1] = costs[0], dp[i] = min(dp[i-1], dp[i-2]) + costs[i-1] for i>=2
-      // Actually: cost to reach top (beyond n) = min(dp[n-1], dp[n-2]) if top is beyond last step
-      // Simplified: dp[i] = cost to reach step i, dp[0]=0, dp[1]=costs[0]
-      var dp = [];
-      var steps = [];
-      var ops = 0;
-
-      dp[0] = 0;
-      if (n >= 1) dp[1] = costs[0];
-
-      vizCard.hidden = false;
-      renderStaircase(n, dp, 0, -1);
-      renderDPTable(n, dp, 0);
-      currentStepEl.textContent = 0;
-      dpValEl.textContent = dp[0];
-      opsEl.textContent = ops;
-      steps.push('dp[0] = 0 (chưa leo)');
-      if (n >= 1) {
-        steps.push('dp[1] = costs[0] = ' + costs[0]);
-      }
-      await sleep(600);
-
-      if (n >= 1) {
-        renderStaircase(n, dp, 1, -1);
-        renderDPTable(n, dp, 1);
-        currentStepEl.textContent = 1;
-        dpValEl.textContent = dp[1];
-        await sleep(400);
-      }
-
-      for (var i = 2; i <= n; i++) {
-        var cost = costs[i - 1];
-        dp[i] = Math.min(dp[i - 1], dp[i - 2]) + cost;
-        ops++;
-        currentStepEl.textContent = i;
-        dpValEl.textContent = dp[i];
-        opsEl.textContent = ops;
-
-        renderStaircase(n, dp, i, -1);
-        renderDPTable(n, dp, i);
-        steps.push('dp[' + i + '] = min(dp[' + (i - 1) + '], dp[' + (i - 2) + ']) + costs[' + (i - 1) + '] = min(' + dp[i - 1] + ', ' + dp[i - 2] + ') + ' + cost + ' = ' + dp[i]);
-        await sleep(500);
-      }
-
-      renderStaircase(n, dp, n, n);
-      renderDPTable(n, dp, n);
-
-      resultValue.textContent = 'Chi phí nhỏ nhất: ' + dp[n];
-      resultDetail.textContent = 'dp[' + n + '] = ' + dp[n] + ' | Phép tính: ' + ops;
-      resultCard.hidden = false;
-
-      steps.push('Kết quả: Chi phí nhỏ nhất = ' + dp[n]);
-      stepsList.innerHTML = '';
-      steps.forEach(function (step, index) {
-        var li = document.createElement('li');
-        li.textContent = step;
-        if (index === steps.length - 1) {
-          li.classList.add('step-final');
-        }
-        stepsList.appendChild(li);
-      });
-      stepsCard.hidden = false;
-    }
-
-    function initStepMode() {
-      clearError();
-      hideAll();
-
-      var validated = validateInput();
-      if (!validated) return;
-
-      var n = validated.n;
-      var costs = validated.costs;
-      var mode = validated.mode;
-
-      var dp = [];
-      dp[0] = mode === 'cost' ? 0 : 1;
-      if (n >= 1) dp[1] = mode === 'cost' ? costs[0] : 1;
-
-      dpState = {
-        n: n,
-        costs: costs,
-        mode: mode,
-        dp: dp,
-        currentI: n >= 1 ? 2 : 0,
-        ops: 0,
-        done: false,
-        steps: []
-      };
-
-      if (mode === 'cost') {
-        dpState.steps.push('dp[0] = 0');
-        if (n >= 1) dpState.steps.push('dp[1] = ' + dp[1]);
-      } else {
-        dpState.steps.push('dp[0] = 1');
-        if (n >= 1) dpState.steps.push('dp[1] = 1');
-      }
-
-      vizCard.hidden = false;
-      renderStaircase(n, dp, 0, -1);
-      renderDPTable(n, dp, 0);
-      currentStepEl.textContent = 0;
-      dpValEl.textContent = dp[0];
-
-      var li = document.createElement('li');
-      li.textContent = dpState.steps[0];
-      stepsList.appendChild(li);
-      if (n >= 1) {
-        var li2 = document.createElement('li');
-        li2.textContent = dpState.steps[1];
-        stepsList.appendChild(li2);
-      }
-      stepsCard.hidden = false;
-
-      if (n < 2) {
-        dpState.done = true;
-        stepBtn.disabled = true;
-        autoBtn.disabled = true;
-        var resultLi = document.createElement('li');
-        resultLi.textContent = 'Kết quả: ' + dp[n];
-        resultLi.classList.add('step-final');
-        stepsList.appendChild(resultLi);
-        resultValue.textContent = dp[n] + (mode === 'cost' ? '' : ' cách');
-        resultDetail.textContent = 'dp[' + n + '] = ' + dp[n];
-        resultCard.hidden = false;
-        return;
-      }
-
-      stepBtn.disabled = false;
-      calcBtn.disabled = true;
-      randomBtn.disabled = true;
-      autoBtn.disabled = true;
-    }
-
-    function handleStep() {
-      if (!dpState || dpState.done) return;
-
-      var n = dpState.n;
-      var costs = dpState.costs;
-      var mode = dpState.mode;
-      var i = dpState.currentI;
-
-      if (i > n) {
-        dpState.done = true;
-        stepBtn.disabled = true;
-        autoBtn.disabled = true;
-
-        var li = document.createElement('li');
-        if (mode === 'cost') {
-          li.textContent = 'Kết quả: Chi phí nhỏ nhất = ' + dpState.dp[n];
-          resultValue.textContent = 'Chi phí nhỏ nhất: ' + dpState.dp[n];
-        } else {
-          li.textContent = 'Kết quả: ' + dpState.dp[n] + ' cách';
-          resultValue.textContent = dpState.dp[n] + ' cách';
-        }
-        li.classList.add('step-final');
-        stepsList.appendChild(li);
-        resultDetail.textContent = 'dp[' + n + '] = ' + dpState.dp[n] + ' | Phép tính: ' + dpState.ops;
-        resultCard.hidden = false;
-
-        renderStaircase(n, dpState.dp, n, n);
-        renderDPTable(n, dpState.dp, n);
-
-        calcBtn.disabled = false;
-        randomBtn.disabled = false;
-        return;
-      }
-
-      var step;
-      if (mode === 'cost') {
-        var cost = costs[i - 1];
-        dpState.dp[i] = Math.min(dpState.dp[i - 1], dpState.dp[i - 2]) + cost;
-        dpState.ops++;
-        step = 'dp[' + i + '] = min(dp[' + (i - 1) + '], dp[' + (i - 2) + ']) + costs[' + (i - 1) + '] = min(' + dpState.dp[i - 1] + ', ' + dpState.dp[i - 2] + ') + ' + cost + ' = ' + dpState.dp[i];
-      } else {
-        dpState.dp[i] = dpState.dp[i - 1] + dpState.dp[i - 2];
-        dpState.ops++;
-        step = 'dp[' + i + '] = dp[' + (i - 1) + '] + dp[' + (i - 2) + '] = ' + dpState.dp[i - 1] + ' + ' + dpState.dp[i - 2] + ' = ' + dpState.dp[i];
-      }
-
-      currentStepEl.textContent = i;
-      dpValEl.textContent = dpState.dp[i];
-      opsEl.textContent = dpState.ops;
-
-      renderStaircase(n, dpState.dp, i, -1);
-      renderDPTable(n, dpState.dp, i);
-
-      var li = document.createElement('li');
-      li.textContent = step;
-      stepsList.appendChild(li);
-
-      dpState.currentI++;
-
-      if (dpState.currentI > n) {
-        dpState.done = true;
-        stepBtn.disabled = true;
-        autoBtn.disabled = true;
-
-        var resultLi = document.createElement('li');
-        if (mode === 'cost') {
-          resultLi.textContent = 'Kết quả: Chi phí nhỏ nhất = ' + dpState.dp[n];
-          resultValue.textContent = 'Chi phí nhỏ nhất: ' + dpState.dp[n];
-        } else {
-          resultLi.textContent = 'Kết quả: ' + dpState.dp[n] + ' cách';
-          resultValue.textContent = dpState.dp[n] + ' cách';
-        }
-        resultLi.classList.add('step-final');
-        stepsList.appendChild(resultLi);
-        resultDetail.textContent = 'dp[' + n + '] = ' + dpState.dp[n] + ' | Phép tính: ' + dpState.ops;
-        resultCard.hidden = false;
-
-        renderStaircase(n, dpState.dp, n, n);
-        renderDPTable(n, dpState.dp, n);
-
-        calcBtn.disabled = false;
-        randomBtn.disabled = false;
-      }
-    }
-
-    function handleAuto() {
-      if (isAnimating) {
-        stopAuto();
-        return;
-      }
-
-      if (!dpState) {
-        initStepMode();
-        if (!dpState) return;
-      }
-
-      isAnimating = true;
-      autoBtn.textContent = '⏸ Dừng';
-      calcBtn.disabled = true;
-      randomBtn.disabled = true;
-      stepBtn.disabled = true;
-
-      function tick() {
-        if (!dpState || dpState.done) {
-          stopAuto();
-          calcBtn.disabled = false;
-          randomBtn.disabled = false;
-          stepBtn.disabled = false;
-          return;
-        }
-        handleStep();
-        autoTimer = setTimeout(tick, 600);
-      }
-
-      tick();
-    }
-
-    function handleReset() {
-      hideAll();
-      stepBtn.disabled = false;
-      calcBtn.disabled = false;
-      randomBtn.disabled = false;
-      autoBtn.disabled = false;
-    }
-
-    function handleRandom() {
-      var n = Math.floor(Math.random() * 10) + 3;
-      nInput.value = n;
-      if (costToggle.checked) {
-        var costs = [];
-        for (var i = 0; i < n; i++) {
-          costs.push(Math.floor(Math.random() * 20) + 1);
-        }
-        costInput.value = costs.join(', ');
-      }
-      clearError();
-      hideAll();
-      stepBtn.disabled = false;
-    }
-
-    calcBtn.addEventListener('click', handleCalc);
-    randomBtn.addEventListener('click', handleRandom);
-    stepBtn.addEventListener('click', function () {
-      if (!dpState) {
-        initStepMode();
-      } else if (!dpState.done && !isAnimating) {
-        handleStep();
-      }
-    });
-    autoBtn.addEventListener('click', handleAuto);
-    resetBtn.addEventListener('click', handleReset);
-
-    nInput.addEventListener('keydown', function (e) {
-      if (e.key === 'Enter') {
-        handleCalc();
-      }
-    });
-
-    costInput.addEventListener('keydown', function (e) {
-      if (e.key === 'Enter') {
-        handleCalc();
-      }
-    });
-
-    nInput.addEventListener('input', function () {
-      if (nInput.classList.contains('input-error-border')) {
-        clearError();
-      }
-    });
-  })();
 })();
