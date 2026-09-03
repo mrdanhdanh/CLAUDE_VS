@@ -28,15 +28,16 @@ node .agent/scripts/policy-check.mjs --check
 - **Thứ tự:** `deny[]` trước, nếu match → `refused`; else `allow[]` → `permitted`; else `refused` (fail-closed).
 - **CEL-lite:** `when` là JS expression với 4 vars: `tool`, `target`, `actor`, `intent`. Ví dụ: `tool === 'shell' && target.includes('rm -rf /')`.
 - **Broken rule → refuse** (không mở). Malformed `policy.json` → deny all.
-- **File:** `.agent/policy.json` (version 1, 4 deny + 2 allow mặc định).
+- **File:** `.agent/policy.json` (version 2, 7 deny + 2 allow — thêm deny-test-mutate/destructive-sql/rm-rf-variants, KN-012).
 
 ### 2. Audit Trail — append-only JSONL
 ```bash
 node .agent/scripts/audit.mjs log --tool shell --target "rm -rf /" --decision refused --rule deny-rm-rf-root --actor YUNIE
 node .agent/scripts/audit.mjs tail --n 20
 node .agent/scripts/audit.mjs stats --json
+node .agent/scripts/audit.mjs verify
 ```
-- **Mỗi event:** `{ts, actor, tool, target, decision, rule, durationMs, error, intent, requestId}`.
+- **Mỗi event:** `{ts, actor, tool, target, decision, rule, durationMs, error, intent, requestId, prevHash, hash}`.
 - **Decision:** `permitted` | `refused` | `failed`.
 - **Redacted:** target chứa `sk-`, `cpk-`, `token`, `secret` → `***` (never log secret).
 - **File:** `.agent/audit.jsonl` (gitignore, append-only). `generate-status.mjs` chỉ tail 100, không đọc hết.
@@ -55,6 +56,18 @@ node .agent/scripts/credentials.mjs delete OPENAI_API_KEY
 ### 4. Take the Wheel (P1)
 - Khi action bị `refused`, human có thể takeover — ghi `control_requested/taken/released` vào audit.
 - Trong audit: `tool: "control"`, `decision: "permitted"`, `intent: "takeover"`.
+
+### 5. Verifier Integrity — chống reward hacking (KN-012, học BTP)
+- **Test là immutable:** `*.Tests.*`, `*.test.*`, `*.spec.*`, `ai-news.json` (auto) — FAIL chỉ được fix bằng production code. Sửa test để pass = reward hacking → CI xanh giả.
+- **Gate:** `policy-check --tool edit --target <test-path> --actor <actor>` — chỉ `verify` actor hoặc `intent=takeover` (human) mới PERMITTED. `deny-test-mutate` chặn còn lại.
+- **Destructive:** `deny-destructive-sql` (DROP/TRUNCATE via shell) + `deny-rm-rf-variants` (rm -fr/rmdir/mkfs/dd).
+- **Notary:** `audit.mjs log` tự gắn `prevHash` + `hash` (SHA-256/16); `audit.mjs verify` phải chain OK sau mỗi session.
+```bash
+node .agent/scripts/policy-check.mjs --tool edit --target "N5Blazor.Tests/ServiceTests.cs" --actor Implement
+# → ⛔ REFUSED (deny-test-mutate) — sửa production code thay vì test
+node .agent/scripts/audit.mjs verify
+# → ✅ audit chain OK
+```
 
 ## Checklist cho agent (tự kiểm trước khi act)
 - [ ] Đã `policy-check --tool X --target Y` chưa? Nếu `refused` → không chạy, báo rule.

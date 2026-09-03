@@ -65,6 +65,11 @@ function redactTarget(target) {
   return target;
 }
 
+function canonicalHash(prevHash, e) {
+  const core = { ts: e.ts, actor: e.actor, tool: e.tool, target: e.target, decision: e.decision, rule: e.rule, durationMs: e.durationMs ?? null, error: e.error ?? null, intent: e.intent ?? null, requestId: e.requestId };
+  return crypto.createHash('sha256').update(prevHash + '|' + JSON.stringify(core)).digest('hex').slice(0, 16);
+}
+
 async function cmdLog(args) {
   const tool = args.tool || args.t;
   const target = args.target || args.tgt || '';
@@ -84,6 +89,17 @@ async function cmdLog(args) {
     process.exit(1);
   }
 
+  // hash-chain (KN-012, BTP notary-lite): prevHash + sha256 → tamper-evident
+  let prevHash = 'GENESIS';
+  try {
+    if (existsSync(AUDIT_PATH)) {
+      const prev = (await fs.readFile(AUDIT_PATH, 'utf8')).trim().split('\n').filter(Boolean).pop();
+      if (prev) {
+        const last = JSON.parse(prev);
+        if (last.hash) prevHash = last.hash;
+      }
+    }
+  } catch {}
   const event = {
     ts: new Date().toISOString(),
     actor,
@@ -95,11 +111,13 @@ async function cmdLog(args) {
     error: error ? String(error).slice(0, 500) : null,
     intent: intent || null,
     requestId: crypto.randomBytes(3).toString('hex'),
+    prevHash,
   };
+  event.hash = canonicalHash(prevHash, event);
 
   await fs.mkdir(path.dirname(AUDIT_PATH), { recursive: true });
   await fs.appendFile(AUDIT_PATH, JSON.stringify(event) + '\n', 'utf8');
-  console.log(`✅ audit logged: ${event.decision} ${event.tool} ${event.target} ${event.rule ? '(' + event.rule + ')' : ''} [${event.requestId}]`);
+  console.log(`✅ audit logged: ${event.decision} ${event.tool} ${event.target} ${event.rule ? '(' + event.rule + ')' : ''} [${event.requestId}] hash=${event.hash}`);
 }
 
 async function cmdTail(args) {
@@ -151,14 +169,40 @@ async function cmdStats(args) {
   }
 }
 
+async function cmdVerify(args) {
+  if (!existsSync(AUDIT_PATH)) {
+    console.log('No audit log yet — .agent/audit.jsonl not found');
+    return;
+  }
+  const lines = (await fs.readFile(AUDIT_PATH, 'utf8')).trim().split('\n').filter(Boolean);
+  let prevHash = 'GENESIS';
+  let ok = 0, legacy = 0, broken = 0;
+  let brokenAt = -1;
+  for (let i = 0; i < lines.length; i++) {
+    let e;
+    try { e = JSON.parse(lines[i]); } catch { broken++; if (brokenAt < 0) brokenAt = i; continue; }
+    if (!e.hash) { legacy++; prevHash = e.hash || prevHash; continue; } // pre-chain events: skip link check
+    if (e.prevHash !== prevHash) { broken++; if (brokenAt < 0) brokenAt = i; prevHash = e.hash || prevHash; continue; }
+    if (canonicalHash(e.prevHash, e) !== e.hash) { broken++; if (brokenAt < 0) brokenAt = i; prevHash = e.hash; continue; }
+    prevHash = e.hash;
+    ok++;
+  }
+  const out = { total: lines.length, chained: ok, legacy, broken, brokenAt, chainOk: broken === 0 };
+  if (args.json) console.log(JSON.stringify(out, null, 2));
+  else if (broken > 0) console.log(`❌ audit chain BROKEN: ${broken} bad event(s), first at line ${brokenAt + 1}/${lines.length} · chained ${ok} · legacy ${legacy}`);
+  else console.log(`✅ audit chain OK: ${ok} chained · ${legacy} legacy (pre-chain) · ${lines.length} total`);
+  if (broken > 0) process.exit(1);
+}
+
 async function main() {
   const args = parseArgs(process.argv.slice(2));
   const cmd = args._[0] || 'stats';
   if (cmd === 'log') await cmdLog(args);
   else if (cmd === 'tail') await cmdTail(args);
   else if (cmd === 'stats') await cmdStats(args);
+  else if (cmd === 'verify') await cmdVerify(args);
   else {
-    console.error(`Unknown command: ${cmd}\nUsage: audit.mjs <log|tail|stats> [options]`);
+    console.error(`Unknown command: ${cmd}\nUsage: audit.mjs <log|tail|stats|verify> [options]`);
     process.exit(1);
   }
 }

@@ -1,6 +1,6 @@
 {
-  "version": 1,
-  "description": "Harness governance — deny before allow, fail-closed (học OpenBot CEL policy)",
+  "version": 2,
+  "description": "Harness governance — deny before allow, fail-closed (học OpenBot CEL policy + BTP pre-flight KN-012)",
   "deny": [
     {
       "id": "deny-rm-rf-root",
@@ -21,6 +21,21 @@
       "id": "deny-private-hosts",
       "when": "tool === 'shell' && (target.includes('curl') || target.includes('wget')) && target.includes('127.0.0.1')",
       "message": "Refuse private host access via shell — use allowlist"
+    },
+    {
+      "id": "deny-test-mutate",
+      "when": "(tool === 'edit' || tool === 'write' || tool === 'shell') && (target.includes('Tests') || target.toLowerCase().includes('.test.') || target.toLowerCase().includes('.spec.') || target.includes('ai-news.json')) && actor.toLowerCase() !== 'verify' && intent !== 'takeover'",
+      "message": "Refuse mutating test/verifier files — tests are immutable, fix production code instead (KN-012). Human takeover via intent=takeover."
+    },
+    {
+      "id": "deny-destructive-sql",
+      "when": "tool === 'shell' && (target.toLowerCase().includes('drop table') || target.toLowerCase().includes('drop schema') || target.toLowerCase().includes('truncate table'))",
+      "message": "Refuse destructive SQL (DROP/TRUNCATE) via shell — use migration review (KN-012)"
+    },
+    {
+      "id": "deny-rm-rf-variants",
+      "when": "tool === 'shell' && (target.includes('rm -fr') || target.includes('rmdir /s') || target.includes('mkfs') || target.includes('dd if='))",
+      "message": "Refuse destructive shell variants (rm -fr/rmdir/mkfs/dd) — destructive (KN-012)"
     }
   ],
   "allow": [

@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-03T05:58:34.909Z",
+  "generatedAt": "2026-09-03T10:45:15.536Z",
   "generatedBy": "YUNIE",
   "version": 1,
   "counts": {
@@ -269,15 +269,15 @@
   "health": {
     "errors": 0,
     "status": "ok",
-    "lastCheck": "2026-09-03T05:58:34.909Z",
+    "lastCheck": "2026-09-03T10:45:15.536Z",
     "checks": [
       "get_errors: pass (0 errors)",
       "registry: 12 instructions (12 total) - 10 skills - 8 agents - 7 prompts - 1 hook — all enabled",
       "www: polished — responsive 375/768/1280, a11y, states, animation 150-300ms",
       "workflow: www/** -> Pages (upload-artifact path: www) — exists: true",
       "library: www/library/ (PDF/DOCX/TXT/MD, BM25 <100ms, tháo lắp) + mcp-server.mjs + export.json + library-rag instruction",
-      "auto-learn: 11 KN, 7 bugs, 0 drafts — suggest/log/propose/status (<50ms, IDF, tiếng Việt)",
-      "governance: audit 3 · policy 4 deny/2 allow (ok) · credentials 0 keys enc",
+      "auto-learn: 12 KN, 8 bugs, 0 drafts — suggest/log/propose/status (<50ms, IDF, tiếng Việt)",
+      "governance: audit 4 · policy 7 deny/2 allow (ok) · credentials 0 keys enc",
       "platform: agents 3 (3 built-in, 0 remote) · mcp 2 vendors/3 grants · components 3/3 pub · routines 1/1 enabled",
       "n5-blazor: www/n5-blazor/ 7 trang static + app.css + data.js + site.js — 100% Pages"
     ]
@@ -341,17 +341,17 @@
     "philosophy": "Process > Model"
   },
   "learn": {
-    "knTotal": 11,
-    "bugsTotal": 7,
+    "knTotal": 12,
+    "bugsTotal": 8,
     "drafts": 0
   },
   "governance": {
     "audit": {
-      "total": 3,
+      "total": 4,
       "permitted": 2,
-      "refused": 1,
+      "refused": 2,
       "failed": 0,
-      "lastTs": "2026-09-02T15:21:31.095Z",
+      "lastTs": "2026-09-03T10:43:45.353Z",
       "tail": [
         {
           "ts": "2026-09-02T15:13:47.506Z",
@@ -388,15 +388,29 @@
           "error": null,
           "intent": null,
           "requestId": "9af705"
+        },
+        {
+          "ts": "2026-09-03T10:43:45.353Z",
+          "actor": "Implement",
+          "tool": "edit",
+          "target": "N5Blazor.Tests/ServiceTests.cs",
+          "decision": "refused",
+          "rule": "deny-test-mutate",
+          "durationMs": null,
+          "error": null,
+          "intent": "guard-test",
+          "requestId": "e242cd",
+          "prevHash": "GENESIS",
+          "hash": "5ae6e08c02bb505b"
         }
       ]
     },
     "policy": {
-      "version": 1,
-      "deny": 4,
+      "version": 2,
+      "deny": 7,
       "allow": 2,
       "status": "ok",
-      "lastCheck": "2026-09-03T05:58:34.905Z"
+      "lastCheck": "2026-09-03T10:45:15.528Z"
     },
     "credentials": {
       "count": 0,
