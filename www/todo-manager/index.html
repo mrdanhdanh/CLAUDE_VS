@@ -4,11 +4,12 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="color-scheme" content="light" />
-  <meta name="description" content="TaskBoard — Todo Manager nâng cao: tạo, sửa, xóa, lọc, sắp xếp, dashboard, undo, lưu LocalStorage." />
+  <meta name="theme-color" content="#6366f1" />
+  <meta name="description" content="TaskBoard — Todo Manager premium: tạo, sửa, xóa, lọc, sắp xếp, dashboard, undo, lưu LocalStorage + GitHub sync." />
   <title>TaskBoard — Todo Manager</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="./styles.css" />
 </head>
 <body>
@@ -22,10 +23,10 @@
         <span class="brand-badge">BÀI 010</span>
       </a>
       <nav class="header-nav" aria-label="Điều hướng">
-        <span class="header-hint">State → xử lý → render</span>
+        <span class="header-hint">✨ Premium Glass · State → xử lý → render</span>
       </nav>
       <div class="header-actions">
-        <a class="btn btn-ghost btn-sm" href="../index.html" aria-label="Về YUNIE STATUS" style="text-decoration:none">← STATUS</a>
+        <a class="btn btn-ghost btn-sm" href="../index.html" aria-label="Về YUNIE STATUS">← STATUS</a>
         <button class="btn btn-primary" id="btn-open-add" aria-label="Thêm công việc mới">
           <span aria-hidden="true">＋</span> Thêm việc
         </button>
@@ -38,7 +39,7 @@
     <section class="dashboard" aria-labelledby="dashboard-title">
       <div class="section-head">
         <h1 id="dashboard-title" class="page-title">Quản lý công việc</h1>
-        <p class="page-sub">Tạo, lọc, sắp xếp và theo dõi deadline — dữ liệu lưu tự động.</p>
+        <p class="page-sub">Giao diện premium glass — tạo, lọc, sắp xếp và theo dõi deadline. Dữ liệu lưu tự động, đồng bộ GitHub khi cần.</p>
       </div>
       <div class="dash-grid" role="list" aria-label="Thống kê">
         <div class="dash-card dash-total" role="listitem">
@@ -79,7 +80,7 @@
       <div class="toolbar-row">
         <label class="search-wrap" aria-label="Tìm kiếm">
           <span class="search-icon" aria-hidden="true">🔍</span>
-          <input id="search-input" class="input search-input" type="search" placeholder="Tìm theo tên hoặc mô tả..." autocomplete="off" />
+          <input id="search-input" class="input search-input" type="search" placeholder="Tìm theo tên, mô tả hoặc tag..." autocomplete="off" />
         </label>
         <div class="toolbar-filters">
           <label class="field field-sm">
@@ -126,8 +127,8 @@
           <span class="count-badge" id="count-badge" aria-live="polite">0 công việc</span>
         </div>
         <div class="toolbar-right">
-          <button class="btn btn-ghost btn-sm" id="btn-clear-filters">Xóa bộ lọc</button>
-          <button class="btn btn-ghost btn-sm" id="btn-seed" title="Thêm dữ liệu mẫu">Seed mẫu</button>
+          <button class="btn btn-ghost btn-sm" id="btn-clear-filters">↺ Xóa bộ lọc</button>
+          <button class="btn btn-ghost btn-sm" id="btn-seed" title="Thêm dữ liệu mẫu">✦ Seed mẫu</button>
           <button class="btn btn-primary btn-sm" id="btn-sync" title="Đẩy tasks hiện tại lên tasks.json trên GitHub">☁ Lưu lên GitHub</button>
           <button class="btn btn-ghost btn-sm" id="btn-github-settings" title="Cài đặt đồng bộ GitHub">⚙ GitHub</button>
           <button class="btn btn-ghost btn-sm" id="btn-export" title="Tải file backup JSON">⬇ Xuất</button>
@@ -139,7 +140,7 @@
         <span class="sync-status" id="sync-status" role="status" aria-live="polite">Chưa kết nối GitHub</span>
         <span class="sync-sub" id="sync-sub">Thêm / sửa task sẽ tự đẩy lên <code>tasks.json</code> sau khi kết nối.</span>
       </div>
-      <p class="persist-hint">Lưu nhanh ở trình duyệt (localStorage). Sau khi bấm <strong>⚙ GitHub</strong> nhập token 1 lần, mọi thêm / sửa / xóa sẽ tự cập nhật <code>tasks.json</code> trên GitHub.</p>
+      <p class="persist-hint">💾 Lưu nhanh ở trình duyệt (localStorage). Sau khi bấm <strong>⚙ GitHub</strong> nhập token 1 lần, mọi thêm / sửa / xóa sẽ tự cập nhật <code>tasks.json</code> trên GitHub.</p>
     </section>
 
     <!-- Task list -->
@@ -150,7 +151,7 @@
       <div id="empty-state" class="empty-state" hidden>
         <div class="empty-icon" aria-hidden="true">📭</div>
         <h3 class="empty-title">Chưa có công việc phù hợp</h3>
-        <p class="empty-desc">Thử đổi bộ lọc hoặc tạo công việc mới để bắt đầu.</p>
+        <p class="empty-desc">Thử đổi bộ lọc hoặc tạo công việc mới để bắt đầu hành trình năng suất.</p>
         <button class="btn btn-primary" id="btn-empty-add">＋ Thêm việc đầu tiên</button>
       </div>
     </section>
@@ -169,27 +170,27 @@
         <div class="form-grid">
           <label class="field field-full">
             <span class="field-label">Tên công việc <span class="req">*</span></span>
-            <input id="field-title" class="input" type="text" placeholder="VD: Học JavaScript" maxlength="80" required autocomplete="off" />
+            <input id="field-title" class="input" type="text" placeholder="VD: Học JavaScript — làm bài 010" maxlength="80" required autocomplete="off" />
             <span class="field-error" id="err-title" role="alert"></span>
           </label>
           <label class="field field-full">
             <span class="field-label">Mô tả</span>
-            <textarea id="field-desc" class="input textarea" rows="3" placeholder="Mô tả chi tiết..."></textarea>
+            <textarea id="field-desc" class="input textarea" rows="3" placeholder="Mô tả chi tiết, ghi chú, link tham khảo..."></textarea>
           </label>
           <label class="field">
             <span class="field-label">Mức độ</span>
             <select id="field-priority" class="select">
-              <option value="low">Low</option>
-              <option value="medium" selected>Medium</option>
-              <option value="high">High</option>
+              <option value="low">Low — Nhẹ nhàng</option>
+              <option value="medium" selected>Medium — Vừa</option>
+              <option value="high">High — Ưu tiên</option>
             </select>
           </label>
           <label class="field">
             <span class="field-label">Trạng thái</span>
             <select id="field-status" class="select">
-              <option value="todo" selected>Todo</option>
-              <option value="doing">Doing</option>
-              <option value="done">Done</option>
+              <option value="todo" selected>⭕ Todo</option>
+              <option value="doing">⚡ Doing</option>
+              <option value="done">✅ Done</option>
             </select>
           </label>
           <label class="field">
@@ -199,7 +200,7 @@
           </label>
           <label class="field">
             <span class="field-label">Tags</span>
-            <input id="field-tags" class="input" type="text" placeholder="VD: javascript, study" autocomplete="off" />
+            <input id="field-tags" class="input" type="text" placeholder="VD: javascript, study, work" autocomplete="off" />
             <span class="field-hint">Ngăn cách bằng dấu phẩy</span>
           </label>
         </div>
@@ -261,7 +262,7 @@
 
   <footer class="site-footer">
     <div class="container footer-inner">
-      <span>TaskBoard — Bài 010 · State duy nhất · Không reload · LocalStorage</span>
+      <span><strong>TaskBoard</strong> — Bài 010 · State duy nhất · Không reload · LocalStorage + GitHub sync</span>
       <span class="footer-dot">·</span>
       <span id="footer-date"></span>
       <span class="footer-dot">·</span>

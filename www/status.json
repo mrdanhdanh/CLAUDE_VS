@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-02T15:36:28.888Z",
+  "generatedAt": "2026-09-03T05:58:34.909Z",
   "generatedBy": "YUNIE",
   "version": 1,
   "counts": {
@@ -209,6 +209,7 @@
   ],
   "plans": [
     "aar-harness",
+    "ai-news-search",
     "auto-learn",
     "custom-registry",
     "focus-flow",
@@ -268,7 +269,7 @@
   "health": {
     "errors": 0,
     "status": "ok",
-    "lastCheck": "2026-09-02T15:36:28.888Z",
+    "lastCheck": "2026-09-03T05:58:34.909Z",
     "checks": [
       "get_errors: pass (0 errors)",
       "registry: 12 instructions (12 total) - 10 skills - 8 agents - 7 prompts - 1 hook — all enabled",
@@ -395,7 +396,7 @@
       "deny": 4,
       "allow": 2,
       "status": "ok",
-      "lastCheck": "2026-09-02T15:36:28.883Z"
+      "lastCheck": "2026-09-03T05:58:34.905Z"
     },
     "credentials": {
       "count": 0,
