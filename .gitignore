@@ -32,3 +32,7 @@ node_modules/
 *.log
 dist/
 build/
+
+# ===== Exported skills — skip demo binaries (mp3/jpg/png), keep code =====
+.claude/skills/*/assets/
+*.mp3

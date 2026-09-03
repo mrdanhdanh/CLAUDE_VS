@@ -2,47 +2,49 @@
   "version": 1,
   "generator": "harness-manager export-claude",
   "files": {
-    ".claude/agents/designer.md": "6b853c1cfa64bde5ef21a272a6acc243fd8946140885fd1e8ae9787e2d22f373",
-    ".claude/agents/explore.md": "1c314ff3c06e3a995ecb7e6c087eec6765c4b0c0d7823c378ae5f66f1dc5e34e",
-    ".claude/agents/implement.md": "539cf572e1d218db5931428c6cb4282db466ab3beb9c5f806d9f5c83a0c01ca9",
-    ".claude/agents/plan.md": "dcd1402d6443529f0450ffa47925834a34523f2e78786ba8398469fafb74a9d7",
-    ".claude/agents/polish.md": "b2f22a76974ac0b2899d20d979fe48e22bb6954418e38467fcdb02de9f3d08e4",
-    ".claude/agents/verify.md": "f4f47c2554b4bed129498960b56d331817d852c523ec1527c07ac195380420bf",
-    ".claude/agents/yunie.md": "4da17870a731022785b49c91a963b263f02e4fa6583f08bbb0904515dd2ed76b",
-    ".claude/agents/learn.md": "9b5143ec798f41e9792873cd5b28c9b1a0ab3781e2925034007f1dc0dc1a6e0c",
-    ".claude/commands/fixbug.md": "33dc290d6a850cdeeaf6917e639a43db5bfacc42fec09432feb74d1260555f88",
-    ".claude/commands/harness.md": "2e2ea61594510b5cad8c4c9234a501b6322658e0a42d58133cff7ba19d905f7d",
-    ".claude/commands/implement.md": "981c68ecda5144355a5b2a4a3632cbc5ce976c50540a02c162cc1cf15107648d",
-    ".claude/commands/plan.md": "4bcdb0220f844d0ff30c12c33bfd428d099a7e7926d69a0114a02fe3d374f486",
-    ".claude/commands/polish.md": "ed2f5572308f9f527f8dc143e040a233d64a78b2cac1d032fd138534b12ebe32",
-    ".claude/commands/product.md": "bc64d8fa9191ba93f0f5f85716eec88610ceb62be3f0375a906e66d6dd61384f",
-    ".claude/commands/verify.md": "fd06a0339bbc767368f0a884f183abc3eb92ab4051d49fd66d7ee904f7a268bc",
-    ".claude/rules/custom-registry.md": "6652f22ff82189763219965a740c27637ec83f1ab37a16500ddee649203c7a85",
-    ".claude/rules/harness-workflow.md": "26118b242c1c289eb84e0342b007ad1a5074445bc294ee4e7cf9cd97832994d5",
-    ".claude/rules/knowleged.md": "e7fd66efcec313a9105e624d8c2461d80644a5a3e776ee9d65f65442f9be58d8",
-    ".claude/rules/locale-i18n.md": "c3273bd0725ae2066269708d4817534f89657639ee48a6bfaf6ac47313afba29",
-    ".claude/rules/plugin-seam.md": "9c7a0bf7bfb57b90c9be2eee2f9f83127a6acbd70d817dab34e701a95d1c3857",
-    ".claude/rules/product-quality.md": "eb1d2d85ee7c10e12ca15ef996a62e2bb9739031979ae54d8bf7a7160956271a",
-    ".claude/rules/skill-usage.md": "e9c9107d79c150b95a5df382b889366b64086844f9c0b2186def83df47c8f9bd",
-    ".claude/rules/library-rag.md": "3e3b2f5465674453555699c1ae126ea438fe2de7e72f7f2a638888e78f556102",
-    ".claude/rules/yunie-personality.md": "d69de82522582d4100facc43285c7f00f1d9bfd6376d9bc912e2a4543d7a839e",
-    ".claude/rules/auto-learn.md": "2563588110852ede50f5372768253eb82b7f44a21f7df7adb6ba9e996640ab7a",
-    "CLAUDE.md": "b910c61ac7c9711efc00681d81dbff71c4eb07d7b2e6596c4b3ec1ab722021be",
+    ".claude/agents/designer.md": "e4fc26b6967fba418ab6da758fd9e462d16d9cd29211e4c1d4d169fb7986430a",
+    ".claude/agents/explore.md": "2a4bb46fed2eeaf2aac590f323500d63f666fe7864a3f61b2287df2c85056906",
+    ".claude/agents/implement.md": "0368a88d5a5f827cac1dbdd0cf4631a4c5b487fe73024741e1ece977871323aa",
+    ".claude/agents/plan.md": "52557a967ca5467c242c565ece1ea7480301ec62e83c620565e7f7ffeb35fee9",
+    ".claude/agents/polish.md": "7db70f5863c754fac97cd0e17df94707a6156697f5188f308887ac2711548132",
+    ".claude/agents/verify.md": "599129a9673ba9da7ceff63d3c50f37ccb799915ebe53c915eb31bc1fc2871bf",
+    ".claude/agents/yunie.md": "16317b59ee41bf5b98785446015bf474800a27294223b8a823d227ad95b775dc",
+    ".claude/agents/learn.md": "af6f988323153361e9ee7c480fdcd85c6666e876b660e098cfbf2f5344ec54a6",
+    ".claude/commands/fixbug.md": "c9115e2d5fc65c4effbc262add4606fc844a1e28ba58f8daf8275e55558857be",
+    ".claude/commands/harness.md": "b65666b6b01f48d662520525908c44f5481e518ecf15d60f066ad44df581ef09",
+    ".claude/commands/implement.md": "34f981db03d2c0731bf0964e2dc3b297816a59bfdaeed2238d56cc288cb681e7",
+    ".claude/commands/plan.md": "66a662a2bb063952c7bbb9e8a4af4dbd232fec8b7f483fb5f799e16a8e4b065a",
+    ".claude/commands/polish.md": "62a0d55010d749475efd840bd40ab1f110e15784befb9e885e251f3faad5fd54",
+    ".claude/commands/product.md": "0236eb6899a6e387f0463eb67983d721c0f5d08f1442fa6b1ff4bef8b7379ca5",
+    ".claude/commands/verify.md": "aed781134887962bacbd8f2d149f3830378dd5ec1c7a30b4143fbcbcf1f137e9",
+    ".claude/rules/custom-registry.md": "5ec8bd5f24dadf791ac82d205a0bd43142ab0e94984c2d930f30caa56ef70f70",
+    ".claude/rules/harness-workflow.md": "c406c6edb8d366fdddd16e78f6c56390440492bab33cf0d7021d13ebd7787390",
+    ".claude/rules/knowleged.md": "7894b3e5c74bfc674e8ed2a8a6982ae6af0049c95b572fbc5a322b8128fb86a8",
+    ".claude/rules/locale-i18n.md": "f314649844eecff7f2d2de76ab9e82a00a8377f7d7c351060bd4eeb95f0b2903",
+    ".claude/rules/plugin-seam.md": "a78e12207e23fd35ab6a092e9da6f4a6bbe67d82c31cbfdf18f282b7ac0a97fa",
+    ".claude/rules/product-quality.md": "49e12bdeb018ad9377f4b72b9a71fbc1e608b543f1239a563d71967fbec91fe6",
+    ".claude/rules/skill-usage.md": "2468a562078900b28432126cae33a4387aeab54f9e136ac9c1bbec536f79bb33",
+    ".claude/rules/library-rag.md": "31a9ed3a632bb0e5bad469b2de1a0f00aa7144590dc57a4b89babcfd671455ee",
+    ".claude/rules/yunie-personality.md": "ec4c88919c394cb24b2baed8e84d00f516970f1cb5e390b3031ca8ded303c09a",
+    ".claude/rules/auto-learn.md": "08a3757ffcf745749485a2e3573f0a05f6fcd0469c864a33cd5783c0d8f7708f",
+    ".claude/rules/agent-governance.md": "fa113fa942666ad73fd4c2f2e300649942fd148f5e9062e724e118074490fb36",
+    ".claude/rules/platform-seam.md": "024d798c3f5a2aa231678b52f2f9c2e89ca9c2335d8106738f21eba4ef8ea1d7",
+    "CLAUDE.md": "65b459bd626d51201672a6020698e91e8fd9e0a19ae3a4789a1030144201029a",
     ".claude/skills/claude-harness": {
       "dir": true,
-      "digest": "edd2ec078288880fab6b8f0337f60b15e31ba558d8bf2e06c24a01eba7fc16ff"
+      "digest": "68ef3fc97816b293a0870192195669eba3fc1a41ccbb85ce65c46b8053e4ec48"
     },
     ".claude/skills/custom-registry": {
       "dir": true,
-      "digest": "a25a48cbad9a67a88640732addcf5eee885a343aff9f886104bf63d3049721c7"
+      "digest": "d7999379ab9fdd610743a5bf3ff0999b9dc640fdae405e1388dd48679ad3c71f"
     },
     ".claude/skills/glass-rainbow-effects": {
       "dir": true,
-      "digest": "594b5cd5825806575048e04c5475d3c73d4ab9a8e24bdbc99110aca7c94822bd"
+      "digest": "4df5fd9854dc9ea3826e8e2f1acb374225aadaacf4eea25951c379baa6a43606"
     },
     ".claude/skills/skill-registry": {
       "dir": true,
-      "digest": "83639eb7449a0434875ef1f1a7dcb3ad378bb8241a5bb6c5ac54ee1f2471c6da"
+      "digest": "2d1b43d819fbc27e15b1a67fe5dfcc0bc4cfb29a3b420d04bf221c65fa7c2d33"
     },
     ".claude/skills/ui-design-system": {
       "dir": true,
@@ -54,11 +56,19 @@
     },
     ".claude/skills/tdd-gate": {
       "dir": true,
-      "digest": "8624463efcdf5e3a97a539273e5341d1ad8d3554735b1864584d7bd3b8d3a353"
+      "digest": "286e6e26bf33622905d2dc5eb2645ddc97c11bfad171322ec735ce36f380e2fd"
     },
     ".claude/skills/systematic-debugging": {
       "dir": true,
-      "digest": "88a41947fbc427e9653363d37df38e722f644137191a5665eb9dc8a6aba71297"
+      "digest": "665d0c7ed8c619cd2e52d397eb0f1d956b5db4dfc94b5a8f58ce3baaeb881a42"
+    },
+    ".claude/skills/auto-researcher": {
+      "dir": true,
+      "digest": "1da878bf3f177a4ca26425241c4c674eea8c58749e0c5aa2d91cb4ab53a79d2d"
+    },
+    ".claude/skills/last30days": {
+      "dir": true,
+      "digest": "cb679ded7a6f3eb18f4f7d6f263b356765405a230b1934c162ba04fddf969ed4"
     }
   },
   "hookCommands": [

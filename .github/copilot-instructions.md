@@ -27,7 +27,7 @@ Idea → Explore → Clarify → PRD → Design → Plan → Implement → Polis
 
 > **Lưu plan:** Luôn `.agent/plans/<task>/prd.md|design.md|plan.md` (thư mục/task). **CẤM flat** `.agent/plans/<task>-prd.md`. Xem `docs/harness-flow.md`.
 | **Polish** | Làm đẹp + UX | Responsive, animation, empty/error/loading states | `Polish` agent |
-| **Verify** | Đảm bảo chất lượng | build/test/lint pass, visual check | `Verify` agent |
+| **Verify** | Đảm bảo chất lượng | build/test/lint pass, visual check + **bằng chứng Pages runtime** (§7) | `Verify` agent |
 
 > **Quy tắc:** Không được nhảy từ Idea → Code. Phải qua PRD + Design + Plan. Không có Agent sẵn thì harness tự tạo process.
 > **Verify animation:** CSS `conic-gradient`/`--angle` phải đo bằng Playwright `getComputedStyle(...).getPropertyValue('--angle')` trước/sau 500ms, không chỉ nhìn (KN-003/KN-004).
@@ -39,6 +39,7 @@ Idea → Explore → Clarify → PRD → Design → Plan → Implement → Polis
 
 ### Với task nhỏ (1-2 file) thì sao?
 Vẫn phải qua pipeline nhưng **rút gọn**: Explore (quick) → Clarify (1 câu) → PRD mini (5 dòng) → Design mini (palette + layout) → Plan (3 todos) → Implement → Polish → Verify. Không bỏ Polish.
+**Làm thật, không nói suông:** PRD/Design/Plan mini phải ghi ra file `.agent/plans/<task>/` + `manage_todo_list` trước khi code. Cấm chỉ nói "đang mapping" mà không có output — user đã phải nhắc "thử lại, nhớ áp dụng harness" (chronicle 2026-09-03).
 
 ## 3. Product Quality Standard (UI/UX)
 
@@ -60,6 +61,12 @@ Mọi sản phẩm web PHẢI đạt:
 - Performance: không layout shift, image có size
 
 > Nếu giao diện xấu → **chưa được gọi là xong**, phải qua Polish phase.
+
+## 3b. Static-Site Persistence (Pages là static — nói rõ từ PRD)
+
+- Mọi nút ghi dữ liệu trên `www/` (GitHub Pages) phải chốt ngay từ PRD: lưu ở **đâu** (localStorage theo trình duyệt / commit file vào repo / Contents API + token), **F5 có giữ không**, **ai thấy** (1 trình duyệt hay mọi người).
+- Không để user phát hiện sau 2 vòng sửa (todo localStorage → đòi lưu Pages; nút Cập nhật F5 về cũ — chronicle 2026-09-03).
+- PRD phải có dòng: `Persistence: <localStorage key + TTL | repo path + workflow | API + auth> · F5: <giữ/mất> · Scope: <per-browser/global>`.
 
 ## 4. Todo-Driven Execution
 
@@ -129,6 +136,10 @@ Mọi sản phẩm web PHẢI đạt:
 - ❌ Viết script kiểu *nix trên Windows (dùng `&&`, path `\`, `.ps1` không BOM) → lỗi vặt PowerShell 5.1 (xem §5d)
 - ❌ Verify animation bằng mắt thường thay vì đo `--angle` bằng Playwright (KN-003/KN-004)
 - ❌ Sửa `www/status.json` tay thay vì regenerate từ `registry.json` (KN-002)
+- ❌ Nói "nút chạy được trên Pages" suông — phải có bằng chứng: `curl -I` CORS + `grep addEventListener` + test cache/F5 (chronicle 2026-09-03)
+- ❌ PRD trang static không ghi `Persistence · F5 · Scope` — để user phát hiện sau 2 vòng sửa (chronicle 2026-09-03)
+- ❌ Khi user nói "thử lại / vẫn lỗi / lặp lại" mà lặp nguyên output cũ — phải đổi strategy, diff file trước/sau, đo lại bằng tool
+- ❌ Ở mode YUNIE mà trả lời như Copilot thường (sai persona/ngôn ngữ) — xem `yunie.agent.md` §Identity-Mode (chronicle 2026-09-03)
 
 ---
 *Harness v2: Process > Model. Idea nhỏ → Product đẹp. Mọi model đều chạy cùng pipeline.*
