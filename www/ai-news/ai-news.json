@@ -1,12 +1,13 @@
 {
-  "generatedAt": "2026-09-02T16:07:20.815Z",
+  "generatedAt": "2026-09-03T06:51:55.809Z",
   "generatedBy": "YUNIE × Last30Days",
   "version": 2,
   "description": "Tin AI mới nhất — tổng hợp từ Last30Days (HN, GitHub, Web) trong 30 ngày qua. Chủ đề: AI. Tự động cập nhật bởi YUNIE.",
   "last30days": {
     "enabled": true,
     "topic": "AI",
-    "since": "2026-08-03",
+    "since": "2026-08-04",
+    "days": 30,
     "sources": [
       "Hacker News (Algolia, free)",
       "GitHub Search (free)",
@@ -50,253 +51,253 @@
   ],
   "articles": [
     {
-      "id": "hn-49535284",
-      "title": "Mistral now trains on user input by default, except on enterprise tier",
-      "summary": "Mistral now trains on user input by default, except on enterprise tier — 31 points, 14 comments on HN.",
+      "id": "hn-49545592",
+      "title": "Frontier Act – Federal oversight of the development of frontier AI",
+      "summary": "Frontier Act – Federal oversight of the development of frontier AI — 5 points, 1 comments on HN.",
       "source": "Hacker News",
-      "sourceUrl": "https://help.mistral.ai/en/articles/455207-can-i-opt-out-of-my-input-or-output-data-being-used-for-training",
+      "sourceUrl": "https://www.congress.gov/bill/119th-congress/house-bill/9925/text",
       "category": "products",
-      "date": "2026-09-02",
-      "hot": false,
-      "tags": [
-        "HN",
-        "AI",
-        "story",
-        "author_teekert"
-      ]
-    },
-    {
-      "id": "hn-49535163",
-      "title": "Show HN: Windrunner – AI-powered project collaboration workspace",
-      "summary": "Show HN: Windrunner – AI-powered project collaboration workspace — 7 points, 3 comments on HN.",
-      "source": "Hacker News",
-      "sourceUrl": "https://shzlw.github.io/windrunner/",
-      "category": "products",
-      "date": "2026-09-02",
-      "hot": false,
-      "tags": [
-        "HN",
-        "AI",
-        "story",
-        "author_yuegui"
-      ]
-    },
-    {
-      "id": "hn-49535300",
-      "title": "Show HN: Local Personal Financial Assistant",
-      "summary": "I built an IOS personal financial app to help user analyze their financial situation. User can easily import their bank statement from their banking app, CFO(this app) will analyze and show  charts by categories, find po — 5 points, 0 comments on HN.",
-      "source": "Hacker News",
-      "sourceUrl": "https://apps.apple.com/us/app/linggen/id6798304906",
-      "category": "safety",
-      "date": "2026-09-02",
-      "hot": false,
-      "tags": [
-        "HN",
-        "AI",
-        "story",
-        "author_linggen"
-      ]
-    },
-    {
-      "id": "hn-49536375",
-      "title": "Three sites made 215,128 \"best software\" pages for AI. Perplexity cites them",
-      "summary": "Three sites made 215,128 \"best software\" pages for AI. Perplexity cites them — 3 points, 0 comments on HN.",
-      "source": "Hacker News",
-      "sourceUrl": "https://trellner.com/reports/manufactured-sources-behind-ai-recommendations/",
-      "category": "products",
-      "date": "2026-09-02",
-      "hot": false,
-      "tags": [
-        "HN",
-        "AI",
-        "story",
-        "author_jakobgreenfeld"
-      ]
-    },
-    {
-      "id": "hn-49536310",
-      "title": "Don’t Believe Robotics Demo Videos",
-      "summary": "Don’t Believe Robotics Demo Videos — 3 points, 0 comments on HN.",
-      "source": "Hacker News",
-      "sourceUrl": "https://secondthoughts.ai/p/14-reasons-robotics-is-hard",
-      "category": "fun",
-      "date": "2026-09-02",
-      "hot": false,
-      "tags": [
-        "HN",
-        "AI",
-        "story",
-        "author_gk1"
-      ]
-    },
-    {
-      "id": "hn-49535465",
-      "title": "Show HN: Serverless reverse geocoding for WebMCP, ESP32, and RP2040",
-      "summary": "I built Galuchat, a compact reverse-geocoding system that works without an external geocoding server or API.<p>The same basic approach can be used in:<p>Browsers\nWebMCP\nESP32\nRP2040 &#x2F; RP2350\nJavaScript &#x2F; C++ &# — 3 points, 0 comments on HN.",
-      "source": "Hacker News",
-      "sourceUrl": "https://nyatla.github.io/galuchat/",
-      "category": "safety",
-      "date": "2026-09-02",
-      "hot": false,
-      "tags": [
-        "HN",
-        "AI",
-        "story",
-        "author_nyatla"
-      ]
-    },
-    {
-      "id": "hn-49535390",
-      "title": "Xfinlab – a financial intelligence API with an MCP server for AI agents",
-      "summary": "Xfinlab – a financial intelligence API with an MCP server for AI agents — 3 points, 0 comments on HN.",
-      "source": "Hacker News",
-      "sourceUrl": "https://github.com/lnanology/Xfinlab",
-      "category": "products",
-      "date": "2026-09-02",
-      "hot": false,
-      "tags": [
-        "HN",
-        "AI",
-        "story",
-        "author_lnanology"
-      ]
-    },
-    {
-      "id": "hn-49535289",
-      "title": "Autopsy of an N=1 Cybernetic Therapy: Multimodal AI for Grief (Case Report)",
-      "summary": "Autopsy of an N=1 Cybernetic Therapy: Multimodal AI for Grief (Case Report) — 3 points, 0 comments on HN.",
-      "source": "Hacker News",
-      "sourceUrl": "https://zenodo.org/records/22169978",
-      "category": "products",
-      "date": "2026-09-02",
-      "hot": false,
-      "tags": [
-        "HN",
-        "AI",
-        "story",
-        "author_poejionkyo"
-      ]
-    },
-    {
-      "id": "hn-49535272",
-      "title": "Ask HN: Where do you get your AI (technology) news?",
-      "summary": "Business&#x2F;company&#x2F;product wise is readily available.<p>I&#x27;m curious where HN gets their news for (new) AI technology.<p>It feels like every day every concept is already old, so would be nice to have 1 or a f — 3 points, 0 comments on HN.",
-      "source": "Hacker News",
-      "sourceUrl": "https://news.ycombinator.com/item?id=49535272",
-      "category": "products",
-      "date": "2026-09-02",
-      "hot": false,
-      "tags": [
-        "HN",
-        "AI",
-        "story",
-        "author_BtM909"
-      ]
-    },
-    {
-      "id": "hn-49536322",
-      "title": "Heides, deterministic code harness giving AI agents senses and judgment",
-      "summary": "Heides, deterministic code harness giving AI agents senses and judgment — 2 points, 0 comments on HN.",
-      "source": "Hacker News",
-      "sourceUrl": "https://github.com/AbduljabbarBXR/heides",
-      "category": "products",
-      "date": "2026-09-02",
-      "hot": false,
-      "tags": [
-        "HN",
-        "AI",
-        "story",
-        "author_TawResearch"
-      ]
-    },
-    {
-      "id": "gh-1336502227",
-      "title": "CopilotKit/OpenBot — Open-source AI coworkers that each get a computer of their own: a browser, files",
-      "summary": "Open-source AI coworkers that each get a computer of their own: a browser, files and tools, with every action decided before it happens and recorded after. Bring any AG-UI agent. ⭐ 3847 stars, TypeScript. ag-ui, agent-go",
-      "source": "GitHub",
-      "sourceUrl": "https://github.com/CopilotKit/OpenBot",
-      "category": "products",
-      "date": "2026-08-17",
+      "date": "2026-09-03",
       "hot": true,
       "tags": [
-        "GitHub",
-        "TypeScript",
-        "ag-ui",
-        "agent-governance"
+        "HN",
+        "AI",
+        "story",
+        "author_cco"
       ]
     },
     {
-      "id": "gh-1336933337",
-      "title": "yetone/cumora — Where agent teams gather. Cross-platform team chat where AI agents are first-cla",
-      "summary": "Where agent teams gather. Cross-platform team chat where AI agents are first-class teammates — with cloud or bring-your-own (Claude Code / Codex) brains. ⭐ 3416 stars, TypeScript. ",
-      "source": "GitHub",
-      "sourceUrl": "https://github.com/yetone/cumora",
+      "id": "hn-49546175",
+      "title": "Generative AI without guardrails can harm learning",
+      "summary": "Generative AI without guardrails can harm learning — 3 points, 0 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/40560616/",
       "category": "products",
-      "date": "2026-08-17",
+      "date": "2026-09-03",
       "hot": true,
       "tags": [
-        "GitHub",
-        "TypeScript"
+        "HN",
+        "AI",
+        "story",
+        "author_shymaple"
       ]
     },
     {
-      "id": "gh-1331135699",
-      "title": "guillaumemeyer/watermarks-remover — A privacy-first app that strips AI watermarks from content you own.",
-      "summary": "A privacy-first app that strips AI watermarks from content you own. ⭐ 20010 stars, Python. agent-skill, ai, anthropic",
-      "source": "GitHub",
-      "sourceUrl": "https://github.com/guillaumemeyer/watermarks-remover",
+      "id": "hn-49545920",
+      "title": "AI Can Help Plan a Bioweapon",
+      "summary": "AI Can Help Plan a Bioweapon — 3 points, 0 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://secondthoughts.ai/p/ai-can-help-plan-a-bioweapon-building",
       "category": "products",
-      "date": "2026-08-11",
-      "hot": true,
+      "date": "2026-09-03",
+      "hot": false,
       "tags": [
-        "GitHub",
-        "Python",
-        "agent-skill",
-        "ai"
+        "HN",
+        "AI",
+        "story",
+        "author_soltanov"
       ]
     },
     {
-      "id": "gh-1323511527",
-      "title": "KKKKhazix/human-writing — 让 AI 写的中文读起来像一个具体的人在说话。通用创作与改稿 Skill，开箱即用。",
-      "summary": "让 AI 写的中文读起来像一个具体的人在说话。通用创作与改稿 Skill，开箱即用。 ⭐ 3383 stars, Python. agent-skills, chinese-writing, creative-writing",
-      "source": "GitHub",
-      "sourceUrl": "https://github.com/KKKKhazix/human-writing",
-      "category": "products",
-      "date": "2026-08-05",
-      "hot": true,
+      "id": "hn-49545209",
+      "title": "Researchers fear safety disaster ahead of OpenAI's Astra release",
+      "summary": "Researchers fear safety disaster ahead of OpenAI's Astra release — 3 points, 1 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://www.theverge.com/ai-artificial-intelligence/988334/openai-astra-ai-monitoring-safety",
+      "category": "big-tech",
+      "date": "2026-09-03",
+      "hot": false,
       "tags": [
-        "GitHub",
-        "Python",
-        "agent-skills",
-        "chinese-writing"
+        "HN",
+        "AI",
+        "story",
+        "author_nevir"
       ]
     },
     {
-      "id": "gh-1322651268",
-      "title": "fuxicodex/Fuxi — FuXi is a fast, self-contained AI coding agent that lives in your terminal — edi",
-      "summary": "FuXi is a fast, self-contained AI coding agent that lives in your terminal — edit code, run commands, and drive tools, with cost-aware routing across LLM providers. ⭐ 3245 stars, Python. agent, ai, ai-agent",
-      "source": "GitHub",
-      "sourceUrl": "https://github.com/fuxicodex/Fuxi",
+      "id": "hn-49546419",
+      "title": "The multi-agent architecture of 2026 was designed in 1975",
+      "summary": "The multi-agent architecture of 2026 was designed in 1975 — 2 points, 0 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://mozaik.jigjoy.ai/blog/the-interoperability-triangle",
       "category": "products",
-      "date": "2026-08-04",
-      "hot": true,
+      "date": "2026-09-03",
+      "hot": false,
       "tags": [
-        "GitHub",
-        "Python",
-        "agent",
-        "ai"
+        "HN",
+        "AI",
+        "story",
+        "author_deepmem"
+      ]
+    },
+    {
+      "id": "hn-49545935",
+      "title": "What happens when your AI agent edits its own tests to pass?",
+      "summary": "What happens when your AI agent edits its own tests to pass? — 2 points, 0 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://bartholomew.info/",
+      "category": "products",
+      "date": "2026-09-03",
+      "hot": false,
+      "tags": [
+        "HN",
+        "AI",
+        "story",
+        "author_itsub_sa"
+      ]
+    },
+    {
+      "id": "hn-49545857",
+      "title": "New York City Bans AI from Elementary Schools",
+      "summary": "New York City Bans AI from Elementary Schools — 2 points, 8 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://gizmodo.com/new-york-city-bans-ai-from-elementary-schools-2000806172",
+      "category": "products",
+      "date": "2026-09-03",
+      "hot": false,
+      "tags": [
+        "HN",
+        "AI",
+        "story",
+        "author_the-mitr"
+      ]
+    },
+    {
+      "id": "hn-49545682",
+      "title": "We analyzed the code published by 29 frontier AI labs. Here's the data",
+      "summary": "We analyzed the code published by 29 frontier AI labs. Here's the data — 2 points, 0 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://opsera.ai/blog/frontier-ai-software-readiness-benchmark/",
+      "category": "products",
+      "date": "2026-09-03",
+      "hot": false,
+      "tags": [
+        "HN",
+        "AI",
+        "story",
+        "author_nassirkhan"
+      ]
+    },
+    {
+      "id": "hn-49545287",
+      "title": "WiCi One",
+      "summary": "WiCi One — 2 points, 0 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://wici.ai/wici-one",
+      "category": "products",
+      "date": "2026-09-03",
+      "hot": false,
+      "tags": [
+        "HN",
+        "AI",
+        "story",
+        "author_handfuloflight"
+      ]
+    },
+    {
+      "id": "hn-49545281",
+      "title": "Protocols for People: AI, the Internet and the IETF",
+      "summary": "Protocols for People: AI, the Internet and the IETF — 2 points, 0 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://digitalmedusa.org/protocols-for-people-ai-the-internet-and-the-ietf/",
+      "category": "products",
+      "date": "2026-09-03",
+      "hot": false,
+      "tags": [
+        "HN",
+        "AI",
+        "story",
+        "author_dannyobrien"
+      ]
+    },
+    {
+      "id": "hn-49545164",
+      "title": "GitHub: Shorter tool outputs can make coding agents more expensive",
+      "summary": "GitHub: Shorter tool outputs can make coding agents more expensive — 2 points, 0 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://github.blog/ai-and-ml/github-copilot/how-we-make-ai-coding-more-cost-efficient-without-sacrificing-task-quality/",
+      "category": "products",
+      "date": "2026-09-03",
+      "hot": false,
+      "tags": [
+        "HN",
+        "AI",
+        "story",
+        "author_lbw1215"
+      ]
+    },
+    {
+      "id": "hn-49546532",
+      "title": "Upload died on Mac air M5. Apple networking needs reboot",
+      "summary": "Upload died on Mac air M5. Apple networking needs reboot — 1 points, 0 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://frederikwouters.be/blog/have-you-tried-turning-it-off-and-on-again",
+      "category": "products",
+      "date": "2026-09-03",
+      "hot": false,
+      "tags": [
+        "HN",
+        "AI",
+        "story",
+        "author_woutersf"
+      ]
+    },
+    {
+      "id": "hn-49546521",
+      "title": "Can AI Create PLC Attacks? Yes, but It's Not That Easy Yet",
+      "summary": "Can AI Create PLC Attacks? Yes, but It's Not That Easy Yet — 1 points, 0 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://www.forescout.com/blog/can-ai-create-plc-attacks-yes-but-it%E2%80%99s-not-that-easy-yet/",
+      "category": "products",
+      "date": "2026-09-03",
+      "hot": false,
+      "tags": [
+        "HN",
+        "AI",
+        "story",
+        "author_Sentralis"
+      ]
+    },
+    {
+      "id": "hn-49546499",
+      "title": "Which AI Fetchers Send Which Headers, Measured on a Live Site",
+      "summary": "Which AI Fetchers Send Which Headers, Measured on a Live Site — 1 points, 1 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://gkoreli.com/which-ai-fetchers-send-which-headers",
+      "category": "products",
+      "date": "2026-09-03",
+      "hot": false,
+      "tags": [
+        "HN",
+        "AI",
+        "story",
+        "author_gogakoreli"
+      ]
+    },
+    {
+      "id": "hn-49545792",
+      "title": "Ask HN: A tool to share my data",
+      "summary": "Hello HN,\nAs a European citizen, I&#x27;d love a tool allowing me to easily collect and centralize data I&#x27;ve already shared with FAANG and other large US platforms, for the purpose of sharing (selling?) it to releva — 1 points, 0 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://news.ycombinator.com/item?id=49545792",
+      "category": "products",
+      "date": "2026-09-03",
+      "hot": false,
+      "tags": [
+        "HN",
+        "AI",
+        "story",
+        "author_roromainmain"
       ]
     }
   ],
   "meta": {
-    "fetchedAt": "2026-09-02T16:07:20.815Z",
+    "fetchedAt": "2026-09-03T06:51:55.809Z",
     "topic": "AI",
     "total": 15,
-    "hot": 5,
+    "hot": 2,
     "sources": [
-      "GitHub",
       "Hacker News"
-    ],
-    "sortedBy": "date-desc-hot-score"
+    ]
   }
 }
