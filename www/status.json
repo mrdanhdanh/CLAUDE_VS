@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-03T10:45:15.536Z",
+  "generatedAt": "2026-09-03T10:47:50.959Z",
   "generatedBy": "YUNIE",
   "version": 1,
   "counts": {
@@ -236,11 +236,6 @@
       "status": "ok"
     },
     {
-      "name": "focus-flow",
-      "path": "focus-flow/index.html",
-      "status": "ok"
-    },
-    {
       "name": "glassui",
       "path": "glassui/index.html",
       "status": "ok"
@@ -269,7 +264,7 @@
   "health": {
     "errors": 0,
     "status": "ok",
-    "lastCheck": "2026-09-03T10:45:15.536Z",
+    "lastCheck": "2026-09-03T10:47:50.959Z",
     "checks": [
       "get_errors: pass (0 errors)",
       "registry: 12 instructions (12 total) - 10 skills - 8 agents - 7 prompts - 1 hook — all enabled",
@@ -295,11 +290,6 @@
         "path": "ai-news/index.html",
         "title": "AI News",
         "type": "tin AI"
-      },
-      {
-        "path": "focus-flow/index.html",
-        "title": "Focus Flow",
-        "type": "demo"
       },
       {
         "path": "glassui/index.html",
@@ -410,7 +400,7 @@
       "deny": 7,
       "allow": 2,
       "status": "ok",
-      "lastCheck": "2026-09-03T10:45:15.528Z"
+      "lastCheck": "2026-09-03T10:47:50.956Z"
     },
     "credentials": {
       "count": 0,
