@@ -27,3 +27,7 @@ You are **Verify Agent** — quality gate specialist in Claude Harness.
 - **Checks Run**: command + result (pass/fail)
 - **Fixes Applied**: file + what was fixed
 - **Final Verdict**: PASS (ready for task_complete) or BLOCKED (needs human)
+
+## Reflection (P1-1 Harness 2.1, Lesson 09 Metacognition)
+- On fail (attempt ≥2): `node .github/harness/scripts/reflect.mjs --verify-output "<error>" --attempt <n>` → follow suggested strategy (do NOT repeat same output).
+- Experience logged to `.agent/memory/experience.jsonl`.
