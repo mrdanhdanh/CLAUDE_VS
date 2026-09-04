@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-03T12:19:27.302Z",
+  "generatedAt": "2026-09-03T16:45:25.921Z",
   "generatedBy": "YUNIE",
   "version": 1,
   "counts": {
@@ -225,13 +225,15 @@
     "liquid-glass-status",
     "n5-blazor",
     "n5-blazor-ladder",
+    "n5-static-polish",
     "openbot-governance",
     "openbot-governance-phase2",
     "skill-registry",
     "status-redesign",
     "status-ui-v2",
     "todo-manager",
-    "web-thuat-toan"
+    "web-thuat-toan",
+    "web-thuat-toan-v2"
   ],
   "demos": [
     {
@@ -273,7 +275,7 @@
   "health": {
     "errors": 0,
     "status": "ok",
-    "lastCheck": "2026-09-03T12:19:27.302Z",
+    "lastCheck": "2026-09-03T16:45:25.921Z",
     "checks": [
       "get_errors: pass (0 errors)",
       "registry: 13 instructions (13 total) - 10 skills - 8 agents - 7 prompts - 1 hook — all enabled",
@@ -281,7 +283,7 @@
       "workflow: www/** -> Pages (upload-artifact path: www) — exists: true",
       "library: www/library/ (PDF/DOCX/TXT/MD, BM25 <100ms, tháo lắp) + mcp-server.mjs + export.json + library-rag instruction",
       "auto-learn: 13 KN, 10 bugs, 0 drafts — suggest/log/propose/status (<50ms, IDF, tiếng Việt)",
-      "governance: audit 15 · policy 7 deny/2 allow (ok) · credentials 0 keys enc",
+      "governance: audit 18 · policy 7 deny/2 allow (ok) · credentials 0 keys enc",
       "platform: agents 3 (3 built-in, 0 remote) · mcp 2 vendors/3 grants · components 3/3 pub · routines 1/1 enabled",
       "n5-blazor: www/n5-blazor/ 7 trang static + app.css + data.js + site.js — 100% Pages"
     ]
@@ -346,54 +348,12 @@
   },
   "governance": {
     "audit": {
-      "total": 15,
-      "permitted": 13,
+      "total": 18,
+      "permitted": 16,
       "refused": 2,
       "failed": 0,
-      "lastTs": "2026-09-03T11:17:28.186Z",
+      "lastTs": "2026-09-03T16:45:22.158Z",
       "tail": [
-        {
-          "ts": "2026-09-03T11:17:20.924Z",
-          "actor": "YUNIE",
-          "tool": "shell",
-          "target": "harness-manager create instruction minimal-ladder + lean-product preset",
-          "decision": "permitted",
-          "rule": "allow-all",
-          "durationMs": null,
-          "error": null,
-          "intent": null,
-          "requestId": "21b298",
-          "prevHash": "154867d407340e0c",
-          "hash": "14c13eabcf542136"
-        },
-        {
-          "ts": "2026-09-03T11:17:28.082Z",
-          "actor": "YUNIE",
-          "tool": "edit",
-          "target": "www/library/app.js",
-          "decision": "permitted",
-          "rule": "allow-all",
-          "durationMs": null,
-          "error": null,
-          "intent": null,
-          "requestId": "6bdbad",
-          "prevHash": "14c13eabcf542136",
-          "hash": "4560fc2b5af9678d"
-        },
-        {
-          "ts": "2026-09-03T11:17:28.116Z",
-          "actor": "YUNIE",
-          "tool": "edit",
-          "target": "www/library/search.mjs",
-          "decision": "permitted",
-          "rule": "allow-all",
-          "durationMs": null,
-          "error": null,
-          "intent": null,
-          "requestId": "4ba614",
-          "prevHash": "4560fc2b5af9678d",
-          "hash": "edf4a6a85fb56507"
-        },
         {
           "ts": "2026-09-03T11:17:28.151Z",
           "actor": "YUNIE",
@@ -421,6 +381,48 @@
           "requestId": "d253bb",
           "prevHash": "ab6c76aa07c9c96a",
           "hash": "5c01c9f5a177bac6"
+        },
+        {
+          "ts": "2026-09-03T16:44:36.921Z",
+          "actor": "YUNIE",
+          "tool": "shell",
+          "target": "fix credentials key sync ~/.harness/key -> .agent/credentials.key",
+          "decision": "permitted",
+          "rule": "allow-all",
+          "durationMs": null,
+          "error": null,
+          "intent": null,
+          "requestId": "c480bd",
+          "prevHash": "5c01c9f5a177bac6",
+          "hash": "4749d461dd34e229"
+        },
+        {
+          "ts": "2026-09-03T16:45:09.152Z",
+          "actor": "YUNIE",
+          "tool": "shell",
+          "target": "cp www/library/seed.json www/library/export.json (create export.json from seed)",
+          "decision": "permitted",
+          "rule": "allow-all",
+          "durationMs": null,
+          "error": null,
+          "intent": null,
+          "requestId": "f1c567",
+          "prevHash": "4749d461dd34e229",
+          "hash": "0e0ba4bf49b0aeb5"
+        },
+        {
+          "ts": "2026-09-03T16:45:22.158Z",
+          "actor": "YUNIE",
+          "tool": "shell",
+          "target": "node .github/harness/scripts/generate-status.mjs (regenerate status.json)",
+          "decision": "permitted",
+          "rule": "allow-all",
+          "durationMs": null,
+          "error": null,
+          "intent": null,
+          "requestId": "e58dfd",
+          "prevHash": "0e0ba4bf49b0aeb5",
+          "hash": "7852d3c274a42d72"
         }
       ]
     },
@@ -429,7 +431,7 @@
       "deny": 7,
       "allow": 2,
       "status": "ok",
-      "lastCheck": "2026-09-03T12:19:27.298Z"
+      "lastCheck": "2026-09-03T16:45:25.916Z"
     },
     "credentials": {
       "count": 0,

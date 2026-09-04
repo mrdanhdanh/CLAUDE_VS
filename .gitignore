@@ -26,6 +26,11 @@ TestResults/
 .agent/credentials.key
 .agent/credentials.key.bak
 
+# ===== Reef-lite — ephemeral records/reports (local only) =====
+.agent/records/
+.agent/reports.jsonl
+# .agent/versions/ is kept (version history) — do not ignore
+
 # ===== Common =====
 node_modules/
 .DS_Store
