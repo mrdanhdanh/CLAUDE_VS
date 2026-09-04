@@ -1,9 +1,9 @@
-# Harness 2.1 — Upgrade Plan (Agentic Patterns)
+# Harness 2.1 / 2.2 — Upgrade Plan (Agentic Patterns) — DONE
 
-> **Version:** 2.1-draft · **Ngày:** 2026-09-04 · **Tác giả:** YUNIE (Your Unified Navigator for Intelligent Execution)
+> **Version:** 2.2-done · **Ngày:** 2026-09-04 · **Tác giả:** YUNIE (Your Unified Navigator for Intelligent Execution)
 > **Nguồn chính:** `AI-Agents-for-Beginners-Distilled.md` (microsoft/ai-agents-for-beginners, MIT, 2026-08-31) — 18 lessons + 00 setup (~320k chars → ~35k chars distilled, 25 chunks, BM25 <100ms) — đã import vào `www/library/export.json` (`id: ai-agents-for-beginners-distilled-md-mtlr9anf-qfnt`, 25 chunks, enabled ✅)
 > **Baseline:** Harness v2 (`.github/copilot-instructions.md`, `docs/harness-flow.md`, `docs/capabilities.md`, `docs/knowleged.md` 13 KNs)
-> **Trạng thái:** Draft — chưa implement, chờ duyệt roadmap P0/P1/P2
+> **Trạng thái:** DONE — P0 (2.1-alpha) + P1 (2.1-beta) + P2 (2.2) đã implement + verify + push (14 commits: `226590a` → `db24be7`). Eval gate PASS, setup-doctor PASS 6/6.
 
 ---
 
@@ -392,18 +392,23 @@ class TravelPlan(BaseModel): main_task: str; subtasks: List[TravelSubTask]; is_g
 
 ---
 
-## 9. Verification Checklist
+## 9. Verification Checklist — DONE (2026-09-04)
 
-- [ ] `search_library` RAG loop: query kém → tự refine → có hits (max 3 vòng, audit log đủ)
-- [ ] Tool Use: mọi tool mới có JSON Schema + approval_mode, `policy-check` pass
-- [ ] Planning: `plan-validate.mjs` pass, router điều phối đúng agent
-- [ ] Receipt: `audit.mjs verify` pass với Ed25519 + JCS, sửa 1 byte → fail
-- [ ] Multi-Agent: hand-off Implement → Polish hoạt động, visibility log đủ
-- [ ] Observability: mỗi harness run có `traceId`, `www/status.json` hiển thị metrics
-- [ ] Protocols: MCP pin version, A2A Agent Card valid, NLWeb search được
-- [ ] Context: scratchpad + compress hoạt động, không poisoning
-- [ ] Memory: working/short/long phân tầng, retrieve đúng
-- [ ] `get_errors` toàn workspace pass, `harness-manager status` pass, `www/status.json` valid JSON
+- [x] `search_library` RAG loop: query kém → tự refine → có hits (max 3 vòng) — P0-1 `226590a` (`xyzabc123` → 3 rounds, `mcp a2a` → 1 round)
+- [x] Tool Use: JSON Schema + approval_mode, `policy-check` pass — P0-2 `c6f594a` (missing/wrong-type/clamp OK)
+- [x] Planning: `plan-validate.mjs` pass, router điều phối đúng agent — P0-3 `6879b36` (legacy pass+warning, route OK)
+- [x] Receipt: `audit.mjs verify` Ed25519 + JCS, sửa 1 byte → fail — P0-4 `f9c32f7` (tamper + forged-hash đều fail)
+- [x] Multi-Agent: hand-off Implement → Polish hoạt động — P1-1 `ed5938b` (8 rules, reflect đổi strategy)
+- [x] Observability: traceId/spanId + eval gate — P1-2 `f5bf248` (trace lifecycle, eval PASS, pages.yml gate)
+- [x] Protocols: MCP 1.2.0 pin + A2A cards valid — P1-3 `c47df20` (grants OK, unknown refused, 3 cards valid)
+- [x] Context: quarantine/compress/isolate/inspect — P1-4 `b1140a4` (5 hits inspect, compress 5→1, secret reject)
+- [x] Memory: working/short/long/persona/episodic — P1-5 `89295b0` (rainbow → KN-003/004, secret redact)
+- [x] Deploy: router fast/deep + cache + lifecycle — P1-6 `92154f5` (cache hit, deploy-check OK, v1.2.0)
+- [x] MAF workflows: branching + approval + checkpoints — P2-1 `0824888` (skip polish, pause/resume, idempotent)
+- [x] CUA guardrails: 7 checks + agent-vs-actor — P2-2 `938fb4b` (read OK, submit gate, untrusted refuse)
+- [x] Local SLM: status/route/chat hybrid — P2-3 `c09dcd6` (graceful, 4 locality cases)
+- [x] Setup doctor: 6 checks PASS — P2-4 `db24be7` (node/files/mcp/env/ports/git)
+- [x] `get_errors` pass, `eval-gate --scope all` PASS, `setup-doctor` PASS 6/6, git clean
 
 ---
 

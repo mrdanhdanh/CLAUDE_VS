@@ -1,6 +1,8 @@
 ﻿# Capabilities — Toàn bộ khả năng của hệ thống
 
-> Harness v2 + Registry tháo lắp wise — VS Code Copilot Chat. Mọi customization đều là plugin.
+> Harness 2.2-done (P0+P1+P2, 14 commits) + Registry tháo lắp wise — VS Code Copilot Chat. Mọi customization đều là plugin.
+>
+> **Mới 2.1/2.2 (2026-09-04):** Agentic RAG loop · Tool hardening · Planning JSON · Receipt Ed25519 · Multi-Agent handoff · Observability traces · MCP 1.2.0 · Context pipeline · Memory tiers · Router+cache · MAF workflows · CUA guardrails · Local SLM · Setup doctor. Chi tiết: `docs/harness-2.1-upgrade.md` (DONE).
 
 ---
 
@@ -307,7 +309,7 @@ Chi tiết: `.github/instructions/product-quality.instructions.md` · `.github/i
 |-----|---------|
 | `.agent/plans/<slug>/prd.md` | PRD trace |
 | `.agent/plans/<slug>/design.md` | Design trace |
-| `.agent/plans/<slug>/plan.md` | Plan + todos trace |
+| `.agent/plans/<slug>/plan.md` | Plan + todos trace (P0-3: frontmatter `plan:` structured, validate bằng `plan-validate.mjs`) |
 | `/memories/` | User memory (cross-workspace) |
 | `/memories/repo/` | Repo memory (pattern, conventions) |
 | `/memories/session/` | Session memory (task hiện tại) |
@@ -315,9 +317,14 @@ Chi tiết: `.github/instructions/product-quality.instructions.md` · `.github/i
 | `.github/harness/presets/*.json` | Preset trace |
 | `www/status.json` | **STATUS trace** — YUNIE generate, dashboard đọc (counts, registry, health, pages) |
 | `www/index.html` | STATUS dashboard — fetch `status.json`, responsive 375/768/1280 |
+| `.agent/traces/<id>.json` | **P1-2 traces** — 1 trace/run, 1 span/phase (`trace.mjs start/span/end`, gitignore) |
+| `.agent/memory/` | **P1-5 memory tiers** — `working|short` (gitignore) + `persona|episodic` (commit), `long` = `docs/knowleged.md` (`memory.mjs`) |
+| `.agent/runs/<id>.json` | **P2-1 workflow checkpoints** — durable pause/resume (`workflow.mjs`, gitignore) |
+| `.agent/cua/evidence.jsonl` | **P2-2 CUA evidence** — action log redacted (gitignore) |
 
 - **Sau Verify PASS:** Ghi pattern quan trọng vào `/memories/repo/`.
 - **Trước khi bắt đầu task mới:** Đọc `/memories/` + `/memories/repo/`.
+- **Scripts mới 2.1/2.2:** `plan-validate` · `handoff` · `reflect` · `trace` · `eval-gate` · `deploy-check` · `agent-card` · `context` · `memory` · `workflow` · `cua-guard` · `local` · `setup-doctor` (tất cả Node 18+, 0 deps, xem `docs/harness-2.1-upgrade.md`).
 
 ---
 

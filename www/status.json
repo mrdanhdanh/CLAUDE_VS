@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-03T16:45:25.921Z",
+  "generatedAt": "2026-09-04T03:33:28.594Z",
   "generatedBy": "YUNIE",
   "version": 1,
   "counts": {
@@ -221,6 +221,20 @@
     "auto-learn",
     "custom-registry",
     "focus-flow",
+    "harness-2.1-context",
+    "harness-2.1-deploy",
+    "harness-2.1-memory",
+    "harness-2.1-multiagent",
+    "harness-2.1-observability",
+    "harness-2.1-planning",
+    "harness-2.1-protocols",
+    "harness-2.1-rag-loop",
+    "harness-2.1-receipt",
+    "harness-2.1-tool-use",
+    "harness-2.2-cua",
+    "harness-2.2-local",
+    "harness-2.2-maf",
+    "harness-2.2-setup",
     "library-rag",
     "liquid-glass-status",
     "n5-blazor",
@@ -274,17 +288,17 @@
   ],
   "health": {
     "errors": 0,
-    "status": "ok",
-    "lastCheck": "2026-09-03T16:45:25.921Z",
+    "status": "warn",
+    "lastCheck": "2026-09-04T03:33:28.594Z",
     "checks": [
       "get_errors: pass (0 errors)",
       "registry: 13 instructions (13 total) - 10 skills - 8 agents - 7 prompts - 1 hook — all enabled",
       "www: polished — responsive 375/768/1280, a11y, states, animation 150-300ms",
       "workflow: www/** -> Pages (upload-artifact path: www) — exists: true",
       "library: www/library/ (PDF/DOCX/TXT/MD, BM25 <100ms, tháo lắp) + mcp-server.mjs + export.json + library-rag instruction",
-      "auto-learn: 13 KN, 10 bugs, 0 drafts — suggest/log/propose/status (<50ms, IDF, tiếng Việt)",
+      "auto-learn: 13 KN, 11 bugs, 1 drafts — suggest/log/propose/status (<50ms, IDF, tiếng Việt)",
       "governance: audit 18 · policy 7 deny/2 allow (ok) · credentials 0 keys enc",
-      "platform: agents 3 (3 built-in, 0 remote) · mcp 2 vendors/3 grants · components 3/3 pub · routines 1/1 enabled",
+      "platform: agents 3 (3 built-in, 0 remote) · mcp 3 vendors/3 grants · components 3/3 pub · routines 1/1 enabled",
       "n5-blazor: www/n5-blazor/ 7 trang static + app.css + data.js + site.js — 100% Pages"
     ]
   },
@@ -343,8 +357,8 @@
   },
   "learn": {
     "knTotal": 13,
-    "bugsTotal": 10,
-    "drafts": 0
+    "bugsTotal": 11,
+    "drafts": 1
   },
   "governance": {
     "audit": {
@@ -431,7 +445,7 @@
       "deny": 7,
       "allow": 2,
       "status": "ok",
-      "lastCheck": "2026-09-03T16:45:25.916Z"
+      "lastCheck": "2026-09-04T03:33:28.590Z"
     },
     "credentials": {
       "count": 0,
@@ -446,7 +460,7 @@
       "remote": 0
     },
     "mcp": {
-      "vendors": 2,
+      "vendors": 3,
       "grants": 3
     },
     "components": {

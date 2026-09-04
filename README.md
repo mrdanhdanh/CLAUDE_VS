@@ -1,10 +1,12 @@
-﻿# CLAUDE HARNESS v2 — VS Code Copilot
+﻿# CLAUDE HARNESS 2.2 — VS Code Copilot
 
-> **Process > Model.** Dù GPT / Claude / Gemini đều chạy cùng pipeline. Một ý tưởng nhỏ → **sản phẩm hoàn chỉnh, giao diện đẹp** — không phụ thuộc model.
+> **Process > Model, Agent tự làm việc.** Dù GPT / Claude / Gemini đều chạy cùng pipeline. Một ý tưởng nhỏ → **sản phẩm hoàn chỉnh, giao diện đẹp** — không phụ thuộc model.
+>
+> **Mới 2.1/2.2 (2026-09-04, DONE):** Agentic RAG loop · Tool hardening · Planning JSON · Receipt Ed25519 · Multi-Agent handoff · Observability traces + eval gate · MCP 1.2.0 · Context pipeline · Memory tiers · Router+cache · MAF workflows · CUA guardrails · Local SLM hybrid · Setup doctor. Chi tiết: `docs/harness-2.1-upgrade.md`.
 
 Harness biến VS Code Copilot Chat thành **Claude Code Extension**: tự động, todo-driven, explore trước khi code, plan trước khi implement, polish trước khi done. Mọi customization (skill / rule / agent / prompt / hook) đều **tháo lắp như plugin** — bật/tắt không xóa, preset theo dự án, scaffold 1 lệnh.
 
-> **Trạng thái hiện tại (2026-09-03):** 10 skills · 13 instructions · 8 agents · 7 prompts · 1 hook — tất cả enabled · 4 presets · 13 KN · 10 bugs · 16 plans · 7 demos `www/` · `www/status.json` do YUNIE generate.
+> **Trạng thái hiện tại (2026-09-04, 2.2-done):** 10 skills · 15 instructions (+context-engineering, +cua-safety) · 8 agents · 7 prompts · 1 hook — tất cả enabled · 4 presets · 13 KN · 10 bugs · 30 plans · 7 demos `www/` · 14 scripts harness mới · MCP library 1.2.0 · `www/status.json` do YUNIE generate.
 
 ---
 
@@ -242,13 +244,15 @@ node .github/harness/scripts/auto-learn.mjs status
 
 ## Governance
 
-Audit + policy + credentials — học OpenBot, fail-closed.
+Audit + policy + credentials — học OpenBot, fail-closed. **Mới 2.1/2.2:** Receipt Ed25519 + traces + eval gate + CUA guardrails.
 
 - **Policy gate:** `node .agent/scripts/policy-check.mjs --tool <tool> --target "<target>" --actor <actor>` — deny trước allow, malformed `policy.json` → deny all. Hiện tại v2: **7 deny** (rm-rf-root, env-read, credentials-direct, private-hosts, test-mutate, destructive-sql, rm-rf-variants) + **2 allow** (read-www, all).
 - **Verifier integrity (KN-012):** test là immutable (`*.Tests.*`, `*.test.*`, `*.spec.*`, `ai-news.json`) — chỉ `verify` actor hoặc human takeover (`intent=takeover`) mới được sửa test. Sửa test để pass = reward hacking.
-- **Audit trail:** `node .agent/scripts/audit.mjs <log|tail|stats|verify>` — append-only JSONL + hash-chain (`prevHash`/`hash` SHA-256/16), secret auto-redact. `verify` phải chain OK sau mỗi session.
+- **Audit trail:** `node .agent/scripts/audit.mjs <log|tail|stats|verify|keygen|pubkey>` — append-only JSONL + hash-chain (SHA-256/16) + **receipt Ed25519 + JCS** (P0-4, sửa 1 byte → fail) + **trace linkage** (`--traceId --spanId`, P1-2), secret auto-redact. `verify` phải chain OK sau mỗi session.
 - **Credentials:** `node .agent/scripts/credentials.mjs <set|list|get|delete>` — AES-256-GCM, never logged.
 - **Take the Wheel:** human takeover khi bị refused → ghi `control_requested/taken/released` vào audit.
+- **CUA safety (P2-2):** `node .github/harness/scripts/cua-guard.mjs check --action <read|submit> --url <url> [--approve]` — 7 guardrails Lesson 15.
+- **Workflows (P2-1):** `node .github/harness/scripts/workflow.mjs <list|run|resume|status>` — branching + approval + checkpoints (`.agent/runs/`, gitignore).
 
 ---
 
@@ -265,10 +269,11 @@ AG-UI + MCP + Components + Routines — học OpenBot, file-based, 0 deps.
 
 ## Library RAG
 
-Thư viện local 0đ, BM25 <100ms — grounding cho /harness, không bịa.
+Thư viện local 0đ, BM25 <100ms — grounding cho /harness, không bịa. **Mới 2.1:** Agentic RAG loop + Tool hardening + Router/cache + MCP 1.2.0.
 
-- **UI:** `www/library/index.html` — kéo PDF/DOCX/TXT/MD vào → bấm **Xuất** tạo `export.json` (đã gitignore, cấm commit). Sách lưu localStorage + IndexedDB.
-- **AI truy cập qua MCP duy nhất:** `www/library/mcp-server.mjs` (`search_library`, `list_books`, `get_book`, `get_status`). **CẤM** `read_file`/`grep` lên `export.json` hay `books/`.
+- **UI:** `www/library/index.html` — kéo PDF/DOCX/TXT/MD vào → bấm **Xuất** tạo `export.json` (đã gitignore, cấm commit). Sách lưu localStorage + IndexedDB. Toggle **Lặp (Agentic)** cho maker-checker 3 vòng.
+- **AI truy cập qua MCP duy nhất:** `www/library/mcp-server.mjs` v1.2.0 (`search_library`, `search_library_iterative`, `list_books`, `get_book`, `get_status`). **CẤM** `read_file`/`grep` lên `export.json` hay `books/`.
+- **Modules mới:** `rag-loop.mjs` (maker-checker) · `tool-registry.mjs` (schema + approval + history) · `router.mjs` (fast/deep + locality + cache TTL 5m).
 - **Harness Explore:** `search_library({query, top_k: 5, enabled_only: true})` → đưa citation `bookName · chunk # · page · score` vào PRD/Design/Plan. Không tìm thấy → nói rõ, không bịa.
 - **CLI dev-only:** `node www/library/search.mjs "query" --top_k 5 --json` (AI cấm dùng).
 
@@ -370,7 +375,8 @@ Mở local: `www/index.html` (file://) hoặc `npx serve www` → `http://localh
 |-----|-------|
 | [`docs/knowleged.md`](docs/knowleged.md) | ⚠️ BẮT BUỘC đọc trước mọi task — 13 KN (KN-001→KN-013) + anti-patterns + checklist phòng tránh |
 | [`docs/harness-flow.md`](docs/harness-flow.md) | Sơ đồ khi dùng `/harness` — flowchart, sequence, architecture, decision, chi tiết 8 phase |
-| [`docs/capabilities.md`](docs/capabilities.md) | Toàn bộ khả năng — Harness, /fixbug, Skills(10), Instructions(13), Agents(8), Prompts(7), Registry, Presets(4), Governance, Platform, Library RAG, Minimal Ladder |
+| [`docs/capabilities.md`](docs/capabilities.md) | Toàn bộ khả năng — Harness 2.2 + Skills(10) + Instructions(15) + Agents(8) + 14 scripts mới + Governance + Library RAG 1.2.0 |
+| [`docs/harness-2.1-upgrade.md`](docs/harness-2.1-upgrade.md) | ✅ DONE — Roadmap P0/P1/P2 (14 commits) + verification checklist + citations |
 | [`docs/yunie-brain-upgrade.md`](docs/yunie-brain-upgrade.md) | YUNIE Personality v2 — GenZ + ấm áp + hài duyên, RAG citations, SSA |
 | [`.github/harness/README.md`](.github/harness/README.md) | Harness Registry — tháo lắp, preset, scaffold |
 | [`.github/skills/custom-registry/SKILL.md`](.github/skills/custom-registry/SKILL.md) | `/custom-registry` — hướng dẫn tháo lắp toàn bộ |
@@ -389,4 +395,4 @@ Mở local: `www/index.html` (file://) hoặc `npx serve www` → `http://localh
 
 ---
 
-*Harness v2 (2026-09-03): Process > Model. Idea nhỏ → Product đẹp. Mọi model đều chạy cùng pipeline. Mọi thứ đều là plugin — YUNIE trực hệ thống, www/ lên Pages. Knowledge first (`docs/knowleged.md`), TDD gate, governance fail-closed, minimal ladder.*
+*Harness 2.2 (2026-09-04, DONE): Process > Model, Agent tự làm việc. Idea nhỏ → Product đẹp. Mọi model đều chạy cùng pipeline. Mọi thứ đều là plugin — YUNIE trực hệ thống, www/ lên Pages. Knowledge first (`docs/knowleged.md`), TDD gate, governance fail-closed + Ed25519, minimal ladder. P0+P1+P2: 14 commits, eval PASS, doctor PASS.*
