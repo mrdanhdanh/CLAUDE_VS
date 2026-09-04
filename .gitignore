@@ -26,6 +26,7 @@ TestResults/
 .agent/credentials.key
 .agent/credentials.key.bak
 .agent/audit.key
+.agent/traces/
 
 # ===== Reef-lite — ephemeral records/reports (local only) =====
 .agent/records/

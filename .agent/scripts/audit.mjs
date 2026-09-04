@@ -156,6 +156,8 @@ function redactTarget(target) {
 }
 
 function canonicalHash(prevHash, e) {
+  // Keep original 10-field core for backward compat (KN-012). Trace linkage (P1-2)
+  // is covered by Ed25519 receipt (receiptPayload includes traceId/spanId), not by hash.
   const core = { ts: e.ts, actor: e.actor, tool: e.tool, target: e.target, decision: e.decision, rule: e.rule, durationMs: e.durationMs ?? null, error: e.error ?? null, intent: e.intent ?? null, requestId: e.requestId };
   return crypto.createHash('sha256').update(prevHash + '|' + JSON.stringify(core)).digest('hex').slice(0, 16);
 }
@@ -169,6 +171,10 @@ async function cmdLog(args) {
   const durationMs = args.durationMs ? Number(args.durationMs) : undefined;
   const error = args.error || null;
   const intent = args.intent || null;
+  // P1-2 Observability: trace linkage (optional, backward compat)
+  const traceId = args.traceId || args.trace || null;
+  const spanId = args.spanId || args.span || null;
+  const parentSpan = args.parentSpan || null;
 
   if (!tool || !decision) {
     console.error('Usage: audit.mjs log --tool <tool> --target <target> --decision <permitted|refused|failed> [--actor <actor>] [--rule <id>] [--durationMs <n>] [--error <msg>]');
@@ -202,6 +208,9 @@ async function cmdLog(args) {
     intent: intent || null,
     requestId: crypto.randomBytes(3).toString('hex'),
     prevHash,
+    ...(traceId ? { traceId: String(traceId).slice(0, 64) } : {}),
+    ...(spanId ? { spanId: String(spanId).slice(0, 64) } : {}),
+    ...(parentSpan ? { parentSpan: String(parentSpan).slice(0, 64) } : {}),
   };
   event.hash = canonicalHash(prevHash, event);
 

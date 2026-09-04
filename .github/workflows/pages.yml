@@ -21,7 +21,23 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
+  eval:
+    name: Offline eval gate (P1-2)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node 18
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+
+      - name: Run eval gate (www/library)
+        run: node .github/harness/scripts/eval-gate.mjs --scope www/library
+
   deploy:
+    needs: eval
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
