@@ -32,6 +32,8 @@ TestResults/
 .agent/memory/short.jsonl
 # ===== Workflows — run checkpoints (local only) =====
 .agent/runs/
+# ===== CUA — evidence (local only) =====
+.agent/cua/
 
 # ===== Reef-lite — ephemeral records/reports (local only) =====
 .agent/records/
