@@ -11,7 +11,12 @@
     "ui-design-system": true,
     "ui-ux-pro-max": true,
     "auto-researcher": true,
-    "last30days": true
+    "last30days": true,
+    "harness-web-ui": true,
+    "harness-process": true,
+    "harness-build-config": true,
+    "harness-governance": true,
+    "harness-minimal": true
   },
   "instructions": {
     "custom-registry": true,

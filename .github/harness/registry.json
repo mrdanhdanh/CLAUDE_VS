@@ -89,6 +89,51 @@
       "description": "Research what people actually say about any topic in the last 30 days. Pulls posts and engagement from Reddit, X, YouTube, TikTok, Hacker News, Polymarket, GitHub, and the web. Includes a doctor health check to diagnose broken or missing sources.",
       "file": "last30days/SKILL.md",
       "installedAt": "2026-09-02T14:05:50.606Z"
+    },
+    "harness-build-config": {
+      "source": "local",
+      "path": "skills/harness-build-config",
+      "ref": "local",
+      "enabled": true,
+      "description": "Task-agnostic lessons 'Build & Config' chưng cất từ docs/knowleged.md (2 KN: KN-008, KN-009) + .agent/bugs/. Use when task chạm build, process, dx, dotnet, config, api — áp Cách phòng tránh trước khi code, tránh lặp bug cũ. DisCo-lite, regenerate bằng distill-agnostic.mjs.",
+      "file": "harness-build-config/SKILL.md",
+      "installedAt": "2026-09-04T09:07:42.922Z"
+    },
+    "harness-governance": {
+      "source": "local",
+      "path": "skills/harness-governance",
+      "ref": "local",
+      "enabled": true,
+      "description": "Task-agnostic lessons 'Governance & Verifier Integrity' chưng cất từ docs/knowleged.md (1 KN: KN-012) + .agent/bugs/. Use when task chạm process, governance, tdd, safety, reward-hacking — áp Cách phòng tránh trước khi code, tránh lặp bug cũ. DisCo-lite, regenerate bằng distill-agnostic.mjs.",
+      "file": "harness-governance/SKILL.md",
+      "installedAt": "2026-09-04T09:07:42.922Z"
+    },
+    "harness-minimal": {
+      "source": "local",
+      "path": "skills/harness-minimal",
+      "ref": "local",
+      "enabled": true,
+      "description": "Task-agnostic lessons 'Minimal Code & YAGNI' chưng cất từ docs/knowleged.md (1 KN: KN-013) + .agent/bugs/. Use when task chạm process, minimal, ponytail, yagni, dx — áp Cách phòng tránh trước khi code, tránh lặp bug cũ. DisCo-lite, regenerate bằng distill-agnostic.mjs.",
+      "file": "harness-minimal/SKILL.md",
+      "installedAt": "2026-09-04T09:07:42.922Z"
+    },
+    "harness-process": {
+      "source": "local",
+      "path": "skills/harness-process",
+      "ref": "local",
+      "enabled": true,
+      "description": "Task-agnostic lessons 'Process & Self-Improvement' chưng cất từ docs/knowleged.md (3 KN: KN-005, KN-007, KN-010) + .agent/bugs/. Use when task chạm process, quality, ux, perf, a11y, knowledge, automation, dx, self-improving, benchmark — áp Cách phòng tránh trước khi code, tránh lặp bug cũ. DisCo-lit",
+      "file": "harness-process/SKILL.md",
+      "installedAt": "2026-09-04T09:07:42.922Z"
+    },
+    "harness-web-ui": {
+      "source": "local",
+      "path": "skills/harness-web-ui",
+      "ref": "local",
+      "enabled": true,
+      "description": "Task-agnostic lessons 'Web UI & UX' chưng cất từ docs/knowleged.md (6 KN: KN-001, KN-002, KN-003, KN-004, KN-006, KN-011) + .agent/bugs/. Use when task chạm ui, a11y, css, responsive, data, animation, spacing, i18n, theme, contrast — áp Cách phòng tránh trước khi code, tránh lặp bug cũ. DisCo-lite, ",
+      "file": "harness-web-ui/SKILL.md",
+      "installedAt": "2026-09-04T09:07:42.922Z"
     }
   },
   "instructions": {

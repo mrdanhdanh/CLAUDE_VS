@@ -1,16 +1,18 @@
 #!/usr/bin/env node
 /**
- * Library RAG Local — MCP Server (stdio) · v1.1.0 (P1-3 Harness 2.1)
+ * Library RAG Local — MCP Server (stdio) · v1.3.0 (DisCo Phase 2)
  * Tools: search_library, search_library_iterative, list_books, get_book, get_status
+ *      + search_skills, list_skills, get_skill (DisCo Phase 2 — skill router)
  * Reads: www/library/export.json (do UI nút Xuất tạo ra) hoặc path truyền vào
+ *      + .agent/skills/ + .github/skills/ (skill library multi-source, không phụ thuộc export.json)
  * Usage:
  *   node www/library/mcp-server.mjs
  *   node www/library/mcp-server.mjs --file ./www/library/export.json
  * MCP config (.vscode/mcp.json):
  *   { "servers": { "library": { "command": "node", "args": ["./www/library/mcp-server.mjs"] } } }
- * P1-3: version pin 1.1.0, output redaction (no secret leak), protocolVersion pin.
+ * P1-3: version pin, output redaction (no secret leak), protocolVersion pin.
  */
-export const MCP_SERVER_VERSION = '1.2.0';
+export const MCP_SERVER_VERSION = '1.3.0';
 
 import fs from 'node:fs';
 import path from 'node:path';
@@ -18,6 +20,7 @@ import { fileURLToPath } from 'node:url';
 import { agenticSearch } from './rag-loop.mjs';
 import { validateParams, normalizeArgs, pushHistory } from './tool-registry.mjs';
 import { routeQuery, cacheGet, cacheSet, cacheKey } from './router.mjs';
+import { listSkills, getSkill, searchSkills } from './skill-router.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
@@ -191,6 +194,35 @@ const TOOLS = [
       },
       required: ['query']
     }
+  },
+  {
+    name: 'search_skills',
+    description: 'Tìm skill đã distill (DisCo) — BM25-lite, progressive disclosure: chỉ trả metadata top-k (slug, score, verdict, gaps), KHÔNG trả full content. Dùng get_skill để mở skill cần.',
+    inputSchema: {
+      type: 'object',
+      properties: {
+        query: { type:'string', description:'Câu truy vấn (vd: rainbow border, etl pipeline)' },
+        top_k: { type:'number', description:'Số skill tối đa (1-20, mặc định 5)', default:5 }
+      },
+      required: ['query']
+    }
+  },
+  {
+    name: 'list_skills',
+    description: 'Liệt kê toàn bộ skill đã distill trong .agent/skills/ + .github/skills/ (slug, capabilities, verdict, gaps).',
+    inputSchema: { type:'object', properties:{}, required:[] }
+  },
+  {
+    name: 'get_skill',
+    description: 'Lấy chi tiết 1 skill theo slug: record.json (checks/gaps) + SKILL.md/evidence.md nếu include_content.',
+    inputSchema: {
+      type:'object',
+      properties:{
+        slug: { type:'string', description:'Slug của skill (vd: rainbow-border-khong-xoay)' },
+        include_content: { type:'boolean', description:'Có trả SKILL.md + evidence.md không (mặc định false)', default:false }
+      },
+      required:['slug']
+    }
   }
 ];
 
@@ -252,6 +284,52 @@ function handleMessage(msg){
       return;
     }
     const norm = normalizeArgs(name, v.normalized);
+    // DisCo Phase 2: skill tools — KHÔNG phụ thuộc export.json, dispatch trước loadData
+    const SKILL_TOOLS = new Set(['search_skills', 'list_skills', 'get_skill']);
+    if (SKILL_TOOLS.has(name)) {
+      const tSkill = Date.now();
+      try {
+        let result;
+        if (name === 'search_skills') {
+          const r = searchSkills(norm.query, { top_k: norm.top_k });
+          result = {
+            query: r.query,
+            hits: redactHits(r.hits),
+            total: r.total,
+            hint: r.hint || null,
+            progressive_disclosure: 'Chỉ trả metadata top-k — dùng get_skill để mở skill cần.'
+          };
+        } else if (name === 'list_skills') {
+          const skills = listSkills().map(s => ({
+            slug: s.slug, name: s.name, description: s.description,
+            capabilities: s.capabilities, gaps: s.gaps, verdict: s.verdict,
+            generatedAt: s.generatedAt, path: s.path
+          }));
+          result = {
+            total: skills.length,
+            skills,
+            dir: '.agent/skills/ + .github/skills/',
+            hint: skills.length === 0 ? 'Thư viện skill rỗng — chạy auto-researcher.mjs --task "..." --distill (task-oriented) hoặc distill-agnostic.mjs (task-agnostic) để sinh skill.' : null
+          };
+        } else if (name === 'get_skill') {
+          const s = getSkill(norm.slug, { include_content: norm.include_content === true });
+          if (s.skillMd) s.skillMd = redactOutput(s.skillMd);
+          if (s.evidence) s.evidence = redactOutput(s.evidence);
+          result = s;
+        }
+        pushHistory({ tool: name, args: norm, timestamp: tSkill, durationMs: Date.now()-tSkill, success: true });
+        send({ jsonrpc:'2.0', id, result:{
+          content:[{ type:'text', text: JSON.stringify(result, null, 2) }]
+        }});
+      } catch (e) {
+        pushHistory({ tool: name, args: norm, timestamp: tSkill, durationMs: Date.now()-tSkill, success: false, error: e.message });
+        send({ jsonrpc:'2.0', id, result:{
+          content:[{ type:'text', text:`Lỗi: ${e.message}` }],
+          isError:true
+        }});
+      }
+      return;
+    }
     const data = loadData();
     if(data._missing){
       send({ jsonrpc:'2.0', id, result:{

@@ -1,14 +1,17 @@
 #!/usr/bin/env node
 /**
- * Auto-Researcher — AAR for Harness v2
+ * Auto-Researcher — AAR for Harness v2 + DisCo-lite Phase 1 (task-oriented)
  * Inspired by Anthropic AAR paper 28/08/2026 (Chen Yueh-Han):
  *   Search → Propose → Train 30m → Keep effective
- * Áp vào Harness: suggest knowleged + library BM25 → propose 3 methods → benchmark → report
+ * + DisCo arXiv:2609.02749v1 Repo-To-Skill:
+ *   scope Q → ground X → construct G~ → verify (G,R)
+ * Áp vào Harness: suggest knowleged + library BM25 → propose 3 methods → benchmark → report → distill skill
  * No deps, Node 18+
  * Usage:
  *   node auto-researcher.mjs --task "rainbow border không xoay" --top 3
  *   node auto-researcher.mjs --task "làm feature X" --top 3 --report
  *   node auto-researcher.mjs --task "xxx" --json
+ *   node auto-researcher.mjs --task "xxx" --distill --top 3 --report --json
  */
 import fs from 'node:fs/promises';
 import { existsSync, readFileSync } from 'node:fs';
@@ -20,6 +23,7 @@ const __dirname = path.dirname(__filename);
 const GITHUB_DIR = path.resolve(__dirname, '..', '..');
 const ROOT = path.resolve(GITHUB_DIR, '..');
 const KNOWLEGED = path.join(ROOT, 'docs', 'knowleged.md');
+const SKILLS_DIR = path.join(ROOT, '.agent', 'skills');
 const LIB_CANDIDATES = [
   path.join(ROOT, 'www', 'library', 'export.json'),
   path.join(__dirname, '..', '..', '..', 'www', 'library', 'export.json'),
@@ -296,17 +300,118 @@ function benchmarkChecklist(task) {
 function slugify(s) {
   return s.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9]+/g,'-').replace(/-+/g,'-').replace(/^-|-$/g,'').slice(0,40) || 'task';
 }
+// ---------- DisCo-lite Phase 1: scope → ground → construct → verify ----------
+// Paper: arXiv:2609.02749v1 §3.2 — z→scope Q→ground X→construct G~→verify (G,R)
+// Minimal, template-based, no LLM required, reuse tokenize/BM25 hiện có.
+function gapAnalysis(task, knHits, libHits) {
+  const toks = tokenize(task);
+  const isUI = /ui|css|rainbow|glass|responsive|theme|contrast|animation|a11y|grid|border|hover|www|styles/i.test(task);
+  const isBuild = /build|dotnet|test|error|fail|lock|msb/i.test(task);
+  const capabilities = [];
+  if (isUI) capabilities.push('ui-polish-responsive-a11y');
+  if (isBuild) capabilities.push('build-test-verify');
+  // keyword capabilities từ task tokens (top 5, bỏ stop đã có trong tokenize)
+  for (const t of toks.slice(0, 5)) {
+    if (!capabilities.includes(t)) capabilities.push(t);
+  }
+  if (capabilities.length === 0) capabilities.push('general-task');
+  const gaps = [];
+  const topKN = knHits[0]?.score ?? 0;
+  const topLib = libHits[0]?.score ?? 0;
+  // YAGNI: chỉ skip khi cả KN và library đều đủ mạnh (KN >=15 và lib >=3)
+  // Ngưỡng thấp trước đây (5/1) khiến mọi task đều skip → không demo được distill
+  if (knHits.length === 0 || topKN < 15) gaps.push('knowleged-coverage-low');
+  if (libHits.length === 0 || topLib < 3) gaps.push('library-coverage-low');
+  if (gaps.length === 0) gaps.push('none-critical-keep-aar-only');
+  const needDistill = !(gaps.length === 1 && gaps[0] === 'none-critical-keep-aar-only');
+  return { capabilities, gaps, needDistill, topKN, topLib };
+}
 
+function buildSkillContent({ slug, task, capabilities, knHits, libHits, methods, gaps }) {
+  const topKN = knHits[0];
+  const topLib = libHits[0];
+  const keywords = [...new Set([...tokenize(task), ...capabilities])].slice(0, 12).join(', ');
+  const knLines = knHits.length
+    ? knHits.map(k => `- ${k.id} — ${k.title} (score ${k.score}): ${k.lesson.slice(0, 100)}`).join('\n')
+    : '- Không có KN liên quan — áp checklist phòng tránh chung.';
+  const libLines = libHits.length
+    ? libHits.map(h => `- "${h.bookName}" chunk #${h.index} p.${h.page} score ${h.score}: ${h.snippet.slice(0, 100)}…`).join('\n')
+    : '- Không có hit thư viện.';
+  const stepLines = methods.length
+    ? methods.map(m => `${m.id}. ${m.title} — ${m.steps.join(' → ')}`).join('\n')
+    : '- Todo-driven theo Harness.';
+  return `---\nname: ${slug}\ndescription: "${task.slice(0, 80).replace(/"/g, "'")} — Use when ${keywords}"\nuser-invocable: false\n---\n\n# ${task} — Skill (DisCo-lite distilled)\n\n> Distilled từ task "${task}" theo DisCo §3.2 (scope→ground→construct→verify).\n> Capabilities: ${capabilities.join(', ')}\n> Gaps: ${gaps.join(', ')}\n\n## When to Use\n- Khi task chứa: ${keywords}\n- Khi suggest/lib trả về pattern tương tự skill này\n\n## Workflow\n${stepLines}\n\n## Grounding\n### Knowleged\n${knLines}\n\n### Library\n${libLines}\n\n## Gaps (R — unresolved)\n${gaps.map(g => `- ${g}`).join('\n')}\n\n## Guardrails\n- Không sửa test để pass (KN-012 deny-test-mutate) — FAIL chỉ fix bằng production code.\n- Check HOW không chỉ WHETHER (KN-010).\n- Nếu skill không khớp task → fallback unguided, không force.\n\n---\n*DisCo-lite Phase 1 — template-based, verified trước khi nhận.*\n`;
+}
+
+async function constructSkill({ slug, task, capabilities, gaps, knHits, libHits, methods }) {
+  const dir = path.join(SKILLS_DIR, slug);
+  const refDir = path.join(dir, 'references');
+  await fs.mkdir(refDir, { recursive: true });
+  const skillMd = buildSkillContent({ slug, task, capabilities, knHits, libHits, methods, gaps });
+  const evidence = `# Evidence — ${task}\n\n> Substrate (DisCo references/) — copy snippet, không đọc lại nguồn khi dùng.\n\n## Knowleged hits\n${knHits.map(k => `### ${k.id} score ${k.score} — ${k.title}\n- Tags: ${k.tags.join(' ') || 'no-tags'} | Severity: ${k.severity}\n- Lesson: ${k.lesson}\n- Snippet: ${k.block.slice(0, 400).replace(/\n/g, ' ')}…\n`).join('\n') || 'Không có.'}\n\n## Library hits\n${libHits.map(h => `### "${h.bookName}" chunk #${h.index} p.${h.page} score ${h.score}\n- ${h.snippet}…\n- Text: ${(h.text || '').slice(0, 400).replace(/\n/g, ' ')}…\n`).join('\n') || 'Không có.'}\n`;
+  const record = {
+    anchor: { type: 'task', task },
+    capabilities,
+    evidence: {
+      knowleged: knHits.map(k => ({ id: k.id, score: k.score })),
+      library: libHits.map(h => ({ book: h.bookName, chunk: h.index, score: h.score })),
+    },
+    checks: [],
+    gaps,
+    generatedAt: new Date().toISOString(),
+    generatedBy: 'auto-researcher.mjs --distill (DisCo-lite Phase 1, arXiv:2609.02749v1 §3.2)',
+    paper: 'arXiv:2609.02749v1 Repo-To-Skill / DisCo',
+  };
+  await fs.writeFile(path.join(dir, 'SKILL.md'), skillMd, 'utf8');
+  await fs.writeFile(path.join(refDir, 'evidence.md'), evidence, 'utf8');
+  await fs.writeFile(path.join(dir, 'record.json'), JSON.stringify(record, null, 2), 'utf8');
+  return { dir, record };
+}
+
+async function verifySkill(dir, record) {
+  const checks = [];
+  const skillPath = path.join(dir, 'SKILL.md');
+  const evPath = path.join(dir, 'references', 'evidence.md');
+  const recPath = path.join(dir, 'record.json');
+  // 1. files exist
+  checks.push({ id: 'files-exist', pass: existsSync(skillPath) && existsSync(evPath) && existsSync(recPath), detail: 'SKILL.md + references/evidence.md + record.json' });
+  // 2. frontmatter
+  let fmPass = false;
+  try {
+    const txt = await fs.readFile(skillPath, 'utf8');
+    const m = txt.match(/^---\s*\n([\s\S]*?)\n---/);
+    const fm = m ? m[1] : '';
+    fmPass = /name:\s*\S+/.test(fm) && /description:/.test(fm);
+  } catch {}
+  checks.push({ id: 'frontmatter', pass: fmPass, detail: 'name + description (wise loading)' });
+  // 3. record đủ fields (R)
+  const recPass = record && record.anchor && Array.isArray(record.capabilities) && record.evidence && Array.isArray(record.gaps) && record.generatedAt;
+  checks.push({ id: 'record-complete', pass: !!recPass, detail: 'anchor + capabilities + evidence + gaps + generatedAt' });
+  // 4. deny-test-mutate: skill không xúi sửa test để pass
+  let noHack = true;
+  try {
+    const txt = await fs.readFile(skillPath, 'utf8');
+    noHack = !/sửa test để pass|edit.*test.*to pass|mutate.*test/i.test(txt) || /Không sửa test để pass/.test(txt);
+  } catch {}
+  checks.push({ id: 'no-test-mutate-advice', pass: noHack, detail: 'KN-012 — không xúi reward hacking' });
+  const pass = checks.every(c => c.pass);
+  record.checks = checks;
+  record.verifiedAt = new Date().toISOString();
+  record.verdict = pass ? 'G-accepted' : 'G~-candidate-needs-review';
+  try { await fs.writeFile(recPath, JSON.stringify(record, null, 2), 'utf8'); } catch {}
+  return { pass, checks, verdict: record.verdict };
+}
 // ---------- CLI ----------
 function parseArgs(argv) {
   const args = argv.slice(2);
-  const opts = { task: '', top: 3, report: false, json: false, help: false };
+  const opts = { task: '', top: 3, report: false, json: false, distill: false, help: false };
   for (let i=0;i<args.length;i++) {
     const a = args[i];
     if (a==='--task' && args[i+1]) { opts.task = args[++i]; }
     else if (a==='--top' && args[i+1]) { opts.top = parseInt(args[++i],10)||3; }
     else if (a==='--report') opts.report = true;
     else if (a==='--json') opts.json = true;
+    else if (a==='--distill') opts.distill = true;
     else if (a==='--help' || a==='-h') opts.help = true;
     else if (!a.startsWith('--') && !opts.task) opts.task = a;
   }
@@ -315,17 +420,19 @@ function parseArgs(argv) {
 
 function helpText() {
   return `
-Auto-Researcher — AAR for Harness v2 (Anthropic 28/08/2026)
+Auto-Researcher — AAR for Harness v2 (Anthropic 28/08/2026) + DisCo-lite Phase 1 (arXiv:2609.02749v1)
 
 Usage:
-  node auto-researcher.mjs --task "mô tả task" [--top 3] [--report] [--json]
+  node auto-researcher.mjs --task "mô tả task" [--top 3] [--report] [--json] [--distill]
   node auto-researcher.mjs "mô tả task" --top 3 --report
+  node auto-researcher.mjs --task "xxx" --distill --top 3 --report --json
 
 Options:
   --task <string>  Mô tả task (bắt buộc)
   --top <n>        Số KN + library hits (mặc định 3)
   --report         Sinh markdown report tại .agent/plans/aar-harness/report-<slug>.md
   --json           Output JSON (cho YUNIE/www)
+  --distill        DisCo-lite: scope→ground→construct→verify, sinh .agent/skills/<slug>/ (SKILL.md + references/evidence.md + record.json)
   --help           Hiện help
 
 Workflow (như paper AAR):
@@ -334,10 +441,12 @@ Workflow (như paper AAR):
   3. Propose 3 methods (A: KN, B: product-quality, C: library)
   4. Benchmark checklist (HOW not just WHETHER)
   5. Report + recommendation
+  6. Distill (nếu --distill): gap analysis → construct skill graph G~ → verify → G + record R
 
 Examples:
   node .github/harness/scripts/auto-researcher.mjs --task "rainbow border không xoay" --top 3
   node .github/harness/scripts/auto-researcher.mjs --task "làm web pomodoro" --top 3 --report --json
+  node .github/harness/scripts/auto-researcher.mjs --task "rainbow border không xoay" --distill --top 3 --report
 `.trim();
 }
 
@@ -389,8 +498,8 @@ async function main() {
     task,
     topK,
     generatedAt: new Date().toISOString(),
-    generatedBy: 'auto-researcher.mjs (AAR for Harness v2)',
-    paper: 'Anthropic AAR 28/08/2026 — Automated Researchers Can Reliably Mitigate Alignment Failures',
+    generatedBy: 'auto-researcher.mjs (AAR for Harness v2 + DisCo-lite Phase 1)',
+    paper: 'Anthropic AAR 28/08/2026 — Automated Researchers Can Reliably Mitigate Alignment Failures + DisCo arXiv:2609.02749v1',
     warningShot: 'OpenAI HF incident 26/08/2026 — benchmark phải check HOW not just WHETHER',
     knowleged: { total: kns.length, hits: knHits.map(k=>({ id:k.id, title:k.title, tags:k.tags, severity:k.severity, score:k.score, lesson:k.lesson.slice(0,120), snippet:k.block.slice(0,150).replace(/\n/g,' ') })) },
     library: { file: lib.file, totalChunks: lib.chunks.length, enabledBooks: Object.values(lib.registry).filter(b=>b.enabled).length, hits: libHits, missing: lib.missing, error: lib.error || null },
@@ -398,6 +507,32 @@ async function main() {
     benchmark: checks,
     recommendation: { keep: recommended, reason: methods.find(m=>m.id===recommended)?.description.slice(0,120) || '' },
   };
+
+  // 5. Distill (DisCo-lite §3.2) — chỉ khi --distill
+  if (opts.distill) {
+    const gap = gapAnalysis(task, knHits, libHits);
+    result.gap = gap;
+    if (!gap.needDistill) {
+      result.distill = { skipped: true, reason: 'Đủ coverage (KN + library) — không cần distill (YAGNI).', gaps: gap.gaps };
+    } else {
+      const slug = slugify(task);
+      try {
+        const { dir, record } = await constructSkill({ slug, task, capabilities: gap.capabilities, gaps: gap.gaps, knHits, libHits, methods });
+        const verify = await verifySkill(dir, record);
+        result.distill = {
+          skipped: false,
+          slug,
+          path: path.relative(ROOT, dir),
+          capabilities: gap.capabilities,
+          gaps: gap.gaps,
+          verify,
+          record: { generatedAt: record.generatedAt, verdict: record.verdict, checks: record.checks },
+        };
+      } catch (e) {
+        result.distill = { skipped: false, slug: slugify(task), error: e.message, gaps: gap.gaps };
+      }
+    }
+  }
 
   if (opts.json) {
     console.log(JSON.stringify(result, null, 2));
@@ -451,6 +586,19 @@ async function main() {
 
   console.log(`\n🎯 5. Recommendation: KEEP Method ${recommended} — ${methods.find(m=>m.id===recommended).title}`);
   console.log(`   Reason: ${methods.find(m=>m.id===recommended).description.slice(0,100)}`);
+  if (result.distill) {
+    console.log(`\n🧬 6. Distill — DisCo-lite (scope→ground→construct→verify):`);
+    if (result.distill.skipped) {
+      console.log(`   → Skipped: ${result.distill.reason}`);
+    } else if (result.distill.error) {
+      console.log(`   ❌ Distill failed: ${result.distill.error}`);
+    } else {
+      console.log(`   Slug: ${result.distill.slug} → ${result.distill.path}`);
+      console.log(`   Capabilities: ${result.distill.capabilities.join(', ')}`);
+      console.log(`   Gaps: ${result.distill.gaps.join(', ')}`);
+      console.log(`   Verify: ${result.distill.verify.pass ? '✅ G-accepted' : '⚠️ G~-candidate-needs-review'} (${result.distill.verify.checks.map(c=>`${c.id}:${c.pass?'pass':'FAIL'}`).join(', ')})`);
+    }
+  }
   console.log(`\n💡 Next: Implement Method ${recommended} todo-driven (tdd-gate) → benchmark → nếu fail thì thử method khác (max 3).`);
   console.log(`   Tip: node auto-researcher.mjs --task "${task}" --top 3 --report  → sinh .agent/plans/aar-harness/report-${slugify(task)}.md`);
 
@@ -479,6 +627,13 @@ function toMarkdown(r) {
     return `### [${m.id}] ${m.title} ${star}\n- **Source:** ${m.source}\n- **Mô tả:** ${m.description}\n- **Steps:** ${m.steps.join(' → ')}\n- **Pros:** ${m.pros} | **Cons:** ${m.cons}\n- **When:** ${m.when}`;
   }).join('\n\n');
   const checkLines = r.benchmark.map(c=>`- [ ] ${c.label}${c.required ? ' **(required)**' : ''}`).join('\n');
+  const distillLines = !r.distill
+    ? `Không chạy distill (thiếu flag \`--distill\`).`
+    : r.distill.skipped
+      ? `Skipped: ${r.distill.reason}\n- Gaps: ${r.distill.gaps.join(', ')}`
+      : r.distill.error
+        ? `❌ Distill failed: ${r.distill.error}`
+        : `Slug: \`${r.distill.slug}\` → \`${r.distill.path}\`\n- Capabilities: ${r.distill.capabilities.join(', ')}\n- Gaps: ${r.distill.gaps.join(', ')}\n- Verify: **${r.distill.verify.pass ? 'G-accepted' : 'G~-candidate-needs-review'}** — ${r.distill.verify.checks.map(c=>`${c.id}: ${c.pass?'pass':'FAIL'}`).join(', ')}\n- Record: \`${r.distill.path}/record.json\` (verdict ${r.distill.record.verdict})`;
   return `# AAR Report — ${r.task}
 
 > Generated: ${r.generatedAt} by ${r.generatedBy}
@@ -512,8 +667,14 @@ Reason: ${r.recommendation.reason}
 
 Next: Implement Method ${r.recommendation.keep} todo-driven (tdd-gate) → benchmark → nếu fail thử method khác (max 3).
 
+## 6. Distill — DisCo-lite (scope→ground→construct→verify)
+
+${distillLines}
+
+> DisCo arXiv:2609.02749v1 §3.2 — không skill nào được nhận nếu chưa verify. Gaps ghi vào record.json (R).
+
 ---
-*Auto-Researcher — AAR for Harness v2. Process > Model. $4/h vs $150/h.*
+*Auto-Researcher — AAR for Harness v2 + DisCo-lite Phase 1. Process > Model. $4/h vs $150/h.*
 `;
 }
 

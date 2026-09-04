@@ -11,7 +11,12 @@
     "tdd-gate": true,
     "systematic-debugging": true,
     "auto-researcher": true,
-    "last30days": false
+    "last30days": false,
+    "harness-web-ui": true,
+    "harness-process": true,
+    "harness-build-config": true,
+    "harness-governance": true,
+    "harness-minimal": true
   },
   "instructions": {
     "custom-registry": true,

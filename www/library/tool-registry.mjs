@@ -61,6 +61,38 @@ export const TOOL_SCHEMAS = [
     approval_mode: 'never_require',
     description: 'Thống kê thư viện.',
     inputSchema: { type: 'object', properties: {}, required: [] }
+  },
+  {
+    name: 'search_skills',
+    approval_mode: 'never_require',
+    description: 'Tìm skill đã distill (DisCo Phase 2) — BM25-lite, progressive disclosure (chỉ trả metadata top-k, không trả full content).',
+    inputSchema: {
+      type: 'object',
+      properties: {
+        query: { type: 'string', description: 'Câu truy vấn', minLength: 1 },
+        top_k: { type: 'number', description: 'Số skill tối đa (1-20)', minimum: 1, maximum: 20, default: 5 }
+      },
+      required: ['query']
+    }
+  },
+  {
+    name: 'list_skills',
+    approval_mode: 'never_require',
+    description: 'Liệt kê toàn bộ skill đã distill trong .agent/skills/.',
+    inputSchema: { type: 'object', properties: {}, required: [] }
+  },
+  {
+    name: 'get_skill',
+    approval_mode: 'never_require',
+    description: 'Lấy chi tiết 1 skill theo slug (SKILL.md + record.json, kèm content nếu cần).',
+    inputSchema: {
+      type: 'object',
+      properties: {
+        slug: { type: 'string', description: 'Slug của skill', minLength: 1 },
+        include_content: { type: 'boolean', description: 'Có trả SKILL.md + evidence.md không', default: false }
+      },
+      required: ['slug']
+    }
   }
 ];
 
@@ -73,7 +105,8 @@ const ALIASES = {
   maxRounds: ['max_rounds', 'maxRounds'],
   minHits: ['min_hits', 'minHits'],
   minScore: ['min_score', 'minScore'],
-  include_chunks: ['includeChunks', 'include_chunks']
+  include_chunks: ['includeChunks', 'include_chunks'],
+  include_content: ['includeContent', 'include_content']
 };
 // Reverse: alias -> canonical
 const REVERSE_ALIAS = {};

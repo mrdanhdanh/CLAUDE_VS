@@ -1,0 +1,67 @@
+{
+  "task": "task-agnostic: web-ui",
+  "form": "task-agnostic",
+  "anchor": {
+    "knowleged": [
+      "KN-001",
+      "KN-002",
+      "KN-003",
+      "KN-004",
+      "KN-006",
+      "KN-011"
+    ],
+    "bugs": [
+      ".agent/bugs/2026-08-29-modal-esc/bug.md",
+      ".agent/bugs/2026-08-29-status-ui/bug.md",
+      ".agent/bugs/2026-08-29-rainbow-animated/bug.md",
+      ".agent/bugs/2026-08-30-grid2-rainbow-hover/bug.md",
+      ".agent/bugs/2026-08-30-n5-ui-polish/bug.md",
+      ".agent/bugs/2026-08-31-random-step-btn-disabled/bug.md"
+    ]
+  },
+  "capabilities": [
+    "ui",
+    "a11y",
+    "css",
+    "responsive",
+    "data",
+    "animation",
+    "spacing",
+    "i18n",
+    "theme",
+    "contrast",
+    "state",
+    "ux",
+    "button"
+  ],
+  "evidence": [
+    ".agent/bugs/2026-08-29-modal-esc/bug.md",
+    ".agent/bugs/2026-08-29-status-ui/bug.md",
+    ".agent/bugs/2026-08-29-rainbow-animated/bug.md",
+    ".agent/bugs/2026-08-30-grid2-rainbow-hover/bug.md",
+    ".agent/bugs/2026-08-30-n5-ui-polish/bug.md",
+    ".agent/bugs/2026-08-31-random-step-btn-disabled/bug.md"
+  ],
+  "checks": [
+    {
+      "id": "files-exist",
+      "pass": true
+    },
+    {
+      "id": "frontmatter",
+      "pass": true
+    },
+    {
+      "id": "record-complete",
+      "pass": true
+    },
+    {
+      "id": "no-test-mutate-advice",
+      "pass": true
+    }
+  ],
+  "gaps": [],
+  "verdict": "G-accepted",
+  "generatedAt": "2026-09-04T09:13:35.831Z",
+  "paper": "DisCo arXiv:2609.02749v1 §3.2 (task-agnostic)"
+}

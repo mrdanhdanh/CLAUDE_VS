@@ -1,12 +1,12 @@
 {
-  "generatedAt": "2026-09-04T03:45:38.516Z",
+  "generatedAt": "2026-09-04T09:17:19.340Z",
   "generatedBy": "YUNIE",
   "version": 1,
   "counts": {
     "skills": {
-      "enabled": 10,
+      "enabled": 15,
       "disabled": 0,
-      "total": 10
+      "total": 15
     },
     "instructions": {
       "enabled": 15,
@@ -70,6 +70,26 @@
       "last30days": {
         "enabled": true,
         "description": "Research what people actually say about any topic in the last 30 days. Pulls posts and engagement from Reddit, X, YouTube, TikTok, Hacker News, Polymarket, GitHub, and the web. Includes a doctor health check to diagnose broken or missing sources."
+      },
+      "harness-build-config": {
+        "enabled": true,
+        "description": "Task-agnostic lessons 'Build & Config' chưng cất từ docs/knowleged.md (2 KN: KN-008, KN-009) + .agent/bugs/. Use when task chạm build, process, dx, dotnet, config, api — áp Cách phòng tránh trước khi code, tránh lặp bug cũ. DisCo-lite, regenerate bằng distill-agnostic.mjs."
+      },
+      "harness-governance": {
+        "enabled": true,
+        "description": "Task-agnostic lessons 'Governance & Verifier Integrity' chưng cất từ docs/knowleged.md (1 KN: KN-012) + .agent/bugs/. Use when task chạm process, governance, tdd, safety, reward-hacking — áp Cách phòng tránh trước khi code, tránh lặp bug cũ. DisCo-lite, regenerate bằng distill-agnostic.mjs."
+      },
+      "harness-minimal": {
+        "enabled": true,
+        "description": "Task-agnostic lessons 'Minimal Code & YAGNI' chưng cất từ docs/knowleged.md (1 KN: KN-013) + .agent/bugs/. Use when task chạm process, minimal, ponytail, yagni, dx — áp Cách phòng tránh trước khi code, tránh lặp bug cũ. DisCo-lite, regenerate bằng distill-agnostic.mjs."
+      },
+      "harness-process": {
+        "enabled": true,
+        "description": "Task-agnostic lessons 'Process & Self-Improvement' chưng cất từ docs/knowleged.md (3 KN: KN-005, KN-007, KN-010) + .agent/bugs/. Use when task chạm process, quality, ux, perf, a11y, knowledge, automation, dx, self-improving, benchmark — áp Cách phòng tránh trước khi code, tránh lặp bug cũ. DisCo-lit"
+      },
+      "harness-web-ui": {
+        "enabled": true,
+        "description": "Task-agnostic lessons 'Web UI & UX' chưng cất từ docs/knowleged.md (6 KN: KN-001, KN-002, KN-003, KN-004, KN-006, KN-011) + .agent/bugs/. Use when task chạm ui, a11y, css, responsive, data, animation, spacing, i18n, theme, contrast — áp Cách phòng tránh trước khi code, tránh lặp bug cũ. DisCo-lite, "
       }
     },
     "instructions": {
@@ -228,6 +248,9 @@
     "ai-news-search",
     "auto-learn",
     "custom-registry",
+    "disco-phase1",
+    "disco-phase2",
+    "disco-phase3",
     "focus-flow",
     "harness-2.1-context",
     "harness-2.1-deploy",
@@ -297,18 +320,18 @@
   "health": {
     "errors": 0,
     "status": "warn",
-    "lastCheck": "2026-09-04T03:45:38.516Z",
+    "lastCheck": "2026-09-04T09:17:19.340Z",
     "checks": [
       "get_errors: pass (0 errors)",
-      "registry: 15 instructions (15 total) - 10 skills - 8 agents - 7 prompts - 1 hook — all enabled",
+      "registry: 15 instructions (15 total) - 15 skills - 8 agents - 7 prompts - 1 hook — all enabled",
       "harness: 2.2-done — P0 (RAG loop, tool hardening, planning JSON, receipt Ed25519) + P1 (multi-agent, observability, protocols, context, memory, deploy) + P2 (MAF workflows, CUA guardrails, local SLM, setup doctor)",
-      "scripts: 17 harness .mjs (plan-validate, handoff, reflect, trace, eval-gate, deploy-check, agent-card, context, memory, workflow, cua-guard, local, setup-doctor)",
+      "scripts: 18 harness .mjs (plan-validate, handoff, reflect, trace, eval-gate, deploy-check, agent-card, context, memory, workflow, cua-guard, local, setup-doctor)",
       "eval-gate: PASS (syntax + MCP smoke + plan-validate)",
       "www: polished — responsive 375/768/1280, a11y, states, animation 150-300ms",
       "workflow: www/** -> Pages (upload-artifact path: www) — exists: true + eval job gate",
       "library: www/library/ MCP v1.2.0 (5 tools: search + iterative + list/get/status, router+cache, redacted) + library-rag instruction",
-      "auto-learn: 13 KN, 11 bugs, 1 drafts — suggest/log/propose/status (<50ms, IDF, tiếng Việt)",
-      "governance: audit 18 (Ed25519 receipt P0-4) · policy 7 deny/2 allow (ok) · credentials 0 keys enc",
+      "auto-learn: 14 KN, 12 bugs, 1 drafts — suggest/log/propose/status (<50ms, IDF, tiếng Việt)",
+      "governance: audit 22 (Ed25519 receipt P0-4) · policy 7 deny/2 allow (ok) · credentials 0 keys enc",
       "platform: agents 3 (3 built-in, 0 remote) · mcp 3 vendors/3 grants (library 1.2.0 read-only) · components 3/3 pub · routines 1/1 enabled",
       "n5-blazor: www/n5-blazor/ 7 trang static + app.css + data.js + site.js — 100% Pages"
     ]
@@ -451,74 +474,18 @@
     }
   },
   "learn": {
-    "knTotal": 13,
-    "bugsTotal": 11,
+    "knTotal": 14,
+    "bugsTotal": 12,
     "drafts": 1
   },
   "governance": {
     "audit": {
-      "total": 18,
-      "permitted": 16,
+      "total": 22,
+      "permitted": 20,
       "refused": 2,
       "failed": 0,
-      "lastTs": "2026-09-03T16:45:22.158Z",
+      "lastTs": "2026-09-04T09:14:17.351Z",
       "tail": [
-        {
-          "ts": "2026-09-03T11:17:28.151Z",
-          "actor": "YUNIE",
-          "tool": "edit",
-          "target": "www/library/mcp-server.mjs",
-          "decision": "permitted",
-          "rule": "allow-all",
-          "durationMs": null,
-          "error": null,
-          "intent": null,
-          "requestId": "c0238b",
-          "prevHash": "edf4a6a85fb56507",
-          "hash": "ab6c76aa07c9c96a"
-        },
-        {
-          "ts": "2026-09-03T11:17:28.186Z",
-          "actor": "YUNIE",
-          "tool": "edit",
-          "target": "www/library/index.html",
-          "decision": "permitted",
-          "rule": "allow-all",
-          "durationMs": null,
-          "error": null,
-          "intent": null,
-          "requestId": "d253bb",
-          "prevHash": "ab6c76aa07c9c96a",
-          "hash": "5c01c9f5a177bac6"
-        },
-        {
-          "ts": "2026-09-03T16:44:36.921Z",
-          "actor": "YUNIE",
-          "tool": "shell",
-          "target": "fix credentials key sync ~/.harness/key -> .agent/credentials.key",
-          "decision": "permitted",
-          "rule": "allow-all",
-          "durationMs": null,
-          "error": null,
-          "intent": null,
-          "requestId": "c480bd",
-          "prevHash": "5c01c9f5a177bac6",
-          "hash": "4749d461dd34e229"
-        },
-        {
-          "ts": "2026-09-03T16:45:09.152Z",
-          "actor": "YUNIE",
-          "tool": "shell",
-          "target": "cp www/library/seed.json www/library/export.json (create export.json from seed)",
-          "decision": "permitted",
-          "rule": "allow-all",
-          "durationMs": null,
-          "error": null,
-          "intent": null,
-          "requestId": "f1c567",
-          "prevHash": "4749d461dd34e229",
-          "hash": "0e0ba4bf49b0aeb5"
-        },
         {
           "ts": "2026-09-03T16:45:22.158Z",
           "actor": "YUNIE",
@@ -532,6 +499,70 @@
           "requestId": "e58dfd",
           "prevHash": "0e0ba4bf49b0aeb5",
           "hash": "7852d3c274a42d72"
+        },
+        {
+          "ts": "2026-09-04T08:42:25.449Z",
+          "actor": "YUNIE",
+          "tool": "write",
+          "target": ".github/harness/scripts/auto-researcher.mjs --distill Phase1",
+          "decision": "permitted",
+          "rule": "allow-all",
+          "durationMs": null,
+          "error": null,
+          "intent": null,
+          "requestId": "ca0656",
+          "prevHash": "7852d3c274a42d72",
+          "hash": "ba60de59b712409f",
+          "sig": "rhTbgvm_78RKI8B2tRxgy5eF-rckWLQ4Z4W5aB0E1YPG8W49b3ySBC7FWdUoSZfdjjtRatBgqkFiC4TQk5dUAQ",
+          "pub": "MCowBQYDK2VwAyEAvWVptg8JeOtmAbQqqYr2-A19YHsgqxTaZL0E2-G_nWE"
+        },
+        {
+          "ts": "2026-09-04T08:49:06.246Z",
+          "actor": "YUNIE",
+          "tool": "write",
+          "target": ".github/harness/scripts/auto-researcher.mjs --distill Phase1 done",
+          "decision": "permitted",
+          "rule": "allow-all",
+          "durationMs": null,
+          "error": null,
+          "intent": null,
+          "requestId": "f4e3d8",
+          "prevHash": "ba60de59b712409f",
+          "hash": "b1f32bcef99cf604",
+          "sig": "ZJnIEUHyhej6I_Mb891mLtkM4gAAd59Hs04gK7JpFatCaTeJv6SnPXSBbJFjojIMraU_XeZrZH5AyY1P29W2Bg",
+          "pub": "MCowBQYDK2VwAyEAvWVptg8JeOtmAbQqqYr2-A19YHsgqxTaZL0E2-G_nWE"
+        },
+        {
+          "ts": "2026-09-04T08:58:29.151Z",
+          "actor": "YUNIE",
+          "tool": "write",
+          "target": "www/library skill-router + mcp-server Phase2 done",
+          "decision": "permitted",
+          "rule": "allow-all",
+          "durationMs": null,
+          "error": null,
+          "intent": null,
+          "requestId": "b778f1",
+          "prevHash": "b1f32bcef99cf604",
+          "hash": "c8f40090c79ec381",
+          "sig": "FzeerMDXLX-mBYMpjzB7Ntmguy5LAWFSU3sV9ULdwwqGS4wxcCdL4KbHm6tYIs6Er1jPbiUFGBxXry8Q5JUVCQ",
+          "pub": "MCowBQYDK2VwAyEAvWVptg8JeOtmAbQqqYr2-A19YHsgqxTaZL0E2-G_nWE"
+        },
+        {
+          "ts": "2026-09-04T09:14:17.351Z",
+          "actor": "YUNIE",
+          "tool": "write",
+          "target": "DisCo Phase3 distill-agnostic + skill-router multi-source + presets",
+          "decision": "permitted",
+          "rule": "allow-all",
+          "durationMs": null,
+          "error": null,
+          "intent": null,
+          "requestId": "4c608f",
+          "prevHash": "c8f40090c79ec381",
+          "hash": "2294c47674b70fe1",
+          "sig": "1BPc0C2Hy-5KJultlm-SBqYMz60b8wGhIzRrvusvzPNd9l1_BlPOrCYVU-X0WbEYhhQL6S1el0DJM2tY-t85BA",
+          "pub": "MCowBQYDK2VwAyEAvWVptg8JeOtmAbQqqYr2-A19YHsgqxTaZL0E2-G_nWE"
         }
       ]
     },
@@ -540,7 +571,7 @@
       "deny": 7,
       "allow": 2,
       "status": "ok",
-      "lastCheck": "2026-09-04T03:45:37.931Z"
+      "lastCheck": "2026-09-04T09:17:18.825Z"
     },
     "credentials": {
       "count": 0,

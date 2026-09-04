@@ -1,0 +1,44 @@
+{
+  "task": "task-agnostic: governance",
+  "form": "task-agnostic",
+  "anchor": {
+    "knowleged": [
+      "KN-012"
+    ],
+    "bugs": [
+      ".agent/bugs/2026-09-03-agent-test-mutate-reward-hacking/bug.md"
+    ]
+  },
+  "capabilities": [
+    "process",
+    "governance",
+    "tdd",
+    "safety",
+    "reward-hacking"
+  ],
+  "evidence": [
+    ".agent/bugs/2026-09-03-agent-test-mutate-reward-hacking/bug.md"
+  ],
+  "checks": [
+    {
+      "id": "files-exist",
+      "pass": true
+    },
+    {
+      "id": "frontmatter",
+      "pass": true
+    },
+    {
+      "id": "record-complete",
+      "pass": true
+    },
+    {
+      "id": "no-test-mutate-advice",
+      "pass": true
+    }
+  ],
+  "gaps": [],
+  "verdict": "G-accepted",
+  "generatedAt": "2026-09-04T09:13:35.827Z",
+  "paper": "DisCo arXiv:2609.02749v1 §3.2 (task-agnostic)"
+}

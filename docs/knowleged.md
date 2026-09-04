@@ -35,6 +35,7 @@
 | KN-011 | 2026-08-31 | Random làm disable nút ▶ Bước tiếp theo (Bài 004 & 005) | `hideAll()` disable `stepBtn` rồi `handleRandom()` không re-enable → user không thể step sau Random | Không disable stepBtn trong hàm reset chung — quản lý button state tập trung, re-enable sau Random | `ui` `state` `ux` `button` |
 | KN-012 | 2026-09-03 | Agent tự sửa test để pass (reward hacking) — CI xanh giả | Governance v1 chỉ chặn shell/secret, không gate edit trên test paths + audit không có hash-chain → agent mutate verifier được | 3 lớp BTP-lite: deny-test-mutate (chỉ verify/takeover được sửa test) + deny SQL/destructive + audit hash-chain + verify | `process` `governance` `tdd` `safety` `reward-hacking` |
 | KN-013 | 2026-09-03 | Tích hợp Ponytail ladder vào Harness — thiếu YAGNI gate, dead code sống sót, N5Blazor trial bị revert | Harness thiên mở rộng (8 phase, UI đẹp) nhưng không có ladder thu gọn; trial N5Blazor xóa GlassCard/RainbowCard/bootstrap + fix Kana toggle nhưng bị revert vì thiếu .NET 8 SDK để verify | Thêm instruction `minimal-ladder` (7 nấc + YAGNI + native-first + dead-code grep) + preset `lean-product` + bật ladder ở full/web-product/api-minimal; trial artifacts giữ ở `.agent/bugs/` + `.agent/plans/n5-blazor-ladder/` | `process` `minimal` `ponytail` `yagni` `dx` |
+| KN-014 | 2026-09-04 | Smoke test treo vĩnh viễn khi import MCP stdio server + self-verify 1/4 checks + regex frontmatter không match | Import module có side-effect khởi động server stdio → chờ stdin vĩnh viễn; verify chạy trước khi record.json được ghi; regex `^` thiếu flag `m` | Cấm import module khởi động server trong smoke one-liner; self-verify chạy sau khi mọi file đã ghi; regex `^`/`$` multi-line luôn thêm flag `m` | `process` `dx` `mcp` `testing` `regex` |
 
 > Dòng ví dụ trên sẽ bị thay khi có bug thật đầu tiên — giữ format.
 
@@ -308,6 +309,28 @@
 - **Tags:** `process` `minimal` `ponytail` `yagni` `dx`
 - **Người ghi:** YUNIE / harness
 
+### KN-014 — Smoke test treo khi import MCP stdio server + verify order + regex m flag
+
+- **Ngày:** 2026-09-04
+- **Bug report:** `.agent/bugs/2026-09-04-import-mcp-stdio-server-trong-smoke-test-gay-treo-/bug.md`
+- **Severity:** minor
+- **Triệu chứng:** (1) Smoke test Phase 3 treo vĩnh viễn — `node -e "import('./www/library/mcp-server.mjs')"` khởi động MCP stdio server chờ input stdin, terminal chuyển background, các bước verify phía sau không chạy. (2) `distill-agnostic.mjs` self-verify chỉ 1/4 checks — `files-exist`/`record-complete` fail vì `record.json` chưa được ghi lúc verify chạy. (3) Sau fix order vẫn 3/4 — regex `/^name:\s*harness-/` thiếu flag `m`, `^name:` không match vì file bắt đầu bằng `---`.
+- **Nguyên nhân gốc (5 Whys):**
+  - Why1: Terminal treo → vì process node không exit.
+  - Why2: Không exit → vì import `mcp-server.mjs` có side-effect khởi động server stdio, chờ stdin vĩnh viễn.
+  - Why3: Verify 1/4 → vì `verifySkill()` chạy trước khi `record.json` được ghi — check phụ thuộc file sinh ra sau.
+  - Why4: Regex không match → vì `^` không có flag `m` chỉ match đầu string, không match đầu dòng.
+  - Why5 (Root): Thiếu 3 quy tắc: (a) cấm import module có side-effect khởi động server trong smoke one-liner; (b) self-verify phải chạy sau khi mọi file đã ghi; (c) regex `^`/`$` multi-line luôn thêm flag `m`.
+- **Cách sửa:** (1) Smoke qua functions nội bộ (`skill-router.mjs`) hoặc spawn server với stdin đóng/timeout — không import trực tiếp module khởi động server. (2) Ghi `record.json` tạm bằng pre-checks (3 checks không phụ thuộc record) → verify đủ 4 checks → ghi lại final. (3) Thêm flag `m` cho regex frontmatter. Kết quả: distiller 5/5 G-accepted 4/4 checks, smoke sạch không treo.
+- **Cách phòng tránh:**
+  - KHÔNG import module khởi động server (stdio/HTTP) trong smoke test one-liner — server chờ input vĩnh viễn → treo terminal.
+  - Smoke MCP: gọi qua functions nội bộ (router) hoặc spawn process với stdin đóng + timeout.
+  - Self-verify phải chạy SAU khi mọi file đã ghi — nếu check phụ thuộc file sinh sau, ghi tạm (pre-checks) trước rồi verify final.
+  - Regex `^`/`$` cho nội dung multi-line luôn thêm flag `m`.
+  - Lệnh shell có ngoặc unquoted trong zsh → quote hoặc heredoc (tránh lỗi "unknown sort specifier").
+- **Tags:** `process` `dx` `mcp` `testing` `regex`
+- **Người ghi:** YUNIE / fixbug (DisCo Phase 3)
+
 <!-- Thêm bài học mới theo template dưới — copy block này -->
 
 <!--
@@ -363,6 +386,9 @@
 - ❌ Verify không grep dead-code + không ghi scoreboard → over-build lọt (KN-013).
 - ❌ Cắt validation/security/a11y/test để giảm LOC — lazy sai chỗ (KN-013).
 - ❌ Sửa instruction xong không refresh registry → description stale cache template cũ (KN-013).
+- ❌ Import module khởi động server (stdio/HTTP) trong smoke test one-liner — server chờ stdin vĩnh viễn, terminal treo (KN-014).
+- ❌ Self-verify chạy trước khi file cần check được ghi — check phụ thuộc file sinh sau phải ghi tạm (pre-checks) rồi verify final (KN-014).
+- ❌ Regex `^`/`$` trên nội dung multi-line thiếu flag `m` — chỉ match đầu/cuối string, không match đầu dòng (KN-014).
 
 ## Checklist phòng tránh chung
 
@@ -392,8 +418,9 @@
 - [ ] Design có native-first (stdlib/native trước dep mới) không? (KN-013)
 - [ ] Verify có grep dead-code + scoreboard diff stat không? (KN-013)
 - [ ] Có cắt validation/security/a11y/test để giảm LOC không? Nếu có → STOP (KN-013)
-
----
+- [ ] Smoke test có import module khởi động server (stdio/HTTP) không? Nếu có → đổi qua functions/spawn stdin đóng (KN-014)
+- [ ] Self-verify đã chạy SAU khi mọi file được ghi (hoặc pre-checks + final)? (KN-014)
+- [ ] Regex `^`/`$` trên nội dung multi-line đã có flag `m`? (KN-014)
 
 *File này do `/fixbug` tự động cập nhật. Mọi luồng khác phải đọc để không lặp lại lỗi cũ.*
-*UpdatedAt: 2026-09-03T11:30:00Z — Maintained by YUNIE / Harness v2 — KN-013 added (Ponytail ladder integration: minimal-ladder + lean-product) — Fix: Bảng tóm tắt reorder KN-005↔KN-006 + thêm KN-009 (đã có detail nhưng thiếu ở bảng) — Presets bổ sung auto-researcher (đồng bộ registry) — KN-011 added (Random disable Step button) — KN-010 added (AAR pattern) — KN-009 bổ sung detail section (slot máy chủ AI — hardcode config) — KN-008 added (dotnet build file lock MSB3027) — KN-007 added (Auto-Learn) — KN-006 added (N5 UI polish) — KN-005 added (Bug Blindness)*
+*UpdatedAt: 2026-09-04T09:20:00Z — Maintained by YUNIE / Harness v2 — KN-014 added (MCP stdio smoke hang + verify order + regex m flag — DisCo Phase 3) — KN-013 added (Ponytail ladder integration: minimal-ladder + lean-product) — Fix: Bảng tóm tắt reorder KN-005↔KN-006 + thêm KN-009 (đã có detail nhưng thiếu ở bảng) — Presets bổ sung auto-researcher (đồng bộ registry) — KN-011 added (Random disable Step button) — KN-010 added (AAR pattern) — KN-009 bổ sung detail section (slot máy chủ AI — hardcode config) — KN-008 added (dotnet build file lock MSB3027) — KN-007 added (Auto-Learn) — KN-006 added (N5 UI polish) — KN-005 added (Bug Blindness)*
