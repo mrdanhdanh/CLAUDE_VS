@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-04T12:57:16.345Z",
+  "generatedAt": "2026-09-04T14:31:57.736Z",
   "generatedBy": "YUNIE",
   "version": 1,
   "counts": {
@@ -252,6 +252,7 @@
     "ai-news-search",
     "auto-learn",
     "custom-registry",
+    "design-showcase-72",
     "disco-phase1",
     "disco-phase2",
     "disco-phase3",
@@ -285,6 +286,10 @@
     "web-011-part1",
     "web-011-part2",
     "web-011-part3",
+    "web-011-part4",
+    "web-011-part5",
+    "web-011-part6",
+    "web-011-part7",
     "web-thuat-toan",
     "web-thuat-toan-v2"
   ],
@@ -297,6 +302,11 @@
     {
       "name": "ai-news",
       "path": "ai-news/index.html",
+      "status": "ok"
+    },
+    {
+      "name": "design-showcase",
+      "path": "design-showcase/index.html",
       "status": "ok"
     },
     {
@@ -333,7 +343,7 @@
   "health": {
     "errors": 0,
     "status": "ok",
-    "lastCheck": "2026-09-04T12:57:16.345Z",
+    "lastCheck": "2026-09-04T14:31:57.736Z",
     "checks": [
       "get_errors: pass (0 errors)",
       "registry: 16 instructions (16 total) - 15 skills - 8 agents - 7 prompts - 1 hook — all enabled",
@@ -344,7 +354,7 @@
       "workflow: www/** -> Pages (upload-artifact path: www) — exists: true + eval job gate",
       "library: www/library/ MCP v1.2.0 (5 tools: search + iterative + list/get/status, router+cache, redacted) + library-rag instruction",
       "auto-learn: 15 KN, 13 bugs, 0 drafts — suggest/log/propose/status (<50ms, IDF, tiếng Việt)",
-      "governance: audit 23 (Ed25519 receipt P0-4) · policy 7 deny/2 allow (ok) · credentials 0 keys enc",
+      "governance: audit 24 (Ed25519 receipt P0-4) · policy 7 deny/2 allow (ok) · credentials 0 keys enc",
       "platform: agents 3 (3 built-in, 0 remote) · mcp 3 vendors/3 grants (library 1.2.0 read-only) · components 3/3 pub · routines 1/1 enabled",
       "n5-blazor: www/n5-blazor/ 7 trang static + app.css + data.js + site.js — 100% Pages"
     ]
@@ -362,6 +372,11 @@
         "path": "ai-news/index.html",
         "title": "AI News",
         "type": "tin AI"
+      },
+      {
+        "path": "design-showcase/index.html",
+        "title": "design-showcase",
+        "type": "demo"
       },
       {
         "path": "glassui/index.html",
@@ -498,28 +513,12 @@
   },
   "governance": {
     "audit": {
-      "total": 23,
-      "permitted": 21,
+      "total": 24,
+      "permitted": 22,
       "refused": 2,
       "failed": 0,
-      "lastTs": "2026-09-04T09:18:36.189Z",
+      "lastTs": "2026-09-04T13:03:31.356Z",
       "tail": [
-        {
-          "ts": "2026-09-04T08:42:25.449Z",
-          "actor": "YUNIE",
-          "tool": "write",
-          "target": ".github/harness/scripts/auto-researcher.mjs --distill Phase1",
-          "decision": "permitted",
-          "rule": "allow-all",
-          "durationMs": null,
-          "error": null,
-          "intent": null,
-          "requestId": "ca0656",
-          "prevHash": "7852d3c274a42d72",
-          "hash": "ba60de59b712409f",
-          "sig": "rhTbgvm_78RKI8B2tRxgy5eF-rckWLQ4Z4W5aB0E1YPG8W49b3ySBC7FWdUoSZfdjjtRatBgqkFiC4TQk5dUAQ",
-          "pub": "MCowBQYDK2VwAyEAvWVptg8JeOtmAbQqqYr2-A19YHsgqxTaZL0E2-G_nWE"
-        },
         {
           "ts": "2026-09-04T08:49:06.246Z",
           "actor": "YUNIE",
@@ -583,6 +582,22 @@
           "hash": "8d9c0f9f5824d4d9",
           "sig": "pSs3L6rMi0R7m3HPRKrSJflAOYunO0GkNxvfjUxcD42LziL508DMQSLwWcQvIzzAVWw30k5TYl85dPLa1slSBw",
           "pub": "MCowBQYDK2VwAyEAvWVptg8JeOtmAbQqqYr2-A19YHsgqxTaZL0E2-G_nWE"
+        },
+        {
+          "ts": "2026-09-04T13:03:31.356Z",
+          "actor": "YUNIE",
+          "tool": "shell",
+          "target": "git add/commit/push awesome-design-md + vercel todo",
+          "decision": "permitted",
+          "rule": "allow-all",
+          "durationMs": null,
+          "error": null,
+          "intent": null,
+          "requestId": "61c2ac",
+          "prevHash": "8d9c0f9f5824d4d9",
+          "hash": "43343491f7d9c765",
+          "sig": "-5AfSDm1FwxYBm9s1fzwT491303KGqsPo7LmMlWQm_b8ALjfQKLIEkWwLH4EoJJsOK2t-UZHYiePv7q6TO79Dw",
+          "pub": "MCowBQYDK2VwAyEAvWVptg8JeOtmAbQqqYr2-A19YHsgqxTaZL0E2-G_nWE"
         }
       ]
     },
@@ -591,7 +606,7 @@
       "deny": 7,
       "allow": 2,
       "status": "ok",
-      "lastCheck": "2026-09-04T12:57:15.706Z"
+      "lastCheck": "2026-09-04T14:31:57.203Z"
     },
     "credentials": {
       "count": 0,

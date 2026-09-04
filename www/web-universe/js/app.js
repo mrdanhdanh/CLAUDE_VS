@@ -31,10 +31,27 @@ const CATALOG = [
   { id: 'svg-lab', name: 'SVG Lab', version: '1.0.0', category: 'graphics', description: 'SVG shapes, paths, interactive, transform, export.', dependencies: [], permissions: [], lazy: true, icon: '🔷' },
   { id: 'webgl-lab', name: 'WebGL Lab', version: '1.0.0', category: 'graphics', description: 'WebGL renderer — triangle, texture, cube, lighting, camera.', dependencies: [], permissions: [], lazy: true, icon: '🧊' },
   { id: 'webgpu', name: 'WebGPU Lab', version: '1.0.0', category: 'graphics', description: 'WebGPU adapter/device detection, limits, basic demo — capability-aware.', dependencies: [], permissions: [], lazy: true, icon: '⚡' },
-  { id: 'audio-lab', name: 'Audio Lab', version: '0.9.0', category: 'media', description: 'Audio player, waveform, visualizer — coming in Part 4.', dependencies: [], permissions: [], lazy: true, icon: '🎵' },
-  { id: 'file-lab', name: 'File Lab', version: '0.9.0', category: 'files', description: 'File picker, drag & drop, preview — coming in Part 4.', dependencies: [], permissions: [], lazy: true, icon: '📁' },
-  { id: 'storage-lab', name: 'Storage Lab', version: '0.9.0', category: 'storage', description: 'LocalStorage / IndexedDB explorer — coming in Part 4.', dependencies: ['file-lab'], permissions: ['storage'], lazy: true, icon: '💾' },
-  { id: 'network-lab', name: 'Network Lab', version: '0.9.0', category: 'network', description: 'Fetch, WebSocket, streaming — coming in Part 4.', dependencies: [], permissions: ['network'], lazy: true, icon: '🌐' },
+  { id: 'audio-lab', name: 'Media Lab', version: '1.0.0', category: 'media', description: 'Audio/Video/Camera/Microphone/Screen Recorder — capability-aware.', dependencies: [], permissions: ['camera','microphone'], lazy: true, icon: '🎵' },
+  { id: 'file-lab', name: 'File Lab', version: '1.0.0', category: 'files', description: 'File picker, drag & drop, folder picker, preview, metadata, save.', dependencies: [], permissions: [], lazy: true, icon: '📁' },
+  { id: 'storage-lab', name: 'Storage Lab', version: '1.0.0', category: 'storage', description: 'LocalStorage / SessionStorage / IndexedDB explorer — CRUD, search, import/export.', dependencies: [], permissions: ['storage'], lazy: true, icon: '💾' },
+  { id: 'network-lab', name: 'Network Lab', version: '1.0.0', category: 'network', description: 'Fetch, Request Inspector, WebSocket, Streaming — with abort/timeout/retry.', dependencies: [], permissions: ['network'], lazy: true, icon: '🌐' },
+  { id: 'concurrency-lab', name: 'Concurrency Lab', version: '1.0.0', category: 'concurrency', description: 'Worker pool, MessageChannel, BroadcastChannel, SharedWorker — with real benchmark.', dependencies: [], permissions: [], lazy: true, icon: '⚡' },
+  { id: 'device-lab', name: 'Device Lab', version: '1.0.0', category: 'device', description: 'Geolocation, orientation, motion, battery, network, clipboard, share, fullscreen — capability-aware.', dependencies: [], permissions: ['location'], lazy: true, icon: '📱' },
+  { id: 'audio-engine', name: 'Audio Engine', version: '1.0.0', category: 'media', description: 'Web Audio — oscillator, filter, analyser, synth, drum machine.', dependencies: [], permissions: [], lazy: true, icon: '🎹' },
+  { id: 'pwa-lab', name: 'PWA Lab', version: '1.0.0', category: 'pwa', description: 'Manifest, Service Worker, Cache, Offline, Install — PWA status.', dependencies: [], permissions: [], lazy: true, icon: '📲' },
+  { id: 'game-lab', name: 'Game Lab', version: '1.0.0', category: 'game', description: 'Mini game engine — Snake, Pong, Particle sandbox.', dependencies: [], permissions: [], lazy: true, icon: '🎮' },
+  { id: 'data-lab', name: 'Data Lab', version: '1.0.0', category: 'data', description: 'CSV/JSON parser, table, sort/filter/search, virtual scroll, benchmark.', dependencies: [], permissions: [], lazy: true, icon: '📊' },
+  { id: 'viz-lab', name: 'Viz Lab', version: '1.0.0', category: 'viz', description: 'Bar, line, pie, scatter, histogram, heatmap, realtime — Canvas/SVG.', dependencies: [], permissions: [], lazy: true, icon: '📈' },
+  { id: 'security-lab', name: 'Security Lab', version: '1.0.0', category: 'security', description: 'XSS, CSP, CORS, iframe sandbox, same-origin, cookies, storage — educational.', dependencies: [], permissions: [], lazy: true, icon: '🔒' },
+  { id: 'api-explorer', name: 'API Explorer', version: '1.0.0', category: 'api', description: 'Auto-detect 20+ Web APIs — support, permission, demo, description.', dependencies: [], permissions: [], lazy: true, icon: '🔍' },
+  { id: 'devtools', name: 'DevTools', version: '1.0.0', category: 'devtools', description: 'JSON, base64, URL, timestamp, UUID, color, regex, text, hash, query, CSV, base converter.', dependencies: [], permissions: [], lazy: true, icon: '🛠️' },
+  { id: 'utilities', name: 'Utilities', version: '1.0.0', category: 'utilities', description: 'Calculator, stopwatch, timer, clock, countdown, random, password, unit converter, text stats, color tools.', dependencies: [], permissions: [], lazy: true, icon: '🧰' },
+  { id: 'dependency-graph', name: 'Dependency Graph', version: '1.0.0', category: 'system', description: 'Visualize module dependencies — nodes, edges, highlight, disable warning.', dependencies: [], permissions: [], lazy: true, icon: '🕸' },
+  { id: 'plugin-lab', name: 'Plugin Lab', version: '1.0.0', category: 'system', description: 'Register new modules at runtime — manifest validate, Blob import, no reload.', dependencies: [], permissions: [], lazy: true, icon: '🔌' },
+  { id: 'theme-lab', name: 'Theme Lab', version: '1.0.0', category: 'system', description: 'Custom theme — colors, radius, spacing, export/import.', dependencies: [], permissions: [], lazy: true, icon: '🎨' },
+  { id: 'benchmark-lab', name: 'Benchmark Lab', version: '1.0.0', category: 'perf', description: 'Real benchmark — startup, lazy vs eager, FPS, memory.', dependencies: [], permissions: [], lazy: true, icon: '📊' },
+  { id: 'sandbox-lab', name: 'Sandbox Lab', version: '1.0.0', category: 'system', description: 'iframe sandbox — permissions, postMessage, isolation.', dependencies: [], permissions: [], lazy: true, icon: '🧪' },
+  { id: 'debug-lab', name: 'Debug Lab', version: '1.0.0', category: 'system', description: 'Debug mode — lifecycle, events, workers, network, storage inspector.', dependencies: [], permissions: [], lazy: true, icon: '🐛' },
   { id: 'crash-demo', name: 'Crash Demo', version: '1.0.0', category: 'devtools', description: 'Cố tình throw error để test error isolation — app vẫn sống.', dependencies: [], permissions: [], lazy: true, icon: '💥' },
 ];
 
@@ -872,6 +889,50 @@ function initBenchmark() {
   }, 1000);
 }
 
+// --- Sleep System ---
+let sleepTimers = new Map(); // id -> lastActive timestamp
+let sleepInterval = null;
+function initSleepSystem() {
+  // Track last active per module
+  function touchModule(id) {
+    sleepTimers.set(id, Date.now());
+    // If sleeping, resume
+    const m = moduleManager.get(id);
+    if (m && m.status === 'sleeping') {
+      moduleManager.resume(id).catch(()=>{});
+      logger.debug(`sleep: resumed ${id} on interaction`);
+    }
+  }
+  // Listen to window focus/click
+  eventBus.on('window:focused', ({id}) => touchModule(id));
+  eventBus.on('module:enabled', ({id}) => touchModule(id));
+  // Also track clicks inside workspace
+  document.addEventListener('click', (e) => {
+    const win = e.target.closest('.window');
+    if (win) touchModule(win.dataset.moduleId);
+  });
+  document.addEventListener('keydown', (e) => {
+    const win = document.activeElement?.closest('.window');
+    if (win) touchModule(win.dataset.moduleId);
+  });
+  // Check every 5s: idle >30s → sleep
+  sleepInterval = setInterval(() => {
+    const now = Date.now();
+    for (const [id, lastActive] of sleepTimers) {
+      const m = moduleManager.get(id);
+      if (!m || m.status !== 'active') continue;
+      if (now - lastActive > 30000) {
+        moduleManager.sleep(id).then(()=>{
+          logger.info(`sleep: auto-sleep ${id} after 30s idle`);
+          showToast({type:'info', title:`${id} sleeping`, message:'Idle 30s — click to resume'});
+        }).catch(()=>{});
+      }
+    }
+  }, 5000);
+  // Expose for manual control
+  window._sleepTimers = sleepTimers;
+}
+
 // --- SW ---
 function initSW() {
   if ('serviceWorker' in navigator) {
@@ -894,6 +955,7 @@ async function main() {
   initOnline();
   initModal();
   initSW();
+  initSleepSystem();
 
   // Event wiring
   eventBus.on('resource:update', updateStatusBar);
