@@ -51,15 +51,18 @@
   display: flex;
   flex-direction: column;
   gap: 12px;
+  min-width: 0;
+  overflow: hidden;
 }
 .search-row {
   display: flex;
   gap: 8px;
   align-items: center;
   flex-wrap: wrap;
+  min-width: 0;
 }
 .search-input-wrap {
-  flex: 1 1 280px;
+  flex: 1 1 200px;
   display: flex;
   align-items: center;
   gap: 8px;
@@ -70,6 +73,7 @@
   height: 42px;
   transition: all 150ms ease;
   min-width: 0;
+  max-width: 100%;
 }
 .search-input-wrap:focus-within {
   border-color: var(--color-primary, #6366f1);
@@ -87,7 +91,7 @@
   min-width: 0;
 }
 .search-input-wrap input::placeholder { color: var(--color-neutral-400, #94a3b8); font-weight: 400; }
-.search-meta { display: flex; flex-direction: column; gap: 8px; }
+.search-meta { display: flex; flex-direction: column; gap: 8px; min-width: 0; }
 .time-chips { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
 .time-label { font: 600 12px Inter, system-ui, sans-serif; color: var(--color-neutral-500, #64748b); margin-right: 2px; }
 .time-chip {
@@ -104,7 +108,7 @@
 .time-chip:hover { border-color: var(--color-primary, #6366f1); color: var(--color-primary, #6366f1); }
 .time-chip.active { background: var(--color-primary, #6366f1); color: #fff; border-color: var(--color-primary, #6366f1); }
 .time-chip:focus-visible, .hint-chip:focus-visible { outline: 2px solid var(--color-primary, #6366f1); outline-offset: 2px; }
-.search-hints { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; font: 400 12px Inter, system-ui, sans-serif; color: var(--color-neutral-500, #64748b); }
+.search-hints { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; font: 400 12px Inter, system-ui, sans-serif; color: var(--color-neutral-500, #64748b); min-width: 0; }
 .hints-label { font-weight: 600; }
 .hint-chip {
   padding: 4px 10px;
@@ -131,8 +135,9 @@
 /* News grid */
 .news-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(min(320px, 100%), 1fr));
   gap: 16px;
+  min-width: 0;
 }
 
 @media (max-width: 768px) {

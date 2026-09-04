@@ -1,17 +1,17 @@
 {
-  "generatedAt": "2026-09-04T14:45:18.725Z",
+  "generatedAt": "2026-09-04T15:44:04.838Z",
   "generatedBy": "YUNIE",
   "version": 1,
   "counts": {
     "skills": {
-      "enabled": 15,
-      "disabled": 0,
-      "total": 15
-    },
-    "instructions": {
       "enabled": 16,
       "disabled": 0,
       "total": 16
+    },
+    "instructions": {
+      "enabled": 17,
+      "disabled": 0,
+      "total": 17
     },
     "agents": {
       "enabled": 8,
@@ -90,6 +90,10 @@
       "harness-web-ui": {
         "enabled": true,
         "description": "Task-agnostic lessons 'Web UI & UX' chưng cất từ docs/knowleged.md (6 KN: KN-001, KN-002, KN-003, KN-004, KN-006, KN-011) + .agent/bugs/. Use when task chạm ui, a11y, css, responsive, data, animation, spacing, i18n, theme, contrast — áp Cách phòng tránh trước khi code, tránh lặp bug cũ. DisCo-lite, "
+      },
+      "cosmic-quantum": {
+        "enabled": true,
+        "description": "Cosmic-Quantum Thinking — triết lý vũ trụ + lượng tử cho Harness. Use when designing system philosophy, harness theory, product vision, need cosmic/quantum metaphors, scale thinking, entanglement, superposition, uncertainty, or user says vũ trụ/lượng tử/cosmos/quantum/triết lý/lý thuyết/hệ thống/sca"
       }
     },
     "instructions": {
@@ -156,6 +160,10 @@
       "awesome-design": {
         "enabled": true,
         "description": "Awesome DESIGN.md — 74 design systems local (VoltAgent/awesome-design-md). Use when user wants UI design, needs design inspiration, mentions vibe/style like linear/stripe/vercel/apple, or needs DESIGN.md for AI agent."
+      },
+      "cosmic-quantum": {
+        "enabled": true,
+        "description": "Cosmic-Quantum Thinking — triết lý vũ trụ + lượng tử cho Harness. Use when designing system philosophy, harness theory, product vision, need cosmic/quantum metaphors, scale thinking, entanglement, superposition, uncertainty, or user says vũ trụ/lượng tử/cosmos/quantum/triết lý/lý thuyết/hệ thống/sca"
       }
     },
     "agents": {
@@ -278,6 +286,7 @@
     "n5-static-polish",
     "openbot-governance",
     "openbot-governance-phase2",
+    "quat-4-mon",
     "skill-registry",
     "status-redesign",
     "status-ui-v2",
@@ -302,6 +311,11 @@
     {
       "name": "ai-news",
       "path": "ai-news/index.html",
+      "status": "ok"
+    },
+    {
+      "name": "cosmos",
+      "path": "cosmos/index.html",
       "status": "ok"
     },
     {
@@ -343,10 +357,10 @@
   "health": {
     "errors": 0,
     "status": "ok",
-    "lastCheck": "2026-09-04T14:45:18.725Z",
+    "lastCheck": "2026-09-04T15:44:04.838Z",
     "checks": [
       "get_errors: pass (0 errors)",
-      "registry: 16 instructions (16 total) - 15 skills - 8 agents - 7 prompts - 1 hook — all enabled",
+      "registry: 17 instructions (17 total) - 16 skills - 8 agents - 7 prompts - 1 hook — all enabled",
       "harness: 2.2-done — P0 (RAG loop, tool hardening, planning JSON, receipt Ed25519) + P1 (multi-agent, observability, protocols, context, memory, deploy) + P2 (MAF workflows, CUA guardrails, local SLM, setup doctor)",
       "scripts: 18 harness .mjs (plan-validate, handoff, reflect, trace, eval-gate, deploy-check, agent-card, context, memory, workflow, cua-guard, local, setup-doctor)",
       "eval-gate: PASS (syntax + MCP smoke + plan-validate)",
@@ -354,7 +368,7 @@
       "workflow: www/** -> Pages (upload-artifact path: www) — exists: true + eval job gate",
       "library: www/library/ MCP v1.2.0 (5 tools: search + iterative + list/get/status, router+cache, redacted) + library-rag instruction",
       "auto-learn: 15 KN, 13 bugs, 0 drafts — suggest/log/propose/status (<50ms, IDF, tiếng Việt)",
-      "governance: audit 24 (Ed25519 receipt P0-4) · policy 7 deny/2 allow (ok) · credentials 0 keys enc",
+      "governance: audit 25 (Ed25519 receipt P0-4) · policy 7 deny/2 allow (ok) · credentials 0 keys enc",
       "platform: agents 3 (3 built-in, 0 remote) · mcp 3 vendors/3 grants (library 1.2.0 read-only) · components 3/3 pub · routines 1/1 enabled",
       "n5-blazor: www/n5-blazor/ 7 trang static + app.css + data.js + site.js — 100% Pages"
     ]
@@ -372,6 +386,11 @@
         "path": "ai-news/index.html",
         "title": "AI News",
         "type": "tin AI"
+      },
+      {
+        "path": "cosmos/index.html",
+        "title": "cosmos",
+        "type": "demo"
       },
       {
         "path": "design-showcase/index.html",
@@ -513,28 +532,12 @@
   },
   "governance": {
     "audit": {
-      "total": 24,
-      "permitted": 22,
+      "total": 25,
+      "permitted": 23,
       "refused": 2,
       "failed": 0,
-      "lastTs": "2026-09-04T13:03:31.356Z",
+      "lastTs": "2026-09-04T15:37:52.957Z",
       "tail": [
-        {
-          "ts": "2026-09-04T08:49:06.246Z",
-          "actor": "YUNIE",
-          "tool": "write",
-          "target": ".github/harness/scripts/auto-researcher.mjs --distill Phase1 done",
-          "decision": "permitted",
-          "rule": "allow-all",
-          "durationMs": null,
-          "error": null,
-          "intent": null,
-          "requestId": "f4e3d8",
-          "prevHash": "ba60de59b712409f",
-          "hash": "b1f32bcef99cf604",
-          "sig": "ZJnIEUHyhej6I_Mb891mLtkM4gAAd59Hs04gK7JpFatCaTeJv6SnPXSBbJFjojIMraU_XeZrZH5AyY1P29W2Bg",
-          "pub": "MCowBQYDK2VwAyEAvWVptg8JeOtmAbQqqYr2-A19YHsgqxTaZL0E2-G_nWE"
-        },
         {
           "ts": "2026-09-04T08:58:29.151Z",
           "actor": "YUNIE",
@@ -598,6 +601,23 @@
           "hash": "43343491f7d9c765",
           "sig": "-5AfSDm1FwxYBm9s1fzwT491303KGqsPo7LmMlWQm_b8ALjfQKLIEkWwLH4EoJJsOK2t-UZHYiePv7q6TO79Dw",
           "pub": "MCowBQYDK2VwAyEAvWVptg8JeOtmAbQqqYr2-A19YHsgqxTaZL0E2-G_nWE"
+        },
+        {
+          "ts": "2026-09-04T15:37:52.957Z",
+          "actor": "YUNIE",
+          "tool": "shell",
+          "target": "test jern-lite",
+          "decision": "permitted",
+          "rule": "allow-all",
+          "durationMs": null,
+          "error": null,
+          "intent": null,
+          "requestId": "666b9d",
+          "prevHash": "43343491f7d9c765",
+          "policyDigest": "fcef465583cdacc8",
+          "hash": "4b1339b1de3cc796",
+          "sig": "0OM95lVX0Fz9L-DVvIkc6fbI3ARBNjT9FuMAofe-kKQEFqxrL62RgyJeWvYNZN_R9RCkUC1LFH86B7mO4f9FBA",
+          "pub": "MCowBQYDK2VwAyEAvWVptg8JeOtmAbQqqYr2-A19YHsgqxTaZL0E2-G_nWE"
         }
       ]
     },
@@ -606,7 +626,7 @@
       "deny": 7,
       "allow": 2,
       "status": "ok",
-      "lastCheck": "2026-09-04T14:45:18.212Z"
+      "lastCheck": "2026-09-04T15:44:04.195Z"
     },
     "credentials": {
       "count": 0,

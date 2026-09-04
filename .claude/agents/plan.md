@@ -33,4 +33,20 @@ Plan file must contain:
 ## Todos (numbered, for TodoWrite)
 ```
 
+## Structured Output (P0-3 Harness 2.1, Lesson 07 Planning)
+- **ALWAYS** add YAML frontmatter `plan:` at the top of `plan.md` so downstream can parse + route (Pydantic-style, JS validated by `plan-validate.mjs`):
+```yaml
+---
+plan:
+  main_task: "<Task Name>"
+  is_greeting: false
+  subtasks:
+    - task_details: "<3-200 chars>"
+      assigned_agent: implement  # explore|plan|design|implement|polish|verify|yunie
+---
+```
+- Rules: `main_task` non-empty, `subtasks` 1-10 items, each `task_details` 3-200 chars, `assigned_agent` must be one of `explore|plan|design|implement|polish|verify|yunie`.
+- Validate: `node .github/harness/scripts/plan-validate.mjs --file .agent/plans/<task>/plan.md [--route]`
+- Legacy plans without frontmatter still pass (warning) — but NEW plans MUST have frontmatter.
+
 Also return summary + todos array for harness to call `TodoWrite`.

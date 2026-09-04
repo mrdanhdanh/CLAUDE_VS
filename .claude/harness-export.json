@@ -4,10 +4,10 @@
   "files": {
     ".claude/agents/designer.md": "e4fc26b6967fba418ab6da758fd9e462d16d9cd29211e4c1d4d169fb7986430a",
     ".claude/agents/explore.md": "2a4bb46fed2eeaf2aac590f323500d63f666fe7864a3f61b2287df2c85056906",
-    ".claude/agents/implement.md": "0368a88d5a5f827cac1dbdd0cf4631a4c5b487fe73024741e1ece977871323aa",
-    ".claude/agents/plan.md": "52557a967ca5467c242c565ece1ea7480301ec62e83c620565e7f7ffeb35fee9",
+    ".claude/agents/implement.md": "472ebeb7ddff9d940943ecc6525d21fde9a7ea4f3337585a9d7d329980bfb3df",
+    ".claude/agents/plan.md": "ae3166cc5ffbb233ff1d03013a6ce8bf05a57c26783cec1c1dc444403d5e7a01",
     ".claude/agents/polish.md": "7db70f5863c754fac97cd0e17df94707a6156697f5188f308887ac2711548132",
-    ".claude/agents/verify.md": "599129a9673ba9da7ceff63d3c50f37ccb799915ebe53c915eb31bc1fc2871bf",
+    ".claude/agents/verify.md": "0f86c6a6378dac9e4ca3236a68d8a0422215c60e4258ada10657674169b7f180",
     ".claude/agents/yunie.md": "30b8c04f21cc9a8e96aa5562f3484a9161fb62c2178a4db737015312b3b84ddd",
     ".claude/agents/learn.md": "af6f988323153361e9ee7c480fdcd85c6666e876b660e098cfbf2f5344ec54a6",
     ".claude/commands/fixbug.md": "c9115e2d5fc65c4effbc262add4606fc844a1e28ba58f8daf8275e55558857be",
@@ -30,10 +30,14 @@
     ".claude/rules/agent-governance.md": "fa113fa942666ad73fd4c2f2e300649942fd148f5e9062e724e118074490fb36",
     ".claude/rules/platform-seam.md": "024d798c3f5a2aa231678b52f2f9c2e89ca9c2335d8106738f21eba4ef8ea1d7",
     ".claude/rules/minimal-ladder.md": "57fe29ad5adfaaebf7a6a85c1521bdf9b8473f1a7072b34d5dc8ce2fec39fdd4",
+    ".claude/rules/context-engineering.md": "ad7f259506397deb5ad3a063c0e8fdad77977a68b28741d5e384076268ab575e",
+    ".claude/rules/cua-safety.md": "36ceebbd6d363fadb81c262292d40ff465d8b040ca689f84458c1cdf12e0c59f",
+    ".claude/rules/awesome-design.md": "7374bd550c144337e35bf67fd3d98058d5c5e50fddeca79b4ed4fc7416bebcaf",
+    ".claude/rules/cosmic-quantum.md": "89aff90c2f571f554296541283f7a5dd2577c7d68d516d44f51c3dd3e64f66fd",
     "CLAUDE.md": "65b459bd626d51201672a6020698e91e8fd9e0a19ae3a4789a1030144201029a",
     ".claude/skills/claude-harness": {
       "dir": true,
-      "digest": "68ef3fc97816b293a0870192195669eba3fc1a41ccbb85ce65c46b8053e4ec48"
+      "digest": "8a53383fba9304d267d2a36172dc43dd70da2978231440819aa9d97d239299e9"
     },
     ".claude/skills/custom-registry": {
       "dir": true,
@@ -53,7 +57,7 @@
     },
     ".claude/skills/ui-ux-pro-max": {
       "dir": true,
-      "digest": "81bd23a6c26db7a394e505528a19781a994d562eb314570057e910db10d8bb41"
+      "digest": "26d17d87c45af338f7fa3221d68efa5dff11a0ba7aacb26a7e392ce4ec5fb997"
     },
     ".claude/skills/tdd-gate": {
       "dir": true,
@@ -69,7 +73,31 @@
     },
     ".claude/skills/last30days": {
       "dir": true,
-      "digest": "cb679ded7a6f3eb18f4f7d6f263b356765405a230b1934c162ba04fddf969ed4"
+      "digest": "d77b9ba4d22a8ad2fca93b2dbd0e8079b302a791b838cbc1d888afce987c678a"
+    },
+    ".claude/skills/harness-build-config": {
+      "dir": true,
+      "digest": "0e63617759d38d0bda25215e7d6fe2959db164f54bfc606033f9b0b6fa6b2c4a"
+    },
+    ".claude/skills/harness-governance": {
+      "dir": true,
+      "digest": "9d6d01c5b00bc002e43d4f8e735fd93fb44a1db0d26798f5d8b84c861dff1d3e"
+    },
+    ".claude/skills/harness-minimal": {
+      "dir": true,
+      "digest": "3d87adaf78ec253fb06a6c88b23ad3944c449071b54caaeba4707b0465fc1892"
+    },
+    ".claude/skills/harness-process": {
+      "dir": true,
+      "digest": "84f358269e722abbf7162f449aec3639251be873c9edad63519bc7e37db1ae46"
+    },
+    ".claude/skills/harness-web-ui": {
+      "dir": true,
+      "digest": "eb561bbc055fe7f4791dd4ae80acc765c57f4cf1d7fe04a09fd8ccd8c6a87675"
+    },
+    ".claude/skills/cosmic-quantum": {
+      "dir": true,
+      "digest": "eb81ce7a3e5dfbba1fb978d56d82158035ed2f68a22c01c006008f9c5dc4f9de"
     }
   },
   "hookCommands": [

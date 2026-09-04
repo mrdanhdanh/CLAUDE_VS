@@ -8,7 +8,7 @@
  * No deps, Node 18+
  */
 import fs from 'node:fs/promises';
-import { existsSync, createReadStream } from 'node:fs';
+import { existsSync, createReadStream, readFileSync } from 'node:fs';
 import path from 'node:path';
 import crypto from 'node:crypto';
 import { fileURLToPath } from 'node:url';
@@ -156,10 +156,24 @@ function redactTarget(target) {
 }
 
 function canonicalHash(prevHash, e) {
-  // Keep original 10-field core for backward compat (KN-012). Trace linkage (P1-2)
-  // is covered by Ed25519 receipt (receiptPayload includes traceId/spanId), not by hash.
+  // Backward compat: old events (pre-Jern-lite) don't have policyDigest/tokens — hash without them
+  // New events have them — hash with them. Detect by presence in event.
+  const hasNewFields = e.policyDigest !== undefined || e.tokens !== undefined;
+  if (hasNewFields) {
+    const core = { ts: e.ts, actor: e.actor, tool: e.tool, target: e.target, decision: e.decision, rule: e.rule, durationMs: e.durationMs ?? null, error: e.error ?? null, intent: e.intent ?? null, requestId: e.requestId, policyDigest: e.policyDigest ?? null, tokens: e.tokens ?? null };
+    return crypto.createHash('sha256').update(prevHash + '|' + JSON.stringify(core)).digest('hex').slice(0, 16);
+  }
   const core = { ts: e.ts, actor: e.actor, tool: e.tool, target: e.target, decision: e.decision, rule: e.rule, durationMs: e.durationMs ?? null, error: e.error ?? null, intent: e.intent ?? null, requestId: e.requestId };
   return crypto.createHash('sha256').update(prevHash + '|' + JSON.stringify(core)).digest('hex').slice(0, 16);
+}
+
+function policyDigestSync() {
+  try {
+    const p = path.join(ROOT, '.agent', 'policy.json');
+    if (!existsSync(p)) return null;
+    const content = readFileSync(p, 'utf8');
+    return crypto.createHash('sha256').update(content).digest('hex').slice(0, 16);
+  } catch { return null; }
 }
 
 async function cmdLog(args) {
@@ -171,10 +185,11 @@ async function cmdLog(args) {
   const durationMs = args.durationMs ? Number(args.durationMs) : undefined;
   const error = args.error || null;
   const intent = args.intent || null;
-  // P1-2 Observability: trace linkage (optional, backward compat)
   const traceId = args.traceId || args.trace || null;
   const spanId = args.spanId || args.span || null;
   const parentSpan = args.parentSpan || null;
+  const tokens = args.tokens ? Number(args.tokens) : (args.tokenCount ? Number(args.tokenCount) : null);
+  const policyDigest = args.policyDigest || policyDigestSync();
 
   if (!tool || !decision) {
     console.error('Usage: audit.mjs log --tool <tool> --target <target> --decision <permitted|refused|failed> [--actor <actor>] [--rule <id>] [--durationMs <n>] [--error <msg>]');
@@ -208,6 +223,8 @@ async function cmdLog(args) {
     intent: intent || null,
     requestId: crypto.randomBytes(3).toString('hex'),
     prevHash,
+    ...(policyDigest ? { policyDigest } : {}),
+    ...(tokens !== null ? { tokens } : {}),
     ...(traceId ? { traceId: String(traceId).slice(0, 64) } : {}),
     ...(spanId ? { spanId: String(spanId).slice(0, 64) } : {}),
     ...(parentSpan ? { parentSpan: String(parentSpan).slice(0, 64) } : {}),
@@ -355,8 +372,13 @@ async function main() {
   else if (cmd === 'verify') await cmdVerify(args);
   else if (cmd === 'keygen') await cmdKeygen();
   else if (cmd === 'pubkey') await cmdPubkey();
+  else if (cmd === 'digest') {
+    const d = policyDigestSync();
+    console.log(d || 'unknown');
+    if (args.json) console.log(JSON.stringify({ policyDigest: d }, null, 2));
+  }
   else {
-    console.error(`Unknown command: ${cmd}\nUsage: audit.mjs <log|tail|stats|verify|keygen|pubkey> [options]`);
+    console.error(`Unknown command: ${cmd}\nUsage: audit.mjs <log|tail|stats|verify|keygen|pubkey|digest> [options]`);
     process.exit(1);
   }
 }

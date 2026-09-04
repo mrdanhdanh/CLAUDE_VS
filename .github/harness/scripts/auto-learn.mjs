@@ -1,9 +1,11 @@
 #!/usr/bin/env node
 /**
- * Auto-Learn — hệ thống tự học hỏi tự động
- * - suggest: gợi ý KN liên quan khi code (BM25-lite)
+ * Auto-Learn — hệ thống tự học hỏi tự động (Engram-lite + Reef-lite)
+ * - suggest: gợi ý KN liên quan khi code (BM25-lite + Wilson score)
  * - log: auto tạo draft bug.md khi có lỗi
  * - propose: sinh KN draft từ bug.md để dán vào knowleged.md
+ * - attest: peer verification (Engram-lite) — Wilson-ranked
+ * - search/get: MCP-like aliases for suggest/propose
  * - status: tổng quan học hỏi
  * No deps, Node 18+
  */
@@ -22,6 +24,7 @@ const TEMPLATE = path.join(BUGS_DIR, '_template', 'bug.md');
 const VERSIONS_DIR = path.join(ROOT, '.agent', 'versions');
 const RECORDS_DIR = path.join(ROOT, '.agent', 'records');
 const REPORTS_FILE = path.join(ROOT, '.agent', 'reports.jsonl');
+const ATTEST_FILE = path.join(ROOT, '.agent', 'attestations.jsonl');
 
 // ---------- helpers ----------
 function tokenize(text) {
@@ -152,6 +155,75 @@ function scoreKN(queryTokens, queryRaw, kn, idf) {
   return Math.round(score * 10) / 10;
 }
 
+// ---------- Engram-lite: Wilson score + attestations ----------
+function wilsonScore(up, total, z = 1.96) {
+  if (total === 0) return 0;
+  const p = up / total;
+  const n = total;
+  const denom = 1 + (z * z) / n;
+  const centre = p + (z * z) / (2 * n);
+  const margin = z * Math.sqrt((p * (1 - p) + (z * z) / (4 * n)) / n);
+  return (centre - margin) / denom;
+}
+
+async function loadAttestations() {
+  const map = new Map(); // knId -> {up, total}
+  try {
+    if (!existsSync(ATTEST_FILE)) return map;
+    const text = await fs.readFile(ATTEST_FILE, 'utf8');
+    for (const line of text.trim().split('\n').filter(Boolean)) {
+      try {
+        const a = JSON.parse(line);
+        const id = a.kn || a.id || a.bug || '';
+        if (!id) continue;
+        // normalize to KN-XXX
+        const knId = id.startsWith('KN-') ? id : null;
+        if (!knId) continue;
+        if (!map.has(knId)) map.set(knId, { up: 0, total: 0 });
+        const e = map.get(knId);
+        e.total++;
+        if (a.result === 'pass' || a.score >= 0.7) e.up++;
+      } catch {}
+    }
+  } catch {}
+  return map;
+}
+
+async function attest(opts, json = false) {
+  const kn = opts.kn || opts.id || opts.bug || '';
+  const result = opts.result || opts.r || '';
+  const scoreRaw = opts.score;
+  if (!kn) {
+    console.error('❌ Thiếu --kn <KN-XXX> hoặc --bug <slug>. Ví dụ: attest --kn KN-003 --result pass');
+    process.exit(1);
+  }
+  const knId = kn.startsWith('KN-') ? kn : kn;
+  let score = scoreRaw !== undefined ? parseFloat(scoreRaw) : (result === 'pass' ? 1 : result === 'fail' ? 0 : NaN);
+  if (isNaN(score)) {
+    console.error('❌ Thiếu --result pass|fail hoặc --score 0..1');
+    process.exit(1);
+  }
+  const entry = {
+    ts: new Date().toISOString(),
+    kn: knId,
+    result: score >= 0.7 ? 'pass' : 'fail',
+    score,
+    actor: opts.actor || 'YUNIE',
+    note: (opts.note || opts.feedback || '').slice(0, 500),
+  };
+  await fs.mkdir(path.dirname(ATTEST_FILE), { recursive: true });
+  await fs.appendFile(ATTEST_FILE, JSON.stringify(entry) + '\n', 'utf8');
+  const map = await loadAttestations();
+  const e = map.get(knId) || { up: 0, total: 0 };
+  const wilson = wilsonScore(e.up, e.total);
+  if (json) console.log(JSON.stringify({ ...entry, wilson, attestations: e }, null, 2));
+  else {
+    console.log(`✅ Attested ${knId}: ${entry.result} (score=${score}) — wilson=${wilson.toFixed(3)} (${e.up}/${e.total})`);
+    console.log(`   → suggest sẽ rank cao hơn cho KN có wilson cao`);
+  }
+  return entry;
+}
+
 async function suggest(query, topK=3, json=false) {
   const { kns, error } = await parseKNs();
   if (error) {
@@ -167,12 +239,20 @@ async function suggest(query, topK=3, json=false) {
   const qTokens = tokenize(query);
   if (qTokens.length === 0) qTokens.push(...query.toLowerCase().split(/\s+/).filter(Boolean));
   const idf = computeIDF(qTokens, kns);
-  const scored = kns.map(kn => ({ ...kn, score: scoreKN(qTokens, query, kn, idf) }))
+  const attestMap = await loadAttestations();
+  const scored = kns.map(kn => {
+    const base = scoreKN(qTokens, query, kn, idf);
+    const att = attestMap.get(kn.id);
+    const wilson = att ? wilsonScore(att.up, att.total) : 0;
+    // Wilson boost: up to +2 points for highly attested KN
+    const boosted = base + wilson * 2;
+    return { ...kn, score: Math.round(boosted * 10) / 10, baseScore: base, wilson, attestations: att || { up: 0, total: 0 } };
+  })
     .filter(k=>k.score>0)
     .sort((a,b)=>b.score-a.score)
     .slice(0, topK);
   if (json) {
-    console.log(JSON.stringify({ query, queryTokens: qTokens, totalKN: kns.length, results: scored.map(k=>({ id:k.id, title:k.title, tags:k.tags, severity:k.severity, date:k.date, score:k.score, lesson:k.lesson.slice(0,120), snippet:k.block.slice(0,200).replace(/\n/g,' ') })) }, null, 2));
+    console.log(JSON.stringify({ query, queryTokens: qTokens, totalKN: kns.length, results: scored.map(k=>({ id:k.id, title:k.title, tags:k.tags, severity:k.severity, date:k.date, score:k.score, baseScore:k.baseScore, wilson: Math.round(k.wilson*1000)/1000, attestations:k.attestations, lesson:k.lesson.slice(0,120), snippet:k.block.slice(0,200).replace(/\n/g,' ') })) }, null, 2));
     return;
   }
   if (scored.length === 0) {
@@ -182,7 +262,8 @@ async function suggest(query, topK=3, json=false) {
   }
   console.log(`🔍 suggest "${query}" — tìm thấy ${scored.length}/${kns.length} KN liên quan:`);
   for (const k of scored) {
-    console.log(`  [${k.id}] score ${k.score} — ${k.title} (${k.severity}, ${k.tags.join(' ') || 'no-tags'})`);
+    const wilsonStr = k.attestations.total ? ` wilson=${k.wilson.toFixed(3)}(${k.attestations.up}/${k.attestations.total})` : '';
+    console.log(`  [${k.id}] score ${k.score} (base ${k.baseScore}${wilsonStr}) — ${k.title} (${k.severity}, ${k.tags.join(' ') || 'no-tags'})`);
     if (k.lesson) console.log(`       → ${k.lesson.slice(0,100)}`);
     console.log(`       snippet: ${k.block.slice(0,120).replace(/\n/g,' ').trim()}...`);
   }
@@ -775,12 +856,13 @@ function parseArgs(argv) {
 async function main() {
   const { cmd, query, opts } = parseArgs(process.argv);
   if (!cmd || cmd==='help' || cmd==='--help' || cmd==='-h') {
-    console.log(`Auto-Learn — hệ thống tự học hỏi tự động (reef-lite)
+    console.log(`Auto-Learn — hệ thống tự học hỏi tự động (reef-lite + Engram-lite)
 
 Usage:
-  node .github/harness/scripts/auto-learn.mjs suggest "từ khóa" [--top 3] [--json]
+  node .github/harness/scripts/auto-learn.mjs suggest "từ khóa" [--top 3] [--json]  (alias: search)
   node .github/harness/scripts/auto-learn.mjs log --error "msg" --file "path" --title "tên" [--slug slug] 
-  node .github/harness/scripts/auto-learn.mjs propose --bug <slug> [--json]
+  node .github/harness/scripts/auto-learn.mjs propose --bug <slug> [--json]  (alias: get --bug <slug>)
+  node .github/harness/scripts/auto-learn.mjs attest --kn KN-003 --result pass|fail [--score 0..1] [--note "..."]  (Engram-lite Wilson)
   node .github/harness/scripts/auto-learn.mjs status [--json]
   # Reef-lite (Serve → Observe → Grow → Commit):
   node .github/harness/scripts/auto-learn.mjs record --prompt "mô tả" [--scenario name] [--response "..."] [--json]
@@ -813,13 +895,20 @@ Flow tự động:
     return;
   }
   try {
-    if (cmd==='suggest') {
+    if (cmd==='suggest' || cmd==='search') {
       if (!query) { console.error('❌ Thiếu query. Ví dụ: suggest "rainbow border"'); process.exit(1); }
       await suggest(query, opts.top||3, !!opts.json);
+    } else if (cmd==='get') {
+      // MCP-like get: alias for propose --bug
+      const bug = opts.bug || opts.slug || query;
+      if (!bug) { console.error('❌ Thiếu --bug <slug>. Ví dụ: get --bug 2026-08-30-xyz'); process.exit(1); }
+      await propose(bug, !!opts.json);
     } else if (cmd==='log') {
       await logBug(opts);
     } else if (cmd==='propose') {
       await propose(opts.bug || opts.slug, !!opts.json);
+    } else if (cmd==='attest') {
+      await attest(opts, !!opts.json);
     } else if (cmd==='status') {
       await status(!!opts.json);
     } else if (cmd==='record') {

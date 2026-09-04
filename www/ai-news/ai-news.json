@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-04T06:56:51.072Z",
+  "generatedAt": "2026-09-04T15:04:43.400Z",
   "generatedBy": "YUNIE × Last30Days",
   "version": 2,
   "description": "Tin AI mới nhất — tổng hợp từ Last30Days (HN, GitHub, Web) trong 30 ngày qua. Chủ đề: AI. Tự động cập nhật bởi YUNIE.",
@@ -51,11 +51,11 @@
   ],
   "articles": [
     {
-      "id": "hn-49560039",
-      "title": "DEF Con 34 – Hacking AI – Bruce Schneier [video]",
-      "summary": "DEF Con 34 – Hacking AI – Bruce Schneier [video] — 8 points, 0 comments on HN.",
+      "id": "hn-49565210",
+      "title": "Can you learn programming by building with AI? (poll)",
+      "summary": "Can you learn programming by building with AI? (poll) — 3 points, 0 comments on HN.",
       "source": "Hacker News",
-      "sourceUrl": "https://www.youtube.com/watch?v=eEBv0STiYhI",
+      "sourceUrl": "https://textlog.cc/post/3183",
       "category": "products",
       "date": "2026-09-04",
       "hot": true,
@@ -63,15 +63,15 @@
         "HN",
         "AI",
         "story",
-        "author_jonbaer"
+        "author_stagas"
       ]
     },
     {
-      "id": "hn-49560129",
-      "title": "Agentic Search",
-      "summary": "Agentic Search — 7 points, 0 comments on HN.",
+      "id": "hn-49565507",
+      "title": "Report: How developers react to AI-scented blog posts",
+      "summary": "Report: How developers react to AI-scented blog posts — 2 points, 0 comments on HN.",
       "source": "Hacker News",
-      "sourceUrl": "https://mistral.ai/news/agentic-search/",
+      "sourceUrl": "https://writethatblog.substack.com/p/dev-reaction-to-ai-blog-posts",
       "category": "products",
       "date": "2026-09-04",
       "hot": true,
@@ -79,15 +79,15 @@
         "HN",
         "AI",
         "story",
-        "author_gmays"
+        "author_CursedSilicon"
       ]
     },
     {
-      "id": "hn-49560093",
-      "title": "The Impact of AI-Generated Text on the Internet",
-      "summary": "The Impact of AI-Generated Text on the Internet — 5 points, 0 comments on HN.",
+      "id": "hn-49565415",
+      "title": "1,200 AIs discovered a secret group chat",
+      "summary": "1,200 AIs discovered a secret group chat — 2 points, 0 comments on HN.",
       "source": "Hacker News",
-      "sourceUrl": "https://ai-on-the-internet.github.io",
+      "sourceUrl": "https://textlog.cc/post/3170",
       "category": "products",
       "date": "2026-09-04",
       "hot": false,
@@ -95,15 +95,15 @@
         "HN",
         "AI",
         "story",
-        "author_alphabetatango"
+        "author_stagas"
       ]
     },
     {
-      "id": "hn-49560076",
-      "title": "How Much of the Internet Is Written with AI?",
-      "summary": "How Much of the Internet Is Written with AI? — 5 points, 0 comments on HN.",
+      "id": "hn-49565238",
+      "title": "Show HN: Petrichor – Native offline music player for macOS",
+      "summary": "Over a year ago I shared about Petrichor on HN[1] while it was still in alpha, it started out as a hobby for me and has now grown into a mature product while staying free and open source[2]. I&#x27;ve just released v1.7  — 2 points, 0 comments on HN.",
       "source": "Hacker News",
-      "sourceUrl": "https://www.pewresearch.org/data-labs/2026/08/20/how-much-of-the-internet-is-written-with-ai/",
+      "sourceUrl": "https://petrichor.page/",
       "category": "products",
       "date": "2026-09-04",
       "hot": false,
@@ -111,15 +111,15 @@
         "HN",
         "AI",
         "story",
-        "author_alphabetatango"
+        "author_kushalpandya"
       ]
     },
     {
-      "id": "hn-49560169",
-      "title": "The 1990s Web vs. today's AI",
-      "summary": "The 1990s Web vs. today's AI — 4 points, 0 comments on HN.",
+      "id": "hn-49565218",
+      "title": "The Asymmetric Disarmament of AI Security",
+      "summary": "The Asymmetric Disarmament of AI Security — 2 points, 0 comments on HN.",
       "source": "Hacker News",
-      "sourceUrl": "https://arnoldkling.substack.com/p/the-1990s-web-vs-todays-ai",
+      "sourceUrl": "https://eddiemissri.substack.com/p/the-asymmetric-disarmament-of-ai",
       "category": "products",
       "date": "2026-09-04",
       "hot": false,
@@ -127,15 +127,15 @@
         "HN",
         "AI",
         "story",
-        "author_paulpauper"
+        "author_pelosm"
       ]
     },
     {
-      "id": "hn-49560887",
-      "title": "AI, Tools and Transformation",
-      "summary": "AI, Tools and Transformation — 3 points, 0 comments on HN.",
+      "id": "hn-49564987",
+      "title": "OpenClaw Improves User Onboarding",
+      "summary": "OpenClaw Improves User Onboarding — 2 points, 1 comments on HN.",
       "source": "Hacker News",
-      "sourceUrl": "https://www.ben-evans.com/benedictevans/2026/9/3/ai-tools-and-transformation",
+      "sourceUrl": "https://openclaw.ai/blog/macos-installer-windows-local-ai",
       "category": "products",
       "date": "2026-09-04",
       "hot": false,
@@ -143,15 +143,15 @@
         "HN",
         "AI",
         "story",
-        "author_meetpateltech"
+        "author_bfdd"
       ]
     },
     {
-      "id": "hn-49560782",
-      "title": "America must learn AI lessons from Astro Boy",
-      "summary": "America must learn AI lessons from Astro Boy — 3 points, 0 comments on HN.",
+      "id": "hn-49564980",
+      "title": "Show HN: Audioreality.ai – email to private daily podcast summary show",
+      "summary": "Hey all,<p>TLDR: When you sign up you get an email alias @audioreality.ai that you can use to sign up for newsletters, have agents send output to, etc. Once a day you get a private podcast with a multi-host format&#x2F;c — 2 points, 0 comments on HN.",
       "source": "Hacker News",
-      "sourceUrl": "https://www.ft.com/content/68751904-522a-41cc-85e0-08015fe75059",
+      "sourceUrl": "https://www.audioreality.ai",
       "category": "products",
       "date": "2026-09-04",
       "hot": false,
@@ -159,15 +159,15 @@
         "HN",
         "AI",
         "story",
-        "author_thm"
+        "author_BSOhealth"
       ]
     },
     {
-      "id": "hn-49560970",
-      "title": "Cerebras and Compute Nordic Finland Announces AI Data Centre in Mikkeli, Finland",
-      "summary": "Cerebras and Compute Nordic Finland Announces AI Data Centre in Mikkeli, Finland — 2 points, 0 comments on HN.",
+      "id": "hn-49565661",
+      "title": "Show HN: JogPad – Shift Shift note capture app (macOS)",
+      "summary": "While working with agents, I always get ideas I wanna queue for the next prompt or session without getting in the way of the current work.<p>I&#x27;ve been noting things in a gitignored USER_NOTES file and asking agents  — 1 points, 0 comments on HN.",
       "source": "Hacker News",
-      "sourceUrl": "https://investors.cerebras.ai/news-releases/news-release-details/cerebras-and-compute-nordic-finland-announce-new-165-mw-ai-data",
+      "sourceUrl": "https://jogpad.fishball.app/",
       "category": "products",
       "date": "2026-09-04",
       "hot": false,
@@ -175,15 +175,15 @@
         "HN",
         "AI",
         "story",
-        "author_olvy0"
+        "author_ycmjason"
       ]
     },
     {
-      "id": "hn-49560927",
-      "title": "Max H3 – MiniMax H3 Max AI Video Generator",
-      "summary": "Max H3 – MiniMax H3 Max AI Video Generator — 2 points, 0 comments on HN.",
+      "id": "hn-49565614",
+      "title": "Unlocking Lossless Speedups in LLMs via Discrete Diffusion",
+      "summary": "Unlocking Lossless Speedups in LLMs via Discrete Diffusion — 1 points, 0 comments on HN.",
       "source": "Hacker News",
-      "sourceUrl": "https://www.maxh3.com/",
+      "sourceUrl": "https://github.com/ifm-ai/uno",
       "category": "products",
       "date": "2026-09-04",
       "hot": false,
@@ -191,15 +191,15 @@
         "HN",
         "AI",
         "story",
-        "author_Follow_Cloud"
+        "author_Bluestein"
       ]
     },
     {
-      "id": "hn-49560890",
-      "title": "World Sandwich",
-      "summary": "World Sandwich — 2 points, 0 comments on HN.",
+      "id": "hn-49565556",
+      "title": "Headroom: Save Tokens from Reversible Compression",
+      "summary": "Headroom: Save Tokens from Reversible Compression — 1 points, 0 comments on HN.",
       "source": "Hacker News",
-      "sourceUrl": "https://claude.ai/code/artifact/5ffe9a8e-e1c6-4204-b893-585bea78a252",
+      "sourceUrl": "https://github.com/headroomlabs-ai/headroom",
       "category": "products",
       "date": "2026-09-04",
       "hot": false,
@@ -207,15 +207,15 @@
         "HN",
         "AI",
         "story",
-        "author_voxycon"
+        "author_ghostoftiber"
       ]
     },
     {
-      "id": "hn-49560431",
-      "title": "Why Air Batteries Are Finally Beating Lithium [video]",
-      "summary": "Why Air Batteries Are Finally Beating Lithium [video] — 2 points, 0 comments on HN.",
+      "id": "hn-49565335",
+      "title": "AI coding agent PR merge rates: Claude 84%, Codex 74%, Devin 43%, humans 85%",
+      "summary": "AI coding agent PR merge rates: Claude 84%, Codex 74%, Devin 43%, humans 85% — 1 points, 0 comments on HN.",
       "source": "Hacker News",
-      "sourceUrl": "https://www.youtube.com/watch?v=GoiECSXOvQE",
+      "sourceUrl": "https://arxiv.org/abs/2607.21832",
       "category": "products",
       "date": "2026-09-04",
       "hot": false,
@@ -223,31 +223,15 @@
         "HN",
         "AI",
         "story",
-        "author_thelastgallon"
+        "author_d-yoda"
       ]
     },
     {
-      "id": "hn-49560428",
-      "title": "MauroPello/stop-the-slop: Spot AI-generated YouTube scripts",
-      "summary": "MauroPello/stop-the-slop: Spot AI-generated YouTube scripts — 2 points, 0 comments on HN.",
+      "id": "hn-49565298",
+      "title": "Show HN: Learn/Practice Sudoku strategies web app",
+      "summary": "So, I wanted to get better at Sudoku puzzles, and I watched a lot of strategy videos, but I just could not grok them.<p>Also I installed a bunch of free Sudoku games on my phone and got very (and I mean very) annoyed by  — 1 points, 0 comments on HN.",
       "source": "Hacker News",
-      "sourceUrl": "https://github.com/MauroPello/stop-the-slop",
-      "category": "safety",
-      "date": "2026-09-04",
-      "hot": false,
-      "tags": [
-        "HN",
-        "AI",
-        "story",
-        "author_rdmuser"
-      ]
-    },
-    {
-      "id": "hn-49559652",
-      "title": "FrontierMath Erdős",
-      "summary": "FrontierMath Erdős — 2 points, 0 comments on HN.",
-      "source": "Hacker News",
-      "sourceUrl": "https://epoch.ai/latest/announcing-frontiermath-erdos",
+      "sourceUrl": "https://sw-fun.github.io/sudoku/",
       "category": "products",
       "date": "2026-09-04",
       "hot": false,
@@ -255,31 +239,15 @@
         "HN",
         "AI",
         "story",
-        "author_cainxinth"
+        "author_softwarewright"
       ]
     },
     {
-      "id": "hn-49561372",
-      "title": "OpenAI commits $1B to critical-infrastructure AI initiative",
-      "summary": "OpenAI commits $1B to critical-infrastructure AI initiative — 1 points, 0 comments on HN.",
+      "id": "hn-49565288",
+      "title": "98% of What Claude Code Does, I Never See. The 0.27% It Stops for Is the Point",
+      "summary": "98% of What Claude Code Does, I Never See. The 0.27% It Stops for Is the Point — 1 points, 0 comments on HN.",
       "source": "Hacker News",
-      "sourceUrl": "https://axios.com/2026/09/03/openai-critical-infrastructure-cyber-ai-models",
-      "category": "big-tech",
-      "date": "2026-09-04",
-      "hot": false,
-      "tags": [
-        "HN",
-        "AI",
-        "story",
-        "author_utiiiD"
-      ]
-    },
-    {
-      "id": "hn-49561361",
-      "title": "Open-weight AI agents can use 10k× more energy than simple queries",
-      "summary": "Open-weight AI agents can use 10k× more energy than simple queries — 1 points, 0 comments on HN.",
-      "source": "Hacker News",
-      "sourceUrl": "https://bloomberg.com/news/articles/2026-09-03/ai-s-environmental-impact-per-task-balloons-with-more-complexity",
+      "sourceUrl": "https://grith.ai/blog/98-percent-of-claude-code-i-never-see",
       "category": "products",
       "date": "2026-09-04",
       "hot": false,
@@ -287,12 +255,44 @@
         "HN",
         "AI",
         "story",
-        "author_utiiiD"
+        "author_edf13"
+      ]
+    },
+    {
+      "id": "hn-49565279",
+      "title": "Show HN: Context Engine – Be an AI-native company or get killed by one that did",
+      "summary": "Show HN: Context Engine – Be an AI-native company or get killed by one that did — 1 points, 0 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://contextengine.com/",
+      "category": "products",
+      "date": "2026-09-04",
+      "hot": false,
+      "tags": [
+        "HN",
+        "AI",
+        "story",
+        "author_hey-fk"
+      ]
+    },
+    {
+      "id": "hn-49565276",
+      "title": "What Should Programmers Do While the AI Writes Code?",
+      "summary": "What Should Programmers Do While the AI Writes Code? — 1 points, 1 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://medium.com/@scott.batson_76410/what-should-programmers-do-while-the-ai-writes-code-a2ce2e6de88e",
+      "category": "products",
+      "date": "2026-09-04",
+      "hot": false,
+      "tags": [
+        "HN",
+        "AI",
+        "story",
+        "author_syumei"
       ]
     }
   ],
   "meta": {
-    "fetchedAt": "2026-09-04T06:56:51.072Z",
+    "fetchedAt": "2026-09-04T15:04:43.400Z",
     "topic": "AI",
     "total": 15,
     "hot": 2,

@@ -1,0 +1,1220 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="color-scheme" content="dark light" />
+  <meta name="description" content="COSMOS · QUANTUM — Triết lý 2 tầng cho Harness v2. Vũ trụ (Macro) + Lượng tử (Micro) = Process là định luật, verify là quan sát." />
+  <title>COSMOS · QUANTUM — Triết lý Harness v2</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@700;800&family=JetBrains+Mono:wght@400;500;600&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+  <style>
+    /* ===== COSMOS · QUANTUM — Design System ===== */
+    :root{
+      --cosmos-bg:#060a18;
+      --cosmos-bg-2:#0b0f1a;
+      --cosmos-surface:#0f172a;
+      --cosmos-surface-2:#131c35;
+      --cosmos-border:rgba(255,255,255,.08);
+      --cosmos-border-strong:rgba(255,255,255,.14);
+      --cosmos-text:#e2e8f0;
+      --cosmos-text-muted:#94a3b8;
+      --cosmos-text-dim:#64748b;
+      --cosmos-primary:#7c3aed;
+      --cosmos-primary-2:#6366f1;
+      --cosmos-accent:#f59e0b;
+      --cosmos-cyan:#06b6d4;
+      --cosmos-pink:#ec4899;
+      --cosmos-success:#10b981;
+      --radius-sm:10px;
+      --radius-md:14px;
+      --radius-lg:18px;
+      --radius-xl:24px;
+      --radius-full:9999px;
+      --shadow-sm:0 1px 2px rgba(0,0,0,.3), 0 4px 12px rgba(0,0,0,.2);
+      --shadow-md:0 8px 24px rgba(0,0,0,.35), 0 2px 8px rgba(0,0,0,.25);
+      --shadow-lg:0 16px 48px rgba(0,0,0,.45);
+      --font-sans:'Inter', system-ui, sans-serif;
+      --font-display:'Plus Jakarta Sans', 'Space Grotesk', sans-serif;
+      --font-mono:'JetBrains Mono', ui-monospace, monospace;
+      --header-h:56px;
+      --angle:0deg;
+    }
+    @property --angle{syntax:"<angle>";initial-value:0deg;inherits:false;}
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      font-family:var(--font-sans);
+      color:var(--cosmos-text);
+      background:var(--cosmos-bg);
+      line-height:1.6;
+      -webkit-font-smoothing:antialiased;
+      overflow-x:hidden;
+    }
+    a{color:inherit}
+    a:focus-visible, button:focus-visible{
+      outline:2px solid var(--cosmos-primary);
+      outline-offset:2px;
+    }
+    .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+    .skip-link{
+      position:absolute;left:16px;top:-40px;z-index:100;
+      background:#fff;color:#0f172a;padding:8px 16px;border-radius:var(--radius-full);
+      font:600 13px var(--font-sans);text-decoration:none;transition:top .2s;
+    }
+    .skip-link:focus{top:12px}
+    .container{max-width:1120px;margin:0 auto;padding:0 16px}
+    @media(min-width:768px){.container{padding:0 24px}}
+    @media(min-width:1120px){.container{padding:0 24px}}
+
+    /* ===== Header ===== */
+    .header{
+      position:sticky;top:0;z-index:40;
+      backdrop-filter:blur(16px) saturate(180%);
+      background:rgba(6,10,24,.72);
+      border-bottom:1px solid var(--cosmos-border);
+    }
+    .header-inner{
+      display:flex;align-items:center;justify-content:space-between;
+      height:var(--header-h);gap:12px;
+    }
+    .brand{
+      display:flex;align-items:center;gap:10px;text-decoration:none;min-width:0;
+    }
+    .brand-mark{
+      width:36px;height:36px;border-radius:10px;
+      display:grid;place-items:center;
+      background:conic-gradient(from var(--angle), #7c3aed, #06b6d4, #f59e0b, #ec4899, #7c3aed);
+      color:#fff;font:800 14px var(--font-display);letter-spacing:.04em;
+      box-shadow:0 2px 12px rgba(124,58,237,.4);
+      animation:spin-angle 4s linear infinite;
+      flex-shrink:0;
+    }
+    @keyframes spin-angle{to{--angle:360deg}}
+    .brand-text{display:flex;flex-direction:column;line-height:1.1;min-width:0}
+    .brand-text strong{font:800 13px var(--font-display);letter-spacing:.06em;color:#fff;white-space:nowrap}
+    .brand-text span{font:500 11px var(--font-sans);color:var(--cosmos-text-muted);letter-spacing:.02em;white-space:nowrap}
+    .header-actions{display:flex;align-items:center;gap:8px}
+    .btn{
+      appearance:none;border:1px solid transparent;border-radius:var(--radius-full);
+      font:600 13px var(--font-sans);padding:8px 14px;cursor:pointer;
+      display:inline-flex;align-items:center;gap:6px;white-space:nowrap;
+      transition:all .18s ease;text-decoration:none;
+    }
+    .btn-ghost{
+      background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.08);color:var(--cosmos-text);
+    }
+    .btn-ghost:hover{background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.14);transform:translateY(-1px)}
+    .btn-primary{
+      background:linear-gradient(135deg, #7c3aed, #6366f1);color:#fff;
+      box-shadow:0 4px 16px rgba(124,58,237,.35);border-color:transparent;
+    }
+    .btn-primary:hover{transform:translateY(-1px);box-shadow:0 6px 20px rgba(124,58,237,.45)}
+    .btn:active{transform:scale(.98)}
+    .btn-icon{padding:8px 10px}
+    @media(max-width:640px){.btn-text-full{display:none}}
+
+    /* ===== Hero ===== */
+    .hero{
+      position:relative;overflow:hidden;
+      padding:48px 0 32px;
+      border-bottom:1px solid var(--cosmos-border);
+    }
+    .hero-bg{
+      position:absolute;inset:0;z-index:0;overflow:hidden;
+      background:
+        radial-gradient(900px 600px at 20% -10%, rgba(124,58,237,.28), transparent 60%),
+        radial-gradient(700px 500px at 85% 0%, rgba(6,182,214,.18), transparent 60%),
+        radial-gradient(600px 400px at 50% 100%, rgba(245,158,11,.12), transparent 60%),
+        radial-gradient(500px 300px at 10% 80%, rgba(236,72,153,.14), transparent 60%),
+        linear-gradient(180deg, #060a18 0%, #0b0f1a 100%);
+    }
+    .hero-bg canvas{
+      position:absolute;inset:0;width:100%;height:100%;opacity:.9;
+    }
+    .hero-bg::after{
+      content:"";position:absolute;inset:0;
+      background:radial-gradient(800px 400px at 50% 0%, transparent 40%, rgba(6,10,24,.6) 100%);
+      pointer-events:none;
+    }
+    .hero-inner{position:relative;z-index:1}
+    .eyebrow{
+      display:inline-flex;align-items:center;gap:8px;
+      font:600 11px var(--font-mono);letter-spacing:.14em;text-transform:uppercase;
+      color:var(--cosmos-cyan);
+      background:rgba(6,182,214,.1);border:1px solid rgba(6,182,214,.2);
+      padding:6px 12px;border-radius:var(--radius-full);
+      backdrop-filter:blur(8px);
+    }
+    .eyebrow i{width:6px;height:6px;border-radius:50%;background:var(--cosmos-cyan);box-shadow:0 0 8px var(--cosmos-cyan);animation:pulse 2s ease infinite}
+    @keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.7;transform:scale(.9)}}
+    .hero h1{
+      margin:16px 0 12px;
+      font:800 clamp(28px, 5vw, 48px)/1.05 var(--font-display);
+      letter-spacing:-.03em;color:#fff;
+      text-wrap:balance;
+    }
+    .hero h1 span{
+      background:linear-gradient(135deg, #a78bfa 0%, #22d3ee 50%, #fbbf24 100%);
+      -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+    }
+    .hero p{
+      margin:0;max-width:640px;
+      font:400 15px/1.7 var(--font-sans);color:var(--cosmos-text-muted);
+      text-wrap:pretty;
+    }
+    .hero p strong{color:var(--cosmos-text);font-weight:600}
+    .hero-meta{
+      display:flex;flex-wrap:wrap;gap:8px;margin-top:20px;
+    }
+    .meta-pill{
+      display:inline-flex;align-items:center;gap:6px;
+      font:500 12px var(--font-mono);color:var(--cosmos-text-muted);
+      background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.08);
+      padding:6px 10px;border-radius:var(--radius-full);
+      backdrop-filter:blur(8px);
+    }
+    .meta-pill b{color:var(--cosmos-text);font-weight:600}
+    .hero-actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:24px}
+    .hero-actions .btn{padding:10px 18px;font-size:13px}
+
+    /* ===== Sections ===== */
+    .section{padding:32px 0}
+    .section-head{
+      display:flex;flex-wrap:wrap;align-items:end;justify-content:space-between;gap:12px;
+      margin-bottom:20px;
+    }
+    .section-head h2{
+      margin:0;font:800 22px/1.2 var(--font-display);letter-spacing:-.02em;color:#fff;
+    }
+    .section-head h2 small{
+      display:block;font:500 12px var(--font-mono);letter-spacing:.08em;text-transform:uppercase;
+      color:var(--cosmos-text-dim);margin-bottom:6px;
+    }
+    .section-head p{
+      margin:0;max-width:520px;font:400 13px/1.6 var(--font-sans);color:var(--cosmos-text-muted);
+    }
+    .section-head a{font:600 12px var(--font-sans);color:var(--cosmos-cyan);text-decoration:none}
+    .section-head a:hover{text-decoration:underline}
+
+    /* ===== Cards ===== */
+    .grid-2{display:grid;gap:16px}
+    @media(min-width:768px){.grid-2{grid-template-columns:1fr 1fr}}
+    .grid-3{display:grid;gap:16px}
+    @media(min-width:768px){.grid-3{grid-template-columns:repeat(3,1fr)}}
+    @media(min-width:768px) and (max-width:1024px){.grid-3{grid-template-columns:repeat(2,1fr)}}
+    .card{
+      position:relative;
+      background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
+      border:1px solid var(--cosmos-border);
+      border-radius:var(--radius-lg);
+      padding:20px;
+      backdrop-filter:blur(12px) saturate(140%);
+      transition:all .2s ease;
+      overflow:hidden;
+    }
+    .card::before{
+      content:"";position:absolute;inset:0;border-radius:inherit;padding:1px;
+      background:linear-gradient(135deg, rgba(255,255,255,.08), transparent 50%, rgba(255,255,255,.04));
+      -webkit-mask:linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      -webkit-mask-composite:xor;mask-composite:exclude;
+      pointer-events:none;
+    }
+    .card:hover{
+      transform:translateY(-2px);
+      border-color:var(--cosmos-border-strong);
+      box-shadow:var(--shadow-md);
+      background:linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.04));
+    }
+    .card-icon{
+      width:40px;height:40px;border-radius:12px;
+      display:grid;place-items:center;
+      font-size:18px;margin-bottom:12px;
+      border:1px solid rgba(255,255,255,.08);
+    }
+    .card-icon.cosmos{background:linear-gradient(135deg, rgba(124,58,237,.2), rgba(99,102,241,.15));border-color:rgba(124,58,237,.2)}
+    .card-icon.quantum{background:linear-gradient(135deg, rgba(6,182,214,.2), rgba(16,185,129,.15));border-color:rgba(6,182,214,.2)}
+    .card h3{margin:0 0 6px;font:700 15px/1.3 var(--font-display);color:#fff}
+    .card p{margin:0;font:400 13px/1.6 var(--font-sans);color:var(--cosmos-text-muted)}
+    .card p strong{color:var(--cosmos-text)}
+    .card ul{margin:10px 0 0;padding:0;list-style:none;display:flex;flex-direction:column;gap:6px}
+    .card li{
+      display:flex;gap:8px;align-items:flex-start;
+      font:400 12.5px/1.5 var(--font-sans);color:var(--cosmos-text-muted);
+    }
+    .card li::before{
+      content:"";width:6px;height:6px;border-radius:50%;margin-top:6px;flex-shrink:0;
+      background:var(--cosmos-primary);
+    }
+    .card.quantum li::before{background:var(--cosmos-cyan)}
+    .tag{
+      display:inline-flex;align-items:center;gap:4px;
+      font:600 10px var(--font-mono);letter-spacing:.06em;text-transform:uppercase;
+      padding:4px 8px;border-radius:var(--radius-full);
+      border:1px solid rgba(255,255,255,.1);
+      background:rgba(255,255,255,.06);color:var(--cosmos-text-muted);
+    }
+    .tag.cosmos{color:#c4b5fd;background:rgba(124,58,237,.15);border-color:rgba(124,58,237,.25)}
+    .tag.quantum{color:#67e8f9;background:rgba(6,182,214,.15);border-color:rgba(6,182,214,.25)}
+    .tag-row{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}
+
+    /* ===== Pipeline Timeline ===== */
+    .timeline{
+      position:relative;
+      display:grid;gap:12px;
+    }
+    @media(min-width:768px){
+      .timeline{grid-template-columns:repeat(4,1fr)}
+      .timeline::before{
+        content:"";position:absolute;top:28px;left:6%;right:6%;height:1px;
+        background:linear-gradient(90deg, transparent, rgba(124,58,237,.3) 15%, rgba(6,182,214,.3) 50%, rgba(245,158,11,.3) 85%, transparent);
+      }
+    }
+    .phase{
+      position:relative;
+      background:rgba(255,255,255,.04);
+      border:1px solid var(--cosmos-border);
+      border-radius:var(--radius-md);
+      padding:16px;
+      text-align:left;
+      transition:all .2s ease;
+    }
+    .phase:hover{transform:translateY(-2px);border-color:rgba(255,255,255,.12);background:rgba(255,255,255,.06)}
+    .phase-num{
+      width:32px;height:32px;border-radius:50%;
+      display:grid;place-items:center;
+      font:700 12px var(--font-mono);color:#fff;
+      margin-bottom:10px;
+      background:linear-gradient(135deg, #7c3aed, #6366f1);
+      box-shadow:0 2px 8px rgba(124,58,237,.3);
+      position:relative;z-index:1;
+    }
+    .phase:nth-child(2) .phase-num{background:linear-gradient(135deg, #6366f1, #06b6d4)}
+    .phase:nth-child(3) .phase-num{background:linear-gradient(135deg, #06b6d4, #10b981)}
+    .phase:nth-child(4) .phase-num{background:linear-gradient(135deg, #10b981, #f59e0b)}
+    .phase:nth-child(5) .phase-num{background:linear-gradient(135deg, #f59e0b, #ec4899)}
+    .phase:nth-child(6) .phase-num{background:linear-gradient(135deg, #ec4899, #7c3aed)}
+    .phase:nth-child(7) .phase-num{background:linear-gradient(135deg, #7c3aed, #06b6d4)}
+    .phase:nth-child(8) .phase-num{background:linear-gradient(135deg, #06b6d4, #7c3aed)}
+    .phase h4{margin:0 0 4px;font:700 13px var(--font-display);color:#fff}
+    .phase .meta{font:500 11px var(--font-mono);color:var(--cosmos-text-dim);margin-bottom:6px}
+    .phase p{margin:0;font:400 12px/1.5 var(--font-sans);color:var(--cosmos-text-muted)}
+    .phase .cosmic{font:500 11px var(--font-mono);color:var(--cosmos-cyan);margin-top:8px;display:flex;align-items:center;gap:4px}
+
+    /* ===== Lab Demos ===== */
+    .lab-grid{display:grid;gap:16px}
+    @media(min-width:900px){.lab-grid{grid-template-columns:1fr 1fr}}
+    .lab-card{
+      background:linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.02));
+      border:1px solid var(--cosmos-border);
+      border-radius:var(--radius-lg);
+      overflow:hidden;
+      backdrop-filter:blur(12px);
+    }
+    .lab-head{
+      padding:16px 20px 12px;
+      border-bottom:1px solid var(--cosmos-border);
+      display:flex;align-items:center;justify-content:space-between;gap:12px;
+    }
+    .lab-head h3{margin:0;font:700 14px var(--font-display);color:#fff;display:flex;align-items:center;gap:8px}
+    .lab-head h3 span{font-size:16px}
+    .lab-head .lab-badge{
+      font:600 10px var(--font-mono);letter-spacing:.06em;text-transform:uppercase;
+      padding:4px 8px;border-radius:var(--radius-full);
+      background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.08);color:var(--cosmos-text-muted);
+    }
+    .lab-body{padding:20px}
+    .lab-body p{margin:0 0 14px;font:400 12.5px/1.6 var(--font-sans);color:var(--cosmos-text-muted)}
+    .lab-demo{
+      background:rgba(0,0,0,.25);
+      border:1px solid rgba(255,255,255,.06);
+      border-radius:var(--radius-md);
+      padding:16px;
+      min-height:140px;
+      display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;
+      position:relative;overflow:hidden;
+    }
+    .lab-demo::before{
+      content:"";position:absolute;inset:0;
+      background:radial-gradient(400px 200px at 50% 0%, rgba(124,58,237,.08), transparent 70%);
+      pointer-events:none;
+    }
+    .lab-controls{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:12px}
+    .lab-controls .btn{padding:7px 12px;font-size:12px}
+    .lab-hint{font:400 11px var(--font-mono);color:var(--cosmos-text-dim);text-align:center;margin-top:8px}
+
+    /* Superposition demo */
+    .superposition-stack{
+      position:relative;width:100%;max-width:320px;height:110px;
+      display:flex;align-items:center;justify-content:center;
+    }
+    .super-card{
+      position:absolute;width:90px;height:90px;border-radius:14px;
+      display:grid;place-items:center;
+      font:700 11px var(--font-mono);letter-spacing:.04em;text-transform:uppercase;
+      color:#fff;text-align:center;padding:8px;
+      border:1px solid rgba(255,255,255,.12);
+      backdrop-filter:blur(8px);
+      transition:all .45s cubic-bezier(.34,1.56,.64,1);
+      cursor:pointer;
+      box-shadow:0 4px 16px rgba(0,0,0,.3);
+    }
+    .super-card:nth-child(1){background:linear-gradient(135deg, rgba(124,58,237,.85), rgba(99,102,241,.7));transform:translateX(-36px) rotate(-6deg) scale(.95);z-index:1}
+    .super-card:nth-child(2){background:linear-gradient(135deg, rgba(6,182,214,.85), rgba(16,185,129,.7));transform:translateX(0) rotate(0deg) scale(1);z-index:2}
+    .super-card:nth-child(3){background:linear-gradient(135deg, rgba(245,158,11,.85), rgba(236,72,153,.7));transform:translateX(36px) rotate(6deg) scale(.95);z-index:1}
+    .superposition-stack.collapsed .super-card{opacity:0;transform:translateX(0) rotate(0) scale(.8);pointer-events:none}
+    .superposition-stack.collapsed .super-card.chosen{opacity:1;transform:translateX(0) rotate(0) scale(1.15);z-index:3;box-shadow:0 8px 32px rgba(0,0,0,.4)}
+    .superposition-stack .super-card:hover{transform:translateX(var(--tx,0)) rotate(var(--r,0)) scale(1.02) translateY(-2px)}
+    .super-card:nth-child(1){--tx:-36px;--r:-6deg}
+    .super-card:nth-child(2){--tx:0px;--r:0deg}
+    .super-card:nth-child(3){--tx:36px;--r:6deg}
+
+    /* Entanglement demo */
+    .entangle-area{
+      width:100%;max-width:360px;height:120px;position:relative;
+      display:flex;align-items:center;justify-content:space-between;padding:0 20px;
+    }
+    .particle{
+      width:56px;height:56px;border-radius:50%;
+      display:grid;place-items:center;
+      font:700 10px var(--font-mono);color:#fff;
+      border:2px solid rgba(255,255,255,.15);
+      cursor:grab;user-select:none;
+      transition:box-shadow .2s, transform .15s;
+      position:relative;z-index:2;
+    }
+    .particle:active{cursor:grabbing;transform:scale(1.05)}
+    .particle.a{background:radial-gradient(circle at 30% 30%, #a78bfa, #7c3aed);box-shadow:0 0 20px rgba(124,58,237,.5), 0 4px 16px rgba(0,0,0,.3)}
+    .particle.b{background:radial-gradient(circle at 30% 30%, #67e8f9, #06b6d4);box-shadow:0 0 20px rgba(6,182,214,.5), 0 4px 16px rgba(0,0,0,.3)}
+    .particle.dragging{box-shadow:0 0 30px currentColor, 0 8px 24px rgba(0,0,0,.4)}
+    .entangle-line{
+      position:absolute;top:50%;left:48px;right:48px;height:2px;
+      background:linear-gradient(90deg, #7c3aed, #06b6d4);
+      opacity:.6;transform:translateY(-50%);
+      overflow:hidden;
+    }
+    .entangle-line::after{
+      content:"";position:absolute;inset:0;
+      background:linear-gradient(90deg, transparent, rgba(255,255,255,.8), transparent);
+      animation:shimmer 1.2s ease infinite;
+    }
+    @keyframes shimmer{0%{transform:translateX(-100%)}100%{transform:translateX(100%)}}
+    .entangle-line.entangled{opacity:1;height:3px;box-shadow:0 0 12px rgba(124,58,237,.4)}
+    .entangle-status{
+      position:absolute;bottom:8px;left:50%;transform:translateX(-50%);
+      font:600 10px var(--font-mono);letter-spacing:.06em;text-transform:uppercase;
+      color:var(--cosmos-cyan);background:rgba(6,182,214,.12);border:1px solid rgba(6,182,214,.2);
+      padding:3px 8px;border-radius:var(--radius-full);white-space:nowrap;
+    }
+
+    /* Heisenberg demo */
+    .heisenberg-grid{
+      display:grid;grid-template-columns:1fr 1fr;gap:12px;width:100%;max-width:360px;
+    }
+    .heisenberg-box{
+      background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);
+      border-radius:12px;padding:12px;text-align:center;
+      transition:all .2s;
+    }
+    .heisenberg-box.active{border-color:rgba(124,58,237,.4);background:rgba(124,58,237,.08);box-shadow:0 0 16px rgba(124,58,237,.15)}
+    .heisenberg-box h4{margin:0 0 6px;font:700 11px var(--font-mono);letter-spacing:.06em;text-transform:uppercase;color:var(--cosmos-text-muted)}
+    .heisenberg-box.active h4{color:#c4b5fd}
+    .heisenberg-value{
+      font:700 18px var(--font-mono);color:#fff;letter-spacing:-.02em;
+      transition:all .3s;
+    }
+    .heisenberg-value.blur{filter:blur(6px);opacity:.5}
+    .heisenberg-bar{
+      height:4px;background:rgba(255,255,255,.08);border-radius:var(--radius-full);margin-top:8px;overflow:hidden;
+    }
+    .heisenberg-bar i{display:block;height:100%;border-radius:inherit;transition:width .4s ease}
+    .heisenberg-box:nth-child(1) .heisenberg-bar i{background:linear-gradient(90deg, #7c3aed, #a78bfa)}
+    .heisenberg-box:nth-child(2) .heisenberg-bar i{background:linear-gradient(90deg, #06b6d4, #67e8f9)}
+
+    /* Ladder demo */
+    .ladder{
+      width:100%;max-width:360px;display:flex;flex-direction:column;gap:6px;
+    }
+    .ladder-step{
+      display:flex;align-items:center;gap:10px;
+      background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.06);
+      border-radius:10px;padding:10px 12px;
+      transition:all .2s;cursor:pointer;
+    }
+    .ladder-step:hover{background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.1);transform:translateX(2px)}
+    .ladder-step.active{background:rgba(124,58,237,.12);border-color:rgba(124,58,237,.3);box-shadow:0 0 12px rgba(124,58,237,.15)}
+    .ladder-step.done{opacity:.6}
+    .ladder-step.done .ladder-num{background:var(--cosmos-success);color:#fff}
+    .ladder-num{
+      width:28px;height:28px;border-radius:8px;
+      display:grid;place-items:center;
+      font:700 11px var(--font-mono);color:var(--cosmos-text-muted);
+      background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.08);
+      flex-shrink:0;
+    }
+    .ladder-step.active .ladder-num{background:linear-gradient(135deg, #7c3aed, #6366f1);color:#fff;border-color:transparent}
+    .ladder-info{flex:1;min-width:0}
+    .ladder-info strong{display:block;font:600 12px var(--font-sans);color:#fff;line-height:1.2}
+    .ladder-info span{font:400 11px var(--font-sans);color:var(--cosmos-text-muted)}
+    .ladder-check{width:20px;height:20px;border-radius:50%;display:grid;place-items:center;font-size:11px;flex-shrink:0}
+    .ladder-step.done .ladder-check{background:var(--cosmos-success);color:#fff}
+    .ladder-step:not(.done) .ladder-check{border:1px solid rgba(255,255,255,.12);color:transparent}
+
+    /* ===== Integration ===== */
+    .integration{
+      display:grid;gap:12px;
+    }
+    @media(min-width:768px){.integration{grid-template-columns:repeat(2,1fr)}}
+    .integration-card{
+      background:rgba(255,255,255,.04);border:1px solid var(--cosmos-border);
+      border-radius:var(--radius-md);padding:16px;
+    }
+    .integration-card h4{
+      margin:0 0 8px;font:700 13px var(--font-display);color:#fff;
+      display:flex;align-items:center;gap:8px;
+    }
+    .integration-card h4 i{
+      width:28px;height:28px;border-radius:8px;display:grid;place-items:center;
+      font-size:13px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.08);
+    }
+    .integration-card code{
+      display:block;margin-top:8px;
+      font:500 11px var(--font-mono);color:#c4b5fd;
+      background:rgba(124,58,237,.1);border:1px solid rgba(124,58,237,.15);
+      padding:8px 10px;border-radius:8px;word-break:break-all;
+    }
+    .integration-card p{margin:0;font:400 12.5px/1.6 var(--font-sans);color:var(--cosmos-text-muted)}
+
+    /* ===== Future ===== */
+    .future-grid{display:grid;gap:12px}
+    @media(min-width:768px){.future-grid{grid-template-columns:repeat(3,1fr)}}
+    .future-card{
+      background:linear-gradient(135deg, rgba(124,58,237,.08), rgba(6,182,214,.06));
+      border:1px solid rgba(255,255,255,.06);
+      border-radius:var(--radius-md);padding:16px;
+      transition:all .2s;
+    }
+    .future-card:hover{transform:translateY(-2px);border-color:rgba(255,255,255,.1)}
+    .future-card h4{margin:0 0 6px;font:700 13px var(--font-display);color:#fff}
+    .future-card p{margin:0;font:400 12px/1.6 var(--font-sans);color:var(--cosmos-text-muted)}
+    .future-card .eta{
+      display:inline-flex;margin-top:10px;
+      font:600 10px var(--font-mono);letter-spacing:.06em;text-transform:uppercase;
+      color:var(--cosmos-accent);background:rgba(245,158,11,.12);border:1px solid rgba(245,158,11,.2);
+      padding:3px 8px;border-radius:var(--radius-full);
+    }
+
+    /* ===== Footer ===== */
+    .footer{
+      margin-top:32px;padding:24px 0;
+      border-top:1px solid var(--cosmos-border);
+      display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px;
+      font:400 12px var(--font-sans);color:var(--cosmos-text-dim);
+    }
+    .footer a{color:var(--cosmos-text-muted);text-decoration:none}
+    .footer a:hover{color:var(--cosmos-text);text-decoration:underline}
+    .footer-links{display:flex;flex-wrap:wrap;gap:12px}
+
+    /* ===== Toast ===== */
+    .toast{
+      position:fixed;bottom:20px;left:50%;transform:translateX(-50%) translateY(12px);
+      background:rgba(15,23,42,.9);color:#fff;
+      border:1px solid rgba(255,255,255,.12);
+      padding:10px 16px;border-radius:var(--radius-full);
+      font:500 13px var(--font-sans);
+      backdrop-filter:blur(12px) saturate(140%);
+      box-shadow:var(--shadow-lg);
+      opacity:0;pointer-events:none;transition:all .25s ease;
+      z-index:60;white-space:nowrap;
+    }
+    .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+    /* ===== Responsive tweaks ===== */
+    @media(max-width:375px){
+      .hero h1{font-size:26px}
+      .lab-demo{min-height:120px}
+      .super-card{width:80px;height:80px;font-size:10px}
+    }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#main">Bỏ qua đến nội dung chính</a>
+
+  <header class="header" role="banner">
+    <div class="container header-inner">
+      <a class="brand" href="./index.html" aria-label="YUNIE STATUS — về trang chủ">
+        <div class="brand-mark" aria-hidden="true">◈</div>
+        <div class="brand-text">
+          <strong>COSMOS · QUANTUM</strong>
+          <span>Harness v2 · Triết lý 2 tầng</span>
+        </div>
+      </a>
+      <nav class="header-actions" aria-label="Thao tác">
+        <a class="btn btn-ghost btn-icon" href="./index.html" aria-label="Về STATUS">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><path d="M9 22V12h6v10"/></svg>
+          <span class="btn-text-full">STATUS</span>
+        </a>
+        <a class="btn btn-ghost btn-icon" href="./status.json" target="_blank" rel="noopener" aria-label="Mở status.json">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg>
+          <span class="btn-text-full">status.json</span>
+        </a>
+        <button class="btn btn-primary btn-icon" id="btnLab" type="button" aria-label="Nhảy tới Lab">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><path d="M12 17h.01"/></svg>
+          <span class="btn-text-full">Thử Lab</span>
+        </button>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <!-- Hero -->
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="hero-bg" aria-hidden="true">
+        <canvas id="starfield" width="1120" height="400"></canvas>
+      </div>
+      <div class="container hero-inner">
+        <div class="eyebrow"><i></i> Triết lý Harness v2 · Process &gt; Model</div>
+        <h1 id="hero-title">Vũ trụ <span>giãn nở</span> từ một ý tưởng.<br>Lượng tử <span>sụp đổ</span> khi bạn quyết định.</h1>
+        <p><strong>Macro</strong> (vũ trụ) cho hệ thống — <strong>Micro</strong> (lượng tử) cho thực thi. Một câu ý tưởng là <strong>Big Bang</strong>, pipeline 8 phase là <strong>định luật vật lý</strong>, và chỉ khi <strong>quan sát (verify)</strong> thì sản phẩm mới thành thật.</p>
+        <div class="hero-meta" aria-label="Thông tin triết lý">
+          <span class="meta-pill">🌌 Macro: <b>www/ là vũ trụ</b></span>
+          <span class="meta-pill">⚛️ Micro: <b>verify là quan sát</b></span>
+          <span class="meta-pill">🔗 Entanglement: <b>1 đổi → toàn hệ đổi</b></span>
+          <span class="meta-pill">🚀 Tunneling: <b>ladder 7 nấc</b></span>
+        </div>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="#lab">🧪 Mở Lab tương tác</a>
+          <a class="btn btn-ghost" href="#pipeline">📜 Xem pipeline vũ trụ</a>
+          <button class="btn btn-ghost" id="btnCopyPhilosophy" type="button">📋 Copy triết lý</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Philosophy 2 pillars -->
+    <section class="section" aria-labelledby="phil-title">
+      <div class="container">
+        <div class="section-head">
+          <h2 id="phil-title"><small>Triết lý 2 tầng</small>Vũ trụ + Lượng tử = Harness</h2>
+          <p>Không phải metaphor cho vui — là khung ra quyết định. Macro hỏi “scale sao?”, Micro hỏi “đã đo chưa?”.</p>
+        </div>
+        <div class="grid-2">
+          <article class="card">
+            <div class="card-icon cosmos" aria-hidden="true">🌌</div>
+            <h3>Tầng Vũ Trụ — Macro</h3>
+            <p>Hệ thống như vũ trụ: cần <strong>cấu trúc</strong> mới không hỗn loạn. <code style="font:500 11px var(--font-mono);background:rgba(124,58,237,.12);padding:2px 6px;border-radius:6px;color:#c4b5fd">www/</code> là vũ trụ, mỗi <code style="font:500 11px var(--font-mono);background:rgba(124,58,237,.12);padding:2px 6px;border-radius:6px;color:#c4b5fd">plan/skill/component</code> là thiên hà.</p>
+            <ul>
+              <li><strong>Big Bang → Idea:</strong> 1 câu nổ ra thành không gian sản phẩm</li>
+              <li><strong>Giãn nở → Explore/Clarify:</strong> mở rộng khả thi rồi chọn hướng</li>
+              <li><strong>Thiên hà → PRD/Design:</strong> từ hỗn mang thành định luật + design system</li>
+              <li><strong>Định luật → Process &gt; Model:</strong> pipeline là vật lý — model nào cũng tuân theo</li>
+            </ul>
+            <div class="tag-row">
+              <span class="tag cosmos">Scale có cấu trúc</span>
+              <span class="tag cosmos">Quy luật &gt; Đoán</span>
+              <span class="tag cosmos">Ánh sáng cần thời gian</span>
+            </div>
+          </article>
+          <article class="card quantum">
+            <div class="card-icon quantum" aria-hidden="true">⚛️</div>
+            <h3>Tầng Lượng Tử — Micro</h3>
+            <p>Thực thi như lượng tử: <strong>không đo = không biết</strong>. Chỉ khi quan sát thì trạng thái mới thật.</p>
+            <ul>
+              <li><strong>Superposition → trước Clarify:</strong> mọi ý tưởng đồng thời tồn tại</li>
+              <li><strong>Sụp đổ → Clarify:</strong> hỏi 1 câu chốt → 1 thực tại duy nhất</li>
+              <li><strong>Entanglement → liên kết phase:</strong> sửa Design → Implement/Polish đổi tức thì</li>
+              <li><strong>Bất định → get_errors:</strong> không đo build/test = không biết pass hay fail</li>
+            </ul>
+            <div class="tag-row">
+              <span class="tag quantum">Không đoán — phải đo</span>
+              <span class="tag quantum">1 đổi → toàn hệ đổi</span>
+              <span class="tag quantum">Tối thiểu mà đủ</span>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- Pipeline as Cosmic Evolution -->
+    <section class="section" id="pipeline" aria-labelledby="pipeline-title">
+      <div class="container">
+        <div class="section-head">
+          <h2 id="pipeline-title"><small>Pipeline 8 phase</small>Tiến hóa vũ trụ → Sản phẩm</h2>
+          <p>Mỗi phase là một kỷ nguyên vũ trụ. Không đốt cháy giai đoạn — ánh sáng từ thiên hà xa cũng cần thời gian.</p>
+        </div>
+        <div class="timeline" role="list">
+          <div class="phase" role="listitem">
+            <div class="phase-num">1</div>
+            <h4>Explore</h4>
+            <div class="meta">Vũ trụ sơ khai · 380k năm</div>
+            <p>Quét không gian khả thi, đọc stack, tìm pattern — như bản đồ bức xạ nền.</p>
+            <div class="cosmic">🌌 Superposition: liệt kê 3-5 khả thi</div>
+          </div>
+          <div class="phase" role="listitem">
+            <div class="phase-num">2</div>
+            <h4>Clarify</h4>
+            <div class="meta">Sụp đổ hàm sóng</div>
+            <p>Hỏi 1 câu chốt, ghi assumption — từ nhiều thực tại về 1.</p>
+            <div class="cosmic">⚛️ Collapse: 1 câu → 1 hướng</div>
+          </div>
+          <div class="phase" role="listitem">
+            <div class="phase-num">3</div>
+            <h4>PRD</h4>
+            <div class="meta">Định luật vật lý</div>
+            <p>Viết định luật cho vũ trụ con: Vision, Scope, Non-Goals, Metrics.</p>
+            <div class="cosmic">📜 Cosmic-Quantum: Macro · Micro · Entanglement</div>
+          </div>
+          <div class="phase" role="listitem">
+            <div class="phase-num">4</div>
+            <h4>Design</h4>
+            <div class="meta">Hình thành thiên hà</div>
+            <p>Palette, typography, wireframe 375/768/1280, states — cấu trúc từ hỗn mang.</p>
+            <div class="cosmic">🎨 Vibe: cosmic dark / quantum light</div>
+          </div>
+          <div class="phase" role="listitem">
+            <div class="phase-num">5</div>
+            <h4>Plan</h4>
+            <div class="meta">Quỹ đạo hành tinh</div>
+            <p>Chia todo có quỹ đạo, ghi Entangled with + Ladder nấc 1-7.</p>
+            <div class="cosmic">🗺️ Mỗi todo là một hành tinh</div>
+          </div>
+          <div class="phase" role="listitem">
+            <div class="phase-num">6</div>
+            <h4>Implement</h4>
+            <div class="meta">Tunneling qua rào cản</div>
+            <p>Chạy ladder 7 nấc, mỗi edit → get_errors (đo bất định) → fix ngay.</p>
+            <div class="cosmic">🚇 YAGNI → reuse → native → tối thiểu</div>
+          </div>
+          <div class="phase" role="listitem">
+            <div class="phase-num">7</div>
+            <h4>Polish</h4>
+            <div class="meta">Tinh vân thành sao</div>
+            <p>Responsive, states, animation 150-300ms, a11y ≥4.5:1 — đánh bóng bụi thành sao.</p>
+            <div class="cosmic">✨ Bụi → sao sáng</div>
+          </div>
+          <div class="phase" role="listitem">
+            <div class="phase-num">8</div>
+            <h4>Verify</h4>
+            <div class="meta">Quan sát tạo thực tại</div>
+            <p>build/test/lint + visual + audit verify — không quan sát = chưa xong.</p>
+            <div class="cosmic">🔭 Không đo = không tồn tại</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Interactive Lab -->
+    <section class="section" id="lab" aria-labelledby="lab-title">
+      <div class="container">
+        <div class="section-head">
+          <h2 id="lab-title"><small>Lab tương tác</small>Chạm để cảm nhận lượng tử</h2>
+          <p>4 thí nghiệm nhỏ — mỗi cái là một nguyên tắc Harness. Thử kéo, bấm, đo.</p>
+          <a href="#integration">→ Áp vào Harness sao?</a>
+        </div>
+        <div class="lab-grid">
+          <!-- Superposition -->
+          <div class="lab-card">
+            <div class="lab-head">
+              <h3><span>🌀</span> Superposition → Collapse</h3>
+              <span class="lab-badge">Clarify</span>
+            </div>
+            <div class="lab-body">
+              <p>Trước khi Clarify, mọi ý tưởng <strong>đồng thời tồn tại</strong> (chồng chập). Bấm <em>Collapse</em> để sụp đổ về 1 thực tại — như chốt 1 hướng sau khi hỏi.</p>
+              <div class="lab-demo">
+                <div class="superposition-stack" id="superStack" role="group" aria-label="3 ý tưởng chồng chập">
+                  <div class="super-card" tabindex="0" role="button" aria-label="Ý tưởng A: Cosmic Dark">A<br>Cosmic<br>Dark</div>
+                  <div class="super-card" tabindex="0" role="button" aria-label="Ý tưởng B: Quantum Light">B<br>Quantum<br>Light</div>
+                  <div class="super-card" tabindex="0" role="button" aria-label="Ý tưởng C: Hybrid">C<br>Hybrid<br>Glass</div>
+                </div>
+              </div>
+              <div class="lab-controls">
+                <button class="btn btn-primary" id="btnCollapse" type="button">⚡ Collapse → chọn 1</button>
+                <button class="btn btn-ghost" id="btnSuperReset" type="button">↺ Superposition lại</button>
+              </div>
+              <div class="lab-hint" id="superHint">Mẹo: bấm trực tiếp vào 1 thẻ để chọn nó · Enter/Space cũng được</div>
+            </div>
+          </div>
+
+          <!-- Entanglement -->
+          <div class="lab-card">
+            <div class="lab-head">
+              <h3><span>🔗</span> Entanglement</h3>
+              <span class="lab-badge">Liên kết phase</span>
+            </div>
+            <div class="lab-body">
+              <p>Hai hạt vướng víu: <strong>đổi một → đổi cả hai</strong> tức thì, dù cách xa. Như sửa <code>Design</code> thì <code>Implement</code> đổi theo.</p>
+              <div class="lab-demo">
+                <div class="entangle-area" id="entangleArea" aria-label="Hai hạt vướng víu, kéo hạt tím để thấy hạt xanh đổi theo">
+                  <div class="entangle-line" id="entangleLine" aria-hidden="true"></div>
+                  <div class="particle a" id="particleA" tabindex="0" role="slider" aria-label="Hạt A (Design)" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100">A<br>Design</div>
+                  <div class="particle b" id="particleB" tabindex="0" role="slider" aria-label="Hạt B (Implement)" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100">B<br>Code</div>
+                  <div class="entangle-status" id="entangleStatus">🔗 Entangled · khoảng cách 0</div>
+                </div>
+              </div>
+              <div class="lab-controls">
+                <button class="btn btn-ghost" id="btnEntangle" type="button">🔗 Entangle</button>
+                <button class="btn btn-ghost" id="btnDisentangle" type="button">✂️ Disentangle</button>
+              </div>
+              <div class="lab-hint">Kéo hạt <b>A</b> (hoặc dùng ← → khi focus) — hạt <b>B</b> sẽ đổi đối xứng nếu đang entangled</div>
+            </div>
+          </div>
+
+          <!-- Heisenberg -->
+          <div class="lab-card">
+            <div class="lab-head">
+              <h3><span>🔬</span> Bất định Heisenberg</h3>
+              <span class="lab-badge">Không đo = không biết</span>
+            </div>
+            <div class="lab-body">
+              <p>Không thể biết chính xác cả <strong>vị trí</strong> và <strong>động lượng</strong> cùng lúc. Càng đo chính xác một cái, cái kia càng mờ — như <code>get_errors</code> vs <code>build</code>.</p>
+              <div class="lab-demo">
+                <div class="heisenberg-grid">
+                  <div class="heisenberg-box active" id="boxPos">
+                    <h4>📍 Vị trí (Position)</h4>
+                    <div class="heisenberg-value" id="valPos">±0.12</div>
+                    <div class="heisenberg-bar"><i id="barPos" style="width:92%"></i></div>
+                  </div>
+                  <div class="heisenberg-box" id="boxMom">
+                    <h4>💨 Động lượng (Momentum)</h4>
+                    <div class="heisenberg-value blur" id="valMom">±4.80</div>
+                    <div class="heisenberg-bar"><i id="barMom" style="width:18%"></i></div>
+                  </div>
+                </div>
+              </div>
+              <div class="lab-controls">
+                <button class="btn btn-primary" id="btnMeasurePos" type="button">📍 Đo vị trí</button>
+                <button class="btn btn-ghost" id="btnMeasureMom" type="button">💨 Đo động lượng</button>
+                <button class="btn btn-ghost" id="btnMeasureBoth" type="button">⚖️ Cố đo cả hai</button>
+              </div>
+              <div class="lab-hint" id="heisenbergHint">Đang đo chính xác <b>vị trí</b> → động lượng mờ (blur) · Bất định Δx·Δp ≥ ħ/2</div>
+            </div>
+          </div>
+
+          <!-- Ladder / Tunneling -->
+          <div class="lab-card">
+            <div class="lab-head">
+              <h3><span>🚇</span> Quantum Tunneling — Ladder 7 nấc</h3>
+              <span class="lab-badge">Minimal</span>
+            </div>
+            <div class="lab-body">
+              <p>Thay vì leo qua rào cản, hãy <strong>xuyên qua</strong> bằng đường ngắn nhất. Ladder 7 nấc: dừng ở nấc đầu tiên đúng.</p>
+              <div class="lab-demo" style="align-items:stretch;justify-content:flex-start">
+                <div class="ladder" id="ladder" role="list" aria-label="Ladder 7 nấc">
+                  <div class="ladder-step done" role="listitem" data-step="1"><div class="ladder-num">1</div><div class="ladder-info"><strong>Cần tồn tại không? (YAGNI)</strong><span>Không → skip, không viết</span></div><div class="ladder-check">✓</div></div>
+                  <div class="ladder-step" role="listitem" data-step="2"><div class="ladder-num">2</div><div class="ladder-info"><strong>Codebase đã có?</strong><span>Reuse, không rewrite</span></div><div class="ladder-check">✓</div></div>
+                  <div class="ladder-step" role="listitem" data-step="3"><div class="ladder-num">3</div><div class="ladder-info"><strong>Stdlib làm được?</strong><span>Dùng stdlib</span></div><div class="ladder-check">✓</div></div>
+                  <div class="ladder-step active" role="listitem" data-step="4"><div class="ladder-num">4</div><div class="ladder-info"><strong>Native platform có?</strong><span>&lt;input type="date"&gt;, CSS, Web API</span></div><div class="ladder-check">✓</div></div>
+                  <div class="ladder-step" role="listitem" data-step="5"><div class="ladder-num">5</div><div class="ladder-info"><strong>Dependency đã cài?</strong><span>Dùng, không cài mới</span></div><div class="ladder-check">✓</div></div>
+                  <div class="ladder-step" role="listitem" data-step="6"><div class="ladder-num">6</div><div class="ladder-info"><strong>Một dòng xong?</strong><span>Một dòng</span></div><div class="ladder-check">✓</div></div>
+                  <div class="ladder-step" role="listitem" data-step="7"><div class="ladder-num">7</div><div class="ladder-info"><strong>Mới viết tối thiểu</strong><span>Minimum that works</span></div><div class="ladder-check">✓</div></div>
+                </div>
+              </div>
+              <div class="lab-controls">
+                <button class="btn btn-ghost" id="btnLadderPrev" type="button">↑ Nấc trên</button>
+                <button class="btn btn-primary" id="btnLadderNext" type="button">↓ Nấc dưới</button>
+                <button class="btn btn-ghost" id="btnLadderTunnel" type="button">🚇 Tunnel!</button>
+              </div>
+              <div class="lab-hint">Đang dừng ở <b>nấc 4: Native</b> — dùng CSS/Canvas native cho starfield, không cài lib mới</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Integration -->
+    <section class="section" id="integration" aria-labelledby="integration-title">
+      <div class="container">
+        <div class="section-head">
+          <h2 id="integration-title"><small>Tích hợp Harness</small>Áp triết lý vào pipeline sao?</h2>
+          <p>Copy 1 dòng vào PRD, chọn vibe cho Design, ghi entanglement trong Plan, đo ở Verify.</p>
+        </div>
+        <div class="integration">
+          <div class="integration-card">
+            <h4><i>📄</i> PRD — Ghi dòng Cosmic-Quantum</h4>
+            <p>Ngay đầu PRD, chốt scale và liên kết để mọi phase sau bám theo.</p>
+            <code>Cosmic-Quantum: Macro www/cosmos là vũ trụ con trong www/ · Micro superposition 3 layout → collapse 1 · Entanglement cosmos.html ↔ status.json ↔ registry.json</code>
+          </div>
+          <div class="integration-card">
+            <h4><i>🎨</i> Design — Chọn vibe</h4>
+            <p>Dùng <code>awesome-design-md/search.mjs</code> để chọn DESIGN.md phù hợp.</p>
+            <code>search.mjs "cosmic dark nebula starfield" --top_k 3<br>search.mjs "quantum light glass superposition" --top_k 3</code>
+          </div>
+          <div class="integration-card">
+            <h4><i>🗺️</i> Plan — Ghi entanglement + ladder</h4>
+            <p>Mỗi todo phải biết nó vướng víu với file nào và dừng ở nấc ladder nào.</p>
+            <code>- [ ] Build cosmos hero (Ladder nấc 4: native canvas starfield, Entangled with: www/styles.css, www/status.json)</code>
+          </div>
+          <div class="integration-card">
+            <h4><i>🔭</i> Verify — Không đo = chưa xong</h4>
+            <p>Thêm checklist cosmic-quantum vào Verify gate.</p>
+            <code>Đã đo (get_errors/build) chưa? Entanglement có vỡ không? Ladder có đúng nấc? --angle có đổi (Playwright) không?</code>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Future -->
+    <section class="section" aria-labelledby="future-title">
+      <div class="container">
+        <div class="section-head">
+          <h2 id="future-title"><small>Khai thác tương lai</small>Đề tài này còn đào sâu được gì?</h2>
+          <p>Sếp nói đúng — vũ trụ + lượng tử khai thác dài hơi. YUNIE gợi ý 3 hướng.</p>
+        </div>
+        <div class="future-grid">
+          <div class="future-card">
+            <h4>🌌 Vũ trụ học cho Scale</h4>
+            <p>Áp dụng <strong>entropy</strong> (độ hỗn loạn) để đo tech debt, <strong>lỗ đen</strong> cho bottleneck, <strong>vật chất tối</strong> cho hidden complexity. Dashboard đo entropy theo thời gian.</p>
+            <span class="eta">→ Q4 2026 · skill: cosmic-scale</span>
+          </div>
+          <div class="future-card">
+            <h4>⚛️ Lượng tử cho Decision</h4>
+            <p>Dùng <strong>superposition</strong> để giữ 3 phương án song song tới khi có data, <strong>decoherence</strong> để phát hiện khi hệ mất kết dính (quá nhiều workaround).</p>
+            <span class="eta">→ Q1 2027 · instruction: quantum-decision</span>
+          </div>
+          <div class="future-card">
+            <h4>🔬 Lab mở rộng</h4>
+            <p>Thêm lab: <strong>double-slit</strong> (quan sát làm đổi kết quả), <strong>Schrödinger's bug</strong> (bug vừa tồn tại vừa không tới khi test), <strong>multiverse</strong> (A/B test như đa vũ trụ).</p>
+            <span class="eta">→ 2027 · www/cosmos/lab-*.html</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="container">
+      <footer class="footer" role="contentinfo">
+        <span>© 2026 YUNIE · <strong style="color:var(--cosmos-text)">COSMOS · QUANTUM</strong> · Process là định luật, verify là quan sát · <a href="./index.html">← STATUS</a></span>
+        <span class="footer-links">
+          <a href=".github/skills/cosmic-quantum/SKILL.md" target="_blank" rel="noopener">Skill</a>
+          <a href=".github/instructions/cosmic-quantum.instructions.md" target="_blank" rel="noopener">Instruction</a>
+          <a href="https://github.com" target="_blank" rel="noopener">GitHub</a>
+        </span>
+      </footer>
+    </div>
+  </main>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script>
+    // ===== Helpers =====
+    const $ = (s, r=document) => r.querySelector(s);
+    const $$ = (s, r=document) => [...r.querySelectorAll(s)];
+    const toastEl = $('#toast');
+    function toast(msg, ms=2600){
+      if(!toastEl) return;
+      toastEl.textContent = msg;
+      toastEl.classList.add('show');
+      clearTimeout(toastEl._t);
+      toastEl._t = setTimeout(()=> toastEl.classList.remove('show'), ms);
+    }
+
+    // ===== Starfield Canvas =====
+    (function(){
+      const canvas = $('#starfield');
+      if(!canvas) return;
+      const ctx = canvas.getContext('2d');
+      let w, h, stars=[], raf;
+      const DPR = Math.min(devicePixelRatio||1, 2);
+      function resize(){
+        const rect = canvas.getBoundingClientRect();
+        w = rect.width; h = rect.height;
+        canvas.width = w * DPR; canvas.height = h * DPR;
+        canvas.style.width = w+'px'; canvas.style.height = h+'px';
+        ctx.setTransform(DPR,0,0,DPR,0,0);
+        initStars();
+      }
+      function initStars(){
+        const count = Math.floor((w*h)/9000);
+        stars = Array.from({length: count}, () => ({
+          x: Math.random()*w,
+          y: Math.random()*h,
+          r: Math.random()*1.4 + 0.2,
+          o: Math.random()*0.7 + 0.3,
+          tw: Math.random()*0.04 + 0.005,
+          ph: Math.random()*Math.PI*2,
+          vx: (Math.random()-0.5)*0.15,
+          vy: (Math.random()-0.5)*0.15,
+          c: Math.random()>.85 ? (Math.random()>.5 ? '124,58,237' : '6,182,214') : '255,255,255'
+        }));
+      }
+      let t=0;
+      function frame(){
+        t+=0.016;
+        ctx.clearRect(0,0,w,h);
+        // nebula blobs
+        const g1 = ctx.createRadialGradient(w*0.2, h*0.1, 0, w*0.2, h*0.1, w*0.5);
+        g1.addColorStop(0, 'rgba(124,58,237,0.10)'); g1.addColorStop(1, 'transparent');
+        ctx.fillStyle=g1; ctx.fillRect(0,0,w,h);
+        const g2 = ctx.createRadialGradient(w*0.85, h*0.15, 0, w*0.85, h*0.15, w*0.4);
+        g2.addColorStop(0, 'rgba(6,182,214,0.07)'); g2.addColorStop(1, 'transparent');
+        ctx.fillStyle=g2; ctx.fillRect(0,0,w,h);
+        for(const s of stars){
+          s.ph += s.tw;
+          const twinkle = 0.6 + 0.4*Math.sin(s.ph);
+          s.x += s.vx; s.y += s.vy;
+          if(s.x<0) s.x=w; if(s.x>w) s.x=0;
+          if(s.y<0) s.y=h; if(s.y>h) s.y=0;
+          ctx.beginPath();
+          ctx.arc(s.x, s.y, s.r, 0, Math.PI*2);
+          ctx.fillStyle = `rgba(${s.c},${(s.o*twinkle).toFixed(3)})`;
+          // glow for colored stars
+          if(s.c!=='255,255,255'){
+            ctx.shadowColor = `rgba(${s.c},0.6)`;
+            ctx.shadowBlur = 6;
+          } else ctx.shadowBlur=0;
+          ctx.fill();
+          ctx.shadowBlur=0;
+        }
+        // shooting star occasionally
+        if(Math.random()<0.008){
+          const sx = Math.random()*w*0.6, sy = Math.random()*h*0.4;
+          const len = 60+Math.random()*80;
+          ctx.beginPath();
+          ctx.moveTo(sx, sy);
+          ctx.lineTo(sx+len, sy+len*0.3);
+          ctx.strokeStyle='rgba(255,255,255,0.9)';
+          ctx.lineWidth=1.2;
+          ctx.shadowColor='rgba(255,255,255,0.8)'; ctx.shadowBlur=8;
+          ctx.stroke(); ctx.shadowBlur=0;
+        }
+        raf = requestAnimationFrame(frame);
+      }
+      const ro = new ResizeObserver(resize);
+      ro.observe(canvas);
+      resize(); frame();
+      document.addEventListener('visibilitychange', ()=>{
+        if(document.hidden) cancelAnimationFrame(raf);
+        else frame();
+      });
+    })();
+
+    // ===== Superposition =====
+    (function(){
+      const stack = $('#superStack');
+      const btnCollapse = $('#btnCollapse');
+      const btnReset = $('#btnSuperReset');
+      const hint = $('#superHint');
+      if(!stack || !btnCollapse) return;
+      const cards = $$('.super-card', stack);
+      let collapsed=false;
+      function collapse(chosenIdx){
+        if(collapsed) return;
+        const idx = chosenIdx ?? Math.floor(Math.random()*3);
+        cards.forEach((c,i)=>{
+          c.classList.toggle('chosen', i===idx);
+        });
+        stack.classList.add('collapsed');
+        collapsed=true;
+        const labels=['Cosmic Dark','Quantum Light','Hybrid Glass'];
+        hint.textContent = `✨ Đã collapse → ${labels[idx]} (thực tại duy nhất) · Bấm "Superposition lại" để mở lại`;
+        toast(`⚛️ Collapse → ${labels[idx]} · 1 thực tại duy nhất`);
+        btnCollapse.disabled=true; btnCollapse.style.opacity=.5;
+      }
+      function reset(){
+        stack.classList.remove('collapsed');
+        cards.forEach(c=>c.classList.remove('chosen'));
+        collapsed=false;
+        hint.textContent='Mẹo: bấm trực tiếp vào 1 thẻ để chọn nó · Enter/Space cũng được';
+        btnCollapse.disabled=false; btnCollapse.style.opacity=1;
+        toast('🌀 Superposition — 3 ý tưởng lại chồng chập');
+      }
+      btnCollapse.addEventListener('click', ()=> collapse());
+      btnReset.addEventListener('click', reset);
+      cards.forEach((c,i)=>{
+        c.addEventListener('click', ()=> collapse(i));
+        c.addEventListener('keydown', (e)=>{
+          if(e.key==='Enter' || e.key===' '){ e.preventDefault(); collapse(i); }
+        });
+      });
+    })();
+
+    // ===== Entanglement =====
+    (function(){
+      const area = $('#entangleArea');
+      const line = $('#entangleLine');
+      const a = $('#particleA');
+      const b = $('#particleB');
+      const status = $('#entangleStatus');
+      const btnEnt = $('#btnEntangle');
+      const btnDis = $('#btnDisentangle');
+      if(!area || !a || !b) return;
+      let entangled=true;
+      let posA=30, posB=70; // percent 0-100
+      let dragging=null;
+      function update(){
+        const rect = area.getBoundingClientRect();
+        const w = rect.width;
+        const xA = (posA/100)*w;
+        const xB = (posB/100)*w;
+        a.style.transform = `translateX(${xA - 28 - w/2 + 28}px)`;
+        b.style.transform = `translateX(${xB - 28 - w/2 + 28}px)`;
+        // line between centers
+        const left = Math.min(xA, xB) + 28;
+        const right = Math.max(xA, xB) - 28;
+        // Use absolute positioning via left/right
+        line.style.left = left+'px';
+        line.style.right = (w - right)+'px';
+        line.classList.toggle('entangled', entangled);
+        a.setAttribute('aria-valuenow', Math.round(posA));
+        b.setAttribute('aria-valuenow', Math.round(posB));
+        const dist = Math.abs(posA-posB);
+        status.textContent = entangled ? `🔗 Entangled · khoảng cách ${Math.round(dist)}` : `✂️ Disentangled · khoảng cách ${Math.round(dist)}`;
+        status.style.color = entangled ? 'var(--cosmos-cyan)' : 'var(--cosmos-text-dim)';
+        status.style.background = entangled ? 'rgba(6,182,214,.12)' : 'rgba(255,255,255,.06)';
+        status.style.borderColor = entangled ? 'rgba(6,182,214,.2)' : 'rgba(255,255,255,.08)';
+      }
+      function setPosA(v){
+        posA = Math.max(5, Math.min(45, v));
+        if(entangled) posB = 100 - posA;
+        update();
+      }
+      function setPosB(v){
+        posB = Math.max(55, Math.min(95, v));
+        if(entangled) posA = 100 - posB;
+        update();
+      }
+      // Mouse/touch drag for A
+      function attachDrag(el, isA){
+        let startX, startPos;
+        function onDown(e){
+          dragging = isA ? 'a' : 'b';
+          el.classList.add('dragging');
+          startX = (e.touches? e.touches[0].clientX : e.clientX);
+          startPos = isA ? posA : posB;
+          e.preventDefault();
+        }
+        function onMove(e){
+          if(!dragging) return;
+          const curX = (e.touches? e.touches[0].clientX : e.clientX);
+          const rect = area.getBoundingClientRect();
+          const deltaPct = ((curX - startX)/rect.width)*100;
+          if(dragging==='a') setPosA(startPos + deltaPct);
+          else setPosB(startPos + deltaPct);
+        }
+        function onUp(){
+          if(dragging){ el.classList.remove('dragging'); dragging=null; }
+        }
+        el.addEventListener('mousedown', onDown);
+        el.addEventListener('touchstart', onDown, {passive:false});
+        window.addEventListener('mousemove', onMove);
+        window.addEventListener('touchmove', onMove, {passive:false});
+        window.addEventListener('mouseup', onUp);
+        window.addEventListener('touchend', onUp);
+        // keyboard
+        el.addEventListener('keydown', (e)=>{
+          if(e.key==='ArrowLeft'){ e.preventDefault(); isA? setPosA(posA-4) : setPosB(posB-4); }
+          if(e.key==='ArrowRight'){ e.preventDefault(); isA? setPosA(posA+4) : setPosB(posB+4); }
+        });
+      }
+      attachDrag(a, true);
+      attachDrag(b, false);
+      btnEnt.addEventListener('click', ()=>{ entangled=true; posB=100-posA; update(); toast('🔗 Entangled — 1 đổi, cả hai đổi'); });
+      btnDis.addEventListener('click', ()=>{ entangled=false; update(); toast('✂️ Disentangled — mỗi hạt tự do'); });
+      // init
+      update();
+      // also handle resize
+      new ResizeObserver(update).observe(area);
+    })();
+
+    // ===== Heisenberg =====
+    (function(){
+      const boxPos=$('#boxPos'), boxMom=$('#boxMom');
+      const valPos=$('#valPos'), valMom=$('#valMom');
+      const barPos=$('#barPos'), barMom=$('#barMom');
+      const hint=$('#heisenbergHint');
+      const btnPos=$('#btnMeasurePos'), btnMom=$('#btnMeasureMom'), btnBoth=$('#btnMeasureBoth');
+      if(!boxPos) return;
+      let mode='pos'; // pos | mom | both
+      function render(){
+        if(mode==='pos'){
+          boxPos.classList.add('active'); boxMom.classList.remove('active');
+          valPos.classList.remove('blur'); valMom.classList.add('blur');
+          valPos.textContent='±0.12'; valMom.textContent='±4.80';
+          barPos.style.width='92%'; barMom.style.width='18%';
+          hint.innerHTML='Đang đo chính xác <b>vị trí</b> → động lượng mờ (blur) · Bất định Δx·Δp ≥ ħ/2';
+        } else if(mode==='mom'){
+          boxMom.classList.add('active'); boxPos.classList.remove('active');
+          valMom.classList.remove('blur'); valPos.classList.add('blur');
+          valMom.textContent='±0.09'; valPos.textContent='±5.20';
+          barMom.style.width='94%'; barPos.style.width='14%';
+          hint.innerHTML='Đang đo chính xác <b>động lượng</b> → vị trí mờ (blur) · Không thể biết cả hai cùng lúc';
+        } else {
+          boxPos.classList.remove('active'); boxMom.classList.remove('active');
+          valPos.classList.remove('blur'); valMom.classList.remove('blur');
+          valPos.textContent='±2.40'; valMom.textContent='±2.35';
+          barPos.style.width='48%'; barMom.style.width='48%';
+          hint.innerHTML='⚠️ Cố đo cả hai → cả hai đều <b>nửa vời</b> (48%) · Heisenberg thắng!';
+        }
+      }
+      btnPos.addEventListener('click', ()=>{ mode='pos'; render(); toast('📍 Đo vị trí chính xác → động lượng mờ'); });
+      btnMom.addEventListener('click', ()=>{ mode='mom'; render(); toast('💨 Đo động lượng chính xác → vị trí mờ'); });
+      btnBoth.addEventListener('click', ()=>{ mode='both'; render(); toast('⚖️ Cố đo cả hai → cả hai nửa vời'); });
+      render();
+    })();
+
+    // ===== Ladder =====
+    (function(){
+      const ladder=$('#ladder');
+      const btnPrev=$('#btnLadderPrev'), btnNext=$('#btnLadderNext'), btnTunnel=$('#btnLadderTunnel');
+      const hint = btnNext ? btnNext.closest('.lab-card').querySelector('.lab-hint') : null;
+      if(!ladder) return;
+      const steps=[...ladder.querySelectorAll('.ladder-step')];
+      let active=3; // 0-indexed, nấc 4
+      const labels=[
+        'YAGNI — skip nếu không cần',
+        'Reuse — dùng codebase đã có',
+        'Stdlib — dùng thư viện chuẩn',
+        'Native — CSS/Canvas/Web API',
+        'Dep đã cài — không cài mới',
+        'Một dòng — xong trong 1 dòng',
+        'Tối thiểu — minimum that works'
+      ];
+      function render(){
+        steps.forEach((s,i)=>{
+          s.classList.toggle('active', i===active);
+          s.classList.toggle('done', i<active);
+          s.setAttribute('aria-current', i===active ? 'step' : 'false');
+        });
+        if(hint) hint.innerHTML=`Đang dừng ở <b>nấc ${active+1}: ${labels[active].split(' — ')[0]}</b> — ${labels[active].split(' — ')[1] || ''}`;
+      }
+      btnPrev.addEventListener('click', ()=>{ active=Math.max(0, active-1); render(); toast(`↑ Nấc ${active+1}: ${labels[active]}`); });
+      btnNext.addEventListener('click', ()=>{ active=Math.min(6, active+1); render(); toast(`↓ Nấc ${active+1}: ${labels[active]}`); });
+      btnTunnel.addEventListener('click', ()=>{
+        // tunnel = jump to first valid (nấc 1 if YAGNI fails, else nấc 4 native for this demo)
+        active=3;
+        render();
+        // flash effect
+        ladder.animate([{filter:'brightness(1)'},{filter:'brightness(1.4)'},{filter:'brightness(1)'}],{duration:400, easing:'ease'});
+        toast('🚇 Tunnel! Xuyên qua rào cản ở nấc 4 Native — không cài lib mới');
+      });
+      steps.forEach((s,i)=>{
+        s.addEventListener('click', ()=>{ active=i; render(); toast(`Nấc ${i+1}: ${labels[i]}`); });
+        s.setAttribute('tabindex','0');
+        s.setAttribute('role','button');
+        s.addEventListener('keydown', (e)=>{ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); active=i; render(); }});
+      });
+      render();
+    })();
+
+    // ===== Copy philosophy =====
+    $('#btnCopyPhilosophy')?.addEventListener('click', async ()=>{
+      const text=`COSMOS · QUANTUM — Triết lý Harness v2
+Macro (Vũ trụ): www/ là vũ trụ, mỗi plan/skill là thiên hà — cần cấu trúc mới không hỗn loạn. Pipeline là định luật vật lý.
+Micro (Lượng tử): Superposition trước Clarify → Collapse khi chốt 1 hướng. Entanglement: 1 đổi → toàn hệ đổi. Không đo (get_errors/build) = không biết.
+Process là định luật, verify là quan sát.`;
+      try{ await navigator.clipboard.writeText(text); toast('📋 Đã copy triết lý'); }
+      catch{ toast('Huhu copy hụt — sếp copy tay nhé'); }
+    });
+    $('#btnLab')?.addEventListener('click', ()=> $('#lab')?.scrollIntoView({behavior:'smooth'}));
+
+    // ===== Smooth scroll for hero links =====
+    $$('a[href^="#"]').forEach(a=>{
+      a.addEventListener('click', (e)=>{
+        const id=a.getAttribute('href').slice(1);
+        const el=document.getElementById(id);
+        if(el){ e.preventDefault(); el.scrollIntoView({behavior:'smooth', block:'start'}); }
+      });
+    });
+  </script>
+</body>
+</html>

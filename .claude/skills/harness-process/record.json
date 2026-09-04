@@ -1,0 +1,54 @@
+{
+  "task": "task-agnostic: process",
+  "form": "task-agnostic",
+  "anchor": {
+    "knowleged": [
+      "KN-005",
+      "KN-007",
+      "KN-010"
+    ],
+    "bugs": [
+      ".agent/bugs/2026-08-30-bug-blindness/bug.md",
+      ".agent/bugs/auto-learn/bug.md"
+    ]
+  },
+  "capabilities": [
+    "process",
+    "quality",
+    "ux",
+    "perf",
+    "a11y",
+    "knowledge",
+    "automation",
+    "dx",
+    "self-improving",
+    "benchmark",
+    "aar"
+  ],
+  "evidence": [
+    ".agent/bugs/2026-08-30-bug-blindness/bug.md",
+    ".agent/bugs/auto-learn/bug.md"
+  ],
+  "checks": [
+    {
+      "id": "files-exist",
+      "pass": true
+    },
+    {
+      "id": "frontmatter",
+      "pass": true
+    },
+    {
+      "id": "record-complete",
+      "pass": true
+    },
+    {
+      "id": "no-test-mutate-advice",
+      "pass": true
+    }
+  ],
+  "gaps": [],
+  "verdict": "G-accepted",
+  "generatedAt": "2026-09-04T09:13:35.830Z",
+  "paper": "DisCo arXiv:2609.02749v1 §3.2 (task-agnostic)"
+}

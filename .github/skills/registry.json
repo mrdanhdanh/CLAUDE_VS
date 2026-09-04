@@ -134,6 +134,13 @@
       "description": "Task-agnostic lessons 'Web UI & UX' chưng cất từ docs/knowleged.md (6 KN: KN-001, KN-002, KN-003, KN-004, KN-006, KN-011) + .agent/bugs/. Use when task chạm ui, a11y, css, responsive, data, animation, spacing, i18n, theme, contrast — áp Cách phòng tránh trước khi code, tránh lặp bug cũ. DisCo-lite, ",
       "file": "harness-web-ui/SKILL.md",
       "installedAt": "2026-09-04T09:07:42.922Z"
+    },
+    "cosmic-quantum": {
+      "source": "local",
+      "file": "cosmic-quantum/SKILL.md",
+      "enabled": true,
+      "description": "Mô tả skill — Use when ... (keyword-rich để agent tự tìm)",
+      "installedAt": "2026-09-04T15:39:16.293Z"
     }
   }
 }

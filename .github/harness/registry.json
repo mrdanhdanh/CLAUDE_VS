@@ -134,6 +134,15 @@
       "description": "Task-agnostic lessons 'Web UI & UX' chưng cất từ docs/knowleged.md (6 KN: KN-001, KN-002, KN-003, KN-004, KN-006, KN-011) + .agent/bugs/. Use when task chạm ui, a11y, css, responsive, data, animation, spacing, i18n, theme, contrast — áp Cách phòng tránh trước khi code, tránh lặp bug cũ. DisCo-lite, ",
       "file": "harness-web-ui/SKILL.md",
       "installedAt": "2026-09-04T09:07:42.922Z"
+    },
+    "cosmic-quantum": {
+      "source": "local",
+      "file": "cosmic-quantum/SKILL.md",
+      "enabled": true,
+      "description": "Cosmic-Quantum Thinking — triết lý vũ trụ + lượng tử cho Harness. Use when designing system philosophy, harness theory, product vision, need cosmic/quantum metaphors, scale thinking, entanglement, superposition, uncertainty, or user says vũ trụ/lượng tử/cosmos/quantum/triết lý/lý thuyết/hệ thống/sca",
+      "installedAt": "2026-09-04T15:39:16.293Z",
+      "path": "skills/cosmic-quantum",
+      "ref": "local"
     }
   },
   "instructions": {
@@ -264,6 +273,14 @@
       "description": "Awesome DESIGN.md — 74 design systems local (VoltAgent/awesome-design-md). Use when user wants UI design, needs design inspiration, mentions vibe/style like linear/stripe/vercel/apple, or needs DESIGN.md for AI agent.",
       "applyTo": "**",
       "installedAt": "2026-09-04T12:47:59.598Z"
+    },
+    "cosmic-quantum": {
+      "source": "local",
+      "file": "cosmic-quantum.instructions.md",
+      "enabled": true,
+      "description": "Cosmic-Quantum Thinking — triết lý vũ trụ + lượng tử cho Harness. Use when designing system philosophy, harness theory, product vision, need cosmic/quantum metaphors, scale thinking, entanglement, superposition, uncertainty, or user says vũ trụ/lượng tử/cosmos/quantum/triết lý/lý thuyết/hệ thống/sca",
+      "applyTo": "**",
+      "installedAt": "2026-09-04T15:39:16.344Z"
     }
   },
   "agents": {

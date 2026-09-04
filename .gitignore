@@ -38,6 +38,8 @@ TestResults/
 # ===== Reef-lite — ephemeral records/reports (local only) =====
 .agent/records/
 .agent/reports.jsonl
+.agent/attestations.jsonl
+.agent/mutation-report.json
 # .agent/versions/ is kept (version history) — do not ignore
 
 # ===== Common =====
