@@ -15,7 +15,7 @@
 - **Reporter:** YUNIE / reef-lite demo
 - **Related KN:** `KN-007` (auto-learn), `KN-010` (AAR)
 - **Tags:** `process` `knowledge` `reef-lite` `demo`
-- **Status:** `open`
+- **Status:** `fixed`
 
 ---
 

@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-04T09:29:03.230Z",
+  "generatedAt": "2026-09-04T09:49:21.662Z",
   "generatedBy": "YUNIE",
   "version": 1,
   "counts": {
@@ -320,7 +320,7 @@
   "health": {
     "errors": 0,
     "status": "warn",
-    "lastCheck": "2026-09-04T09:29:03.230Z",
+    "lastCheck": "2026-09-04T09:49:21.662Z",
     "checks": [
       "get_errors: pass (0 errors)",
       "registry: 15 instructions (15 total) - 15 skills - 8 agents - 7 prompts - 1 hook — all enabled",
@@ -330,7 +330,7 @@
       "www: polished — responsive 375/768/1280, a11y, states, animation 150-300ms",
       "workflow: www/** -> Pages (upload-artifact path: www) — exists: true + eval job gate",
       "library: www/library/ MCP v1.2.0 (5 tools: search + iterative + list/get/status, router+cache, redacted) + library-rag instruction",
-      "auto-learn: 14 KN, 12 bugs, 1 drafts — suggest/log/propose/status (<50ms, IDF, tiếng Việt)",
+      "auto-learn: 14 KN, 13 bugs, 1 drafts — suggest/log/propose/status (<50ms, IDF, tiếng Việt)",
       "governance: audit 23 (Ed25519 receipt P0-4) · policy 7 deny/2 allow (ok) · credentials 0 keys enc",
       "platform: agents 3 (3 built-in, 0 remote) · mcp 3 vendors/3 grants (library 1.2.0 read-only) · components 3/3 pub · routines 1/1 enabled",
       "n5-blazor: www/n5-blazor/ 7 trang static + app.css + data.js + site.js — 100% Pages"
@@ -475,7 +475,7 @@
   },
   "learn": {
     "knTotal": 14,
-    "bugsTotal": 12,
+    "bugsTotal": 13,
     "drafts": 1
   },
   "governance": {
@@ -573,7 +573,7 @@
       "deny": 7,
       "allow": 2,
       "status": "ok",
-      "lastCheck": "2026-09-04T09:29:02.584Z"
+      "lastCheck": "2026-09-04T09:49:21.016Z"
     },
     "credentials": {
       "count": 0,
