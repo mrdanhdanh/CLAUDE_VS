@@ -27,6 +27,9 @@ TestResults/
 .agent/credentials.key.bak
 .agent/audit.key
 .agent/traces/
+# ===== Memory — working/short ephemeral (local only) =====
+.agent/memory/working.jsonl
+.agent/memory/short.jsonl
 
 # ===== Reef-lite — ephemeral records/reports (local only) =====
 .agent/records/
