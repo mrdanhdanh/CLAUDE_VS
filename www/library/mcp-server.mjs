@@ -13,6 +13,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { agenticSearch } from './rag-loop.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
@@ -155,6 +156,22 @@ const TOOLS = [
     name: 'get_status',
     description: 'Thống kê thư viện: tổng sách, đang gắn, đã đọc, tổng chunk.',
     inputSchema: { type:'object', properties:{}, required:[] }
+  },
+  {
+    name: 'search_library_iterative',
+    description: 'Agentic RAG loop (maker-checker, max 3 vòng) — tự refine query khi 0 hits/score thấp. Trả về rounds + refinedQueries + gap.',
+    inputSchema: {
+      type: 'object',
+      properties: {
+        query: { type:'string', description:'Câu truy vấn' },
+        top_k: { type:'number', description:'Số kết quả (1-20, mặc định 5)', default:5 },
+        enabled_only: { type:'boolean', description:'Chỉ tìm trong sách đang gắn (mặc định true)', default:true },
+        maxRounds: { type:'number', description:'Số vòng tối đa (1-5, mặc định 3)', default:3 },
+        minHits: { type:'number', description:'Số hits tối thiểu để coi là đủ (mặc định 2)', default:2 },
+        minScore: { type:'number', description:'Score tối thiểu để coi là đủ (mặc định 1.0)', default:1.0 }
+      },
+      required: ['query']
+    }
   }
 ];
 
@@ -268,6 +285,22 @@ function handleMessage(msg){
         };
         send({ jsonrpc:'2.0', id, result:{
           content:[{ type:'text', text: JSON.stringify(status, null, 2) }]
+        }});
+        return;
+      }
+      if(name === 'search_library_iterative'){
+        const q = args?.query || '';
+        const top_k = Math.min(20, Math.max(1, Number(args?.top_k || 5)));
+        const enabled_only = args?.enabled_only !== false;
+        const maxRounds = Math.min(5, Math.max(1, Number(args?.maxRounds || 3)));
+        const minHits = Number(args?.minHits ?? 2);
+        const minScore = Number(args?.minScore ?? 1.0);
+        if(!q.trim()) throw new Error('query rỗng');
+        const resultIter = agenticSearch(q, data.chunks, data.registry, {
+          top_k, enabled_only, maxRounds, minHits, minScore, file: data._file
+        });
+        send({ jsonrpc:'2.0', id, result:{
+          content:[{ type:'text', text: JSON.stringify(resultIter, null, 2) }]
         }});
         return;
       }

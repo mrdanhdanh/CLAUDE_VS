@@ -1,4 +1,5 @@
 /* Library RAG Local — app.js · BM25 + IndexedDB + Parser + UI + API · 0đ offline */
+import { agenticSearch } from './rag-loop.mjs';
 const LS_KEY = 'library:registry';
 const DB_NAME = 'libraryDB';
 const STORE = 'chunks';
@@ -387,6 +388,8 @@ let activeFilter = 'all';
 let sortBy = 'newest';
 let viewMode = 'grid';
 let searchQuery = '';
+let iterativeMode = false;
+try{ iterativeMode = localStorage.getItem('library:iterative') === '1'; }catch{}
 
 // ---------- Render ----------
 function renderStats(){
@@ -526,7 +529,7 @@ function renderBooks(){
     });
   });
 }
-function renderResults(results, query, timeMs){
+function renderResults(results, query, timeMs, extra=null){
   const section = $('#resultsSection');
   const list = $('#resultsList');
   const empty = $('#resultsEmpty');
@@ -543,8 +546,14 @@ function renderResults(results, query, timeMs){
   }
   section.hidden = false;
   if(title) title.textContent = `Kết quả cho “${query.slice(0,40)}”`;
-  if(tag) tag.textContent = `${results.length} kết quả · ${timeMs}ms`;
-  if(info) info.textContent = results.length? `Tìm thấy ${results.length} đoạn` : 'Không tìm thấy';
+  if(tag){
+    if(extra && extra.rounds > 1) tag.textContent = `${results.length} kết quả · ${timeMs}ms · ${extra.rounds} vòng · ${extra.gap?.reason || ''}`;
+    else tag.textContent = `${results.length} kết quả · ${timeMs}ms`;
+  }
+  if(info){
+    if(extra && extra.rounds > 1) info.textContent = results.length? `Tìm thấy ${results.length} đoạn (${extra.rounds} vòng, queries: ${extra.refinedQueries.join(' → ').slice(0,80)})` : 'Không tìm thấy (đã thử 3 vòng)';
+    else info.textContent = results.length? `Tìm thấy ${results.length} đoạn` : 'Không tìm thấy';
+  }
   if(timeEl) timeEl.textContent = `${timeMs}ms`;
   if(results.length===0){
     list.innerHTML = '';
@@ -811,9 +820,20 @@ const doSearch = debounce(()=>{
     return;
   }
   const t0 = performance.now();
-  const res = bm25Search(q, 20);
+  let res, extra = null;
+  if(iterativeMode){
+    try{
+      const r = agenticSearch(q, allChunks, registry, {top_k:20, enabled_only:true, maxRounds:3, minHits:2, minScore:1.0});
+      res = r.hits;
+      extra = {rounds: r.rounds, refinedQueries: r.refinedQueries, gap: r.gap};
+    }catch(e){
+      res = bm25Search(q, 20);
+    }
+  } else {
+    res = bm25Search(q, 20);
+  }
   const dt = Math.round(performance.now()-t0);
-  renderResults(res, q, dt);
+  renderResults(res, q, dt, extra);
 }, 150);
 
 // ---------- Bind ----------
@@ -997,6 +1017,17 @@ function bindEvents(){
       if(inp){ inp.value='hợp đồng'; searchQuery='hợp đồng'; if($('#searchClear')) $('#searchClear').hidden=false; doSearch(); inp.focus(); }
     });
   }
+  // iterative toggle
+  const iterToggle = $('#iterativeToggle');
+  if(iterToggle){
+    iterToggle.checked = iterativeMode;
+    iterToggle.addEventListener('change', ()=>{
+      iterativeMode = iterToggle.checked;
+      try{ localStorage.setItem('library:iterative', iterativeMode ? '1' : '0'); }catch{}
+      toast(iterativeMode ? 'Đã bật Agentic RAG loop (max 3 vòng)' : 'Đã tắt Agentic RAG loop');
+      if(searchQuery.trim()) doSearch();
+    });
+  }
 }
 
 // ---------- API for AI ----------
@@ -1015,6 +1046,14 @@ function exposeAPI(){
         return res;
       }
       return bm25Search(q, top_k);
+    },
+    searchIterative: (q, opts={})=>{
+      const top_k = opts.top_k || opts.topK || 5;
+      const enabledOnly = opts.enabledOnly !== false && opts.enabled_only !== false;
+      const maxRounds = Math.min(5, Math.max(1, Number(opts.maxRounds || opts.max_rounds || 3)));
+      const minHits = Number(opts.minHits ?? opts.min_hits ?? 2);
+      const minScore = Number(opts.minScore ?? opts.min_score ?? 1.0);
+      return agenticSearch(q, allChunks, registry, {top_k, enabled_only: enabledOnly, maxRounds, minHits, minScore});
     },
     listBooks: ()=> Object.values(registry),
     getBook: (id)=> registry[id] || null,
