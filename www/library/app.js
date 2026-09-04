@@ -1,5 +1,6 @@
 /* Library RAG Local — app.js · BM25 + IndexedDB + Parser + UI + API · 0đ offline */
 import { agenticSearch } from './rag-loop.mjs';
+import { validateParams, normalizeArgs, toolHistory } from './tool-registry.mjs';
 const LS_KEY = 'library:registry';
 const DB_NAME = 'libraryDB';
 const STORE = 'chunks';
@@ -1033,9 +1034,14 @@ function bindEvents(){
 // ---------- API for AI ----------
 function exposeAPI(){
   window.LibrarySearch = {
+    validate: (tool, args) => validateParams(tool, args),
+    get history(){ return toolHistory; },
     search: (q, opts={})=>{
-      const top_k = opts.top_k || opts.topK || 5;
-      const enabledOnly = opts.enabledOnly !== false;
+      const v = validateParams('search_library', {query: q, top_k: opts.top_k || opts.topK || 5, enabled_only: opts.enabledOnly !== false && opts.enabled_only !== false});
+      if(!v.valid) throw new Error(v.errors.join('; '));
+      const norm = normalizeArgs('search_library', v.normalized);
+      const top_k = norm.top_k;
+      const enabledOnly = norm.enabled_only;
       // if enabledOnly false, temporarily build index with all
       if(!enabledOnly){
         const tmpIdx = buildBM25(allChunks, Object.fromEntries(Object.entries(registry).map(([k,v])=> [k, {...v, enabled:true}])));
@@ -1048,12 +1054,10 @@ function exposeAPI(){
       return bm25Search(q, top_k);
     },
     searchIterative: (q, opts={})=>{
-      const top_k = opts.top_k || opts.topK || 5;
-      const enabledOnly = opts.enabledOnly !== false && opts.enabled_only !== false;
-      const maxRounds = Math.min(5, Math.max(1, Number(opts.maxRounds || opts.max_rounds || 3)));
-      const minHits = Number(opts.minHits ?? opts.min_hits ?? 2);
-      const minScore = Number(opts.minScore ?? opts.min_score ?? 1.0);
-      return agenticSearch(q, allChunks, registry, {top_k, enabled_only: enabledOnly, maxRounds, minHits, minScore});
+      const v = validateParams('search_library_iterative', {query: q, top_k: opts.top_k || opts.topK || 5, enabled_only: opts.enabledOnly !== false && opts.enabled_only !== false, maxRounds: opts.maxRounds || opts.max_rounds || 3, minHits: opts.minHits ?? opts.min_hits ?? 2, minScore: opts.minScore ?? opts.min_score ?? 1.0});
+      if(!v.valid) throw new Error(v.errors.join('; '));
+      const norm = normalizeArgs('search_library_iterative', v.normalized);
+      return agenticSearch(q, allChunks, registry, {top_k: norm.top_k, enabled_only: norm.enabled_only, maxRounds: norm.maxRounds, minHits: norm.minHits, minScore: norm.minScore});
     },
     listBooks: ()=> Object.values(registry),
     getBook: (id)=> registry[id] || null,
@@ -1125,4 +1129,5 @@ async function init(){
 init();
 
 // expose for debugging
-window._lib = { get registry(){return registry}, get chunks(){return allChunks}, get index(){return bm25Index}, buildBM25, bm25Search };
+window._lib = { get registry(){return registry}, get chunks(){return allChunks}, get index(){return bm25Index}, buildBM25, bm25Search, toolHistory };
+window._toolHistory = toolHistory;

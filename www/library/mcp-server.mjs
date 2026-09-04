@@ -14,6 +14,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { agenticSearch } from './rag-loop.mjs';
+import { validateParams, normalizeArgs, pushHistory } from './tool-registry.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
@@ -221,6 +222,18 @@ function handleMessage(msg){
   }
   if(method === 'tools/call'){
     const { name, arguments: args } = params || {};
+    // Tool Use Hardening (P0-2): validate before loadData for unknown tool, else after
+    const v = validateParams(name, args || {});
+    if(!v.valid){
+      const t0 = Date.now();
+      pushHistory({ tool: name, args: args || {}, timestamp: t0, durationMs: 0, success: false, error: v.errors.join('; ') });
+      send({ jsonrpc:'2.0', id, result:{
+        content:[{ type:'text', text: JSON.stringify({ error: 'validation failed', errors: v.errors }, null, 2) }],
+        isError:true
+      }});
+      return;
+    }
+    const norm = normalizeArgs(name, v.normalized);
     const data = loadData();
     if(data._missing){
       send({ jsonrpc:'2.0', id, result:{
@@ -236,13 +249,14 @@ function handleMessage(msg){
       }});
       return;
     }
+    const tCall = Date.now();
     try{
       let result;
       if(name === 'search_library'){
-        const q = args?.query || '';
-        const top_k = Math.min(20, Math.max(1, Number(args?.top_k || 5)));
-        const enabled_only = args?.enabled_only !== false;
-        if(!q.trim()) throw new Error('query rỗng');
+        const q = norm.query;
+        const top_k = norm.top_k;
+        const enabled_only = norm.enabled_only !== false;
+        if(!String(q).trim()) throw new Error('query rỗng');
         const hits = searchBM25(q, data.chunks, data.registry, top_k, enabled_only);
         result = {
           query: q,
@@ -251,6 +265,7 @@ function handleMessage(msg){
           enabled_books: Object.values(data.registry).filter(b=>b.enabled).length,
           file: data._file
         };
+        pushHistory({ tool: name, args: norm, timestamp: tCall, durationMs: Date.now()-tCall, success: true });
         send({ jsonrpc:'2.0', id, result:{
           content:[{ type:'text', text: JSON.stringify(result, null, 2) }]
         }});
@@ -258,16 +273,18 @@ function handleMessage(msg){
       }
       if(name === 'list_books'){
         const books = Object.values(data.registry);
+        pushHistory({ tool: name, args: norm, timestamp: tCall, durationMs: Date.now()-tCall, success: true });
         send({ jsonrpc:'2.0', id, result:{
           content:[{ type:'text', text: JSON.stringify({ total: books.length, books, file: data._file }, null, 2) }]
         }});
         return;
       }
       if(name === 'get_book'){
-        const bid = args?.id;
+        const bid = norm.id;
         const book = data.registry[bid];
         if(!book) throw new Error(`Không tìm thấy sách id="${bid}"`);
-        const chunks = args?.include_chunks ? data.chunks.filter(c=>c.bookId===bid) : undefined;
+        const chunks = norm.include_chunks ? data.chunks.filter(c=>c.bookId===bid) : undefined;
+        pushHistory({ tool: name, args: norm, timestamp: tCall, durationMs: Date.now()-tCall, success: true });
         send({ jsonrpc:'2.0', id, result:{
           content:[{ type:'text', text: JSON.stringify({ book, chunks, file: data._file }, null, 2) }]
         }});
@@ -283,22 +300,24 @@ function handleMessage(msg){
           enabledChunks: books.filter(b=>b.enabled).reduce((a,b)=>a+(b.chunks||0),0),
           file: data._file
         };
+        pushHistory({ tool: name, args: norm, timestamp: tCall, durationMs: Date.now()-tCall, success: true });
         send({ jsonrpc:'2.0', id, result:{
           content:[{ type:'text', text: JSON.stringify(status, null, 2) }]
         }});
         return;
       }
       if(name === 'search_library_iterative'){
-        const q = args?.query || '';
-        const top_k = Math.min(20, Math.max(1, Number(args?.top_k || 5)));
-        const enabled_only = args?.enabled_only !== false;
-        const maxRounds = Math.min(5, Math.max(1, Number(args?.maxRounds || 3)));
-        const minHits = Number(args?.minHits ?? 2);
-        const minScore = Number(args?.minScore ?? 1.0);
-        if(!q.trim()) throw new Error('query rỗng');
+        const q = norm.query;
+        const top_k = norm.top_k;
+        const enabled_only = norm.enabled_only !== false;
+        const maxRounds = norm.maxRounds;
+        const minHits = norm.minHits;
+        const minScore = norm.minScore;
+        if(!String(q).trim()) throw new Error('query rỗng');
         const resultIter = agenticSearch(q, data.chunks, data.registry, {
           top_k, enabled_only, maxRounds, minHits, minScore, file: data._file
         });
+        pushHistory({ tool: name, args: norm, timestamp: tCall, durationMs: Date.now()-tCall, success: true });
         send({ jsonrpc:'2.0', id, result:{
           content:[{ type:'text', text: JSON.stringify(resultIter, null, 2) }]
         }});
@@ -306,6 +325,7 @@ function handleMessage(msg){
       }
       throw new Error(`Unknown tool: ${name}`);
     }catch(e){
+      pushHistory({ tool: name, args: norm, timestamp: tCall, durationMs: Date.now()-tCall, success: false, error: e.message });
       send({ jsonrpc:'2.0', id, result:{
         content:[{ type:'text', text:`Lỗi: ${e.message}` }],
         isError:true
