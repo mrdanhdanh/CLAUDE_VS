@@ -1,0 +1,74 @@
+# PRD: WEB 011 Part 2 — TEXT UNIVERSE
+
+> Part 2 của THE ULTIMATE WEB UNIVERSE — hoàn thiện nhóm Text: Markdown + Code Playground + Diff, nâng Text Editor, giữ Core Runtime không sửa.
+
+## 1. Vision
+- **One-liner:** Text Universe đầy đủ — Markdown live preview, Code Playground HTML/CSS/JS với console, Diff side-by-side — tất cả lazy-load, persist, error-isolated.
+- **Problem:** Part 1 mới có Text Editor + JSON Tool + Canvas Lab; thiếu Markdown, Code Playground, Diff — chưa đủ Text Universe theo spec §5.1.
+- **Target User:** Dev / người chấm — mở từng module Text, thấy editor + preview + export hoạt động thật, không hard-code.
+- **Persistence:** `localStorage: web-universe:markdown, web-universe:code-playground, web-universe:diff` + `web-universe:text-editor` (đã có) · **F5: giữ** · **Scope: per-browser**.
+
+## 2. User Stories
+| ID | As a ... | I want ... | So that ... | Priority |
+|----|----------|------------|-------------|----------|
+| US-01 | User | Mở Markdown → gõ markdown bên trái, thấy preview bên phải realtime | Viết markdown có preview | P0 |
+| US-02 | User | Trong Markdown, click heading ở outline để scroll tới heading đó | Điều hướng nhanh | P0 |
+| US-03 | User | Export Markdown ra HTML hoặc .md file | Lưu kết quả | P0 |
+| US-04 | User | Mở Code Playground → 3 editor HTML/CSS/JS + nút Run → thấy preview trong iframe sandbox | Thử code an toàn | P0 |
+| US-05 | User | Thấy console (log/error) của code vừa chạy, và nút Reset | Debug code | P0 |
+| US-06 | User | Mở Diff → nhập 2 text/JSON → chọn Text/JSON mode → thấy diff side-by-side với highlight | So sánh thay đổi | P0 |
+| US-07 | User | Trong Diff, thấy thống kê added/removed/unchanged | Biết mức thay đổi | P1 |
+| US-08 | User | F5 vẫn giữ nội dung các editor Text Universe | Không mất việc | P0 |
+| US-09 | User | Gõ Ctrl+K → tìm "markdown/code/diff" → Enter mở module | Mở nhanh bằng bàn phím | P0 |
+
+## 3. Scope
+
+### In Scope (P0 — phải có)
+- [x] **Markdown:** editor (textarea) + live preview (debounce 200ms) + heading navigation (outline từ `#`/`##`/`###`) + Export HTML + Export Markdown (.md download) + toolbar (bold/italic/link/code/heading)
+- [x] **Code Playground:** 3 editors (HTML/CSS/JS) + Live preview (iframe `sandbox="allow-scripts"`, `srcdoc`) + Console (capture `console.log/error` + runtime error via `window.onerror` trong iframe) + Error display + Reset + Run (manual, không auto-run để tránh loop)
+- [x] **Diff:** 2 inputs (left/right) + mode Text/JSON + side-by-side view + inline highlight (added/removed) + stats + swap + clear
+- [x] **Text Editor polish:** thêm Export .txt, giữ nguyên word/char/line + autosave + find/replace (đã có)
+- [x] Catalog: 3 modules mới chuyển từ stub → real (markdown, code-playground, diff), lazy-load thật
+- [x] Persist per-module localStorage + restore on mount
+- [x] Responsive + a11y + theme (kế thừa Core)
+
+### Nice to Have (P1)
+- [x] Markdown: sync scroll (editor ↔ preview)
+- [x] Code Playground: auto-run toggle (debounce)
+- [x] Diff: JSON pretty toggle + copy diff
+
+### Non-Goals (Out of Scope — để Part 3+)
+- Không làm Graphics/Media/File/Storage/Network (Part 3-4)
+- Không thêm dependency markdown lib — tự parse minimal (headings, bold, italic, code, link, list, blockquote, hr)
+- Không làm full Monaco/CodeMirror — dùng textarea + line numbers minimal
+
+## 4. Success Metrics
+- M1: Mở Markdown → gõ `# Hello` → preview hiện `<h1>Hello</h1>` trong <300ms
+- M2: Markdown outline click → scroll tới heading đúng
+- M3: Export Markdown → tải file `.md` và `.html` đúng nội dung
+- M4: Code Playground → gõ HTML/CSS/JS → Run → iframe hiện kết quả, console hiện log
+- M5: Code lỗi → console hiện error, không crash app
+- M6: Diff → nhập 2 text khác nhau → side-by-side highlight added/removed + stats đúng
+- M7: F5 → nội dung 3 modules vẫn giữ
+- M8: Network tab: mỗi module chỉ fetch khi Enable lần đầu (lazy-load)
+
+## 5. Edge Cases & Constraints
+- EC1: Markdown rỗng → preview hiện placeholder, không lỗi
+- EC2: Markdown chứa `<script>` → escape, không thực thi (XSS safe)
+- EC3: Code Playground JS infinite loop → không auto-run, chỉ Run manual; iframe sandbox cô lập
+- EC4: Diff với JSON invalid → fallback sang Text diff, báo "JSON invalid — showing text diff"
+- EC5: Diff với input rất dài (10k lines) → virtual? Part 2 chỉ cần scroll, không virtual (để Part 5 Data Lab)
+- EC6: Export khi nội dung rỗng → toast "Nothing to export"
+- Constraint: ES Modules, không thêm lib, iframe sandbox, escape HTML, cleanup timers on unmount
+
+## 6. Dependencies
+- Không thêm npm dep — vanilla JS + CSS
+- Dùng Core Runtime Part 1 (module-manager, window-manager, state, event-bus)
+
+## 7. Open Questions → Assumptions
+- Q: Markdown parser? A: Minimal custom parser (regex) — đủ headings/bold/italic/code/link/list/blockquote/hr/code block
+- Q: Code editor? A: 3 textarea + line numbers CSS, không Monaco
+- Q: Diff algorithm? A: LCS-based line diff (DP) cho text, JSON thì stringify pretty rồi diff
+
+---
+*Generated by YUNIE — Harness v2 PRD Phase — Part 2 Text Universe*

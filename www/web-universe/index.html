@@ -1,0 +1,285 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="color-scheme" content="dark light" />
+  <meta name="description" content="WEB UNIVERSE — Modular Browser OS. Core Runtime + Module Manager + Window System + Resource Monitor." />
+  <title>WEB UNIVERSE — Core Runtime</title>
+  <script>
+  (function(){try{var k='web-universe:theme';var t=localStorage.getItem(k);if(!t){t=matchMedia('(prefers-color-scheme:light)').matches?'light':'dark'}document.documentElement.dataset.theme=t;document.documentElement.style.colorScheme=t}catch(e){}})();
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="manifest" href="./manifest.webmanifest" />
+  <link rel="stylesheet" href="./css/base.css" />
+  <link rel="stylesheet" href="./css/layout.css" />
+  <link rel="stylesheet" href="./css/windows.css" />
+  <link rel="stylesheet" href="./css/modules.css" />
+  <meta name="theme-color" content="#0b0f1a" />
+</head>
+<body>
+  <a class="skip-link" href="#main">Bỏ qua đến nội dung chính</a>
+
+  <!-- Top Bar -->
+  <header class="topbar" role="banner">
+    <div class="topbar-left">
+      <button class="btn-icon topbar-menu" id="btnSidebarToggle" aria-label="Mở menu" aria-expanded="false" aria-controls="sidebar">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+      </button>
+      <a class="brand" href="#" aria-label="WEB UNIVERSE — trang chủ">
+        <span class="brand-mark" aria-hidden="true">◈</span>
+        <span class="brand-text">
+          <strong>WEB UNIVERSE</strong>
+          <span>Core Runtime · Part 1</span>
+        </span>
+      </a>
+      <button class="search-trigger" id="btnSearchTrigger" aria-label="Tìm kiếm module (Ctrl+K)">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
+        <span class="search-trigger-text">Tìm module…</span>
+        <kbd class="kbd">⌘K</kbd>
+      </button>
+    </div>
+    <div class="topbar-center" aria-hidden="true">
+      <div class="metrics" id="topMetrics">
+        <span class="metric"><span class="dot dot-cpu"></span> CPU <b id="metricCpu">~31%</b> <span class="metric-hint">estimate</span></span>
+        <span class="metric"><span class="dot dot-fps"></span> FPS <b id="metricFps">60</b></span>
+        <span class="metric hide-sm"><span class="dot dot-ram"></span> RAM <b id="metricRam">~420MB</b> <span class="metric-hint">estimate</span></span>
+      </div>
+    </div>
+    <div class="topbar-right">
+      <span class="online-indicator" id="onlineIndicator" title="Trạng thái mạng"><span class="online-dot"></span><span class="online-text">Online</span></span>
+      <button class="btn-icon" id="btnThemeToggle" aria-label="Đổi giao diện sáng/tối" title="Đổi theme (T)">
+        <svg class="icon-sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
+        <svg class="icon-moon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      </button>
+      <button class="btn-icon" id="btnCommandPalette" aria-label="Mở Command Palette (Ctrl+K)" title="Command Palette">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/></svg>
+      </button>
+      <button class="btn-icon" id="btnSettings" aria-label="Cài đặt" title="Cài đặt">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="3"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+      </button>
+    </div>
+  </header>
+
+  <div class="layout">
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar" role="navigation" aria-label="Điều hướng chính">
+      <div class="sidebar-inner">
+        <nav class="nav">
+          <div class="nav-group">
+            <div class="nav-group-title">Tổng quan</div>
+            <a class="nav-item active" href="#" data-view="home" aria-current="page">
+              <span class="nav-icon">🏠</span><span>Home</span><span class="nav-badge" id="badgeActive">0</span>
+            </a>
+            <a class="nav-item" href="#" data-view="modules">
+              <span class="nav-icon">📦</span><span>Modules</span><span class="nav-badge" id="badgeModules">12</span>
+            </a>
+            <a class="nav-item" href="#" data-view="favorites">
+              <span class="nav-icon">⭐</span><span>Favorites</span>
+            </a>
+          </div>
+          <div class="nav-group">
+            <div class="nav-group-title">Labs</div>
+            <a class="nav-item" href="#" data-category="text"><span class="nav-icon">📝</span><span>Text</span></a>
+            <a class="nav-item" href="#" data-category="graphics"><span class="nav-icon">🎨</span><span>Graphics</span></a>
+            <a class="nav-item" href="#" data-category="media"><span class="nav-icon">🎵</span><span>Media</span></a>
+            <a class="nav-item" href="#" data-category="files"><span class="nav-icon">📁</span><span>Files</span></a>
+            <a class="nav-item" href="#" data-category="storage"><span class="nav-icon">💾</span><span>Storage</span></a>
+            <a class="nav-item" href="#" data-category="network"><span class="nav-icon">🌐</span><span>Network</span></a>
+            <a class="nav-item" href="#" data-category="concurrency"><span class="nav-icon">⚡</span><span>Concurrency</span></a>
+            <a class="nav-item" href="#" data-category="data"><span class="nav-icon">📊</span><span>Data</span></a>
+            <a class="nav-item" href="#" data-category="devtools"><span class="nav-icon">🛠️</span><span>DevTools</span></a>
+          </div>
+          <div class="nav-group">
+            <div class="nav-group-title">Hệ thống</div>
+            <a class="nav-item" href="#" data-view="performance"><span class="nav-icon">📈</span><span>Performance</span></a>
+            <a class="nav-item" href="#" data-view="settings"><span class="nav-icon">⚙️</span><span>Settings</span></a>
+          </div>
+        </nav>
+
+        <div class="sidebar-footer">
+          <div class="resource-mini" id="resourceMini" aria-label="Tài nguyên">
+            <div class="resource-mini-head">
+              <span>Resource</span>
+              <button class="btn-ghost btn-xs" id="btnResourceDetails" aria-label="Xem chi tiết tài nguyên">Chi tiết</button>
+            </div>
+            <div class="resource-bars">
+              <div class="rbar"><span>FPS</span><div class="rbar-track"><div class="rbar-fill fps" id="rbarFps" style="width:100%"></div></div><b id="rbarFpsVal">60</b></div>
+              <div class="rbar"><span>DOM</span><div class="rbar-track"><div class="rbar-fill dom" id="rbarDom" style="width:30%"></div></div><b id="rbarDomVal">—</b></div>
+              <div class="rbar"><span>Timers</span><div class="rbar-track"><div class="rbar-fill timers" id="rbarTimers" style="width:20%"></div></div><b id="rbarTimersVal">0</b></div>
+            </div>
+            <div class="resource-meta">
+              <span id="resourceMeta">0 active · 0 loaded · 0 workers</span>
+            </div>
+          </div>
+          <div class="sidebar-actions">
+            <button class="btn btn-ghost btn-sm" id="btnExportSnapshot">Export Snapshot</button>
+            <button class="btn btn-ghost btn-sm" id="btnImportSnapshot">Import</button>
+            <input type="file" id="importFile" accept=".json" hidden />
+          </div>
+        </div>
+      </div>
+    </aside>
+    <div class="sidebar-backdrop" id="sidebarBackdrop" aria-hidden="true"></div>
+
+    <!-- Main -->
+    <main class="main" id="main" role="main">
+      <!-- Home / Catalog -->
+      <section class="view active" id="viewHome" aria-labelledby="homeTitle">
+        <div class="view-header">
+          <div>
+            <h1 id="homeTitle">Workspace</h1>
+            <p class="view-subtitle">Bật module để mở window — module chưa dùng sẽ không tải (lazy-load thật). Thử <kbd>Ctrl</kbd> + <kbd>K</kbd> để mở Command Palette.</p>
+          </div>
+          <div class="view-actions">
+            <div class="search-box" role="search">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
+              <input id="catalogSearch" type="search" placeholder="Tìm module, category, mô tả…" aria-label="Tìm module" autocomplete="off" />
+              <kbd class="kbd hide-sm">/</kbd>
+            </div>
+            <select id="catalogFilter" aria-label="Lọc theo trạng thái">
+              <option value="all">Tất cả</option>
+              <option value="active">Active</option>
+              <option value="loaded">Loaded</option>
+              <option value="unloaded">Unloaded</option>
+              <option value="sleeping">Sleeping</option>
+              <option value="crashed">Crashed</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="catalog" id="catalog" role="list" aria-label="Danh sách module"></div>
+
+        <div class="workspace-section">
+          <div class="workspace-head">
+            <h2>Workspace</h2>
+            <div class="workspace-actions">
+              <button class="btn btn-ghost btn-sm" id="btnPauseAll">Pause All</button>
+              <button class="btn btn-ghost btn-sm" id="btnResumeAll">Resume All</button>
+              <button class="btn btn-ghost btn-sm" id="btnSleepAll">Sleep All</button>
+              <button class="btn btn-ghost btn-sm" id="btnCloseAll">Close All</button>
+            </div>
+          </div>
+          <div class="workspace" id="workspace" aria-label="Workspace — chứa các window module">
+            <div class="workspace-empty" id="workspaceEmpty">
+              <div class="empty-icon">◈</div>
+              <h3>Chưa có module nào đang chạy</h3>
+              <p>Bật module từ catalog bên trên — module sẽ được <b>lazy-load</b> và mount vào window.</p>
+              <div class="empty-hints">
+                <span><kbd>Ctrl</kbd> + <kbd>K</kbd> mở palette</span>
+                <span><kbd>/</kbd> tìm nhanh</span>
+                <span><kbd>T</kbd> đổi theme</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="grid-2">
+          <section class="panel" aria-labelledby="perfTitle">
+            <div class="panel-head">
+              <h3 id="perfTitle">Performance — Benchmark</h3>
+              <span class="badge badge-live">Live</span>
+            </div>
+            <div class="benchmark" id="benchmark">
+              <div class="bench-row"><span>Startup (core only)</span><b id="benchStartup">—</b></div>
+              <div class="bench-row"><span>Lazy-load saving</span><b id="benchLazy">—</b></div>
+              <div class="bench-row"><span>Active modules</span><b id="benchActive">0</b></div>
+              <div class="bench-row"><span>FPS (avg)</span><b id="benchFps">—</b></div>
+            </div>
+            <p class="panel-hint">Số liệu đo thực tế, không hard-code. CPU/RAM là <em>estimate</em> nội bộ.</p>
+          </section>
+          <section class="panel" aria-labelledby="logTitle">
+            <div class="panel-head">
+              <h3 id="logTitle">Logger</h3>
+              <div class="panel-actions">
+                <select id="logLevel" aria-label="Lọc log level"><option value="debug">DEBUG</option><option value="info" selected>INFO</option><option value="warn">WARN</option><option value="error">ERROR</option></select>
+                <button class="btn btn-ghost btn-xs" id="btnClearLog">Clear</button>
+                <label class="toggle"><input type="checkbox" id="toggleDevMode" /><span>Dev Mode</span></label>
+              </div>
+            </div>
+            <div class="logger" id="logger" role="log" aria-live="polite"></div>
+          </section>
+        </div>
+      </section>
+
+      <section class="view" id="viewPerformance" aria-labelledby="perfViewTitle">
+        <h2 id="perfViewTitle">Performance Monitor</h2>
+        <div class="perf-grid" id="perfGrid"></div>
+      </section>
+
+      <section class="view" id="viewSettings" aria-labelledby="settingsTitle">
+        <h2 id="settingsTitle">Settings</h2>
+        <div class="settings-grid">
+          <div class="panel">
+            <h3>Theme</h3>
+            <div class="setting-row"><span>Dark / Light</span><button class="btn btn-primary btn-sm" id="btnToggleTheme2">Toggle Theme</button></div>
+            <div class="setting-row"><span>Animation</span><label class="toggle"><input type="checkbox" id="toggleMotion" checked /><span>Enable motion</span></label></div>
+          </div>
+          <div class="panel">
+            <h3>Workspace</h3>
+            <div class="setting-row"><span>Lưu workspace</span><button class="btn btn-ghost btn-sm" id="btnSaveWorkspace">Save now</button></div>
+            <div class="setting-row"><span>Reset workspace</span><button class="btn btn-danger btn-sm" id="btnResetWorkspace">Reset</button></div>
+          </div>
+          <div class="panel">
+            <h3>Permissions (stub)</h3>
+            <div id="permissionList"></div>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <!-- Status Bar -->
+  <footer class="statusbar" role="contentinfo" aria-label="Thanh trạng thái">
+    <div class="status-left">
+      <span><span class="status-dot active"></span> <b id="statusActive">0</b> active</span>
+      <span class="hide-sm">· <b id="statusLoaded">0</b> loaded</span>
+      <span class="hide-sm">· <b id="statusWorkers">0</b> workers</span>
+    </div>
+    <div class="status-center hide-sm">
+      <span>DOM <b id="statusDom">—</b></span>
+      <span>· Timers <b id="statusTimers">0</b></span>
+      <span>· Canvas <b id="statusCanvas">0</b></span>
+    </div>
+    <div class="status-right">
+      <span>FPS <b id="statusFps">60</b></span>
+      <span class="hide-sm">· <span id="statusOnline">● Online</span></span>
+    </div>
+  </footer>
+
+  <!-- Command Palette -->
+  <dialog class="palette" id="palette" aria-label="Command Palette">
+    <div class="palette-inner">
+      <div class="palette-input-wrap">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
+        <input id="paletteInput" type="text" placeholder="Gõ lệnh hoặc tìm module… (↑↓ Enter Esc)" aria-label="Command palette input" autocomplete="off" />
+        <kbd class="kbd">ESC</kbd>
+      </div>
+      <div class="palette-list" id="paletteList" role="listbox" aria-label="Kết quả"></div>
+      <div class="palette-hint">↑↓ di chuyển · Enter chọn · Esc đóng · Gõ "theme", "pause all", "export"</div>
+    </div>
+  </dialog>
+
+  <!-- Modal -->
+  <dialog class="modal" id="appModal" aria-label="Hộp thoại">
+    <div class="modal-inner">
+      <div class="modal-head">
+        <h3 id="modalTitle">Thông báo</h3>
+        <button class="btn-icon" id="btnModalClose" aria-label="Đóng"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M18 6L6 18M6 6l12 12"/></svg></button>
+      </div>
+      <div class="modal-body" id="modalBody"></div>
+      <div class="modal-actions" id="modalActions"></div>
+    </div>
+  </dialog>
+
+  <!-- Context Menu -->
+  <div class="context-menu" id="contextMenu" role="menu" aria-hidden="true"></div>
+
+  <!-- Toast -->
+  <div class="toast-stack" id="toastStack" aria-live="polite" aria-atomic="true"></div>
+
+  <script type="module" src="./js/app.js"></script>
+</body>
+</html>
