@@ -1,6 +1,6 @@
 {
-  "version": 1,
-  "description": "MCP catalog — vendors this deployment stands behind (học OpenBot)",
+  "version": 2,
+  "description": "MCP catalog — vendors this deployment stands behind (học OpenBot). P1-3: added library vendor 1.1.0 (read-only).",
   "vendors": [
     {
       "id": "google-drive",
@@ -15,6 +15,15 @@
       "description": "Reached as the person asking",
       "tools": ["read", "write"],
       "auth": "oauth"
+    },
+    {
+      "id": "library",
+      "name": "Library RAG Local",
+      "description": "Local BM25 RAG (read-only, 0đ offline). P1-3 Harness 2.1.",
+      "version": "1.1.0",
+      "tools": ["search_library", "search_library_iterative", "list_books", "get_book", "get_status"],
+      "auth": "none",
+      "scope": "read-only"
     }
   ]
 }

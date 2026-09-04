@@ -1,9 +1,9 @@
 {
-  "version": 1,
-  "description": "MCP grants per agent — which agent holds which connector (học OpenBot)",
+  "version": 2,
+  "description": "MCP grants per agent — which agent holds which connector (học OpenBot). P1-3: library granted to general + knowledge (read-only).",
   "grants": {
-    "general": ["google-drive"],
-    "knowledge": ["notion"],
+    "general": ["google-drive", "library"],
+    "knowledge": ["notion", "library"],
     "risk": []
   }
 }

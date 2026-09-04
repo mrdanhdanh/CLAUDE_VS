@@ -1,14 +1,16 @@
 #!/usr/bin/env node
 /**
- * Library RAG Local — MCP Server (stdio)
- * Tools: search_library, list_books, get_book, get_status
+ * Library RAG Local — MCP Server (stdio) · v1.1.0 (P1-3 Harness 2.1)
+ * Tools: search_library, search_library_iterative, list_books, get_book, get_status
  * Reads: www/library/export.json (do UI nút Xuất tạo ra) hoặc path truyền vào
  * Usage:
  *   node www/library/mcp-server.mjs
  *   node www/library/mcp-server.mjs --file ./www/library/export.json
  * MCP config (.vscode/mcp.json):
  *   { "servers": { "library": { "command": "node", "args": ["./www/library/mcp-server.mjs"] } } }
+ * P1-3: version pin 1.1.0, output redaction (no secret leak), protocolVersion pin.
  */
+export const MCP_SERVER_VERSION = '1.1.0';
 
 import fs from 'node:fs';
 import path from 'node:path';
@@ -121,6 +123,21 @@ function searchBM25(query, chunks, registry, top_k=5, enabledOnly=true){
   return scored;
 }
 
+// ---------- Output redaction (P1-3: no secret leak) ----------
+function redactOutput(text) {
+  return String(text)
+    .replace(/sk-[a-zA-Z0-9]{10,}/g, '***')
+    .replace(/cpk-[a-zA-Z0-9]{10,}/g, '***');
+}
+
+function redactHits(hits) {
+  return (hits || []).map(h => ({
+    ...h,
+    text: redactOutput(h.text),
+    snippet: redactOutput(h.snippet),
+  }));
+}
+
 // ---------- MCP Protocol ----------
 const TOOLS = [
   {
@@ -206,7 +223,7 @@ function handleMessage(msg){
       result:{
         protocolVersion:'2024-11-05',
         capabilities:{ tools:{} },
-        serverInfo:{ name:'library-rag-local', version:'1.0.0' }
+        serverInfo:{ name:'library-rag-local', version: MCP_SERVER_VERSION }
       }
     });
     // notification
@@ -257,7 +274,7 @@ function handleMessage(msg){
         const top_k = norm.top_k;
         const enabled_only = norm.enabled_only !== false;
         if(!String(q).trim()) throw new Error('query rỗng');
-        const hits = searchBM25(q, data.chunks, data.registry, top_k, enabled_only);
+        const hits = redactHits(searchBM25(q, data.chunks, data.registry, top_k, enabled_only));
         result = {
           query: q,
           hits,
@@ -283,7 +300,7 @@ function handleMessage(msg){
         const bid = norm.id;
         const book = data.registry[bid];
         if(!book) throw new Error(`Không tìm thấy sách id="${bid}"`);
-        const chunks = norm.include_chunks ? data.chunks.filter(c=>c.bookId===bid) : undefined;
+        const chunks = norm.include_chunks ? redactHits(data.chunks.filter(c=>c.bookId===bid)) : undefined;
         pushHistory({ tool: name, args: norm, timestamp: tCall, durationMs: Date.now()-tCall, success: true });
         send({ jsonrpc:'2.0', id, result:{
           content:[{ type:'text', text: JSON.stringify({ book, chunks, file: data._file }, null, 2) }]
@@ -317,6 +334,7 @@ function handleMessage(msg){
         const resultIter = agenticSearch(q, data.chunks, data.registry, {
           top_k, enabled_only, maxRounds, minHits, minScore, file: data._file
         });
+        resultIter.hits = redactHits(resultIter.hits);
         pushHistory({ tool: name, args: norm, timestamp: tCall, durationMs: Date.now()-tCall, success: true });
         send({ jsonrpc:'2.0', id, result:{
           content:[{ type:'text', text: JSON.stringify(resultIter, null, 2) }]
