@@ -1,12 +1,12 @@
 {
-  "generatedAt": "2026-09-03T06:51:55.809Z",
+  "generatedAt": "2026-09-04T06:56:51.072Z",
   "generatedBy": "YUNIE × Last30Days",
   "version": 2,
   "description": "Tin AI mới nhất — tổng hợp từ Last30Days (HN, GitHub, Web) trong 30 ngày qua. Chủ đề: AI. Tự động cập nhật bởi YUNIE.",
   "last30days": {
     "enabled": true,
     "topic": "AI",
-    "since": "2026-08-04",
+    "since": "2026-08-05",
     "days": 30,
     "sources": [
       "Hacker News (Algolia, free)",
@@ -51,248 +51,248 @@
   ],
   "articles": [
     {
-      "id": "hn-49545592",
-      "title": "Frontier Act – Federal oversight of the development of frontier AI",
-      "summary": "Frontier Act – Federal oversight of the development of frontier AI — 5 points, 1 comments on HN.",
+      "id": "hn-49560039",
+      "title": "DEF Con 34 – Hacking AI – Bruce Schneier [video]",
+      "summary": "DEF Con 34 – Hacking AI – Bruce Schneier [video] — 8 points, 0 comments on HN.",
       "source": "Hacker News",
-      "sourceUrl": "https://www.congress.gov/bill/119th-congress/house-bill/9925/text",
+      "sourceUrl": "https://www.youtube.com/watch?v=eEBv0STiYhI",
       "category": "products",
-      "date": "2026-09-03",
+      "date": "2026-09-04",
       "hot": true,
       "tags": [
         "HN",
         "AI",
         "story",
-        "author_cco"
+        "author_jonbaer"
       ]
     },
     {
-      "id": "hn-49546175",
-      "title": "Generative AI without guardrails can harm learning",
-      "summary": "Generative AI without guardrails can harm learning — 3 points, 0 comments on HN.",
+      "id": "hn-49560129",
+      "title": "Agentic Search",
+      "summary": "Agentic Search — 7 points, 0 comments on HN.",
       "source": "Hacker News",
-      "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/40560616/",
+      "sourceUrl": "https://mistral.ai/news/agentic-search/",
       "category": "products",
-      "date": "2026-09-03",
+      "date": "2026-09-04",
       "hot": true,
       "tags": [
         "HN",
         "AI",
         "story",
-        "author_shymaple"
+        "author_gmays"
       ]
     },
     {
-      "id": "hn-49545920",
-      "title": "AI Can Help Plan a Bioweapon",
-      "summary": "AI Can Help Plan a Bioweapon — 3 points, 0 comments on HN.",
+      "id": "hn-49560093",
+      "title": "The Impact of AI-Generated Text on the Internet",
+      "summary": "The Impact of AI-Generated Text on the Internet — 5 points, 0 comments on HN.",
       "source": "Hacker News",
-      "sourceUrl": "https://secondthoughts.ai/p/ai-can-help-plan-a-bioweapon-building",
+      "sourceUrl": "https://ai-on-the-internet.github.io",
       "category": "products",
-      "date": "2026-09-03",
+      "date": "2026-09-04",
       "hot": false,
       "tags": [
         "HN",
         "AI",
         "story",
-        "author_soltanov"
+        "author_alphabetatango"
       ]
     },
     {
-      "id": "hn-49545209",
-      "title": "Researchers fear safety disaster ahead of OpenAI's Astra release",
-      "summary": "Researchers fear safety disaster ahead of OpenAI's Astra release — 3 points, 1 comments on HN.",
+      "id": "hn-49560076",
+      "title": "How Much of the Internet Is Written with AI?",
+      "summary": "How Much of the Internet Is Written with AI? — 5 points, 0 comments on HN.",
       "source": "Hacker News",
-      "sourceUrl": "https://www.theverge.com/ai-artificial-intelligence/988334/openai-astra-ai-monitoring-safety",
+      "sourceUrl": "https://www.pewresearch.org/data-labs/2026/08/20/how-much-of-the-internet-is-written-with-ai/",
+      "category": "products",
+      "date": "2026-09-04",
+      "hot": false,
+      "tags": [
+        "HN",
+        "AI",
+        "story",
+        "author_alphabetatango"
+      ]
+    },
+    {
+      "id": "hn-49560169",
+      "title": "The 1990s Web vs. today's AI",
+      "summary": "The 1990s Web vs. today's AI — 4 points, 0 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://arnoldkling.substack.com/p/the-1990s-web-vs-todays-ai",
+      "category": "products",
+      "date": "2026-09-04",
+      "hot": false,
+      "tags": [
+        "HN",
+        "AI",
+        "story",
+        "author_paulpauper"
+      ]
+    },
+    {
+      "id": "hn-49560887",
+      "title": "AI, Tools and Transformation",
+      "summary": "AI, Tools and Transformation — 3 points, 0 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://www.ben-evans.com/benedictevans/2026/9/3/ai-tools-and-transformation",
+      "category": "products",
+      "date": "2026-09-04",
+      "hot": false,
+      "tags": [
+        "HN",
+        "AI",
+        "story",
+        "author_meetpateltech"
+      ]
+    },
+    {
+      "id": "hn-49560782",
+      "title": "America must learn AI lessons from Astro Boy",
+      "summary": "America must learn AI lessons from Astro Boy — 3 points, 0 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://www.ft.com/content/68751904-522a-41cc-85e0-08015fe75059",
+      "category": "products",
+      "date": "2026-09-04",
+      "hot": false,
+      "tags": [
+        "HN",
+        "AI",
+        "story",
+        "author_thm"
+      ]
+    },
+    {
+      "id": "hn-49560970",
+      "title": "Cerebras and Compute Nordic Finland Announces AI Data Centre in Mikkeli, Finland",
+      "summary": "Cerebras and Compute Nordic Finland Announces AI Data Centre in Mikkeli, Finland — 2 points, 0 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://investors.cerebras.ai/news-releases/news-release-details/cerebras-and-compute-nordic-finland-announce-new-165-mw-ai-data",
+      "category": "products",
+      "date": "2026-09-04",
+      "hot": false,
+      "tags": [
+        "HN",
+        "AI",
+        "story",
+        "author_olvy0"
+      ]
+    },
+    {
+      "id": "hn-49560927",
+      "title": "Max H3 – MiniMax H3 Max AI Video Generator",
+      "summary": "Max H3 – MiniMax H3 Max AI Video Generator — 2 points, 0 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://www.maxh3.com/",
+      "category": "products",
+      "date": "2026-09-04",
+      "hot": false,
+      "tags": [
+        "HN",
+        "AI",
+        "story",
+        "author_Follow_Cloud"
+      ]
+    },
+    {
+      "id": "hn-49560890",
+      "title": "World Sandwich",
+      "summary": "World Sandwich — 2 points, 0 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://claude.ai/code/artifact/5ffe9a8e-e1c6-4204-b893-585bea78a252",
+      "category": "products",
+      "date": "2026-09-04",
+      "hot": false,
+      "tags": [
+        "HN",
+        "AI",
+        "story",
+        "author_voxycon"
+      ]
+    },
+    {
+      "id": "hn-49560431",
+      "title": "Why Air Batteries Are Finally Beating Lithium [video]",
+      "summary": "Why Air Batteries Are Finally Beating Lithium [video] — 2 points, 0 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://www.youtube.com/watch?v=GoiECSXOvQE",
+      "category": "products",
+      "date": "2026-09-04",
+      "hot": false,
+      "tags": [
+        "HN",
+        "AI",
+        "story",
+        "author_thelastgallon"
+      ]
+    },
+    {
+      "id": "hn-49560428",
+      "title": "MauroPello/stop-the-slop: Spot AI-generated YouTube scripts",
+      "summary": "MauroPello/stop-the-slop: Spot AI-generated YouTube scripts — 2 points, 0 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://github.com/MauroPello/stop-the-slop",
+      "category": "safety",
+      "date": "2026-09-04",
+      "hot": false,
+      "tags": [
+        "HN",
+        "AI",
+        "story",
+        "author_rdmuser"
+      ]
+    },
+    {
+      "id": "hn-49559652",
+      "title": "FrontierMath Erdős",
+      "summary": "FrontierMath Erdős — 2 points, 0 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://epoch.ai/latest/announcing-frontiermath-erdos",
+      "category": "products",
+      "date": "2026-09-04",
+      "hot": false,
+      "tags": [
+        "HN",
+        "AI",
+        "story",
+        "author_cainxinth"
+      ]
+    },
+    {
+      "id": "hn-49561372",
+      "title": "OpenAI commits $1B to critical-infrastructure AI initiative",
+      "summary": "OpenAI commits $1B to critical-infrastructure AI initiative — 1 points, 0 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://axios.com/2026/09/03/openai-critical-infrastructure-cyber-ai-models",
       "category": "big-tech",
-      "date": "2026-09-03",
+      "date": "2026-09-04",
       "hot": false,
       "tags": [
         "HN",
         "AI",
         "story",
-        "author_nevir"
+        "author_utiiiD"
       ]
     },
     {
-      "id": "hn-49546419",
-      "title": "The multi-agent architecture of 2026 was designed in 1975",
-      "summary": "The multi-agent architecture of 2026 was designed in 1975 — 2 points, 0 comments on HN.",
+      "id": "hn-49561361",
+      "title": "Open-weight AI agents can use 10k× more energy than simple queries",
+      "summary": "Open-weight AI agents can use 10k× more energy than simple queries — 1 points, 0 comments on HN.",
       "source": "Hacker News",
-      "sourceUrl": "https://mozaik.jigjoy.ai/blog/the-interoperability-triangle",
+      "sourceUrl": "https://bloomberg.com/news/articles/2026-09-03/ai-s-environmental-impact-per-task-balloons-with-more-complexity",
       "category": "products",
-      "date": "2026-09-03",
+      "date": "2026-09-04",
       "hot": false,
       "tags": [
         "HN",
         "AI",
         "story",
-        "author_deepmem"
-      ]
-    },
-    {
-      "id": "hn-49545935",
-      "title": "What happens when your AI agent edits its own tests to pass?",
-      "summary": "What happens when your AI agent edits its own tests to pass? — 2 points, 0 comments on HN.",
-      "source": "Hacker News",
-      "sourceUrl": "https://bartholomew.info/",
-      "category": "products",
-      "date": "2026-09-03",
-      "hot": false,
-      "tags": [
-        "HN",
-        "AI",
-        "story",
-        "author_itsub_sa"
-      ]
-    },
-    {
-      "id": "hn-49545857",
-      "title": "New York City Bans AI from Elementary Schools",
-      "summary": "New York City Bans AI from Elementary Schools — 2 points, 8 comments on HN.",
-      "source": "Hacker News",
-      "sourceUrl": "https://gizmodo.com/new-york-city-bans-ai-from-elementary-schools-2000806172",
-      "category": "products",
-      "date": "2026-09-03",
-      "hot": false,
-      "tags": [
-        "HN",
-        "AI",
-        "story",
-        "author_the-mitr"
-      ]
-    },
-    {
-      "id": "hn-49545682",
-      "title": "We analyzed the code published by 29 frontier AI labs. Here's the data",
-      "summary": "We analyzed the code published by 29 frontier AI labs. Here's the data — 2 points, 0 comments on HN.",
-      "source": "Hacker News",
-      "sourceUrl": "https://opsera.ai/blog/frontier-ai-software-readiness-benchmark/",
-      "category": "products",
-      "date": "2026-09-03",
-      "hot": false,
-      "tags": [
-        "HN",
-        "AI",
-        "story",
-        "author_nassirkhan"
-      ]
-    },
-    {
-      "id": "hn-49545287",
-      "title": "WiCi One",
-      "summary": "WiCi One — 2 points, 0 comments on HN.",
-      "source": "Hacker News",
-      "sourceUrl": "https://wici.ai/wici-one",
-      "category": "products",
-      "date": "2026-09-03",
-      "hot": false,
-      "tags": [
-        "HN",
-        "AI",
-        "story",
-        "author_handfuloflight"
-      ]
-    },
-    {
-      "id": "hn-49545281",
-      "title": "Protocols for People: AI, the Internet and the IETF",
-      "summary": "Protocols for People: AI, the Internet and the IETF — 2 points, 0 comments on HN.",
-      "source": "Hacker News",
-      "sourceUrl": "https://digitalmedusa.org/protocols-for-people-ai-the-internet-and-the-ietf/",
-      "category": "products",
-      "date": "2026-09-03",
-      "hot": false,
-      "tags": [
-        "HN",
-        "AI",
-        "story",
-        "author_dannyobrien"
-      ]
-    },
-    {
-      "id": "hn-49545164",
-      "title": "GitHub: Shorter tool outputs can make coding agents more expensive",
-      "summary": "GitHub: Shorter tool outputs can make coding agents more expensive — 2 points, 0 comments on HN.",
-      "source": "Hacker News",
-      "sourceUrl": "https://github.blog/ai-and-ml/github-copilot/how-we-make-ai-coding-more-cost-efficient-without-sacrificing-task-quality/",
-      "category": "products",
-      "date": "2026-09-03",
-      "hot": false,
-      "tags": [
-        "HN",
-        "AI",
-        "story",
-        "author_lbw1215"
-      ]
-    },
-    {
-      "id": "hn-49546532",
-      "title": "Upload died on Mac air M5. Apple networking needs reboot",
-      "summary": "Upload died on Mac air M5. Apple networking needs reboot — 1 points, 0 comments on HN.",
-      "source": "Hacker News",
-      "sourceUrl": "https://frederikwouters.be/blog/have-you-tried-turning-it-off-and-on-again",
-      "category": "products",
-      "date": "2026-09-03",
-      "hot": false,
-      "tags": [
-        "HN",
-        "AI",
-        "story",
-        "author_woutersf"
-      ]
-    },
-    {
-      "id": "hn-49546521",
-      "title": "Can AI Create PLC Attacks? Yes, but It's Not That Easy Yet",
-      "summary": "Can AI Create PLC Attacks? Yes, but It's Not That Easy Yet — 1 points, 0 comments on HN.",
-      "source": "Hacker News",
-      "sourceUrl": "https://www.forescout.com/blog/can-ai-create-plc-attacks-yes-but-it%E2%80%99s-not-that-easy-yet/",
-      "category": "products",
-      "date": "2026-09-03",
-      "hot": false,
-      "tags": [
-        "HN",
-        "AI",
-        "story",
-        "author_Sentralis"
-      ]
-    },
-    {
-      "id": "hn-49546499",
-      "title": "Which AI Fetchers Send Which Headers, Measured on a Live Site",
-      "summary": "Which AI Fetchers Send Which Headers, Measured on a Live Site — 1 points, 1 comments on HN.",
-      "source": "Hacker News",
-      "sourceUrl": "https://gkoreli.com/which-ai-fetchers-send-which-headers",
-      "category": "products",
-      "date": "2026-09-03",
-      "hot": false,
-      "tags": [
-        "HN",
-        "AI",
-        "story",
-        "author_gogakoreli"
-      ]
-    },
-    {
-      "id": "hn-49545792",
-      "title": "Ask HN: A tool to share my data",
-      "summary": "Hello HN,\nAs a European citizen, I&#x27;d love a tool allowing me to easily collect and centralize data I&#x27;ve already shared with FAANG and other large US platforms, for the purpose of sharing (selling?) it to releva — 1 points, 0 comments on HN.",
-      "source": "Hacker News",
-      "sourceUrl": "https://news.ycombinator.com/item?id=49545792",
-      "category": "products",
-      "date": "2026-09-03",
-      "hot": false,
-      "tags": [
-        "HN",
-        "AI",
-        "story",
-        "author_roromainmain"
+        "author_utiiiD"
       ]
     }
   ],
   "meta": {
-    "fetchedAt": "2026-09-03T06:51:55.809Z",
+    "fetchedAt": "2026-09-04T06:56:51.072Z",
     "topic": "AI",
     "total": 15,
     "hot": 2,
