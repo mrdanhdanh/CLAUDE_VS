@@ -24,6 +24,21 @@ export function routeQuery(query) {
   return 'deep';
 }
 
+// ---------- Locality routing (P2-3 Lesson 17: local vs cloud) ----------
+const SENSITIVE_RE = /password|token|secret|private|personal|credential|ssn|credit/i;
+const OFFLINE_RE = /offline|plane|outage|local-?only|on-?device|airplane/i;
+const HARD_RE = /plan.*trip|compare.*3|analy[sz]e.*codebase|multi-?hop|research.*report/i;
+
+export function routeLocality(query = '') {
+  const q = String(query);
+  if (SENSITIVE_RE.test(q)) return 'local';
+  if (OFFLINE_RE.test(q)) return 'local';
+  if (HARD_RE.test(q)) return 'cloud';
+  const tokens = tokenize(q);
+  if (tokens.length <= 3) return 'local';
+  return 'local'; // default privacy-first
+}
+
 // ---------- Cache (in-memory, TTL 5m, max 50, LRU-ish) ----------
 const CACHE_TTL_MS = 5 * 60 * 1000;
 const CACHE_MAX = 50;
@@ -66,4 +81,4 @@ export function clearCache() {
   _cache.clear();
 }
 
-export default { routeQuery, cacheGet, cacheSet, cacheStats, clearCache, cacheKey, COMPLEX_TOKENS };
+export default { routeQuery, routeLocality, cacheGet, cacheSet, cacheStats, clearCache, cacheKey, COMPLEX_TOKENS };
