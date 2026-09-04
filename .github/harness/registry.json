@@ -195,6 +195,22 @@
       "description": "Ponytail-inspired minimal ladder — YAGNI gate, reuse-first, native-first, dead-code grep + scoreboard. Use when implementing feature, fixing bug, reviewing over-engineering, need minimal code, YAGNI, dead code, native platform, or user says ponytail/ladder/minimal/lean.",
       "applyTo": "**",
       "installedAt": "2026-09-03T11:20:09.424Z"
+    },
+    "context-engineering": {
+      "source": "local",
+      "file": "context-engineering.instructions.md",
+      "enabled": true,
+      "description": "Context engineering — dynamic context pipeline (scratchpad/compress/isolate) + anti-poisoning. Use when managing RAG context, hitting window limits, or debugging wrong/missing context.",
+      "applyTo": "**",
+      "installedAt": "2026-09-04T03:35:56.864Z"
+    },
+    "cua-safety": {
+      "source": "local",
+      "file": "cua-safety.instructions.md",
+      "enabled": true,
+      "description": "CUA safety — browser-use guardrails (scope, observe/action, secrets, untrusted, checks, budgets, evidence) + agent-vs-actor. Use when browser automation, visual check, UI testing, or risky web actions.",
+      "applyTo": "**",
+      "installedAt": "2026-09-04T03:35:56.864Z"
     }
   },
   "agents": {

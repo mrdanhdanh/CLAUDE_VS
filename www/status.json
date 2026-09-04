@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-04T03:33:28.594Z",
+  "generatedAt": "2026-09-04T03:41:10.536Z",
   "generatedBy": "YUNIE",
   "version": 1,
   "counts": {
@@ -9,9 +9,9 @@
       "total": 10
     },
     "instructions": {
-      "enabled": 13,
+      "enabled": 15,
       "disabled": 0,
-      "total": 13
+      "total": 15
     },
     "agents": {
       "enabled": 8,
@@ -124,6 +124,14 @@
       "minimal-ladder": {
         "enabled": true,
         "description": "Ponytail-inspired minimal ladder — YAGNI gate, reuse-first, native-first, dead-code grep + scoreboard. Use when implementing feature, fixing bug, reviewing over-engineering, need minimal code, YAGNI, dead code, native platform, or user says ponytail/ladder/minimal/lean."
+      },
+      "context-engineering": {
+        "enabled": true,
+        "description": "Context engineering — dynamic context pipeline (scratchpad/compress/isolate) + anti-poisoning. Use when managing RAG context, hitting window limits, or debugging wrong/missing context."
+      },
+      "cua-safety": {
+        "enabled": true,
+        "description": "CUA safety — browser-use guardrails (scope, observe/action, secrets, untrusted, checks, budgets, evidence) + agent-vs-actor. Use when browser automation, visual check, UI testing, or risky web actions."
       }
     },
     "agents": {
@@ -289,10 +297,10 @@
   "health": {
     "errors": 0,
     "status": "warn",
-    "lastCheck": "2026-09-04T03:33:28.594Z",
+    "lastCheck": "2026-09-04T03:41:10.536Z",
     "checks": [
       "get_errors: pass (0 errors)",
-      "registry: 13 instructions (13 total) - 10 skills - 8 agents - 7 prompts - 1 hook — all enabled",
+      "registry: 15 instructions (15 total) - 10 skills - 8 agents - 7 prompts - 1 hook — all enabled",
       "www: polished — responsive 375/768/1280, a11y, states, animation 150-300ms",
       "workflow: www/** -> Pages (upload-artifact path: www) — exists: true",
       "library: www/library/ (PDF/DOCX/TXT/MD, BM25 <100ms, tháo lắp) + mcp-server.mjs + export.json + library-rag instruction",
@@ -445,7 +453,7 @@
       "deny": 7,
       "allow": 2,
       "status": "ok",
-      "lastCheck": "2026-09-04T03:33:28.590Z"
+      "lastCheck": "2026-09-04T03:41:10.527Z"
     },
     "credentials": {
       "count": 0,
