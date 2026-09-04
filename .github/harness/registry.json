@@ -44,7 +44,7 @@
       "enabled": true,
       "description": "UI design system toolkit for Senior UI Designer including design token generation, component documentation, responsive design calculations, and developer handoff tools. Use for creating design systems, maintaining visual consistency, and facilitating design-dev collaboration.",
       "file": "ui-design-system/SKILL.md",
-      "installedAt": "2026-08-30T18:34:37.871Z"
+      "installedAt": "2026-09-04T12:48:01.909Z"
     },
     "ui-ux-pro-max": {
       "source": "nextlevelbuilder/ui-ux-pro-max-skill",
@@ -53,7 +53,7 @@
       "enabled": true,
       "description": "UI/UX design intelligence for web, mobile, and desktop. This skill should be used when designing, building, reviewing, or fixing interfaces, including pages, components, design systems, accessibility, interaction, responsive layout, typography, color, charts, and stack-specific UI implementation. Se",
       "file": "ui-ux-pro-max/SKILL.md",
-      "installedAt": "2026-08-30T18:35:09.724Z"
+      "installedAt": "2026-09-04T12:48:42.597Z"
     },
     "tdd-gate": {
       "source": "local",
@@ -88,7 +88,7 @@
       "enabled": true,
       "description": "Research what people actually say about any topic in the last 30 days. Pulls posts and engagement from Reddit, X, YouTube, TikTok, Hacker News, Polymarket, GitHub, and the web. Includes a doctor health check to diagnose broken or missing sources.",
       "file": "last30days/SKILL.md",
-      "installedAt": "2026-09-02T14:05:50.606Z"
+      "installedAt": "2026-09-04T12:49:49.107Z"
     },
     "harness-build-config": {
       "source": "local",
@@ -256,6 +256,14 @@
       "description": "CUA safety — browser-use guardrails (scope, observe/action, secrets, untrusted, checks, budgets, evidence) + agent-vs-actor. Use when browser automation, visual check, UI testing, or risky web actions.",
       "applyTo": "**",
       "installedAt": "2026-09-04T03:35:56.864Z"
+    },
+    "awesome-design": {
+      "source": "local",
+      "file": "awesome-design.instructions.md",
+      "enabled": true,
+      "description": "Awesome DESIGN.md — 74 design systems local (VoltAgent/awesome-design-md). Use when user wants UI design, needs design inspiration, mentions vibe/style like linear/stripe/vercel/apple, or needs DESIGN.md for AI agent.",
+      "applyTo": "**",
+      "installedAt": "2026-09-04T12:47:59.598Z"
     }
   },
   "agents": {

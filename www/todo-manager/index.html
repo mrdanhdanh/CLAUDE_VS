@@ -4,12 +4,12 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="color-scheme" content="light" />
-  <meta name="theme-color" content="#6366f1" />
+  <meta name="theme-color" content="#171717" />
   <meta name="description" content="TaskBoard — Todo Manager premium: tạo, sửa, xóa, lọc, sắp xếp, dashboard, undo, lưu LocalStorage + GitHub sync + Sync Code không cần DB." />
   <title>TaskBoard — Todo Manager</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Geist:wght@400;500;600&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="./styles.css" />
 </head>
 <body>
@@ -20,10 +20,10 @@
       <a class="brand" href="#" aria-label="TaskBoard trang chủ">
         <span class="brand-dot" aria-hidden="true"></span>
         <span class="brand-name">TaskBoard</span>
-        <span class="brand-badge">BÀI 010</span>
+        <span class="brand-badge">BÀI 010 · VERCEL</span>
       </a>
       <nav class="header-nav" aria-label="Điều hướng">
-        <span class="header-hint">✨ Premium Glass · State → xử lý → render</span>
+        <span class="header-hint">▲ Stark · Geist · Mesh gradient</span>
       </nav>
       <div class="header-actions">
         <a class="btn btn-ghost btn-sm" href="../index.html" aria-label="Về YUNIE STATUS">← STATUS</a>
@@ -34,13 +34,17 @@
     </div>
   </header>
 
-  <main id="main" class="container">
-    <!-- Dashboard -->
-    <section class="dashboard" aria-labelledby="dashboard-title">
+  <div class="hero-mesh">
+    <div class="container hero-mesh-inner">
       <div class="section-head">
         <h1 id="dashboard-title" class="page-title">Quản lý công việc</h1>
-        <p class="page-sub">Giao diện premium glass — tạo, lọc, sắp xếp và theo dõi deadline. Lưu tự động ở trình duyệt, đồng bộ đa máy qua <strong>GitHub</strong> hoặc <strong>Sync Code</strong> không cần DB.</p>
+        <p class="page-sub">Giao diện Vercel stark — tạo, lọc, sắp xếp và theo dõi deadline. Lưu tự động ở trình duyệt, đồng bộ đa máy qua <strong>GitHub</strong> hoặc <strong>Sync Code</strong> không cần DB.</p>
       </div>
+    </div>
+  </div>
+  <main id="main" class="container">
+    <!-- Dashboard -->
+    <section class="dashboard" aria-label="Thống kê">
       <div class="dash-grid" role="list" aria-label="Thống kê">
         <div class="dash-card dash-total" role="listitem">
           <div class="dash-icon" aria-hidden="true">📋</div>

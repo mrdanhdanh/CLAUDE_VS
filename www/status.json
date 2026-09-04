@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-04T09:51:29.024Z",
+  "generatedAt": "2026-09-04T12:57:16.345Z",
   "generatedBy": "YUNIE",
   "version": 1,
   "counts": {
@@ -9,9 +9,9 @@
       "total": 15
     },
     "instructions": {
-      "enabled": 15,
+      "enabled": 16,
       "disabled": 0,
-      "total": 15
+      "total": 16
     },
     "agents": {
       "enabled": 8,
@@ -152,6 +152,10 @@
       "cua-safety": {
         "enabled": true,
         "description": "CUA safety — browser-use guardrails (scope, observe/action, secrets, untrusted, checks, budgets, evidence) + agent-vs-actor. Use when browser automation, visual check, UI testing, or risky web actions."
+      },
+      "awesome-design": {
+        "enabled": true,
+        "description": "Awesome DESIGN.md — 74 design systems local (VoltAgent/awesome-design-md). Use when user wants UI design, needs design inspiration, mentions vibe/style like linear/stripe/vercel/apple, or needs DESIGN.md for AI agent."
       }
     },
     "agents": {
@@ -277,6 +281,10 @@
     "status-redesign",
     "status-ui-v2",
     "todo-manager",
+    "todo-rebuild-v2",
+    "web-011-part1",
+    "web-011-part2",
+    "web-011-part3",
     "web-thuat-toan",
     "web-thuat-toan-v2"
   ],
@@ -315,15 +323,20 @@
       "name": "web-thuat-toan",
       "path": "web-thuat-toan/index.html",
       "status": "ok"
+    },
+    {
+      "name": "web-universe",
+      "path": "web-universe/index.html",
+      "status": "ok"
     }
   ],
   "health": {
     "errors": 0,
     "status": "ok",
-    "lastCheck": "2026-09-04T09:51:29.024Z",
+    "lastCheck": "2026-09-04T12:57:16.345Z",
     "checks": [
       "get_errors: pass (0 errors)",
-      "registry: 15 instructions (15 total) - 15 skills - 8 agents - 7 prompts - 1 hook — all enabled",
+      "registry: 16 instructions (16 total) - 15 skills - 8 agents - 7 prompts - 1 hook — all enabled",
       "harness: 2.2-done — P0 (RAG loop, tool hardening, planning JSON, receipt Ed25519) + P1 (multi-agent, observability, protocols, context, memory, deploy) + P2 (MAF workflows, CUA guardrails, local SLM, setup doctor)",
       "scripts: 18 harness .mjs (plan-validate, handoff, reflect, trace, eval-gate, deploy-check, agent-card, context, memory, workflow, cua-guard, local, setup-doctor)",
       "eval-gate: PASS (syntax + MCP smoke + plan-validate)",
@@ -373,6 +386,11 @@
       {
         "path": "web-thuat-toan/index.html",
         "title": "10 Bài Thuật Toán",
+        "type": "demo"
+      },
+      {
+        "path": "web-universe/index.html",
+        "title": "web-universe",
         "type": "demo"
       }
     ],
@@ -573,7 +591,7 @@
       "deny": 7,
       "allow": 2,
       "status": "ok",
-      "lastCheck": "2026-09-04T09:51:28.431Z"
+      "lastCheck": "2026-09-04T12:57:15.706Z"
     },
     "credentials": {
       "count": 0,
