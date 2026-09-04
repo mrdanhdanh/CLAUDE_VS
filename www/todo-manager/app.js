@@ -2,7 +2,8 @@
 (() => {
   'use strict';
 
-  const STORAGE_KEY = 'todo-manager:v1';
+  const STORAGE_KEY = 'todo-manager:v2';
+  const STORAGE_KEY_LEGACY = 'todo-manager:v1';
   const TASKS_JSON_URL = './tasks.json';
   const GITHUB_CONFIG_KEY = 'todo-manager:github:v1';
   const GITHUB_DEFAULTS = {
@@ -13,6 +14,9 @@
     token: '',
     autosync: true
   };
+  const SYNC_CODE_KEY = 'todo-manager:syncCode:v1';
+  const SYNC_CODE_BUCKET = 'K9MBNitexpzGMAzW5rQzJN';
+  const KVDB_BASE = 'https://kvdb.io';
 
   // ---------- Helpers ----------
   const $ = (s, r = document) => r.querySelector(s);
@@ -97,11 +101,17 @@
     btnSeed: $('#btn-seed'),
     btnSync: $('#btn-sync'),
     btnGithubSettings: $('#btn-github-settings'),
+    btnSyncCode: $('#btn-sync-code'),
     btnExport: $('#btn-export'),
     btnImport: $('#btn-import'),
     fileImport: $('#file-import'),
     syncStatus: $('#sync-status'),
     syncSub: $('#sync-sub'),
+    syncCodeBar: $('#sync-code-bar'),
+    syncCodePill: $('#sync-code-pill'),
+    syncCodeSub: $('#sync-code-sub'),
+    btnCopyCode: $('#btn-copy-code'),
+    btnPullCode: $('#btn-pull-code'),
     githubModal: $('#github-modal'),
     githubBackdrop: $('#github-backdrop'),
     ghOwner: $('#gh-owner'),
@@ -115,6 +125,15 @@
     btnGithubCancel: $('#btn-github-cancel'),
     btnGithubSave: $('#btn-github-save'),
     btnGithubDisconnect: $('#btn-github-disconnect'),
+    syncCodeModal: $('#sync-code-modal'),
+    syncCodeBackdrop: $('#sync-code-backdrop'),
+    syncCodeInput: $('#sync-code-input'),
+    errSyncCode: $('#err-sync-code'),
+    btnCloseSyncCode: $('#btn-close-sync-code'),
+    btnSyncCodeCancel: $('#btn-sync-code-cancel'),
+    btnSyncCodeSave: $('#btn-sync-code-save'),
+    btnSyncCodeDisconnect: $('#btn-sync-code-disconnect'),
+    btnGenerateCode: $('#btn-generate-code'),
     btnOpenAdd: $('#btn-open-add'),
     btnEmptyAdd: $('#btn-empty-add'),
     modal: $('#modal'),
@@ -192,12 +211,140 @@
 
   function refreshSyncStatus() {
     const cfg = getGithubConfig();
+    const code = getSyncCode();
+    // Sync Code bar
+    refreshSyncCodeBar();
     if (!cfg.token) {
-      setSyncStatus('', 'Chưa kết nối GitHub', 'Thêm / sửa task sẽ tự đẩy lên <code>tasks.json</code> sau khi kết nối.');
+      if (code) {
+        setSyncStatus('is-ok', 'Đang dùng Sync Code ●', 'Mã <code>' + escapeHtml(code) + '</code> — thêm/sửa sẽ tự đồng bộ. Máy khác nhập cùng mã là thấy.');
+      } else {
+        setSyncStatus('', 'Chưa kết nối', 'Bấm <strong>🔗 Sync Code → Tạo mã</strong> để đồng bộ không cần DB, hoặc <strong>⚙ GitHub</strong> để lưu vào <code>tasks.json</code>.');
+      }
       return;
     }
     const last = localStorage.getItem('todo-manager:github:lastSync');
-    setSyncStatus('is-ok', 'Đã kết nối GitHub ●', last ? ('Lần đẩy gần nhất: ' + last + ' → <code>' + escapeHtml(cfg.path) + '</code>') : ('Sẵn sàng đẩy lên <code>' + escapeHtml(cfg.path) + '</code>'));
+    const extra = code ? ' · Sync Code <code>' + escapeHtml(code) + '</code> cũng đang bật' : '';
+    setSyncStatus('is-ok', 'Đã kết nối GitHub ●', last ? ('Lần đẩy gần nhất: ' + last + ' → <code>' + escapeHtml(cfg.path) + '</code>' + extra) : ('Sẵn sàng đẩy lên <code>' + escapeHtml(cfg.path) + '</code>' + extra));
+  }
+
+  // ---------- Sync Code (kvdb.io — không DB, free) ----------
+  function normalizeSyncCode(s) {
+    return String(s || '').trim().toLowerCase().replace(/[^a-z0-9_-]/g, '').slice(0, 20);
+  }
+  function generateSyncCode() {
+    const chars = 'abcdefghijklmnopqrstuvwxyz0123456789';
+    let out = '';
+    for (let i = 0; i < 6; i++) out += chars[Math.floor(Math.random() * chars.length)];
+    return out;
+  }
+  function getSyncCode() {
+    try {
+      const v = localStorage.getItem(SYNC_CODE_KEY);
+      const n = normalizeSyncCode(v);
+      return n.length >= 4 ? n : '';
+    } catch { return ''; }
+  }
+  function setSyncCode(code) {
+    const n = normalizeSyncCode(code);
+    try {
+      if (!n) localStorage.removeItem(SYNC_CODE_KEY);
+      else localStorage.setItem(SYNC_CODE_KEY, n);
+    } catch {}
+    return n;
+  }
+  function kvdbKey(code) {
+    return 'todo:' + normalizeSyncCode(code);
+  }
+  function refreshSyncCodeBar() {
+    const code = getSyncCode();
+    if (!els.syncCodeBar) return;
+    if (!code) {
+      els.syncCodeBar.hidden = true;
+      return;
+    }
+    els.syncCodeBar.hidden = false;
+    if (els.syncCodePill) els.syncCodePill.textContent = code;
+    const last = localStorage.getItem('todo-manager:syncCode:lastSync');
+    if (els.syncCodeSub) els.syncCodeSub.textContent = last ? 'Lần đồng bộ: ' + last : 'Sẵn sàng đồng bộ';
+  }
+  let kvdbSyncTimer = null;
+  let kvdbSyncing = false;
+  function scheduleKvdbSync(reason) {
+    const code = getSyncCode();
+    if (!code) return;
+    if (kvdbSyncTimer) clearTimeout(kvdbSyncTimer);
+    kvdbSyncTimer = setTimeout(() => { kvdbPush(reason || 'cap-nhat'); }, 1200);
+  }
+  async function kvdbPush(reason) {
+    const code = getSyncCode();
+    if (!code) return false;
+    if (kvdbSyncing) return false;
+    kvdbSyncing = true;
+    try {
+      const payload = buildBackupPayload();
+      const json = JSON.stringify(payload);
+      const url = KVDB_BASE + '/' + SYNC_CODE_BUCKET + '/' + encodeURIComponent(kvdbKey(code));
+      const res = await fetch(url, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: json });
+      if (!res.ok) {
+        const txt = await res.text().catch(() => '');
+        throw new Error('kvdb POST ' + res.status + ' ' + txt.slice(0, 200));
+      }
+      const stamp = new Date().toLocaleString('vi-VN');
+      try { localStorage.setItem('todo-manager:syncCode:lastSync', stamp); } catch {}
+      refreshSyncCodeBar();
+      refreshSyncStatus();
+      return true;
+    } catch (e) {
+      console.warn('kvdbPush failed', e);
+      showToast('Sync Code that bai: ' + (e.message || 'loi'), 'success');
+      return false;
+    } finally {
+      kvdbSyncing = false;
+    }
+  }
+  async function kvdbPull(opts) {
+    opts = opts || {};
+    const code = opts.code || getSyncCode();
+    if (!code) {
+      if (!opts.silent) showToast('Chua co Sync Code - bam Nut Sync Code de tao', 'success');
+      return null;
+    }
+    const url = KVDB_BASE + '/' + SYNC_CODE_BUCKET + '/' + encodeURIComponent(kvdbKey(code));
+    const res = await fetch(url, { cache: 'no-store' });
+    if (res.status === 404) {
+      if (!opts.silent) showToast('Chua co du lieu cho ma nay - day len truoc', 'success');
+      return null;
+    }
+    if (!res.ok) {
+      const txt = await res.text().catch(() => '');
+      throw new Error('kvdb GET ' + res.status + ' ' + txt.slice(0, 200));
+    }
+    const text = await res.text();
+    if (!text || text.trim() === '' || text.trim() === 'null') return null;
+    let data;
+    try { data = JSON.parse(text); } catch { throw new Error('Du lieu Sync Code khong hop le'); }
+    const list = sanitizeTasks(data.tasks || data);
+    return list;
+  }
+  async function handleKvdbPull() {
+    const code = getSyncCode();
+    if (!code) { openSyncCodeModal(); return; }
+    try {
+      const list = await kvdbPull({ silent: false });
+      if (!list || !list.length) {
+        showToast('Khong co du lieu de keo ve', 'success');
+        return;
+      }
+      if (state.tasks.length && !confirm('Keo ' + list.length + ' viec tu Sync Code "' + code + '" ve? Se thay the list hien tai (' + state.tasks.length + ' viec).')) return;
+      state.tasks = list;
+      saveData();
+      render();
+      try { localStorage.setItem('todo-manager:syncCode:lastSync', new Date().toLocaleString('vi-VN')); } catch {}
+      refreshSyncCodeBar();
+      showToast('Da keo ' + list.length + ' viec tu Sync Code', 'success');
+    } catch (e) {
+      showToast('Keo Sync Code that bai: ' + (e.message || 'loi'), 'success');
+    }
   }
 
   function encodeBase64Unicode(str) {
@@ -343,7 +490,20 @@
 
   function loadData() {
     try {
-      const raw = localStorage.getItem(STORAGE_KEY);
+      let raw = localStorage.getItem(STORAGE_KEY);
+      // migrate v1 -> v2
+      if (!raw) {
+        const legacy = localStorage.getItem(STORAGE_KEY_LEGACY);
+        if (legacy) {
+          try {
+            const p = JSON.parse(legacy);
+            if (p && Array.isArray(p.tasks)) {
+              localStorage.setItem(STORAGE_KEY, legacy);
+              raw = legacy;
+            }
+          } catch {}
+        }
+      }
       if (!raw) return null;
       const parsed = JSON.parse(raw);
       if (parsed && Array.isArray(parsed.tasks)) {
@@ -444,6 +604,7 @@
         saveData();
         render();
         scheduleGithubSync('nhap-backup');
+        scheduleKvdbSync('nhap-backup');
         showToast('Da nhap ' + list.length + ' cong viec', 'success');
       } catch {
         showToast('File JSON khong hop le', 'success');
@@ -515,11 +676,12 @@
     ];
   }
 
-  // ---------- CRUD (thao tac state + auto-push GitHub) ----------
+  // ---------- CRUD (thao tac state + auto-push GitHub + kvdb) ----------
   function afterMutation(reason) {
     saveData();
     render();
     scheduleGithubSync(reason);
+    scheduleKvdbSync(reason);
   }
 
   function addTask(data) {
@@ -564,6 +726,7 @@
     saveData();
     render();
     scheduleGithubSync('xoa-task');
+    scheduleKvdbSync('xoa-task');
     showUndoToast(task, idx);
   }
 
@@ -890,6 +1053,68 @@
     closeModal();
   }
 
+  // ---------- Sync Code modal ----------
+  function openSyncCodeModal() {
+    const code = getSyncCode();
+    if (els.syncCodeInput) els.syncCodeInput.value = code || '';
+    if (els.errSyncCode) els.errSyncCode.textContent = '';
+    if (!els.syncCodeModal || !els.syncCodeBackdrop) return;
+    els.syncCodeModal.hidden = false;
+    els.syncCodeBackdrop.hidden = false;
+    requestAnimationFrame(() => {
+      els.syncCodeModal.classList.add('is-open');
+      els.syncCodeBackdrop.classList.add('is-open');
+    });
+    setTimeout(() => { if (els.syncCodeInput) els.syncCodeInput.focus(); }, 100);
+  }
+  function closeSyncCodeModal() {
+    if (!els.syncCodeModal || !els.syncCodeBackdrop) return;
+    els.syncCodeModal.classList.remove('is-open');
+    els.syncCodeBackdrop.classList.remove('is-open');
+    setTimeout(() => {
+      els.syncCodeModal.hidden = true;
+      els.syncCodeBackdrop.hidden = true;
+    }, 200);
+  }
+  async function handleSyncCodeSave() {
+    const raw = els.syncCodeInput ? els.syncCodeInput.value : '';
+    const code = normalizeSyncCode(raw);
+    if (!code || code.length < 4) {
+      if (els.errSyncCode) els.errSyncCode.textContent = 'Ma phai co it nhat 4 ky tu (chu/so)';
+      if (els.syncCodeInput) els.syncCodeInput.focus();
+      return;
+    }
+    if (els.errSyncCode) els.errSyncCode.textContent = '';
+    setSyncCode(code);
+    closeSyncCodeModal();
+    refreshSyncStatus();
+    showToast('Da ket noi Sync Code "' + code + '" - dang dong bo...', 'success');
+    // Try pull first if remote has data and local is empty-ish, else push
+    try {
+      const remote = await kvdbPull({ code, silent: true });
+      if (remote && remote.length && state.tasks.length === 0) {
+        state.tasks = remote;
+        saveData();
+        render();
+        showToast('Da keo ' + remote.length + ' viec tu Sync Code', 'success');
+      } else {
+        await kvdbPush('ket-noi-sync-code');
+        showToast('Da day ' + state.tasks.length + ' viec len Sync Code', 'success');
+      }
+    } catch (e) {
+      await kvdbPush('ket-noi-sync-code');
+    }
+    refreshSyncCodeBar();
+  }
+  function handleSyncCodeDisconnect() {
+    try { localStorage.removeItem(SYNC_CODE_KEY); } catch {}
+    try { localStorage.removeItem('todo-manager:syncCode:lastSync'); } catch {}
+    if (els.syncCodeInput) els.syncCodeInput.value = '';
+    closeSyncCodeModal();
+    refreshSyncStatus();
+    showToast('Da ngat Sync Code', 'success');
+  }
+
   // ---------- GitHub settings modal ----------
   function openGithubModal() {
     const cfg = getGithubConfig();
@@ -1022,6 +1247,36 @@
     if (els.githubBackdrop) els.githubBackdrop.addEventListener('click', closeGithubModal);
     if (els.btnGithubSave) els.btnGithubSave.addEventListener('click', handleGithubSave);
     if (els.btnGithubDisconnect) els.btnGithubDisconnect.addEventListener('click', handleGithubDisconnect);
+    // Sync Code
+    if (els.btnSyncCode) els.btnSyncCode.addEventListener('click', openSyncCodeModal);
+    if (els.btnCloseSyncCode) els.btnCloseSyncCode.addEventListener('click', closeSyncCodeModal);
+    if (els.btnSyncCodeCancel) els.btnSyncCodeCancel.addEventListener('click', closeSyncCodeModal);
+    if (els.syncCodeBackdrop) els.syncCodeBackdrop.addEventListener('click', closeSyncCodeModal);
+    if (els.btnSyncCodeSave) els.btnSyncCodeSave.addEventListener('click', handleSyncCodeSave);
+    if (els.btnSyncCodeDisconnect) els.btnSyncCodeDisconnect.addEventListener('click', handleSyncCodeDisconnect);
+    if (els.btnGenerateCode) els.btnGenerateCode.addEventListener('click', () => {
+      const c = generateSyncCode();
+      if (els.syncCodeInput) els.syncCodeInput.value = c;
+      if (els.errSyncCode) els.errSyncCode.textContent = '';
+    });
+    if (els.btnCopyCode) els.btnCopyCode.addEventListener('click', async () => {
+      const code = getSyncCode();
+      if (!code) return;
+      try {
+        await navigator.clipboard.writeText(code);
+        showToast('Da copy ma "' + code + '"', 'success');
+      } catch {
+        // fallback
+        const ta = document.createElement('textarea');
+        ta.value = code;
+        document.body.appendChild(ta);
+        ta.select();
+        document.execCommand('copy');
+        ta.remove();
+        showToast('Da copy ma "' + code + '"', 'success');
+      }
+    });
+    if (els.btnPullCode) els.btnPullCode.addEventListener('click', handleKvdbPull);
     if (els.btnExport) {
       els.btnExport.addEventListener('click', exportBackup);
     }
@@ -1077,6 +1332,9 @@
       if (e.key === 'Escape' && els.githubModal && !els.githubModal.hidden) {
         closeGithubModal();
       }
+      if (e.key === 'Escape' && els.syncCodeModal && !els.syncCodeModal.hidden) {
+        closeSyncCodeModal();
+      }
     });
 
     // footer date
@@ -1120,12 +1378,24 @@
     bindEvents();
     render();
     refreshSyncStatus();
+    // If Sync Code exists, try to pull latest in background (non-blocking)
+    const code = getSyncCode();
+    if (code) {
+      kvdbPull({ code, silent: true }).then(list => {
+        if (list && list.length && list.length !== state.tasks.length) {
+          // Only auto-merge if local is empty or user confirms via toast
+          // For now, just update sync bar — user can click Kéo về to apply
+          if (els.syncCodeSub) els.syncCodeSub.textContent = 'Có ' + list.length + ' việc trên cloud — bấm Kéo về để cập nhật';
+        }
+      }).catch(() => {});
+    }
   }
 
   // Expose for debugging / rubric check
   window.TaskBoard = {
     get state() { return state; },
-    addTask, updateTask, deleteTask, restoreTask, filterTasks, sortTasks, renderTasks, renderDashboard, saveData, loadData, exportBackup, importBackupFile, loadDefaultTasks, pushTasksToGitHub, getGithubConfig
+    addTask, updateTask, deleteTask, restoreTask, filterTasks, sortTasks, renderTasks, renderDashboard, saveData, loadData, exportBackup, importBackupFile, loadDefaultTasks, pushTasksToGitHub, getGithubConfig,
+    getSyncCode, setSyncCode, kvdbPush, kvdbPull, generateSyncCode
   };
 
   document.addEventListener('DOMContentLoaded', init);

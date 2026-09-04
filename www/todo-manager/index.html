@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="color-scheme" content="light" />
   <meta name="theme-color" content="#6366f1" />
-  <meta name="description" content="TaskBoard — Todo Manager premium: tạo, sửa, xóa, lọc, sắp xếp, dashboard, undo, lưu LocalStorage + GitHub sync." />
+  <meta name="description" content="TaskBoard — Todo Manager premium: tạo, sửa, xóa, lọc, sắp xếp, dashboard, undo, lưu LocalStorage + GitHub sync + Sync Code không cần DB." />
   <title>TaskBoard — Todo Manager</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -39,7 +39,7 @@
     <section class="dashboard" aria-labelledby="dashboard-title">
       <div class="section-head">
         <h1 id="dashboard-title" class="page-title">Quản lý công việc</h1>
-        <p class="page-sub">Giao diện premium glass — tạo, lọc, sắp xếp và theo dõi deadline. Dữ liệu lưu tự động, đồng bộ GitHub khi cần.</p>
+        <p class="page-sub">Giao diện premium glass — tạo, lọc, sắp xếp và theo dõi deadline. Lưu tự động ở trình duyệt, đồng bộ đa máy qua <strong>GitHub</strong> hoặc <strong>Sync Code</strong> không cần DB.</p>
       </div>
       <div class="dash-grid" role="list" aria-label="Thống kê">
         <div class="dash-card dash-total" role="listitem">
@@ -131,6 +131,7 @@
           <button class="btn btn-ghost btn-sm" id="btn-seed" title="Thêm dữ liệu mẫu">✦ Seed mẫu</button>
           <button class="btn btn-primary btn-sm" id="btn-sync" title="Đẩy tasks hiện tại lên tasks.json trên GitHub">☁ Lưu lên GitHub</button>
           <button class="btn btn-ghost btn-sm" id="btn-github-settings" title="Cài đặt đồng bộ GitHub">⚙ GitHub</button>
+          <button class="btn btn-ghost btn-sm" id="btn-sync-code" title="Tạo hoặc nhập mã đồng bộ — không cần DB, mở máy khác nhập cùng mã là thấy">🔗 Sync Code</button>
           <button class="btn btn-ghost btn-sm" id="btn-export" title="Tải file backup JSON">⬇ Xuất</button>
           <button class="btn btn-ghost btn-sm" id="btn-import" title="Khôi phục từ file backup JSON">⬆ Nhập</button>
           <input type="file" id="file-import" accept="application/json,.json" hidden aria-label="Chọn file backup JSON" />
@@ -140,7 +141,14 @@
         <span class="sync-status" id="sync-status" role="status" aria-live="polite">Chưa kết nối GitHub</span>
         <span class="sync-sub" id="sync-sub">Thêm / sửa task sẽ tự đẩy lên <code>tasks.json</code> sau khi kết nối.</span>
       </div>
-      <p class="persist-hint">💾 Lưu nhanh ở trình duyệt (localStorage). Sau khi bấm <strong>⚙ GitHub</strong> nhập token 1 lần, mọi thêm / sửa / xóa sẽ tự cập nhật <code>tasks.json</code> trên GitHub.</p>
+      <div class="sync-code-bar" id="sync-code-bar" hidden>
+        <span class="sync-code-label">🔗 Sync Code:</span>
+        <code class="sync-code-pill" id="sync-code-pill">—</code>
+        <button class="btn btn-ghost btn-sm" id="btn-copy-code" title="Sao chép mã">📋 Copy</button>
+        <button class="btn btn-ghost btn-sm" id="btn-pull-code" title="Kéo dữ liệu mới nhất từ mã này">↻ Kéo về</button>
+        <span class="sync-code-sub" id="sync-code-sub"></span>
+      </div>
+      <p class="persist-hint">💾 Lưu nhanh ở trình duyệt (localStorage). <strong>Không cần DB:</strong> bấm <strong>🔗 Sync Code → Tạo mã</strong> rồi mở máy khác nhập cùng mã là thấy ngay. Hoặc bấm <strong>⚙ GitHub</strong> để lưu vào <code>tasks.json</code> trên repo (cần PAT 1 lần).</p>
     </section>
 
     <!-- Task list -->
@@ -215,6 +223,38 @@
   <!-- Toast stack -->
   <div id="toast-stack" class="toast-stack" aria-live="polite" aria-atomic="true"></div>
 
+  <!-- Sync Code modal -->
+  <div id="sync-code-backdrop" class="modal-backdrop" hidden></div>
+  <div id="sync-code-modal" class="modal" role="dialog" aria-modal="true" aria-labelledby="sync-code-title" hidden>
+    <div class="modal-panel">
+      <div class="modal-head">
+        <h2 id="sync-code-title" class="modal-title">🔗 Sync Code — Đồng bộ không cần DB</h2>
+        <button class="btn btn-ghost btn-icon" id="btn-close-sync-code" aria-label="Đóng">✕</button>
+      </div>
+      <p class="modal-desc">Tạo mã 6 ký tự, chia sẻ cho máy khác — nhập cùng mã là thấy cùng list. Không cần tài khoản, không cần DB, lưu trên <code>kvdb.io</code> free.</p>
+      <div class="form-grid">
+        <label class="field field-full">
+          <span class="field-label">Mã đồng bộ</span>
+          <div style="display:flex; gap:8px; align-items:center">
+            <input id="sync-code-input" class="input" type="text" placeholder="VD: a1b2c3" maxlength="20" autocomplete="off" style="flex:1; font-family: ui-monospace, monospace; letter-spacing:.08em; text-transform: lowercase" />
+            <button type="button" class="btn btn-ghost btn-sm" id="btn-generate-code">🎲 Tạo mã</button>
+          </div>
+          <span class="field-hint">Mã ngắn gọn, chỉ chữ + số, 4-20 ký tự. Chia sẻ mã này cho máy khác.</span>
+          <span class="field-error" id="err-sync-code" role="alert"></span>
+        </label>
+      </div>
+      <div class="sync-code-info" id="sync-code-info" style="margin-top:12px; padding:12px; background: var(--surface-2); border:1px solid var(--border); border-radius:12px; font-size:.84rem; line-height:1.6; color:var(--muted)">
+        <strong style="color:var(--text)">Cách dùng:</strong> Bấm <strong>Tạo mã</strong> → <strong>Kết nối</strong> → tasks hiện tại sẽ được đẩy lên. Mở máy khác, bấm <strong>🔗 Sync Code</strong> → nhập cùng mã → <strong>Kéo về</strong> là thấy.
+      </div>
+      <div class="modal-actions">
+        <button type="button" class="btn btn-ghost" id="btn-sync-code-disconnect">Ngắt kết nối</button>
+        <button type="button" class="btn btn-ghost" id="btn-sync-code-cancel">Hủy</button>
+        <button type="button" class="btn btn-primary" id="btn-sync-code-save">Kết nối &amp; đồng bộ</button>
+      </div>
+      <p class="modal-desc" style="margin-top:12px; font-size:.78rem">Tuỳ chọn DB nhỏ free: nếu muốn DB thật, dùng <a href="https://supabase.com" target="_blank" rel="noopener">Supabase</a> (500MB free) tạo 1 bảng <code>todos</code> với cột <code>workspace_id</code> = mã này, hoặc <a href="https://firebase.google.com" target="_blank" rel="noopener">Firebase Firestore</a> — chỉ cần dán anon key, không cần backend.</p>
+    </div>
+  </div>
+
   <!-- GitHub sync settings -->
   <div id="github-backdrop" class="modal-backdrop" hidden></div>
   <div id="github-modal" class="modal" role="dialog" aria-modal="true" aria-labelledby="github-title" hidden>
@@ -262,7 +302,7 @@
 
   <footer class="site-footer">
     <div class="container footer-inner">
-      <span><strong>TaskBoard</strong> — Bài 010 · State duy nhất · Không reload · LocalStorage + GitHub sync</span>
+      <span><strong>TaskBoard</strong> — Bài 010 · State duy nhất · Không reload · LocalStorage + GitHub / Sync Code (không DB)</span>
       <span class="footer-dot">·</span>
       <span id="footer-date"></span>
       <span class="footer-dot">·</span>

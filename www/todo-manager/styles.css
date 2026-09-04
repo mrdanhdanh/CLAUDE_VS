@@ -223,6 +223,22 @@ input,select,textarea{font:inherit}
 .sync-status.is-error{color:var(--danger)}
 .sync-sub{font-size:.78rem; color:var(--muted); line-height:1.4}
 .sync-sub code{background:#fff; border:1px solid var(--border); padding:2px 7px; border-radius:7px; font-size:.74rem; font-weight:600; color:var(--text-2)}
+.sync-code-bar{
+  display:flex; gap:8px; align-items:center; flex-wrap:wrap;
+  background:linear-gradient(135deg, rgba(238,242,255,.9), rgba(255,255,255,.9));
+  border:1px solid rgba(99,102,241,.18); border-radius:12px; padding:10px 14px;
+  box-shadow:var(--shadow-sm);
+}
+.sync-code-label{font-size:.82rem; font-weight:750; color:var(--primary-600)}
+.sync-code-pill{
+  font-family:ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size:.85rem; font-weight:800; letter-spacing:.08em;
+  background:#fff; border:1px solid rgba(99,102,241,.2); padding:6px 12px; border-radius:999px;
+  color:var(--primary-700); box-shadow:var(--shadow-sm);
+}
+.sync-code-sub{font-size:.78rem; color:var(--muted)}
+.sync-code-info a{color:var(--primary-600); text-decoration:underline; text-underline-offset:2px}
+.sync-code-info a:hover{color:var(--primary-700)}
 .modal-desc{margin:0 0 16px; font-size:.88rem; color:var(--muted); line-height:1.6}
 .modal-desc code{background:var(--surface-2); border:1px solid var(--border); padding:2px 7px; border-radius:7px; font-size:.78rem}
 .check-row{flex-direction:row !important; align-items:center; gap:10px; font-size:.88rem; cursor:pointer; font-weight:500}
