@@ -30,7 +30,24 @@ function checkSyntax(files) {
   for (const f of files) {
     const full = path.join(ROOT, f);
     if (!fs.existsSync(full)) continue;
-    const r = run(`node --check ${f}`);
+    // Node 18 `node --check` treats `.js` as CommonJS → ESM `import/export`
+    // in a browser `.js` (e.g. www/library/app.js) fails on Node 18 but passes
+    // on Node 20+. Check ESM `.js` via a temp `.mjs` copy so the gate is
+    // version-robust across CI (Node 18) and local (Node 20+).
+    let r;
+    const src = fs.readFileSync(full, 'utf8');
+    const isESM = f.endsWith('.js') && /^\s*(import|export)\s/m.test(src);
+    if (isESM) {
+      const tmp = `.tmp-eval-check-${process.pid}.mjs`;
+      try {
+        fs.writeFileSync(path.join(ROOT, tmp), src);
+        r = run(`node --check ${tmp}`);
+      } finally {
+        try { fs.unlinkSync(path.join(ROOT, tmp)); } catch {}
+      }
+    } else {
+      r = run(`node --check ${f}`);
+    }
     if (!r.ok) failed.push(f);
   }
   return { name: 'syntax', pass: failed.length === 0, detail: failed.length ? `failed: ${failed.join(', ')}` : `${files.length} files checked` };
