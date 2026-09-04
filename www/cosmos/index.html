@@ -1028,7 +1028,7 @@
       });
     })();
 
-    // ===== Entanglement =====
+    // ===== Entanglement — fixed: single drag state, no NaN (disentangle bug) =====
     (function(){
       const area = $('#entangleArea');
       const line = $('#entangleLine');
@@ -1041,17 +1041,18 @@
       let entangled=true;
       let posA=30, posB=70; // percent 0-100
       let dragging=null;
+      let dragStartX=0, dragStartPos=0;
       function update(){
+        // guard NaN from old bug
+        if(Number.isNaN(posA) || Number.isNaN(posB)){ posA=30; posB=70; }
         const rect = area.getBoundingClientRect();
         const w = rect.width;
         const xA = (posA/100)*w;
         const xB = (posB/100)*w;
         a.style.transform = `translateX(${xA - 28 - w/2 + 28}px)`;
         b.style.transform = `translateX(${xB - 28 - w/2 + 28}px)`;
-        // line between centers
         const left = Math.min(xA, xB) + 28;
         const right = Math.max(xA, xB) - 28;
-        // Use absolute positioning via left/right
         line.style.left = left+'px';
         line.style.right = (w - right)+'px';
         line.classList.toggle('entangled', entangled);
@@ -1064,55 +1065,64 @@
         status.style.borderColor = entangled ? 'rgba(6,182,214,.2)' : 'rgba(255,255,255,.08)';
       }
       function setPosA(v){
+        if(Number.isNaN(v)) return;
         posA = Math.max(5, Math.min(45, v));
         if(entangled) posB = 100 - posA;
         update();
       }
       function setPosB(v){
+        if(Number.isNaN(v)) return;
         posB = Math.max(55, Math.min(95, v));
         if(entangled) posA = 100 - posB;
         update();
       }
-      // Mouse/touch drag for A
-      function attachDrag(el, isA){
-        let startX, startPos;
-        function onDown(e){
-          dragging = isA ? 'a' : 'b';
-          el.classList.add('dragging');
-          startX = (e.touches? e.touches[0].clientX : e.clientX);
-          startPos = isA ? posA : posB;
-          e.preventDefault();
-        }
-        function onMove(e){
-          if(!dragging) return;
-          const curX = (e.touches? e.touches[0].clientX : e.clientX);
-          const rect = area.getBoundingClientRect();
-          const deltaPct = ((curX - startX)/rect.width)*100;
-          if(dragging==='a') setPosA(startPos + deltaPct);
-          else setPosB(startPos + deltaPct);
-        }
-        function onUp(){
-          if(dragging){ el.classList.remove('dragging'); dragging=null; }
-        }
-        el.addEventListener('mousedown', onDown);
-        el.addEventListener('touchstart', onDown, {passive:false});
-        window.addEventListener('mousemove', onMove);
-        window.addEventListener('touchmove', onMove, {passive:false});
-        window.addEventListener('mouseup', onUp);
-        window.addEventListener('touchend', onUp);
-        // keyboard
-        el.addEventListener('keydown', (e)=>{
-          if(e.key==='ArrowLeft'){ e.preventDefault(); isA? setPosA(posA-4) : setPosB(posB-4); }
-          if(e.key==='ArrowRight'){ e.preventDefault(); isA? setPosA(posA+4) : setPosB(posB+4); }
-        });
+      function onDown(e, isA){
+        dragging = isA ? 'a' : 'b';
+        const el = isA ? a : b;
+        el.classList.add('dragging');
+        dragStartX = (e.touches? e.touches[0].clientX : e.clientX);
+        dragStartPos = isA ? posA : posB;
+        e.preventDefault();
       }
-      attachDrag(a, true);
-      attachDrag(b, false);
-      btnEnt.addEventListener('click', ()=>{ entangled=true; posB=100-posA; update(); toast('🔗 Entangled — 1 đổi, cả hai đổi'); });
-      btnDis.addEventListener('click', ()=>{ entangled=false; update(); toast('✂️ Disentangled — mỗi hạt tự do'); });
-      // init
+      function onMove(e){
+        if(!dragging) return;
+        const curX = (e.touches? e.touches[0].clientX : e.clientX);
+        const rect = area.getBoundingClientRect();
+        const deltaPct = ((curX - dragStartX)/rect.width)*100;
+        if(dragging==='a') setPosA(dragStartPos + deltaPct);
+        else setPosB(dragStartPos + deltaPct);
+      }
+      function onUp(){
+        if(dragging){
+          (dragging==='a' ? a : b).classList.remove('dragging');
+          dragging=null;
+        }
+      }
+      a.addEventListener('mousedown', (e)=> onDown(e, true));
+      b.addEventListener('mousedown', (e)=> onDown(e, false));
+      a.addEventListener('touchstart', (e)=> onDown(e, true), {passive:false});
+      b.addEventListener('touchstart', (e)=> onDown(e, false), {passive:false});
+      window.addEventListener('mousemove', onMove);
+      window.addEventListener('touchmove', onMove, {passive:false});
+      window.addEventListener('mouseup', onUp);
+      window.addEventListener('touchend', onUp);
+      a.addEventListener('keydown', (e)=>{
+        if(e.key==='ArrowLeft'){ e.preventDefault(); setPosA(posA-4); }
+        if(e.key==='ArrowRight'){ e.preventDefault(); setPosA(posA+4); }
+      });
+      b.addEventListener('keydown', (e)=>{
+        if(e.key==='ArrowLeft'){ e.preventDefault(); setPosB(posB-4); }
+        if(e.key==='ArrowRight'){ e.preventDefault(); setPosB(posB+4); }
+      });
+      btnEnt.addEventListener('click', ()=>{
+        if(Number.isNaN(posA) || Number.isNaN(posB)){ posA=30; posB=70; }
+        entangled=true; posB=100-posA; update(); toast('🔗 Entangled — 1 đổi, cả hai đổi');
+      });
+      btnDis.addEventListener('click', ()=>{
+        if(Number.isNaN(posA) || Number.isNaN(posB)){ posA=30; posB=70; }
+        entangled=false; update(); toast('✂️ Disentangled — mỗi hạt tự do');
+      });
       update();
-      // also handle resize
       new ResizeObserver(update).observe(area);
     })();
 
