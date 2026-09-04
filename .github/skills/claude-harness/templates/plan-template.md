@@ -1,5 +1,20 @@
 ﻿# Plan: {{TASK_NAME}}
 
+> **Structured Output (P0-3 Harness 2.1, Lesson 07):** Thêm frontmatter `plan:` để `plan-validate.mjs` parse + router điều phối. Plan cũ không frontmatter vẫn pass (legacy + warning).
+> ```yaml
+> ---
+> plan:
+>   main_task: "{{TASK_NAME}}"
+>   is_greeting: false
+>   subtasks:
+>     - task_details: "Tạo file X (3-200 chars)"
+>       assigned_agent: implement  # explore|plan|design|implement|polish|verify|yunie
+>     - task_details: "Verify build + get_errors"
+>       assigned_agent: verify
+> ---
+> ```
+> Validate: `node .github/harness/scripts/plan-validate.mjs --file .agent/plans/{{TASK}}/plan.md [--route]`
+
 ## Context
 - PRD: `.agent/plans/{{TASK}}/prd.md`
 - Design: `.agent/plans/{{TASK}}/design.md`
