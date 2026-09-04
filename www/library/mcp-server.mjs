@@ -10,13 +10,14 @@
  *   { "servers": { "library": { "command": "node", "args": ["./www/library/mcp-server.mjs"] } } }
  * P1-3: version pin 1.1.0, output redaction (no secret leak), protocolVersion pin.
  */
-export const MCP_SERVER_VERSION = '1.1.0';
+export const MCP_SERVER_VERSION = '1.2.0';
 
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { agenticSearch } from './rag-loop.mjs';
 import { validateParams, normalizeArgs, pushHistory } from './tool-registry.mjs';
+import { routeQuery, cacheGet, cacheSet, cacheKey } from './router.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
@@ -274,14 +275,24 @@ function handleMessage(msg){
         const top_k = norm.top_k;
         const enabled_only = norm.enabled_only !== false;
         if(!String(q).trim()) throw new Error('query rỗng');
-        const hits = redactHits(searchBM25(q, data.chunks, data.registry, top_k, enabled_only));
-        result = {
-          query: q,
-          hits,
-          total_chunks: data.chunks.length,
-          enabled_books: Object.values(data.registry).filter(b=>b.enabled).length,
-          file: data._file
-        };
+        // P1-6: router + cache
+        const ck = cacheKey(q, {top_k, enabled_only, mode: 'fast'});
+        const cached = cacheGet(ck);
+        if(cached.hit){
+          result = {...cached.value, cached: true};
+        } else {
+          const hits = redactHits(searchBM25(q, data.chunks, data.registry, top_k, enabled_only));
+          result = {
+            query: q,
+            hits,
+            total_chunks: data.chunks.length,
+            enabled_books: Object.values(data.registry).filter(b=>b.enabled).length,
+            file: data._file,
+            routed: routeQuery(q),
+            cached: false,
+          };
+          cacheSet(ck, result);
+        }
         pushHistory({ tool: name, args: norm, timestamp: tCall, durationMs: Date.now()-tCall, success: true });
         send({ jsonrpc:'2.0', id, result:{
           content:[{ type:'text', text: JSON.stringify(result, null, 2) }]
@@ -331,10 +342,23 @@ function handleMessage(msg){
         const minHits = norm.minHits;
         const minScore = norm.minScore;
         if(!String(q).trim()) throw new Error('query rỗng');
+        // P1-6: router + cache
+        const ck = cacheKey(q, {top_k, enabled_only, mode: 'deep'});
+        const cached = cacheGet(ck);
+        if(cached.hit){
+          pushHistory({ tool: name, args: norm, timestamp: tCall, durationMs: Date.now()-tCall, success: true });
+          send({ jsonrpc:'2.0', id, result:{
+            content:[{ type:'text', text: JSON.stringify({...cached.value, cached: true}, null, 2) }]
+          }});
+          return;
+        }
         const resultIter = agenticSearch(q, data.chunks, data.registry, {
           top_k, enabled_only, maxRounds, minHits, minScore, file: data._file
         });
         resultIter.hits = redactHits(resultIter.hits);
+        resultIter.routed = routeQuery(q);
+        resultIter.cached = false;
+        cacheSet(ck, resultIter);
         pushHistory({ tool: name, args: norm, timestamp: tCall, durationMs: Date.now()-tCall, success: true });
         send({ jsonrpc:'2.0', id, result:{
           content:[{ type:'text', text: JSON.stringify(resultIter, null, 2) }]

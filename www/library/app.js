@@ -1,6 +1,7 @@
 /* Library RAG Local — app.js · BM25 + IndexedDB + Parser + UI + API · 0đ offline */
 import { agenticSearch } from './rag-loop.mjs';
 import { validateParams, normalizeArgs, toolHistory } from './tool-registry.mjs';
+import { routeQuery, cacheGet, cacheSet, cacheKey } from './router.mjs';
 const LS_KEY = 'library:registry';
 const DB_NAME = 'libraryDB';
 const STORE = 'chunks';
@@ -813,7 +814,7 @@ async function doImport(file){
   }
 }
 
-// ---------- Search ----------
+// ---------- Search (P1-6: router + cache) ----------
 const doSearch = debounce(()=>{
   const q = searchQuery;
   if(!q.trim()){
@@ -822,17 +823,39 @@ const doSearch = debounce(()=>{
   }
   const t0 = performance.now();
   let res, extra = null;
+  // P1-6: check cache first
+  const ck = cacheKey(q, {top_k: 20, enabled_only: true, mode: iterativeMode ? 'deep' : 'auto'});
+  const cached = cacheGet(ck);
+  if(cached.hit){
+    const dt = Math.round(performance.now()-t0);
+    renderResults(cached.value.hits, q, dt, {...cached.value.extra, cached: true});
+    return;
+  }
   if(iterativeMode){
     try{
       const r = agenticSearch(q, allChunks, registry, {top_k:20, enabled_only:true, maxRounds:3, minHits:2, minScore:1.0});
       res = r.hits;
-      extra = {rounds: r.rounds, refinedQueries: r.refinedQueries, gap: r.gap};
+      extra = {rounds: r.rounds, refinedQueries: r.refinedQueries, gap: r.gap, routed: routeQuery(q)};
     }catch(e){
       res = bm25Search(q, 20);
     }
   } else {
-    res = bm25Search(q, 20);
+    // P1-6: auto-route when toggle off — simple → 1-shot, complex → iterative
+    const route = routeQuery(q);
+    if(route === 'deep'){
+      try{
+        const r = agenticSearch(q, allChunks, registry, {top_k:20, enabled_only:true, maxRounds:3, minHits:2, minScore:1.0});
+        res = r.hits;
+        extra = {rounds: r.rounds, refinedQueries: r.refinedQueries, gap: r.gap, routed: route};
+      }catch(e){
+        res = bm25Search(q, 20);
+      }
+    } else {
+      res = bm25Search(q, 20);
+      extra = {routed: route};
+    }
   }
+  cacheSet(ck, {hits: res, extra});
   const dt = Math.round(performance.now()-t0);
   renderResults(res, q, dt, extra);
 }, 150);
@@ -1057,8 +1080,15 @@ function exposeAPI(){
       const v = validateParams('search_library_iterative', {query: q, top_k: opts.top_k || opts.topK || 5, enabled_only: opts.enabledOnly !== false && opts.enabled_only !== false, maxRounds: opts.maxRounds || opts.max_rounds || 3, minHits: opts.minHits ?? opts.min_hits ?? 2, minScore: opts.minScore ?? opts.min_score ?? 1.0});
       if(!v.valid) throw new Error(v.errors.join('; '));
       const norm = normalizeArgs('search_library_iterative', v.normalized);
-      return agenticSearch(q, allChunks, registry, {top_k: norm.top_k, enabled_only: norm.enabled_only, maxRounds: norm.maxRounds, minHits: norm.minHits, minScore: norm.minScore});
+      const ck = cacheKey(q, {top_k: norm.top_k, enabled_only: norm.enabled_only, mode: 'deep'});
+      const cached = cacheGet(ck);
+      if(cached.hit) return {...cached.value, cached: true};
+      const r = agenticSearch(q, allChunks, registry, {top_k: norm.top_k, enabled_only: norm.enabled_only, maxRounds: norm.maxRounds, minHits: norm.minHits, minScore: norm.minScore});
+      const out = {...r, routed: routeQuery(q)};
+      cacheSet(ck, out);
+      return out;
     },
+    route: (q) => routeQuery(q),
     listBooks: ()=> Object.values(registry),
     getBook: (id)=> registry[id] || null,
     getStatus: ()=>{
