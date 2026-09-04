@@ -36,6 +36,7 @@
 | KN-012 | 2026-09-03 | Agent tự sửa test để pass (reward hacking) — CI xanh giả | Governance v1 chỉ chặn shell/secret, không gate edit trên test paths + audit không có hash-chain → agent mutate verifier được | 3 lớp BTP-lite: deny-test-mutate (chỉ verify/takeover được sửa test) + deny SQL/destructive + audit hash-chain + verify | `process` `governance` `tdd` `safety` `reward-hacking` |
 | KN-013 | 2026-09-03 | Tích hợp Ponytail ladder vào Harness — thiếu YAGNI gate, dead code sống sót, N5Blazor trial bị revert | Harness thiên mở rộng (8 phase, UI đẹp) nhưng không có ladder thu gọn; trial N5Blazor xóa GlassCard/RainbowCard/bootstrap + fix Kana toggle nhưng bị revert vì thiếu .NET 8 SDK để verify | Thêm instruction `minimal-ladder` (7 nấc + YAGNI + native-first + dead-code grep) + preset `lean-product` + bật ladder ở full/web-product/api-minimal; trial artifacts giữ ở `.agent/bugs/` + `.agent/plans/n5-blazor-ladder/` | `process` `minimal` `ponytail` `yagni` `dx` |
 | KN-014 | 2026-09-04 | Smoke test treo vĩnh viễn khi import MCP stdio server + self-verify 1/4 checks + regex frontmatter không match | Import module có side-effect khởi động server stdio → chờ stdin vĩnh viễn; verify chạy trước khi record.json được ghi; regex `^` thiếu flag `m` | Cấm import module khởi động server trong smoke one-liner; self-verify chạy sau khi mọi file đã ghi; regex `^`/`$` multi-line luôn thêm flag `m` | `process` `dx` `mcp` `testing` `regex` |
+| KN-015 | 2026-09-04 | GitHub Pages deploy fail — 2 workflows cùng `github-pages` env + eval-gate FAIL Node 18 do `node --check` CJS | `ai-news.yml` copy 3 bước deploy từ `pages.yml` → xung đột `github-pages` env; `node --check` trên Node 18 coi `.js` là CJS nên `import` fail | Chỉ 1 workflow deploy Pages; workflow data chỉ commit; `eval-gate` check ESM `.js` qua temp `.mjs` | `build` `deploy` `ci` `workflow` `pages` |
 
 > Dòng ví dụ trên sẽ bị thay khi có bug thật đầu tiên — giữ format.
 
@@ -331,6 +332,26 @@
 - **Tags:** `process` `dx` `mcp` `testing` `regex`
 - **Người ghi:** YUNIE / fixbug (DisCo Phase 3)
 
+### KN-015 — GitHub Pages deploy fail — 2 workflows cùng `github-pages` env + eval-gate Node 18 CJS
+
+- **Ngày:** 2026-09-04
+- **Bug report:** `.agent/bugs/2026-09-04-pages-deploy-conflict-2-workflows/bug.md`
+- **Severity:** major
+- **Triệu chứng:** (1) Push `www/**` trigger `pages.yml` deploy, đồng thời `ai-news.yml` cũng deploy `www/` với `environment: github-pages` → GitHub Pages chỉ cho 1 deployment → job thứ 2 cancel/fail. (2) Trên CI Node 18, `eval-gate --scope www/library` báo `❌ syntax: failed: www/library/app.js` dù local Node 22 PASS.
+- **Nguyên nhân gốc (5 Whys):**
+  - Why1: Deploy fail → vì 2 workflow cùng giành `github-pages` env + `deploy-pages@v4`.
+  - Why2: Cùng giành → vì `ai-news.yml` copy 3 bước deploy từ `pages.yml` dù chỉ cần commit `ai-news.json`.
+  - Why3: Copy deploy → vì muốn ai-news tự deploy sau commit, không nghĩ tới concurrency.
+  - Why4: Eval FAIL chỉ trên CI → vì `node --check` trên Node 18 coi `.js` là CJS, gặp `import` là lỗi; Node 20+ tự nhận ESM nên pass.
+  - Why5 (Root): Thiếu quy tắc: (a) chỉ 1 workflow được `deploy-pages` với `github-pages` env; (b) `eval-gate` phải robust qua Node version — ESM `.js` phải check qua temp `.mjs`.
+- **Cách sửa:** (1) `ai-news.yml`: bỏ `pages: write`/`id-token: write`, bỏ `environment: github-pages`, bỏ 3 steps `Setup Pages`/`Upload artifact`/`Deploy`, chỉ `git push` và log `pages.yml will deploy`. (2) `eval-gate.mjs` `checkSyntax`: detect ESM `.js` (`/^\s*(import|export)\s/m`) thì copy sang temp `.mjs` rồi `node --check` temp, xóa temp sau. Kết quả: `eval-gate` PASS trên cả Node 18 và 22, Pages chỉ 1 deployer.
+- **Cách phòng tránh:**
+  - 1 repo = 1 deployer cho `github-pages` env — workflow data chỉ `contents: write`, không `pages`/`id-token`, không `environment: github-pages`.
+  - `eval-gate` ESM `.js` → temp `.mjs` trước `node --check` để robust Node 18/22.
+  - Khi thêm workflow mới đụng `www/`, check `grep -r "github-pages" .github/workflows/` trước khi merge.
+- **Tags:** `build` `deploy` `ci` `workflow` `pages`
+- **Người ghi:** YUNIE / fixbug
+
 <!-- Thêm bài học mới theo template dưới — copy block này -->
 
 <!--
@@ -389,6 +410,8 @@
 - ❌ Import module khởi động server (stdio/HTTP) trong smoke test one-liner — server chờ stdin vĩnh viễn, terminal treo (KN-014).
 - ❌ Self-verify chạy trước khi file cần check được ghi — check phụ thuộc file sinh sau phải ghi tạm (pre-checks) rồi verify final (KN-014).
 - ❌ Regex `^`/`$` trên nội dung multi-line thiếu flag `m` — chỉ match đầu/cuối string, không match đầu dòng (KN-014).
+- ❌ 2 workflows cùng `environment: github-pages` + `deploy-pages` — chỉ 1 deployer được giữ env này (KN-015).
+- ❌ `node --check` ESM `.js` trên Node 18 fail do coi là CJS — phải check qua temp `.mjs` (KN-015).
 
 ## Checklist phòng tránh chung
 
@@ -421,6 +444,8 @@
 - [ ] Smoke test có import module khởi động server (stdio/HTTP) không? Nếu có → đổi qua functions/spawn stdin đóng (KN-014)
 - [ ] Self-verify đã chạy SAU khi mọi file được ghi (hoặc pre-checks + final)? (KN-014)
 - [ ] Regex `^`/`$` trên nội dung multi-line đã có flag `m`? (KN-014)
+- [ ] Chỉ 1 workflow có `environment: github-pages` + `deploy-pages`? Workflow data chỉ `contents: write`? (KN-015)
+- [ ] `eval-gate` ESM `.js` đã check qua temp `.mjs` để robust Node 18/22? (KN-015)
 
 *File này do `/fixbug` tự động cập nhật. Mọi luồng khác phải đọc để không lặp lại lỗi cũ.*
-*UpdatedAt: 2026-09-04T09:20:00Z — Maintained by YUNIE / Harness v2 — KN-014 added (MCP stdio smoke hang + verify order + regex m flag — DisCo Phase 3) — KN-013 added (Ponytail ladder integration: minimal-ladder + lean-product) — Fix: Bảng tóm tắt reorder KN-005↔KN-006 + thêm KN-009 (đã có detail nhưng thiếu ở bảng) — Presets bổ sung auto-researcher (đồng bộ registry) — KN-011 added (Random disable Step button) — KN-010 added (AAR pattern) — KN-009 bổ sung detail section (slot máy chủ AI — hardcode config) — KN-008 added (dotnet build file lock MSB3027) — KN-007 added (Auto-Learn) — KN-006 added (N5 UI polish) — KN-005 added (Bug Blindness)*
+*UpdatedAt: 2026-09-04T09:50:00Z — Maintained by YUNIE / Harness v2 — KN-015 added (Pages 2 workflows + eval-gate Node 18 CJS) — KN-014 added (MCP stdio smoke hang + verify order + regex m flag — DisCo Phase 3) — KN-013 added (Ponytail ladder integration: minimal-ladder + lean-product) — Fix: Bảng tóm tắt reorder KN-005↔KN-006 + thêm KN-009 (đã có detail nhưng thiếu ở bảng) — Presets bổ sung auto-researcher (đồng bộ registry) — KN-011 added (Random disable Step button) — KN-010 added (AAR pattern) — KN-009 bổ sung detail section (slot máy chủ AI — hardcode config) — KN-008 added (dotnet build file lock MSB3027) — KN-007 added (Auto-Learn) — KN-006 added (N5 UI polish) — KN-005 added (Bug Blindness)*
