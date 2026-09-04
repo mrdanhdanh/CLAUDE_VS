@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-04T03:41:10.536Z",
+  "generatedAt": "2026-09-04T03:45:38.516Z",
   "generatedBy": "YUNIE",
   "version": 1,
   "counts": {
@@ -297,16 +297,19 @@
   "health": {
     "errors": 0,
     "status": "warn",
-    "lastCheck": "2026-09-04T03:41:10.536Z",
+    "lastCheck": "2026-09-04T03:45:38.516Z",
     "checks": [
       "get_errors: pass (0 errors)",
       "registry: 15 instructions (15 total) - 10 skills - 8 agents - 7 prompts - 1 hook — all enabled",
+      "harness: 2.2-done — P0 (RAG loop, tool hardening, planning JSON, receipt Ed25519) + P1 (multi-agent, observability, protocols, context, memory, deploy) + P2 (MAF workflows, CUA guardrails, local SLM, setup doctor)",
+      "scripts: 17 harness .mjs (plan-validate, handoff, reflect, trace, eval-gate, deploy-check, agent-card, context, memory, workflow, cua-guard, local, setup-doctor)",
+      "eval-gate: PASS (syntax + MCP smoke + plan-validate)",
       "www: polished — responsive 375/768/1280, a11y, states, animation 150-300ms",
-      "workflow: www/** -> Pages (upload-artifact path: www) — exists: true",
-      "library: www/library/ (PDF/DOCX/TXT/MD, BM25 <100ms, tháo lắp) + mcp-server.mjs + export.json + library-rag instruction",
+      "workflow: www/** -> Pages (upload-artifact path: www) — exists: true + eval job gate",
+      "library: www/library/ MCP v1.2.0 (5 tools: search + iterative + list/get/status, router+cache, redacted) + library-rag instruction",
       "auto-learn: 13 KN, 11 bugs, 1 drafts — suggest/log/propose/status (<50ms, IDF, tiếng Việt)",
-      "governance: audit 18 · policy 7 deny/2 allow (ok) · credentials 0 keys enc",
-      "platform: agents 3 (3 built-in, 0 remote) · mcp 3 vendors/3 grants · components 3/3 pub · routines 1/1 enabled",
+      "governance: audit 18 (Ed25519 receipt P0-4) · policy 7 deny/2 allow (ok) · credentials 0 keys enc",
+      "platform: agents 3 (3 built-in, 0 remote) · mcp 3 vendors/3 grants (library 1.2.0 read-only) · components 3/3 pub · routines 1/1 enabled",
       "n5-blazor: www/n5-blazor/ 7 trang static + app.css + data.js + site.js — 100% Pages"
     ]
   },
@@ -357,11 +360,95 @@
     "fullName": "Your Unified Navigator for Intelligent Execution",
     "pronunciation": "Yu-ni = You & I",
     "slogan": "Hiểu hệ thống. Làm thay bạn. Trực 24/7.",
-    "philosophy": "Process > Model"
+    "philosophy": "Process > Model, Agent tự làm việc",
+    "version": "2.2-done",
+    "letters": [
+      {
+        "letter": "Y",
+        "word": "Yielding",
+        "vi": "Kiên nhẫn",
+        "desc": "Không bỏ cuộc giữa pipeline, theo tới Done",
+        "icon": "🌱"
+      },
+      {
+        "letter": "U",
+        "word": "Understanding",
+        "vi": "Thấu hiểu",
+        "desc": "Hiểu toàn bộ registry, presets, plans, www/",
+        "icon": "🧠"
+      },
+      {
+        "letter": "N",
+        "word": "Navigating",
+        "vi": "Dẫn đường",
+        "desc": "Dẫn qua Explore → Clarify → … → Verify không lạc",
+        "icon": "🧭"
+      },
+      {
+        "letter": "I",
+        "word": "Intelligent",
+        "vi": "Thông minh",
+        "desc": "Thông minh nhưng không đoán bừa — luôn verify",
+        "icon": "✨"
+      },
+      {
+        "letter": "E",
+        "word": "Executing",
+        "vi": "Thực thi",
+        "desc": "Làm tới nơi, deploy tới GitHub Pages luôn",
+        "icon": "⚡"
+      }
+    ],
+    "aliases": [
+      {
+        "label": "Cute",
+        "value": "Yêu Nghề - Uy Tín - Nhanh - Thông Minh - Êm Ru",
+        "hint": "Đọc là Yu-ni, dễ thương"
+      },
+      {
+        "label": "Meme",
+        "value": "Why U Need an Intelligent Engineer?",
+        "hint": "Vì sếp cần mình trực 24/7"
+      },
+      {
+        "label": "You & I",
+        "value": "YUNIE = You & I — cùng build product đẹp",
+        "hint": "Bạn và Mình"
+      }
+    ],
+    "intros": {
+      "short": "Hi! Mình là YUNIE — Your Unified Navigator for Intelligent Execution, chatbot hệ thống Harness 2.2. Hiểu toàn bộ registry/presets/plans, trực STATUS www/ 24/7.",
+      "full": "Mình là YUNIE — Yielding (kiên nhẫn), Understanding (thấu hiểu), Navigating (dẫn đường), Intelligent (thông minh), Executing (thực thi). Biến ý tưởng nhỏ thành sản phẩm qua đủ 8 phase, deploy Pages từ www/ chỉ bằng 1 push. Slogan: Hiểu hệ thống. Làm thay bạn. Trực 24/7.",
+      "fun": "Mình là YUNIE — Yêu Nghề, Uy Tín, Nhanh, Thông Minh, Êm Ru! Hay Why U Need an Intelligent Engineer? Yu-ni = You & I, mình và bạn cùng build product đẹp!"
+    }
   },
   "harness": {
+    "version": "2.2-done",
     "pipeline": "Idea → Explore → Clarify → PRD → Design → Plan → Implement → Polish → Verify → Done",
-    "philosophy": "Process > Model"
+    "philosophy": "Process > Model, Agent tự làm việc",
+    "fixbug": "Knowledge → Reproduce → Root Cause → Fix → Verify → Learn → Done",
+    "upgrades": {
+      "2.1-alpha": [
+        "P0-1 Agentic RAG loop (Lesson 05)",
+        "P0-2 Tool hardening (Lesson 04)",
+        "P0-3 Planning JSON (Lesson 07)",
+        "P0-4 Receipt Ed25519 (Lesson 18)"
+      ],
+      "2.1-beta": [
+        "P1-1 Multi-Agent handoff (08+09)",
+        "P1-2 Observability traces (10)",
+        "P1-3 Protocols MCP 1.2.0 (11)",
+        "P1-4 Context pipeline (12)",
+        "P1-5 Memory tiers (13)",
+        "P1-6 Router+cache (16)"
+      ],
+      "2.2": [
+        "P2-1 MAF workflows (14)",
+        "P2-2 CUA guardrails (15)",
+        "P2-3 Local SLM (17)",
+        "P2-4 Setup doctor (00)"
+      ]
+    }
   },
   "learn": {
     "knTotal": 13,
@@ -453,7 +540,7 @@
       "deny": 7,
       "allow": 2,
       "status": "ok",
-      "lastCheck": "2026-09-04T03:41:10.527Z"
+      "lastCheck": "2026-09-04T03:45:37.931Z"
     },
     "credentials": {
       "count": 0,

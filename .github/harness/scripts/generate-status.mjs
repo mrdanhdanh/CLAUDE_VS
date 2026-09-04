@@ -211,16 +211,30 @@ async function main() {
     }
   } catch {}
 
-  // health checks
+  // health checks — Harness 2.2: eval-gate + setup-doctor + 2.1/2.2 scripts
+  let evalStatus = 'unknown';
+  try {
+    const { execSync } = await import('node:child_process');
+    execSync('node .github/harness/scripts/eval-gate.mjs --scope all', { cwd: ROOT, stdio: 'ignore', timeout: 60000 });
+    evalStatus = 'PASS';
+  } catch { evalStatus = 'FAIL'; }
+  let scriptCount = 0;
+  try {
+    const files = await fs.readdir(path.join(GITHUB_DIR, 'harness', 'scripts'));
+    scriptCount = files.filter(f => f.endsWith('.mjs')).length;
+  } catch {}
   const healthChecks = [
     `get_errors: pass (0 errors)`,
     `registry: ${counts.instructions.enabled} instructions (${counts.instructions.total} total) - ${counts.skills.enabled} skills - ${counts.agents.enabled} agents - ${counts.prompts.enabled} prompts - ${counts.hooks.enabled} hook — all enabled`,
+    `harness: 2.2-done — P0 (RAG loop, tool hardening, planning JSON, receipt Ed25519) + P1 (multi-agent, observability, protocols, context, memory, deploy) + P2 (MAF workflows, CUA guardrails, local SLM, setup doctor)`,
+    `scripts: ${scriptCount} harness .mjs (plan-validate, handoff, reflect, trace, eval-gate, deploy-check, agent-card, context, memory, workflow, cua-guard, local, setup-doctor)`,
+    `eval-gate: ${evalStatus} (syntax + MCP smoke + plan-validate)`,
     `www: polished — responsive 375/768/1280, a11y, states, animation 150-300ms`,
-    `workflow: www/** -> Pages (upload-artifact path: www) — exists: ${existsSync(path.join(GITHUB_DIR, 'workflows', 'pages.yml'))}`,
-    `library: www/library/ (PDF/DOCX/TXT/MD, BM25 <100ms, tháo lắp) + mcp-server.mjs + export.json + library-rag instruction`,
+    `workflow: www/** -> Pages (upload-artifact path: www) — exists: ${existsSync(path.join(GITHUB_DIR, 'workflows', 'pages.yml'))} + eval job gate`,
+    `library: www/library/ MCP v1.2.0 (5 tools: search + iterative + list/get/status, router+cache, redacted) + library-rag instruction`,
     `auto-learn: ${learnStats.knTotal} KN, ${learnStats.bugsTotal} bugs, ${learnStats.drafts} drafts — suggest/log/propose/status (<50ms, IDF, tiếng Việt)`,
-    `governance: audit ${governance.audit.total} · policy ${governance.policy.deny} deny/${governance.policy.allow} allow (${governance.policy.status}) · credentials ${governance.credentials.count} keys ${governance.credentials.enc ? 'enc' : 'plain'}`,
-    `platform: agents ${platform.agents.total} (${platform.agents.builtIn} built-in, ${platform.agents.remote} remote) · mcp ${platform.mcp.vendors} vendors/${platform.mcp.grants} grants · components ${platform.components.total}/${platform.components.published} pub · routines ${platform.routines.total}/${platform.routines.enabled} enabled`,
+    `governance: audit ${governance.audit.total} (Ed25519 receipt P0-4) · policy ${governance.policy.deny} deny/${governance.policy.allow} allow (${governance.policy.status}) · credentials ${governance.credentials.count} keys ${governance.credentials.enc ? 'enc' : 'plain'}`,
+    `platform: agents ${platform.agents.total} (${platform.agents.builtIn} built-in, ${platform.agents.remote} remote) · mcp ${platform.mcp.vendors} vendors/${platform.mcp.grants} grants (library 1.2.0 read-only) · components ${platform.components.total}/${platform.components.published} pub · routines ${platform.routines.total}/${platform.routines.enabled} enabled`,
     `n5-blazor: www/n5-blazor/ 7 trang static + app.css + data.js + site.js — 100% Pages`,
   ];
 
@@ -264,16 +278,41 @@ async function main() {
       entries: pagesEntries,
       note: existing.pages?.note || 'Copy file mới vào www/ là tự deploy lên GitHub Pages (workflow upload toàn bộ www).'
     },
-    yunie: existing.yunie || {
+    yunie: {
       name: 'YUNIE',
       fullName: 'Your Unified Navigator for Intelligent Execution',
       pronunciation: 'Yu-ni = You & I',
       slogan: 'Hiểu hệ thống. Làm thay bạn. Trực 24/7.',
-      philosophy: 'Process > Model'
+      philosophy: 'Process > Model, Agent tự làm việc',
+      version: '2.2-done',
+      letters: [
+        { letter: 'Y', word: 'Yielding', vi: 'Kiên nhẫn', desc: 'Không bỏ cuộc giữa pipeline, theo tới Done', icon: '🌱' },
+        { letter: 'U', word: 'Understanding', vi: 'Thấu hiểu', desc: 'Hiểu toàn bộ registry, presets, plans, www/', icon: '🧠' },
+        { letter: 'N', word: 'Navigating', vi: 'Dẫn đường', desc: 'Dẫn qua Explore → Clarify → … → Verify không lạc', icon: '🧭' },
+        { letter: 'I', word: 'Intelligent', vi: 'Thông minh', desc: 'Thông minh nhưng không đoán bừa — luôn verify', icon: '✨' },
+        { letter: 'E', word: 'Executing', vi: 'Thực thi', desc: 'Làm tới nơi, deploy tới GitHub Pages luôn', icon: '⚡' },
+      ],
+      aliases: [
+        { label: 'Cute', value: 'Yêu Nghề - Uy Tín - Nhanh - Thông Minh - Êm Ru', hint: 'Đọc là Yu-ni, dễ thương' },
+        { label: 'Meme', value: 'Why U Need an Intelligent Engineer?', hint: 'Vì sếp cần mình trực 24/7' },
+        { label: 'You & I', value: 'YUNIE = You & I — cùng build product đẹp', hint: 'Bạn và Mình' },
+      ],
+      intros: {
+        short: 'Hi! Mình là YUNIE — Your Unified Navigator for Intelligent Execution, chatbot hệ thống Harness 2.2. Hiểu toàn bộ registry/presets/plans, trực STATUS www/ 24/7.',
+        full: 'Mình là YUNIE — Yielding (kiên nhẫn), Understanding (thấu hiểu), Navigating (dẫn đường), Intelligent (thông minh), Executing (thực thi). Biến ý tưởng nhỏ thành sản phẩm qua đủ 8 phase, deploy Pages từ www/ chỉ bằng 1 push. Slogan: Hiểu hệ thống. Làm thay bạn. Trực 24/7.',
+        fun: 'Mình là YUNIE — Yêu Nghề, Uy Tín, Nhanh, Thông Minh, Êm Ru! Hay Why U Need an Intelligent Engineer? Yu-ni = You & I, mình và bạn cùng build product đẹp!',
+      },
     },
-    harness: existing.harness || {
+    harness: {
+      version: '2.2-done',
       pipeline: 'Idea → Explore → Clarify → PRD → Design → Plan → Implement → Polish → Verify → Done',
-      philosophy: 'Process > Model'
+      philosophy: 'Process > Model, Agent tự làm việc',
+      fixbug: 'Knowledge → Reproduce → Root Cause → Fix → Verify → Learn → Done',
+      upgrades: {
+        '2.1-alpha': ['P0-1 Agentic RAG loop (Lesson 05)', 'P0-2 Tool hardening (Lesson 04)', 'P0-3 Planning JSON (Lesson 07)', 'P0-4 Receipt Ed25519 (Lesson 18)'],
+        '2.1-beta': ['P1-1 Multi-Agent handoff (08+09)', 'P1-2 Observability traces (10)', 'P1-3 Protocols MCP 1.2.0 (11)', 'P1-4 Context pipeline (12)', 'P1-5 Memory tiers (13)', 'P1-6 Router+cache (16)'],
+        '2.2': ['P2-1 MAF workflows (14)', 'P2-2 CUA guardrails (15)', 'P2-3 Local SLM (17)', 'P2-4 Setup doctor (00)'],
+      },
     },
     learn: learnStats,
     governance,

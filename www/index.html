@@ -450,7 +450,7 @@ node .github/harness/scripts/harness-manager.mjs create agent my-agent
       <div class="modal-header">
         <div>
           <h2 id="pipelineTitle">Quy trình Harness 2.2</h2>
-          <p id="pipelineDesc">2 pipeline + gates + skills — Process &gt; Model · Bắt đầu từ Knowledge First</p>
+          <p id="pipelineDesc">2 pipeline + gates + skills + 2.1/2.2 agentic — Process &gt; Model · Bắt đầu từ Knowledge First</p>
         </div>
         <button class="btn btn-ghost btn-icon" id="btnClosePipeline" type="button" aria-label="Đóng">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6L6 18"/><path d="M6 6l12 12"/></svg>
@@ -778,13 +778,23 @@ node .github/harness/scripts/harness-manager.mjs create agent my-agent
             </div>
             <div class="sys-grid">
               <div class="extra-card"><h4>🧠 Knowledge First + Auto-Learn</h4><p><span class="kbd">suggest</span> KN trước code · <span class="kbd">log</span> khi lỗi · <span class="kbd">propose</span> sau fix · <span class="kbd">status</span> health. Hooks PostToolUse/Stop nhắc tự động.</p></div>
-              <div class="extra-card"><h4>🛡️ Governance (fail-closed)</h4><p>Policy v2: 7 deny + 2 allow · deny trước allow · audit hash-chain + redact secret · credentials AES-256-GCM · Take the Wheel khi refused.</p></div>
+              <div class="extra-card"><h4>🛡️ Governance (fail-closed + Ed25519)</h4><p>Policy v2: 7 deny + 2 allow · audit hash-chain + <strong>receipt Ed25519 + JCS</strong> (P0-4) + trace linkage · credentials AES-256-GCM · Take the Wheel khi refused.</p></div>
               <div class="extra-card"><h4>🪜 Minimal Ladder (7 nấc)</h4><p>YAGNI → reuse → stdlib → native → dep đã cài → 1 dòng → tối thiểu. PRD có YAGNI gate, Verify grep dead-code + scoreboard. Không cắt validation/security/a11y.</p></div>
-              <div class="extra-card"><h4>📚 Library RAG (MCP duy nhất)</h4><p><span class="kbd">search_library top_k 5</span> qua <span class="kbd">mcp-server.mjs</span>. Citation <span class="kbd">book · chunk # · page · score</span>. Cấm đọc <span class="kbd">export.json</span> trực tiếp. Không thấy → nói rõ, không bịa.</p></div>
+              <div class="extra-card"><h4>📚 Library RAG v1.2.0 (MCP)</h4><p><span class="kbd">search_library</span> + <span class="kbd">search_library_iterative</span> (maker-checker 3 vòng, P0-1) · schema validation (P0-2) · router fast/deep + cache (P1-6) · redacted output. Citation <span class="kbd">book · chunk # · score</span>.</p></div>
               <div class="extra-card"><h4>🔴 TDD Gate + Debugging</h4><p><span class="kbd">tdd-gate</span>: RED-GREEN-REFACTOR, không production code nếu chưa có test fail. <span class="kbd">systematic-debugging</span>: evidence → single hypothesis → fix → 3-fix limit.</p></div>
               <div class="extra-card"><h4>🧰 Tool Priority</h4><p>Task &gt;2 bước → <span class="kbd">manage_todo_list</span> · Mơ hồ → hỏi max 3 câu · Multi-file → <span class="kbd">multi_replace</span> · Sau edit → <span class="kbd">get_errors</span> · Verify → terminal sync.</p></div>
               <div class="extra-card"><h4>🎨 Product Quality</h4><p>Palette 3–5 màu, spacing 4/8, responsive 375/768/1280, states đầy đủ, animation 150–300ms (transform/opacity), contrast ≥4.5:1, keyboard + aria, locale-owned copy.</p></div>
               <div class="extra-card"><h4>📦 Presets (4)</h4><p><span class="kbd">full</span> (tất cả) · <span class="kbd">web-product</span> (đẹp) · <span class="kbd">api-minimal</span> (gọn) · <span class="kbd">lean-product</span> (ladder + tắt UI nặng).</p></div>
+              <div class="extra-card"><h4>📋 Planning JSON (P0-3)</h4><p>Frontmatter <span class="kbd">plan: main_task + subtasks[]</span> · <span class="kbd">plan-validate.mjs --file --route</span> · AgentEnum 7 agents · legacy pass+warning.</p></div>
+              <div class="extra-card"><h4>🤝 Multi-Agent + Reflect (P1-1)</h4><p><span class="kbd">handoff.mjs --from --to --reason</span> (8 rules) · <span class="kbd">reflect.mjs --verify-output --attempt</span> (5 strategies, không lặp) · experience.jsonl.</p></div>
+              <div class="extra-card"><h4>🔍 Observability (P1-2)</h4><p><span class="kbd">trace.mjs start/span/end</span> (1 trace/run) · <span class="kbd">eval-gate.mjs --scope all</span> (CI gate) · <span class="kbd">deploy-check.mjs</span> lifecycle · audit traceId/spanId.</p></div>
+              <div class="extra-card"><h4>🧩 Protocols MCP 1.2.0 (P1-3)</h4><p>Catalog library read-only + grants · version pin · output redact · <span class="kbd">agent-card.mjs</span> validate A2A · unknown tool = refused.</p></div>
+              <div class="extra-card"><h4>🧹 Context Pipeline (P1-4)</h4><p><span class="kbd">context.mjs quarantine/compress/isolate/inspect</span> · chống poisoning/distraction/confusion · chỉ counts/hashes khi debug.</p></div>
+              <div class="extra-card"><h4>🧠 Memory Tiers (P1-5)</h4><p><span class="kbd">memory.mjs remember/recall/forget/persona/episodic</span> · working/short (ephemeral) · long = knowleged · secret redact.</p></div>
+              <div class="extra-card"><h4>🔀 MAF Workflows (P2-1)</h4><p><span class="kbd">workflow.mjs run/resume/status</span> · harness-8phase + fixbug-7phase · branching (<span class="kbd">when</span>) + approval nodes + checkpoints <span class="kbd">.agent/runs/</span>.</p></div>
+              <div class="extra-card"><h4>🛡️ CUA Guardrails (P2-2)</h4><p><span class="kbd">cua-guard.mjs check/decide</span> · 7 guardrails Lesson 15 · observe free, action cần approve+verify · evidence redacted.</p></div>
+              <div class="extra-card"><h4>💻 Local SLM (P2-3)</h4><p><span class="kbd">local.mjs status/route/chat</span> · Foundry-compatible · sensitive/offline → local, multi-hop → cloud · graceful fallback.</p></div>
+              <div class="extra-card"><h4>🩺 Setup Doctor (P2-4)</h4><p><span class="kbd">setup-doctor.mjs</span> · node/files/mcp/env/ports/git · không in secret · PASS 6/6 mới onboard.</p></div>
             </div>
             <div class="pipeline-extras">
               <div class="extra-card"><h4>🔍 Verify animation đúng cách</h4><p>CSS <span class="kbd">conic-gradient</span>/<span class="kbd">--angle</span> phải đo bằng Playwright <span class="kbd">getComputedStyle --angle</span> trước/sau 500ms (KN-003/KN-004), không nhìn mắt.</p></div>
@@ -794,7 +804,7 @@ node .github/harness/scripts/harness-manager.mjs create agent my-agent
         </div>
       </div>
       <div class="modal-footer">
-        <span class="muted small">Triết lý: <strong>Process &gt; Model</strong> — Chất lượng đến từ quy trình, không phụ thuộc mô hình.</span>
+        <span class="muted small">Triết lý: <strong>Process &gt; Model, Agent tự làm việc</strong> — Harness 2.2-done: P0+P1+P2 (14 commits). Chi tiết: <strong>docs/harness-2.1-upgrade.md</strong>.</span>
         <button class="btn btn-primary" id="btnClosePipeline2" type="button">Đã hiểu</button>
       </div>
     </div>
