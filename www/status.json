@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-04T09:17:19.340Z",
+  "generatedAt": "2026-09-04T09:29:03.230Z",
   "generatedBy": "YUNIE",
   "version": 1,
   "counts": {
@@ -320,7 +320,7 @@
   "health": {
     "errors": 0,
     "status": "warn",
-    "lastCheck": "2026-09-04T09:17:19.340Z",
+    "lastCheck": "2026-09-04T09:29:03.230Z",
     "checks": [
       "get_errors: pass (0 errors)",
       "registry: 15 instructions (15 total) - 15 skills - 8 agents - 7 prompts - 1 hook — all enabled",
@@ -331,7 +331,7 @@
       "workflow: www/** -> Pages (upload-artifact path: www) — exists: true + eval job gate",
       "library: www/library/ MCP v1.2.0 (5 tools: search + iterative + list/get/status, router+cache, redacted) + library-rag instruction",
       "auto-learn: 14 KN, 12 bugs, 1 drafts — suggest/log/propose/status (<50ms, IDF, tiếng Việt)",
-      "governance: audit 22 (Ed25519 receipt P0-4) · policy 7 deny/2 allow (ok) · credentials 0 keys enc",
+      "governance: audit 23 (Ed25519 receipt P0-4) · policy 7 deny/2 allow (ok) · credentials 0 keys enc",
       "platform: agents 3 (3 built-in, 0 remote) · mcp 3 vendors/3 grants (library 1.2.0 read-only) · components 3/3 pub · routines 1/1 enabled",
       "n5-blazor: www/n5-blazor/ 7 trang static + app.css + data.js + site.js — 100% Pages"
     ]
@@ -480,26 +480,12 @@
   },
   "governance": {
     "audit": {
-      "total": 22,
-      "permitted": 20,
+      "total": 23,
+      "permitted": 21,
       "refused": 2,
       "failed": 0,
-      "lastTs": "2026-09-04T09:14:17.351Z",
+      "lastTs": "2026-09-04T09:18:36.189Z",
       "tail": [
-        {
-          "ts": "2026-09-03T16:45:22.158Z",
-          "actor": "YUNIE",
-          "tool": "shell",
-          "target": "node .github/harness/scripts/generate-status.mjs (regenerate status.json)",
-          "decision": "permitted",
-          "rule": "allow-all",
-          "durationMs": null,
-          "error": null,
-          "intent": null,
-          "requestId": "e58dfd",
-          "prevHash": "0e0ba4bf49b0aeb5",
-          "hash": "7852d3c274a42d72"
-        },
         {
           "ts": "2026-09-04T08:42:25.449Z",
           "actor": "YUNIE",
@@ -563,6 +549,22 @@
           "hash": "2294c47674b70fe1",
           "sig": "1BPc0C2Hy-5KJultlm-SBqYMz60b8wGhIzRrvusvzPNd9l1_BlPOrCYVU-X0WbEYhhQL6S1el0DJM2tY-t85BA",
           "pub": "MCowBQYDK2VwAyEAvWVptg8JeOtmAbQqqYr2-A19YHsgqxTaZL0E2-G_nWE"
+        },
+        {
+          "ts": "2026-09-04T09:18:36.189Z",
+          "actor": "YUNIE",
+          "tool": "shell",
+          "target": "git push origin main DisCo Phase1-3 + KN-014",
+          "decision": "permitted",
+          "rule": "allow-all",
+          "durationMs": null,
+          "error": null,
+          "intent": null,
+          "requestId": "24aab0",
+          "prevHash": "2294c47674b70fe1",
+          "hash": "8d9c0f9f5824d4d9",
+          "sig": "pSs3L6rMi0R7m3HPRKrSJflAOYunO0GkNxvfjUxcD42LziL508DMQSLwWcQvIzzAVWw30k5TYl85dPLa1slSBw",
+          "pub": "MCowBQYDK2VwAyEAvWVptg8JeOtmAbQqqYr2-A19YHsgqxTaZL0E2-G_nWE"
         }
       ]
     },
@@ -571,7 +573,7 @@
       "deny": 7,
       "allow": 2,
       "status": "ok",
-      "lastCheck": "2026-09-04T09:17:18.825Z"
+      "lastCheck": "2026-09-04T09:29:02.584Z"
     },
     "credentials": {
       "count": 0,
