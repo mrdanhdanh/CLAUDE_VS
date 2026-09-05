@@ -1,0 +1,40 @@
+{
+  "generatedAt": "2026-09-05T15:12:33.950Z",
+  "generatedBy": "cosmic-scale.mjs",
+  "entropy": {
+    "S": 0,
+    "level": "low",
+    "advice": "Vũ trụ ổn định — giữ nhịp audit + generate-status đều.",
+    "parts": {
+      "mismatch": 0,
+      "drafts": 0,
+      "refused": 0,
+      "disabled": 0,
+      "failed": 0
+    }
+  },
+  "counts": {
+    "knTotal": 15,
+    "bugsTotal": 13,
+    "auditTotal": 0
+  },
+  "mismatches": [],
+  "missing": [],
+  "blackHoles": [
+    {
+      "id": "KN-008",
+      "title": "file lock MSB3027 (dotnet run giữ handle)",
+      "kind": "known",
+      "fix": "Stop-Process PID trên 5251 rồi build lại"
+    },
+    {
+      "id": "KN-015",
+      "title": "2 workflows cùng github-pages env",
+      "kind": "known",
+      "fix": "chỉ 1 workflow deploy Pages"
+    }
+  ],
+  "policy": {
+    "ok": true
+  }
+}

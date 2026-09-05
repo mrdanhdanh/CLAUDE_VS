@@ -143,6 +143,15 @@
       "installedAt": "2026-09-04T15:39:16.293Z",
       "path": "skills/cosmic-quantum",
       "ref": "local"
+    },
+    "cosmic-scale": {
+      "source": "local:D:\\CLAUDE_VS\\.github\\skills\\cosmic-scale",
+      "path": "D:\\CLAUDE_VS\\.github\\skills\\cosmic-scale",
+      "ref": "local",
+      "enabled": true,
+      "description": "Cosmic Scale — đo entropy vũ trụ (tech debt), black-hole bottleneck, dark-matter map cho Harness. Use when cần đo sức khỏe hệ thống, tìm bottleneck, tính entropy, heat death, dark energy/scope creep, hoặc user nói entropy/scale/black hole/dark matter/vũ trụ học",
+      "file": "cosmic-scale/SKILL.md",
+      "installedAt": "2026-09-05T15:11:57.796Z"
     }
   },
   "instructions": {

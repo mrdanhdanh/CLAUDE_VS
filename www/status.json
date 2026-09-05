@@ -1,12 +1,12 @@
 {
-  "generatedAt": "2026-09-04T15:44:04.838Z",
+  "generatedAt": "2026-09-05T15:21:51.889Z",
   "generatedBy": "YUNIE",
   "version": 1,
   "counts": {
     "skills": {
-      "enabled": 16,
+      "enabled": 17,
       "disabled": 0,
-      "total": 16
+      "total": 17
     },
     "instructions": {
       "enabled": 17,
@@ -94,6 +94,10 @@
       "cosmic-quantum": {
         "enabled": true,
         "description": "Cosmic-Quantum Thinking — triết lý vũ trụ + lượng tử cho Harness. Use when designing system philosophy, harness theory, product vision, need cosmic/quantum metaphors, scale thinking, entanglement, superposition, uncertainty, or user says vũ trụ/lượng tử/cosmos/quantum/triết lý/lý thuyết/hệ thống/sca"
+      },
+      "cosmic-scale": {
+        "enabled": true,
+        "description": "Cosmic Scale — đo entropy vũ trụ (tech debt), black-hole bottleneck, dark-matter map cho Harness. Use when cần đo sức khỏe hệ thống, tìm bottleneck, tính entropy, heat death, dark energy/scope creep, hoặc user nói entropy/scale/black hole/dark matter/vũ trụ học"
       }
     },
     "instructions": {
@@ -261,6 +265,7 @@
     "auto-learn",
     "custom-registry",
     "design-showcase-72",
+    "design-showcase-cut-critic",
     "disco-phase1",
     "disco-phase2",
     "disco-phase3",
@@ -357,18 +362,18 @@
   "health": {
     "errors": 0,
     "status": "ok",
-    "lastCheck": "2026-09-04T15:44:04.838Z",
+    "lastCheck": "2026-09-05T15:21:51.889Z",
     "checks": [
       "get_errors: pass (0 errors)",
-      "registry: 17 instructions (17 total) - 16 skills - 8 agents - 7 prompts - 1 hook — all enabled",
+      "registry: 17 instructions (17 total) - 17 skills - 8 agents - 7 prompts - 1 hook — all enabled",
       "harness: 2.2-done — P0 (RAG loop, tool hardening, planning JSON, receipt Ed25519) + P1 (multi-agent, observability, protocols, context, memory, deploy) + P2 (MAF workflows, CUA guardrails, local SLM, setup doctor)",
-      "scripts: 18 harness .mjs (plan-validate, handoff, reflect, trace, eval-gate, deploy-check, agent-card, context, memory, workflow, cua-guard, local, setup-doctor)",
+      "scripts: 19 harness .mjs (plan-validate, handoff, reflect, trace, eval-gate, deploy-check, agent-card, context, memory, workflow, cua-guard, local, setup-doctor)",
       "eval-gate: PASS (syntax + MCP smoke + plan-validate)",
       "www: polished — responsive 375/768/1280, a11y, states, animation 150-300ms",
       "workflow: www/** -> Pages (upload-artifact path: www) — exists: true + eval job gate",
       "library: www/library/ MCP v1.2.0 (5 tools: search + iterative + list/get/status, router+cache, redacted) + library-rag instruction",
       "auto-learn: 15 KN, 13 bugs, 0 drafts — suggest/log/propose/status (<50ms, IDF, tiếng Việt)",
-      "governance: audit 25 (Ed25519 receipt P0-4) · policy 7 deny/2 allow (ok) · credentials 0 keys enc",
+      "governance: audit 0 (Ed25519 receipt P0-4) · policy 7 deny/2 allow (ok) · credentials 0 keys plain",
       "platform: agents 3 (3 built-in, 0 remote) · mcp 3 vendors/3 grants (library 1.2.0 read-only) · components 3/3 pub · routines 1/1 enabled",
       "n5-blazor: www/n5-blazor/ 7 trang static + app.css + data.js + site.js — 100% Pages"
     ]
@@ -532,106 +537,24 @@
   },
   "governance": {
     "audit": {
-      "total": 25,
-      "permitted": 23,
-      "refused": 2,
+      "total": 0,
+      "permitted": 0,
+      "refused": 0,
       "failed": 0,
-      "lastTs": "2026-09-04T15:37:52.957Z",
-      "tail": [
-        {
-          "ts": "2026-09-04T08:58:29.151Z",
-          "actor": "YUNIE",
-          "tool": "write",
-          "target": "www/library skill-router + mcp-server Phase2 done",
-          "decision": "permitted",
-          "rule": "allow-all",
-          "durationMs": null,
-          "error": null,
-          "intent": null,
-          "requestId": "b778f1",
-          "prevHash": "b1f32bcef99cf604",
-          "hash": "c8f40090c79ec381",
-          "sig": "FzeerMDXLX-mBYMpjzB7Ntmguy5LAWFSU3sV9ULdwwqGS4wxcCdL4KbHm6tYIs6Er1jPbiUFGBxXry8Q5JUVCQ",
-          "pub": "MCowBQYDK2VwAyEAvWVptg8JeOtmAbQqqYr2-A19YHsgqxTaZL0E2-G_nWE"
-        },
-        {
-          "ts": "2026-09-04T09:14:17.351Z",
-          "actor": "YUNIE",
-          "tool": "write",
-          "target": "DisCo Phase3 distill-agnostic + skill-router multi-source + presets",
-          "decision": "permitted",
-          "rule": "allow-all",
-          "durationMs": null,
-          "error": null,
-          "intent": null,
-          "requestId": "4c608f",
-          "prevHash": "c8f40090c79ec381",
-          "hash": "2294c47674b70fe1",
-          "sig": "1BPc0C2Hy-5KJultlm-SBqYMz60b8wGhIzRrvusvzPNd9l1_BlPOrCYVU-X0WbEYhhQL6S1el0DJM2tY-t85BA",
-          "pub": "MCowBQYDK2VwAyEAvWVptg8JeOtmAbQqqYr2-A19YHsgqxTaZL0E2-G_nWE"
-        },
-        {
-          "ts": "2026-09-04T09:18:36.189Z",
-          "actor": "YUNIE",
-          "tool": "shell",
-          "target": "git push origin main DisCo Phase1-3 + KN-014",
-          "decision": "permitted",
-          "rule": "allow-all",
-          "durationMs": null,
-          "error": null,
-          "intent": null,
-          "requestId": "24aab0",
-          "prevHash": "2294c47674b70fe1",
-          "hash": "8d9c0f9f5824d4d9",
-          "sig": "pSs3L6rMi0R7m3HPRKrSJflAOYunO0GkNxvfjUxcD42LziL508DMQSLwWcQvIzzAVWw30k5TYl85dPLa1slSBw",
-          "pub": "MCowBQYDK2VwAyEAvWVptg8JeOtmAbQqqYr2-A19YHsgqxTaZL0E2-G_nWE"
-        },
-        {
-          "ts": "2026-09-04T13:03:31.356Z",
-          "actor": "YUNIE",
-          "tool": "shell",
-          "target": "git add/commit/push awesome-design-md + vercel todo",
-          "decision": "permitted",
-          "rule": "allow-all",
-          "durationMs": null,
-          "error": null,
-          "intent": null,
-          "requestId": "61c2ac",
-          "prevHash": "8d9c0f9f5824d4d9",
-          "hash": "43343491f7d9c765",
-          "sig": "-5AfSDm1FwxYBm9s1fzwT491303KGqsPo7LmMlWQm_b8ALjfQKLIEkWwLH4EoJJsOK2t-UZHYiePv7q6TO79Dw",
-          "pub": "MCowBQYDK2VwAyEAvWVptg8JeOtmAbQqqYr2-A19YHsgqxTaZL0E2-G_nWE"
-        },
-        {
-          "ts": "2026-09-04T15:37:52.957Z",
-          "actor": "YUNIE",
-          "tool": "shell",
-          "target": "test jern-lite",
-          "decision": "permitted",
-          "rule": "allow-all",
-          "durationMs": null,
-          "error": null,
-          "intent": null,
-          "requestId": "666b9d",
-          "prevHash": "43343491f7d9c765",
-          "policyDigest": "fcef465583cdacc8",
-          "hash": "4b1339b1de3cc796",
-          "sig": "0OM95lVX0Fz9L-DVvIkc6fbI3ARBNjT9FuMAofe-kKQEFqxrL62RgyJeWvYNZN_R9RCkUC1LFH86B7mO4f9FBA",
-          "pub": "MCowBQYDK2VwAyEAvWVptg8JeOtmAbQqqYr2-A19YHsgqxTaZL0E2-G_nWE"
-        }
-      ]
+      "lastTs": null,
+      "tail": []
     },
     "policy": {
       "version": 2,
       "deny": 7,
       "allow": 2,
       "status": "ok",
-      "lastCheck": "2026-09-04T15:44:04.195Z"
+      "lastCheck": "2026-09-05T15:21:51.720Z"
     },
     "credentials": {
       "count": 0,
       "status": "ok",
-      "enc": true
+      "enc": false
     }
   },
   "platform": {

@@ -139,8 +139,8 @@ function renderGrid(){
   grid.innerHTML = filtered.map(d=>{
     const cat = getCategory(d.slug);
     const primary = d.colors?.primary || '#6366f1';
-    const dots = Object.entries(d.colors||{}).slice(0,5).map(([k,v])=> `<span class="palette-dot" style="background:${escapeHtml(v)}" title="${escapeHtml(k)}: ${escapeHtml(v)}"></span>`).join('');
-    const more = Object.keys(d.colors||{}).length > 5 ? `<span class="palette-more">+${Object.keys(d.colors).length-5}</span>` : '';
+    const dots = Object.entries(d.colors||{}).slice(0,3).map(([k,v])=> `<span class="palette-dot" style="background:${escapeHtml(v)}" title="${escapeHtml(k)}: ${escapeHtml(v)}"></span>`).join('');
+    const more = Object.keys(d.colors||{}).length > 3 ? `<span class="palette-more">+${Object.keys(d.colors).length-3}</span>` : '';
     const desc = (d.description||'').slice(0,140);
     return `
       <article class="card showcase-card" role="listitem" tabindex="0" data-slug="${escapeHtml(d.slug)}" aria-label="${escapeHtml(d.name||d.slug)} — ${escapeHtml(cat)}">
@@ -157,10 +157,6 @@ function renderGrid(){
             <a class="card-link" href="./preview.html?slug=${escapeHtml(d.slug)}" target="_blank" rel="noopener" aria-label="Xem demo ${escapeHtml(d.slug)}" onclick="event.stopPropagation()" style="background:var(--color-primary);color:white;border-color:var(--color-primary)">
               <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
               Demo
-            </a>
-            <a class="card-link" href="./designs/${escapeHtml(d.slug)}.md" target="_blank" rel="noopener" aria-label="Mở DESIGN.md của ${escapeHtml(d.slug)}" onclick="event.stopPropagation()">
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg>
-              DESIGN.md
             </a>
             <button class="card-link secondary" type="button" data-detail="${escapeHtml(d.slug)}" aria-label="Xem chi tiết ${escapeHtml(d.slug)}" onclick="event.stopPropagation()">
               <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 12h.01"/><path d="M12 16h.01"/><path d="M8 8h8"/></svg>

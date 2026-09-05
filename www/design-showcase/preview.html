@@ -36,9 +36,9 @@
     .preview-meta .tag{font-size:11px}
     /* Inner mock — isolated */
     .pv-root{
-      --pv-primary:#6366f1;
+      --pv-primary:#5e6ad2;
       --pv-on-primary:#ffffff;
-      --pv-primary-hover:#4f46e5;
+      --pv-primary-hover:#828fff;
       --pv-ink:#0f172a;
       --pv-body:#334155;
       --pv-muted:#64748b;
@@ -323,7 +323,7 @@
       const colors = design.colors || {};
       const cat = getCategory(design.slug);
       // Resolve tokens with fallbacks
-      const primary = pick(colors, ['primary','primary-500','brand','accent'], '#6366f1');
+      const primary = pick(colors, ['primary','primary-500','brand','accent'], '#5e6ad2');
       const primaryHover = pick(colors, ['primary-hover','primaryHover','primary_active','primary-focus','primaryFocus'], primary);
       const onPrimary = pick(colors, ['on-primary','onPrimary','on_primary','inverse-ink'], '#ffffff');
       const canvas = pick(colors, ['canvas','background','bg','surface','canvas-soft'], '#ffffff');
@@ -475,7 +475,7 @@
         const d = allDesigns.find(x=> x.slug===currentSlug);
         if(!d) return;
         const cat = getCategory(d.slug);
-        const primary = d.colors?.primary || '#6366f1';
+        const primary = d.colors?.primary || '#5e6ad2';
         const prompt = `Build me a page that looks like ${d.slug} (${cat}) — ${d.description||''} — primary ${primary}, canvas ${d.colors?.canvas||'#fff'}, ink ${d.colors?.ink||'#0f172a'}. Use DESIGN.md: awesome-design-md/design-md/${d.slug}/DESIGN.md`;
         try{ await navigator.clipboard.writeText(prompt); toast('Đã copy prompt'); }catch{ toast('Không copy được'); }
       });

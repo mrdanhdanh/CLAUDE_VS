@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-05T06:41:33.844Z",
+  "generatedAt": "2026-09-05T14:48:38.249Z",
   "generatedBy": "YUNIE × Last30Days",
   "version": 2,
   "description": "Tin AI mới nhất — tổng hợp từ Last30Days (HN, GitHub, Web) trong 30 ngày qua. Chủ đề: AI. Tự động cập nhật bởi YUNIE.",
@@ -51,11 +51,27 @@
   ],
   "articles": [
     {
-      "id": "hn-49571632",
-      "title": "Artificial Analysis Intelligence Index v4.2",
-      "summary": "Artificial Analysis Intelligence Index v4.2 — 102 points, 37 comments on HN.",
+      "id": "hn-49576187",
+      "title": "AMD unveils Threadripper Halo Station, an AI workstation packing 96 cores",
+      "summary": "AMD unveils Threadripper Halo Station, an AI workstation packing 96 cores — 5 points, 0 comments on HN.",
       "source": "Hacker News",
-      "sourceUrl": "https://artificialanalysis.ai/articles/artificial-analysis-intelligence-index-v4-2",
+      "sourceUrl": "https://www.tomshardware.com/pc-components/cpus/amd-unveils-threadripper-halo-station-an-ai-workstation-packing-96-cores-and-dual-liquid-cooled-mi350p-accelerators-the-most-powerful-workstation-in-the-world-can-run-trillion-parameter-models-says-amd",
+      "category": "safety",
+      "date": "2026-09-05",
+      "hot": true,
+      "tags": [
+        "HN",
+        "AI",
+        "story",
+        "author_Levitating"
+      ]
+    },
+    {
+      "id": "hn-49576164",
+      "title": "I built an AI junior trader. It forked its own constitution",
+      "summary": "I built an AI junior trader. It forked its own constitution — 4 points, 1 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://www.haipa.ai/blog/no-rogue-ai-traders",
       "category": "products",
       "date": "2026-09-05",
       "hot": true,
@@ -63,15 +79,15 @@
         "HN",
         "AI",
         "story",
-        "author_nojs"
+        "author_lostnfound8778"
       ]
     },
     {
-      "id": "hn-49572875",
-      "title": "GPT-6 Astra in code review: Gains, privacy, and cost",
-      "summary": "GPT-6 Astra in code review: Gains, privacy, and cost — 14 points, 3 comments on HN.",
+      "id": "hn-49576243",
+      "title": "AI doesn't suck, people do",
+      "summary": "AI doesn't suck, people do — 3 points, 5 comments on HN.",
       "source": "Hacker News",
-      "sourceUrl": "https://www.coderabbit.ai/blog/gpt-6-astra-code-review-evaluation",
+      "sourceUrl": "https://catalins.tech/ai-fatigue/",
       "category": "products",
       "date": "2026-09-05",
       "hot": false,
@@ -79,15 +95,15 @@
         "HN",
         "AI",
         "story",
-        "author_cebert"
+        "author_cmpit"
       ]
     },
     {
-      "id": "hn-49572226",
-      "title": "Personal AI Router for Local Inference",
-      "summary": "Personal AI Router for Local Inference — 7 points, 0 comments on HN.",
+      "id": "hn-49576871",
+      "title": "Cash in on the AI Boom by Renting Out Your Spare Compute",
+      "summary": "Cash in on the AI Boom by Renting Out Your Spare Compute — 2 points, 0 comments on HN.",
       "source": "Hacker News",
-      "sourceUrl": "https://www.nvidia.com/en-us/ai-on-rtx/personal-ai-router/",
+      "sourceUrl": "https://spectrum.ieee.org/ai-inference-distributed-computing",
       "category": "products",
       "date": "2026-09-05",
       "hot": false,
@@ -95,31 +111,15 @@
         "HN",
         "AI",
         "story",
-        "author_jonbaer"
+        "author_pseudolus"
       ]
     },
     {
-      "id": "hn-49573532",
-      "title": "Former Treasury Secretaries: AI is a risk of a different kind",
-      "summary": "Former Treasury Secretaries: AI is a risk of a different kind — 5 points, 1 comments on HN.",
+      "id": "hn-49576826",
+      "title": "Almost Anyone Can Make Money Selling Electricity with AI and Batteries",
+      "summary": "Almost Anyone Can Make Money Selling Electricity with AI and Batteries — 2 points, 1 comments on HN.",
       "source": "Hacker News",
-      "sourceUrl": "https://www.washingtonpost.com/opinions/2026/09/03/ai-safety-security-risks-demand-new-government-body/",
-      "category": "safety",
-      "date": "2026-09-05",
-      "hot": false,
-      "tags": [
-        "HN",
-        "AI",
-        "story",
-        "author_reasonableklout"
-      ]
-    },
-    {
-      "id": "hn-49572116",
-      "title": "The jobs apocalypse is postponed. An AI jobs boom is here",
-      "summary": "The jobs apocalypse is postponed. An AI jobs boom is here — 5 points, 1 comments on HN.",
-      "source": "Hacker News",
-      "sourceUrl": "https://www.economist.com/finance-and-economics/2026/09/04/the-jobs-apocalypse-is-postponed-an-ai-jobs-boom-is-here",
+      "sourceUrl": "https://www.bloomberg.com/news/features/2026-09-03/consumers-profit-off-solar-batteries-selling-excess-energy-back-to-grid",
       "category": "products",
       "date": "2026-09-05",
       "hot": false,
@@ -127,15 +127,15 @@
         "HN",
         "AI",
         "story",
-        "author_alephnerd"
+        "author_JumpCrisscross"
       ]
     },
     {
-      "id": "hn-49573241",
-      "title": "Air India A320 pilot could have triggered hydraulic shutdown that injured 17",
-      "summary": "Air India A320 pilot could have triggered hydraulic shutdown that injured 17 — 4 points, 1 comments on HN.",
+      "id": "hn-49576762",
+      "title": "Turn your AI into a world-class designer",
+      "summary": "Turn your AI into a world-class designer — 2 points, 0 comments on HN.",
       "source": "Hacker News",
-      "sourceUrl": "https://avherald.com/h?article=53cc9465",
+      "sourceUrl": "https://www.lennysnewsletter.com/p/how-to-turn-your-ai-into-a-world",
       "category": "products",
       "date": "2026-09-05",
       "hot": false,
@@ -143,15 +143,15 @@
         "HN",
         "AI",
         "story",
-        "author_r2sk5t"
+        "author_eustoria"
       ]
     },
     {
-      "id": "hn-49572431",
-      "title": "A documentary about a scientist who thinks time loops are real",
-      "summary": "The current consensus driving the scale-up of AI data centers rests on two assumptions:<p>The human brain is a biological computer operating without quantum effects.<p>The human brain does not solve computationally &quot — 4 points, 0 comments on HN.",
+      "id": "hn-49576173",
+      "title": "AI Image Generation on an RP2350 Microcontroller",
+      "summary": "AI Image Generation on an RP2350 Microcontroller — 2 points, 0 comments on HN.",
       "source": "Hacker News",
-      "sourceUrl": "https://news.ycombinator.com/item?id=49572431",
+      "sourceUrl": "https://cpldcpu.github.io/2026/08/28/ai-image-generation-on-a-rp-pico-2-microcontroller/",
       "category": "products",
       "date": "2026-09-05",
       "hot": false,
@@ -159,15 +159,15 @@
         "HN",
         "AI",
         "story",
-        "author_undefbehavior"
+        "author_iamnothere"
       ]
     },
     {
-      "id": "hn-49572390",
-      "title": "ProgramBench",
-      "summary": "ProgramBench — 4 points, 2 comments on HN.",
+      "id": "hn-49576032",
+      "title": "Paygate – a non-custodial paywall AI agents pay each other with (USDC on Base)",
+      "summary": "Paygate – a non-custodial paywall AI agents pay each other with (USDC on Base) — 2 points, 0 comments on HN.",
       "source": "Hacker News",
-      "sourceUrl": "https://www.vals.ai/benchmarks/programbench",
+      "sourceUrl": "https://tollbooth402--691ab20aa91411f1867b1607ee4eb77e.web.val.run",
       "category": "products",
       "date": "2026-09-05",
       "hot": false,
@@ -175,15 +175,15 @@
         "HN",
         "AI",
         "story",
-        "author_vinhnx"
+        "author_sololevelingsof"
       ]
     },
     {
-      "id": "hn-49573040",
-      "title": "Big Tech Wants to Be Your Bible Translator",
-      "summary": "Big Tech Wants to Be Your Bible Translator — 3 points, 0 comments on HN.",
+      "id": "hn-49577054",
+      "title": "A field guide to sandboxes for AI",
+      "summary": "A field guide to sandboxes for AI — 1 points, 0 comments on HN.",
       "source": "Hacker News",
-      "sourceUrl": "https://jaisenmathai.com/faith-and-ai/big-tech-wants-to-be-your-bible-translator/",
+      "sourceUrl": "https://www.luiscardoso.dev/blog/sandboxes-for-ai",
       "category": "products",
       "date": "2026-09-05",
       "hot": false,
@@ -191,15 +191,15 @@
         "HN",
         "AI",
         "story",
-        "author_jmathai"
+        "author_abdelhousni"
       ]
     },
     {
-      "id": "hn-49572780",
-      "title": "Show HN: Rubato – Retro-Mac desk device mirrors AI coding state-ESP8266",
-      "summary": "Hi everyone!<p>I have built an AI health device (ESP8266 + 240*240 screen). It can show AI Agents&#x27; status in real time with breathing bubble. And remind user dringking water, toilet, streth, etc.<p>support: DeepSeek — 3 points, 0 comments on HN.",
+      "id": "hn-49577009",
+      "title": "AI Philosophy Competition",
+      "summary": "AI Philosophy Competition — 1 points, 0 comments on HN.",
       "source": "Hacker News",
-      "sourceUrl": "https://github.com/lovaxi/Rubato_Device",
+      "sourceUrl": "https://www.zacharygoodsell.com/ai-philosophy-competition",
       "category": "products",
       "date": "2026-09-05",
       "hot": false,
@@ -207,31 +207,15 @@
         "HN",
         "AI",
         "story",
-        "author_Beartificial"
+        "author_m-hodges"
       ]
     },
     {
-      "id": "hn-49572279",
-      "title": "GitSpawn: Untrusted repos can execute code via AI coding agents",
-      "summary": "GitSpawn: Untrusted repos can execute code via AI coding agents — 3 points, 1 comments on HN.",
+      "id": "hn-49576846",
+      "title": "SpaceX is building its own gas turbine blade factory to power AI faster",
+      "summary": "SpaceX is building its own gas turbine blade factory to power AI faster — 1 points, 2 comments on HN.",
       "source": "Hacker News",
-      "sourceUrl": "https://www.manifold.security/blog/ai-coding-agents-git-hijack",
-      "category": "fun",
-      "date": "2026-09-05",
-      "hot": false,
-      "tags": [
-        "HN",
-        "AI",
-        "story",
-        "author_fourfire"
-      ]
-    },
-    {
-      "id": "hn-49573459",
-      "title": "Is AI ruining my brain?",
-      "summary": "Is AI ruining my brain? — 2 points, 1 comments on HN.",
-      "source": "Hacker News",
-      "sourceUrl": "https://thoughtbot.com/blog/is-ai-ruining-my-brain",
+      "sourceUrl": "https://qz.com/spacex-turbine-blade-foundry-ai-data-centers-090226",
       "category": "products",
       "date": "2026-09-05",
       "hot": false,
@@ -239,15 +223,15 @@
         "HN",
         "AI",
         "story",
-        "author_signa11"
+        "author_JumpCrisscross"
       ]
     },
     {
-      "id": "hn-49573423",
-      "title": "Cerebras CS-4: 30x Faster Than GPUs",
-      "summary": "Cerebras CS-4: 30x Faster Than GPUs — 2 points, 2 comments on HN.",
+      "id": "hn-49576775",
+      "title": "Run AI in the Browser: A Practical Guide to Transformers.js",
+      "summary": "Run AI in the Browser: A Practical Guide to Transformers.js — 1 points, 0 comments on HN.",
       "source": "Hacker News",
-      "sourceUrl": "https://www.cerebras.ai/blog/introducing-cerebras-cs-4",
+      "sourceUrl": "https://tighten.com/insights/run-ai-in-the-browser-a-practical-guide-to-transformers-js/",
       "category": "products",
       "date": "2026-09-05",
       "hot": false,
@@ -255,15 +239,15 @@
         "HN",
         "AI",
         "story",
-        "author_mgh2"
+        "author_eustoria"
       ]
     },
     {
-      "id": "hn-49573352",
-      "title": "There's No Such Thing as an AI 'Lab'",
-      "summary": "There's No Such Thing as an AI 'Lab' — 2 points, 0 comments on HN.",
+      "id": "hn-49576629",
+      "title": "A snapshot in time: Reflections on AI usage for vertumnus",
+      "summary": "A snapshot in time: Reflections on AI usage for vertumnus — 1 points, 0 comments on HN.",
       "source": "Hacker News",
-      "sourceUrl": "https://www.theatlantic.com/technology/2026/09/stop-calling-ai-companies-labs/688528/",
+      "sourceUrl": "https://vertumnus.fyi/about/ai/",
       "category": "products",
       "date": "2026-09-05",
       "hot": false,
@@ -271,31 +255,47 @@
         "HN",
         "AI",
         "story",
-        "author_littlexsparkee"
+        "author_perspectivezoom"
       ]
     },
     {
-      "id": "hn-49572417",
-      "title": "Lenexus – dependency graph with deterministic risk engine and AI layer",
-      "summary": "Lenexus – dependency graph with deterministic risk engine and AI layer — 2 points, 0 comments on HN.",
+      "id": "hn-49576559",
+      "title": "Is your LLM Biased? Making ChatGPT evaluate itself",
+      "summary": "Is your LLM Biased? Making ChatGPT evaluate itself — 1 points, 0 comments on HN.",
       "source": "Hacker News",
-      "sourceUrl": "https://lenexux.com/welcome",
-      "category": "safety",
+      "sourceUrl": "https://think-twice.me/is-ai-biased-or-sexist-making-chatgpt-evaluate-itself/",
+      "category": "products",
       "date": "2026-09-05",
       "hot": false,
       "tags": [
         "HN",
         "AI",
         "story",
-        "author_loicobg"
+        "author_zug_zug"
+      ]
+    },
+    {
+      "id": "hn-49576528",
+      "title": "(available in 1 hour) AI Slopacalypse – understanding all this crap",
+      "summary": "(available in 1 hour) AI Slopacalypse – understanding all this crap — 1 points, 1 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://www.youtube.com/@robertviragh6527",
+      "category": "products",
+      "date": "2026-09-05",
+      "hot": false,
+      "tags": [
+        "HN",
+        "AI",
+        "story",
+        "author_logicallee"
       ]
     }
   ],
   "meta": {
-    "fetchedAt": "2026-09-05T06:41:33.844Z",
+    "fetchedAt": "2026-09-05T14:48:38.250Z",
     "topic": "AI",
     "total": 15,
-    "hot": 1,
+    "hot": 2,
     "sources": [
       "Hacker News"
     ]

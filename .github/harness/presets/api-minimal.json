@@ -11,7 +11,9 @@
     "ui-design-system": true,
     "ui-ux-pro-max": true,
     "auto-researcher": true,
-    "last30days": true
+    "last30days": true,
+    "cosmic-quantum": true,
+    "cosmic-scale": true
   },
   "instructions": {
     "custom-registry": true,
@@ -26,7 +28,11 @@
     "auto-learn": true,
     "agent-governance": true,
     "platform-seam": false,
-    "minimal-ladder": true
+    "minimal-ladder": true,
+    "awesome-design": false,
+    "context-engineering": false,
+    "cosmic-quantum": true,
+    "cua-safety": false
   },
   "agents": {
     "designer": false,

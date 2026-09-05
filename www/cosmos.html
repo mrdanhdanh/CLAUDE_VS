@@ -219,6 +219,7 @@
       content:"";position:absolute;inset:0;border-radius:inherit;padding:1px;
       background:linear-gradient(135deg, rgba(255,255,255,.08), transparent 50%, rgba(255,255,255,.04));
       -webkit-mask:linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      mask:linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
       -webkit-mask-composite:xor;mask-composite:exclude;
       pointer-events:none;
     }
@@ -531,16 +532,210 @@
     }
     .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
 
+    /* ===== Black Hole lab ===== */
+    .bh-stage{
+      width:100%;max-width:360px;height:160px;position:relative;
+      display:flex;align-items:center;justify-content:center;
+      overflow:hidden;
+      background:radial-gradient(300px 200px at 50% 50%, rgba(124,58,237,.12), transparent 70%), radial-gradient(200px 120px at 50% 50%, rgba(0,0,0,.6), transparent 70%);
+      border-radius:12px;
+    }
+    .bh-core{
+      width:64px;height:64px;border-radius:50%;
+      background:radial-gradient(circle at 30% 30%, #1e1b4b, #000);
+      border:2px solid rgba(124,58,237,.5);
+      box-shadow:0 0 24px rgba(124,58,237,.6), 0 0 48px rgba(124,58,237,.25), inset 0 0 20px rgba(0,0,0,.8);
+      position:relative;z-index:2;
+      display:grid;place-items:center;
+      font:700 9px var(--font-mono);color:#a78bfa;letter-spacing:.06em;text-transform:uppercase;
+    }
+    .bh-core::before{
+      content:"";position:absolute;inset:-8px;border-radius:50%;
+      border:1px dashed rgba(124,58,237,.35);
+      animation:spin-angle 6s linear infinite;
+    }
+    .bh-ring{
+      position:absolute;width:140px;height:140px;border-radius:50%;
+      border:2px solid transparent;
+      background:conic-gradient(from var(--angle), transparent 0deg, rgba(124,58,237,.0) 60deg, rgba(124,58,237,.5) 120deg, rgba(6,182,214,.4) 180deg, rgba(245,158,11,.3) 240deg, transparent 300deg) border-box;
+      -webkit-mask:linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
+      mask:linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
+      -webkit-mask-composite:xor;mask-composite:exclude;
+      animation:spin-angle 3s linear infinite;
+      opacity:.9;
+    }
+    .bh-ring.sucking{animation:spin-angle .6s linear infinite;opacity:1}
+    .bh-particle{
+      position:absolute;width:10px;height:10px;border-radius:50%;
+      background:radial-gradient(circle at 30% 30%, #fbbf24, #f59e0b);
+      box-shadow:0 0 8px rgba(245,158,11,.7);
+      z-index:3;
+      transition:all .6s cubic-bezier(.4,0,.2,1);
+    }
+    .bh-particle.p2{background:radial-gradient(circle at 30% 30%, #67e8f9, #06b6d4);box-shadow:0 0 8px rgba(6,182,214,.7)}
+    .bh-particle.p3{background:radial-gradient(circle at 30% 30%, #a78bfa, #7c3aed);box-shadow:0 0 8px rgba(124,58,237,.7)}
+    .bh-particle.sucked{transform:scale(0) !important;opacity:0}
+    .bh-horizon-label{
+      position:absolute;bottom:6px;left:50%;transform:translateX(-50%);
+      font:600 9px var(--font-mono);letter-spacing:.08em;text-transform:uppercase;
+      color:var(--cosmos-text-dim);background:rgba(0,0,0,.4);border:1px solid rgba(255,255,255,.08);
+      padding:3px 8px;border-radius:var(--radius-full);white-space:nowrap;
+    }
+    .bh-stats{
+      position:absolute;top:8px;right:8px;
+      font:600 10px var(--font-mono);color:var(--cosmos-text-muted);
+      background:rgba(0,0,0,.35);border:1px solid rgba(255,255,255,.08);
+      padding:4px 8px;border-radius:8px;
+    }
+
+    /* ===== Schrödinger lab ===== */
+    .schrodinger-stage{
+      width:100%;max-width:360px;height:160px;position:relative;
+      display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;
+      background:radial-gradient(300px 180px at 50% 30%, rgba(6,182,214,.08), transparent 70%);
+      border-radius:12px;
+    }
+    .schrodinger-box-wrap{
+      position:relative;width:140px;height:100px;
+      perspective:600px;
+    }
+    .schrodinger-box{
+      width:100%;height:100%;
+      background:linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.03));
+      border:1px solid rgba(255,255,255,.12);
+      border-radius:12px;
+      display:grid;place-items:center;
+      position:relative;overflow:hidden;
+      backdrop-filter:blur(8px);
+      transition:all .4s ease;
+    }
+    .schrodinger-box.open{
+      border-color:rgba(16,185,129,.4);
+      box-shadow:0 0 20px rgba(16,185,129,.2);
+    }
+    .schrodinger-box.dead{
+      border-color:rgba(239,68,68,.4);
+      box-shadow:0 0 20px rgba(239,68,68,.2);
+    }
+    .schrodinger-lid{
+      position:absolute;top:0;left:0;right:0;height:22px;
+      background:linear-gradient(180deg, rgba(255,255,255,.12), rgba(255,255,255,.06));
+      border-bottom:1px solid rgba(255,255,255,.1);
+      border-radius:12px 12px 0 0;
+      display:flex;align-items:center;justify-content:center;
+      font:600 9px var(--font-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--cosmos-text-muted);
+      transform-origin:top;
+      transition:transform .5s cubic-bezier(.34,1.56,.64,1);
+      z-index:2;
+    }
+    .schrodinger-box.open .schrodinger-lid{transform:rotateX(-110deg)}
+    .schrodinger-content{
+      display:flex;flex-direction:column;align-items:center;gap:6px;
+      transition:all .3s;
+    }
+    .schrodinger-content.superposition{
+      filter:blur(0px);
+      opacity:1;
+    }
+    .schrodinger-content.superposition .schrodinger-cat{
+      animation:schrodinger-flicker 1.2s ease infinite;
+    }
+    @keyframes schrodinger-flicker{
+      0%,100%{opacity:1;transform:scale(1)}
+      50%{opacity:.7;transform:scale(.98)}
+    }
+    .schrodinger-cat{
+      font-size:32px;line-height:1;
+      filter:drop-shadow(0 2px 8px rgba(0,0,0,.3));
+      transition:all .4s;
+    }
+    .schrodinger-state{
+      font:700 11px var(--font-mono);letter-spacing:.06em;text-transform:uppercase;
+      padding:4px 10px;border-radius:var(--radius-full);
+      border:1px solid rgba(255,255,255,.1);
+      background:rgba(255,255,255,.06);color:var(--cosmos-text-muted);
+    }
+    .schrodinger-state.alive{color:#6ee7b7;background:rgba(16,185,129,.15);border-color:rgba(16,185,129,.3)}
+    .schrodinger-state.dead{color:#fca5a5;background:rgba(239,68,68,.15);border-color:rgba(239,68,68,.3)}
+    .schrodinger-state.super{color:#c4b5fd;background:rgba(124,58,237,.15);border-color:rgba(124,58,237,.3);animation:pulse 1.5s ease infinite}
+    .schrodinger-hint{
+      font:400 10px var(--font-mono);color:var(--cosmos-text-dim);text-align:center;
+    }
+
+    /* ===== Scroll Progress ===== */
+    .scroll-progress{position:fixed;top:0;left:0;right:0;height:3px;z-index:100;background:rgba(255,255,255,.06);pointer-events:none}
+    .scroll-progress-bar{height:100%;width:0%;background:linear-gradient(90deg,#7c3aed,#06b6d4,#f59e0b);transition:width .08s linear;box-shadow:0 0 8px rgba(124,58,237,.5)}
+    /* ===== Reveal on scroll ===== */
+    .reveal{opacity:0;transform:translateY(18px);transition:opacity .6s ease, transform .6s ease}
+    .reveal.in{opacity:1;transform:none}
+    @media(prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none;transition:none}}
+    /* ===== Floating orbs (parallax) ===== */
+    .floating-orbs{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden}
+    .orb{position:absolute;border-radius:50%;filter:blur(40px);opacity:.18;will-change:transform}
+    .orb-1{width:420px;height:420px;left:-80px;top:18%;background:radial-gradient(circle at 30% 30%, #7c3aed, transparent 70%)}
+    .orb-2{width:360px;height:360px;right:-60px;top:42%;background:radial-gradient(circle at 30% 30%, #06b6d4, transparent 70%)}
+    .orb-3{width:500px;height:500px;left:30%;top:68%;background:radial-gradient(circle at 30% 30%, #ec4899, transparent 70%);opacity:.12}
+    .orb-4{width:300px;height:300px;right:20%;top:78%;background:radial-gradient(circle at 30% 30%, #f59e0b, transparent 70%);opacity:.14}
+    /* ===== Hero illustration ===== */
+    .hero-layout{display:grid;gap:24px;align-items:center}
+    @media(min-width:900px){.hero-layout{grid-template-columns:1.15fr .85fr}}
+    .hero-visual{position:relative;display:none;min-height:320px;align-items:center;justify-content:center}
+    @media(min-width:900px){.hero-visual{display:flex}}
+    .hero-visual-inner{position:relative;width:100%;max-width:380px;height:320px}
+    .hero-planet{position:absolute;border-radius:50%;display:grid;place-items:center;color:#fff;font:700 10px var(--font-mono);letter-spacing:.06em;text-transform:uppercase;box-shadow:0 8px 32px rgba(0,0,0,.4), 0 0 20px rgba(124,58,237,.3);border:1px solid rgba(255,255,255,.12)}
+    .hero-planet.big{width:140px;height:140px;left:50%;top:50%;transform:translate(-50%,-50%);background:radial-gradient(circle at 30% 30%, #a78bfa, #7c3aed 60%, #4c1d95);font-size:11px;animation:float 6s ease-in-out infinite}
+    .hero-planet.small{width:64px;height:64px;background:radial-gradient(circle at 30% 30%, #67e8f9, #06b6d4);animation:float 5s ease-in-out infinite reverse}
+    .hero-planet.tiny{width:44px;height:44px;background:radial-gradient(circle at 30% 30%, #fcd34d, #f59e0b);font-size:8px;animation:float 4.5s ease-in-out infinite}
+    .hero-orbit{position:absolute;left:50%;top:50%;border:1px dashed rgba(255,255,255,.08);border-radius:50%;transform:translate(-50%,-50%)}
+    .hero-orbit.o1{width:220px;height:220px;animation:spin-angle 20s linear infinite}
+    .hero-orbit.o2{width:300px;height:300px;animation:spin-angle 30s linear infinite reverse;opacity:.6}
+    .hero-orbit.o3{width:360px;height:360px;border-style:dotted;opacity:.4}
+    @keyframes float{0%,100%{transform:translate(-50%,-50%) translateY(0)}50%{transform:translate(-50%,-50%) translateY(-8px)}}
+    .hero-visual-caption{position:absolute;bottom:0;left:50%;transform:translateX(-50%);font:500 10px var(--font-mono);letter-spacing:.06em;text-transform:uppercase;color:var(--cosmos-text-dim);background:rgba(0,0,0,.35);border:1px solid rgba(255,255,255,.08);padding:4px 10px;border-radius:var(--radius-full);white-space:nowrap;backdrop-filter:blur(8px)}
+    /* ===== Section dividers ===== */
+    .section-divider{height:1px;position:relative;overflow:visible;margin:0}
+    .section-divider svg{display:block;width:100%;height:24px}
+    .section-divider line{stroke:rgba(255,255,255,.06)}
+    .section-divider circle{fill:rgba(124,58,237,.5)}
+    /* ===== Scroll dots (desktop) ===== */
+    .scroll-dots{position:fixed;right:16px;top:50%;transform:translateY(-50%);z-index:30;display:none;flex-direction:column;gap:10px}
+    @media(min-width:1100px){.scroll-dots{display:flex}}
+    .scroll-dot{width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,.2);border:1px solid rgba(255,255,255,.1);transition:all .2s;cursor:pointer;padding:0}
+    .scroll-dot.active{background:#7c3aed;box-shadow:0 0 10px rgba(124,58,237,.6);transform:scale(1.4);border-color:rgba(124,58,237,.5)}
+    .scroll-dot:hover{background:rgba(255,255,255,.4)}
+    /* ===== Pillar illustrations ===== */
+    .pillar-visual{height:120px;border-radius:12px;overflow:hidden;position:relative;margin-bottom:14px;border:1px solid rgba(255,255,255,.06);background:rgba(0,0,0,.2)}
+    .pillar-visual svg{width:100%;height:100%}
+    /* ===== Pipeline illustration ===== */
+    .pipeline-visual{height:140px;border-radius:12px;overflow:hidden;position:relative;margin-bottom:18px;border:1px solid rgba(255,255,255,.06);background:radial-gradient(600px 200px at 50% 0%, rgba(124,58,237,.12), transparent 70%), rgba(0,0,0,.2)}
+    .pipeline-visual svg{width:100%;height:100%}
     /* ===== Responsive tweaks ===== */
     @media(max-width:375px){
       .hero h1{font-size:26px}
       .lab-demo{min-height:120px}
       .super-card{width:80px;height:80px;font-size:10px}
+      .bh-stage{height:140px}
+      .schrodinger-stage{height:140px}
     }
   </style>
 </head>
 <body>
   <a class="skip-link" href="#main">Bỏ qua đến nội dung chính</a>
+  <div class="scroll-progress" aria-hidden="true"><div class="scroll-progress-bar" id="scrollProgressBar"></div></div>
+  <div class="floating-orbs" aria-hidden="true">
+    <div class="orb orb-1" data-speed="0.15"></div>
+    <div class="orb orb-2" data-speed="0.25"></div>
+    <div class="orb orb-3" data-speed="0.1"></div>
+    <div class="orb orb-4" data-speed="0.2"></div>
+  </div>
+  <nav class="scroll-dots" aria-label="Điều hướng nhanh">
+    <button class="scroll-dot active" data-target="hero" aria-label="Hero"></button>
+    <button class="scroll-dot" data-target="phil" aria-label="Triết lý"></button>
+    <button class="scroll-dot" data-target="pipeline" aria-label="Pipeline"></button>
+    <button class="scroll-dot" data-target="lab" aria-label="Lab"></button>
+    <button class="scroll-dot" data-target="integration" aria-label="Tích hợp"></button>
+    <button class="scroll-dot" data-target="future" aria-label="Tương lai"></button>
+  </nav>
 
   <header class="header" role="banner">
     <div class="container header-inner">
@@ -570,37 +765,75 @@
 
   <main id="main">
     <!-- Hero -->
-    <section class="hero" aria-labelledby="hero-title">
+    <section class="hero" id="hero" aria-labelledby="hero-title">
       <div class="hero-bg" aria-hidden="true">
         <canvas id="starfield" width="1120" height="400"></canvas>
       </div>
       <div class="container hero-inner">
-        <div class="eyebrow"><i></i> Triết lý Harness v2 · Process &gt; Model</div>
-        <h1 id="hero-title">Vũ trụ <span>giãn nở</span> từ một ý tưởng.<br>Lượng tử <span>sụp đổ</span> khi bạn quyết định.</h1>
-        <p><strong>Macro</strong> (vũ trụ) cho hệ thống — <strong>Micro</strong> (lượng tử) cho thực thi. Một câu ý tưởng là <strong>Big Bang</strong>, pipeline 8 phase là <strong>định luật vật lý</strong>, và chỉ khi <strong>quan sát (verify)</strong> thì sản phẩm mới thành thật.</p>
-        <div class="hero-meta" aria-label="Thông tin triết lý">
-          <span class="meta-pill">🌌 Macro: <b>www/ là vũ trụ</b></span>
-          <span class="meta-pill">⚛️ Micro: <b>verify là quan sát</b></span>
-          <span class="meta-pill">🔗 Entanglement: <b>1 đổi → toàn hệ đổi</b></span>
-          <span class="meta-pill">🚀 Tunneling: <b>ladder 7 nấc</b></span>
-        </div>
-        <div class="hero-actions">
-          <a class="btn btn-primary" href="#lab">🧪 Mở Lab tương tác</a>
-          <a class="btn btn-ghost" href="#pipeline">📜 Xem pipeline vũ trụ</a>
-          <button class="btn btn-ghost" id="btnCopyPhilosophy" type="button">📋 Copy triết lý</button>
+        <div class="hero-layout">
+          <div>
+            <div class="eyebrow"><i></i> Triết lý Harness v2 · Process &gt; Model</div>
+            <h1 id="hero-title">Vũ trụ <span>giãn nở</span> từ một ý tưởng.<br>Lượng tử <span>sụp đổ</span> khi bạn quyết định.</h1>
+            <p><strong>Macro</strong> (vũ trụ) cho hệ thống — <strong>Micro</strong> (lượng tử) cho thực thi. Một câu ý tưởng là <strong>Big Bang</strong>, pipeline 8 phase là <strong>định luật vật lý</strong>, và chỉ khi <strong>quan sát (verify)</strong> thì sản phẩm mới thành thật.</p>
+            <div class="hero-meta" aria-label="Thông tin triết lý">
+              <span class="meta-pill">🌌 Macro: <b>www/ là vũ trụ</b></span>
+              <span class="meta-pill">⚛️ Micro: <b>verify là quan sát</b></span>
+              <span class="meta-pill">🔗 Entanglement: <b>1 đổi → toàn hệ đổi</b></span>
+              <span class="meta-pill">🚀 Tunneling: <b>ladder 7 nấc</b></span>
+            </div>
+            <div class="hero-actions">
+              <a class="btn btn-primary" href="#lab">🧪 Mở Lab tương tác</a>
+              <a class="btn btn-ghost" href="#pipeline">📜 Xem pipeline vũ trụ</a>
+              <button class="btn btn-ghost" id="btnCopyPhilosophy" type="button">📋 Copy triết lý</button>
+            </div>
+          </div>
+          <div class="hero-visual" aria-hidden="true">
+            <div class="hero-visual-inner">
+              <div class="hero-orbit o1"></div>
+              <div class="hero-orbit o2"></div>
+              <div class="hero-orbit o3"></div>
+              <div class="hero-planet big">BIG<br>BANG</div>
+              <div class="hero-planet small" style="left:12%;top:18%">PRD</div>
+              <div class="hero-planet small" style="right:8%;top:12%;background:radial-gradient(circle at 30% 30%, #fbbf24, #f59e0b)">PLAN</div>
+              <div class="hero-planet tiny" style="left:8%;bottom:22%">CODE</div>
+              <div class="hero-planet tiny" style="right:14%;bottom:18%;background:radial-gradient(circle at 30% 30%, #a78bfa, #7c3aed)">VERIFY</div>
+              <div class="hero-visual-caption">◈ 8 phase · 1 vũ trụ · 0 đoán</div>
+            </div>
+          </div>
         </div>
       </div>
     </section>
 
     <!-- Philosophy 2 pillars -->
-    <section class="section" aria-labelledby="phil-title">
+    <section class="section reveal" id="phil" aria-labelledby="phil-title">
       <div class="container">
         <div class="section-head">
           <h2 id="phil-title"><small>Triết lý 2 tầng</small>Vũ trụ + Lượng tử = Harness</h2>
           <p>Không phải metaphor cho vui — là khung ra quyết định. Macro hỏi “scale sao?”, Micro hỏi “đã đo chưa?”.</p>
         </div>
         <div class="grid-2">
-          <article class="card">
+          <article class="card reveal">
+            <div class="pillar-visual" aria-hidden="true">
+              <svg viewBox="0 0 400 120" xmlns="http://www.w3.org/2000/svg" role="img">
+                <defs>
+                  <radialGradient id="gMacro" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#a78bfa" stop-opacity=".9"/><stop offset="60%" stop-color="#7c3aed" stop-opacity=".6"/><stop offset="100%" stop-color="#1e1b4b" stop-opacity="0"/></radialGradient>
+                  <linearGradient id="lgMacro" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#7c3aed" stop-opacity=".0"/><stop offset="50%" stop-color="#7c3aed" stop-opacity=".5"/><stop offset="100%" stop-color="#06b6d4" stop-opacity=".0"/></linearGradient>
+                </defs>
+                <rect width="400" height="120" rx="12" fill="#0f172a"/>
+                <circle cx="200" cy="60" r="38" fill="url(#gMacro)" stroke="rgba(124,58,237,.35)" stroke-width="1.2"/>
+                <text x="200" y="56" text-anchor="middle" font-family="JetBrains Mono" font-size="9" font-weight="700" fill="#fff" letter-spacing=".08em">www/</text>
+                <text x="200" y="68" text-anchor="middle" font-family="JetBrains Mono" font-size="7" fill="#c4b5fd">VŨ TRỤ</text>
+                <circle cx="200" cy="60" r="58" fill="none" stroke="rgba(255,255,255,.07)" stroke-dasharray="4 6"/>
+                <circle cx="200" cy="60" r="78" fill="none" stroke="rgba(255,255,255,.05)" stroke-dasharray="2 8"/>
+                <g font-family="JetBrains Mono" font-size="6" font-weight="600" fill="#e2e8f0">
+                  <circle cx="258" cy="38" r="14" fill="rgba(124,58,237,.18)" stroke="rgba(124,58,237,.3)"/><text x="258" y="40" text-anchor="middle">plan</text>
+                  <circle cx="142" cy="42" r="14" fill="rgba(6,182,214,.15)" stroke="rgba(6,182,214,.25)"/><text x="142" y="44" text-anchor="middle">skill</text>
+                  <circle cx="268" cy="82" r="12" fill="rgba(245,158,11,.15)" stroke="rgba(245,158,11,.25)"/><text x="268" y="84" text-anchor="middle" font-size="5">comp</text>
+                  <circle cx="132" cy="84" r="10" fill="rgba(236,72,153,.15)" stroke="rgba(236,72,153,.25)"/><text x="132" y="86" text-anchor="middle" font-size="5">hook</text>
+                </g>
+                <line x1="200" y1="60" x2="258" y2="38" stroke="url(#lgMacro)" stroke-width="1" opacity=".6"/>
+              </svg>
+            </div>
             <div class="card-icon cosmos" aria-hidden="true">🌌</div>
             <h3>Tầng Vũ Trụ — Macro</h3>
             <p>Hệ thống như vũ trụ: cần <strong>cấu trúc</strong> mới không hỗn loạn. <code style="font:500 11px var(--font-mono);background:rgba(124,58,237,.12);padding:2px 6px;border-radius:6px;color:#c4b5fd">www/</code> là vũ trụ, mỗi <code style="font:500 11px var(--font-mono);background:rgba(124,58,237,.12);padding:2px 6px;border-radius:6px;color:#c4b5fd">plan/skill/component</code> là thiên hà.</p>
@@ -616,7 +849,27 @@
               <span class="tag cosmos">Ánh sáng cần thời gian</span>
             </div>
           </article>
-          <article class="card quantum">
+          <article class="card quantum reveal">
+            <div class="pillar-visual" aria-hidden="true">
+              <svg viewBox="0 0 400 120" xmlns="http://www.w3.org/2000/svg" role="img">
+                <rect width="400" height="120" rx="12" fill="#0f172a"/>
+                <path d="M 20 60 Q 60 20, 100 60 T 180 60 T 260 60 T 340 60" fill="none" stroke="#06b6d4" stroke-width="1.6" opacity=".9" stroke-linecap="round"/>
+                <path d="M 20 60 Q 60 100, 100 60 T 180 60 T 260 60 T 340 60" fill="none" stroke="#a78bfa" stroke-width="1.2" opacity=".5" stroke-dasharray="4 4"/>
+                <circle cx="100" cy="60" r="6" fill="#06b6d4" stroke="#fff" stroke-width="1.2"/>
+                <circle cx="180" cy="60" r="6" fill="#7c3aed" stroke="#fff" stroke-width="1.2"/>
+                <circle cx="260" cy="60" r="6" fill="#f59e0b" stroke="#fff" stroke-width="1.2"/>
+                <g font-family="JetBrains Mono" font-size="6" font-weight="600" fill="#94a3b8" text-anchor="middle">
+                  <text x="100" y="82">super</text><text x="100" y="90">position</text>
+                  <text x="180" y="82">entangle</text><text x="180" y="90">ment</text>
+                  <text x="260" y="82">measure</text><text x="260" y="90">verify</text>
+                </g>
+                <g opacity=".7">
+                  <line x1="100" y1="66" x2="180" y2="66" stroke="rgba(124,58,237,.4)" stroke-width="1" stroke-dasharray="3 3"/>
+                  <line x1="180" y1="66" x2="260" y2="66" stroke="rgba(6,182,214,.4)" stroke-width="1" stroke-dasharray="3 3"/>
+                </g>
+                <text x="360" y="18" font-family="JetBrains Mono" font-size="7" fill="#64748b" text-anchor="middle">Δx·Δp ≥ ħ/2</text>
+              </svg>
+            </div>
             <div class="card-icon quantum" aria-hidden="true">⚛️</div>
             <h3>Tầng Lượng Tử — Micro</h3>
             <p>Thực thi như lượng tử: <strong>không đo = không biết</strong>. Chỉ khi quan sát thì trạng thái mới thật.</p>
@@ -636,12 +889,35 @@
       </div>
     </section>
 
+    <div class="section-divider" aria-hidden="true"><svg viewBox="0 0 1120 24" preserveAspectRatio="none"><line x1="0" y1="12" x2="520" y2="12" stroke-width="1"/><circle cx="560" cy="12" r="4"/><line x1="600" y1="12" x2="1120" y2="12" stroke-width="1"/></svg></div>
     <!-- Pipeline as Cosmic Evolution -->
-    <section class="section" id="pipeline" aria-labelledby="pipeline-title">
+    <section class="section reveal" id="pipeline" aria-labelledby="pipeline-title">
       <div class="container">
         <div class="section-head">
           <h2 id="pipeline-title"><small>Pipeline 8 phase</small>Tiến hóa vũ trụ → Sản phẩm</h2>
           <p>Mỗi phase là một kỷ nguyên vũ trụ. Không đốt cháy giai đoạn — ánh sáng từ thiên hà xa cũng cần thời gian.</p>
+        </div>
+        <div class="pipeline-visual reveal" aria-hidden="true">
+          <svg viewBox="0 0 1120 140" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet">
+            <defs>
+              <linearGradient id="pgLine" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#7c3aed"/><stop offset="50%" stop-color="#06b6d4"/><stop offset="100%" stop-color="#f59e0b"/></linearGradient>
+              <radialGradient id="pgGlow" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#7c3aed" stop-opacity=".25"/><stop offset="100%" stop-color="transparent" stop-opacity="0"/></radialGradient>
+            </defs>
+            <rect width="1120" height="140" rx="12" fill="transparent"/>
+            <line x1="60" y1="70" x2="1060" y2="70" stroke="url(#pgLine)" stroke-width="2" opacity=".5" stroke-linecap="round"/>
+            <g font-family="JetBrains Mono" font-size="8" font-weight="700" text-anchor="middle">
+              <circle cx="120" cy="70" r="22" fill="#0f172a" stroke="#7c3aed" stroke-width="1.5"/><text x="120" y="74" fill="#fff">1</text><text x="120" y="108" fill="#94a3b8" font-size="7">Explore</text>
+              <circle cx="250" cy="70" r="22" fill="#0f172a" stroke="#6366f1" stroke-width="1.5"/><text x="250" y="74" fill="#fff">2</text><text x="250" y="108" fill="#94a3b8" font-size="7">Clarify</text>
+              <circle cx="380" cy="70" r="22" fill="#0f172a" stroke="#06b6d4" stroke-width="1.5"/><text x="380" y="74" fill="#fff">3</text><text x="380" y="108" fill="#94a3b8" font-size="7">PRD</text>
+              <circle cx="510" cy="70" r="22" fill="#0f172a" stroke="#10b981" stroke-width="1.5"/><text x="510" y="74" fill="#fff">4</text><text x="510" y="108" fill="#94a3b8" font-size="7">Design</text>
+              <circle cx="640" cy="70" r="22" fill="#0f172a" stroke="#f59e0b" stroke-width="1.5"/><text x="640" y="74" fill="#fff">5</text><text x="640" y="108" fill="#94a3b8" font-size="7">Plan</text>
+              <circle cx="770" cy="70" r="22" fill="#0f172a" stroke="#ec4899" stroke-width="1.5"/><text x="770" y="74" fill="#fff">6</text><text x="770" y="108" fill="#94a3b8" font-size="7">Implement</text>
+              <circle cx="900" cy="70" r="22" fill="#0f172a" stroke="#8b5cf6" stroke-width="1.5"/><text x="900" y="74" fill="#fff">7</text><text x="900" y="108" fill="#94a3b8" font-size="7">Polish</text>
+              <circle cx="1020" cy="70" r="26" fill="#7c3aed" stroke="#fff" stroke-width="1.5"/><text x="1020" y="74" fill="#fff">8</text><text x="1020" y="108" fill="#c4b5fd" font-size="7" font-weight="700">Verify ✓</text>
+            </g>
+            <circle cx="1020" cy="70" r="36" fill="url(#pgGlow)"/>
+            <text x="560" y="28" text-anchor="middle" font-family="Plus Jakarta Sans" font-size="9" font-weight="700" fill="#64748b" letter-spacing=".08em">BIG BANG → VŨ TRỤ GIÃN NỞ → THIÊN HÀ → QUAN SÁT</text>
+          </svg>
         </div>
         <div class="timeline" role="list">
           <div class="phase" role="listitem">
@@ -704,13 +980,15 @@
       </div>
     </section>
 
+    <div class="section-divider" aria-hidden="true"><svg viewBox="0 0 1120 24" preserveAspectRatio="none"><line x1="0" y1="12" x2="520" y2="12" stroke-width="1"/><circle cx="560" cy="12" r="3" fill="rgba(6,182,214,.5)"/><line x1="600" y1="12" x2="1120" y2="12" stroke-width="1"/></svg></div>
     <!-- Interactive Lab -->
-    <section class="section" id="lab" aria-labelledby="lab-title">
+    <section class="section reveal" id="lab" aria-labelledby="lab-title">
       <div class="container">
         <div class="section-head">
           <h2 id="lab-title"><small>Lab tương tác</small>Chạm để cảm nhận lượng tử</h2>
-          <p>4 thí nghiệm nhỏ — mỗi cái là một nguyên tắc Harness. Thử kéo, bấm, đo.</p>
+          <p>6 thí nghiệm — 4 cũ + 2 mới: <b>Black Hole</b> (bottleneck) + <b>Schrödinger</b> (Heisenbug). Thử kéo, bấm, đo, thả.</p>
           <a href="#integration">→ Áp vào Harness sao?</a>
+          <a href="./cosmos/scale.html" style="margin-left:8px">→ Dashboard entropy</a>
         </div>
         <div class="lab-grid">
           <!-- Superposition -->
@@ -818,12 +1096,72 @@
               <div class="lab-hint">Đang dừng ở <b>nấc 4: Native</b> — dùng CSS/Canvas native cho starfield, không cài lib mới</div>
             </div>
           </div>
+
+          <!-- Black Hole -->
+          <div class="lab-card">
+            <div class="lab-head">
+              <h3><span>🕳️</span> Black Hole — Bottleneck</h3>
+              <span class="lab-badge">KN-008 · KN-015</span>
+            </div>
+            <div class="lab-body">
+              <p><strong>Lỗ đen</strong> là bottleneck mà velocity không thoát: file lock MSB3027, 2 workflow giành Pages env. Thả debt vào — qua chân trời sự kiện là phải human takeover.</p>
+              <div class="lab-demo">
+                <div class="bh-stage" id="bhStage" role="group" aria-label="Lỗ đen hút debt">
+                  <div class="bh-ring" id="bhRing" aria-hidden="true"></div>
+                  <div class="bh-core" id="bhCore">HORIZON</div>
+                  <div class="bh-particle p1" id="bhP1" style="left:18%;top:22%" title="mismatch"></div>
+                  <div class="bh-particle p2" id="bhP2" style="left:72%;top:18%" title="draft"></div>
+                  <div class="bh-particle p3" id="bhP3" style="left:68%;top:68%" title="refused"></div>
+                  <div class="bh-horizon-label" id="bhLabel">— thả debt vào lỗ đen —</div>
+                  <div class="bh-stats" id="bhStats">S = 0 · low</div>
+                </div>
+              </div>
+              <div class="lab-controls">
+                <button class="btn btn-primary" id="btnBhDrop" type="button">🕳️ Thả debt</button>
+                <button class="btn btn-ghost" id="btnBhReset" type="button">↺ Reset</button>
+                <button class="btn btn-ghost" id="btnBhHorizon" type="button">⚠️ Qua horizon?</button>
+              </div>
+              <div class="lab-hint" id="bhHint">Mẹo: bấm Thả debt nhiều lần — S tăng, vòng xoáy nhanh dần · Qua horizon = takeover</div>
+            </div>
+          </div>
+
+          <!-- Schrödinger -->
+          <div class="lab-card">
+            <div class="lab-head">
+              <h3><span>🐱</span> Schrödinger's Bug — Heisenbug</h3>
+              <span class="lab-badge">KN-014</span>
+            </div>
+            <div class="lab-body">
+              <p>Bug vừa <strong>sống vừa chết</strong> tới khi bạn quan sát (mở hộp / chạy test). Như KN-014: import làm treo smoke — quan sát làm đổi kết quả.</p>
+              <div class="lab-demo">
+                <div class="schrodinger-stage" id="schrodingerStage" role="group" aria-label="Hộp Schrödinger">
+                  <div class="schrodinger-box-wrap">
+                    <div class="schrodinger-box" id="schrodingerBox">
+                      <div class="schrodinger-lid" id="schrodingerLid">◈ HỘP · CHƯA MỞ</div>
+                      <div class="schrodinger-content superposition" id="schrodingerContent">
+                        <div class="schrodinger-cat" id="schrodingerCat" aria-hidden="true">🐱</div>
+                        <div class="schrodinger-state super" id="schrodingerState">superposition</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="schrodinger-hint" id="schrodingerHint">Chưa đo = chưa biết · Bấm Mở hộp để sụp đổ hàm sóng</div>
+                </div>
+              </div>
+              <div class="lab-controls">
+                <button class="btn btn-primary" id="btnSchrodingerOpen" type="button">📦 Mở hộp (đo)</button>
+                <button class="btn btn-ghost" id="btnSchrodingerReset" type="button">↺ Đóng lại</button>
+                <button class="btn btn-ghost" id="btnSchrodingerPeek" type="button">👁️ Peek (lén nhìn)</button>
+              </div>
+              <div class="lab-hint">Peek = quan sát nhẹ (import) cũng làm đổi kết quả — Heisenbug!</div>
+            </div>
+          </div>
         </div>
       </div>
     </section>
 
+    <div class="section-divider" aria-hidden="true"><svg viewBox="0 0 1120 24" preserveAspectRatio="none"><line x1="0" y1="12" x2="520" y2="12" stroke-width="1"/><circle cx="560" cy="12" r="3" fill="rgba(245,158,11,.5)"/><line x1="600" y1="12" x2="1120" y2="12" stroke-width="1"/></svg></div>
     <!-- Integration -->
-    <section class="section" id="integration" aria-labelledby="integration-title">
+    <section class="section reveal" id="integration" aria-labelledby="integration-title">
       <div class="container">
         <div class="section-head">
           <h2 id="integration-title"><small>Tích hợp Harness</small>Áp triết lý vào pipeline sao?</h2>
@@ -854,8 +1192,9 @@
       </div>
     </section>
 
+    <div class="section-divider" aria-hidden="true"><svg viewBox="0 0 1120 24" preserveAspectRatio="none"><line x1="0" y1="12" x2="520" y2="12" stroke-width="1"/><circle cx="560" cy="12" r="3" fill="rgba(236,72,153,.5)"/><line x1="600" y1="12" x2="1120" y2="12" stroke-width="1"/></svg></div>
     <!-- Future -->
-    <section class="section" aria-labelledby="future-title">
+    <section class="section reveal" aria-labelledby="future-title">
       <div class="container">
         <div class="section-head">
           <h2 id="future-title"><small>Khai thác tương lai</small>Đề tài này còn đào sâu được gì?</h2>
@@ -1206,6 +1545,145 @@
       render();
     })();
 
+    // ===== Black Hole =====
+    (function(){
+      const stage=$('#bhStage'), ring=$('#bhRing'), core=$('#bhCore');
+      const p1=$('#bhP1'), p2=$('#bhP2'), p3=$('#bhP3');
+      const label=$('#bhLabel'), stats=$('#bhStats');
+      const btnDrop=$('#btnBhDrop'), btnReset=$('#btnBhReset'), btnHorizon=$('#btnBhHorizon');
+      const hint=$('#bhHint');
+      if(!stage || !btnDrop) return;
+      let S=0, sucked=0;
+      const particles=[p1,p2,p3].filter(Boolean);
+      function render(){
+        const level = S<10 ? 'low' : S<25 ? 'medium' : 'high';
+        const color = level==='low' ? 'var(--cosmos-success)' : level==='medium' ? 'var(--cosmos-accent)' : '#ef4444';
+        stats.textContent = `S = ${S} · ${level}`;
+        stats.style.color = color;
+        stats.style.borderColor = level==='high' ? 'rgba(239,68,68,.3)' : level==='medium' ? 'rgba(245,158,11,.3)' : 'rgba(16,185,129,.3)';
+        ring.style.opacity = S>0 ? '1' : '.9';
+        ring.style.animationDuration = S>=25 ? '.5s' : S>=10 ? '1.2s' : '3s';
+        ring.classList.toggle('sucking', S>=10);
+        if(S>=25){
+          label.textContent='⚠️ Qua horizon — cần human takeover!';
+          label.style.color='#fca5a5'; label.style.background='rgba(239,68,68,.15)'; label.style.borderColor='rgba(239,68,68,.3)';
+        } else if(S>=10){
+          label.textContent='🌀 Đang hút — bơm năng lượng ngay';
+          label.style.color='var(--cosmos-accent)'; label.style.background='rgba(245,158,11,.12)'; label.style.borderColor='rgba(245,158,11,.2)';
+        } else {
+          label.textContent='— thả debt vào lỗ đen —';
+          label.style.color='var(--cosmos-text-dim)'; label.style.background='rgba(0,0,0,.4)'; label.style.borderColor='rgba(255,255,255,.08)';
+        }
+        if(hint) hint.textContent = S>=25 ? 'S ≥25 high — heat death! Bấm Reset để bơm năng lượng (audit + polish)' : S>=10 ? `S=${S} medium — vòng xoáy nhanh dần · Thả tiếp để xem horizon` : 'Mẹo: bấm Thả debt nhiều lần — S tăng, vòng xoáy nhanh dần · Qua horizon = takeover';
+      }
+      function drop(){
+        S += 7 + Math.floor(Math.random()*6);
+        const p = particles[sucked % particles.length];
+        if(p){
+          const angle = Math.random()*360;
+          const dist = 40 + Math.random()*30;
+          p.style.left = `calc(50% + ${Math.cos(angle*Math.PI/180)*dist}px)`;
+          p.style.top = `calc(50% + ${Math.sin(angle*Math.PI/180)*dist}px)`;
+          p.style.transform = 'translate(-50%,-50%) scale(1)';
+          p.classList.remove('sucked');
+          void p.offsetWidth;
+          setTimeout(()=>{
+            p.style.left='50%'; p.style.top='50%';
+            p.style.transform='translate(-50%,-50%) scale(0)';
+            p.classList.add('sucked');
+          }, 80);
+          sucked++;
+        }
+        stage.animate([{filter:'brightness(1)'},{filter:'brightness(1.3)'},{filter:'brightness(1)'}],{duration:300});
+        render();
+        if(S>=25) toast('🕳️ S='+S+' HIGH — qua horizon! Human takeover');
+        else if(S>=10) toast('🌀 S='+S+' — đang hút mạnh');
+        else toast('🕳️ Thả debt → S='+S);
+      }
+      function reset(){
+        S=0; sucked=0;
+        particles.forEach((p,i)=>{
+          p.classList.remove('sucked');
+          p.style.transform='translate(-50%,-50%) scale(1)';
+          const pos=[{l:'18%',t:'22%'},{l:'72%',t:'18%'},{l:'68%',t:'68%'}][i];
+          if(pos){ p.style.left=pos.l; p.style.top=pos.t; }
+        });
+        render(); toast('✨ Reset — đã bơm năng lượng, S=0 low');
+      }
+      btnDrop.addEventListener('click', drop);
+      btnReset.addEventListener('click', reset);
+      btnHorizon.addEventListener('click', ()=>{
+        if(S>=25) toast('⚠️ Đã qua horizon — không cố fix loop, báo human!');
+        else toast('Chưa qua horizon (S='+S+') — còn cứu được, thả thêm debt để test');
+      });
+      render();
+    })();
+
+    // ===== Schrödinger =====
+    (function(){
+      const box=$('#schrodingerBox'), lid=$('#schrodingerLid');
+      const content=$('#schrodingerContent'), cat=$('#schrodingerCat'), state=$('#schrodingerState');
+      const hint=$('#schrodingerHint');
+      const btnOpen=$('#btnSchrodingerOpen'), btnReset=$('#btnSchrodingerReset'), btnPeek=$('#btnSchrodingerPeek');
+      if(!box || !btnOpen) return;
+      let opened=false, peeked=false;
+      function render(){
+        if(!opened){
+          box.classList.remove('open','dead');
+          content.classList.add('superposition');
+          cat.textContent='🐱';
+          state.textContent='superposition';
+          state.className='schrodinger-state super';
+          lid.textContent='◈ HỘP · CHƯA MỞ';
+          if(hint) hint.textContent='Chưa đo = chưa biết · Bấm Mở hộp để sụp đổ hàm sóng';
+          btnOpen.disabled=false; btnOpen.style.opacity=1;
+        }
+      }
+      function open(){
+        if(opened) return;
+        const alive = Math.random() > 0.5;
+        opened=true; peeked=false;
+        box.classList.add('open');
+        content.classList.remove('superposition');
+        lid.textContent = alive ? '✓ ĐÃ MỞ · ALIVE' : '✗ ĐÃ MỞ · DEAD';
+        if(alive){
+          cat.textContent='😺'; state.textContent='alive ✓'; state.className='schrodinger-state alive';
+          box.classList.remove('dead');
+          if(hint) hint.textContent='Sụp đổ → alive! Quan sát tạo thực tại (verify pass)';
+          toast('😺 Alive! Quan sát tạo thực tại');
+        } else {
+          cat.textContent='💀'; state.textContent='dead ✗'; state.className='schrodinger-state dead';
+          box.classList.add('dead');
+          if(hint) hint.textContent='Sụp đổ → dead! Bug tồn tại — fix production code (KN-012)';
+          toast('💀 Dead! Bug tồn tại tới khi đo');
+        }
+        btnOpen.disabled=true; btnOpen.style.opacity=.5;
+        box.animate([{transform:'scale(1)'},{transform:'scale(1.02)'},{transform:'scale(1)'}],{duration:400});
+      }
+      function reset(){
+        opened=false; peeked=false;
+        render(); toast('📦 Đóng hộp — lại superposition');
+      }
+      function peek(){
+        if(opened){ toast('Đã mở rồi — không cần peek'); return; }
+        if(peeked){ toast('Peek rồi — quan sát nhẹ cũng đổi kết quả!'); return; }
+        peeked=true;
+        cat.textContent='🙀';
+        state.textContent='peeked!';
+        state.className='schrodinger-state super';
+        if(hint) hint.textContent='👁️ Peek = quan sát nhẹ (import) cũng làm đổi kết quả — Heisenbug KN-014!';
+        toast('👁️ Peek! Quan sát nhẹ cũng đổi — Heisenbug');
+        setTimeout(()=>{ if(!opened){ cat.textContent='🐱'; state.textContent='superposition'; } }, 900);
+      }
+      btnOpen.addEventListener('click', open);
+      btnReset.addEventListener('click', reset);
+      btnPeek.addEventListener('click', peek);
+      box.addEventListener('click', ()=>{ if(!opened) open(); });
+      box.setAttribute('tabindex','0'); box.setAttribute('role','button'); box.setAttribute('aria-label','Hộp Schrödinger, bấm để mở');
+      box.addEventListener('keydown', (e)=>{ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); if(!opened) open(); }});
+      render();
+    })();
+
     // ===== Copy philosophy =====
     $('#btnCopyPhilosophy')?.addEventListener('click', async ()=>{
       const text=`COSMOS · QUANTUM — Triết lý Harness v2
@@ -1216,6 +1694,70 @@ Process là định luật, verify là quan sát.`;
       catch{ toast('Huhu copy hụt — sếp copy tay nhé'); }
     });
     $('#btnLab')?.addEventListener('click', ()=> $('#lab')?.scrollIntoView({behavior:'smooth'}));
+
+    // ===== Scroll progress + Reveal + Parallax + Dots =====
+    (function(){
+      const bar=$('#scrollProgressBar');
+      const dots=[...document.querySelectorAll('.scroll-dot')];
+      const sections=['hero','phil','pipeline','lab','integration','future'].map(id=>document.getElementById(id)).filter(Boolean);
+      const orbs=[...document.querySelectorAll('.orb')];
+      const prefersReduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
+      // progress
+      function onScroll(){
+        const h=document.documentElement;
+        const max=h.scrollHeight - h.clientHeight;
+        const p=max>0 ? (h.scrollTop/max)*100 : 0;
+        if(bar) bar.style.width=p.toFixed(2)+'%';
+        // parallax orbs
+        if(!prefersReduced){
+          const y=h.scrollTop;
+          orbs.forEach(o=>{
+            const s=parseFloat(o.dataset.speed||'0.15');
+            o.style.transform=`translateY(${y*s*0.3}px)`;
+          });
+        }
+        // dots active
+        if(dots.length && sections.length){
+          let activeId=sections[0].id;
+          const mid=window.scrollY + window.innerHeight*0.35;
+          for(const sec of sections){
+            if(sec.offsetTop <= mid) activeId=sec.id;
+          }
+          dots.forEach(d=>d.classList.toggle('active', d.dataset.target===activeId));
+        }
+      }
+      window.addEventListener('scroll', onScroll, {passive:true});
+      window.addEventListener('resize', onScroll);
+      onScroll();
+      dots.forEach(d=>{
+        d.addEventListener('click', ()=>{
+          const el=document.getElementById(d.dataset.target);
+          if(el) el.scrollIntoView({behavior:'smooth', block:'start'});
+        });
+      });
+      // reveal
+      if(!prefersReduced && 'IntersectionObserver' in window){
+        const io=new IntersectionObserver((entries)=>{
+          entries.forEach(e=>{
+            if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }
+          });
+        }, {threshold:0.12, rootMargin:'0px 0px -40px 0px'});
+        document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+        // stagger timeline phases
+        document.querySelectorAll('.timeline .phase').forEach((el,i)=>{
+          el.classList.add('reveal');
+          el.style.transitionDelay=(i*60)+'ms';
+          io.observe(el);
+        });
+        document.querySelectorAll('.lab-card').forEach((el,i)=>{
+          el.classList.add('reveal');
+          el.style.transitionDelay=(i*70)+'ms';
+          io.observe(el);
+        });
+      } else {
+        document.querySelectorAll('.reveal').forEach(el=>el.classList.add('in'));
+      }
+    })();
 
     // ===== Smooth scroll for hero links =====
     $$('a[href^="#"]').forEach(a=>{

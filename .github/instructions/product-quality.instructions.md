@@ -103,13 +103,16 @@ Mọi view/list PHẢI xử lý 4 states:
 
 ## 9. Polish Checklist (trước khi Verify)
 
-- [ ] Palette + typography + spacing đã định nghĩa
+- [ ] Palette + typography + spacing đã định nghĩa (có citation `awesome-design-md` + seed nếu dùng)
 - [ ] Responsive 375/768/1280 không vỡ
 - [ ] Đủ hover/focus/active/disabled/loading states
 - [ ] Đủ loading/empty/error/success states
 - [ ] Animation mượt 150-300ms
 - [ ] Contrast + keyboard + aria-label
 - [ ] Không inline style bừa bãi
+- [ ] **Không AI slop:** không gradient tím mặc định, không layout text-trái/graphic-phải cookie-cutter, không glow/container/label thừa (học Anshu Chimala — Lenny's Newsletter 01/09/2026)
+- [ ] **Đã Cut 30% thừa:** review và xóa elements không tạo value — ít = premium (VD calorie tracker bỏ glow hồng + label thừa → grid image-centric, Apple-native — Technique 6)
+- [ ] **Critic ≥9/10** (nếu có screenshot: fresh-context critic chấm /10, <9 fix top 3 gaps max 2 vòng — Technique 3) hoặc self-review 3 gaps nếu không có browser
 - [ ] Visual check bằng browser (screenshot nếu có thể)
 
-> **Quy tắc:** Giao diện xấu = chưa xong. Phải qua Polish phase.
+> **Quy tắc:** Giao diện xấu = chưa xong. Phải qua Polish phase. AI slop = chưa xong — phải Cut + Critic.

@@ -72,10 +72,44 @@ user-invocable: true
 - **Plan:** Mỗi todo ghi `Entangled with: <files>` + `Ladder nấc: <1-7>`
 - **Verify:** Checklist thêm `Đã đo (get_errors/build) chưa? Entanglement có vỡ không?`
 
+## System Map — Harness → Cosmos (đủ 48 thực thể)
+
+| Harness có sẵn | Map vũ trụ | Vì sao hợp |
+|----------------|------------|------------|
+| `docs/knowleged.md` (15 KN) | **CMB — bức xạ nền** | Tín hiệu mờ từ mọi vụ nổ quá khứ, agent nào cũng phải đọc trước khi code |
+| `.agent/audit.jsonl` (`prevHash→hash`) | **Nón ánh sáng + mạng lưới vũ trụ** | Chuỗi nhân quả — `verify` là kiểm tra tính nhân quả |
+| `.agent/policy.json` (deny trước allow) | **Định luật vật lý + chân trời sự kiện** | `refused` = không thoát như event horizon; luật vỡ là deny all |
+| `.agent/credentials.enc.json` | **Vật chất tối** | Khối lượng vô hình giữ thiên hà, never logged, chỉ đếm |
+| `.agent/routines.json` (cron) | **Pulsar** | Hải đăng tick chuẩn giờ — miss là biết hệ lệch |
+| `www/status.json` + `index.html` | **Quasar + Đài thiên văn** | Vật sáng nhất nhìn từ xa; `index.html` là kính Hubble |
+| `.github/harness/registry.json` | **Danh mục sao (Messier)** | Catalog 48 thiên thể; lệch filesystem là drift vũ trụ |
+| `presets/` (full/web-product/api-minimal) | **Đa vũ trụ** | `preset apply` là nhảy vũ trụ song song |
+| `**/.disabled/` | **Thiên hà ngủ đông** | Không xóa, chỉ ngủ — cần là đánh thức |
+| `.agent/bugs/` + `.agent/plans/` (~40 plans) | **Tàn tích supernova + hệ hành tinh** | Mỗi bug nổ gieo nguyên tố mới (KN); mỗi plan là hệ sao |
+| `auto-learn.mjs` suggest/log/propose | **Khảo sát bầu trời (SDSS)** | Quét CMB → phát hiện → ghi catalog tự động |
+| `context.mjs` quarantine/compress/isolate | **Bộ lọc vũ trụ khả kiến** | Window có hạn như chân trời — phải lọc mới nhìn xa |
+| `awesome-design-md/` (74 designs) | **Hubble Deep Field** | 74 thiên hà để soi vibe cosmic dark / quantum light |
+| Wise loading (skill chỉ load khi match) | **Kích thích trường lượng tử** | Instruction là trường phủ khắp, skill là hạt khi đủ năng lượng |
+| `manage_todo_list` (1 in-progress) | **Nguyên lý loại trừ Pauli** | 2 todo không chiếm cùng trạng thái — vi phạm là decoherence |
+
+## New Theory — Mở rộng (vũ trụ học thật)
+
+- **Dark Energy ↔ Scope creep:** vũ trụ giãn nở gia tốc như feature phình. Đối trọng là gravity = `minimal-ladder` + YAGNI. Đo bằng diff stat mỗi Verify.
+- **Entropy / Heat death ↔ Tech debt:** không bơm năng lượng (audit + `generate-status` + polish) thì hệ drift tới hỗn loạn. Meter: `S = mismatch + dead-code + drafts`.
+- **Black Hole ↔ Bottleneck:** `MSB3027 file lock` (KN-008), `2 workflow giành Pages env` (KN-015) — kỳ dị mà velocity không thoát. Qua event horizon là phải human takeover.
+- **Cosmic web ↔ Entanglement graph:** audit hash + `Entangled with:` vẽ thành filament — sửa 1 file kéo theo chòm nào.
+- **Double-slit + Schrödinger's bug ↔ Heisenbug:** KN-014 smoke treo vì import side-effect — quan sát làm đổi kết quả.
+- **Quantum error correction ↔ 3-fix limit + TDD gate:** RED-GREEN-REFACTOR là mã sửa lỗi, `verify` là syndrome measurement.
+- **Chân không lượng tử ↔ Flaky:** BOM, path `\` vs `/`, `node --check` CJS — dao động nền, cần quarantine trước.
+
+Công thức Lab: bất định $\Delta x \cdot \Delta p \ge \hbar/2$ ↔ `get_errors` chính xác thì `build` mờ; entropy $S = k \log W$ ↔ debt tăng theo số trạng thái không đo.
+
 ## References
 - `docs/harness-flow.md` — pipeline 8 phase (ánh xạ vũ trụ)
 - `.github/instructions/cosmic-quantum.instructions.md` — rule enforce
-- `www/cosmos.html` — demo visual vũ trụ + lượng tử
+- `www/cosmos.html` + `www/cosmos/index.html` (mirror) — demo visual vũ trụ + lượng tử
+- `www/cosmos/scale.html` — dashboard entropy + black-hole (skill cosmic-scale)
+- `.github/skills/cosmic-scale/SKILL.md` — đo entropy, bottleneck, dark-matter map
 - `awesome-design-md/` — 74 DESIGN.md cho vibe cosmic/quantum
 - Sách gợi ý (nếu có trong `www/library/`): search `vũ trụ`, `lượng tử`, `quantum`, `cosmos` qua MCP `search_library`
 

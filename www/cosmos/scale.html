@@ -1,0 +1,275 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="color-scheme" content="dark light" />
+  <meta name="description" content="COSMOS Scale — Dashboard entropy vũ trụ (tech debt) + black hole + dark matter cho Harness v2." />
+  <title>COSMOS Scale — Entropy Dashboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --cosmos-bg:#060a18;--cosmos-bg-2:#0b0f1a;--cosmos-surface:#0f172a;--cosmos-surface-2:#131c35;
+      --cosmos-border:rgba(255,255,255,.08);--cosmos-border-strong:rgba(255,255,255,.14);
+      --cosmos-text:#e2e8f0;--cosmos-text-muted:#94a3b8;--cosmos-text-dim:#64748b;
+      --cosmos-primary:#7c3aed;--cosmos-primary-2:#6366f1;--cosmos-accent:#f59e0b;--cosmos-cyan:#06b6d4;--cosmos-pink:#ec4899;--cosmos-success:#10b981;
+      --radius-sm:10px;--radius-md:14px;--radius-lg:18px;--radius-xl:24px;--radius-full:9999px;
+      --shadow-sm:0 1px 2px rgba(0,0,0,.3),0 4px 12px rgba(0,0,0,.2);--shadow-md:0 8px 24px rgba(0,0,0,.35),0 2px 8px rgba(0,0,0,.25);--shadow-lg:0 16px 48px rgba(0,0,0,.45);
+      --font-sans:'Inter',system-ui,sans-serif;--font-display:'Plus Jakarta Sans',sans-serif;--font-mono:'JetBrains Mono',ui-monospace,monospace;
+      --header-h:56px;--angle:0deg;
+    }
+    @property --angle{syntax:"<angle>";initial-value:0deg;inherits:false;}
+    *{box-sizing:border-box} html{scroll-behavior:smooth}
+    body{margin:0;font-family:var(--font-sans);color:var(--cosmos-text);background:var(--cosmos-bg);line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+    a{color:inherit} a:focus-visible,button:focus-visible{outline:2px solid var(--cosmos-primary);outline-offset:2px}
+    .skip-link{position:absolute;left:16px;top:-40px;z-index:100;background:#fff;color:#0f172a;padding:8px 16px;border-radius:var(--radius-full);font:600 13px var(--font-sans);text-decoration:none;transition:top .2s}
+    .skip-link:focus{top:12px}
+    .container{max-width:1120px;margin:0 auto;padding:0 16px} @media(min-width:768px){.container{padding:0 24px}}
+    .header{position:sticky;top:0;z-index:40;backdrop-filter:blur(16px) saturate(180%);background:rgba(6,10,24,.72);border-bottom:1px solid var(--cosmos-border)}
+    .header-inner{display:flex;align-items:center;justify-content:space-between;height:var(--header-h);gap:12px}
+    .brand{display:flex;align-items:center;gap:10px;text-decoration:none;min-width:0}
+    .brand-mark{width:36px;height:36px;border-radius:10px;display:grid;place-items:center;background:conic-gradient(from var(--angle),#7c3aed,#06b6d4,#f59e0b,#ec4899,#7c3aed);color:#fff;font:800 14px var(--font-display);letter-spacing:.04em;box-shadow:0 2px 12px rgba(124,58,237,.4);animation:spin-angle 4s linear infinite;flex-shrink:0}
+    @keyframes spin-angle{to{--angle:360deg}}
+    .brand-text{display:flex;flex-direction:column;line-height:1.1;min-width:0}
+    .brand-text strong{font:800 13px var(--font-display);letter-spacing:.06em;color:#fff;white-space:nowrap}
+    .brand-text span{font:500 11px var(--font-sans);color:var(--cosmos-text-muted);letter-spacing:.02em;white-space:nowrap}
+    .header-actions{display:flex;align-items:center;gap:8px}
+    .btn{appearance:none;border:1px solid transparent;border-radius:var(--radius-full);font:600 13px var(--font-sans);padding:8px 14px;cursor:pointer;display:inline-flex;align-items:center;gap:6px;white-space:nowrap;transition:all .18s ease;text-decoration:none}
+    .btn-ghost{background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.08);color:var(--cosmos-text)}
+    .btn-ghost:hover{background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.14);transform:translateY(-1px)}
+    .btn-primary{background:linear-gradient(135deg,#7c3aed,#6366f1);color:#fff;box-shadow:0 4px 16px rgba(124,58,237,.35);border-color:transparent}
+    .btn-primary:hover{transform:translateY(-1px);box-shadow:0 6px 20px rgba(124,58,237,.45)}
+    .btn:active{transform:scale(.98)} .btn-icon{padding:8px 10px} @media(max-width:640px){.btn-text-full{display:none}}
+    .hero{position:relative;overflow:hidden;padding:36px 0 28px;border-bottom:1px solid var(--cosmos-border)}
+    .hero-bg{position:absolute;inset:0;z-index:0;overflow:hidden;background:radial-gradient(900px 600px at 20% -10%,rgba(124,58,237,.28),transparent 60%),radial-gradient(700px 500px at 85% 0%,rgba(6,182,214,.18),transparent 60%),linear-gradient(180deg,#060a18 0%,#0b0f1a 100%)}
+    .hero-bg::after{content:"";position:absolute;inset:0;background:radial-gradient(800px 400px at 50% 0%,transparent 40%,rgba(6,10,24,.6) 100%);pointer-events:none}
+    .hero-inner{position:relative;z-index:1}
+    .eyebrow{display:inline-flex;align-items:center;gap:8px;font:600 11px var(--font-mono);letter-spacing:.14em;text-transform:uppercase;color:var(--cosmos-cyan);background:rgba(6,182,214,.1);border:1px solid rgba(6,182,214,.2);padding:6px 12px;border-radius:var(--radius-full);backdrop-filter:blur(8px)}
+    .eyebrow i{width:6px;height:6px;border-radius:50%;background:var(--cosmos-cyan);box-shadow:0 0 8px var(--cosmos-cyan);animation:pulse 2s ease infinite}
+    @keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.7;transform:scale(.9)}}
+    .hero h1{margin:14px 0 10px;font:800 clamp(26px,4.5vw,40px)/1.05 var(--font-display);letter-spacing:-.03em;color:#fff;text-wrap:balance}
+    .hero h1 span{background:linear-gradient(135deg,#a78bfa 0%,#22d3ee 50%,#fbbf24 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+    .hero p{margin:0;max-width:640px;font:400 14px/1.7 var(--font-sans);color:var(--cosmos-text-muted);text-wrap:pretty}
+    .hero p strong{color:var(--cosmos-text);font-weight:600}
+    .hero-actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:18px} .hero-actions .btn{padding:10px 18px;font-size:13px}
+    .section{padding:28px 0}
+    .section-head{display:flex;flex-wrap:wrap;align-items:end;justify-content:space-between;gap:12px;margin-bottom:18px}
+    .section-head h2{margin:0;font:800 20px/1.2 var(--font-display);letter-spacing:-.02em;color:#fff}
+    .section-head h2 small{display:block;font:500 11px var(--font-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--cosmos-text-dim);margin-bottom:6px}
+    .section-head p{margin:0;max-width:520px;font:400 13px/1.6 var(--font-sans);color:var(--cosmos-text-muted)}
+    .grid-2{display:grid;gap:16px} @media(min-width:768px){.grid-2{grid-template-columns:1fr 1fr}}
+    .grid-3{display:grid;gap:16px} @media(min-width:768px){.grid-3{grid-template-columns:repeat(3,1fr)}}
+    .card{position:relative;background:linear-gradient(180deg,rgba(255,255,255,.06),rgba(255,255,255,.03));border:1px solid var(--cosmos-border);border-radius:var(--radius-lg);padding:20px;backdrop-filter:blur(12px) saturate(140%);transition:all .2s ease;overflow:hidden}
+    .card::before{content:"";position:absolute;inset:0;border-radius:inherit;padding:1px;background:linear-gradient(135deg,rgba(255,255,255,.08),transparent 50%,rgba(255,255,255,.04));-webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);-webkit-mask-composite:xor;mask-composite:exclude;pointer-events:none}
+    .card:hover{transform:translateY(-2px);border-color:var(--cosmos-border-strong);box-shadow:var(--shadow-md)}
+    .card h3{margin:0 0 6px;font:700 15px/1.3 var(--font-display);color:#fff}
+    .card p{margin:0;font:400 13px/1.6 var(--font-sans);color:var(--cosmos-text-muted)}
+    .tag{display:inline-flex;align-items:center;gap:4px;font:600 10px var(--font-mono);letter-spacing:.06em;text-transform:uppercase;padding:4px 8px;border-radius:var(--radius-full);border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.06);color:var(--cosmos-text-muted)}
+    .tag.low{color:#6ee7b7;background:rgba(16,185,129,.15);border-color:rgba(16,185,129,.25)}
+    .tag.medium{color:#fcd34d;background:rgba(245,158,11,.15);border-color:rgba(245,158,11,.25)}
+    .tag.high{color:#fca5a5;background:rgba(239,68,68,.15);border-color:rgba(239,68,68,.25)}
+    /* Gauge */
+    .gauge-wrap{display:flex;flex-direction:column;align-items:center;gap:12px}
+    .gauge{width:180px;height:180px;border-radius:50%;position:relative;display:grid;place-items:center;background:conic-gradient(from 270deg, var(--g1) 0deg, var(--g2) 120deg, var(--g3) 240deg, var(--g1) 360deg);padding:10px;box-shadow:0 8px 32px rgba(0,0,0,.4)}
+    .gauge.low{--g1:#10b981;--g2:#06b6d4;--g3:#7c3aed}
+    .gauge.medium{--g1:#f59e0b;--g2:#f97316;--g3:#eab308}
+    .gauge.high{--g1:#ef4444;--g2:#dc2626;--g3:#991b1b}
+    .gauge-inner{width:100%;height:100%;border-radius:50%;background:radial-gradient(circle at 30% 30%, #0f172a, #060a18);display:grid;place-items:center;flex-direction:column;border:1px solid rgba(255,255,255,.08)}
+    .gauge-value{font:800 36px var(--font-display);color:#fff;letter-spacing:-.03em;line-height:1}
+    .gauge-label{font:600 10px var(--font-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--cosmos-text-muted);margin-top:4px}
+    .gauge-level{font:700 12px var(--font-mono);letter-spacing:.06em;text-transform:uppercase;margin-top:6px;padding:4px 10px;border-radius:var(--radius-full);border:1px solid rgba(255,255,255,.1)}
+    .gauge-level.low{color:#6ee7b7;background:rgba(16,185,129,.12);border-color:rgba(16,185,129,.2)}
+    .gauge-level.medium{color:#fcd34d;background:rgba(245,158,11,.12);border-color:rgba(245,158,11,.2)}
+    .gauge-level.high{color:#fca5a5;background:rgba(239,68,68,.12);border-color:rgba(239,68,68,.2)}
+    .parts{display:grid;gap:8px;width:100%;max-width:360px}
+    .part{display:flex;align-items:center;justify-content:space-between;gap:12px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.06);border-radius:10px;padding:10px 12px}
+    .part b{font:700 13px var(--font-mono);color:#fff}
+    .part span{font:500 11px var(--font-mono);color:var(--cosmos-text-muted)}
+    .part i{font-style:normal;font:600 11px var(--font-mono);color:var(--cosmos-text-dim)}
+    .bh-list{display:flex;flex-direction:column;gap:10px}
+    .bh-item{display:flex;gap:12px;align-items:flex-start;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.06);border-radius:12px;padding:14px}
+    .bh-item.known{border-color:rgba(124,58,237,.2);background:rgba(124,58,237,.06)}
+    .bh-item.dynamic{border-color:rgba(245,158,11,.2);background:rgba(245,158,11,.06)}
+    .bh-icon{width:36px;height:36px;border-radius:10px;display:grid;place-items:center;font-size:16px;flex-shrink:0;border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.06)}
+    .bh-item.known .bh-icon{background:rgba(124,58,237,.15);border-color:rgba(124,58,237,.25)}
+    .bh-item.dynamic .bh-icon{background:rgba(245,158,11,.15);border-color:rgba(245,158,11,.25)}
+    .bh-info{flex:1;min-width:0}
+    .bh-info strong{display:block;font:600 13px var(--font-sans);color:#fff;line-height:1.2}
+    .bh-info span{font:400 12px var(--font-sans);color:var(--cosmos-text-muted)}
+    .bh-info code{display:block;margin-top:6px;font:500 11px var(--font-mono);color:#c4b5fd;background:rgba(124,58,237,.1);border:1px solid rgba(124,58,237,.15);padding:6px 8px;border-radius:8px;word-break:break-all}
+    .meta-grid{display:grid;gap:12px} @media(min-width:768px){.meta-grid{grid-template-columns:repeat(3,1fr)}}
+    .meta-card{background:rgba(255,255,255,.04);border:1px solid var(--cosmos-border);border-radius:12px;padding:16px;text-align:center}
+    .meta-card b{display:block;font:800 22px var(--font-display);color:#fff}
+    .meta-card span{font:500 11px var(--font-mono);letter-spacing:.06em;text-transform:uppercase;color:var(--cosmos-text-muted)}
+    .code-block{font:500 11px var(--font-mono);color:#c4b5fd;background:rgba(124,58,237,.1);border:1px solid rgba(124,58,237,.15);padding:10px 12px;border-radius:10px;word-break:break-all;display:block;margin-top:10px}
+    .footer{margin-top:32px;padding:24px 0;border-top:1px solid var(--cosmos-border);display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px;font:400 12px var(--font-sans);color:var(--cosmos-text-dim)}
+    .footer a{color:var(--cosmos-text-muted);text-decoration:none} .footer a:hover{color:var(--cosmos-text);text-decoration:underline}
+    .toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%) translateY(12px);background:rgba(15,23,42,.9);color:#fff;border:1px solid rgba(255,255,255,.12);padding:10px 16px;border-radius:var(--radius-full);font:500 13px var(--font-sans);backdrop-filter:blur(12px) saturate(140%);box-shadow:var(--shadow-lg);opacity:0;pointer-events:none;transition:all .25s ease;z-index:60;white-space:nowrap}
+    .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+    @media(max-width:375px){.gauge{width:150px;height:150px}.gauge-value{font-size:28px}}
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#main">Bỏ qua đến nội dung chính</a>
+  <header class="header" role="banner">
+    <div class="container header-inner">
+      <a class="brand" href="../index.html" aria-label="STATUS">
+        <div class="brand-mark" aria-hidden="true">◈</div>
+        <div class="brand-text"><strong>COSMOS · SCALE</strong><span>Entropy Dashboard</span></div>
+      </a>
+      <nav class="header-actions" aria-label="Thao tác">
+        <a class="btn btn-ghost btn-icon" href="./index.html" aria-label="Về COSMOS"><span class="btn-text-full">← COSMOS</span><span aria-hidden="true">←</span></a>
+        <a class="btn btn-ghost btn-icon" href="../index.html" aria-label="STATUS"><span class="btn-text-full">STATUS</span>⌘</a>
+        <a class="btn btn-ghost btn-icon" href="./scale.json" target="_blank" rel="noopener" aria-label="scale.json"><span class="btn-text-full">scale.json</span>{ }</a>
+        <button class="btn btn-primary btn-icon" id="btnRefresh" type="button" aria-label="Tải lại">↻ <span class="btn-text-full">Refresh</span></button>
+      </nav>
+    </div>
+  </header>
+  <main id="main">
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="hero-bg" aria-hidden="true"></div>
+      <div class="container hero-inner">
+        <div class="eyebrow"><i></i> Cosmic Scale · S = mismatch×10 + drafts×5 + refused×2 + disabled×1 + failed×5</div>
+        <h1 id="hero-title">Entropy <span>S</span> — đo độ hỗn loạn vũ trụ.</h1>
+        <p><strong>S &lt;10 low</strong> · <strong>10–24 medium</strong> · <strong>≥25 high</strong> (heat death). Đọc từ <code style="font:500 11px var(--font-mono);background:rgba(124,58,237,.12);padding:2px 6px;border-radius:6px;color:#c4b5fd">scale.json</code> do <code style="font:500 11px var(--font-mono);background:rgba(124,58,237,.12);padding:2px 6px;border-radius:6px;color:#c4b5fd">cosmic-scale.mjs</code> sinh — không sửa tay.</p>
+        <div class="hero-actions">
+          <button class="btn btn-primary" id="btnCopyCmd" type="button">📋 Copy lệnh đo</button>
+          <a class="btn btn-ghost" href="#blackholes">🕳️ Xem black holes</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="entropy-title">
+      <div class="container">
+        <div class="section-head">
+          <h2 id="entropy-title"><small>Entropy</small>S hiện tại</h2>
+          <p id="entropyAdvice">Đang tải scale.json…</p>
+        </div>
+        <div class="grid-2">
+          <div class="card" style="display:grid;place-items:center;padding:24px">
+            <div class="gauge-wrap">
+              <div class="gauge low" id="gauge" aria-label="Gauge entropy">
+                <div class="gauge-inner">
+                  <div class="gauge-value" id="gaugeValue">—</div>
+                  <div class="gauge-label">Entropy S</div>
+                  <div class="gauge-level low" id="gaugeLevel">loading</div>
+                </div>
+              </div>
+              <div class="parts" id="parts" aria-label="Thành phần entropy"></div>
+              <div style="font:400 11px var(--font-mono);color:var(--cosmos-text-dim);text-align:center" id="generatedAt">—</div>
+            </div>
+          </div>
+          <div class="card">
+            <h3>📊 Counts</h3>
+            <p style="margin-bottom:12px">Tổng quan hệ thống lúc đo.</p>
+            <div class="meta-grid" id="countsGrid"></div>
+            <div class="code-block" id="policyBox">policy: —</div>
+            <p style="margin-top:12px;font:400 11px var(--font-mono);color:var(--cosmos-text-dim)">Chạy <code>node .github/harness/scripts/cosmic-scale.mjs --json --out www/cosmos/scale.json</code> để cập nhật. Dashboard chỉ đọc, không ghi.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="blackholes" aria-labelledby="bh-title">
+      <div class="container">
+        <div class="section-head">
+          <h2 id="bh-title"><small>Black Holes</small>Bottleneck — qua horizon là takeover</h2>
+          <p>Known (KN-008, KN-015) + dynamic (missing, audit failed). Sửa gốc, không cố fix loop.</p>
+        </div>
+        <div class="bh-list" id="bhList" role="list"></div>
+        <div class="card" style="margin-top:16px" id="mismatchCard">
+          <h3>🛰️ Drift — mismatch / missing</h3>
+          <p id="mismatchText">—</p>
+          <code class="code-block" id="mismatchCode" style="display:none"></code>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="theory-title">
+      <div class="container">
+        <div class="section-head">
+          <h2 id="theory-title"><small>Lý thuyết</small>Map vũ trụ học</h2>
+          <p>Công thức và map đã gắn vào skill cosmic-quantum + cosmic-scale.</p>
+        </div>
+        <div class="grid-3">
+          <div class="card"><h3>🌌 Dark Energy ↔ Scope creep</h3><p>Giãn nở gia tốc như feature phình. Đối trọng là gravity = minimal-ladder + YAGNI. Đo bằng diff stat mỗi Verify.</p><span class="tag">S tăng khi thêm không cần</span></div>
+          <div class="card"><h3>🕳️ Black Hole ↔ Bottleneck</h3><p>KN-008 file lock, KN-015 Pages env. Qua event horizon → human takeover, không loop.</p><span class="tag">horizon = takeover</span></div>
+          <div class="card"><h3>🐱 Schrödinger ↔ Heisenbug</h3><p>KN-014 import làm treo — quan sát làm đổi kết quả. Lab cosmos.html #6 demo.</p><span class="tag">đo là đổi</span></div>
+        </div>
+        <div class="code-block" style="margin-top:16px">S = mismatch×10 + drafts×5 + refused×2 + disabled×1 + failed×5 · low &lt;10 · medium &lt;25 · high ≥25 · Δx·Δp ≥ ħ/2 ↔ get_errors chính xác thì build mờ</div>
+      </div>
+    </section>
+
+    <div class="container">
+      <footer class="footer" role="contentinfo">
+        <span>© 2026 YUNIE · <strong style="color:var(--cosmos-text)">COSMOS · SCALE</strong> · <a href="./index.html">← COSMOS</a> · <a href="../index.html">← STATUS</a></span>
+        <span><a href="../../.github/skills/cosmic-scale/SKILL.md" target="_blank" rel="noopener">Skill</a> · <a href="../../.github/skills/cosmic-quantum/SKILL.md" target="_blank" rel="noopener">Quantum</a> · <a href="./scale.json" target="_blank" rel="noopener">scale.json</a></span>
+      </footer>
+    </div>
+  </main>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <script>
+    const $ = (s,r=document)=>r.querySelector(s);
+    const toastEl=$('#toast');
+    function toast(m,ms=2600){ if(!toastEl) return; toastEl.textContent=m; toastEl.classList.add('show'); clearTimeout(toastEl._t); toastEl._t=setTimeout(()=>toastEl.classList.remove('show'),ms); }
+    async function load(){
+      try{
+        const res=await fetch('./scale.json',{cache:'no-store'});
+        if(!res.ok) throw new Error('HTTP '+res.status);
+        const j=await res.json();
+        render(j);
+      }catch(e){
+        $('#entropyAdvice').textContent='Không tải được scale.json — chạy: node .github/harness/scripts/cosmic-scale.mjs --json --out www/cosmos/scale.json ('+e.message+')';
+        $('#gaugeValue').textContent='—'; $('#gaugeLevel').textContent='no data'; $('#gaugeLevel').className='gauge-level';
+        toast('⚠️ Không tải được scale.json');
+      }
+    }
+    function render(j){
+      const S=j.entropy?.S ?? 0;
+      const level=j.entropy?.level || (S<10?'low':S<25?'medium':'high');
+      const advice=j.entropy?.advice || '';
+      $('#entropyAdvice').textContent=advice;
+      $('#gaugeValue').textContent=String(S);
+      const g=$('#gauge'); g.className='gauge '+level;
+      const gl=$('#gaugeLevel'); gl.textContent=level; gl.className='gauge-level '+level;
+      const parts=j.entropy?.parts || {};
+      const labels={mismatch:'mismatch ×10',drafts:'drafts ×5',refused:'refused ×2',disabled:'disabled ×1',failed:'failed ×5'};
+      const partsEl=$('#parts'); partsEl.innerHTML='';
+      for(const k of ['mismatch','drafts','refused','disabled','failed']){
+        const v=parts[k] ?? 0;
+        const row=document.createElement('div'); row.className='part';
+        row.innerHTML=`<span>${labels[k]}</span><b>${v}</b><i>${k==='mismatch'?v*10:k==='drafts'?v*5:k==='refused'?v*2:k==='failed'?v*5:v}</i>`;
+        partsEl.appendChild(row);
+      }
+      $('#generatedAt').textContent='Đo lúc: '+(j.generatedAt||'—')+' · by '+(j.generatedBy||'—');
+      const counts=j.counts||{};
+      const cg=$('#countsGrid'); cg.innerHTML='';
+      for(const [k,v] of [['KN',counts.knTotal],['Bugs',counts.bugsTotal],['Audit',counts.auditTotal]]){
+        const d=document.createElement('div'); d.className='meta-card'; d.innerHTML=`<b>${v??'—'}</b><span>${k}</span>`; cg.appendChild(d);
+      }
+      $('#policyBox').textContent='policy: '+(j.policy?.ok?'ok':'fail')+(j.policy?.error?' — '+j.policy.error:'');
+      const bh=j.blackHoles||[]; const list=$('#bhList'); list.innerHTML='';
+      if(bh.length===0){ list.innerHTML='<div class="card"><p>Không có black hole — vũ trụ sạch!</p></div>'; }
+      else bh.forEach(b=>{
+        const div=document.createElement('div'); div.className='bh-item '+(b.kind||'known'); div.setAttribute('role','listitem');
+        const icon=b.kind==='dynamic'?'⚠️':'🕳️';
+        div.innerHTML=`<div class="bh-icon" aria-hidden="true">${icon}</div><div class="bh-info"><strong>${b.id} — ${b.title}</strong><span>${b.kind}</span><code>Fix: ${b.fix}</code></div>`;
+        list.appendChild(div);
+      });
+      const mm=j.mismatches||[], ms=j.missing||[];
+      const mt=$('#mismatchText');
+      if(mm.length===0 && ms.length===0) mt.textContent='Không có drift — registry khớp filesystem ✅';
+      else mt.textContent=(mm.length? mm.length+' mismatch: '+mm.map(m=>m.type+'/'+m.name).join(', '):'')+(mm.length&&ms.length?' · ':'')+(ms.length? ms.length+' missing: '+ms.map(m=>m.type+'/'+m.name).join(', '):'');
+      const mc=$('#mismatchCode'); if(mm.length||ms.length){ mc.style.display='block'; mc.textContent=JSON.stringify({mismatches:mm,missing:ms},null,2); } else mc.style.display='none';
+    }
+    $('#btnRefresh')?.addEventListener('click', ()=>{ load(); toast('↻ Đã refresh'); });
+    $('#btnCopyCmd')?.addEventListener('click', async()=>{
+      const t='node .github/harness/scripts/cosmic-scale.mjs --json --out www/cosmos/scale.json';
+      try{ await navigator.clipboard.writeText(t); toast('📋 Đã copy lệnh'); }catch{ toast('Copy hụt — sếp copy tay nhé'); }
+    });
+    load();
+  </script>
+</body>
+</html>

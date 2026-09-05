@@ -16,7 +16,9 @@
     "harness-process": true,
     "harness-build-config": true,
     "harness-governance": true,
-    "harness-minimal": true
+    "harness-minimal": true,
+    "cosmic-quantum": true,
+    "cosmic-scale": true
   },
   "instructions": {
     "custom-registry": true,
@@ -31,7 +33,11 @@
     "auto-learn": true,
     "agent-governance": true,
     "platform-seam": true,
-    "minimal-ladder": true
+    "minimal-ladder": true,
+    "awesome-design": true,
+    "context-engineering": true,
+    "cosmic-quantum": true,
+    "cua-safety": true
   },
   "agents": {
     "designer": true,

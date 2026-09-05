@@ -1,5 +1,15 @@
-/* YUNIE Showcase — 74 styles · reuse www/styles.css tokens · vanilla */
-.showcase-hero .hero-card{ --glass-fill:rgba(255,255,255,0.76); }
+/* YUNIE Showcase — 74 styles · Linear vibe #5e6ad2 · seed 9f24... · Cut 30% */
+:root{
+  --color-primary:#5e6ad2;
+  --color-primary-600:#4f46e5;
+  --color-primary-50:#eef0ff;
+}
+.showcase-hero .hero-card{ --glass-fill:rgba(255,255,255,0.76); padding:18px; }
+.showcase-hero .hero-card h1{ letter-spacing:-.02em; }
+.showcase-hero .hero-card p{ max-width:62ch; }
+.hero-meta{ gap:8px; margin-top:12px; }
+.hero-actions{ margin-top:14px; gap:8px; }
+.status-bar{ margin:10px 0 8px; background:var(--color-neutral-50); border:1px solid var(--color-neutral-200); }
 .showcase-search-row{
   display:flex;gap:10px;align-items:center;flex-wrap:wrap;
   margin-top:16px;

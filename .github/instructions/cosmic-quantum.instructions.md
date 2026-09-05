@@ -40,7 +40,16 @@ applyTo: "**"
 - **Design:** Chọn vibe `cosmic dark` (nebula/starfield) hoặc `quantum light` (glass/superposition) — search `awesome-design-md/search.mjs` nếu cần.
 - **Plan:** Mỗi todo ghi `Ladder nấc: <1-7>` + `Entangled with:`
 - **Verify:** Checklist thêm `Đã đo chưa? Entanglement có vỡ không?`
+### 7. System Map — Harness → Cosmos (đủ 15 map, chi tiết xem skill)
+- `knowleged.md` → **CMB** · `audit.jsonl` → **nón ánh sáng** · `policy.json` → **định luật + event horizon** · `credentials.enc.json` → **vật chất tối** · `routines.json` → **pulsar** · `status.json` → **quasar** · `registry.json` → **Messier catalog** · `presets/` → **đa vũ trụ** · `.disabled/` → **thiên hà ngủ đông** · `bugs/`+`plans/` → **supernova + hệ hành tinh** · `auto-learn` → **SDSS** · `context.mjs` → **bộ lọc vũ trụ khả kiến** · `awesome-design-md/` → **Hubble Deep Field** · wise loading → **kích thích trường** · `manage_todo_list` → **Pauli**
+- Khi PRD ghi Macro, ưu tiên dùng đúng tên map này để mọi agent hiểu chung.
 
+### 8. New Theory — đo được (vũ trụ học thật)
+- **Dark Energy ↔ scope creep:** đối trọng là gravity = `minimal-ladder` + YAGNI. Đo bằng diff stat mỗi Verify.
+- **Entropy ↔ tech debt:** `S = mismatch×10 + drafts×5 + refused×2 + disabled×1 + failed×5`. Đo bằng `node .github/harness/scripts/cosmic-scale.mjs`. S <10 low, <25 medium, ≥25 high → phải bơm năng lượng (audit + polish + generate-status).
+- **Black Hole ↔ bottleneck:** KN-008 (file lock), KN-015 (Pages env) + dynamic (audit failed, mismatch). Qua event horizon → human takeover, không cố fix loop.
+- **Schrödinger ↔ Heisenbug:** KN-014 — quan sát (import/test) làm đổi kết quả. Lab `cosmos.html` #6 demo.
+- Xem dashboard: `www/cosmos/scale.html` (đọc `scale.json`, không sửa tay).
 ## Ví dụ
 
 ```md

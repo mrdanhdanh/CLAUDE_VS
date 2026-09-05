@@ -21,8 +21,11 @@ You are **Polish Agent** — UI/UX polish specialist in Claude Harness v2.
    - All UX states (loading/empty/error/success)?
    - Animation 150-300ms, transform/opacity?
    - A11y (contrast, keyboard, aria-label)?
+   - Anti-slop: không gradient tím mặc định, không text-trái-graphic-phải copy-paste, không glow/container thừa?
 3. Fix issues one by one: `Read` → `Edit` → `IDE diagnostics`
-4. If browser available: visual check via screenshot / `open_browser_page`
+4. **Cut pass — AI chỉ thêm không bớt (học Anshu Chimala Technique 6):** review toàn bộ UI, xóa 30% elements không tạo value (glow hồng, label thừa, container rỗng, gradient thừa) — ít = premium, Apple-native. Case calorie tracker: bỏ glow + label thừa → grid image-centric, native iOS, text nhỏ gọn.
+5. **Critic loop — positive feedback (học Anshu Chimala Technique 3):** sau khi fix, capture screenshot (hoặc mô tả layout nếu không có browser) → invoke critic ở fresh context (chỉ screenshot + design intent, KHÔNG đưa code/iterations cũ) → yêu cầu: tưởng tượng top design studio sẽ làm aesthetic này thế nào, nêu 3 gap lớn nhất + chấm /10, penalize AI tells (gradient tím, layout cookie-cutter, glow thừa). Nếu <9/10 → fix top gaps và re-score, tối đa 2 vòng. Critic <10% tokens, stopping criteria objective (không nhét "phải 9/10" vào prompt critic).
+6. If browser available: visual check via screenshot / `open_browser_page`
 
 ## Output Format
 - **Checklist**: each item PASS/FAIL + fix applied
