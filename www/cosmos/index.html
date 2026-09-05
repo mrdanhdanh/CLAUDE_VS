@@ -737,7 +737,7 @@
     @keyframes twinkle{0%{opacity:.15}100%{opacity:.35}}
     @keyframes spinSlow{to{transform:translate(-50%,-50%) rotate(360deg)}}
     .hero-visual-caption{position:absolute;bottom:0;left:50%;transform:translateX(-50%);font:500 10px var(--font-mono);letter-spacing:.06em;text-transform:uppercase;color:var(--cosmos-text-dim);background:rgba(0,0,0,.35);border:1px solid rgba(255,255,255,.08);padding:4px 10px;border-radius:var(--radius-full);white-space:nowrap;backdrop-filter:blur(8px)}
-    .nebula{position:absolute;border-radius:50%;filter:blur(18px);opacity:.5;pointer-events:none;z-index:1}
+    .nebula{position:absolute;border-radius:50%;filter:blur(18px);opacity:.5;pointer-events:none;z-index:1;will-change:transform;transition:transform .1s linear}
     .shooting{position:absolute;width:80px;height:1px;background:linear-gradient(90deg, transparent, rgba(255,255,255,.9), transparent);opacity:0;z-index:2;pointer-events:none}
     .hero-visual .shooting,.pillar-visual .shooting,.pipeline-visual .shooting{animation:shoot 3s ease-in-out infinite}
     .hero-visual .shooting.d2,.pillar-visual .shooting.d2,.pipeline-visual .shooting.d2{animation-delay:1.2s}
@@ -1783,27 +1783,68 @@ Process là định luật, verify là quan sát.`;
     });
     $('#btnLab')?.addEventListener('click', ()=> $('#lab')?.scrollIntoView({behavior:'smooth'}));
 
-    // ===== Scroll progress + Reveal + Parallax + Dots =====
+    // ===== Scroll progress + Reveal + Parallax Vũ Trụ + Dots =====
     (function(){
       const bar=$('#scrollProgressBar');
       const dots=[...document.querySelectorAll('.scroll-dot')];
       const sections=['hero','phil','pipeline','lab','integration','future'].map(id=>document.getElementById(id)).filter(Boolean);
       const orbs=[...document.querySelectorAll('.orb')];
+      const nebulas=[...document.querySelectorAll('.nebula')];
+      const heroInner=document.querySelector('.hero-visual-inner');
+      const heroBg=document.querySelector('.hero-bg');
+      const pillars=[...document.querySelectorAll('.pillar-visual')];
+      const pipeline=document.querySelector('.pipeline-visual');
+      const cards=[...document.querySelectorAll('.card')];
       const prefersReduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
-      // progress
+      let ticking=false;
+      // progress + parallax
       function onScroll(){
-        const h=document.documentElement;
-        const max=h.scrollHeight - h.clientHeight;
-        const p=max>0 ? (h.scrollTop/max)*100 : 0;
-        if(bar) bar.style.width=p.toFixed(2)+'%';
-        // parallax orbs
-        if(!prefersReduced){
-          const y=h.scrollTop;
-          orbs.forEach(o=>{
-            const s=parseFloat(o.dataset.speed||'0.15');
-            o.style.transform=`translateY(${y*s*0.3}px)`;
-          });
-        }
+        if(ticking) return;
+        ticking=true;
+        requestAnimationFrame(()=>{
+          const h=document.documentElement;
+          const max=h.scrollHeight - h.clientHeight;
+          const p=max>0 ? (h.scrollTop/max)*100 : 0;
+          if(bar) bar.style.width=p.toFixed(2)+'%';
+          // parallax vũ trụ — nebula trôi chậm, hero trôi nhẹ, orbs trôi vừa
+          if(!prefersReduced){
+            const y=h.scrollTop;
+            const vh=window.innerHeight;
+            orbs.forEach(o=>{
+              const s=parseFloat(o.dataset.speed||'0.15');
+              o.style.transform=`translate3d(0,${(y*s*0.35).toFixed(1)}px,0)`;
+            });
+            nebulas.forEach((el,i)=>{
+              const base=0.06 + (i%4)*0.03;
+              const rect=el.getBoundingClientRect();
+              const centerY=rect.top + rect.height/2;
+              const distFromCenter=(centerY - vh/2)/vh;
+              const offset=y*base*0.18 - distFromCenter*12;
+              el.style.transform=`translate3d(0,${offset.toFixed(1)}px,0)`;
+            });
+            if(heroInner){
+              heroInner.style.transform=`translate3d(0,${(y*0.07).toFixed(1)}px,0)`;
+            }
+            if(heroBg){
+              heroBg.style.transform=`translate3d(0,${(y*0.04).toFixed(1)}px,0)`;
+            }
+            pillars.forEach((el,i)=>{
+              const s=0.05 + (i%2)*0.03;
+              el.style.transform=`translate3d(0,${(y*s*0.12).toFixed(1)}px,0)`;
+            });
+            if(pipeline){
+              pipeline.style.transform=`translate3d(0,${(y*0.03).toFixed(1)}px,0)`;
+            }
+            cards.forEach((el,i)=>{
+              const rect=el.getBoundingClientRect();
+              const visible=rect.top < vh && rect.bottom > 0;
+              if(visible){
+                const progress=(vh - rect.top)/ (vh + rect.height);
+                const offset=(progress - 0.5)*8;
+                el.style.transform=`translate3d(0,${offset.toFixed(1)}px,0)`;
+              }
+            });
+          }
         // dots active
         if(dots.length && sections.length){
           let activeId=sections[0].id;
@@ -1813,6 +1854,8 @@ Process là định luật, verify là quan sát.`;
           }
           dots.forEach(d=>d.classList.toggle('active', d.dataset.target===activeId));
         }
+          ticking=false;
+        });
       }
       window.addEventListener('scroll', onScroll, {passive:true});
       window.addEventListener('resize', onScroll);
