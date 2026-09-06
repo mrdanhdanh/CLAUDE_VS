@@ -753,6 +753,113 @@
     .section-divider svg{display:block;width:100%;height:24px}
     .section-divider line{stroke:rgba(255,255,255,.06)}
     .section-divider circle{fill:rgba(124,58,237,.5)}
+
+    /* ===== System Map 15 vùng ===== */
+    .map-universe{display:grid;grid-template-columns:repeat(auto-fill,minmax(196px,1fr));gap:12px}
+    .map-node{
+      position:relative;text-align:left;color:inherit;font:inherit;
+      border:1px solid var(--cosmos-border);border-radius:var(--radius-md);
+      background:linear-gradient(180deg, rgba(255,255,255,.045), rgba(255,255,255,.015));
+      padding:14px;cursor:pointer;
+      transition:transform .18s ease, border-color .18s ease, box-shadow .18s ease, background .18s ease;
+    }
+    .map-node:hover{transform:translateY(-3px);border-color:rgba(124,58,237,.45);box-shadow:var(--shadow-md);background:linear-gradient(180deg, rgba(124,58,237,.10), rgba(255,255,255,.02))}
+    .map-node:focus-visible{outline:2px solid var(--cosmos-primary);outline-offset:2px}
+    .map-node.active{border-color:var(--cosmos-primary);box-shadow:0 0 0 1px var(--cosmos-primary), var(--shadow-md);background:linear-gradient(180deg, rgba(124,58,237,.14), rgba(255,255,255,.02))}
+    .map-node .map-ico{display:block;font-size:22px;line-height:1;margin-bottom:8px}
+    .map-node strong{display:block;font:700 13px/1.35 var(--font-display);color:#fff}
+    .map-node .map-file{display:block;margin-top:4px;font:500 10.5px/1.4 var(--font-mono);color:var(--cosmos-text-dim);word-break:break-all}
+    .map-node .map-idx{position:absolute;top:10px;right:12px;font:600 10px var(--font-mono);font-style:normal;color:var(--cosmos-text-dim)}
+    .map-detail{
+      margin-top:14px;border:1px solid var(--cosmos-border-strong);border-radius:var(--radius-md);
+      padding:16px 18px;background:rgba(255,255,255,.03);min-height:88px;
+      transition:border-color .2s ease;
+    }
+    .map-detail h4{margin:0 0 6px;font:700 15px/1.3 var(--font-display);color:#fff;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+    .map-detail h4 small{font:600 11px var(--font-mono);color:var(--cosmos-cyan);background:rgba(6,182,214,.1);border:1px solid rgba(6,182,214,.2);padding:3px 8px;border-radius:var(--radius-full)}
+    .map-detail p{margin:0 0 10px;font:400 13px/1.65 var(--font-sans);color:var(--cosmos-text-muted)}
+    .map-detail .map-link{font:600 12px var(--font-mono);color:var(--cosmos-cyan);text-decoration:none;border-bottom:1px dashed rgba(6,182,214,.4)}
+    .map-detail .map-link:hover{color:#67e8f9}
+
+    /* ===== Cosmic Calendar ===== */
+    .calendar-wrap{position:relative}
+    .calendar-track{display:flex;gap:14px;overflow-x:auto;padding:20px 2px 24px;scroll-snap-type:x proximity}
+    .calendar-track::-webkit-scrollbar{height:8px}
+    .calendar-track::-webkit-scrollbar-thumb{background:rgba(124,58,237,.35);border-radius:8px}
+    .calendar-track::-webkit-scrollbar-track{background:rgba(255,255,255,.05);border-radius:8px}
+    .calendar-line{position:absolute;top:2px;left:0;right:0;height:2px;background:linear-gradient(90deg, transparent, rgba(124,58,237,.4) 6%, rgba(6,182,214,.4) 55%, rgba(245,158,11,.4) 94%, transparent);pointer-events:none}
+    .era{
+      position:relative;flex:0 0 210px;scroll-snap-align:start;text-align:left;color:inherit;font:inherit;
+      border:1px solid var(--cosmos-border);border-radius:var(--radius-md);
+      background:linear-gradient(180deg, rgba(255,255,255,.045), rgba(255,255,255,.015));
+      padding:16px 14px 14px;cursor:pointer;
+      transition:transform .18s ease, border-color .18s ease, box-shadow .18s ease;
+    }
+    .era::before{content:"";position:absolute;top:-19px;left:0;right:0;height:3px;border-radius:3px;background:linear-gradient(90deg, var(--cosmos-primary), var(--cosmos-cyan));opacity:.85}
+    .era:hover{transform:translateY(-3px);border-color:rgba(6,182,214,.5);box-shadow:var(--shadow-md)}
+    .era:focus-visible{outline:2px solid var(--cosmos-cyan);outline-offset:2px}
+    .era.active{border-color:var(--cosmos-cyan);box-shadow:0 0 0 1px var(--cosmos-cyan), var(--shadow-md)}
+    .era .era-num{font:600 10px var(--font-mono);letter-spacing:.1em;color:var(--cosmos-cyan)}
+    .era h4{margin:6px 0 4px;font:800 15px/1.25 var(--font-display);color:#fff}
+    .era .era-phase{display:inline-block;margin:4px 0 8px;font:600 10.5px var(--font-mono);color:#fff;background:rgba(124,58,237,.28);border:1px solid rgba(124,58,237,.45);padding:3px 8px;border-radius:var(--radius-full)}
+    .era p{margin:0 0 8px;font:400 12px/1.55 var(--font-sans);color:var(--cosmos-text-muted)}
+    .era .era-out{font:500 11px var(--font-mono);color:var(--cosmos-accent)}
+    .era-detail{
+      margin-top:6px;border:1px solid var(--cosmos-border-strong);border-radius:var(--radius-md);
+      padding:14px 18px;background:rgba(255,255,255,.03);
+    }
+    .era-detail p{margin:0;font:400 13px/1.65 var(--font-sans);color:var(--cosmos-text-muted)}
+    .era-detail p b{color:var(--cosmos-text)}
+
+    /* ===== Observatory — Event Horizon + Dark Energy ===== */
+    .obs-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+    @media(max-width:900px){.obs-grid{grid-template-columns:1fr}}
+    .obs-panel{border:1px solid var(--cosmos-border);border-radius:var(--radius-lg);padding:18px;background:linear-gradient(180deg, rgba(255,255,255,.035), rgba(255,255,255,.012));display:flex;flex-direction:column;gap:12px;min-width:0}
+    .obs-panel-head{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
+    .obs-panel-head h4{margin:0;font:700 14px var(--font-display);color:#fff;display:flex;align-items:center;gap:8px}
+    .chain-badge{font:600 11px var(--font-mono);padding:4px 10px;border-radius:var(--radius-full);border:1px solid rgba(16,185,129,.35);background:rgba(16,185,129,.12);color:#34d399}
+    .chain-badge.broken{border-color:rgba(239,68,68,.4);background:rgba(239,68,68,.12);color:#f87171}
+    .chain-badge.loading{border-color:var(--cosmos-border);background:rgba(255,255,255,.05);color:var(--cosmos-text-dim)}
+    .chain-list{display:flex;flex-direction:column;gap:8px;max-height:300px;overflow-y:auto;padding-right:2px}
+    .chain-list::-webkit-scrollbar{width:6px}
+    .chain-list::-webkit-scrollbar-thumb{background:rgba(124,58,237,.35);border-radius:6px}
+    .chain-row{
+      display:grid;grid-template-columns:10px 1fr auto;gap:10px;align-items:start;
+      font:500 11.5px/1.5 var(--font-mono);color:var(--cosmos-text-muted);
+      padding:9px 12px;border:1px solid var(--cosmos-border);border-radius:10px;background:rgba(255,255,255,.02);
+      transition:border-color .15s ease, background .15s ease;
+    }
+    .chain-row:hover{border-color:rgba(255,255,255,.16);background:rgba(255,255,255,.04)}
+    .chain-dot{width:8px;height:8px;border-radius:50%;margin-top:4px;box-shadow:0 0 8px currentColor;background:currentColor}
+    .chain-dot.permitted{color:var(--cosmos-success)}
+    .chain-dot.refused{color:var(--cosmos-pink)}
+    .chain-dot.failed{color:var(--cosmos-accent)}
+    .chain-row .chain-target{color:var(--cosmos-text);word-break:break-all}
+    .chain-row .chain-meta{font-size:10px;color:var(--cosmos-text-dim);text-align:right;white-space:nowrap}
+    .chain-row .chain-meta b{display:block;font-size:10.5px;font-weight:600}
+    .chain-row .chain-meta b.permitted{color:var(--cosmos-success)}
+    .chain-row .chain-meta b.refused{color:var(--cosmos-pink)}
+    .chain-row .chain-meta b.failed{color:var(--cosmos-accent)}
+    .horizon-callout{
+      display:none;align-items:flex-start;gap:10px;
+      border:1px solid rgba(236,72,153,.35);background:rgba(236,72,153,.08);
+      border-radius:var(--radius-md);padding:12px 14px;
+      font:400 12.5px/1.6 var(--font-sans);color:var(--cosmos-text);
+    }
+    .horizon-callout.show{display:flex;animation:callout-in .25s ease}
+    @keyframes callout-in{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
+    .horizon-callout b{color:#f9a8d4}
+    .de-stats{display:flex;flex-wrap:wrap;gap:8px}
+    .de-stat{display:inline-flex;flex-direction:column;gap:2px;flex:1;min-width:104px;border:1px solid var(--cosmos-border);border-radius:var(--radius-sm);padding:10px 12px;background:rgba(255,255,255,.02)}
+    .de-stat span{font:500 10px var(--font-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--cosmos-text-dim)}
+    .de-stat b{font:800 20px/1.1 var(--font-display);color:#fff}
+    .de-stat b small{font:600 12px var(--font-mono);color:var(--cosmos-text-muted)}
+    .de-stat.warn b{color:#fbbf24}
+    .de-stat.hot b{color:#f87171}
+    .spark-wrap{border:1px solid var(--cosmos-border);border-radius:var(--radius-sm);padding:10px;background:rgba(6,10,24,.45)}
+    .spark-canvas{display:block;width:100%;height:150px}
+    .de-hint{font:500 11.5px/1.6 var(--font-mono);color:var(--cosmos-text-dim);margin:0}
+    .de-hint b{color:var(--cosmos-text-muted)}
     /* ===== Scroll dots (desktop) ===== */
     .scroll-dots{position:fixed;right:16px;top:50%;transform:translateY(-50%);z-index:30;display:none;flex-direction:column;gap:10px}
     @media(min-width:1100px){.scroll-dots{display:flex}}
@@ -790,7 +897,10 @@
     <button class="scroll-dot active" data-target="hero" aria-label="Hero"></button>
     <button class="scroll-dot" data-target="phil" aria-label="Triết lý"></button>
     <button class="scroll-dot" data-target="pipeline" aria-label="Pipeline"></button>
+    <button class="scroll-dot" data-target="map" aria-label="Bản đồ thiên hà"></button>
+    <button class="scroll-dot" data-target="calendar" aria-label="Lịch vũ trụ"></button>
     <button class="scroll-dot" data-target="lab" aria-label="Lab"></button>
+    <button class="scroll-dot" data-target="observatory" aria-label="Đài quan sát"></button>
     <button class="scroll-dot" data-target="integration" aria-label="Tích hợp"></button>
     <button class="scroll-dot" data-target="future" aria-label="Tương lai"></button>
   </nav>
@@ -1243,6 +1353,67 @@
               </div>
               <div class="lab-hint">Peek = quan sát nhẹ (import) cũng làm đổi kết quả — Heisenbug!</div>
             </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="section-divider" aria-hidden="true"><svg viewBox="0 0 1120 24" preserveAspectRatio="none"><line x1="0" y1="12" x2="520" y2="12" stroke-width="1"/><circle cx="560" cy="12" r="3" fill="rgba(6,182,214,.5)"/><line x1="600" y1="12" x2="1120" y2="12" stroke-width="1"/></svg></div>
+    <!-- System Map -->
+    <section class="section reveal" id="map" aria-labelledby="map-title">
+      <div class="container">
+        <div class="section-head">
+          <h2 id="map-title"><small>Bản đồ thiên hà</small>System Map — Harness → Cosmos</h2>
+          <p>15 vùng của vũ trụ Harness. Chạm 1 node để xem nó ứng với <b>file thật</b> nào trong hệ thống.</p>
+        </div>
+        <div class="map-universe" id="mapUniverse" role="group" aria-label="15 vùng vũ trụ Harness"></div>
+        <div class="map-detail" id="mapDetail" aria-live="polite"></div>
+      </div>
+    </section>
+
+    <div class="section-divider" aria-hidden="true"><svg viewBox="0 0 1120 24" preserveAspectRatio="none"><line x1="0" y1="12" x2="520" y2="12" stroke-width="1"/><circle cx="560" cy="12" r="3" fill="rgba(236,72,153,.5)"/><line x1="600" y1="12" x2="1120" y2="12" stroke-width="1"/></svg></div>
+    <!-- Cosmic Calendar -->
+    <section class="section reveal" id="calendar" aria-labelledby="calendar-title">
+      <div class="container">
+        <div class="section-head">
+          <h2 id="calendar-title"><small>Lịch vũ trụ</small>Pipeline 8 phase = Lịch sử vũ trụ</h2>
+          <p>Nén 13.8 tỷ năm thành 1 pipeline. Mỗi phase là một <b>kỷ nguyên</b> — cuộn ngang và chạm từng kỷ nguyên.</p>
+        </div>
+        <div class="calendar-wrap">
+          <div class="calendar-line" aria-hidden="true"></div>
+          <div class="calendar-track" id="calendarTrack" role="group" aria-label="9 kỷ nguyên của pipeline"></div>
+        </div>
+        <div class="era-detail" id="eraDetail" aria-live="polite"></div>
+      </div>
+    </section>
+
+    <div class="section-divider" aria-hidden="true"><svg viewBox="0 0 1120 24" preserveAspectRatio="none"><line x1="0" y1="12" x2="520" y2="12" stroke-width="1"/><circle cx="560" cy="12" r="3" fill="rgba(124,58,237,.5)"/><line x1="600" y1="12" x2="1120" y2="12" stroke-width="1"/></svg></div>
+    <!-- Observatory -->
+    <section class="section reveal" id="observatory" aria-labelledby="observatory-title">
+      <div class="container">
+        <div class="section-head">
+          <h2 id="observatory-title"><small>Đài quan sát</small>Event Horizon + Dark Energy</h2>
+          <p>Đo dữ liệu thật của vũ trụ: chuỗi audit <b>audit.jsonl</b> (nón ánh sáng) và entropy <b>scale.json</b> (giãn nở).</p>
+        </div>
+        <div class="obs-grid">
+          <div class="obs-panel">
+            <div class="obs-panel-head">
+              <h4>🕳️ Event Horizon — chuỗi audit</h4>
+              <span class="chain-badge loading" id="chainBadge">Đang quan sát…</span>
+            </div>
+            <div class="chain-list" id="chainList" aria-live="polite"></div>
+            <div class="horizon-callout" id="horizonCallout" role="alert"></div>
+          </div>
+          <div class="obs-panel">
+            <div class="obs-panel-head">
+              <h4>🌌 Dark Energy — vũ trụ giãn nhanh không?</h4>
+              <span class="chain-badge loading" id="deBadge">Đang đo…</span>
+            </div>
+            <div class="de-stats" id="deStats"></div>
+            <div class="spark-wrap">
+              <canvas class="spark-canvas" id="deSpark" aria-label="Sparkline entropy S theo thời gian" role="img"></canvas>
+            </div>
+            <p class="de-hint" id="deHint">—</p>
           </div>
         </div>
       </div>
@@ -1795,11 +1966,216 @@ Process là định luật, verify là quan sát.`;
     });
     $('#btnLab')?.addEventListener('click', ()=> $('#lab')?.scrollIntoView({behavior:'smooth'}));
 
+    // ===== System Map 15 vùng — Harness → Cosmos =====
+    (function(){
+      const MAPS=[
+        {ico:'📡', map:'CMB — Bức xạ nền', file:'docs/knowleged.md', link:'../../docs/knowleged.md', desc:'Tri thức gốc của vũ trụ — bài học từ bug (KN-001→015). Mọi agent PHẢI đọc trước khi code: đây là phông nền mà mọi quyết định in trên đó.'},
+        {ico:'💡', map:'Nón ánh sáng', file:'.agent/audit.jsonl', link:'../../.agent/audit.jsonl', desc:'Append-only + hash-chain: mọi event để lại dấu vết nhân quả, không ai sửa được quá khứ. Chain vỡ = nghịch lý thời gian → điều tra ngay.'},
+        {ico:'⚖️', map:'Định luật + Event Horizon', file:'.agent/policy.json', link:'../../.agent/policy.json', desc:'Deny trước allow, fail-closed. Qua event horizon (refused) là phải human takeover — agent không tự fix loop.'},
+        {ico:'🌑', map:'Vật chất tối', file:'.agent/credentials.enc.json', link:'', desc:'Tồn tại, có khối lượng (AES-256-GCM) nhưng không nhìn thấy trực tiếp — never logged, không plain trong .env.'},
+        {ico:'📶', map:'Pulsar', file:'.agent/routines.json', link:'', desc:'Nhịp phát đều theo cron (floor 15m, cap 20, 10 fails → off). Kỷ luật lịch trình như nhịp xung sao neutron.'},
+        {ico:'🌟', map:'Quasar', file:'www/status.json', link:'../status.json', desc:'Nguồn sáng trung tâm — regenerate từ registry.json, không sửa tay. JSON.parse + serve 200 mới là thật (KN-002).'},
+        {ico:'🗂️', map:'Catalog Messier', file:'.github/harness/registry.json', link:'', desc:'Danh mục mọi thiên hà: skill/instruction/agent/prompt/hook. Source of truth — sync sau khi clone.'},
+        {ico:'🫧', map:'Đa vũ trụ', file:'.github/harness/presets/', link:'', desc:'Mỗi preset là 1 vũ trụ con (web-product, api-minimal, lean-product). Chọn preset = chọn vũ trụ để sống.'},
+        {ico:'😴', map:'Thiên hà ngủ đông', file:'**/.disabled/', link:'', desc:'Tồn tại nhưng tắt — không load, không gợi ý. Enable khi task thực sự cần, không nhồi 20 thứ cùng lúc.'},
+        {ico:'💥', map:'Supernova', file:'.agent/bugs/', link:'', desc:'Mỗi bug nổ tung rồi để lại nguyên tố nặng: bug.md + KN-XXX. Không để lỗi trôi — log ngay, fix sau.'},
+        {ico:'🪐', map:'Hệ hành tinh', file:'.agent/plans/', link:'', desc:'PRD/Design/Plan quay quanh 1 task như hành tinh quay quanh sao. Thư mục/task, cấm flat.'},
+        {ico:'🔭', map:'SDSS — khảo sát trời', file:'auto-learn.mjs', link:'', desc:'Suggest KN trước khi code, auto-log khi lỗi, propose sau fix — khảo sát tự học liên tục, không bỏ sót vùng trời.'},
+        {ico:'🪟', map:'Bộ lọc khả kiến', file:'context.mjs', link:'', desc:'Quarantine → compress → isolate → inspect: chỉ thấy dải sáng an toàn, chặn prompt-injection và secret lọt vào.'},
+        {ico:'🌠', map:'Hubble Deep Field', file:'awesome-design-md/', link:'', desc:'74 dải thiên hà thiết kế (DESIGN.md) — mỗi vibe là 1 mảnh trời sâu để chọn tokens.'},
+        {ico:'⚡', map:'Kích thích trường', file:'wise loading', link:'', desc:'Không kích hoạt toàn trường — chỉ load skill/instruction khi description/applyTo match task. Progressive disclosure.'}
+      ];
+      const grid=$('#mapUniverse'), detail=$('#mapDetail');
+      if(!grid || !detail) return;
+      const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+      function renderDetail(i){
+        const m=MAPS[i];
+        detail.innerHTML=`<h4>${m.ico} ${esc(m.map)} <small>${esc(m.file)}</small></h4><p>${esc(m.desc)}</p>${m.link?`<a class="map-link" href="${m.link}" target="_blank" rel="noopener">→ mở ${esc(m.file)} ↗</a>`:''}`;
+      }
+      MAPS.forEach((m,i)=>{
+        const b=document.createElement('button');
+        b.type='button'; b.className='map-node'; b.setAttribute('aria-pressed','false');
+        b.innerHTML=`<em class="map-idx">${String(i+1).padStart(2,'0')}</em><span class="map-ico" aria-hidden="true">${m.ico}</span><strong>${esc(m.map)}</strong><span class="map-file">${esc(m.file)}</span>`;
+        b.addEventListener('click', ()=>{
+          $$('.map-node', grid).forEach(n=>{n.classList.remove('active'); n.setAttribute('aria-pressed','false');});
+          b.classList.add('active'); b.setAttribute('aria-pressed','true');
+          renderDetail(i);
+        });
+        grid.appendChild(b);
+      });
+      grid.querySelector('.map-node')?.click();
+    })();
+
+    // ===== Cosmic Calendar — pipeline = lịch sử vũ trụ =====
+    (function(){
+      const ERAS=[
+        {era:'Big Bang', phase:'Idea', desc:'Mọi thứ nổ ra từ 1 điểm kỳ dị — 1 câu ý tưởng, chưa có cấu trúc.', out:'1 câu ý tưởng'},
+        {era:'Inflation', phase:'Explore', desc:'Giãn nở chóng mặt: khảo sát codebase, stack, pattern — không gian mở rộng trước khi hình thành gì.', out:'Tóm tắt stack + file liên quan'},
+        {era:'Recombination', phase:'Clarify', desc:'Ánh sáng tách khỏi bóng tối: superposition 3 hướng sụp đổ còn 1 — giả định được chốt.', out:'Giả định chốt (collapse)'},
+        {era:'CMB', phase:'PRD', desc:'Bức xạ nền vi sóng: định luật được ghi thành văn bản — spec còn sót lại mãi, mọi phase sau đo trên đó.', out:'prd.md'},
+        {era:'First Stars', phase:'Design', desc:'Ánh sáng đầu tiên bừng lên: design system hình thành — palette, typography, states.', out:'design.md'},
+        {era:'Solar System', phase:'Plan', desc:'Hành tinh vào quỹ đạo: task chia nhỏ, todo rõ ràng, entanglement ghi rõ — không va chạm hỗn loạn.', out:'plan.md + todos'},
+        {era:'Stellar Era', phase:'Implement', desc:'Fusion cháy: code được viết todo-driven, mỗi edit đo bằng get_errors — năng lượng thành nguyên tố.', out:'Files + get_errors sạch'},
+        {era:'Heavy Elements', phase:'Polish', desc:'Vàng bạc được tinh luyện trong sao: responsive 375/768/1280, states, animation, a11y.', out:'UI đạt product quality'},
+        {era:'Observation', phase:'Verify', desc:'Kính thiên văn bật lên: không đo = không biết. Build/test/visual + bằng chứng thật, không claim suông.', out:'Build/test pass + evidence'}
+      ];
+      const track=$('#calendarTrack'), detail=$('#eraDetail');
+      if(!track || !detail) return;
+      const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+      function renderDetail(i){
+        const e=ERAS[i];
+        detail.innerHTML=`<p><b>${String(i+1).padStart(2,'0')} · ${esc(e.era)} — kỷ nguyên ${esc(e.phase)}.</b> Sản phẩm chấm dứt kỷ nguyên này khi có: <b>${esc(e.out)}</b>. ${esc(e.desc)}</p>`;
+      }
+      ERAS.forEach((e,i)=>{
+        const b=document.createElement('button');
+        b.type='button'; b.className='era'; b.setAttribute('aria-pressed','false');
+        b.innerHTML=`<span class="era-num">ERA ${String(i+1).padStart(2,'0')} / ${ERAS.length}</span><h4>${esc(e.era)}</h4><span class="era-phase">${esc(e.phase)}</span><p>${esc(e.desc)}</p><span class="era-out">→ ${esc(e.out)}</span>`;
+        b.addEventListener('click', ()=>{
+          $$('.era', track).forEach(n=>{n.classList.remove('active'); n.setAttribute('aria-pressed','false');});
+          b.classList.add('active'); b.setAttribute('aria-pressed','true');
+          renderDetail(i);
+        });
+        track.appendChild(b);
+      });
+      track.querySelector('.era')?.click();
+    })();
+
+    // ===== Observatory — Event Horizon (audit chain) + Dark Energy (scale history) =====
+    (function(){
+      const badge=$('#chainBadge'), list=$('#chainList'), callout=$('#horizonCallout');
+      const deBadge=$('#deBadge'), deStats=$('#deStats'), spark=$('#deSpark'), deHint=$('#deHint');
+      const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+      const fmtTime=ts=>{ try{ return new Date(ts).toLocaleString('vi-VN',{hour12:false}); }catch{ return String(ts); } };
+
+      // fallback demo — chain nhất quán (prevHash = hash trước đó)
+      const DEMO_AUDIT=[
+        {ts:'2026-09-06T09:09:00.653Z',actor:'YUNIE',tool:'edit',target:'www/cosmos.html',decision:'permitted',rule:'allow-all',prevHash:'GENESIS',hash:'0a2fbeaf3018eda2'},
+        {ts:'2026-09-06T09:09:00.756Z',actor:'YUNIE',tool:'edit',target:'www/cosmos/index.html',decision:'permitted',rule:'allow-all',prevHash:'0a2fbeaf3018eda2',hash:'2fbe0d021293a642'},
+        {ts:'2026-09-06T09:10:12.100Z',actor:'Implement',tool:'shell',target:'rm -rf /',decision:'refused',rule:'deny-rm-rf-root',prevHash:'2fbe0d021293a642',hash:'c41d9e07a2b63381'},
+        {ts:'2026-09-06T09:12:40.480Z',actor:'YUNIE',tool:'read',target:'www/index.html',decision:'permitted',rule:'allow-read-www',prevHash:'c41d9e07a2b63381',hash:'9de701b5cc42af10'}
+      ];
+      const DEMO_SCALE={
+        entropy:{S:12, level:'medium'},
+        history:[{t:'2026-09-04T09:00:00Z',S:0},{t:'2026-09-04T18:00:00Z',S:0},{t:'2026-09-05T10:00:00Z',S:3},{t:'2026-09-05T19:00:00Z',S:8},{t:'2026-09-06T08:00:00Z',S:12},{t:'2026-09-06T09:22:04Z',S:12}]
+      };
+
+      async function loadAudit(){
+        try{
+          const res=await fetch('../../.agent/audit.jsonl',{cache:'no-store'});
+          if(!res.ok) throw 0;
+          const events=(await res.text()).split('\n').map(l=>l.trim()).filter(Boolean).map(JSON.parse);
+          if(!Array.isArray(events) || !events.length) throw 0;
+          return {events, real:true};
+        }catch{ return {events:DEMO_AUDIT, real:false}; }
+      }
+      function renderChain(events, real){
+        let broken=false;
+        for(let i=1;i<events.length;i++){
+          if(events[i].prevHash && events[i-1].hash && events[i].prevHash!==events[i-1].hash){ broken=true; break; }
+        }
+        badge.textContent = broken ? '⚠️ Chain vỡ!' : (real ? '✅ Chain OK — dữ liệu thật' : '✅ Chain OK — demo');
+        badge.classList.toggle('broken', broken);
+        badge.classList.remove('loading');
+        list.innerHTML = events.slice().reverse().map(ev=>`
+          <div class="chain-row">
+            <span class="chain-dot ${esc(ev.decision)}" aria-hidden="true"></span>
+            <span class="chain-target">${esc(ev.actor)} · ${esc(ev.tool)} · ${esc(ev.target)}<br><span style="color:var(--cosmos-text-dim)">${esc(ev.rule||'')}</span></span>
+            <span class="chain-meta"><b class="${esc(ev.decision)}">${esc(ev.decision)}</b>${esc(fmtTime(ev.ts))}</span>
+          </div>`).join('');
+        const swallowed=events.filter(e=>e.decision==='refused'||e.decision==='failed');
+        if(broken){
+          callout.classList.add('show');
+          callout.innerHTML=`<span aria-hidden="true">⏳</span><span><b>Nghịch lý thời gian!</b> Chuỗi hash không liền mạch — có event bị sửa/xen giữa. Chạy <b>audit.mjs verify</b> và điều tra ngay.</span>`;
+        } else if(swallowed.length){
+          callout.classList.add('show');
+          callout.innerHTML=`<span aria-hidden="true">🕳️</span><span><b>${swallowed.length} sự kiện rơi qua chân trời sự kiện</b> (refused/failed) — qua event horizon là phải <b>human takeover</b>, agent không tự fix loop.</span>`;
+        } else {
+          callout.classList.remove('show');
+        }
+      }
+
+      async function loadScale(){
+        try{
+          const res=await fetch('./scale.json',{cache:'no-store'});
+          if(!res.ok) throw 0;
+          const j=await res.json();
+          if(!j || !Array.isArray(j.history) || !j.history.length) throw 0;
+          return {data:j, real:true};
+        }catch{ return {data:DEMO_SCALE, real:false}; }
+      }
+      function renderScale(data, real){
+        const hist=data.history;
+        const S=data.entropy?.S ?? hist[hist.length-1].S;
+        const first=hist[0].S ?? 0, last=hist[hist.length-1].S ?? 0;
+        const dS=last-first;
+        const level=(data.entropy?.level || (S>=25?'high':S>=10?'medium':'low')).toUpperCase();
+        deStats.innerHTML=`
+          <div class="de-stat ${S>=25?'hot':S>=10?'warn':''}"><span>Entropy S</span><b>${Number(S)} <small>${level}</small></b></div>
+          <div class="de-stat"><span>ΔS giãn nở</span><b>${dS>0?'+':''}${Number(dS)}</b></div>
+          <div class="de-stat"><span>Điểm đo</span><b>${hist.length}</b></div>`;
+        deBadge.textContent = real ? '✅ scale.json — thật' : '⚠️ demo (fetch fail)';
+        deBadge.classList.remove('loading','broken');
+        if(!real) deBadge.classList.add('broken');
+        deHint.innerHTML = dS>0
+          ? `<b>Dark Energy thắng:</b> S tăng +${dS} — vũ trụ giãn (scope creep). Đối trọng là gravity: minimal-ladder + YAGNI, đo lại bằng cosmic-scale.mjs.`
+          : dS<0
+            ? `<b>Gravity thắng:</b> S giảm ${dS} — vũ trụ co lại (audit + polish có hiệu lực). Giữ nhịp!`
+            : `<b>Cân bằng:</b> S giữ nguyên ${S} — vũ trụ ổn định. Giữ nhịp audit + generate-status đều.`;
+        drawSpark(hist);
+      }
+      function drawSpark(hist){
+        const c=spark; if(!c) return;
+        const dpr=Math.min(devicePixelRatio||1, 2);
+        const rect=c.getBoundingClientRect();
+        const w=rect.width||420, h=rect.height||150;
+        c.width=w*dpr; c.height=h*dpr;
+        const ctx=c.getContext('2d');
+        ctx.setTransform(dpr,0,0,dpr,0,0);
+        ctx.clearRect(0,0,w,h);
+        const pad=16;
+        const vals=hist.map(p=>Number(p.S)||0);
+        const max=Math.max(30, ...vals);
+        const x=i=> pad + (w-2*pad)*(hist.length===1 ? 0.5 : i/(hist.length-1));
+        const y=v=> h-pad - (h-2*pad)*(v/max);
+        // ngưỡng S=10 / S=25
+        ctx.setLineDash([4,4]); ctx.strokeStyle='rgba(255,255,255,.08)'; ctx.lineWidth=1;
+        [[10,'S=10 medium'],[25,'S=25 high']].forEach(([t,label])=>{
+          ctx.beginPath(); ctx.moveTo(pad,y(t)); ctx.lineTo(w-pad,y(t)); ctx.stroke();
+          ctx.fillStyle='rgba(148,163,184,.7)'; ctx.font='9px JetBrains Mono, monospace';
+          ctx.fillText(label, pad+4, y(t)-4);
+        });
+        ctx.setLineDash([]);
+        // vùng gradient
+        const grad=ctx.createLinearGradient(0,0,0,h);
+        grad.addColorStop(0,'rgba(124,58,237,.32)'); grad.addColorStop(1,'rgba(6,182,214,0)');
+        ctx.beginPath(); ctx.moveTo(x(0), y(vals[0]));
+        vals.forEach((v,i)=>ctx.lineTo(x(i), y(v)));
+        ctx.lineTo(x(vals.length-1), h-pad); ctx.lineTo(x(0), h-pad); ctx.closePath();
+        ctx.fillStyle=grad; ctx.fill();
+        // đường S
+        const lg=ctx.createLinearGradient(0,0,w,0);
+        lg.addColorStop(0,'#7c3aed'); lg.addColorStop(.6,'#06b6d4'); lg.addColorStop(1,'#f59e0b');
+        ctx.beginPath(); ctx.moveTo(x(0), y(vals[0]));
+        vals.forEach((v,i)=>ctx.lineTo(x(i), y(v)));
+        ctx.strokeStyle=lg; ctx.lineWidth=2; ctx.stroke();
+        // điểm
+        vals.forEach((v,i)=>{
+          ctx.beginPath(); ctx.arc(x(i), y(v), 3, 0, Math.PI*2);
+          ctx.fillStyle = i===vals.length-1 ? '#fbbf24' : '#22d3ee';
+          ctx.fill();
+        });
+      }
+      let lastData=null, lastReal=false;
+      window.addEventListener('resize', ()=>{ if(lastData) drawSpark(lastData.history); });
+      loadAudit().then(({events, real})=>renderChain(events, real));
+      loadScale().then(({data, real})=>{ lastData=data; lastReal=real; renderScale(data, real); });
+    })();
+
     // ===== Scroll progress + Reveal + Parallax Vũ Trụ + Dots =====
     (function(){
       const bar=$('#scrollProgressBar');
       const dots=[...document.querySelectorAll('.scroll-dot')];
-      const sections=['hero','phil','pipeline','lab','integration','future'].map(id=>document.getElementById(id)).filter(Boolean);
+      const sections=['hero','phil','pipeline','map','calendar','lab','observatory','integration','future'].map(id=>document.getElementById(id)).filter(Boolean);
       const orbs=[...document.querySelectorAll('.orb')];
       const nebulas=[...document.querySelectorAll('.nebula')];
       const heroInner=document.querySelector('.hero-visual-inner');
