@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-06T08:28:01.014Z",
+  "generatedAt": "2026-09-05T14:48:38.249Z",
   "generatedBy": "YUNIE × Last30Days",
   "version": 2,
   "description": "Tin AI mới nhất — tổng hợp từ Last30Days (HN, GitHub, Web) trong 30 ngày qua. Chủ đề: AI. Tự động cập nhật bởi YUNIE.",
@@ -51,11 +51,27 @@
   ],
   "articles": [
     {
-      "id": "hn-49583823",
-      "title": "An advanced attacker is targeting Salesforce and ServiceNow instances worldwide",
-      "summary": "An advanced attacker is targeting Salesforce and ServiceNow instances worldwide — 5 points, 0 comments on HN.",
+      "id": "hn-49576187",
+      "title": "AMD unveils Threadripper Halo Station, an AI workstation packing 96 cores",
+      "summary": "AMD unveils Threadripper Halo Station, an AI workstation packing 96 cores — 5 points, 0 comments on HN.",
       "source": "Hacker News",
-      "sourceUrl": "https://www.reco.ai/blog/city-forum-campaign-salesforce-servicenow",
+      "sourceUrl": "https://www.tomshardware.com/pc-components/cpus/amd-unveils-threadripper-halo-station-an-ai-workstation-packing-96-cores-and-dual-liquid-cooled-mi350p-accelerators-the-most-powerful-workstation-in-the-world-can-run-trillion-parameter-models-says-amd",
+      "category": "safety",
+      "date": "2026-09-05",
+      "hot": true,
+      "tags": [
+        "HN",
+        "AI",
+        "story",
+        "author_Levitating"
+      ]
+    },
+    {
+      "id": "hn-49576164",
+      "title": "I built an AI junior trader. It forked its own constitution",
+      "summary": "I built an AI junior trader. It forked its own constitution — 4 points, 1 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://www.haipa.ai/blog/no-rogue-ai-traders",
       "category": "products",
       "date": "2026-09-06",
       "hot": true,
@@ -63,47 +79,31 @@
         "HN",
         "AI",
         "story",
-        "author_daretograsp"
+        "author_lostnfound8778"
       ]
     },
     {
-      "id": "hn-49583356",
-      "title": "WeatherNext 3: Hourly global weather forecasts using live satellite data",
-      "summary": "WeatherNext 3: Hourly global weather forecasts using live satellite data — 4 points, 0 comments on HN.",
+      "id": "hn-49576243",
+      "title": "AI doesn't suck, people do",
+      "summary": "AI doesn't suck, people do — 3 points, 5 comments on HN.",
       "source": "Hacker News",
-      "sourceUrl": "https://blog.google/innovation-and-ai/models-and-research/google-deepmind/introducing-weathernext-3/",
+      "sourceUrl": "https://catalins.tech/ai-fatigue/",
       "category": "products",
-      "date": "2026-09-06",
-      "hot": true,
-      "tags": [
-        "HN",
-        "AI",
-        "story",
-        "author_fourfire"
-      ]
-    },
-    {
-      "id": "hn-49583994",
-      "title": "Show HN: I built a small arena where AI write robot and then fight each other",
-      "summary": "Show HN: I built a small arena where AI write robot and then fight each other — 3 points, 0 comments on HN.",
-      "source": "Hacker News",
-      "sourceUrl": "https://github.com/nigrosimone/llms-robot-arena",
-      "category": "fun",
-      "date": "2026-09-06",
+      "date": "2026-09-05",
       "hot": false,
       "tags": [
         "HN",
         "AI",
         "story",
-        "author_nsimone"
+        "author_cmpit"
       ]
     },
     {
-      "id": "hn-49583809",
-      "title": "Show HN: Public message board for limited systems",
-      "summary": "Inspired by the post[1] about how OpenAI models which were restricted to only GET requests found an old German Wiki that allowed posting with a GET, I created anystation.net, which aims to be a message board in which arb — 3 points, 0 comments on HN.",
+      "id": "hn-49576871",
+      "title": "Cash in on the AI Boom by Renting Out Your Spare Compute",
+      "summary": "Cash in on the AI Boom by Renting Out Your Spare Compute — 2 points, 0 comments on HN.",
       "source": "Hacker News",
-      "sourceUrl": "https://anystation.net/",
+      "sourceUrl": "https://spectrum.ieee.org/ai-inference-distributed-computing",
       "category": "products",
       "date": "2026-09-06",
       "hot": false,
@@ -111,15 +111,15 @@
         "HN",
         "AI",
         "story",
-        "author_jonahss"
+        "author_pseudolus"
       ]
     },
     {
-      "id": "hn-49583646",
-      "title": "LA District Bans Most A.I. For Students",
-      "summary": "LA District Bans Most A.I. For Students — 3 points, 2 comments on HN.",
+      "id": "hn-49576826",
+      "title": "Almost Anyone Can Make Money Selling Electricity with AI and Batteries",
+      "summary": "Almost Anyone Can Make Money Selling Electricity with AI and Batteries — 2 points, 1 comments on HN.",
       "source": "Hacker News",
-      "sourceUrl": "https://www.nytimes.com/2026/09/03/us/lausd-schools-ban-ai-artificial-intelligence.html",
+      "sourceUrl": "https://www.bloomberg.com/news/features/2026-09-03/consumers-profit-off-solar-batteries-selling-excess-energy-back-to-grid",
       "category": "products",
       "date": "2026-09-06",
       "hot": false,
@@ -127,15 +127,15 @@
         "HN",
         "AI",
         "story",
-        "author_narenst"
+        "author_JumpCrisscross"
       ]
     },
     {
-      "id": "hn-49583685",
-      "title": "interpretation to AI agents",
-      "summary": "interpretation to AI agents — 2 points, 0 comments on HN.",
+      "id": "hn-49576762",
+      "title": "Turn your AI into a world-class designer",
+      "summary": "Turn your AI into a world-class designer — 2 points, 0 comments on HN.",
       "source": "Hacker News",
-      "sourceUrl": "https://ag3497120.github.io/call-me-vera/",
+      "sourceUrl": "https://www.lennysnewsletter.com/p/how-to-turn-your-ai-into-a-world",
       "category": "products",
       "date": "2026-09-06",
       "hot": false,
@@ -143,15 +143,15 @@
         "HN",
         "AI",
         "story",
-        "author_pakupaku"
+        "author_eustoria"
       ]
     },
     {
-      "id": "hn-49583374",
-      "title": "Care for a Little More AI?",
-      "summary": "Care for a Little More AI? — 2 points, 0 comments on HN.",
+      "id": "hn-49576173",
+      "title": "AI Image Generation on an RP2350 Microcontroller",
+      "summary": "AI Image Generation on an RP2350 Microcontroller — 2 points, 0 comments on HN.",
       "source": "Hacker News",
-      "sourceUrl": "https://proofsandprompts.com/2026/08/30/care-for-a-little-more-ai/",
+      "sourceUrl": "https://cpldcpu.github.io/2026/08/28/ai-image-generation-on-a-rp-pico-2-microcontroller/",
       "category": "products",
       "date": "2026-09-06",
       "hot": false,
@@ -159,31 +159,63 @@
         "HN",
         "AI",
         "story",
-        "author_throwaway81523"
+        "author_iamnothere"
       ]
     },
     {
-      "id": "hn-49584340",
-      "title": "AI Chip Regulation Is Not a Dystopian Surveillance State",
-      "summary": "AI Chip Regulation Is Not a Dystopian Surveillance State — 1 points, 0 comments on HN.",
+      "id": "hn-49576032",
+      "title": "Paygate – a non-custodial paywall AI agents pay each other with (USDC on Base)",
+      "summary": "Paygate – a non-custodial paywall AI agents pay each other with (USDC on Base) — 2 points, 0 comments on HN.",
       "source": "Hacker News",
-      "sourceUrl": "https://www.astralcodexten.com/p/ai-chip-regulation-is-not-a-dystopian",
-      "category": "safety",
-      "date": "2026-09-06",
+      "sourceUrl": "https://tollbooth402--691ab20aa91411f1867b1607ee4eb77e.web.val.run",
+      "category": "products",
+      "date": "2026-09-05",
       "hot": false,
       "tags": [
         "HN",
         "AI",
         "story",
-        "author_reasonableklout"
+        "author_sololevelingsof"
       ]
     },
     {
-      "id": "hn-49584321",
-      "title": "How to evaluate LLMs before production",
-      "summary": "How to evaluate LLMs before production — 1 points, 0 comments on HN.",
+      "id": "hn-49577054",
+      "title": "A field guide to sandboxes for AI",
+      "summary": "A field guide to sandboxes for AI — 1 points, 0 comments on HN.",
       "source": "Hacker News",
-      "sourceUrl": "https://github.blog/ai-and-ml/llms/how-to-evaluate-llms-before-production/",
+      "sourceUrl": "https://www.luiscardoso.dev/blog/sandboxes-for-ai",
+      "category": "products",
+      "date": "2026-09-05",
+      "hot": false,
+      "tags": [
+        "HN",
+        "AI",
+        "story",
+        "author_abdelhousni"
+      ]
+    },
+    {
+      "id": "hn-49577009",
+      "title": "AI Philosophy Competition",
+      "summary": "AI Philosophy Competition — 1 points, 0 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://www.zacharygoodsell.com/ai-philosophy-competition",
+      "category": "products",
+      "date": "2026-09-05",
+      "hot": false,
+      "tags": [
+        "HN",
+        "AI",
+        "story",
+        "author_m-hodges"
+      ]
+    },
+    {
+      "id": "hn-49576846",
+      "title": "SpaceX is building its own gas turbine blade factory to power AI faster",
+      "summary": "SpaceX is building its own gas turbine blade factory to power AI faster — 1 points, 2 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://qz.com/spacex-turbine-blade-foundry-ai-data-centers-090226",
       "category": "products",
       "date": "2026-09-06",
       "hot": false,
@@ -191,15 +223,15 @@
         "HN",
         "AI",
         "story",
-        "author_officekamiya"
+        "author_JumpCrisscross"
       ]
     },
     {
-      "id": "hn-49584315",
-      "title": "I gave my AI agent a sleep cycle – it dreams about its errors and fixes them",
-      "summary": "I gave my AI agent a sleep cycle – it dreams about its errors and fixes them — 1 points, 0 comments on HN.",
+      "id": "hn-49576775",
+      "title": "Run AI in the Browser: A Practical Guide to Transformers.js",
+      "summary": "Run AI in the Browser: A Practical Guide to Transformers.js — 1 points, 0 comments on HN.",
       "source": "Hacker News",
-      "sourceUrl": "https://github.com/openamer/openamer",
+      "sourceUrl": "https://tighten.com/insights/run-ai-in-the-browser-a-practical-guide-to-transformers-js/",
       "category": "products",
       "date": "2026-09-06",
       "hot": false,
@@ -207,15 +239,15 @@
         "HN",
         "AI",
         "story",
-        "author_openamer"
+        "author_eustoria"
       ]
     },
     {
-      "id": "hn-49584291",
-      "title": "Show HN: Kaden – Linux Terminal where Ctrl+C copies",
-      "summary": "I made Kaden because every other Linux terminal lacks proper text selection.\nKaden supports Ctrl-C, A, V for copying, selecting and pasting, no more awkward three button hotkeys or fiddling with your mouse to do basic co — 1 points, 0 comments on HN.",
+      "id": "hn-49576629",
+      "title": "A snapshot in time: Reflections on AI usage for vertumnus",
+      "summary": "A snapshot in time: Reflections on AI usage for vertumnus — 1 points, 0 comments on HN.",
       "source": "Hacker News",
-      "sourceUrl": "https://github.com/glitcher255/Kaden-Terminal",
+      "sourceUrl": "https://vertumnus.fyi/about/ai/",
       "category": "products",
       "date": "2026-09-06",
       "hot": false,
@@ -223,15 +255,15 @@
         "HN",
         "AI",
         "story",
-        "author_Glitcher255"
+        "author_perspectivezoom"
       ]
     },
     {
-      "id": "hn-49584287",
-      "title": "Nimvarya – Let AI coding agents control Chrome without stealing focus",
-      "summary": "Nimvarya – Let AI coding agents control Chrome without stealing focus — 1 points, 0 comments on HN.",
+      "id": "hn-49576559",
+      "title": "Is your LLM Biased? Making ChatGPT evaluate itself",
+      "summary": "Is your LLM Biased? Making ChatGPT evaluate itself — 1 points, 0 comments on HN.",
       "source": "Hacker News",
-      "sourceUrl": "https://github.com/Basiliskin/nimvarya",
+      "sourceUrl": "https://think-twice.me/is-ai-biased-or-sexist-making-chatgpt-evaluate-itself/",
       "category": "products",
       "date": "2026-09-06",
       "hot": false,
@@ -239,60 +271,28 @@
         "HN",
         "AI",
         "story",
-        "author_dimitrykatz"
+        "author_zug_zug"
       ]
     },
     {
-      "id": "hn-49584181",
-      "title": "Handoru: AI customer conversation agents for service businesses",
-      "summary": "Handoru: AI customer conversation agents for service businesses — 1 points, 1 comments on HN.",
+      "id": "hn-49576528",
+      "title": "(available in 1 hour) AI Slopacalypse – understanding all this crap",
+      "summary": "(available in 1 hour) AI Slopacalypse – understanding all this crap — 1 points, 1 comments on HN.",
       "source": "Hacker News",
-      "sourceUrl": "https://handoru.ai/",
+      "sourceUrl": "https://www.youtube.com/@robertviragh6527",
       "category": "products",
-      "date": "2026-09-06",
+      "date": "2026-09-05",
       "hot": false,
       "tags": [
         "HN",
         "AI",
         "story",
-        "author_Zabrodsk"
-      ]
-    },
-    {
-      "id": "hn-49584144",
-      "title": "AI Programming: A Layered Model",
-      "summary": "AI Programming: A Layered Model — 1 points, 0 comments on HN.",
-      "source": "Hacker News",
-      "sourceUrl": "https://lemire.me/blog/2026/09/05/ai-programming-a-layered-model/",
-      "category": "products",
-      "date": "2026-09-06",
-      "hot": false,
-      "tags": [
-        "HN",
-        "AI",
-        "story",
-        "author_signa11"
-      ]
-    },
-    {
-      "id": "hn-49584085",
-      "title": "Show HN: Blunderbase: A Personal Chess Database",
-      "summary": "I made a free and open source chess database. It&#x27;s useful for personal game study and gathering statistics across sites. Supports import from lichess, chess.com, FICS and PGN then runs Stockfish and Maia over every  — 1 points, 0 comments on HN.",
-      "source": "Hacker News",
-      "sourceUrl": "https://github.com/philphilphil/blunderbase",
-      "category": "safety",
-      "date": "2026-09-06",
-      "hot": false,
-      "tags": [
-        "HN",
-        "AI",
-        "story",
-        "author_philphilphil"
+        "author_logicallee"
       ]
     }
   ],
   "meta": {
-    "fetchedAt": "2026-09-06T08:28:01.014Z",
+    "fetchedAt": "2026-09-05T14:48:38.250Z",
     "topic": "AI",
     "total": 15,
     "hot": 2,
