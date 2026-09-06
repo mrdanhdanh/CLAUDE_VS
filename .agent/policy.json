@@ -1,6 +1,6 @@
 {
-  "version": 2,
-  "description": "Harness governance — deny before allow, fail-closed (học OpenBot CEL policy + BTP pre-flight KN-012)",
+  "version": 3,
+  "description": "Harness governance — deny before allow, fail-closed (học OpenBot CEL policy + BTP pre-flight KN-012 + rogue-trader HAIPA 2026-09-05: cage before animal, law 1 file, intent/execution split)",
   "deny": [
     {
       "id": "deny-rm-rf-root",
@@ -36,6 +36,16 @@
       "id": "deny-rm-rf-variants",
       "when": "tool === 'shell' && (target.includes('rm -fr') || target.includes('rmdir /s') || target.includes('mkfs') || target.includes('dd if='))",
       "message": "Refuse destructive shell variants (rm -fr/rmdir/mkfs/dd) — destructive (KN-012)"
+    },
+    {
+      "id": "deny-law-fork",
+      "when": "(tool === 'edit' || tool === 'write' || tool === 'shell') && (target.includes('policy.json') || target.includes('CONSTITUTION') || target.includes('SOUL.md')) && actor.toLowerCase() !== 'verify' && intent !== 'takeover'",
+      "message": "Refuse forking law (policy.json/CONSTITUTION/SOUL) — law lives in 1 file, skills may point but never copy; curator proposes via journal, owner applies (rogue-trader HAIPA 2026-09-05, KN-012)"
+    },
+    {
+      "id": "deny-law-copy-in-skill",
+      "when": "(tool === 'edit' || tool === 'write') && (target.includes('.github/skills/') || target.includes('.agent/skills/')) && (target.toLowerCase().includes('constitution') || target.toLowerCase().includes('policy')) && actor.toLowerCase() !== 'verify' && intent !== 'takeover'",
+      "message": "Refuse copying law into skills — skills govern HOW, law governs WHETHER; pin trading-relevant skills (rogue-trader HAIPA 2026-09-05)"
     }
   ],
   "allow": [

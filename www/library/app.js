@@ -1,7 +1,7 @@
-/* Library RAG Local — app.js · BM25 + IndexedDB + Parser + UI + API · 0đ offline */
-import { agenticSearch } from './rag-loop.mjs';
+/* Library RAG Local — app.js · BM25 + Hybrid(optional) + IndexedDB + Parser + UI + API · 0đ offline */
+import { agenticSearch, hybridSearch, setHybridProvider, isHybridReady } from './rag-loop.mjs';
 import { validateParams, normalizeArgs, toolHistory } from './tool-registry.mjs';
-import { routeQuery, cacheGet, cacheSet, cacheKey } from './router.mjs';
+import { routeQuery, routeHybrid, cacheGet, cacheSet, cacheKey } from './router.mjs';
 const LS_KEY = 'library:registry';
 const DB_NAME = 'libraryDB';
 const STORE = 'chunks';
@@ -392,6 +392,39 @@ let viewMode = 'grid';
 let searchQuery = '';
 let iterativeMode = false;
 try{ iterativeMode = localStorage.getItem('library:iterative') === '1'; }catch{}
+// Hybrid rerank (Transformers.js optional, offline-first, default OFF — BM25 <100ms stays default)
+let hybridMode = false;
+try{ hybridMode = localStorage.getItem('library:hybrid') === '1'; }catch{}
+let hybridStatus = 'off'; // off | loading | ready | failed
+
+// Lazy-load embedding provider (Transformers.js feature-extraction, quantized, cached in IndexedDB)
+async function ensureHybridProvider() {
+  if (isHybridReady()) return true;
+  if (hybridStatus === 'loading') return false;
+  hybridStatus = 'loading';
+  try {
+    const mod = await import('https://cdn.jsdelivr.net/npm/@huggingface/transformers@3.5.1/dist/transformers.min.js');
+    const pipe = await mod.pipeline('feature-extraction', 'Xenova/all-MiniLM-L6-v2', { quantized: true });
+    setHybridProvider({
+      ready: true,
+      embed: async (texts) => {
+        const out = [];
+        for (const t of texts) {
+          const r = await pipe(String(t).slice(0, 512), { pooling: 'mean', normalize: true });
+          out.push(Array.from(r.data || r));
+        }
+        return out;
+      },
+    });
+    hybridStatus = 'ready';
+    toast('Đã bật Hybrid rerank (embedding local, cached)');
+    return true;
+  } catch (e) {
+    hybridStatus = 'failed';
+    toast('Hybrid cần mạng lần đầu để tải model — vẫn dùng BM25');
+    return false;
+  }
+}
 
 // ---------- Render ----------
 function renderStats(){
@@ -814,8 +847,8 @@ async function doImport(file){
   }
 }
 
-// ---------- Search (P1-6: router + cache) ----------
-const doSearch = debounce(()=>{
+// ---------- Search (P1-6: router + cache, Hybrid optional) ----------
+const doSearch = debounce(async ()=>{
   const q = searchQuery;
   if(!q.trim()){
     renderResults([], '', 0);
@@ -823,8 +856,10 @@ const doSearch = debounce(()=>{
   }
   const t0 = performance.now();
   let res, extra = null;
-  // P1-6: check cache first
-  const ck = cacheKey(q, {top_k: 20, enabled_only: true, mode: iterativeMode ? 'deep' : 'auto'});
+  // Hybrid rerank nếu bật (BM25 trước, rerank top-N khi provider sẵn)
+  const hm = hybridMode ? routeHybrid(q, true) : 'bm25';
+  // P1-6: check cache first (mode-aware)
+  const ck = cacheKey(q, {top_k: 20, enabled_only: true, mode: `${iterativeMode ? 'deep' : 'auto'}-${hm}`});
   const cached = cacheGet(ck);
   if(cached.hit){
     const dt = Math.round(performance.now()-t0);
@@ -835,7 +870,13 @@ const doSearch = debounce(()=>{
     try{
       const r = agenticSearch(q, allChunks, registry, {top_k:20, enabled_only:true, maxRounds:3, minHits:2, minScore:1.0});
       res = r.hits;
-      extra = {rounds: r.rounds, refinedQueries: r.refinedQueries, gap: r.gap, routed: routeQuery(q)};
+      extra = {rounds: r.rounds, refinedQueries: r.refinedQueries, gap: r.gap, routed: routeQuery(q), hybrid: hm};
+      if (hm === 'hybrid') {
+        try {
+          const hr = await hybridSearch(q, allChunks, registry, { top_k: 20, enabled_only: true });
+          if (hr.reranked) { res = hr.hits; extra.hybridMode = hr.mode; extra.reranked = true; }
+        } catch {}
+      }
     }catch(e){
       res = bm25Search(q, 20);
     }
@@ -846,9 +887,18 @@ const doSearch = debounce(()=>{
       try{
         const r = agenticSearch(q, allChunks, registry, {top_k:20, enabled_only:true, maxRounds:3, minHits:2, minScore:1.0});
         res = r.hits;
-        extra = {rounds: r.rounds, refinedQueries: r.refinedQueries, gap: r.gap, routed: route};
+        extra = {rounds: r.rounds, refinedQueries: r.refinedQueries, gap: r.gap, routed: route, hybrid: hm};
       }catch(e){
         res = bm25Search(q, 20);
+      }
+    } else if (hm === 'hybrid') {
+      try {
+        const hr = await hybridSearch(q, allChunks, registry, { top_k: 20, enabled_only: true });
+        res = hr.hits;
+        extra = { routed: route, hybrid: hm, hybridMode: hr.mode, reranked: hr.reranked };
+      } catch {
+        res = bm25Search(q, 20);
+        extra = { routed: route, hybrid: hm };
       }
     } else {
       res = bm25Search(q, 20);
@@ -1052,6 +1102,22 @@ function bindEvents(){
       if(searchQuery.trim()) doSearch();
     });
   }
+  // hybrid toggle (Transformers.js optional, lazy-load, default OFF)
+  const hybridToggle = $('#hybridToggle');
+  if(hybridToggle){
+    hybridToggle.checked = hybridMode;
+    hybridToggle.addEventListener('change', async ()=>{
+      hybridMode = hybridToggle.checked;
+      try{ localStorage.setItem('library:hybrid', hybridMode ? '1' : '0'); }catch{}
+      if (hybridMode) {
+        toast('Đang tải embedding model (lần đầu cần mạng)…');
+        await ensureHybridProvider();
+      } else {
+        toast('Đã tắt Hybrid — dùng BM25 thuần (<100ms)');
+      }
+      if(searchQuery.trim()) doSearch();
+    });
+  }
 }
 
 // ---------- API for AI ----------
@@ -1060,7 +1126,7 @@ function exposeAPI(){
     validate: (tool, args) => validateParams(tool, args),
     get history(){ return toolHistory; },
     search: (q, opts={})=>{
-      const v = validateParams('search_library', {query: q, top_k: opts.top_k || opts.topK || 5, enabled_only: opts.enabledOnly !== false && opts.enabled_only !== false});
+      const v = validateParams('search_library', {query: q, top_k: opts.top_k || opts.topK || 5, enabled_only: opts.enabledOnly !== false && opts.enabled_only !== false, mode: opts.mode || 'bm25'});
       if(!v.valid) throw new Error(v.errors.join('; '));
       const norm = normalizeArgs('search_library', v.normalized);
       const top_k = norm.top_k;
@@ -1076,6 +1142,12 @@ function exposeAPI(){
       }
       return bm25Search(q, top_k);
     },
+    searchHybrid: async (q, opts={})=>{
+      const r = await hybridSearch(q, allChunks, registry, { top_k: opts.top_k || 5, enabled_only: opts.enabled_only !== false });
+      return { ...r, hybrid: routeHybrid(q, true), ready: isHybridReady() };
+    },
+    isHybridReady,
+    ensureHybrid: ensureHybridProvider,
     searchIterative: (q, opts={})=>{
       const v = validateParams('search_library_iterative', {query: q, top_k: opts.top_k || opts.topK || 5, enabled_only: opts.enabledOnly !== false && opts.enabled_only !== false, maxRounds: opts.maxRounds || opts.max_rounds || 3, minHits: opts.minHits ?? opts.min_hits ?? 2, minScore: opts.minScore ?? opts.min_score ?? 1.0});
       if(!v.valid) throw new Error(v.errors.join('; '));

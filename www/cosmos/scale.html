@@ -166,6 +166,7 @@
             <p style="margin-bottom:12px">Tổng quan hệ thống lúc đo.</p>
             <div class="meta-grid" id="countsGrid"></div>
             <div class="code-block" id="policyBox">policy: —</div>
+            <canvas id="historyChart" width="320" height="64" style="width:100%;height:64px;margin-top:12px" aria-label="Lịch sử entropy"></canvas>
             <p style="margin-top:12px;font:400 11px var(--font-mono);color:var(--cosmos-text-dim)">Chạy <code>node .github/harness/scripts/cosmic-scale.mjs --json --out www/cosmos/scale.json</code> để cập nhật. Dashboard chỉ đọc, không ghi.</p>
           </div>
         </div>
@@ -196,7 +197,7 @@
         <div class="grid-3">
           <div class="card"><h3>🌌 Dark Energy ↔ Scope creep</h3><p>Giãn nở gia tốc như feature phình. Đối trọng là gravity = minimal-ladder + YAGNI. Đo bằng diff stat mỗi Verify.</p><span class="tag">S tăng khi thêm không cần</span></div>
           <div class="card"><h3>🕳️ Black Hole ↔ Bottleneck</h3><p>KN-008 file lock, KN-015 Pages env. Qua event horizon → human takeover, không loop.</p><span class="tag">horizon = takeover</span></div>
-          <div class="card"><h3>🐱 Schrödinger ↔ Heisenbug</h3><p>KN-014 import làm treo — quan sát làm đổi kết quả. Lab cosmos.html #6 demo.</p><span class="tag">đo là đổi</span></div>
+          <div class="card"><h3>🐱 Schrödinger ↔ Heisenbug</h3><p>KN-014 import làm treo — quan sát làm đổi kết quả. Lab cosmos #6 demo.</p><span class="tag">đo là đổi</span></div>
         </div>
         <div class="code-block" style="margin-top:16px">S = mismatch×10 + drafts×5 + refused×2 + disabled×1 + failed×5 · low &lt;10 · medium &lt;25 · high ≥25 · Δx·Δp ≥ ħ/2 ↔ get_errors chính xác thì build mờ</div>
       </div>
@@ -263,6 +264,28 @@
       if(mm.length===0 && ms.length===0) mt.textContent='Không có drift — registry khớp filesystem ✅';
       else mt.textContent=(mm.length? mm.length+' mismatch: '+mm.map(m=>m.type+'/'+m.name).join(', '):'')+(mm.length&&ms.length?' · ':'')+(ms.length? ms.length+' missing: '+ms.map(m=>m.type+'/'+m.name).join(', '):'');
       const mc=$('#mismatchCode'); if(mm.length||ms.length){ mc.style.display='block'; mc.textContent=JSON.stringify({mismatches:mm,missing:ms},null,2); } else mc.style.display='none';
+      drawHistory(j.history||[]);
+    }
+    function drawHistory(h){
+      const c=$('#historyChart'); if(!c) return;
+      const ctx=c.getContext('2d'); const w=c.width, hh=c.height;
+      ctx.clearRect(0,0,w,hh);
+      if(!h.length) return;
+      const max=Math.max(25,...h.map(p=>p.S));
+      ctx.strokeStyle='rgba(255,255,255,.12)'; ctx.beginPath(); ctx.moveTo(0,hh-6); ctx.lineTo(w,hh-6); ctx.stroke();
+      ctx.beginPath();
+      h.forEach((p,i)=>{
+        const x=h.length===1? w/2 : (i/(h.length-1))*w;
+        const y=hh-8-((p.S/max)*(hh-20));
+        i===0? ctx.moveTo(x,y) : ctx.lineTo(x,y);
+      });
+      ctx.strokeStyle='#7c3aed'; ctx.lineWidth=2; ctx.stroke();
+      h.forEach((p,i)=>{
+        const x=h.length===1? w/2 : (i/(h.length-1))*w;
+        const y=hh-8-((p.S/max)*(hh-20));
+        ctx.fillStyle=p.S>=25?'#ef4444':p.S>=10?'#f59e0b':'#10b981';
+        ctx.beginPath(); ctx.arc(x,y,3,0,Math.PI*2); ctx.fill();
+      });
     }
     $('#btnRefresh')?.addEventListener('click', ()=>{ load(); toast('↻ Đã refresh'); });
     $('#btnCopyCmd')?.addEventListener('click', async()=>{

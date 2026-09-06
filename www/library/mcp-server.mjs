@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * Library RAG Local — MCP Server (stdio) · v1.3.0 (DisCo Phase 2)
+ * Library RAG Local — MCP Server (stdio) · v1.4.0 (DisCo Phase 2 + Hybrid 2026-09-06)
  * Tools: search_library, search_library_iterative, list_books, get_book, get_status
  *      + search_skills, list_skills, get_skill (DisCo Phase 2 — skill router)
  * Reads: www/library/export.json (do UI nút Xuất tạo ra) hoặc path truyền vào
@@ -11,15 +11,17 @@
  * MCP config (.vscode/mcp.json):
  *   { "servers": { "library": { "command": "node", "args": ["./www/library/mcp-server.mjs"] } } }
  * P1-3: version pin, output redaction (no secret leak), protocolVersion pin.
+ * Hybrid (2026-09-06): search_library(+iterative) thêm mode bm25|hybrid — Node mặc định bm25 (0 deps);
+ *   hybrid trên Node trả bm25 + note (embedding provider chỉ chạy ở browser via app.js lazy-load).
  */
-export const MCP_SERVER_VERSION = '1.3.0';
+export const MCP_SERVER_VERSION = '1.4.0';
 
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { agenticSearch } from './rag-loop.mjs';
+import { agenticSearch, hybridSearch, isHybridReady } from './rag-loop.mjs';
 import { validateParams, normalizeArgs, pushHistory } from './tool-registry.mjs';
-import { routeQuery, cacheGet, cacheSet, cacheKey } from './router.mjs';
+import { routeQuery, routeHybrid, cacheGet, cacheSet, cacheKey } from './router.mjs';
 import { listSkills, getSkill, searchSkills } from './skill-router.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -146,13 +148,14 @@ function redactHits(hits) {
 const TOOLS = [
   {
     name: 'search_library',
-    description: 'Tìm trong thư viện RAG local (BM25). Chỉ tìm trong sách đang gắn (enabled) mặc định. Trả về citation: bookName, chunkId, page, score, snippet.',
+    description: 'Tìm trong thư viện RAG local (BM25, mode hybrid optional). Chỉ tìm trong sách đang gắn (enabled) mặc định. Trả về citation: bookName, chunkId, page, score, snippet.',
     inputSchema: {
       type: 'object',
       properties: {
         query: { type:'string', description:'Câu truy vấn (vd: điều khoản thanh toán, chương 5 rủi ro)' },
         top_k: { type:'number', description:'Số kết quả (1-20, mặc định 5)', default:5 },
-        enabled_only: { type:'boolean', description:'Chỉ tìm trong sách đang gắn (mặc định true)', default:true }
+        enabled_only: { type:'boolean', description:'Chỉ tìm trong sách đang gắn (mặc định true)', default:true },
+        mode: { type:'string', description:'bm25 (mặc định) hoặc hybrid (BM25 + embedding rerank nếu provider sẵn)', enum:['bm25','hybrid'], default:'bm25' }
       },
       required: ['query']
     }
@@ -188,6 +191,7 @@ const TOOLS = [
         query: { type:'string', description:'Câu truy vấn' },
         top_k: { type:'number', description:'Số kết quả (1-20, mặc định 5)', default:5 },
         enabled_only: { type:'boolean', description:'Chỉ tìm trong sách đang gắn (mặc định true)', default:true },
+        mode: { type:'string', description:'bm25 (mặc định) hoặc hybrid', enum:['bm25','hybrid'], default:'bm25' },
         maxRounds: { type:'number', description:'Số vòng tối đa (1-5, mặc định 3)', default:3 },
         minHits: { type:'number', description:'Số hits tối thiểu để coi là đủ (mặc định 2)', default:2 },
         minScore: { type:'number', description:'Score tối thiểu để coi là đủ (mặc định 1.0)', default:1.0 }
@@ -247,7 +251,7 @@ process.stdin.on('data', chunk=>{
   }
 });
 
-function handleMessage(msg){
+async function handleMessage(msg){
   const { id, method, params } = msg;
   if(method === 'initialize'){
     initialized = true;
@@ -352,12 +356,30 @@ function handleMessage(msg){
         const q = norm.query;
         const top_k = norm.top_k;
         const enabled_only = norm.enabled_only !== false;
+        const mode = norm.mode || 'bm25';
         if(!String(q).trim()) throw new Error('query rỗng');
-        // P1-6: router + cache
-        const ck = cacheKey(q, {top_k, enabled_only, mode: 'fast'});
+        // P1-6: router + cache (mode-aware)
+        const ck = cacheKey(q, {top_k, enabled_only, mode: mode === 'hybrid' ? 'hybrid' : 'fast'});
         const cached = cacheGet(ck);
         if(cached.hit){
           result = {...cached.value, cached: true};
+        } else if (mode === 'hybrid') {
+          // Node: no embedding provider (browser-only lazy-load) → BM25 + note, never fail
+          const r = await hybridSearch(q, data.chunks, data.registry, { top_k, enabled_only });
+          result = {
+            query: q,
+            hits: redactHits(r.hits),
+            total_chunks: data.chunks.length,
+            enabled_books: Object.values(data.registry).filter(b=>b.enabled).length,
+            file: data._file,
+            routed: routeQuery(q),
+            hybrid: routeHybrid(q, true),
+            mode: r.mode,
+            reranked: r.reranked,
+            note: isHybridReady() ? undefined : 'Node hybrid: embedding provider chỉ chạy ở browser (app.js lazy-load) — trả BM25, bật Hybrid trong www/library/index.html để rerank.',
+            cached: false,
+          };
+          cacheSet(ck, result);
         } else {
           const hits = redactHits(searchBM25(q, data.chunks, data.registry, top_k, enabled_only));
           result = {
@@ -416,12 +438,13 @@ function handleMessage(msg){
         const q = norm.query;
         const top_k = norm.top_k;
         const enabled_only = norm.enabled_only !== false;
+        const mode = norm.mode || 'bm25';
         const maxRounds = norm.maxRounds;
         const minHits = norm.minHits;
         const minScore = norm.minScore;
         if(!String(q).trim()) throw new Error('query rỗng');
-        // P1-6: router + cache
-        const ck = cacheKey(q, {top_k, enabled_only, mode: 'deep'});
+        // P1-6: router + cache (mode-aware)
+        const ck = cacheKey(q, {top_k, enabled_only, mode: mode === 'hybrid' ? 'hybrid-deep' : 'deep'});
         const cached = cacheGet(ck);
         if(cached.hit){
           pushHistory({ tool: name, args: norm, timestamp: tCall, durationMs: Date.now()-tCall, success: true });
@@ -435,6 +458,15 @@ function handleMessage(msg){
         });
         resultIter.hits = redactHits(resultIter.hits);
         resultIter.routed = routeQuery(q);
+        if (mode === 'hybrid') {
+          const r = await hybridSearch(q, data.chunks, data.registry, { top_k, enabled_only });
+          // Hybrid rerank trên top BM25 của iterative (giữ rounds/refinedQueries để trace)
+          if (r.reranked) resultIter.hits = redactHits(r.hits);
+          resultIter.hybrid = routeHybrid(q, true);
+          resultIter.hybridMode = r.mode;
+          resultIter.hybridReranked = r.reranked;
+          if (!isHybridReady()) resultIter.hybridNote = 'Node hybrid: embedding provider chỉ chạy ở browser — trả BM25.';
+        }
         resultIter.cached = false;
         cacheSet(ck, resultIter);
         pushHistory({ tool: name, args: norm, timestamp: tCall, durationMs: Date.now()-tCall, success: true });

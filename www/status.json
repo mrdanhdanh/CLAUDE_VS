@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-05T15:21:51.889Z",
+  "generatedAt": "2026-09-06T09:22:11.067Z",
   "generatedBy": "YUNIE",
   "version": 1,
   "counts": {
@@ -262,7 +262,9 @@
   "plans": [
     "aar-harness",
     "ai-news-search",
+    "ai-news-upgrades-4",
     "auto-learn",
+    "cosmos-p0-upgrade",
     "custom-registry",
     "design-showcase-72",
     "design-showcase-cut-critic",
@@ -362,7 +364,7 @@
   "health": {
     "errors": 0,
     "status": "ok",
-    "lastCheck": "2026-09-05T15:21:51.889Z",
+    "lastCheck": "2026-09-06T09:22:11.068Z",
     "checks": [
       "get_errors: pass (0 errors)",
       "registry: 17 instructions (17 total) - 17 skills - 8 agents - 7 prompts - 1 hook — all enabled",
@@ -373,7 +375,7 @@
       "workflow: www/** -> Pages (upload-artifact path: www) — exists: true + eval job gate",
       "library: www/library/ MCP v1.2.0 (5 tools: search + iterative + list/get/status, router+cache, redacted) + library-rag instruction",
       "auto-learn: 15 KN, 13 bugs, 0 drafts — suggest/log/propose/status (<50ms, IDF, tiếng Việt)",
-      "governance: audit 0 (Ed25519 receipt P0-4) · policy 7 deny/2 allow (ok) · credentials 0 keys plain",
+      "governance: audit 2 (Ed25519 receipt P0-4) · policy 9 deny/2 allow (ok) · credentials 0 keys plain",
       "platform: agents 3 (3 built-in, 0 remote) · mcp 3 vendors/3 grants (library 1.2.0 read-only) · components 3/3 pub · routines 1/1 enabled",
       "n5-blazor: www/n5-blazor/ 7 trang static + app.css + data.js + site.js — 100% Pages"
     ]
@@ -537,19 +539,54 @@
   },
   "governance": {
     "audit": {
-      "total": 0,
-      "permitted": 0,
+      "total": 2,
+      "permitted": 2,
       "refused": 0,
       "failed": 0,
-      "lastTs": null,
-      "tail": []
+      "lastTs": "2026-09-06T09:09:00.756Z",
+      "tail": [
+        {
+          "ts": "2026-09-06T09:09:00.653Z",
+          "actor": "YUNIE",
+          "tool": "edit",
+          "target": "www/cosmos.html",
+          "decision": "permitted",
+          "rule": "allow-all",
+          "durationMs": null,
+          "error": null,
+          "intent": null,
+          "requestId": "951355",
+          "prevHash": "GENESIS",
+          "policyDigest": "162346288ec03771",
+          "hash": "0a2fbeaf3018eda2",
+          "sig": "uDFM7r6n3_x8FR7VwrFKtgH5zjRX0oNO8WhUnuh-Tds6oCEOVlxU_AXSCyeYdno3eNVUr_U4D0K1hDrOmm1BDg",
+          "pub": "MCowBQYDK2VwAyEAY8PlU0KjXp4HJUUlNlVZdaXHUmDagUMm8rUrEShTPXo"
+        },
+        {
+          "ts": "2026-09-06T09:09:00.756Z",
+          "actor": "YUNIE",
+          "tool": "edit",
+          "target": "www/cosmos/index.html",
+          "decision": "permitted",
+          "rule": "allow-all",
+          "durationMs": null,
+          "error": null,
+          "intent": null,
+          "requestId": "c09bd0",
+          "prevHash": "0a2fbeaf3018eda2",
+          "policyDigest": "162346288ec03771",
+          "hash": "2fbe0d021293a642",
+          "sig": "zl0LyQI3MXyAZbv3E5zlCQvquU2kZ9rfsv3r3trjBuSQ-ftMLSbCJBMJdJ1kWnzoYMi6sVT7vgD6-tYlIkgjDw",
+          "pub": "MCowBQYDK2VwAyEAY8PlU0KjXp4HJUUlNlVZdaXHUmDagUMm8rUrEShTPXo"
+        }
+      ]
     },
     "policy": {
-      "version": 2,
-      "deny": 7,
+      "version": 3,
+      "deny": 9,
       "allow": 2,
       "status": "ok",
-      "lastCheck": "2026-09-05T15:21:51.720Z"
+      "lastCheck": "2026-09-06T09:22:10.950Z"
     },
     "credentials": {
       "count": 0,

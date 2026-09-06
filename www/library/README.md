@@ -66,6 +66,7 @@ Upload → Parser (pdf.js / mammoth / text) → Chunk (2400 chars, overlap 400)
 ```
 
 - **BM25**: k1=1.2, b=0.75, chỉ trên sách `enabled`
+- **Hybrid (optional, 2026-09-06):** BM25 retriever + embedding rerank (Transformers.js `feature-extraction`, quantized, lazy-load, cached) — toggle Hybrid trong UI (persist `localStorage library:hybrid`, mặc định OFF để giữ <100ms); MCP/CLI `mode: hybrid` (Node trả BM25 + note, browser mới rerank thật)
 - **Chunk**: giữ paragraph boundary, overlap để không miss
 - **Tháo**: `enabled=false` → loại khỏi index, không xóa chunks (gắn lại instant)
 - **Xóa**: confirm modal (ESC + focus trap) → xóa IndexedDB

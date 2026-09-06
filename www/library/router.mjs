@@ -24,6 +24,16 @@ export function routeQuery(query) {
   return 'deep';
 }
 
+// Hybrid routing (2026-09-06): short/simple → BM25; long/complex → hybrid (if enabled).
+export function routeHybrid(query, hybridEnabled = false) {
+  if (!hybridEnabled) return 'bm25';
+  const tokens = tokenize(query);
+  if (!tokens.length) return 'bm25';
+  if (tokens.length >= 6) return 'hybrid';
+  if (tokens.some(t => COMPLEX_TOKENS.has(t))) return 'hybrid';
+  return 'bm25';
+}
+
 // ---------- Locality routing (P2-3 Lesson 17: local vs cloud) ----------
 const SENSITIVE_RE = /password|token|secret|private|personal|credential|ssn|credit/i;
 const OFFLINE_RE = /offline|plane|outage|local-?only|on-?device|airplane/i;
@@ -81,4 +91,4 @@ export function clearCache() {
   _cache.clear();
 }
 
-export default { routeQuery, routeLocality, cacheGet, cacheSet, cacheStats, clearCache, cacheKey, COMPLEX_TOKENS };
+export default { routeQuery, routeHybrid, routeLocality, cacheGet, cacheSet, cacheStats, clearCache, cacheKey, COMPLEX_TOKENS };

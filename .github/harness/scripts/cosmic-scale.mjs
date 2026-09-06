@@ -129,6 +129,13 @@ async function main() {
 
   if (outPath) {
     await fs.mkdir(path.dirname(outPath), { recursive: true });
+    let history = [];
+    try {
+      const prev = JSON.parse(await fs.readFile(outPath, 'utf8'));
+      if (Array.isArray(prev.history)) history = prev.history.slice(-29);
+    } catch {}
+    history.push({ t: result.generatedAt, S, level });
+    result.history = history;
     await fs.writeFile(outPath, JSON.stringify(result, null, 2) + '\n', 'utf8');
   }
   if (asJson || outPath) console.log(JSON.stringify(result, null, 2));

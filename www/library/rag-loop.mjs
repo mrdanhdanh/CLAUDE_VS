@@ -1,8 +1,9 @@
 /**
  * Library RAG — Agentic Loop (Maker-Checker) · P0-1 Harness 2.1
+ * + Hybrid rerank (Transformers.js optional, 2026-09-06) — BM25 first, embedding rerank top-N if provider ready.
  * Pure ESM, 0 deps, Node + browser compatible.
  * Reuses BM25 (K1=1.2, B=0.75) + STOPWORDS from mcp-server.mjs / app.js
- * Exports: tokenize, buildIndex, searchBM25, evaluateGap, refineQuery, agenticSearch, SYNONYMS
+ * Exports: tokenize, buildIndex, searchBM25, evaluateGap, refineQuery, agenticSearch, hybridSearch, SYNONYMS
  */
 
 // ---------- STOPWORDS (same as mcp-server.mjs / app.js) ----------
@@ -212,4 +213,43 @@ export function agenticSearch(query, chunks, registry, opts={}){
   return { query: String(query), hits, rounds, refinedQueries, gap, total_chunks, enabled_books, ...(file?{file}:{}) };
 }
 
-export default { tokenize, buildIndex, searchBM25, evaluateGap, refineQuery, agenticSearch, SYNONYMS, STOPWORDS, K1, B };
+// ---------- Hybrid rerank (Transformers.js optional, offline-first) ----------
+// BM25 stays the retriever (<100ms, 0 deps). If an embedding provider is ready
+// (lazy-loaded Transformers.js feature-extraction, cached in IndexedDB), rerank
+// top-N BM25 hits by cosine similarity. Else fallback to BM25 order.
+// Provider contract: { ready: boolean, embed(texts: string[]): Promise<number[][]> }
+let _hybridProvider = null;
+export function setHybridProvider(provider) { _hybridProvider = provider || null; }
+export function getHybridProvider() { return _hybridProvider; }
+export function isHybridReady() { return !!(_hybridProvider && _hybridProvider.ready); }
+
+function cosine(a, b) {
+  let dot = 0, na = 0, nb = 0;
+  const n = Math.min(a.length, b.length);
+  for (let i = 0; i < n; i++) { dot += a[i] * b[i]; na += a[i] * a[i]; nb += b[i] * b[i]; }
+  if (!na || !nb) return 0;
+  return dot / (Math.sqrt(na) * Math.sqrt(nb));
+}
+
+export async function hybridSearch(query, chunks, registry, opts = {}) {
+  const top_k = Math.min(20, Math.max(1, Number(opts.top_k || 5)));
+  const rerankN = Math.min(20, Math.max(top_k, Number(opts.rerankN || opts.rerank_n || 10)));
+  const enabledOnly = opts.enabled_only !== false && opts.enabledOnly !== false;
+  const base = searchBM25(query, chunks, registry, rerankN, enabledOnly);
+  if (base.length === 0 || !isHybridReady()) {
+    return { query: String(query), hits: base.slice(0, top_k), mode: isHybridReady() ? 'hybrid-empty' : 'bm25', reranked: false };
+  }
+  try {
+    const texts = [String(query), ...base.map(h => h.text)];
+    const vecs = await _hybridProvider.embed(texts);
+    const qv = vecs[0];
+    const scored = base.map((h, i) => ({ ...h, _cos: cosine(qv, vecs[i + 1] || []) }));
+    scored.sort((a, b) => (0.7 * b._cos + 0.3 * (b.score / 10)) - (0.7 * a._cos + 0.3 * (a.score / 10)));
+    const hits = scored.slice(0, top_k).map(({ _cos, ...h }) => ({ ...h, hybridScore: Number(_cos.toFixed(3)) }));
+    return { query: String(query), hits, mode: 'hybrid', reranked: true };
+  } catch {
+    return { query: String(query), hits: base.slice(0, top_k), mode: 'bm25-fallback', reranked: false };
+  }
+}
+
+export default { tokenize, buildIndex, searchBM25, evaluateGap, refineQuery, agenticSearch, hybridSearch, setHybridProvider, getHybridProvider, isHybridReady, SYNONYMS, STOPWORDS, K1, B };

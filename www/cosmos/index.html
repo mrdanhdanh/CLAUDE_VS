@@ -1206,10 +1206,11 @@
               </div>
               <div class="lab-controls">
                 <button class="btn btn-primary" id="btnBhDrop" type="button">🕳️ Thả debt</button>
+                <button class="btn btn-ghost" id="btnBhSync" type="button">📡 S thật</button>
                 <button class="btn btn-ghost" id="btnBhReset" type="button">↺ Reset</button>
                 <button class="btn btn-ghost" id="btnBhHorizon" type="button">⚠️ Qua horizon?</button>
               </div>
-              <div class="lab-hint" id="bhHint">Mẹo: bấm Thả debt nhiều lần — S tăng, vòng xoáy nhanh dần · Qua horizon = takeover</div>
+              <div class="lab-hint" id="bhHint">Mẹo: bấm S thật để đồng bộ từ scale.json · Thả debt để demo · Qua horizon = takeover</div>
             </div>
           </div>
 
@@ -1638,10 +1639,20 @@
       const stage=$('#bhStage'), ring=$('#bhRing'), core=$('#bhCore');
       const p1=$('#bhP1'), p2=$('#bhP2'), p3=$('#bhP3');
       const label=$('#bhLabel'), stats=$('#bhStats');
-      const btnDrop=$('#btnBhDrop'), btnReset=$('#btnBhReset'), btnHorizon=$('#btnBhHorizon');
+      const btnDrop=$('#btnBhDrop'), btnReset=$('#btnBhReset'), btnHorizon=$('#btnBhHorizon'), btnSync=$('#btnBhSync');
       const hint=$('#bhHint');
       if(!stage || !btnDrop) return;
-      let S=0, sucked=0;
+      let S=0, sucked=0, realS=null;
+      async function syncReal(){
+        try{
+          const res=await fetch('./scale.json',{cache:'no-store'});
+          if(!res.ok) throw new Error('HTTP '+res.status);
+          const j=await res.json();
+          realS=j?.entropy?.S ?? 0;
+          S=realS; render();
+          toast('📡 S thật = '+S+' · '+(j?.entropy?.level||''));
+        }catch(e){ toast('⚠️ Không tải được scale.json — giữ S demo'); }
+      }
       const particles=[p1,p2,p3].filter(Boolean);
       function render(){
         const level = S<10 ? 'low' : S<25 ? 'medium' : 'high';
@@ -1699,6 +1710,7 @@
         render(); toast('✨ Reset — đã bơm năng lượng, S=0 low');
       }
       btnDrop.addEventListener('click', drop);
+      btnSync?.addEventListener('click', syncReal);
       btnReset.addEventListener('click', reset);
       btnHorizon.addEventListener('click', ()=>{
         if(S>=25) toast('⚠️ Đã qua horizon — không cố fix loop, báo human!');

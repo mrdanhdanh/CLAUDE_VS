@@ -34,6 +34,8 @@ function hasFlag(name){
 }
 const queryArg = getArg('query') || getArg('q') || (args[0] && !args[0].startsWith('--') ? args[0] : null);
 const topK = Math.min(20, Math.max(1, parseInt(getArg('top_k') || getArg('top-k') || getArg('k') || '5', 10) || 5));
+const modeArg = String(getArg('mode') || 'bm25').toLowerCase();
+const hybridMode = modeArg === 'hybrid';
 const jsonMode = hasFlag('json');
 const fileArg = getArg('file') || getArg('export') || process.env.LIBRARY_EXPORT || null;
 const listMode = hasFlag('list');
@@ -60,6 +62,7 @@ Cách dùng:
 Tùy chọn:
   --query, -q     Câu truy vấn (hoặc đối số đầu tiên)
   --top_k, --top-k, --k  Số kết quả (1-20, mặc định 5)
+  --mode <bm25|hybrid>  bm25 mặc định; hybrid = BM25 + note (embedding chỉ ở browser)
   --json          Xuất JSON (cho harness parse)
   --file <path>   Đường dẫn export.json (mặc định tự tìm)
   --list          Liệt kê tất cả sách
@@ -252,6 +255,8 @@ if(jsonMode){
     query: queryArg,
     top_k: topK,
     enabled_only: enabledOnly,
+    mode: hybridMode ? 'hybrid' : 'bm25',
+    hybridNote: hybridMode ? 'CLI hybrid: embedding provider chỉ chạy ở browser (app.js lazy-load) — trả BM25.' : undefined,
     hits,
     total_chunks: data.chunks.length,
     enabled_books: Object.values(data.registry).filter(b=>b.enabled).length,
@@ -259,7 +264,7 @@ if(jsonMode){
     file: data._file
   }, null, 2));
 } else {
-  console.log(`Tìm "${queryArg}" — ${hits.length} kết quả (${dt}ms, ${enabledOnly?'chỉ đang gắn':'cả đã tháo'}, top_k=${topK})\n`);
+  console.log(`Tìm "${queryArg}" — ${hits.length} kết quả (${dt}ms, ${enabledOnly?'chỉ đang gắn':'cả đã tháo'}, top_k=${topK}, mode=${hybridMode?'hybrid(BM25)':'bm25'})\n`);
   if(hits.length===0){
     console.log('Không tìm thấy. Thử từ khóa khác hoặc kiểm tra sách đang gắn (--all để tìm cả đã tháo).');
   } else {

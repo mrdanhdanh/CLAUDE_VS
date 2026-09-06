@@ -9,13 +9,14 @@ export const TOOL_SCHEMAS = [
   {
     name: 'search_library',
     approval_mode: 'never_require',
-    description: 'Tìm trong thư viện RAG local (BM25).',
+    description: 'Tìm trong thư viện RAG local (BM25, mode hybrid optional).',
     inputSchema: {
       type: 'object',
       properties: {
         query: { type: 'string', description: 'Câu truy vấn', minLength: 1 },
         top_k: { type: 'number', description: 'Số kết quả (1-20)', minimum: 1, maximum: 20, default: 5 },
-        enabled_only: { type: 'boolean', description: 'Chỉ tìm trong sách đang gắn', default: true }
+        enabled_only: { type: 'boolean', description: 'Chỉ tìm trong sách đang gắn', default: true },
+        mode: { type: 'string', description: 'bm25 (mặc định) hoặc hybrid (BM25 + embedding rerank nếu provider sẵn)', enum: ['bm25', 'hybrid'], default: 'bm25' }
       },
       required: ['query']
     }
@@ -30,6 +31,7 @@ export const TOOL_SCHEMAS = [
         query: { type: 'string', description: 'Câu truy vấn', minLength: 1 },
         top_k: { type: 'number', description: 'Số kết quả (1-20)', minimum: 1, maximum: 20, default: 5 },
         enabled_only: { type: 'boolean', description: 'Chỉ tìm trong sách đang gắn', default: true },
+        mode: { type: 'string', description: 'bm25 (mặc định) hoặc hybrid', enum: ['bm25', 'hybrid'], default: 'bm25' },
         maxRounds: { type: 'number', description: 'Số vòng tối đa (1-5)', minimum: 1, maximum: 5, default: 3 },
         minHits: { type: 'number', description: 'Số hits tối thiểu', minimum: 1, maximum: 20, default: 2 },
         minScore: { type: 'number', description: 'Score tối thiểu', minimum: 0, maximum: 10, default: 1.0 }

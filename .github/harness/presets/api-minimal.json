@@ -12,6 +12,11 @@
     "ui-ux-pro-max": true,
     "auto-researcher": true,
     "last30days": true,
+    "harness-build-config": true,
+    "harness-governance": true,
+    "harness-minimal": true,
+    "harness-process": true,
+    "harness-web-ui": false,
     "cosmic-quantum": true,
     "cosmic-scale": true
   },

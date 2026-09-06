@@ -28,7 +28,7 @@ node .agent/scripts/policy-check.mjs --check
 - **Thứ tự:** `deny[]` trước, nếu match → `refused`; else `allow[]` → `permitted`; else `refused` (fail-closed).
 - **CEL-lite:** `when` là JS expression với 4 vars: `tool`, `target`, `actor`, `intent`. Ví dụ: `tool === 'shell' && target.includes('rm -rf /')`.
 - **Broken rule → refuse** (không mở). Malformed `policy.json` → deny all.
-- **File:** `.agent/policy.json` (version 2, 7 deny + 2 allow — thêm deny-test-mutate/destructive-sql/rm-rf-variants, KN-012).
+- **File:** `.agent/policy.json` (version 3, 9 deny + 2 allow — thêm deny-test-mutate/destructive-sql/rm-rf-variants KN-012 + deny-law-fork/deny-law-copy-in-skill rogue-trader HAIPA 2026-09-05).
 
 ### 2. Audit Trail — append-only JSONL
 ```bash
@@ -65,9 +65,18 @@ node .agent/scripts/credentials.mjs delete OPENAI_API_KEY
 ```bash
 node .agent/scripts/policy-check.mjs --tool edit --target "N5Blazor.Tests/ServiceTests.cs" --actor Implement
 # → ⛔ REFUSED (deny-test-mutate) — sửa production code thay vì test
+node .agent/scripts/policy-check.mjs --tool edit --target ".agent/policy.json" --actor Implement
+# → ⛔ REFUSED (deny-law-fork) — law 1 file, chỉ verify/takeover được sửa
 node .agent/scripts/audit.mjs verify
 # → ✅ audit chain OK
 ```
+
+### 6. Rogue-trader hardening — cage before animal (học HAIPA 2026-09-05)
+- **Law 1 file duy nhất:** `.agent/policy.json` là law. Skills (`HOW`) chỉ pointer tới law (`WHETHER`), không copy/restate law, không mang authority-granting language. `deny-law-fork` + `deny-law-copy-in-skill` enforce.
+- **Pin skills nhạy cảm:** curator (auto-learn/auto-researcher) chỉ propose via journal (`PROPOSAL:` lines), chỉ owner/`verify` actor hoặc `intent=takeover` mới apply.
+- **Tách intent/execution:** LLM đề xuất intent; connector deterministic enforce (pre-trade cap + post-trade clamp + floor lockout). Trust nằm ở policy layer observable, không ở stochastic process.
+- **Journal append-only + git version:** `.agent/` commit nightly; posture rewrite ở file riêng, journal chỉ append (không full-file write).
+- **Wake ritual (live exchange last):** đọc identity → orders → mailbox → journal → live state cuối cùng — reality beats stale memory. Webhook chỉ wake, không instruct (payload là tape).
 
 ## Checklist cho agent (tự kiểm trước khi act)
 - [ ] Đã `policy-check --tool X --target Y` chưa? Nếu `refused` → không chạy, báo rule.
