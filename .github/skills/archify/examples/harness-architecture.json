@@ -1,0 +1,64 @@
+{
+  "schema_version": 1,
+  "diagram_type": "architecture",
+  "meta": {
+    "title": "CLAUDE HARNESS v2 — Runtime Architecture",
+    "quality_profile": "showcase",
+    "views": [
+      {
+        "id": "idea-to-product",
+        "label": "Idea → Product",
+        "focus": ["user", "copilot", "yunie", "harness", "plans", "www"],
+        "note": "Primary path: user idea through Harness pipeline to deployed product on GitHub Pages."
+      },
+      {
+        "id": "governance",
+        "label": "Governance & Audit",
+        "focus": ["registry", "audit", "skills", "agents"],
+        "note": "Registry is source of truth; every tool call passes policy gate and audit trail."
+      },
+      {
+        "id": "cosmic-map",
+        "label": "Cosmic-Quantum Map",
+        "focus": ["registry", "audit", "www", "plans"],
+        "note": "Harness → Cosmos: registry (Messier catalog), audit (light cone), policy (laws), www (universe)."
+      }
+    ]
+  },
+  "components": [
+    { "id": "user", "type": "external", "label": "User", "sublabel": "Idea (1 câu)", "pos": [45, 190], "size": [125, 56] },
+    { "id": "copilot", "type": "frontend", "label": "Copilot Chat", "sublabel": "VS Code", "pos": [216, 190], "size": [148, 56] },
+    { "id": "yunie", "type": "frontend", "label": "YUNIE", "sublabel": "You & I · 24/7", "pos": [216, 100], "size": [148, 56], "tag": "system chatbot" },
+    { "id": "harness", "type": "backend", "label": "Harness Pipeline", "sublabel": "8 phases", "pos": [420, 190], "size": [159, 56], "tag": "Process > Model" },
+    { "id": "registry", "type": "database", "label": "Registry", "sublabel": "registry.json v2", "pos": [420, 100], "size": [159, 56], "tag": "source of truth" },
+    { "id": "skills", "type": "messagebus", "label": "Skills ×18", "sublabel": "archify + harness", "pos": [636, 100], "size": [148, 56] },
+    { "id": "agents", "type": "backend", "label": "Agents ×8", "sublabel": "Explore → Verify", "pos": [636, 190], "size": [148, 56] },
+    { "id": "plans", "type": "database", "label": "Plans & Bugs", "sublabel": ".agent/plans + bugs", "pos": [840, 190], "size": [159, 56] },
+    { "id": "audit", "type": "security", "label": "Governance", "sublabel": "audit + policy + creds", "pos": [636, 280], "size": [148, 56], "tag": "fail-closed" },
+    { "id": "www", "type": "cloud", "label": "STATUS Site", "sublabel": "www/ → Pages", "pos": [1067, 190], "size": [148, 56], "tag": "GitHub Pages" },
+    { "id": "pages", "type": "cloud", "label": "GitHub Pages", "sublabel": "deploy www/", "pos": [1067, 100], "size": [148, 56] }
+  ],
+  "boundaries": [
+    { "kind": "region", "label": "Harness v2 — .github/harness/", "wraps": ["registry", "skills", "agents", "audit"] },
+    { "kind": "security-group", "label": "Governance Gate", "wraps": ["audit"] }
+  ],
+  "connections": [
+    { "id": "user-to-copilot", "from": "user", "to": "copilot", "label": "idea", "variant": "emphasis" },
+    { "id": "copilot-to-yunie", "from": "copilot", "to": "yunie", "fromSide": "top", "toSide": "bottom" },
+    { "id": "copilot-to-harness", "from": "copilot", "to": "harness", "label": "pipeline", "variant": "emphasis" },
+    { "id": "harness-to-registry", "from": "harness", "to": "registry", "variant": "security", "fromSide": "top", "toSide": "bottom" },
+    { "id": "registry-to-skills", "from": "registry", "to": "skills", "label": "enable/disable", "labelAt": [610, 173] },
+    { "id": "harness-to-agents", "from": "harness", "to": "agents", "label": "delegate" },
+    { "id": "agents-to-plans", "from": "agents", "to": "plans", "label": "prd/design/plan", "labelAt": [812, 263] },
+    { "id": "harness-to-audit", "from": "harness", "to": "audit", "label": "policy-check → audit", "variant": "security", "fromSide": "bottom", "toSide": "top", "labelAt": [499, 263] },
+    { "id": "plans-to-www", "from": "plans", "to": "www", "label": "deliver", "variant": "emphasis" },
+    { "id": "www-to-pages", "from": "www", "to": "pages", "variant": "emphasis", "fromSide": "top", "toSide": "bottom" },
+    { "id": "yunie-to-registry", "from": "yunie", "to": "registry", "label": "harness-manager", "variant": "dashed", "labelAt": [392, 173] }
+  ],
+  "cards": [
+    { "dot": "cyan", "title": "Pipeline", "items": ["Idea → Explore → Clarify → PRD → Design → Plan → Implement → Polish → Verify", "Process > Model — model nào cũng qua cùng pipeline", "Todo-driven, get_errors sau mỗi edit"] },
+    { "dot": "emerald", "title": "Registry (tháo lắp)", "items": ["registry.json v2 là source of truth (commit vào git)", "disable = move → .disabled/ (không xóa), enable = move ngược", "preset: web-product / api-minimal / full — 1 lệnh cho cả dự án"] },
+    { "dot": "rose", "title": "Governance", "items": ["policy.json: deny trước allow, fail-closed (CEL-lite)", "audit.jsonl: append-only, hash chain, verify", "credentials.enc.json: AES-256-GCM, never logged"] },
+    { "dot": "violet", "title": "YUNIE", "items": ["Chatbot hệ thống — trực 24/7, You & I", "Cập nhật www/status.json + deploy GitHub Pages", "Thực thi harness-manager: enable/disable/preset"] }
+  ]
+}

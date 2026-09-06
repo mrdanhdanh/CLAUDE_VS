@@ -152,6 +152,15 @@
       "description": "Cosmic Scale — đo entropy vũ trụ (tech debt), black-hole bottleneck, dark-matter map cho Harness. Use when cần đo sức khỏe hệ thống, tìm bottleneck, tính entropy, heat death, dark energy/scope creep, hoặc user nói entropy/scale/black hole/dark matter/vũ trụ học",
       "file": "cosmic-scale/SKILL.md",
       "installedAt": "2026-09-05T15:11:57.796Z"
+    },
+    "archify": {
+      "source": "local",
+      "file": "archify/SKILL.md",
+      "enabled": true,
+      "description": "Create polished, verifiable architecture, workflow, sequence, data-flow, lifecycle diagrams as self-contained HTML — typed JSON IR, deterministic validation, atomic delivery. Use when visualizing system architecture, infrastructure, cloud/security topology, workflow, API sequence, data pipeline, state machine, or converting Mermaid to beautiful diagrams. Port of tt-a1i/archify (50k⭐) for Harness v2, tháo lắp via harness-manager.",
+      "installedAt": "2026-09-06T15:30:08.193Z",
+      "path": "skills/archify",
+      "ref": "local"
     }
   },
   "instructions": {

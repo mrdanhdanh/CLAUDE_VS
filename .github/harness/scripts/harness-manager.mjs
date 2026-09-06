@@ -83,6 +83,24 @@ function validateName(name) {
 function normalizeName(name) {
   return name.toLowerCase().replace(/[^a-z0-9-]/g, '-').replace(/-+/g, '-').replace(/^-|-$/g, '');
 }
+async function safeRename(src, dst) {
+  try {
+    await fs.rename(src, dst);
+  } catch (e) {
+    if (e.code === 'EPERM' || e.code === 'EXDEV' || e.code === 'EBUSY') {
+      const stat = await fs.stat(src).catch(() => null);
+      if (!stat) throw e;
+      if (stat.isDirectory()) {
+        await fs.cp(src, dst, { recursive: true, force: true });
+        await fs.rm(src, { recursive: true, force: true });
+      } else {
+        await fs.mkdir(path.dirname(dst), { recursive: true });
+        await fs.copyFile(src, dst);
+        await fs.rm(src, { force: true });
+      }
+    } else throw e;
+  }
+}
 
 // ---------- registry ----------
 async function scanFs() {
@@ -290,7 +308,7 @@ async function setEnabled(type, name, enabled) {
     }
     if (!existsDisabled) throw new Error(`Không tìm thấy file cho ${type} "${name}" ở cả enabled và disabled`);
     await fs.mkdir(path.dirname(pEnabled), { recursive: true });
-    await fs.rename(pDisabled, pEnabled);
+    await safeRename(pDisabled, pEnabled);
     entry.enabled = true;
     await saveRegistry(reg);
     console.log(`✅ Enabled ${type} "${name}" — moved .disabled → enabled`);
@@ -306,7 +324,7 @@ async function setEnabled(type, name, enabled) {
     }
     if (!existsEnabled) throw new Error(`Không tìm thấy file cho ${type} "${name}"`);
     await fs.mkdir(path.dirname(pDisabled), { recursive: true });
-    await fs.rename(pEnabled, pDisabled);
+    await safeRename(pEnabled, pDisabled);
     entry.enabled = false;
     await saveRegistry(reg);
     console.log(`✅ Disabled ${type} "${name}" — moved enabled → .disabled/${path.basename(pDisabled)}`);
@@ -747,14 +765,14 @@ async function presetApply(name) {
       const fsDisabled = existsSync(pD);
       if (shouldEnable && !fsEnabled && fsDisabled) {
         await fs.mkdir(path.dirname(pE), { recursive: true });
-        await fs.rename(pD, pE);
+        await safeRename(pD, pE);
         entry.enabled = true;
         enabledCount++;
       } else if (shouldEnable && fsEnabled) {
         if (!entry.enabled) { entry.enabled = true; enabledCount++; }
       } else if (!shouldEnable && fsEnabled && !fsDisabled) {
         await fs.mkdir(path.dirname(pD), { recursive: true });
-        await fs.rename(pE, pD);
+        await safeRename(pE, pD);
         entry.enabled = false;
         disabledCount++;
       } else if (!shouldEnable && fsDisabled) {

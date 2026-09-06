@@ -18,7 +18,8 @@
     "harness-process": true,
     "harness-web-ui": false,
     "cosmic-quantum": true,
-    "cosmic-scale": true
+    "cosmic-scale": true,
+    "archify": false
   },
   "instructions": {
     "custom-registry": true,

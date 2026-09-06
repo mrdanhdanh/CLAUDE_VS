@@ -52,3 +52,6 @@ build/
 # ===== Exported skills — skip demo binaries (mp3/jpg/png), keep code =====
 .claude/skills/*/assets/
 *.mp3
+
+# ===== Archify vendor — local clone, cài lại bằng install.mjs =====
+.github/skills/archify/vendor/

@@ -37,6 +37,8 @@
 | KN-013 | 2026-09-03 | Tích hợp Ponytail ladder vào Harness — thiếu YAGNI gate, dead code sống sót, N5Blazor trial bị revert | Harness thiên mở rộng (8 phase, UI đẹp) nhưng không có ladder thu gọn; trial N5Blazor xóa GlassCard/RainbowCard/bootstrap + fix Kana toggle nhưng bị revert vì thiếu .NET 8 SDK để verify | Thêm instruction `minimal-ladder` (7 nấc + YAGNI + native-first + dead-code grep) + preset `lean-product` + bật ladder ở full/web-product/api-minimal; trial artifacts giữ ở `.agent/bugs/` + `.agent/plans/n5-blazor-ladder/` | `process` `minimal` `ponytail` `yagni` `dx` |
 | KN-014 | 2026-09-04 | Smoke test treo vĩnh viễn khi import MCP stdio server + self-verify 1/4 checks + regex frontmatter không match | Import module có side-effect khởi động server stdio → chờ stdin vĩnh viễn; verify chạy trước khi record.json được ghi; regex `^` thiếu flag `m` | Cấm import module khởi động server trong smoke one-liner; self-verify chạy sau khi mọi file đã ghi; regex `^`/`$` multi-line luôn thêm flag `m` | `process` `dx` `mcp` `testing` `regex` |
 | KN-015 | 2026-09-04 | GitHub Pages deploy fail — 2 workflows cùng `github-pages` env + eval-gate FAIL Node 18 do `node --check` CJS | `ai-news.yml` copy 3 bước deploy từ `pages.yml` → xung đột `github-pages` env; `node --check` trên Node 18 coi `.js` là CJS nên `import` fail | Chỉ 1 workflow deploy Pages; workflow data chỉ commit; `eval-gate` check ESM `.js` qua temp `.mjs` | `build` `deploy` `ci` `workflow` `pages` |
+| KN-016 | 2026-09-06 | `harness-manager disable skill` fail EPERM trên Windows — rename folder bị chặn dù ACL đầy đủ | `fs.rename` folder bị process khác (VS Code file watcher) giữ handle → EPERM; PowerShell `Move-Item` cùng lúc lại OK | Wrap rename bằng `safeRename()`: thử `fs.rename`, bắt EPERM/EXDEV/EBUSY → fallback `fs.cp` + `fs.rm` | `process` `dx` `windows` `fs` |
+| KN-017 | 2026-09-06 | Archify diagram fail `viewer/viewport-overflow` + `composition/desktop-readability` — viewBox gần vuông render tràn first-screen | Diagram panel ~930px @1440 → `scale = 930/viewBoxWidth`; viewBox 772×652 gần vuông → height×scale > 586px tràn dọc; width 1400 → scale 0.66 < 0.822 text < 6px | Chọn viewBox width trong sweet spot [1035, 1131] để đồng thời thỏa `scale ≥ 0.822` và `height×scale ≤ ~586px`; luôn chạy `visual-check` sau `deliver` | `ui` `diagram` `archify` `responsive` `verify` |
 
 > Dòng ví dụ trên sẽ bị thay khi có bug thật đầu tiên — giữ format.
 
@@ -352,6 +354,48 @@
 - **Tags:** `build` `deploy` `ci` `workflow` `pages`
 - **Người ghi:** YUNIE / fixbug
 
+### KN-016 — harness-manager disable fail EPERM trên Windows (fs.rename folder bị chặn)
+
+- **Ngày:** 2026-09-06
+- **Bug report:** `.agent/bugs/2026-09-06-archify-skill-port/bug.md` (phần EPERM)
+- **Severity:** major
+- **Triệu chứng:** `node harness-manager.mjs disable skill archify` fail `❌ EPERM: operation not permitted, rename 'D:\CLAUDE_VS\.github\skills\archify' -> '...\.disabled\archify'` — dù ACL đầy đủ (Authenticated Users Modify), folder không readonly, không file lock rõ ràng. Cùng lúc đó PowerShell `Move-Item` cùng 2 path lại OK, và Node rename thử lại vẫn fail.
+- **Nguyên nhân gốc (5 Whys):**
+  - Why1: `fs.rename` fail EPERM → vì OS từ chối rename folder.
+  - Why2: OS từ chối → vì một process (VS Code file watcher / Copilot context indexer) đang giữ handle trên folder/file bên trong.
+  - Why3: Handle không thấy qua `open()` → vì watcher giữ handle ở mức directory, không phải file đơn.
+  - Why4: `harness-manager` chỉ có 1 đường rename → không có fallback khi rename bị chặn.
+  - Why5 (Root): Windows rename folder là operation dễ vỡ khi có watcher — cần **fallback copy+rm** thay vì fail cứng.
+- **Cách sửa:** Thêm `safeRename(src, dst)` vào `harness-manager.mjs`: thử `fs.rename`; bắt `EPERM|EXDEV|EBUSY` → `fs.cp(src, dst, {recursive:true, force:true})` + `fs.rm(src, {recursive:true, force:true})` (folder) hoặc `copyFile` + `rm` (file). Patch cả `setEnabled` + `presetApply`. Kết quả: disable/enable/preset apply đều pass.
+- **Cách phòng tránh:**
+  - Mọi script move file/folder trên Windows dùng wrapper rename có fallback, không gọi `fs.rename` trần.
+  - Gặp EPERM rename: thử PowerShell `Move-Item` để xác nhận OS cho phép → nếu OK thì chắc chắn là fallback thiếu, không phải permission.
+  - Không đoán "chắc chạy được" — test disable/enable thật sau khi thêm skill mới.
+- **Tags:** `process` `dx` `windows` `fs`
+- **Người ghi:** YUNIE / fixbug
+
+### KN-017 — Archify diagram tràn first-screen + text quá nhỏ — viewBox ratio math
+
+- **Ngày:** 2026-09-06
+- **Bug report:** `.agent/bugs/2026-09-06-archify-skill-port/bug.md` (phần viewport-overflow)
+- **Severity:** major
+- **Triệu chứng:** Diagram deliver pass 9/9 showcase checks nhưng `visual-check` fail `viewer/viewport-overflow` (scrollHeight 1415–2004 > innerHeight 900–1320) hoặc `composition/desktop-readability` (projectedFontPx 4.8–5.9 < 6). Sửa width thì vỡ text, sửa height thì tràn dọc — bế tắc 2 đầu.
+- **Nguyên nhân gốc (5 Whys):**
+  - Why1: Render tràn dọc → vì diagram height × scale > viewport height trừ chrome (~586px @1440×900).
+  - Why2: Scale nhỏ → vì `scale = availableDiagramWidth (~930px) / viewBoxWidth`.
+  - Why3: viewBoxWidth quá lớn (1400) → scale 0.66 → text context 7.3px × 0.66 = 4.8px < 6px minimum.
+  - Why4: viewBoxWidth nhỏ (772) → scale 1.2 nhưng height 652 × 1.2 = 785px > 586px → tràn.
+  - Why5 (Root): Thiếu **ratio math** — phải chọn viewBox width thỏa đồng thời 2 ràng buộc: `scale ≥ 0.822` (text ≥6px) VÀ `height × scale ≤ ~586px`.
+- **Cách sửa:** Tính sweet spot: `width ∈ [1035, 1131]` cho height ~652 (workflow: `[1100, 652]` pass cả 2) và `[1050, 560]` cho sequence (nén y theo tỉ lệ `560/720`, giữ min y 160, spread messages ≥28px, nâng cụm cuối tránh legend). Sau mỗi lần đổi viewBox: rescale toàn bộ `y` (messages/activations/segments) theo tỉ lệ, rồi `deliver` + `visual-check` lại.
+- **Cách phòng tránh:**
+  - Workflow/sequence: ưu tiên viewBox **dẹt** (ratio ≥ 1.7:1) — architecture 1255×424 pass ngay lần đầu.
+  - Công thức nhanh: `maxHeight = 586 / (930/width)` → chọn `width = maxHeight × ratio mong muốn`, kiểm tra `930/width ≥ 0.822`.
+  - Đổi viewBox → nhớ rescale toàn bộ tọa độ y, không chỉ meta.
+  - Luôn chạy `visual-check` (cần `ARCHIFY_CHROME` trỏ Edge/Chrome) sau `deliver` — 9/9 showcase checks KHÔNG bao gồm browser containment.
+  - Đọc `supportedFixes` của validator — nó luôn chỉ đúng đường (bỏ fromSide/toSide, dùng labelAt gợi ý, route preset conflict → thả auto).
+- **Tags:** `ui` `diagram` `archify` `responsive` `verify`
+- **Người ghi:** YUNIE / fixbug
+
 <!-- Thêm bài học mới theo template dưới — copy block này -->
 
 <!--
@@ -412,6 +456,12 @@
 - ❌ Regex `^`/`$` trên nội dung multi-line thiếu flag `m` — chỉ match đầu/cuối string, không match đầu dòng (KN-014).
 - ❌ 2 workflows cùng `environment: github-pages` + `deploy-pages` — chỉ 1 deployer được giữ env này (KN-015).
 - ❌ `node --check` ESM `.js` trên Node 18 fail do coi là CJS — phải check qua temp `.mjs` (KN-015).
+- ❌ Gọi `fs.rename` folder trần trên Windows — watcher giữ handle → EPERM; dùng wrapper có fallback cp+rm (KN-016).
+- ❌ Gặp EPERM rename mà kết luận "permission sai" — test PowerShell `Move-Item` trước để phân biệt watcher-lock vs ACL (KN-016).
+- ❌ Chọn viewBox gần vuông (772×652) cho diagram — render tràn first-screen; ưu tiên ratio dẹt ≥1.7:1 (KN-017).
+- ❌ Đổi viewBox width mà không tính scale text — width 1400 → scale 0.66 → text < 6px fail readability (KN-017).
+- ❌ Đổi viewBox mà không rescale tọa độ y (messages/activations/segments) — messages rơi ngoài readable timeline (KN-017).
+- ❌ Tin 9/9 showcase checks là đủ — nó không bao gồm browser containment; phải chạy `visual-check` với `ARCHIFY_CHROME` (KN-017).
 
 ## Checklist phòng tránh chung
 

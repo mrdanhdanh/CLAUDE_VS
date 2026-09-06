@@ -1,0 +1,53 @@
+{
+  "schema_version": 2,
+  "diagram_type": "workflow",
+  "meta": {
+    "title": "Harness v2 — 8-Phase Pipeline + /fixbug Loop",
+    "quality_profile": "showcase",
+    "viewBox": [1100, 652]
+  },
+  "lanes": [
+    { "id": "user", "label": "User" },
+    { "id": "fixbug", "label": "/fixbug Loop", "variant": "exception" },
+    { "id": "harness", "label": "Harness (Explore · Implement · Verify)" },
+    { "id": "agents", "label": "Agents (Spec · Plan · Polish)" }
+  ],
+  "phases": [
+    { "id": "intake", "label": "Understand", "fromCol": 0, "toCol": 1 },
+    { "id": "specify", "label": "Spec + Plan", "fromCol": 2, "toCol": 3, "variant": "emphasis" },
+    { "id": "execute", "label": "Build + Polish", "fromCol": 4, "toCol": 4, "variant": "emphasis" },
+    { "id": "ship", "label": "Verify + Done", "fromCol": 5, "toCol": 5, "variant": "dashed" }
+  ],
+  "mainPath": ["idea", "explore", "clarify", "prd", "design", "plan", "implement", "polish", "verify", "done"],
+  "nodes": [
+    { "id": "idea", "lane": "user", "col": 0, "type": "external", "label": "Idea", "sublabel": "1 câu" },
+    { "id": "explore", "lane": "harness", "col": 1, "type": "backend", "label": "Explore", "sublabel": "read-only codebase" },
+    { "id": "clarify", "lane": "harness", "col": 2, "type": "backend", "label": "Clarify", "sublabel": "ask or assume" },
+    { "id": "prd", "lane": "agents", "col": 2, "type": "backend", "label": "PRD", "sublabel": "prd.md" },
+    { "id": "design", "lane": "agents", "col": 3, "type": "frontend", "label": "Design", "sublabel": "design.md" },
+    { "id": "plan", "lane": "agents", "col": 4, "type": "backend", "label": "Plan", "sublabel": "todos + risks" },
+    { "id": "fixbug", "lane": "fixbug", "col": 4, "type": "backend", "label": "/fixbug", "sublabel": "bounded repair" },
+    { "id": "implement", "lane": "harness", "col": 4, "type": "backend", "label": "Implement", "sublabel": "todo-driven + TDD" },
+    { "id": "polish", "lane": "agents", "col": 5, "type": "frontend", "label": "Polish", "sublabel": "responsive + a11y" },
+    { "id": "verify", "lane": "harness", "col": 5, "type": "security", "label": "Verify", "sublabel": "build · test · lint" },
+    { "id": "done", "lane": "user", "col": 5, "type": "cloud", "label": "Done", "sublabel": "Pages deploy" }
+  ],
+  "edges": [
+    { "id": "idea-to-explore", "from": "idea", "to": "explore", "role": "main", "label": "harness" },
+    { "id": "explore-to-clarify", "from": "explore", "to": "clarify", "role": "main" },
+    { "id": "clarify-to-prd", "from": "clarify", "to": "prd", "role": "main", "label": "chốt scope" },
+    { "id": "prd-to-design", "from": "prd", "to": "design", "role": "main" },
+    { "id": "design-to-plan", "from": "design", "to": "plan", "role": "main" },
+    { "id": "plan-to-implement", "from": "plan", "to": "implement", "role": "main" },
+    { "id": "implement-to-polish", "from": "implement", "to": "polish", "role": "main" },
+    { "id": "polish-to-verify", "from": "polish", "to": "verify", "role": "main" },
+    { "id": "verify-to-done", "from": "verify", "to": "done", "role": "main", "label": "pass" },
+    { "id": "verify-to-fixbug", "from": "verify", "to": "fixbug", "role": "error", "label": "fail" },
+    { "id": "fixbug-to-implement", "from": "fixbug", "to": "implement", "role": "branch", "label": "fix → re-verify" }
+  ],
+  "cards": [
+    { "dot": "cyan", "title": "Pipeline", "items": ["Idea → Explore → Clarify → PRD → Design → Plan → Implement → Polish → Verify", "Process > Model — model nào cũng qua cùng pipeline", "Todo-driven, get_errors sau mỗi edit"] },
+    { "dot": "rose", "title": "/fixbug loop", "items": ["Bounded repair loop: reproduce → root cause → fix → verify", "≥3 fails không giảm error count → escalate + learn", "Mỗi bug ghi .agent/bugs/<slug>/bug.md"] },
+    { "dot": "emerald", "title": "Learning Gate", "items": ["Fix xong không ghi knowledge = chưa xong", "KN-XXX dán vào docs/knowleged.md (CMB của Harness)", "Confidence ≥ MEDIUM mới được close"] }
+  ]
+}

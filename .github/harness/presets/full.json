@@ -18,7 +18,8 @@
     "harness-governance": true,
     "harness-minimal": true,
     "cosmic-quantum": true,
-    "cosmic-scale": true
+    "cosmic-scale": true,
+    "archify": true
   },
   "instructions": {
     "custom-registry": true,
