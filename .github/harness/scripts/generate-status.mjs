@@ -185,10 +185,24 @@ async function main() {
     const catalogPath = path.join(ROOT, '.agent', 'mcp', 'catalog.json');
     const grantsPath = path.join(ROOT, '.agent', 'mcp', 'grants.json');
     if (existsSync(catalogPath)) {
-      try { const c = JSON.parse(await fs.readFile(catalogPath, 'utf8')); platform.mcp.vendors = (c.vendors || []).length; } catch {}
+      try {
+        const c = JSON.parse(await fs.readFile(catalogPath, 'utf8'));
+        platform.mcp.vendors = (c.vendors || []).length;
+        platform.mcp.list = (c.vendors || []).map(v => ({
+          id: v.id,
+          name: v.name || v.id,
+          scope: v.scope || 'read/write',
+          auth: v.auth || 'unknown',
+          tools: (v.tools || []).length,
+        }));
+      } catch {}
     }
     if (existsSync(grantsPath)) {
-      try { const g = JSON.parse(await fs.readFile(grantsPath, 'utf8')); platform.mcp.grants = Object.keys(g.grants || {}).length; } catch {}
+      try {
+        const g = JSON.parse(await fs.readFile(grantsPath, 'utf8'));
+        platform.mcp.grants = Object.keys(g.grants || {}).length;
+        platform.mcp.grantsByAgent = g.grants || {};
+      } catch {}
     }
     // components
     const galleryDir = path.join(WWW_DIR, 'components', 'gallery');
@@ -210,6 +224,23 @@ async function main() {
       try { const r = JSON.parse(await fs.readFile(routinesPath, 'utf8')); platform.routines = { total: r.length, enabled: r.filter(x => x.enabled).length }; } catch {}
     }
   } catch {}
+
+  // collaboration metrics — KN-018 (Waymo effect / decollaboration)
+  const collaboration = {
+    kn: 'KN-018',
+    dissentGate: false,
+    whoDidYouThinkWith: false,
+    criticAgent: false,
+    fundTheFriction: false,
+  };
+  try {
+    const wf = await fs.readFile(path.join(GITHUB_DIR, 'instructions', 'harness-workflow.instructions.md'), 'utf8');
+    collaboration.dissentGate = /Dissent Review/.test(wf);
+    collaboration.whoDidYouThinkWith = /Who did you think with\?/.test(wf);
+    collaboration.criticAgent = existsSync(path.join(GITHUB_DIR, 'agents', 'critic.agent.md'));
+    collaboration.fundTheFriction = existsSync(path.join(GITHUB_DIR, 'instructions', 'fund-the-friction.instructions.md'));
+  } catch {}
+  collaboration.status = Object.values(collaboration).every(v => typeof v !== 'boolean' || v) ? 'ok' : 'partial';
 
   // health checks — Harness 2.2: eval-gate + setup-doctor + 2.1/2.2 scripts
   let evalStatus = 'unknown';
@@ -235,6 +266,7 @@ async function main() {
     `auto-learn: ${learnStats.knTotal} KN, ${learnStats.bugsTotal} bugs, ${learnStats.drafts} drafts — suggest/log/propose/status (<50ms, IDF, tiếng Việt)`,
     `governance: audit ${governance.audit.total} (Ed25519 receipt P0-4) · policy ${governance.policy.deny} deny/${governance.policy.allow} allow (${governance.policy.status}) · credentials ${governance.credentials.count} keys ${governance.credentials.enc ? 'enc' : 'plain'}`,
     `platform: agents ${platform.agents.total} (${platform.agents.builtIn} built-in, ${platform.agents.remote} remote) · mcp ${platform.mcp.vendors} vendors/${platform.mcp.grants} grants (library 1.2.0 read-only) · components ${platform.components.total}/${platform.components.published} pub · routines ${platform.routines.total}/${platform.routines.enabled} enabled`,
+    `collaboration: KN-018 — dissentGate ${collaboration.dissentGate ? '✅' : '❌'} · whoDidYouThinkWith ${collaboration.whoDidYouThinkWith ? '✅' : '❌'} · critic ${collaboration.criticAgent ? '✅' : '❌'} · fund-the-friction ${collaboration.fundTheFriction ? '✅' : '❌'} (${collaboration.status})`,
     `n5-blazor: www/n5-blazor/ 7 trang static + app.css + data.js + site.js — 100% Pages`,
   ];
 
@@ -251,6 +283,7 @@ async function main() {
     'n5-blazor': { title: 'N5 Blazor', type: 'demo' },
     'todo-manager': { title: 'Todo Manager', type: 'demo' },
     'web-thuat-toan': { title: '10 Bài Thuật Toán', type: 'demo' },
+    'waymo-effect': { title: 'The Waymo Effect (KN-018)', type: 'slide' },
   };
   const pagesEntries = demos.map(d => {
     const meta = pageMeta[d.name] || { title: d.name, type: 'demo' };
@@ -278,6 +311,7 @@ async function main() {
       entries: pagesEntries,
       note: existing.pages?.note || 'Copy file mới vào www/ là tự deploy lên GitHub Pages (workflow upload toàn bộ www).'
     },
+    collaboration: collaboration,
     yunie: {
       name: 'YUNIE',
       fullName: 'Your Unified Navigator for Intelligent Execution',

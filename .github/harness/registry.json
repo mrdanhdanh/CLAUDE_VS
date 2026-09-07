@@ -44,7 +44,7 @@
       "enabled": true,
       "description": "UI design system toolkit for Senior UI Designer including design token generation, component documentation, responsive design calculations, and developer handoff tools. Use for creating design systems, maintaining visual consistency, and facilitating design-dev collaboration.",
       "file": "ui-design-system/SKILL.md",
-      "installedAt": "2026-09-04T12:48:01.909Z"
+      "installedAt": "2026-09-07T16:26:57.263Z"
     },
     "ui-ux-pro-max": {
       "source": "nextlevelbuilder/ui-ux-pro-max-skill",
@@ -53,7 +53,7 @@
       "enabled": true,
       "description": "UI/UX design intelligence for web, mobile, and desktop. This skill should be used when designing, building, reviewing, or fixing interfaces, including pages, components, design systems, accessibility, interaction, responsive layout, typography, color, charts, and stack-specific UI implementation. Se",
       "file": "ui-ux-pro-max/SKILL.md",
-      "installedAt": "2026-09-04T12:48:42.597Z"
+      "installedAt": "2026-09-07T16:27:27.099Z"
     },
     "tdd-gate": {
       "source": "local",
@@ -88,7 +88,7 @@
       "enabled": true,
       "description": "Research what people actually say about any topic in the last 30 days. Pulls posts and engagement from Reddit, X, YouTube, TikTok, Hacker News, Polymarket, GitHub, and the web. Includes a doctor health check to diagnose broken or missing sources.",
       "file": "last30days/SKILL.md",
-      "installedAt": "2026-09-04T12:49:49.107Z"
+      "installedAt": "2026-09-07T16:28:24.288Z"
     },
     "harness-build-config": {
       "source": "local",
@@ -299,6 +299,14 @@
       "description": "Cosmic-Quantum Thinking — triết lý vũ trụ + lượng tử cho Harness. Use when designing system philosophy, harness theory, product vision, need cosmic/quantum metaphors, scale thinking, entanglement, superposition, uncertainty, or user says vũ trụ/lượng tử/cosmos/quantum/triết lý/lý thuyết/hệ thống/sca",
       "applyTo": "**",
       "installedAt": "2026-09-04T15:39:16.344Z"
+    },
+    "fund-the-friction": {
+      "source": "local",
+      "file": "fund-the-friction.instructions.md",
+      "enabled": true,
+      "description": "Fund the friction — collaboration là infrastructure, không phải nice-to-have (học KN-018 Waymo effect). Use when cân nhắc cắt workshop/review/pari khi gấp, đánh giá contribution vs velocity, cần giữ thinking together, hoặc task liên quan diversity/serendipity.",
+      "applyTo": "**",
+      "installedAt": "2026-09-07T16:26:55.240Z"
     }
   },
   "agents": {
@@ -357,6 +365,13 @@
       "enabled": true,
       "description": "Learn — auto-learn agent: suggest KN liên quan, auto-log bug draft, propose KN mới cho knowleged.md. Use when need suggest KN, log bug, propose KN, auto-learn, knowledge, before coding, after error, after fix.",
       "installedAt": "2026-08-30T16:08:47.747Z"
+    },
+    "critic": {
+      "source": "local",
+      "file": "critic.agent.md",
+      "enabled": true,
+      "description": "Critic — friction engineer: bẻ argument, tìm rival work, check assumptions, đảm bảo Dissent Review (KN-018). Use when cần critique độc lập cho PRD/Design/Plan, cần framing đối lập không prompt trước, cần check rival work/assumption sai trước khi Verify, hoặc user nói critic/dissent/challenge.",
+      "installedAt": "2026-09-07T16:26:55.252Z"
     }
   },
   "prompts": {

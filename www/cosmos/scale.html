@@ -173,6 +173,27 @@
       </div>
     </section>
 
+    <section class="section" aria-labelledby="de-title">
+      <div class="container">
+        <div class="section-head">
+          <h2 id="de-title"><small>Dark Energy</small>💜 Decollaboration (KN-018)</h2>
+          <p id="deAdvice">Đang tải…</p>
+        </div>
+        <div class="grid-2">
+          <div class="card">
+            <h3>💜 Dark Energy D — lực nở rộng của decollaboration</h3>
+            <p style="margin-bottom:12px">D = (1 − dissentRatio) × 10 — tỉ lệ plans <em>không</em> có Dissent/“Who did you think with?” (KN-018 Waymo effect).</p>
+            <div class="parts" id="deParts" aria-label="Thành phần dark energy"></div>
+          </div>
+          <div class="card">
+            <h3>.Gravity — đối trọng</h3>
+            <p style="margin-bottom:12px">Gravity = Dissent Review gate + fund-the-friction + Critic agent. Mỗi PRD mới thêm <code>Who did you think with?</code> là bơm 1 đơn vị gravity.</p>
+            <div class="code-block" id="deCode">darkEnergy: —</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <section class="section" id="blackholes" aria-labelledby="bh-title">
       <div class="container">
         <div class="section-head">
@@ -251,6 +272,20 @@
         const d=document.createElement('div'); d.className='meta-card'; d.innerHTML=`<b>${v??'—'}</b><span>${k}</span>`; cg.appendChild(d);
       }
       $('#policyBox').textContent='policy: '+(j.policy?.ok?'ok':'fail')+(j.policy?.error?' — '+j.policy.error:'');
+      // dark energy (KN-018)
+      const de=j.darkEnergy||{};
+      const D=de.D ?? 0;
+      const deLevel=D===0?'low':D<=5?'medium':'high';
+      $('#deAdvice').textContent=de.advice||'Chưa đo dark energy — chạy lại cosmic-scale.mjs.';
+      const deParts=$('#deParts'); deParts.innerHTML='';
+      const deRows=[['Dissented plans',de.plansWithDissent??0],['Tổng plans',de.plansTotal??0],['Dissent ratio',(de.dissentRatio!=null?Math.round(de.dissentRatio*100)+'%':'—')]];
+      for(const [k,v] of deRows){
+        const row=document.createElement('div'); row.className='part';
+        row.innerHTML=`<span>${k}</span><b>${v}</b>`; deParts.appendChild(row);
+      }
+      const badge=document.createElement('div'); badge.className='gauge-level '+deLevel; badge.style.marginTop='12px'; badge.style.display='inline-block'; badge.style.padding='4px 12px'; badge.style.borderRadius='999px';
+      badge.textContent='D='+D+' ('+deLevel+')'; deParts.appendChild(badge);
+      $('#deCode').textContent='darkEnergy: '+JSON.stringify(de,null,2);
       const bh=j.blackHoles||[]; const list=$('#bhList'); list.innerHTML='';
       if(bh.length===0){ list.innerHTML='<div class="card"><p>Không có black hole — vũ trụ sạch!</p></div>'; }
       else bh.forEach(b=>{

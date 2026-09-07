@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-06T09:22:04.682Z",
+  "generatedAt": "2026-09-07T16:30:13.126Z",
   "generatedBy": "cosmic-scale.mjs",
   "entropy": {
     "S": 0,
@@ -13,10 +13,17 @@
       "failed": 0
     }
   },
+  "darkEnergy": {
+    "D": 10,
+    "dissentRatio": 0,
+    "plansTotal": 49,
+    "plansWithDissent": 0,
+    "advice": "Dark energy cao — decollaboration đang nở rộng: áp KN-018 cho mọi PRD mới (Who did you think with?)."
+  },
   "counts": {
-    "knTotal": 15,
+    "knTotal": 18,
     "bugsTotal": 13,
-    "auditTotal": 2
+    "auditTotal": 3
   },
   "mismatches": [],
   "missing": [],
@@ -45,6 +52,11 @@
     },
     {
       "t": "2026-09-06T09:22:04.682Z",
+      "S": 0,
+      "level": "low"
+    },
+    {
+      "t": "2026-09-07T16:30:13.126Z",
       "S": 0,
       "level": "low"
     }

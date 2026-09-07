@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-06T16:36:06.291Z",
+  "generatedAt": "2026-09-07T16:50:36.069Z",
   "generatedBy": "YUNIE",
   "version": 1,
   "counts": {
@@ -9,14 +9,14 @@
       "total": 18
     },
     "instructions": {
-      "enabled": 17,
+      "enabled": 18,
       "disabled": 0,
-      "total": 17
+      "total": 18
     },
     "agents": {
-      "enabled": 8,
+      "enabled": 9,
       "disabled": 0,
-      "total": 8
+      "total": 9
     },
     "prompts": {
       "enabled": 7,
@@ -172,6 +172,10 @@
       "cosmic-quantum": {
         "enabled": true,
         "description": "Cosmic-Quantum Thinking — triết lý vũ trụ + lượng tử cho Harness. Use when designing system philosophy, harness theory, product vision, need cosmic/quantum metaphors, scale thinking, entanglement, superposition, uncertainty, or user says vũ trụ/lượng tử/cosmos/quantum/triết lý/lý thuyết/hệ thống/sca"
+      },
+      "fund-the-friction": {
+        "enabled": true,
+        "description": "Fund the friction — collaboration là infrastructure, không phải nice-to-have (học KN-018 Waymo effect). Use when cân nhắc cắt workshop/review/pari khi gấp, đánh giá contribution vs velocity, cần giữ thinking together, hoặc task liên quan diversity/serendipity."
       }
     },
     "agents": {
@@ -206,6 +210,10 @@
       "learn": {
         "enabled": true,
         "description": "Learn — auto-learn agent: suggest KN liên quan, auto-log bug draft, propose KN mới cho knowleged.md. Use when need suggest KN, log bug, propose KN, auto-learn, knowledge, before coding, after error, after fix."
+      },
+      "critic": {
+        "enabled": true,
+        "description": "Critic — friction engineer: bẻ argument, tìm rival work, check assumptions, đảm bảo Dissent Review (KN-018). Use when cần critique độc lập cho PRD/Design/Plan, cần framing đối lập không prompt trước, cần check rival work/assumption sai trước khi Verify, hoặc user nói critic/dissent/challenge."
       }
     },
     "prompts": {
@@ -362,6 +370,11 @@
       "status": "ok"
     },
     {
+      "name": "waymo-effect",
+      "path": "waymo-effect/index.html",
+      "status": "ok"
+    },
+    {
       "name": "web-thuat-toan",
       "path": "web-thuat-toan/index.html",
       "status": "ok"
@@ -375,19 +388,20 @@
   "health": {
     "errors": 0,
     "status": "ok",
-    "lastCheck": "2026-09-06T16:36:06.291Z",
+    "lastCheck": "2026-09-07T16:50:36.069Z",
     "checks": [
       "get_errors: pass (0 errors)",
-      "registry: 17 instructions (17 total) - 18 skills - 8 agents - 7 prompts - 1 hook — all enabled",
+      "registry: 18 instructions (18 total) - 18 skills - 9 agents - 7 prompts - 1 hook — all enabled",
       "harness: 2.2-done — P0 (RAG loop, tool hardening, planning JSON, receipt Ed25519) + P1 (multi-agent, observability, protocols, context, memory, deploy) + P2 (MAF workflows, CUA guardrails, local SLM, setup doctor)",
       "scripts: 19 harness .mjs (plan-validate, handoff, reflect, trace, eval-gate, deploy-check, agent-card, context, memory, workflow, cua-guard, local, setup-doctor)",
       "eval-gate: PASS (syntax + MCP smoke + plan-validate)",
       "www: polished — responsive 375/768/1280, a11y, states, animation 150-300ms",
       "workflow: www/** -> Pages (upload-artifact path: www) — exists: true + eval job gate",
       "library: www/library/ MCP v1.2.0 (5 tools: search + iterative + list/get/status, router+cache, redacted) + library-rag instruction",
-      "auto-learn: 17 KN, 13 bugs, 0 drafts — suggest/log/propose/status (<50ms, IDF, tiếng Việt)",
+      "auto-learn: 18 KN, 13 bugs, 0 drafts — suggest/log/propose/status (<50ms, IDF, tiếng Việt)",
       "governance: audit 3 (Ed25519 receipt P0-4) · policy 9 deny/2 allow (ok) · credentials 0 keys plain",
       "platform: agents 3 (3 built-in, 0 remote) · mcp 3 vendors/3 grants (library 1.2.0 read-only) · components 3/3 pub · routines 1/1 enabled",
+      "collaboration: KN-018 — dissentGate ✅ · whoDidYouThinkWith ✅ · critic ✅ · fund-the-friction ✅ (ok)",
       "n5-blazor: www/n5-blazor/ 7 trang static + app.css + data.js + site.js — 100% Pages"
     ]
   },
@@ -441,6 +455,11 @@
         "type": "demo"
       },
       {
+        "path": "waymo-effect/index.html",
+        "title": "The Waymo Effect (KN-018)",
+        "type": "slide"
+      },
+      {
         "path": "web-thuat-toan/index.html",
         "title": "10 Bài Thuật Toán",
         "type": "demo"
@@ -452,6 +471,14 @@
       }
     ],
     "note": "Copy file mới vào www/ là tự deploy lên GitHub Pages (workflow upload toàn bộ www)."
+  },
+  "collaboration": {
+    "kn": "KN-018",
+    "dissentGate": true,
+    "whoDidYouThinkWith": true,
+    "criticAgent": true,
+    "fundTheFriction": true,
+    "status": "ok"
   },
   "yunie": {
     "name": "YUNIE",
@@ -549,7 +576,7 @@
     }
   },
   "learn": {
-    "knTotal": 17,
+    "knTotal": 18,
     "bugsTotal": 13,
     "drafts": 0
   },
@@ -619,7 +646,7 @@
       "deny": 9,
       "allow": 2,
       "status": "ok",
-      "lastCheck": "2026-09-06T16:36:06.192Z"
+      "lastCheck": "2026-09-07T16:50:35.901Z"
     },
     "credentials": {
       "count": 0,
@@ -635,7 +662,41 @@
     },
     "mcp": {
       "vendors": 3,
-      "grants": 3
+      "grants": 3,
+      "list": [
+        {
+          "id": "google-drive",
+          "name": "Google Drive",
+          "scope": "read/write",
+          "auth": "oauth",
+          "tools": 2
+        },
+        {
+          "id": "notion",
+          "name": "Notion",
+          "scope": "read/write",
+          "auth": "oauth",
+          "tools": 2
+        },
+        {
+          "id": "library",
+          "name": "Library RAG Local",
+          "scope": "read-only",
+          "auth": "none",
+          "tools": 5
+        }
+      ],
+      "grantsByAgent": {
+        "general": [
+          "google-drive",
+          "library"
+        ],
+        "knowledge": [
+          "notion",
+          "library"
+        ],
+        "risk": []
+      }
     },
     "components": {
       "total": 3,

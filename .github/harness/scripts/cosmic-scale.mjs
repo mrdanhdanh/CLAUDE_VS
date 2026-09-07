@@ -105,7 +105,29 @@ async function main() {
   if (missing.length) blackHoles.push({ id: 'drift-missing', title: missing.length + ' registry entries missing file', kind: 'dynamic', fix: 'chạy harness-manager sync hoặc gỡ' });
   if (failed > 0) blackHoles.push({ id: 'audit-failed', title: failed + ' audit failed (200 events gần nhất)', kind: 'dynamic', fix: 'xem audit tail, fix gốc rồi verify lại' });
 
-  // 5. entropy
+  // 5. dark energy — decollaboration (KN-018): tỉ lệ plans CÓ Dissent ("Who did you think with?")
+  const PLANS_DIR = path.join(ROOT, '.agent', 'plans');
+  let plansTotal = 0, plansWithDissent = 0;
+  try {
+    const entries = await fs.readdir(PLANS_DIR, { withFileTypes: true });
+    for (const e of entries) {
+      if (!e.isDirectory()) continue;
+      try {
+        const prd = await fs.readFile(path.join(PLANS_DIR, e.name, 'prd.md'), 'utf8');
+        plansTotal++;
+        if (/who did you think with\?/i.test(prd) || /dissent review/i.test(prd)) plansWithDissent++;
+      } catch {}
+    }
+  } catch {}
+  const dissentRatio = plansTotal ? plansWithDissent / plansTotal : 1;
+  const darkEnergy = Math.round((1 - dissentRatio) * 10);
+  const deAdvice = darkEnergy === 0
+    ? 'Gravity thắng — mọi plan đều có Dissent/Who did you think with.'
+    : darkEnergy <= 5
+      ? 'Dark energy vừa phải — các plan mới thêm Dissent Review gate (KN-018) để chống decollaboration.'
+      : 'Dark energy cao — decollaboration đang nở rộng: áp KN-018 cho mọi PRD mới (Who did you think with?).';
+
+  // 6. entropy
   const S = mismatches.length * 10 + drafts * 5 + refused * 2 + disabled * 1 + failed * 5;
   const level = S < 10 ? 'low' : S < 25 ? 'medium' : 'high';
   const advice = level === 'low'
@@ -118,6 +140,7 @@ async function main() {
     generatedAt: new Date().toISOString(),
     generatedBy: 'cosmic-scale.mjs',
     entropy: { S, level, advice, parts: { mismatch: mismatches.length, drafts, refused, disabled, failed } },
+    darkEnergy: { D: darkEnergy, dissentRatio: Math.round(dissentRatio * 100) / 100, plansTotal, plansWithDissent, advice: deAdvice },
     counts: { knTotal, bugsTotal, auditTotal },
     mismatches, missing, blackHoles,
     policy: (() => { try { return { ok: true }; } catch { return { ok: false }; } })(),
@@ -142,6 +165,7 @@ async function main() {
   else {
     console.log('🌌 Entropy S=' + S + ' (' + level + ') — mismatch ' + mismatches.length + ' · drafts ' + drafts + ' · refused ' + refused + ' · disabled ' + disabled + ' · failed ' + failed);
     console.log('   ' + advice);
+    console.log('   💜 dark energy D=' + darkEnergy + ' (dissent ' + plansWithDissent + '/' + plansTotal + ' plans) — ' + deAdvice);
     if (mismatches.length) console.log('   mismatch: ' + mismatches.map(m => m.type + '/' + m.name).join(', '));
     if (missing.length) console.log('   missing: ' + missing.map(m => m.type + '/' + m.name).join(', '));
     console.log('   black holes: ' + blackHoles.map(b => b.id).join(', '));

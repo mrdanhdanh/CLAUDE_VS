@@ -789,6 +789,19 @@ function renderPlatform(data){
 
   const mcpCard = $('#platMcpCard');
   if(mcpCard){
+    const vendorList = Array.isArray(mcp.list) ? mcp.list : [];
+    const grantsByAgent = mcp.grantsByAgent && typeof mcp.grantsByAgent === 'object' ? mcp.grantsByAgent : {};
+    const vendorRows = vendorList.length ? vendorList.map(v => `
+        <div style="display:flex;align-items:center;gap:6px;padding:4px 0;border-bottom:1px solid var(--color-neutral-200)">
+          <strong style="font:600 12px var(--font-sans);min-width:0">${escapeHtml(v.name)}</strong>
+          <span class="tag" style="margin-left:auto;flex-shrink:0">${escapeHtml(v.scope)}</span>
+          <span class="tag" style="flex-shrink:0">${v.tools} tools</span>
+        </div>`).join('') : '<div style="font:500 11px var(--font-mono);color:var(--color-neutral-500)">Chưa có vendor nào trong catalog</div>';
+    const grantRows = Object.keys(grantsByAgent).length ? Object.entries(grantsByAgent).map(([agent, vendors]) => `
+        <div style="display:flex;align-items:center;gap:6px;padding:4px 0">
+          <strong style="font:600 12px var(--font-sans)">${escapeHtml(agent)}</strong>
+          <span style="font:500 11px var(--font-mono);color:var(--color-neutral-500);min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${escapeHtml((vendors||[]).join(', ') || '—')}</span>
+        </div>`).join('') : '';
     mcpCard.innerHTML = `
       <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
         <span style="width:32px;height:32px;border-radius:10px;display:grid;place-items:center;background:#0ea5e9;color:white;flex-shrink:0">
@@ -804,6 +817,8 @@ function renderPlatform(data){
         <span class="tag">${mcp.vendors||0} vendors</span>
         <span class="tag tag-on">${mcp.grants||0} grants</span>
       </div>
+      ${vendorList.length ? `<div style="margin:8px 0;padding-top:8px;border-top:1px solid var(--color-neutral-200)"><div style="font:600 11px var(--font-sans);color:var(--color-neutral-500);margin-bottom:4px">Vendors</div>${vendorRows}</div>` : ''}
+      ${grantRows ? `<div style="margin:8px 0;padding-top:8px;border-top:1px solid var(--color-neutral-200)"><div style="font:600 11px var(--font-sans);color:var(--color-neutral-500);margin-bottom:4px">Grants per agent</div>${grantRows}</div>` : ''}
       <div style="font:500 11px var(--font-mono);color:var(--color-neutral-500)">unknown tool = write → refused</div>
       <div style="margin-top:10px"><span class="kbd">mcp-check.mjs --tool google-drive</span></div>
     `;

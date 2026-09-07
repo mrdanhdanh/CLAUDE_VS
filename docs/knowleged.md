@@ -39,6 +39,7 @@
 | KN-015 | 2026-09-04 | GitHub Pages deploy fail — 2 workflows cùng `github-pages` env + eval-gate FAIL Node 18 do `node --check` CJS | `ai-news.yml` copy 3 bước deploy từ `pages.yml` → xung đột `github-pages` env; `node --check` trên Node 18 coi `.js` là CJS nên `import` fail | Chỉ 1 workflow deploy Pages; workflow data chỉ commit; `eval-gate` check ESM `.js` qua temp `.mjs` | `build` `deploy` `ci` `workflow` `pages` |
 | KN-016 | 2026-09-06 | `harness-manager disable skill` fail EPERM trên Windows — rename folder bị chặn dù ACL đầy đủ | `fs.rename` folder bị process khác (VS Code file watcher) giữ handle → EPERM; PowerShell `Move-Item` cùng lúc lại OK | Wrap rename bằng `safeRename()`: thử `fs.rename`, bắt EPERM/EXDEV/EBUSY → fallback `fs.cp` + `fs.rm` | `process` `dx` `windows` `fs` |
 | KN-017 | 2026-09-06 | Archify diagram fail `viewer/viewport-overflow` + `composition/desktop-readability` — viewBox gần vuông render tràn first-screen | Diagram panel ~930px @1440 → `scale = 930/viewBoxWidth`; viewBox 772×652 gần vuông → height×scale > 586px tràn dọc; width 1400 → scale 0.66 < 0.822 text < 6px | Chọn viewBox width trong sweet spot [1035, 1131] để đồng thời thỏa `scale ≥ 0.822` và `height×scale ≤ ~586px`; luôn chạy `visual-check` sau `deliver` | `ui` `diagram` `archify` `responsive` `verify` |
+| KN-018 | 2026-09-07 | Waymo effect / Decollaboration — AI tiện quá khiến human ngừng nghĩ chung, diversity của ý tưởng thu hẹp | LLM bỏ friction của collaborator (không agenda, không tranh author order, available 2am) → decollaboration là lựa chọn hợp lý trong hệ thưởng velocity; outsource writing = skip thinking (Bjork desirable difficulties) | Dissent Review gate ở Clarify/Verify: mỗi PRD phải có 1 framing đối lập không prompt trước; trả lời "Who did you think with?"; human giữ pilot-in-command | `process` `collaboration` `diversity` `pilot-in-command` |
 
 > Dòng ví dụ trên sẽ bị thay khi có bug thật đầu tiên — giữ format.
 
@@ -396,6 +397,28 @@
 - **Tags:** `ui` `diagram` `archify` `responsive` `verify`
 - **Người ghi:** YUNIE / fixbug
 
+### KN-018 — Waymo effect / Decollaboration — AI tiện quá khiến human ngừng nghĩ chung
+
+- **Ngày:** 2026-09-07
+- **Bug report:** N/A — bài học rút từ essay "The Waymo effect" (Daniel Hook, CSO Holtzbrinck Group, researchagenda.news 2026-09-07) + Dashun Wang Nature comment 03/2026
+- **Severity:** major
+- **Triệu chứng:** Mọi conversation bị redirect từ đồng nghiệp sang chatbot; output tăng nhưng diversity của ý tưởng thu hẹp — mọi người chạy nhanh hơn trên cùng 1 đường; PRD/Design để AI viết 1 phát xong, không có framing đối lập; human dần thành passenger-in-comfort thay vì pilot-in-command.
+- **Nguyên nhân gốc (5 Whys):**
+  - Why1: Human ngừng nghĩ chung → vì LLM "đủ dùng" cho mọi bước.
+  - Why2: LLM đủ dùng → vì nó bỏ hết friction của collaborator: không agenda, không tranh author order, available 2am, challenge đúng mức được yêu cầu — không hơn 1 độ.
+  - Why3: Bỏ friction thấy là pure gain → vì cost của friction (small talk, ego management, scheduling) luôn visible còn benefit (đối lập framing, serendipity, người lạ ngoài bubble) thì diffuse và deferred.
+  - Why4: Lựa chọn này "hợp lý" → vì hệ incentive thưởng velocity + credit, không thưởng thinking together (incentive trap: funding cắt workshop, velocity worship, credit arbitrage).
+  - Why5 (Root): Thiếu gate bảo đảm **dissent** trong pipeline — không có cơ chế bắt buộc một tiếng nói đối lập không prompt trước, nên decollaboration diễn ra âm thầm, không ai quyết định ("never by decision, always by convenience").
+- **Cách sửa:** Thêm **Dissent Review gate** ở Clarify + Verify (harness-workflow): mỗi PRD phải ghi `Who did you think with?` và chứa ≥1 framing đối lập/critique không được prompt trước; YUNIE bật **dissent mode** (challenge 1 lần mỗi ý tưởng); agent `Critic` đảm nhiệm vai friction-engineer; đo `collaboration` metric trong status.json.
+- **Cách phòng tránh:**
+  - Mọi PRD/Design phải trả lời "Who did you think with?" nghiêm túc như "What did you publish?".
+  - Human giữ pilot-in-command: agent là crew (analyst/critic/planner), human quyết question + path + conclusions.
+  - Outsource writing ≠ skip thinking — viết PRD/design là forcing function, không delegate toàn bộ.
+  - Coi collaboration là infrastructure: fund workshop/visit/co-location/unstructured time, không cắt khi budget căng.
+  - Khi output rẻ đi, thứ quý đảo ngược: thinking together là scarce resource — bảo vệ nó.
+- **Tags:** `process` `collaboration` `diversity` `pilot-in-command`
+- **Người ghi:** YUNIE / auto-learn
+
 <!-- Thêm bài học mới theo template dưới — copy block này -->
 
 <!--
@@ -462,6 +485,10 @@
 - ❌ Đổi viewBox width mà không tính scale text — width 1400 → scale 0.66 → text < 6px fail readability (KN-017).
 - ❌ Đổi viewBox mà không rescale tọa độ y (messages/activations/segments) — messages rơi ngoài readable timeline (KN-017).
 - ❌ Tin 9/9 showcase checks là đủ — nó không bao gồm browser containment; phải chạy `visual-check` với `ARCHIFY_CHROME` (KN-017).
+- ❌ Redirect mọi conversation sang chatbot vì tiện — decollaboration diễn ra "never by decision, always by convenience" (KN-018).
+- ❌ Để AI viết PRD/design 1 phát xong, không có framing đối lập — outsource writing = skip thinking (KN-018).
+- ❌ Thưởng velocity mà không đo diversity — individual productivity tăng nhưng ideas thu hẹp (KN-018).
+- ❌ Cắt workshop/travel/co-location khi budget căng — đó chính là hạ tầng của serendipity (KN-018).
 
 ## Checklist phòng tránh chung
 
@@ -478,6 +505,8 @@
 - [ ] Đã giữ tiếng Việt có dấu chuẩn UTF-8 (không xóa dấu khi fix bug)? (KN-006)
 - [ ] Đã polish menu với badge/grouping/aria-label? (KN-006)
 - [ ] Đã `suggest "<từ khóa>"` và áp dụng KN liên quan trước khi code? (KN-007)
+- [ ] PRD/Design đã ghi "Who did you think with?" + có ≥1 framing đối lập không prompt trước? (KN-018)
+- [ ] Human vẫn là pilot-in-command — agent chỉ là crew, human quyết question + path + conclusions? (KN-018)
 - [ ] Nếu gặp lỗi → đã `log --error` tạo bug draft ngay? (KN-007)
 - [ ] Sau khi fix → đã `propose --bug` và đề xuất cập nhật `knowleged.md`? (KN-007)
 - [ ] Đã `status` kiểm tra health (KN total, drafts)? (KN-007)

@@ -1,0 +1,283 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Slide — The Waymo Effect (KN-018) · YUNIE STATUS</title>
+  <meta name="description" content="Slide deck tóm tắt bài 'The Waymo effect' — AI đang khiến nghiên cứu bớt collaborative, và Harness v2 phản ứng thế nào (KN-018)." />
+  <meta name="color-scheme" content="dark" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    /* Design tokens — consistent với www/styles.css (cosmic dark) */
+    :root {
+      --bg: #0b0f1a;
+      --bg-card: #131a2b;
+      --bg-card-2: #1a2338;
+      --text: #e8ecf4;
+      --text-dim: #94a3b8;
+      --accent: #6366f1;
+      --accent-2: #ec4899;
+      --accent-3: #f59e0b;
+      --ok: #10b981;
+      --border: rgba(148, 163, 184, .18);
+      --radius: 16px;
+      --font-body: 'Inter', system-ui, sans-serif;
+      --font-display: 'Plus Jakarta Sans', 'Inter', sans-serif;
+      --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+      --space: 8px;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } * { animation: none !important; transition: none !important; } }
+    body {
+      margin: 0; background: var(--bg); color: var(--text);
+      font: 400 16px/1.6 var(--font-body);
+      -webkit-font-smoothing: antialiased;
+    }
+    /* Starfield nhẹ — pure CSS, no JS */
+    body::before {
+      content: ''; position: fixed; inset: 0; z-index: -1; pointer-events: none;
+      background:
+        radial-gradient(1px 1px at 20% 30%, rgba(232,236,244,.5) 50%, transparent 51%),
+        radial-gradient(1px 1px at 70% 15%, rgba(232,236,244,.35) 50%, transparent 51%),
+        radial-gradient(1.5px 1.5px at 85% 60%, rgba(232,236,244,.4) 50%, transparent 51%),
+        radial-gradient(1px 1px at 40% 80%, rgba(232,236,244,.3) 50%, transparent 51%),
+        radial-gradient(1px 1px at 10% 65%, rgba(232,236,244,.35) 50%, transparent 51%),
+        radial-gradient(circle at 80% 10%, rgba(99,102,241,.12), transparent 45%),
+        radial-gradient(circle at 10% 90%, rgba(236,72,153,.10), transparent 45%);
+    }
+    .skip-link {
+      position: absolute; left: -9999px; top: 0; z-index: 100;
+      background: var(--accent); color: #fff; padding: 8px 16px; border-radius: 0 0 8px 0;
+    }
+    .skip-link:focus { left: 0; }
+    /* Header */
+    header {
+      position: sticky; top: 0; z-index: 10;
+      display: flex; align-items: center; justify-content: space-between; gap: 12px;
+      padding: 12px clamp(16px, 4vw, 32px);
+      background: rgba(11, 15, 26, .8); backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+    .brand { display: flex; align-items: center; gap: 12px; text-decoration: none; color: var(--text); }
+    .brand-mark {
+      width: 36px; height: 36px; border-radius: 10px; flex: none;
+      display: grid; place-items: center;
+      font: 800 18px var(--font-display); color: #fff;
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+    }
+    .brand-text strong { display: block; font: 700 15px var(--font-display); }
+    .brand-text span { font: 400 12px var(--font-body); color: var(--text-dim); }
+    header nav { display: flex; gap: 8px; }
+    .btn {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 8px 14px; border-radius: 10px; border: 1px solid var(--border);
+      background: var(--bg-card); color: var(--text);
+      font: 600 13px var(--font-body); text-decoration: none; cursor: pointer;
+      transition: transform 150ms ease, border-color 150ms ease, background 150ms ease;
+    }
+    .btn:hover { border-color: var(--accent); transform: translateY(-1px); }
+    .btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+    .btn.primary { background: linear-gradient(135deg, var(--accent), var(--accent-2)); border: 0; color: #fff; }
+    /* Slide deck — scroll snap */
+    main { height: calc(100dvh - 61px); overflow-y: auto; scroll-snap-type: y mandatory; }
+    @media (max-width: 640px) { main { height: auto; overflow: visible; scroll-snap-type: none; } }
+    section.slide {
+      min-height: calc(100dvh - 61px); scroll-snap-align: start;
+      display: flex; flex-direction: column; justify-content: center;
+      padding: clamp(24px, 6vw, 72px) clamp(20px, 6vw, 96px);
+      max-width: 1080px; margin: 0 auto;
+    }
+    .kicker {
+      display: inline-flex; align-items: center; gap: 8px; align-self: flex-start;
+      font: 600 12px var(--font-mono); letter-spacing: .08em; text-transform: uppercase;
+      color: var(--accent-3); background: rgba(245, 158, 11, .1);
+      border: 1px solid rgba(245, 158, 11, .3);
+      padding: 6px 12px; border-radius: 999px; margin-bottom: 20px;
+    }
+    .slide h1 { font: 800 clamp(30px, 6vw, 56px)/1.15 var(--font-display); margin: 0 0 16px; }
+    .slide h2 { font: 800 clamp(24px, 4.5vw, 40px)/1.2 var(--font-display); margin: 0 0 16px; }
+    .slide h1 .grad, .slide h2 .grad {
+      background: linear-gradient(90deg, var(--accent), var(--accent-2));
+      -webkit-background-clip: text; background-clip: text; color: transparent;
+    }
+    .lead { font-size: clamp(16px, 2vw, 20px); color: var(--text-dim); max-width: 62ch; }
+    .quote {
+      border-left: 3px solid var(--accent); padding: 12px 20px; margin: 20px 0;
+      background: var(--bg-card); border-radius: 0 var(--radius) var(--radius) 0;
+      font-style: italic; color: var(--text);
+    }
+    .quote cite { display: block; margin-top: 8px; font: 400 12px var(--font-mono); color: var(--text-dim); font-style: normal; }
+    .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; margin-top: 20px; }
+    .card {
+      background: var(--bg-card); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 20px;
+      transition: transform 200ms ease, border-color 200ms ease;
+    }
+    .card:hover { transform: translateY(-3px); border-color: var(--accent); }
+    .card h3 { margin: 0 0 8px; font: 700 16px var(--font-display); }
+    .card p { margin: 0; font-size: 14px; color: var(--text-dim); }
+    .card .icon { font-size: 24px; margin-bottom: 10px; display: block; }
+    table { width: 100%; border-collapse: collapse; margin-top: 16px; font-size: 14px; }
+    th, td { text-align: left; padding: 10px 12px; border-bottom: 1px solid var(--border); }
+    th { font: 600 12px var(--font-mono); text-transform: uppercase; letter-spacing: .06em; color: var(--text-dim); }
+    td:first-child { color: var(--text); font-weight: 600; white-space: nowrap; }
+    ul.check { list-style: none; padding: 0; margin: 16px 0 0; }
+    ul.check li { padding: 8px 0 8px 30px; position: relative; color: var(--text-dim); }
+    ul.check li::before { content: '✅'; position: absolute; left: 0; }
+    ul.check li strong { color: var(--text); }
+    code { font: 500 13px var(--font-mono); background: var(--bg-card-2); padding: 2px 6px; border-radius: 6px; }
+    .tag { display: inline-block; font: 500 12px var(--font-mono); color: var(--accent); background: rgba(99, 102, 241, .12); border: 1px solid rgba(99, 102, 241, .3); padding: 3px 10px; border-radius: 999px; margin: 4px 4px 0 0; }
+    /* Progress dots */
+    .dots {
+      position: fixed; right: clamp(12px, 3vw, 24px); top: 50%; transform: translateY(-50%);
+      display: flex; flex-direction: column; gap: 10px; z-index: 20;
+    }
+    @media (max-width: 640px) { .dots { display: none; } }
+    .dots a {
+      width: 10px; height: 10px; border-radius: 50%;
+      background: var(--border); border: 0; padding: 0; display: block;
+      transition: background 150ms ease, transform 150ms ease;
+    }
+    .dots a:hover, .dots a:focus-visible, .dots a.active { background: var(--accent); transform: scale(1.3); }
+    .dots a:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+    footer { padding: 24px; text-align: center; color: var(--text-dim); font-size: 13px; border-top: 1px solid var(--border); }
+    footer a { color: var(--accent); }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#s1">Bỏ qua đến slide đầu tiên</a>
+
+  <header role="banner">
+    <a class="brand" href="../index.html" aria-label="Quay về YUNIE STATUS">
+      <div class="brand-mark" aria-hidden="true">Y</div>
+      <div class="brand-text">
+        <strong>THE WAYMO EFFECT</strong>
+        <span>Slide · KN-018 · Daniel Hook (researchagenda.news)</span>
+      </div>
+    </a>
+    <nav aria-label="Thao tác nhanh">
+      <a class="btn" href="../index.html">← STATUS</a>
+      <a class="btn primary" href="https://www.researchagenda.news/articles/the-waymo-effect.html" target="_blank" rel="noopener">Bài gốc ↗</a>
+    </nav>
+  </header>
+
+  <div class="dots" role="navigation" aria-label="Điều hướng slide">
+    <a href="#s1" class="active" aria-label="Slide 1: Mở đầu"></a>
+    <a href="#s2" aria-label="Slide 2: Định nghĩa"></a>
+    <a href="#s3" aria-label="Slide 3: Đồng nghiệp không ma sát"></a>
+    <a href="#s4" aria-label="Slide 4: Bẫy incentive"></a>
+    <a href="#s5" aria-label="Slide 5: Writing is thinking"></a>
+    <a href="#s6" aria-label="Slide 6: Pilots và passengers"></a>
+    <a href="#s7" aria-label="Slide 7: Fund the friction"></a>
+  </div>
+
+  <main id="main" role="main">
+    <section class="slide" id="s1" aria-labelledby="t1">
+      <span class="kicker">📖 Essay · 7 Sep 2026 · 10 min</span>
+      <h1 id="t1">The <span class="grad">Waymo Effect</span></h1>
+      <p class="lead">Công nghệ gỡ bỏ ma sát của việc giao tiếp với người khác — và ta trải nghiệm sự gỡ bỏ đó như thuần lợi, vì <strong>cost của ma sát luôn hiện hữu còn benefit thì không</strong>.</p>
+      <p class="lead"><strong>Daniel Hook</strong> — Chief Scientific Officer, Holtzbrinck Group · Tác động tới Harness v2: <code>KN-018</code></p>
+    </section>
+
+    <section class="slide" id="s2" aria-labelledby="t2">
+      <span class="kicker">🚗 01 · Định nghĩa</span>
+      <h2 id="t2">Waymo bỏ tài xế. LLM bỏ <span class="grad">collaborator</span>.</h2>
+      <div class="quote">
+        “The costs of talking to a taxi driver are obvious… the benefits are diffuse and deferred: the driver was the last stranger we were obliged to encounter.”
+        <cite>— Daniel Hook, The Waymo effect</cite>
+      </div>
+      <p class="lead">Hai người bay qua 2 châu lục để nghĩ cùng nhau — lại cùng mê loại xe mà tính năng chính là <strong>không phải nói chuyện với ai</strong>. Đó là cách mọi thứ bị mất: <em>never by decision, always by convenience</em>.</p>
+    </section>
+
+    <section class="slide" id="s3" aria-labelledby="t3">
+      <span class="kicker">🤝 02 · The frictionless colleague</span>
+      <h2 id="t3">Collaborator vs <span class="grad">LLM</span></h2>
+      <table>
+        <thead><tr><th scope="col">Collaborator (con người)</th><th scope="col">LLM (mặc định)</th></tr></thead>
+        <tbody>
+          <tr><td>Bận, giữa teaching + deadline + timezone</td><td>Available 2h sáng Chủ Nhật</td></tr>
+          <tr><td>Có agenda riêng, dám bảo bạn sai</td><td>Chỉ challenge đúng mức được yêu cầu — không hơn 1 độ</td></tr>
+          <tr><td>Phải thuyết phục</td><td>Chỉ cần prompt</td></tr>
+          <tr><td>Tranh author order, đòi credit</td><td>Không đòi gì — arbitrage!</td></tr>
+        </tbody>
+      </table>
+      <div class="quote">“The collaborator's inconvenience is not a bug; it largely <strong>is</strong> the collaboration.”<cite>— Tên mới cho hiện tượng: decollaboration</cite></div>
+    </section>
+
+    <section class="slide" id="s4" aria-labelledby="t4">
+      <span class="kicker">🪤 03 · The incentive trap</span>
+      <h2 id="t4">Decollaboration là lựa chọn <span class="grad">hợp lý</span> — đó mới là vấn đề</h2>
+      <div class="cards">
+        <div class="card"><span class="icon" aria-hidden="true">💸</span><h3>Funding pressure</h3><p>Cắt travel/workshop/sabbatical — chính là hạ tầng của serendipity. “We defund the corridor and then wonder where the corridor conversations went.”</p></div>
+        <div class="card"><span class="icon" aria-hidden="true">⏩</span><h3>Velocity worship</h3><p>Hệ evaluation thưởng output + tốc độ. LLM hứa: literature review xong thứ 6, draft xong thứ 2.</p></div>
+        <div class="card"><span class="icon" aria-hidden="true">🏷️</span><h3>Credit arbitrage</h3><p>LLM không tranh author order. Trong hệ credit-là-tiền-tệ, interlocutor giỏi mà không đòi credit là arbitrage.</p></div>
+      </div>
+      <p class="lead" style="margin-top:20px">Kết quả đo được: <strong>individual productivity ↑ nhưng diversity of ideas ↓</strong> — mọi người chạy nhanh hơn trên cùng 1 đường.</p>
+    </section>
+
+    <section class="slide" id="s5" aria-labelledby="t5">
+      <span class="kicker">✍️ 04 · Writing is thinking</span>
+      <h2 id="t5">Outsource writing = <span class="grad">skip thinking</span></h2>
+      <p class="lead">Viết lâu vì <strong>nghĩ</strong> lâu — hai việc không tách được. Giá trị của việc viết bài không phải artifact mà là <strong>forcing function</strong>: viết mới thấy lỗ hổng ở section 3.</p>
+      <div class="quote">“Desirable difficulties” (Robert Bjork): friction khi học — retrieval gắng sức, feedback trễ, struggle diễn đạt — <strong>không phải chướng ngại của hiểu sâu, mà là cơ chế</strong> của nó.<cite>— Bjork, desirable difficulties</cite></div>
+      <p class="lead">Ẩn họa: model càng giỏi, output càng mượt, tell-tale signs càng nhỏ — cám dỗ tăng đúng lúc dấu hiệu biến mất. Như hệ PT-symmetric quantum: bình thường cho tới khi symmetry break, rồi sụp một lần.</p>
+    </section>
+
+    <section class="slide" id="s6" aria-labelledby="t6">
+      <span class="kicker">✈️ 05 · Pilots & passengers</span>
+      <h2 id="t6">AI = aeroplane for the mind — nhưng <span class="grad">ai đang lái?</span></h2>
+      <p class="lead">Dashun Wang (Nature 03/2026): computer là “bicycle for the mind” (Jobs) → AI agent là <strong>aeroplane</strong>: nhanh hơn, mạnh hơn, khó lái hơn, crash đau hơn. Giải pháp của ông: <strong>pilot-in-command science</strong> — human là captain, agent là crew (analyst / critic / planner).</p>
+      <div class="quote">“The more reliably a system runs on its own, the less practice its human overseer gets… competence quietly erodes precisely because it is needed only rarely, and always at the worst moment.”<cite>— Bainbridge 1983, ironies of automation</cite></div>
+      <p class="lead">Rủi ro thật: incentives đang huấn luyện ta thành <strong>passenger-in-comfort</strong> scientists. Research đang trèo lên ghế sau — chuyến êm ru, output vẫn tới, nhưng ghế trước đang trống.</p>
+    </section>
+
+    <section class="slide" id="s7" aria-labelledby="t7">
+      <span class="kicker">💜 06 · Fund the friction — Harness v2 phản ứng (KN-018)</span>
+      <h2 id="t7">Output rẻ đi, <span class="grad">thinking together</span> thành scarce resource</h2>
+      <ul class="check">
+        <li><strong>Dissent Review gate</strong> ở Clarify + Verify — ≥1 framing đối lập <em>không prompt trước</em></li>
+        <li><strong>“Who did you think with?”</strong> trong mọi PRD — nghiêm túc như “What did you publish?”</li>
+        <li><strong>Critic agent</strong> — friction engineer: rival work, assumption sai, wrong problem</li>
+        <li><strong>fund-the-friction instruction</strong> — collaboration là infrastructure, không cắt khi gấp</li>
+        <li><strong>Dark Energy D</strong> đo trên COSMOS Scale — entropy của decollaboration</li>
+        <li><strong>Pilot-in-command</strong> — human giữ quyết định cuối, YUNIE là crew</li>
+      </ul>
+      <div style="margin-top:20px">
+        <span class="tag">KN-018</span><span class="tag">dissent-mode</span><span class="tag">critic-agent</span><span class="tag">fund-the-friction</span><span class="tag">dark-energy</span>
+      </div>
+      <p class="lead" style="margin-top:20px">Câu hỏi cho research leaders — <em>trước khi mọi người ngồi thêm vài chuyến êm nữa</em>: <strong>ai đang ở ghế trước? Và khi nào ta ngừng nhận ra không ai lái?</strong> 🚗</p>
+    </section>
+  </main>
+
+  <footer>
+    Tóm tắt bởi <strong>YUNIE</strong> — Your Unified Navigator for Intelligent Execution · Bài gốc: <a href="https://www.researchagenda.news/articles/the-waymo-effect.html" target="_blank" rel="noopener">researchagenda.news</a> · Knowledge: <code>docs/knowleged.md</code> KN-018
+  </footer>
+
+  <script>
+    (function () {
+      'use strict';
+      // Highlight dot theo slide đang xem
+      var slides = Array.prototype.slice.call(document.querySelectorAll('section.slide'));
+      var dots = Array.prototype.slice.call(document.querySelectorAll('.dots a'));
+      function setActive() {
+        var fromTop = window.scrollY + window.innerHeight / 3;
+        var current = 0;
+        slides.forEach(function (s, i) { if (s.offsetTop <= fromTop) current = i; });
+        dots.forEach(function (d, i) { d.classList.toggle('active', i === current); });
+      }
+      window.addEventListener('scroll', setActive, { passive: true });
+      setActive();
+      // Keyboard: ←/→ hoặc PgUp/PgDn giữa slides
+      document.addEventListener('keydown', function (e) {
+        if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') return;
+        var current = Math.max(0, dots.findIndex(function (d) { return d.classList.contains('active'); }));
+        var next = Math.min(slides.length - 1, Math.max(0, current + (e.key === 'ArrowRight' ? 1 : -1)));
+        slides[next].scrollIntoView({ behavior: 'smooth' });
+      });
+    })();
+  </script>
+</body>
+</html>
