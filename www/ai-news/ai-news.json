@@ -1,12 +1,12 @@
 {
-  "generatedAt": "2026-09-06T06:51:50.731Z",
+  "generatedAt": "2026-09-07T07:01:09.505Z",
   "generatedBy": "YUNIE × Last30Days",
   "version": 2,
   "description": "Tin AI mới nhất — tổng hợp từ Last30Days (HN, GitHub, Web) trong 30 ngày qua. Chủ đề: AI. Tự động cập nhật bởi YUNIE.",
   "last30days": {
     "enabled": true,
     "topic": "AI",
-    "since": "2026-08-07",
+    "since": "2026-08-08",
     "days": 30,
     "sources": [
       "Hacker News (Algolia, free)",
@@ -51,251 +51,251 @@
   ],
   "articles": [
     {
-      "id": "hn-49583356",
-      "title": "WeatherNext 3: Hourly global weather forecasts using live satellite data",
-      "summary": "WeatherNext 3: Hourly global weather forecasts using live satellite data — 4 points, 0 comments on HN.",
+      "id": "hn-49594189",
+      "title": "Nvidia's Jensen Huang says 'AGI has arrived' and congratulates OpenAI",
+      "summary": "Nvidia's Jensen Huang says 'AGI has arrived' and congratulates OpenAI — 24 points, 60 comments on HN.",
       "source": "Hacker News",
-      "sourceUrl": "https://blog.google/innovation-and-ai/models-and-research/google-deepmind/introducing-weathernext-3/",
-      "category": "products",
-      "date": "2026-09-06",
-      "hot": true,
-      "tags": [
-        "HN",
-        "AI",
-        "story",
-        "author_fourfire"
-      ]
-    },
-    {
-      "id": "hn-49583646",
-      "title": "LA District Bans Most A.I. For Students",
-      "summary": "LA District Bans Most A.I. For Students — 3 points, 1 comments on HN.",
-      "source": "Hacker News",
-      "sourceUrl": "https://www.nytimes.com/2026/09/03/us/lausd-schools-ban-ai-artificial-intelligence.html",
-      "category": "products",
-      "date": "2026-09-06",
-      "hot": true,
-      "tags": [
-        "HN",
-        "AI",
-        "story",
-        "author_narenst"
-      ]
-    },
-    {
-      "id": "hn-49583020",
-      "title": "I was offered money to scare you of AI [video]",
-      "summary": "I was offered money to scare you of AI [video] — 3 points, 1 comments on HN.",
-      "source": "Hacker News",
-      "sourceUrl": "https://www.youtube.com/watch?v=lPdmYMHrWKg",
-      "category": "products",
-      "date": "2026-09-06",
-      "hot": false,
-      "tags": [
-        "HN",
-        "AI",
-        "story",
-        "author_nomilk"
-      ]
-    },
-    {
-      "id": "hn-49583823",
-      "title": "An advanced attacker is targeting Salesforce and ServiceNow instances worldwide",
-      "summary": "An advanced attacker is targeting Salesforce and ServiceNow instances worldwide — 2 points, 0 comments on HN.",
-      "source": "Hacker News",
-      "sourceUrl": "https://www.reco.ai/blog/city-forum-campaign-salesforce-servicenow",
-      "category": "products",
-      "date": "2026-09-06",
-      "hot": false,
-      "tags": [
-        "HN",
-        "AI",
-        "story",
-        "author_daretograsp"
-      ]
-    },
-    {
-      "id": "hn-49583374",
-      "title": "Care for a Little More AI?",
-      "summary": "Care for a Little More AI? — 2 points, 0 comments on HN.",
-      "source": "Hacker News",
-      "sourceUrl": "https://proofsandprompts.com/2026/08/30/care-for-a-little-more-ai/",
-      "category": "products",
-      "date": "2026-09-06",
-      "hot": false,
-      "tags": [
-        "HN",
-        "AI",
-        "story",
-        "author_throwaway81523"
-      ]
-    },
-    {
-      "id": "hn-49583301",
-      "title": "The state of AI in 2026: On the road to ROI",
-      "summary": "The state of AI in 2026: On the road to ROI — 2 points, 0 comments on HN.",
-      "source": "Hacker News",
-      "sourceUrl": "https://www.mckinsey.com/capabilities/quantumblack/our-insights/the-state-of-ai?cid=mgp_opr-eml-nsl-chr-mgp-glb--&hlkid=94f62d3efc7b49e69d74a2c0c5c3e5d4&hctky=16697440&hdpid=8873fe71-6a1d-47db-bce5-68d20c035812",
-      "category": "products",
-      "date": "2026-09-06",
-      "hot": false,
-      "tags": [
-        "HN",
-        "AI",
-        "story",
-        "author_giuliomagnifico"
-      ]
-    },
-    {
-      "id": "hn-49582936",
-      "title": "AI Stock Research Assistant · Streamlit",
-      "summary": "AI Stock Research Assistant · Streamlit — 2 points, 0 comments on HN.",
-      "source": "Hacker News",
-      "sourceUrl": "https://ai-stock-research-kiaan.streamlit.app",
-      "category": "products",
-      "date": "2026-09-06",
-      "hot": false,
-      "tags": [
-        "HN",
-        "AI",
-        "story",
-        "author_KiaanKothari"
-      ]
-    },
-    {
-      "id": "hn-49582923",
-      "title": "Routed: Local, zero-token hybrid router for AI agent skills (<20ms)",
-      "summary": "Routed: Local, zero-token hybrid router for AI agent skills (<20ms) — 2 points, 1 comments on HN.",
-      "source": "Hacker News",
-      "sourceUrl": "https://github.com/bshea-1/Routed",
-      "category": "products",
-      "date": "2026-09-06",
-      "hot": false,
-      "tags": [
-        "HN",
-        "AI",
-        "story",
-        "author_bshea1"
-      ]
-    },
-    {
-      "id": "hn-49582867",
-      "title": "Nvidia Personal AI Router (Pair)",
-      "summary": "Nvidia Personal AI Router (Pair) — 2 points, 0 comments on HN.",
-      "source": "Hacker News",
-      "sourceUrl": "https://github.com/NVIDIA/Personal-AI-Router",
+      "sourceUrl": "https://www.businessinsider.com/nvidia-jensen-huang-agi-openai-astra-ai-2026-9",
       "category": "big-tech",
-      "date": "2026-09-06",
+      "date": "2026-09-07",
+      "hot": true,
+      "tags": [
+        "HN",
+        "AI",
+        "story",
+        "author_vinni2"
+      ]
+    },
+    {
+      "id": "hn-49593959",
+      "title": "I refused to train the AI that could replace me",
+      "summary": "I refused to train the AI that could replace me — 50 points, 35 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://restofworld.org/2026/ai-training-jobs-expert-replacement/",
+      "category": "products",
+      "date": "2026-09-07",
       "hot": false,
       "tags": [
         "HN",
         "AI",
         "story",
-        "author_ystad"
+        "author_colinprince"
       ]
     },
     {
-      "id": "hn-49582772",
-      "title": "EvoMind: A local-first cognitive AI architecture with runtime safety gates",
-      "summary": "EvoMind: A local-first cognitive AI architecture with runtime safety gates — 2 points, 0 comments on HN.",
+      "id": "hn-49593776",
+      "title": "US Republicans revolt against Flock AI surveillance as backlash intensifies",
+      "summary": "US Republicans revolt against Flock AI surveillance as backlash intensifies — 20 points, 2 comments on HN.",
       "source": "Hacker News",
-      "sourceUrl": "https://zenodo.org/records/20580153",
+      "sourceUrl": "https://www.ft.com/content/b207536e-6def-4080-878f-d0eba61d11e0",
+      "category": "products",
+      "date": "2026-09-07",
+      "hot": false,
+      "tags": [
+        "HN",
+        "AI",
+        "story",
+        "author_sbulaev"
+      ]
+    },
+    {
+      "id": "hn-49593778",
+      "title": "'RAMageddon' hits consumer electronics as AI drains chip supply",
+      "summary": "'RAMageddon' hits consumer electronics as AI drains chip supply — 13 points, 3 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://www.ft.com/content/ea9a9dcc-b1df-49b0-b80c-f320161b9efa",
       "category": "safety",
-      "date": "2026-09-06",
+      "date": "2026-09-07",
       "hot": false,
       "tags": [
         "HN",
         "AI",
         "story",
-        "author_Salt19"
+        "author_sbulaev"
       ]
     },
     {
-      "id": "hn-49583809",
-      "title": "Show HN: Public message board for limited systems",
-      "summary": "Inspired by the post[1] about how OpenAI models which were restricted to only GET requests found an old German Wiki that allowed posting with a GET, I created anystation.net, which aims to be a message board in which arb — 1 points, 0 comments on HN.",
+      "id": "hn-49594008",
+      "title": "Show HN: Engrim – A universal, local-first SQLite memory engine for AI CLIs",
+      "summary": "Show HN: Engrim – A universal, local-first SQLite memory engine for AI CLIs — 9 points, 1 comments on HN.",
       "source": "Hacker News",
-      "sourceUrl": "https://anystation.net/",
+      "sourceUrl": "https://github.com/timgordontg/engrim",
       "category": "products",
-      "date": "2026-09-06",
+      "date": "2026-09-07",
       "hot": false,
       "tags": [
         "HN",
         "AI",
         "story",
-        "author_jonahss"
+        "author_timgordontg"
       ]
     },
     {
-      "id": "hn-49583757",
-      "title": "Ask HN: Do you route only certain websites through a VPN?",
-      "summary": "I often need a particular exit IP to access certain websites. Switching my VPN back and forth gets annoying, and finding separate proxies isn&#x27;t much fun either. I also wanted one place to see how much traffic I&#x27 — 1 points, 1 comments on HN.",
+      "id": "hn-49594082",
+      "title": "Will anybody use AI as much as coders do?",
+      "summary": "Will anybody use AI as much as coders do? — 4 points, 2 comments on HN.",
       "source": "Hacker News",
-      "sourceUrl": "https://news.ycombinator.com/item?id=49583757",
+      "sourceUrl": "https://www.economist.com/business/2026/08/30/will-anybody-use-ai-as-much-as-coders-do",
       "category": "products",
-      "date": "2026-09-06",
+      "date": "2026-09-07",
       "hot": false,
       "tags": [
         "HN",
         "AI",
         "story",
-        "author_dennysora-main"
+        "author_nialse"
       ]
     },
     {
-      "id": "hn-49583685",
-      "title": "interpretation to AI agents",
-      "summary": "interpretation to AI agents — 1 points, 0 comments on HN.",
+      "id": "hn-49593883",
+      "title": "He's Letting AI Agents Invest His Money. They Even Have Names",
+      "summary": "He's Letting AI Agents Invest His Money. They Even Have Names — 4 points, 0 comments on HN.",
       "source": "Hacker News",
-      "sourceUrl": "https://ag3497120.github.io/call-me-vera/",
+      "sourceUrl": "https://www.wsj.com/tech/ai/the-ai-shift-turning-everyday-investors-into-mini-quant-funds-ebe4d45f",
       "category": "products",
-      "date": "2026-09-06",
+      "date": "2026-09-07",
       "hot": false,
       "tags": [
         "HN",
         "AI",
         "story",
-        "author_pakupaku"
+        "author_thm"
       ]
     },
     {
-      "id": "hn-49583682",
-      "title": "The biggest problem in buying AI compute is credit",
-      "summary": "The biggest problem in buying AI compute is credit — 1 points, 0 comments on HN.",
+      "id": "hn-49593777",
+      "title": "Tell HN: Anthropic should make Claude the Author and me the Co-Author",
+      "summary": "Anthropic has been messing with this behavior as seen by the bugs below:\nhttps:&#x2F;&#x2F;github.com&#x2F;anthropics&#x2F;claude-code&#x2F;issues&#x2F;66602\nhttps:&#x2F;&#x2F;github.com&#x2F;anthropics&#x2F;claude-code& — 4 points, 3 comments on HN.",
       "source": "Hacker News",
-      "sourceUrl": "https://twitter.com/gpugene/status/2096427973893411312",
-      "category": "products",
-      "date": "2026-09-06",
+      "sourceUrl": "https://news.ycombinator.com/item?id=49593777",
+      "category": "big-tech",
+      "date": "2026-09-07",
       "hot": false,
       "tags": [
         "HN",
         "AI",
         "story",
-        "author_MrBuddyCasino"
+        "author_xeonax"
       ]
     },
     {
-      "id": "hn-49583478",
-      "title": "A Wiki for AIs",
-      "summary": "A Wiki for AIs — 1 points, 0 comments on HN.",
+      "id": "hn-49594143",
+      "title": "AI Index Report",
+      "summary": "AI Index Report — 3 points, 0 comments on HN.",
       "source": "Hacker News",
-      "sourceUrl": "https://synthetic.wiki/",
+      "sourceUrl": "https://hai.stanford.edu/ai-index/2026-ai-index-report",
       "category": "products",
-      "date": "2026-09-06",
+      "date": "2026-09-07",
       "hot": false,
       "tags": [
         "HN",
         "AI",
         "story",
-        "author_guscatalano"
+        "author_olalonde"
+      ]
+    },
+    {
+      "id": "hn-49594496",
+      "title": "Collaborative Machine Knowledge Platform",
+      "summary": "Collaborative Machine Knowledge Platform — 2 points, 1 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://haidaa.com/",
+      "category": "products",
+      "date": "2026-09-07",
+      "hot": false,
+      "tags": [
+        "HN",
+        "AI",
+        "story",
+        "author_AISETR"
+      ]
+    },
+    {
+      "id": "hn-49594258",
+      "title": "Escaping Containment",
+      "summary": "I feel like I am in one of those nightmares where you are running from an unseen horror that is rapidly catching up, but your legs are stuck in jello.<p>I spent the day today using AI to build a program. It built a progr — 2 points, 2 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://news.ycombinator.com/item?id=49594258",
+      "category": "products",
+      "date": "2026-09-07",
+      "hot": false,
+      "tags": [
+        "HN",
+        "AI",
+        "story",
+        "author_silexia"
+      ]
+    },
+    {
+      "id": "hn-49593896",
+      "title": "Samsung Debuts zHBM Prototype, Stacking Memory Directly on AI Accelerators",
+      "summary": "Samsung Debuts zHBM Prototype, Stacking Memory Directly on AI Accelerators — 2 points, 1 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://www.thelec.net/news/articleView.html?idxno=12835",
+      "category": "products",
+      "date": "2026-09-07",
+      "hot": false,
+      "tags": [
+        "HN",
+        "AI",
+        "story",
+        "author_peter_d_sherman"
+      ]
+    },
+    {
+      "id": "hn-49593735",
+      "title": "Indonesia's Anak Krakatau eruption halts flights, schools, fishing",
+      "summary": "Indonesia's Anak Krakatau eruption halts flights, schools, fishing — 2 points, 0 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://www.reuters.com/business/environment/indonesias-jakarta-airport-suspends-flights-due-ash-mount-anak-krakatau-2026-09-06/",
+      "category": "products",
+      "date": "2026-09-07",
+      "hot": false,
+      "tags": [
+        "HN",
+        "AI",
+        "story",
+        "author_wslh"
+      ]
+    },
+    {
+      "id": "hn-49594738",
+      "title": "1M Lines of AI-Assisted Code in 2025",
+      "summary": "1M Lines of AI-Assisted Code in 2025 — 1 points, 0 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://jonathanclark.com/posts/ai-coding-million-lines-2025.html",
+      "category": "products",
+      "date": "2026-09-07",
+      "hot": false,
+      "tags": [
+        "HN",
+        "AI",
+        "story",
+        "author_profstasiak"
+      ]
+    },
+    {
+      "id": "hn-49594719",
+      "title": "Wan 3.0 at 68% of Alibaba Cloud's international list price, Prime at 78%",
+      "summary": "Wan 3.0 at 68% of Alibaba Cloud's international list price, Prime at 78% — 1 points, 0 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://reapi.ai/models/wan-3-0",
+      "category": "products",
+      "date": "2026-09-07",
+      "hot": false,
+      "tags": [
+        "HN",
+        "AI",
+        "story",
+        "author_andrew06124"
       ]
     }
   ],
   "meta": {
-    "fetchedAt": "2026-09-06T06:51:50.731Z",
+    "fetchedAt": "2026-09-07T07:01:09.505Z",
     "topic": "AI",
     "total": 15,
-    "hot": 2,
+    "hot": 1,
     "sources": [
       "Hacker News"
     ]
