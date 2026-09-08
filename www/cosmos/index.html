@@ -1462,9 +1462,9 @@
         </div>
         <div class="future-grid">
           <div class="future-card">
-            <h4>🌌 Vũ trụ học cho Scale</h4>
+            <h4>🌌 Vũ trụ học cho Scale <span class="tag" style="color:#6ee7b7;background:rgba(16,185,129,.15);border-color:rgba(16,185,129,.25);vertical-align:middle">✅ Done</span></h4>
             <p>Áp dụng <strong>entropy</strong> (độ hỗn loạn) để đo tech debt, <strong>lỗ đen</strong> cho bottleneck, <strong>vật chất tối</strong> cho hidden complexity. Dashboard đo entropy theo thời gian.</p>
-            <span class="eta">→ Q4 2026 · skill: cosmic-scale</span>
+            <span class="eta">→ Shipped 2026-09-09 · <a href="./scale.html#timeline" style="color:#c4b5fd">timeline S</a> + <a href="./scale.html#darkmatter" style="color:#c4b5fd">dark matter M</a></span>
           </div>
           <div class="future-card">
             <h4>⚛️ Lượng tử cho Decision</h4>
@@ -2109,18 +2109,22 @@ Process là định luật, verify là quan sát.`;
         const first=hist[0].S ?? 0, last=hist[hist.length-1].S ?? 0;
         const dS=last-first;
         const level=(data.entropy?.level || (S>=25?'high':S>=10?'medium':'low')).toUpperCase();
+        const M=data.darkMatter?.M ?? 0;
+        const mLevel=data.darkMatter?.level || (M>=15?'high':M>=5?'medium':'low');
         deStats.innerHTML=`
           <div class="de-stat ${S>=25?'hot':S>=10?'warn':''}"><span>Entropy S</span><b>${Number(S)} <small>${level}</small></b></div>
           <div class="de-stat"><span>ΔS giãn nở</span><b>${dS>0?'+':''}${Number(dS)}</b></div>
+          <div class="de-stat"><span>🌑 Dark Matter M</span><b>${Number(M)} <small>${mLevel}</small></b></div>
           <div class="de-stat"><span>Điểm đo</span><b>${hist.length}</b></div>`;
         deBadge.textContent = real ? '✅ scale.json — thật' : '⚠️ demo (fetch fail)';
         deBadge.classList.remove('loading','broken');
         if(!real) deBadge.classList.add('broken');
-        deHint.innerHTML = dS>0
+        deHint.innerHTML = (dS>0
           ? `<b>Dark Energy thắng:</b> S tăng +${dS} — vũ trụ giãn (scope creep). Đối trọng là gravity: minimal-ladder + YAGNI, đo lại bằng cosmic-scale.mjs.`
           : dS<0
             ? `<b>Gravity thắng:</b> S giảm ${dS} — vũ trụ co lại (audit + polish có hiệu lực). Giữ nhịp!`
-            : `<b>Cân bằng:</b> S giữ nguyên ${S} — vũ trụ ổn định. Giữ nhịp audit + generate-status đều.`;
+            : `<b>Cân bằng:</b> S giữ nguyên ${S} — vũ trụ ổn định. Giữ nhịp audit + generate-status đều.`)
+          + (M>0 ? ` <b>Dark matter M=${M} (${mLevel}):</b> có hidden complexity — <a href="./scale.html#darkmatter" style="color:#c4b5fd">xem orphan map</a>.` : ' Dark matter M=0 — registry nhìn thấy hết vũ trụ ✅');
         drawSpark(hist);
       }
       function drawSpark(hist){
