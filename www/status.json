@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-08T15:32:19.818Z",
+  "generatedAt": "2026-09-08T15:51:28.816Z",
   "generatedBy": "YUNIE",
   "version": 1,
   "counts": {
@@ -321,7 +321,8 @@
     "web-011-part6",
     "web-011-part7",
     "web-thuat-toan",
-    "web-thuat-toan-v2"
+    "web-thuat-toan-v2",
+    "yunie-chat"
   ],
   "demos": [
     {
@@ -383,12 +384,17 @@
       "name": "web-universe",
       "path": "web-universe/index.html",
       "status": "ok"
+    },
+    {
+      "name": "yunie-chat",
+      "path": "yunie-chat/index.html",
+      "status": "ok"
     }
   ],
   "health": {
     "errors": 0,
     "status": "ok",
-    "lastCheck": "2026-09-08T15:32:19.818Z",
+    "lastCheck": "2026-09-08T15:51:28.817Z",
     "checks": [
       "get_errors: pass (0 errors)",
       "registry: 18 instructions (18 total) - 18 skills - 9 agents - 7 prompts - 1 hook — all enabled",
@@ -467,6 +473,11 @@
       {
         "path": "web-universe/index.html",
         "title": "web-universe",
+        "type": "demo"
+      },
+      {
+        "path": "yunie-chat/index.html",
+        "title": "yunie-chat",
         "type": "demo"
       }
     ],
@@ -646,7 +657,7 @@
       "deny": 9,
       "allow": 2,
       "status": "ok",
-      "lastCheck": "2026-09-08T15:32:19.681Z"
+      "lastCheck": "2026-09-08T15:51:28.716Z"
     },
     "credentials": {
       "count": 0,
