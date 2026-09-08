@@ -1,13 +1,13 @@
 {
-  "generatedAt": "2026-09-07T16:50:24.185Z",
+  "generatedAt": "2026-09-08T06:55:48.779Z",
   "generatedBy": "YUNIE × Last30Days",
   "version": 2,
-  "description": "Tin AI mới nhất — tổng hợp từ Last30Days (HN, GitHub, Web) trong 7 ngày qua. Chủ đề: AI. Tự động cập nhật bởi YUNIE.",
+  "description": "Tin AI mới nhất — tổng hợp từ Last30Days (HN, GitHub, Web) trong 30 ngày qua. Chủ đề: AI. Tự động cập nhật bởi YUNIE.",
   "last30days": {
     "enabled": true,
     "topic": "AI",
-    "since": "2026-08-31",
-    "days": 7,
+    "since": "2026-08-09",
+    "days": 30,
     "sources": [
       "Hacker News (Algolia, free)",
       "GitHub Search (free)",
@@ -51,251 +51,251 @@
   ],
   "articles": [
     {
-      "id": "hn-49599559",
-      "title": "Show HN: Send flowers from your AI agent and make your mum happy",
-      "summary": "Hi,<p>I have created an MCP for AI agents to send flowers for your mum’s birthday, for a great customer who just renewed his contract or what ever you can think of!<p>I created this after working on a family AI assistant — 5 points, 1 comments on HN.",
+      "id": "hn-49605767",
+      "title": "Mistral raises €3B to make sovereign, open-weight AI the technology frontier",
+      "summary": "Mistral raises €3B to make sovereign, open-weight AI the technology frontier — 151 points, 74 comments on HN.",
       "source": "Hacker News",
-      "sourceUrl": "https://news.ycombinator.com/item?id=49599559",
+      "sourceUrl": "https://mistral.ai/news/mistral-makes-sovereign-open-weight-ai-to-frontier/",
       "category": "products",
-      "date": "2026-09-07",
+      "date": "2026-09-08",
       "hot": true,
       "tags": [
         "HN",
         "AI",
         "story",
-        "author_fabian_shipamax"
+        "author_kuberwastaken"
       ]
     },
     {
-      "id": "hn-49599867",
-      "title": "Show HN: Benzi – Code Intelligence Infrastructure for Frontier AI Models",
-      "summary": "Roughly speaking, the way current AI coding agents&#x2F;harnesses work is by either: a) Pulling in appropriate text snippets of code across multiple files and handing them to the agent, or b) Parsing code to make high di — 3 points, 0 comments on HN.",
+      "id": "hn-49605511",
+      "title": "Arm Mali G2-Ultra NX GPU: desktop-class mobile gameplay with AI-native graphics",
+      "summary": "Arm Mali G2-Ultra NX GPU: desktop-class mobile gameplay with AI-native graphics — 27 points, 12 comments on HN.",
       "source": "Hacker News",
-      "sourceUrl": "https://github.com/oooscoos/Benzi",
+      "sourceUrl": "https://newsroom.arm.com/blog/arm-mali-g2-ultra-nx-ai-native-mobile-graphics",
       "category": "products",
-      "date": "2026-09-07",
-      "hot": true,
-      "tags": [
-        "HN",
-        "AI",
-        "story",
-        "author_tweedler290"
-      ]
-    },
-    {
-      "id": "hn-49599267",
-      "title": "The Waymo effect: how AI is quietly making research less collaborative",
-      "summary": "The Waymo effect: how AI is quietly making research less collaborative — 3 points, 0 comments on HN.",
-      "source": "Hacker News",
-      "sourceUrl": "https://www.researchagenda.news/articles/the-waymo-effect.html",
-      "category": "products",
-      "date": "2026-09-07",
+      "date": "2026-09-08",
       "hot": false,
       "tags": [
         "HN",
         "AI",
         "story",
-        "author_JohnHammersley"
+        "author_Re-Tails"
       ]
     },
     {
-      "id": "hn-49599132",
-      "title": "Hikers stranded on Mount Shasta after following a plan by Gemini AI",
-      "summary": "Hikers stranded on Mount Shasta after following a plan by Gemini AI — 3 points, 0 comments on HN.",
+      "id": "hn-49604956",
+      "title": "AI cancer cures slowed by chip shortage, says Arm boss",
+      "summary": "AI cancer cures slowed by chip shortage, says Arm boss — 13 points, 11 comments on HN.",
       "source": "Hacker News",
-      "sourceUrl": "https://www.latimes.com/california/story/2026-09-03/hikers-following-google-gemini-ai-route-become-stranded-on-mt-shasta",
-      "category": "products",
-      "date": "2026-09-07",
-      "hot": false,
-      "tags": [
-        "HN",
-        "AI",
-        "story",
-        "author_swernli"
-      ]
-    },
-    {
-      "id": "hn-49599084",
-      "title": "A Senior Software Engineers Perspective on Building with AI",
-      "summary": "A Senior Software Engineers Perspective on Building with AI — 3 points, 0 comments on HN.",
-      "source": "Hacker News",
-      "sourceUrl": "https://sitecmd.com/blog/senior-software-engineers-perspective-on-building-with-ai",
-      "category": "products",
-      "date": "2026-09-07",
-      "hot": false,
-      "tags": [
-        "HN",
-        "AI",
-        "story",
-        "author_brambleworks"
-      ]
-    },
-    {
-      "id": "hn-49599018",
-      "title": "The complex corporate web behind a $3.2 billion AI data center",
-      "summary": "The complex corporate web behind a $3.2 billion AI data center — 3 points, 0 comments on HN.",
-      "source": "Hacker News",
-      "sourceUrl": "https://arstechnica.com/ai/2026/09/the-ai-data-center-boom-is-causing-new-accountability-problems/",
-      "category": "products",
-      "date": "2026-09-07",
-      "hot": false,
-      "tags": [
-        "HN",
-        "AI",
-        "story",
-        "author_Brajeshwar"
-      ]
-    },
-    {
-      "id": "hn-49600305",
-      "title": "Sen. Kennedy rails against AI developers as 'high IQ stupid people'",
-      "summary": "Sen. Kennedy rails against AI developers as 'high IQ stupid people' — 2 points, 0 comments on HN.",
-      "source": "Hacker News",
-      "sourceUrl": "https://www.politico.com/news/2026/09/06/kennedy-ai-developers-high-iq-stupid-people-01066756",
-      "category": "products",
-      "date": "2026-09-07",
-      "hot": false,
-      "tags": [
-        "HN",
-        "AI",
-        "story",
-        "author_1vuio0pswjnm7"
-      ]
-    },
-    {
-      "id": "hn-49600009",
-      "title": "Where every AI coding tool keeps its config",
-      "summary": "Where every AI coding tool keeps its config — 2 points, 0 comments on HN.",
-      "source": "Hacker News",
-      "sourceUrl": "https://github.com/moneytool/agentmeld/blob/main/docs/where-ai-coding-tools-keep-their-config.md",
-      "category": "products",
-      "date": "2026-09-07",
-      "hot": false,
-      "tags": [
-        "HN",
-        "AI",
-        "story",
-        "author_moneytool"
-      ]
-    },
-    {
-      "id": "hn-49599679",
-      "title": "The Machine (1968) [video]",
-      "summary": "The Machine (1968) [video] — 2 points, 0 comments on HN.",
-      "source": "Hacker News",
-      "sourceUrl": "https://www.youtube.com/watch?v=iwVu2BWLZqA",
-      "category": "products",
-      "date": "2026-09-07",
-      "hot": false,
-      "tags": [
-        "HN",
-        "AI",
-        "story",
-        "author_ai_critic"
-      ]
-    },
-    {
-      "id": "hn-49599196",
-      "title": "Designers should not fear being replaced by AI, industry leaders say",
-      "summary": "Designers should not fear being replaced by AI, industry leaders say — 2 points, 0 comments on HN.",
-      "source": "Hacker News",
-      "sourceUrl": "https://www.theguardian.com/uk-news/2026/sep/07/designers-should-not-fear-being-replaced-by-ai-industry-leaders-say",
-      "category": "products",
-      "date": "2026-09-07",
-      "hot": false,
-      "tags": [
-        "HN",
-        "AI",
-        "story",
-        "author_Brajeshwar"
-      ]
-    },
-    {
-      "id": "hn-49599049",
-      "title": "The Problem with Your AI Tests",
-      "summary": "The Problem with Your AI Tests — 2 points, 1 comments on HN.",
-      "source": "Hacker News",
-      "sourceUrl": "https://www.michaelbromley.co.uk/blog/the-problem-with-your-ai-tests/",
-      "category": "products",
-      "date": "2026-09-07",
-      "hot": false,
-      "tags": [
-        "HN",
-        "AI",
-        "story",
-        "author_tosh"
-      ]
-    },
-    {
-      "id": "hn-49598971",
-      "title": "Joshua 8:1 NIV – AI destroyed",
-      "summary": "Joshua 8:1 NIV – AI destroyed — 2 points, 1 comments on HN.",
-      "source": "Hacker News",
-      "sourceUrl": "https://www.biblegateway.com/passage/?search=Joshua%25208%253A1&version=NIV",
-      "category": "products",
-      "date": "2026-09-07",
-      "hot": false,
-      "tags": [
-        "HN",
-        "AI",
-        "story",
-        "author_npilk"
-      ]
-    },
-    {
-      "id": "hn-49600141",
-      "title": "Apple's \"Think Different\" inspired ad made by AI",
-      "summary": "Apple's \"Think Different\" inspired ad made by AI — 1 points, 1 comments on HN.",
-      "source": "Hacker News",
-      "sourceUrl": "https://twitter.com/Noahsarc1000/status/2096989380774903883",
-      "category": "products",
-      "date": "2026-09-07",
-      "hot": false,
-      "tags": [
-        "HN",
-        "AI",
-        "story",
-        "author_nhannguyenkooln"
-      ]
-    },
-    {
-      "id": "hn-49599985",
-      "title": "Benchmarks show scores. Dashboards show usage. What ships?",
-      "summary": "Benchmarks show scores. Dashboards show usage. What ships? — 1 points, 0 comments on HN.",
-      "source": "Hacker News",
-      "sourceUrl": "https://pragmatikos.ai/",
+      "sourceUrl": "https://www.bbc.com/news/articles/c0m39g7xzevo",
       "category": "safety",
-      "date": "2026-09-07",
+      "date": "2026-09-08",
       "hot": false,
       "tags": [
         "HN",
         "AI",
         "story",
-        "author_judsd"
+        "author_dabinat"
       ]
     },
     {
-      "id": "hn-49599932",
-      "title": "Phairplay – AirPlay and Miracast for Android TV",
-      "summary": "Phairplay – AirPlay and Miracast for Android TV — 1 points, 0 comments on HN.",
+      "id": "hn-49605395",
+      "title": "Ask HN: Anyone else feeling uneasy with the latest developments in AI?",
+      "summary": "I&#x27;m feeling extremely depressed and anxious lately. After seeing Astra saturating ARC-AGI-3 and blowing through many other benchmarks, it&#x27;s hard to believe we won&#x27;t have a strong form of AGI by the end of  — 9 points, 8 comments on HN.",
       "source": "Hacker News",
-      "sourceUrl": "https://github.com/mazer666/PhairPlay",
-      "category": "products",
-      "date": "2026-09-07",
+      "sourceUrl": "https://news.ycombinator.com/item?id=49605395",
+      "category": "self-improving",
+      "date": "2026-09-08",
       "hot": false,
       "tags": [
         "HN",
         "AI",
         "story",
-        "author_theturtletalks"
+        "author_sensitivekt9q3"
+      ]
+    },
+    {
+      "id": "hn-49605324",
+      "title": "Denzel Explains AI \"Slop\"",
+      "summary": "Denzel Explains AI \"Slop\" — 9 points, 0 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://www.reddit.com/r/ClaudeCode/comments/1w9e1tg/denzel_explains_ai_slop/",
+      "category": "products",
+      "date": "2026-09-08",
+      "hot": false,
+      "tags": [
+        "HN",
+        "AI",
+        "story",
+        "author_freakynit"
+      ]
+    },
+    {
+      "id": "hn-49606122",
+      "title": "Major Math Breakthrough by AI",
+      "summary": "Major Math Breakthrough by AI — 3 points, 0 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://mastodon.social/@tristanbuckmaster/117233413705701198",
+      "category": "products",
+      "date": "2026-09-08",
+      "hot": false,
+      "tags": [
+        "HN",
+        "AI",
+        "story",
+        "author_mvrandswe"
+      ]
+    },
+    {
+      "id": "hn-49605592",
+      "title": "Evidence runtime for autonomous agent task management",
+      "summary": "Evidence runtime for autonomous agent task management — 3 points, 0 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://grainulator.app",
+      "category": "products",
+      "date": "2026-09-08",
+      "hot": false,
+      "tags": [
+        "HN",
+        "AI",
+        "story",
+        "author_aid-ninja"
+      ]
+    },
+    {
+      "id": "hn-49605147",
+      "title": "Show HN: Archprint, infer architecture lint rules from your repo's import graph",
+      "summary": "This tool started as a research for me trying to answer the question &quot;Does AI agents drift from your architecture conventions or if you need enforcement instead?&quot;. So I started out building a benchmark to test  — 3 points, 2 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://github.com/Tommkruix/archprint",
+      "category": "safety",
+      "date": "2026-09-08",
+      "hot": false,
+      "tags": [
+        "HN",
+        "AI",
+        "story",
+        "author_Tommkruix123"
+      ]
+    },
+    {
+      "id": "hn-49605654",
+      "title": "Cognition Has More Than One Shape: From AI to Synthetic Cognition",
+      "summary": "Cognition Has More Than One Shape: From AI to Synthetic Cognition — 2 points, 0 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://tvvocold.github.io/2026/09/08/cognition-has-more-than-one-shape.html",
+      "category": "products",
+      "date": "2026-09-08",
+      "hot": false,
+      "tags": [
+        "HN",
+        "AI",
+        "story",
+        "author_tvvocold"
+      ]
+    },
+    {
+      "id": "hn-49605245",
+      "title": "AI Is Making Us Build Too Much",
+      "summary": "AI Is Making Us Build Too Much — 2 points, 0 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://sjg.io/writing/ai-is-making-us-build-too-much/",
+      "category": "products",
+      "date": "2026-09-08",
+      "hot": false,
+      "tags": [
+        "HN",
+        "AI",
+        "story",
+        "author_gmays"
+      ]
+    },
+    {
+      "id": "hn-49606373",
+      "title": "Arm unveils AI Portal for optimized AI apps",
+      "summary": "Arm unveils AI Portal for optimized AI apps — 1 points, 0 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://newsroom.arm.com/news/arm-unveils-arm-ai-portal",
+      "category": "products",
+      "date": "2026-09-08",
+      "hot": false,
+      "tags": [
+        "HN",
+        "AI",
+        "story",
+        "author_CoderLim110"
+      ]
+    },
+    {
+      "id": "hn-49606339",
+      "title": "UAE-based Falcon AI NSFW classifier among top global open-source models (2025)",
+      "summary": "UAE-based Falcon AI NSFW classifier among top global open-source models (2025) — 1 points, 0 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://www.middleeastainews.com/p/uae-ai-model-tops-50-million-monthly",
+      "category": "products",
+      "date": "2026-09-08",
+      "hot": false,
+      "tags": [
+        "HN",
+        "AI",
+        "story",
+        "author_instagraham"
+      ]
+    },
+    {
+      "id": "hn-49606313",
+      "title": "What is your thought about the future on video extend developing?",
+      "summary": "What is your thought about the future on video extend developing? — 1 points, 1 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://videoall.ai/video‑extend",
+      "category": "products",
+      "date": "2026-09-08",
+      "hot": false,
+      "tags": [
+        "HN",
+        "AI",
+        "story",
+        "author_henryjin76"
+      ]
+    },
+    {
+      "id": "hn-49606202",
+      "title": "TrustNotch – Tamper-evident audit logs for AI agents, verifiable offline",
+      "summary": "TrustNotch – Tamper-evident audit logs for AI agents, verifiable offline — 1 points, 0 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://trustnotch.com/",
+      "category": "products",
+      "date": "2026-09-08",
+      "hot": false,
+      "tags": [
+        "HN",
+        "AI",
+        "story",
+        "author_sandrochekalov"
+      ]
+    },
+    {
+      "id": "hn-49606128",
+      "title": "Star Trek 60th Anniversary – National Air and Space Museum",
+      "summary": "Star Trek 60th Anniversary – National Air and Space Museum — 1 points, 0 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://airandspace.si.edu/whats-on/events/star-trek-60th-anniversary",
+      "category": "products",
+      "date": "2026-09-08",
+      "hot": false,
+      "tags": [
+        "HN",
+        "AI",
+        "story",
+        "author_rbanffy"
       ]
     }
   ],
   "meta": {
-    "fetchedAt": "2026-09-07T16:50:24.185Z",
+    "fetchedAt": "2026-09-08T06:55:48.779Z",
     "topic": "AI",
     "total": 15,
-    "hot": 2,
+    "hot": 1,
     "sources": [
       "Hacker News"
     ]
