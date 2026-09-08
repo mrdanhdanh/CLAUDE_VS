@@ -117,6 +117,67 @@ async function fetchLiveGitHub(topic = 'AI', days = 30) {
     score: r.stargazers_count||0,
   }));
 }
+async function fetchLiveDevTo(topic = 'AI', days = 30) {
+  const tag = (topic.toLowerCase().includes('ai') ? 'ai' : (topic.toLowerCase().split(/\s+/)[0] || 'ai').replace(/[^a-z0-9-]/g, '')) || 'ai';
+  const url = `https://dev.to/api/articles?tag=${encodeURIComponent(tag)}&per_page=15&top=7`;
+  const res = await fetch(url, { headers: { 'Accept': 'application/json' } });
+  if (!res.ok) throw new Error(`DEV.to ${res.status}`);
+  const items = await res.json();
+  const since = days > 0 ? Date.now() - days*24*60*60*1000 : 0;
+  return items.filter(a => days === 0 || new Date(a.published_at).getTime() >= since).map(a => ({
+    id: `dev-${a.id}`,
+    title: a.title || 'Untitled',
+    summary: (a.description || a.title || '').slice(0,220) + (a.public_reactions_count ? ` — ${a.public_reactions_count} reactions, ${a.comments_count||0} comments on DEV.to.` : ''),
+    source: 'DEV.to',
+    sourceUrl: a.url || `https://dev.to${a.path}`,
+    category: liveCategorize(a.title || '', a.description || ''),
+    date: fmtDateShort(a.published_at),
+    hot: (a.public_reactions_count || 0) > 30,
+    tags: ['DEV.to', tag, ...((a.tag_list || []).slice(0,2))],
+    score: a.public_reactions_count || 0,
+  }));
+}
+async function fetchLiveReddit(topic = 'AI', days = 30) {
+  const url = 'https://www.reddit.com/r/MachineLearning/hot.json?limit=20&raw_json=1';
+  const res = await fetch(url, { headers: { 'Accept': 'application/json' } });
+  if (!res.ok) throw new Error(`Reddit ${res.status}`);
+  const data = await res.json();
+  const children = (data && data.data && data.data.children) || [];
+  const since = Math.floor(Date.now()/1000) - days*24*60*60;
+  return children.filter(c => days === 0 || ((c.data || {}).created_utc || 0) >= since).map(c => {
+    const d = c.data || {};
+    return {
+      id: `rd-${d.id}`,
+      title: d.title || 'Untitled',
+      summary: ((d.selftext || d.title || '').slice(0,180)) + ` — ${d.score||0} upvotes, ${d.num_comments||0} comments on r/MachineLearning.`,
+      source: 'Reddit r/MachineLearning',
+      sourceUrl: d.permalink ? `https://www.reddit.com${d.permalink}` : 'https://www.reddit.com/r/MachineLearning/',
+      category: liveCategorize(d.title || '', d.selftext || ''),
+      date: fmtDateShort((d.created_utc || 0) * 1000),
+      hot: (d.score || 0) > 50 || (d.num_comments || 0) > 30,
+      tags: ['Reddit', d.link_flair_text || 'ML'].filter(Boolean).slice(0,3),
+      score: d.score || 0,
+    };
+  });
+}
+async function fetchLiveHuggingFace() {
+  const url = 'https://huggingface.co/api/models?sort=trendingScore&direction=-1&limit=10';
+  const res = await fetch(url, { headers: { 'Accept': 'application/json' } });
+  if (!res.ok) throw new Error(`HF ${res.status}`);
+  const items = await res.json();
+  return items.map(m => ({
+    id: `hf-${(m.id || '').replace(/[^a-zA-Z0-9-]/g, '_')}`,
+    title: `🤗 ${m.id} — trending on Hugging Face`,
+    summary: `Model trending: ${m.pipeline_tag || 'model'}, ${m.likes || 0} likes, ${m.downloads || 0} downloads. ${m.library_name || ''}`.slice(0,220),
+    source: 'Hugging Face',
+    sourceUrl: `https://huggingface.co/${m.id}`,
+    category: 'products',
+    date: fmtDateShort(m.lastModified || Date.now()),
+    hot: (m.likes || 0) > 500,
+    tags: ['Hugging Face', m.pipeline_tag || 'model', m.library_name || ''].filter(Boolean).slice(0,3),
+    score: m.likes || 0,
+  }));
+}
 let isLiveFetching = false;
 let isSearching = false;
 let searchKeyword = '';
@@ -209,10 +270,17 @@ async function handleLiveRefresh() {
   toast('Đang lấy tin mới từ HN + GitHub… ⏳', 4000);
   // show loading in grids
   const hotGrid = $('#hotGrid'), allGrid = $('#allGrid');
-  if (hotGrid) hotGrid.innerHTML = '<div class="empty-state"><div class="empty-icon">⏳</div><p>Đang fetch trực tiếp từ Hacker News + GitHub…</p><p class="small muted" style="font-size:12px;margin-top:6px">Chạy ngay trên trình duyệt, không cần VS Code</p></div>';
+  if (hotGrid) hotGrid.innerHTML = '<div class="empty-state"><div class="empty-icon">⏳</div><p>Đang fetch trực tiếp từ Hacker News + GitHub + DEV.to + Reddit + Hugging Face…</p><p class="small muted" style="font-size:12px;margin-top:6px">Chạy ngay trên trình duyệt, không cần VS Code</p></div>';
   if (allGrid) allGrid.innerHTML = '';
   try {
-    const [hn, gh] = await Promise.all([fetchLiveHN('AI', 30), fetchLiveGitHub('AI', 30).catch(()=>[])]);
+    const [hn, gh, dev, rd, hf] = await Promise.all([
+      fetchLiveHN('AI', 30),
+      fetchLiveGitHub('AI', 30).catch(()=>[]),
+      fetchLiveDevTo('AI', 30).catch(()=>[]),
+      fetchLiveReddit('AI', 30).catch(()=>[]),
+      fetchLiveHuggingFace().catch(()=>[]),
+    ]);
+    const live = [...hn, ...gh, ...dev, ...rd, ...hf];
     const seen = new Set();
     const merged = [...hn, ...gh].filter(a => {
       const k = a.title.toLowerCase().slice(0,40);
@@ -235,7 +303,7 @@ async function handleLiveRefresh() {
       generatedBy: 'YUNIE × Live (trình duyệt)',
       articles: articles.map(a=>({ id:a.id, title:a.title, summary:a.summary, source:a.source, sourceUrl:a.sourceUrl, category:a.category, date:a.date, hot:!!a.hot, tags:(a.tags||[]).slice(0,5) })),
       meta: { fetchedAt: new Date().toISOString(), topic:'AI', total: articles.length, hot: articles.filter(a=>a.hot).length, sources:[...new Set(articles.map(a=>a.source))] },
-      last30days: { ...(data.last30days||{}), topic:'AI', since: fmtDateShort(Date.now()-30*24*60*60*1000), sources:['Hacker News (live)','GitHub (live)'], engine:'Live fetch trực tiếp trên trình duyệt (không cần VS Code)' }
+      last30days: { ...(data.last30days||{}), topic:'AI', since: fmtDateShort(Date.now()-30*24*60*60*1000), sources:['Hacker News (live)','GitHub (live)','DEV.to (live)','Reddit (live)','Hugging Face (live)'], engine:'Live fetch trực tiếp trên trình duyệt (không cần VS Code)' }
     };
     // update hero meta
     const genEl = $('#metaGenerated'); if (genEl) genEl.textContent = fmtDate(data.generatedAt);
@@ -342,15 +410,19 @@ async function handleSearch() {
   if (btn) { btn.disabled = true; btn.style.opacity = '0.6'; }
   toast(`Đang tìm "${kw}" trong ${days===0?'không giới hạn':days+' ngày'}… ⏳`, 3000);
   const hotGrid = $('#hotGrid'), allGrid = $('#allGrid');
-  if (hotGrid) hotGrid.innerHTML = '<div class="empty-state"><div class="empty-icon">🔍</div><p>Đang tìm tin hot cho "' + escapeHtml(kw) + '"…</p><p class="small muted" style="font-size:12px;margin-top:6px">HN Algolia + GitHub · giữ chuẩn hot như Cập nhật</p></div>';
+  if (hotGrid) hotGrid.innerHTML = '<div class="empty-state"><div class="empty-icon">🔍</div><p>Đang tìm tin hot cho "' + escapeHtml(kw) + '"…</p><p class="small muted" style="font-size:12px;margin-top:6px">HN + GitHub + DEV.to + Reddit + Hugging Face · giữ chuẩn hot như Cập nhật</p></div>';
   if (allGrid) allGrid.innerHTML = '';
   const statusEl = $('#searchStatus');
   if (statusEl) { statusEl.hidden = false; statusEl.textContent = `Đang tìm "${kw}"…`; }
   try {
-    const [hn, gh] = await Promise.all([
+    const [hn, gh, dev, rd, hf] = await Promise.all([
       fetchLiveHN(kw, days),
-      fetchLiveGitHub(kw, days).catch(()=>[])
+      fetchLiveGitHub(kw, days).catch(()=>[]),
+      fetchLiveDevTo(kw, days).catch(()=>[]),
+      fetchLiveReddit(kw, days).catch(()=>[]),
+      fetchLiveHuggingFace().catch(()=>[]),
     ]);
+    const live = [...hn, ...gh, ...dev, ...rd, ...hf];
     const seen = new Set();
     const merged = [...hn, ...gh].filter(a => {
       const k = a.title.toLowerCase().slice(0,40);
@@ -390,7 +462,7 @@ async function handleSearch() {
       generatedBy: `YUNIE × Tìm kiếm "${kw}"`,
       articles: articles.map(a=>({ id:a.id, title:a.title, summary:a.summary, source:a.source, sourceUrl:a.sourceUrl, category:a.category, date:a.date, hot:!!a.hot, tags:(a.tags||[]).slice(0,5) })),
       meta: { fetchedAt: new Date().toISOString(), topic: kw, total: articles.length, hot: articles.filter(a=>a.hot).length, sources:[...new Set(articles.map(a=>a.source))] },
-      last30days: { ...(data.last30days||{}), topic: kw, since: days===0 ? 'không giới hạn' : fmtDateShort(Date.now()-days*24*60*60*1000), sources:['Hacker News (live)','GitHub (live)'], engine:'Tìm kiếm live — HN Algolia + GitHub, giữ chuẩn hot' }
+      last30days: { ...(data.last30days||{}), topic: kw, since: days===0 ? 'không giới hạn' : fmtDateShort(Date.now()-days*24*60*60*1000), sources:['Hacker News (live)','GitHub (live)','DEV.to (live)','Reddit (live)','Hugging Face (live)'], engine:'Tìm kiếm live — HN + GitHub + DEV.to + Reddit + Hugging Face, giữ chuẩn hot' }
     };
     const genEl = $('#metaGenerated'); if (genEl) genEl.textContent = fmtDate(data.generatedAt);
     const byEl = $('#metaBy'); if (byEl) byEl.textContent = data.generatedBy;

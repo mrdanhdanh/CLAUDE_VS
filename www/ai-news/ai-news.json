@@ -1,21 +1,25 @@
 {
-  "generatedAt": "2026-09-08T06:55:48.779Z",
+  "generatedAt": "2026-09-08T14:47:38.256Z",
   "generatedBy": "YUNIE × Last30Days",
   "version": 2,
-  "description": "Tin AI mới nhất — tổng hợp từ Last30Days (HN, GitHub, Web) trong 30 ngày qua. Chủ đề: AI. Tự động cập nhật bởi YUNIE.",
+  "description": "Tin AI mới nhất — tổng hợp từ Last30Days (HN, GitHub, DEV.to, Reddit, Hugging Face, arXiv) trong 7 ngày qua. Chủ đề: AI. Tự động cập nhật bởi YUNIE.",
   "last30days": {
     "enabled": true,
     "topic": "AI",
-    "since": "2026-08-09",
-    "days": 30,
+    "since": "2026-09-01",
+    "days": 7,
     "sources": [
       "Hacker News (Algolia, free)",
       "GitHub Search (free)",
+      "DEV.to (free)",
+      "Reddit r/MachineLearning (free)",
+      "Hugging Face trending (free)",
+      "arXiv (free)",
       "Web (Brave/Perplexity when key)"
     ],
-    "engine": "Node.js bridge (no Python 3.12 needed) — HN Algolia + GitHub API, scored by upvotes/stars",
+    "engine": "Node.js bridge (no Python 3.12 needed) — HN Algolia + GitHub API + DEV.to + Reddit + Hugging Face + arXiv, scored by upvotes/stars/reactions/likes",
     "skill": "mvanhorn/last30days-skill v3.23.0 (61k ⭐)",
-    "note": "Full Last30Days engine (Reddit/X/YouTube/TikTok/Polymarket) cần Python 3.12 + API keys. Bridge này dùng free sources, đủ cho ai-news. Cài Python 3.12 để chạy full: python3.12 .github/skills/last30days/scripts/last30days.py \"AI\" --emit=json"
+    "note": "Full Last30Days engine (X/YouTube/TikTok/Polymarket) cần Python 3.12 + API keys. Bridge này dùng 6 nguồn free (HN, GitHub, DEV.to, Reddit, Hugging Face, arXiv), đủ cho ai-news. Cài Python 3.12 để chạy full: python3.12 .github/skills/last30days/scripts/last30days.py \"AI\" --emit=json"
   },
   "categories": [
     {
@@ -51,11 +55,144 @@
   ],
   "articles": [
     {
-      "id": "hn-49605767",
-      "title": "Mistral raises €3B to make sovereign, open-weight AI the technology frontier",
-      "summary": "Mistral raises €3B to make sovereign, open-weight AI the technology frontier — 151 points, 74 comments on HN.",
+      "id": "hf-Qwen_Qwen3_8-27B",
+      "title": "🤗 Qwen/Qwen3.8-27B — trending on Hugging Face",
+      "summary": "Model trending: image-text-to-text, 14347 likes, 6712160 downloads. transformers",
+      "source": "Hugging Face",
+      "sourceUrl": "https://huggingface.co/Qwen/Qwen3.8-27B",
+      "category": "products",
+      "date": "2026-09-08",
+      "hot": true,
+      "tags": [
+        "Hugging Face",
+        "image-text-to-text",
+        "transformers"
+      ]
+    },
+    {
+      "id": "hf-Qwen_Qwen3_8-Flash-Next",
+      "title": "🤗 Qwen/Qwen3.8-Flash-Next — trending on Hugging Face",
+      "summary": "Model trending: image-text-to-text, 5002 likes, 503263 downloads. transformers",
+      "source": "Hugging Face",
+      "sourceUrl": "https://huggingface.co/Qwen/Qwen3.8-Flash-Next",
+      "category": "products",
+      "date": "2026-09-08",
+      "hot": true,
+      "tags": [
+        "Hugging Face",
+        "image-text-to-text",
+        "transformers"
+      ]
+    },
+    {
+      "id": "hf-unsloth_Qwen3_8-27B-GGUF",
+      "title": "🤗 unsloth/Qwen3.8-27B-GGUF — trending on Hugging Face",
+      "summary": "Model trending: model, 3675 likes, 10675683 downloads. ",
+      "source": "Hugging Face",
+      "sourceUrl": "https://huggingface.co/unsloth/Qwen3.8-27B-GGUF",
+      "category": "products",
+      "date": "2026-09-08",
+      "hot": true,
+      "tags": [
+        "Hugging Face",
+        "model"
+      ]
+    },
+    {
+      "id": "hf-Lightricks_LTX-2_5",
+      "title": "🤗 Lightricks/LTX-2.5 — trending on Hugging Face",
+      "summary": "Model trending: image-to-video, 3134 likes, 1644796 downloads. diffusion-single-file",
+      "source": "Hugging Face",
+      "sourceUrl": "https://huggingface.co/Lightricks/LTX-2.5",
+      "category": "products",
+      "date": "2026-09-08",
+      "hot": true,
+      "tags": [
+        "Hugging Face",
+        "image-to-video",
+        "diffusion-single-file"
+      ]
+    },
+    {
+      "id": "hf-XHToken_Spark-X2_5-4B",
+      "title": "🤗 XHToken/Spark-X2.5-4B — trending on Hugging Face",
+      "summary": "Model trending: text-generation, 813 likes, 10661 downloads. transformers",
+      "source": "Hugging Face",
+      "sourceUrl": "https://huggingface.co/XHToken/Spark-X2.5-4B",
+      "category": "products",
+      "date": "2026-09-08",
+      "hot": true,
+      "tags": [
+        "Hugging Face",
+        "text-generation",
+        "transformers"
+      ]
+    },
+    {
+      "id": "hf-deepseek-ai_DeepSeek-V4-Flash-Vision-Exp",
+      "title": "🤗 deepseek-ai/DeepSeek-V4-Flash-Vision-Exp — trending on Hugging Face",
+      "summary": "Model trending: image-text-to-text, 812 likes, 313547 downloads. transformers",
+      "source": "Hugging Face",
+      "sourceUrl": "https://huggingface.co/deepseek-ai/DeepSeek-V4-Flash-Vision-Exp",
+      "category": "products",
+      "date": "2026-09-08",
+      "hot": true,
+      "tags": [
+        "Hugging Face",
+        "image-text-to-text",
+        "transformers"
+      ]
+    },
+    {
+      "id": "hf-ISTA-DASLab_Qwen3_8-27B-GSQ-RCO-GGUF",
+      "title": "🤗 ISTA-DASLab/Qwen3.8-27B-GSQ-RCO-GGUF — trending on Hugging Face",
+      "summary": "Model trending: image-text-to-text, 622 likes, 479597 downloads. gguf",
+      "source": "Hugging Face",
+      "sourceUrl": "https://huggingface.co/ISTA-DASLab/Qwen3.8-27B-GSQ-RCO-GGUF",
+      "category": "products",
+      "date": "2026-09-08",
+      "hot": true,
+      "tags": [
+        "Hugging Face",
+        "image-text-to-text",
+        "gguf"
+      ]
+    },
+    {
+      "id": "hf-google_timesfm-3_0-pytorch",
+      "title": "🤗 google/timesfm-3.0-pytorch — trending on Hugging Face",
+      "summary": "Model trending: time-series-forecasting, 613 likes, 444052 downloads. ",
+      "source": "Hugging Face",
+      "sourceUrl": "https://huggingface.co/google/timesfm-3.0-pytorch",
+      "category": "products",
+      "date": "2026-09-08",
+      "hot": true,
+      "tags": [
+        "Hugging Face",
+        "time-series-forecasting"
+      ]
+    },
+    {
+      "id": "hf-openbmb_MiniCPM5-2B",
+      "title": "🤗 openbmb/MiniCPM5-2B — trending on Hugging Face",
+      "summary": "Model trending: text-generation, 575 likes, 2879 downloads. transformers",
+      "source": "Hugging Face",
+      "sourceUrl": "https://huggingface.co/openbmb/MiniCPM5-2B",
+      "category": "products",
+      "date": "2026-09-08",
+      "hot": true,
+      "tags": [
+        "Hugging Face",
+        "text-generation",
+        "transformers"
+      ]
+    },
+    {
+      "id": "hn-49610538",
+      "title": "LibreOffice breaks download records after declaring it has no AI features",
+      "summary": "LibreOffice breaks download records after declaring it has no AI features — 140 points, 35 comments on HN.",
       "source": "Hacker News",
-      "sourceUrl": "https://mistral.ai/news/mistral-makes-sovereign-open-weight-ai-to-frontier/",
+      "sourceUrl": "https://manualdousuario.net/en/libreoffice-download-record-no-ai/",
       "category": "products",
       "date": "2026-09-08",
       "hot": true,
@@ -63,15 +200,29 @@
         "HN",
         "AI",
         "story",
-        "author_kuberwastaken"
+        "author_rpgbr"
       ]
     },
     {
-      "id": "hn-49605511",
-      "title": "Arm Mali G2-Ultra NX GPU: desktop-class mobile gameplay with AI-native graphics",
-      "summary": "Arm Mali G2-Ultra NX GPU: desktop-class mobile gameplay with AI-native graphics — 27 points, 12 comments on HN.",
+      "id": "hf-DavidAU_Qwen3_8-27B-TURBO-Fable-Cold-Fusion-735-882-Heretic-Uncensored-NEO-CODER-MAX-MTP-GGUF",
+      "title": "🤗 DavidAU/Qwen3.8-27B-TURBO-Fable-Cold-Fusion-735-882-Heretic-Uncensored-NEO-CODER-MAX-MTP-GGUF — trending on Hugging Face",
+      "summary": "Model trending: image-text-to-text, 327 likes, 348753 downloads. ",
+      "source": "Hugging Face",
+      "sourceUrl": "https://huggingface.co/DavidAU/Qwen3.8-27B-TURBO-Fable-Cold-Fusion-735-882-Heretic-Uncensored-NEO-CODER-MAX-MTP-GGUF",
+      "category": "products",
+      "date": "2026-09-08",
+      "hot": false,
+      "tags": [
+        "Hugging Face",
+        "image-text-to-text"
+      ]
+    },
+    {
+      "id": "hn-49610229",
+      "title": "We Must Return to the Office to Use AI in Person",
+      "summary": "We Must Return to the Office to Use AI in Person — 35 points, 1 comments on HN.",
       "source": "Hacker News",
-      "sourceUrl": "https://newsroom.arm.com/blog/arm-mali-g2-ultra-nx-ai-native-mobile-graphics",
+      "sourceUrl": "https://www.mcsweeneys.net/articles/why-we-must-return-to-the-office-to-use-ai-in-person",
       "category": "products",
       "date": "2026-09-08",
       "hot": false,
@@ -79,47 +230,31 @@
         "HN",
         "AI",
         "story",
-        "author_Re-Tails"
+        "author_cainxinth"
       ]
     },
     {
-      "id": "hn-49604956",
-      "title": "AI cancer cures slowed by chip shortage, says Arm boss",
-      "summary": "AI cancer cures slowed by chip shortage, says Arm boss — 13 points, 11 comments on HN.",
-      "source": "Hacker News",
-      "sourceUrl": "https://www.bbc.com/news/articles/c0m39g7xzevo",
-      "category": "safety",
+      "id": "dev-4603458",
+      "title": "Most 'AI Agents' Are Just If-Statements in a Trench Coat",
+      "summary": "I built an agent last year, and I was proud of it.  It had a planner. It had tools. It had a... — 23 reactions, 10 comments on DEV.to.",
+      "source": "DEV.to",
+      "sourceUrl": "https://dev.to/james_anderson_h/most-ai-agents-are-just-if-statements-in-a-trench-coat-3960",
+      "category": "products",
       "date": "2026-09-08",
       "hot": false,
       "tags": [
-        "HN",
-        "AI",
-        "story",
-        "author_dabinat"
+        "DEV.to",
+        "ai",
+        "ai",
+        "softwareengineering"
       ]
     },
     {
-      "id": "hn-49605395",
-      "title": "Ask HN: Anyone else feeling uneasy with the latest developments in AI?",
-      "summary": "I&#x27;m feeling extremely depressed and anxious lately. After seeing Astra saturating ARC-AGI-3 and blowing through many other benchmarks, it&#x27;s hard to believe we won&#x27;t have a strong form of AGI by the end of  — 9 points, 8 comments on HN.",
+      "id": "hn-49610410",
+      "title": "AI may have just solved a million-dollar math problem",
+      "summary": "AI may have just solved a million-dollar math problem — 5 points, 4 comments on HN.",
       "source": "Hacker News",
-      "sourceUrl": "https://news.ycombinator.com/item?id=49605395",
-      "category": "self-improving",
-      "date": "2026-09-08",
-      "hot": false,
-      "tags": [
-        "HN",
-        "AI",
-        "story",
-        "author_sensitivekt9q3"
-      ]
-    },
-    {
-      "id": "hn-49605324",
-      "title": "Denzel Explains AI \"Slop\"",
-      "summary": "Denzel Explains AI \"Slop\" — 9 points, 0 comments on HN.",
-      "source": "Hacker News",
-      "sourceUrl": "https://www.reddit.com/r/ClaudeCode/comments/1w9e1tg/denzel_explains_ai_slop/",
+      "sourceUrl": "https://www.scientificamerican.com/article/ai-may-have-just-solved-a-million-dollar-math-problem-the-field-will-never-be-the-same/",
       "category": "products",
       "date": "2026-09-08",
       "hot": false,
@@ -127,15 +262,15 @@
         "HN",
         "AI",
         "story",
-        "author_freakynit"
+        "author_lanstin"
       ]
     },
     {
-      "id": "hn-49606122",
-      "title": "Major Math Breakthrough by AI",
-      "summary": "Major Math Breakthrough by AI — 3 points, 0 comments on HN.",
+      "id": "hn-49610464",
+      "title": "My Little AI Factory",
+      "summary": "My Little AI Factory — 4 points, 0 comments on HN.",
       "source": "Hacker News",
-      "sourceUrl": "https://mastodon.social/@tristanbuckmaster/117233413705701198",
+      "sourceUrl": "https://dominis.blog/blog/my-little-ai-factory/",
       "category": "products",
       "date": "2026-09-08",
       "hot": false,
@@ -143,161 +278,19 @@
         "HN",
         "AI",
         "story",
-        "author_mvrandswe"
-      ]
-    },
-    {
-      "id": "hn-49605592",
-      "title": "Evidence runtime for autonomous agent task management",
-      "summary": "Evidence runtime for autonomous agent task management — 3 points, 0 comments on HN.",
-      "source": "Hacker News",
-      "sourceUrl": "https://grainulator.app",
-      "category": "products",
-      "date": "2026-09-08",
-      "hot": false,
-      "tags": [
-        "HN",
-        "AI",
-        "story",
-        "author_aid-ninja"
-      ]
-    },
-    {
-      "id": "hn-49605147",
-      "title": "Show HN: Archprint, infer architecture lint rules from your repo's import graph",
-      "summary": "This tool started as a research for me trying to answer the question &quot;Does AI agents drift from your architecture conventions or if you need enforcement instead?&quot;. So I started out building a benchmark to test  — 3 points, 2 comments on HN.",
-      "source": "Hacker News",
-      "sourceUrl": "https://github.com/Tommkruix/archprint",
-      "category": "safety",
-      "date": "2026-09-08",
-      "hot": false,
-      "tags": [
-        "HN",
-        "AI",
-        "story",
-        "author_Tommkruix123"
-      ]
-    },
-    {
-      "id": "hn-49605654",
-      "title": "Cognition Has More Than One Shape: From AI to Synthetic Cognition",
-      "summary": "Cognition Has More Than One Shape: From AI to Synthetic Cognition — 2 points, 0 comments on HN.",
-      "source": "Hacker News",
-      "sourceUrl": "https://tvvocold.github.io/2026/09/08/cognition-has-more-than-one-shape.html",
-      "category": "products",
-      "date": "2026-09-08",
-      "hot": false,
-      "tags": [
-        "HN",
-        "AI",
-        "story",
-        "author_tvvocold"
-      ]
-    },
-    {
-      "id": "hn-49605245",
-      "title": "AI Is Making Us Build Too Much",
-      "summary": "AI Is Making Us Build Too Much — 2 points, 0 comments on HN.",
-      "source": "Hacker News",
-      "sourceUrl": "https://sjg.io/writing/ai-is-making-us-build-too-much/",
-      "category": "products",
-      "date": "2026-09-08",
-      "hot": false,
-      "tags": [
-        "HN",
-        "AI",
-        "story",
-        "author_gmays"
-      ]
-    },
-    {
-      "id": "hn-49606373",
-      "title": "Arm unveils AI Portal for optimized AI apps",
-      "summary": "Arm unveils AI Portal for optimized AI apps — 1 points, 0 comments on HN.",
-      "source": "Hacker News",
-      "sourceUrl": "https://newsroom.arm.com/news/arm-unveils-arm-ai-portal",
-      "category": "products",
-      "date": "2026-09-08",
-      "hot": false,
-      "tags": [
-        "HN",
-        "AI",
-        "story",
-        "author_CoderLim110"
-      ]
-    },
-    {
-      "id": "hn-49606339",
-      "title": "UAE-based Falcon AI NSFW classifier among top global open-source models (2025)",
-      "summary": "UAE-based Falcon AI NSFW classifier among top global open-source models (2025) — 1 points, 0 comments on HN.",
-      "source": "Hacker News",
-      "sourceUrl": "https://www.middleeastainews.com/p/uae-ai-model-tops-50-million-monthly",
-      "category": "products",
-      "date": "2026-09-08",
-      "hot": false,
-      "tags": [
-        "HN",
-        "AI",
-        "story",
-        "author_instagraham"
-      ]
-    },
-    {
-      "id": "hn-49606313",
-      "title": "What is your thought about the future on video extend developing?",
-      "summary": "What is your thought about the future on video extend developing? — 1 points, 1 comments on HN.",
-      "source": "Hacker News",
-      "sourceUrl": "https://videoall.ai/video‑extend",
-      "category": "products",
-      "date": "2026-09-08",
-      "hot": false,
-      "tags": [
-        "HN",
-        "AI",
-        "story",
-        "author_henryjin76"
-      ]
-    },
-    {
-      "id": "hn-49606202",
-      "title": "TrustNotch – Tamper-evident audit logs for AI agents, verifiable offline",
-      "summary": "TrustNotch – Tamper-evident audit logs for AI agents, verifiable offline — 1 points, 0 comments on HN.",
-      "source": "Hacker News",
-      "sourceUrl": "https://trustnotch.com/",
-      "category": "products",
-      "date": "2026-09-08",
-      "hot": false,
-      "tags": [
-        "HN",
-        "AI",
-        "story",
-        "author_sandrochekalov"
-      ]
-    },
-    {
-      "id": "hn-49606128",
-      "title": "Star Trek 60th Anniversary – National Air and Space Museum",
-      "summary": "Star Trek 60th Anniversary – National Air and Space Museum — 1 points, 0 comments on HN.",
-      "source": "Hacker News",
-      "sourceUrl": "https://airandspace.si.edu/whats-on/events/star-trek-60th-anniversary",
-      "category": "products",
-      "date": "2026-09-08",
-      "hot": false,
-      "tags": [
-        "HN",
-        "AI",
-        "story",
-        "author_rbanffy"
+        "author_dominis"
       ]
     }
   ],
   "meta": {
-    "fetchedAt": "2026-09-08T06:55:48.779Z",
+    "fetchedAt": "2026-09-08T14:47:38.256Z",
     "topic": "AI",
     "total": 15,
-    "hot": 1,
+    "hot": 10,
     "sources": [
-      "Hacker News"
+      "Hugging Face",
+      "Hacker News",
+      "DEV.to"
     ]
   }
 }

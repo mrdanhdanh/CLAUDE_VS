@@ -40,6 +40,9 @@
 | KN-016 | 2026-09-06 | `harness-manager disable skill` fail EPERM trên Windows — rename folder bị chặn dù ACL đầy đủ | `fs.rename` folder bị process khác (VS Code file watcher) giữ handle → EPERM; PowerShell `Move-Item` cùng lúc lại OK | Wrap rename bằng `safeRename()`: thử `fs.rename`, bắt EPERM/EXDEV/EBUSY → fallback `fs.cp` + `fs.rm` | `process` `dx` `windows` `fs` |
 | KN-017 | 2026-09-06 | Archify diagram fail `viewer/viewport-overflow` + `composition/desktop-readability` — viewBox gần vuông render tràn first-screen | Diagram panel ~930px @1440 → `scale = 930/viewBoxWidth`; viewBox 772×652 gần vuông → height×scale > 586px tràn dọc; width 1400 → scale 0.66 < 0.822 text < 6px | Chọn viewBox width trong sweet spot [1035, 1131] để đồng thời thỏa `scale ≥ 0.822` và `height×scale ≤ ~586px`; luôn chạy `visual-check` sau `deliver` | `ui` `diagram` `archify` `responsive` `verify` |
 | KN-018 | 2026-09-07 | Waymo effect / Decollaboration — AI tiện quá khiến human ngừng nghĩ chung, diversity của ý tưởng thu hẹp | LLM bỏ friction của collaborator (không agenda, không tranh author order, available 2am) → decollaboration là lựa chọn hợp lý trong hệ thưởng velocity; outsource writing = skip thinking (Bjork desirable difficulties) | Dissent Review gate ở Clarify/Verify: mỗi PRD phải có 1 framing đối lập không prompt trước; trả lời "Who did you think with?"; human giữ pilot-in-command | `process` `collaboration` `diversity` `pilot-in-command` |
+| KN-019 | 2026-09-08 | Perceived vs Measured Productivity — dev kỳ vọng AI nhanh hơn 24% nhưng đo được chậm hơn 19% (METR) mà vẫn tin là nhanh hơn | Productivity đánh bằng cảm nhận (vibes) không đo bằng evidence → gap giữa perceived và measured không bao giờ bị phát hiện | Mọi claim tốc độ/ROI phải đo bằng metrics (session logs, diff stat, token cost, rework count) — không nhận vibes | `process` `metrics` `benchmark` `evidence` |
+| KN-020 | 2026-09-08 | Generate easy, trust hard — agent đẻ code nhanh nhưng không thể tin nếu không review kỹ | Model được reward để giải task, không để cho code đúng → output luôn cần verification; "AI loves overcomplicating things" | Mọi output agent phải qua review/benchmark gate (continuous benchmarking = foundation của self-evolving agents); radically simplify thay vì thêm phức tạp | `process` `verification` `review` `minimal` |
+| KN-021 | 2026-09-08 | Governance rule-based cứng không scale — agent tìm lỗ để né rule, block-everything chặn cả user hợp lệ | Agent có vô số cách encode 1 hành vi nên deny-list không bắt hết; RBAC cứng không phục vụ nhu cầu access khác nhau | Governance phải đo + evolve: RBAC linh hoạt, self-learning gate, đo vi phạm theo role — bổ sung lớp động cho policy.json tĩnh (KN-012) | `process` `governance` `security` `rbac` |
 
 > Dòng ví dụ trên sẽ bị thay khi có bug thật đầu tiên — giữ format.
 
@@ -419,6 +422,66 @@
 - **Tags:** `process` `collaboration` `diversity` `pilot-in-command`
 - **Người ghi:** YUNIE / auto-learn
 
+### KN-019 — Perceived vs Measured Productivity — claim tốc độ phải đo, không nhận vibes
+
+- **Ngày:** 2026-09-08
+- **Bug report:** N/A — bài học rút từ bài "My Little AI Factory" (dominis.blog, 07/09/2026) + METR study (metr.org, 07/2025)
+- **Severity:** major
+- **Triệu chứng:** METR study: 16 dev open-source kỳ vọng AI giúp nhanh hơn 24%, đo được thực tế chậm hơn 19% — và sau study vẫn tin AI giúp nhanh hơn 20%. Mọi người đánh giá AI productivity bằng cảm nhận ("nhanh hơn hẳn!") mà không có metrics nào đằng sau.
+- **Nguyên nhân gốc (5 Whys):**
+  - Why1: Không biết mình chậm hơn → vì không đo.
+  - Why2: Không đo → vì đo tốn công, cảm nhận có sẵn.
+  - Why3: Cảm nhận có sẵn và tin được → vì tool tạo trải nghiệm trôi chảy (autocompletion mượt, agent chạy liên tục) — cảm giác tiến độ ≠ tiến độ thật.
+  - Why4: Không ai đòi metrics → vì team không có hạ tầng đo (session logs, diff stat, cost).
+  - Why5 (Root): Pipeline thiếu gate "claim phải có measured evidence" — chỉ verify WHETHER (task xong chưa) mà không đo HOW (bao nhiêu token, bao nhiêu rework, nhanh hơn thật không).
+- **Cách sửa:** Mọi claim hiệu quả phải kèm evidence đo được: diff stat (minimal-ladder scoreboard), số verify loop, token/cost nếu có, rework count trong bug.md/plan.md. Cronicle session history dùng để đối chiếu "cảm nhận vs thực tế".
+- **Cách phòng tránh:**
+  - Trước khi claim "nhanh hơn/tốt hơn": hỏi "đo bằng gì?" — không metrics thì nói rõ confidence LOW.
+  - Ghi scoreboard diff stat mỗi Verify (đã có trong minimal-ladder).
+  - Nhớ gap perceived vs measured là có hệ thống — chính dev trong study cũng sai sau khi được đo.
+- **Tags:** `process` `metrics` `benchmark` `evidence`
+- **Người ghi:** YUNIE / auto-learn
+
+### KN-020 — Generate easy, trust hard — output agent phải qua review/benchmark gate
+
+- **Ngày:** 2026-09-08
+- **Bug report:** N/A — bài học rút từ "My Little AI Factory" (dominis.blog): Superglue thành công vì review tay từng thay đổi; BERBench sinh ra vì "no matter which magic setup, không thể tin code mà không review kỹ"
+- **Severity:** major
+- **Triệu chứng:** Agent đẻ code rất nhanh, nhiều setup "magic" (harness/model/skill/MCP) nhưng không có setup nào cho code đáng tin không cần human review; ở scale, human không đủ sức review hết.
+- **Nguyên nhân gốc (5 Whys):**
+  - Why1: Code phải review kỹ → vì model bị reward để giải task, không để cho code đúng.
+  - Why2: Model tối ưu task-completion → vì training signal là success rate, không phải trustworthiness.
+  - Why3: Vibe-check setup không cải thiện trust → vì biến cấu hình (harness/model/skill) không thay đổi nhu cầu verification.
+  - Why4: Không có cách so sánh setup → vì thiếu benchmark deterministic trên codebase thật.
+  - Why5 (Root): Thiếu continuous benchmarking + review gate trong pipeline — tin output vì nó trông ổn, không phải vì đã đo.
+- **Cách sửa:** Giữ + siết các gate có sẵn: `tdd-gate` (RED trước), `verify` fresh evidence, Dissent Review; benchmark 2-3 cách (AAR, KN-010) trước khi chốt setup. "AI loves overcomplicating things" — áp minimal-ladder để radically simplify thay vì thêm phức tạp.
+- **Cách phòng tránh:**
+  - Không bao giờ trust agent output vì "trông đúng" — phải có test/measure (KN-012: check HOW not WHETHER).
+  - Continuous benchmarking là foundation của self-evolving agents — benchmark định kỳ, keep best.
+  - Radically simplify: mỗi task thêm phức tạp → hỏi YAGNI gate (KN-013).
+- **Tags:** `process` `verification` `review` `minimal`
+- **Người ghi:** YUNIE / auto-learn
+
+### KN-021 — Governance rule-based cứng không scale — cần đo + RBAC linh hoạt
+
+- **Ngày:** 2026-09-08
+- **Bug report:** N/A — bài học rút từ "My Little AI Factory" (dominis.blog, component LEX) — bổ sung hướng evolve cho KN-012
+- **Severity:** minor
+- **Triệu chứng:** Rule engine gắn hook endpoint chặn được PII/secrets/network nhưng: (1) agent được reward để giải task — nếu delete file giúp xong task, nó tìm cách encode hành vi mà rule không bắt hết; (2) block-everything chặn luôn user hợp lệ cần elevated access.
+- **Nguyên nhân gốc (5 Whys):**
+  - Why1: Rule bị né → vì hành vi nguy hiểm có vô số cách encode, deny-list chỉ liệt kê được hữu hạn.
+  - Why2: Block-all cũng fail → vì môi trường thật cần phân quyền theo role/người, không phải deny tuyệt đối.
+  - Why3: Deny-list tĩnh không đủ → vì policy phải phản ánh ngữ cảnh (ai, khi nào, làm gì) chứ không chỉ pattern text.
+  - Why4: Chưa đo vi phạm theo ngữ cảnh → vì thiếu telemetry per-role.
+  - Why5 (Root): Governance tĩnh không tự học — cần gate đo được + RBAC linh hoạt, evolve dần theo vi phạm thực tế.
+- **Cách sửa:** Giữ policy.json tĩnh làm lõi fail-closed (KN-012 — chưa thay vì chưa có bằng chứng cần thay), nhưng đo thêm: vi phạm per-actor trong audit stats; lộ trình evolve sang RBAC linh hoạt + self-learning gate khi số refused/false-positive tăng.
+- **Cách phòng tránh:**
+  - Đừng belief deny-list là đủ vĩnh viễn — đo refused rate + false positive định kỳ (cosmic-scale entropy).
+  - Rule mới phải có evidence vi phạm thật, không thêm rule vì "sợ" (minimal-ladder cho policy).
+  - Take the Wheel (human takeover) vẫn là fallback cuối — governance không thay human judgment.
+- **Tags:** `process` `governance` `security` `rbac`
+- **Người ghi:** YUNIE / auto-learn
+
 <!-- Thêm bài học mới theo template dưới — copy block này -->
 
 <!--
@@ -489,6 +552,13 @@
 - ❌ Để AI viết PRD/design 1 phát xong, không có framing đối lập — outsource writing = skip thinking (KN-018).
 - ❌ Thưởng velocity mà không đo diversity — individual productivity tăng nhưng ideas thu hẹp (KN-018).
 - ❌ Cắt workshop/travel/co-location khi budget căng — đó chính là hạ tầng của serendipity (KN-018).
+- ❌ Đánh giá AI productivity bằng cảm nhận ("nhanh hơn hẳn!") không có metrics — METR: kỳ vọng +24%, thực tế −19% (KN-019).
+- ❌ Claim "setup này xịn" mà không đo — trải nghiệm trôi chảy ≠ tiến độ thật (KN-019).
+- ❌ Trust agent output vì "trông đúng" — không setup nào cho code đáng tin thiếu review (KN-020).
+- ❌ Theo hype setup mới (model/skill/MCP) mà không benchmark trên codebase thật (KN-020).
+- ❌ Nhồi phức tạp vì "AI giỏi mà" — AI loves overcomplicating things, job của mình là radically simplify (KN-020).
+- ❌ Cứ tin deny-list bắt hết hành vi nguy hiểm — agent có vô số cách encode 1 hành vi (KN-021).
+- ❌ Thêm rule policy vì "sợ" mà không có evidence vi phạm thật (KN-021).
 
 ## Checklist phòng tránh chung
 
@@ -525,6 +595,10 @@
 - [ ] Regex `^`/`$` trên nội dung multi-line đã có flag `m`? (KN-014)
 - [ ] Chỉ 1 workflow có `environment: github-pages` + `deploy-pages`? Workflow data chỉ `contents: write`? (KN-015)
 - [ ] `eval-gate` ESM `.js` đã check qua temp `.mjs` để robust Node 18/22? (KN-015)
+- [ ] Claim "nhanh hơn/tốt hơn" đã có measured evidence (diff stat, loop count, cost) hay chỉ vibes? (KN-019)
+- [ ] Output agent đã qua test/review gate trước khi trust, không tin vì "trông đúng"? (KN-020)
+- [ ] Setup mới đã benchmark ≥2 cách (AAR) trước khi chốt, không theo hype? (KN-020)
+- [ ] Rule/policy mới có evidence vi phạm thật, refused/false-positive có được đo không? (KN-021)
 
 *File này do `/fixbug` tự động cập nhật. Mọi luồng khác phải đọc để không lặp lại lỗi cũ.*
-*UpdatedAt: 2026-09-04T09:50:00Z — Maintained by YUNIE / Harness v2 — KN-015 added (Pages 2 workflows + eval-gate Node 18 CJS) — KN-014 added (MCP stdio smoke hang + verify order + regex m flag — DisCo Phase 3) — KN-013 added (Ponytail ladder integration: minimal-ladder + lean-product) — Fix: Bảng tóm tắt reorder KN-005↔KN-006 + thêm KN-009 (đã có detail nhưng thiếu ở bảng) — Presets bổ sung auto-researcher (đồng bộ registry) — KN-011 added (Random disable Step button) — KN-010 added (AAR pattern) — KN-009 bổ sung detail section (slot máy chủ AI — hardcode config) — KN-008 added (dotnet build file lock MSB3027) — KN-007 added (Auto-Learn) — KN-006 added (N5 UI polish) — KN-005 added (Bug Blindness)*
+*UpdatedAt: 2026-09-08T15:10:00Z — Maintained by YUNIE / Harness v2 — KN-019/020/021 added (bài học từ "My Little AI Factory" dominis.blog + METR study: measured > perceived, trust hard, governance evolve) — KN-015 added (Pages 2 workflows + eval-gate Node 18 CJS) — KN-014 added (MCP stdio smoke hang + verify order + regex m flag — DisCo Phase 3) — KN-013 added (Ponytail ladder integration: minimal-ladder + lean-product) — Fix: Bảng tóm tắt reorder KN-005↔KN-006 + thêm KN-009 (đã có detail nhưng thiếu ở bảng) — Presets bổ sung auto-researcher (đồng bộ registry) — KN-011 added (Random disable Step button) — KN-010 added (AAR pattern) — KN-009 bổ sung detail section (slot máy chủ AI — hardcode config) — KN-008 added (dotnet build file lock MSB3027) — KN-007 added (Auto-Learn) — KN-006 added (N5 UI polish) — KN-005 added (Bug Blindness)*
