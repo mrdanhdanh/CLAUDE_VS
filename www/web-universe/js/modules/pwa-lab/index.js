@@ -97,7 +97,7 @@ export async function mount(container, ctx) {
     try {
       const reg = await navigator.serviceWorker.getRegistration();
       if (!reg) {
-        els.sw.innerHTML = '<span style="color:var(--warning)">○ Not registered — will register on next load</span><div class="muted small" style="margin-top:4px">SW: ./sw.js (stub, Part 1)</div>';
+        els.sw.innerHTML = '<span style="color:var(--warning)">○ Not registered — will register on next load</span><div class="muted small" style="margin-top:4px">SW: ./sw.js (v2 — real cache + offline fallback)</div>';
       } else {
         const state = reg.active?.state || reg.installing?.state || reg.waiting?.state || 'unknown';
         els.sw.innerHTML = `
@@ -137,7 +137,7 @@ export async function mount(container, ctx) {
     try {
       const keys = await caches.keys();
       if (keys.length===0) {
-        els.cache.innerHTML = '<div>0 caches — SW stub does not cache yet (Part 6 will add)</div><div class="muted small">Cache API available ✓</div>';
+        els.cache.innerHTML = '<div>0 caches — SW v2 sẽ precache ở lần install tới</div><div class="muted small">Cache API available ✓</div>';
         return;
       }
       let totalEntries = 0;

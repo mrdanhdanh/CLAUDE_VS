@@ -38,6 +38,7 @@ const CATALOG = [
   { id: 'concurrency-lab', name: 'Concurrency Lab', version: '1.0.0', category: 'concurrency', description: 'Worker pool, MessageChannel, BroadcastChannel, SharedWorker — with real benchmark.', dependencies: [], permissions: [], lazy: true, icon: '⚡' },
   { id: 'device-lab', name: 'Device Lab', version: '1.0.0', category: 'device', description: 'Geolocation, orientation, motion, battery, network, clipboard, share, fullscreen — capability-aware.', dependencies: [], permissions: ['location'], lazy: true, icon: '📱' },
   { id: 'audio-engine', name: 'Audio Engine', version: '1.0.0', category: 'media', description: 'Web Audio — oscillator, filter, analyser, synth, drum machine.', dependencies: [], permissions: [], lazy: true, icon: '🎹' },
+  { id: 'speech-lab', name: 'Speech Lab', version: '1.0.0', category: 'media', description: 'Text-to-Speech (voices, rate/pitch/volume) + Speech Recognition (transcript, interim) — capability-aware.', dependencies: [], permissions: ['microphone'], lazy: true, icon: '🎤' },
   { id: 'pwa-lab', name: 'PWA Lab', version: '1.0.0', category: 'pwa', description: 'Manifest, Service Worker, Cache, Offline, Install — PWA status.', dependencies: [], permissions: [], lazy: true, icon: '📲' },
   { id: 'game-lab', name: 'Game Lab', version: '1.0.0', category: 'game', description: 'Mini game engine — Snake, Pong, Particle sandbox.', dependencies: [], permissions: [], lazy: true, icon: '🎮' },
   { id: 'data-lab', name: 'Data Lab', version: '1.0.0', category: 'data', description: 'CSV/JSON parser, table, sort/filter/search, virtual scroll, benchmark.', dependencies: [], permissions: [], lazy: true, icon: '📊' },
@@ -787,13 +788,16 @@ function renderPermissions() {
   els.permissionList.innerHTML = list.map(p=> `
     <div class="setting-row">
       <span>${escapeHtml(p.label)} <span class="badge" style="margin-left:6px">${p.supported?'✓':'✗'}</span> <span class="muted small">${escapeHtml(p.status)}</span></span>
-      <button class="btn btn-ghost btn-xs" data-perm="${p.name}">${p.status==='granted'?'Revoke':'Request'}</button>
+      <button class="btn btn-ghost btn-xs" data-perm="${p.name}">${p.status==='granted'?'Re-check':'Request'}</button>
     </div>
   `).join('');
   els.permissionList.querySelectorAll('[data-perm]').forEach(btn=> {
     btn.addEventListener('click', async ()=> {
       const name = btn.dataset.perm;
-      const next = await permissionManager.request(name);
+      // Part 8: request thật — granted → re-check qua Permissions API thay vì revoke giả
+      const next = btn.textContent === 'Re-check' && name === 'notifications'
+        ? await permissionManager.query(name)
+        : await permissionManager.request(name);
       showToast({type:'info',title:`Permission: ${name}`,message:next});
       renderPermissions();
     });

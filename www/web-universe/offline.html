@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="color-scheme" dark light />
+  <title>Offline — WEB UNIVERSE</title>
+  <link rel="manifest" href="./manifest.webmanifest" />
+  <style>
+    /* Offline fallback — reuse tokens trùng khớp base.css (SW không fetch CSS khi offline miss) */
+    :root{--bg:#0b0f1a;--surface:#111827;--border:#1f2a3a;--text:#e5e7eb;--muted:#94a3b8;--primary:#6366f1;--primary-hover:#4f46e5;--radius-lg:16px;--shadow-lg:0 8px 24px rgba(0,0,0,.28)}
+    @media (prefers-color-scheme:light){:root{--bg:#f8fafc;--surface:#ffffff;--border:#e2e8f0;--text:#0f172a;--muted:#64748b;--shadow-lg:0 8px 24px rgba(15,23,42,.12)}}
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{min-height:100vh;display:grid;place-items:center;background:var(--bg);color:var(--text);font-family:'Inter',system-ui,-apple-system,sans-serif;padding:24px}
+    .card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);box-shadow:var(--shadow-lg);padding:40px 32px;max-width:420px;width:100%;text-align:center}
+    .glyph{font-size:44px;line-height:1;margin-bottom:16px}
+    h1{font-size:20px;font-weight:800;margin-bottom:8px}
+    p{color:var(--muted);font-size:14px;line-height:1.6;margin-bottom:20px}
+    button{appearance:none;border:0;background:var(--primary);color:#fff;font:inherit;font-weight:600;font-size:14px;padding:10px 20px;border-radius:10px;cursor:pointer;transition:background .18s ease,transform .18s ease}
+    button:hover{background:var(--primary-hover);transform:translateY(-1px)}
+    button:focus-visible{outline:2px solid var(--primary);outline-offset:2px}
+    .hint{margin-top:16px;font-size:12px;color:var(--muted)}
+  </style>
+</head>
+<body>
+  <main class="card" role="main">
+    <div class="glyph" aria-hidden="true">📡</div>
+    <h1>Bạn đang offline</h1>
+    <p>WEB UNIVERSE không tải được trang này vì mất kết nối mạng. Các module chạy local vẫn dùng được khi mở app chính từ cache.</p>
+    <button id="btnRetry" type="button">Thử lại</button>
+    <p class="hint">SW v2 · offline.html — fallback cho navigation miss</p>
+  </main>
+  <script>
+    document.getElementById('btnRetry').addEventListener('click', () => location.reload());
+  </script>
+</body>
+</html>
