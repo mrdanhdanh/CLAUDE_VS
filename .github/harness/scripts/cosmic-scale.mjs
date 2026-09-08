@@ -63,6 +63,32 @@ async function main() {
     }
   }
 
+  // 1b. dark matter — hidden complexity: orphan files (FS có nhưng registry không biết) + disabled (thiên hà ngủ đông)
+  const orphans = [];
+  for (const type of Object.keys(TYPE_DEFS)) {
+    const d = TYPE_DEFS[type];
+    const known = new Set(Object.keys(registry[KEY_OF[type]] || {}));
+    for (const dir of [d.dir, d.disabledDir]) {
+      let entries = [];
+      try { entries = await fs.readdir(dir, { withFileTypes: true }); } catch { continue; }
+      for (const e of entries) {
+        if (e.name === '_template' || e.name.startsWith('.')) continue;
+        if (d.isFolder && !e.isDirectory()) continue; // file lẻ (registry.json...) không phải skill
+        if (d.isFolder && e.name === 'scripts') continue; // infra folder, không phải skill
+        const name = d.isFolder ? e.name : (e.name.match(d.pattern)?.[1] ?? null);
+        if (!name || known.has(name)) continue;
+        orphans.push({ type, name: e.name, where: dir === d.disabledDir ? 'disabled' : 'active' });
+      }
+    }
+  }
+  const darkMatter = orphans.length * 2 + disabled * 1;
+  const dmLevel = darkMatter < 5 ? 'low' : darkMatter < 15 ? 'medium' : 'high';
+  const dmAdvice = dmLevel === 'low'
+    ? 'Vật chất tối thấp — registry nhìn thấy gần hết vũ trụ.'
+    : dmLevel === 'medium'
+      ? 'Vật chất tối vừa phải — có file/hành tinh registry không nhìn thấy: chạy harness-manager sync hoặc gỡ orphan.'
+      : 'Vật chất tối cao — hidden complexity lớn: audit orphan + .disabled trước khi code tiếp.';
+
   // 2. drafts (bug mở) — supernova chưa nguội
   let drafts = 0, bugsTotal = 0, knTotal = 0;
   try {
@@ -141,6 +167,7 @@ async function main() {
     generatedBy: 'cosmic-scale.mjs',
     entropy: { S, level, advice, parts: { mismatch: mismatches.length, drafts, refused, disabled, failed } },
     darkEnergy: { D: darkEnergy, dissentRatio: Math.round(dissentRatio * 100) / 100, plansTotal, plansWithDissent, advice: deAdvice },
+    darkMatter: { M: darkMatter, level: dmLevel, advice: dmAdvice, orphans, orphanCount: orphans.length, disabledGalaxies: disabled },
     counts: { knTotal, bugsTotal, auditTotal },
     mismatches, missing, blackHoles,
     policy: (() => { try { return { ok: true }; } catch { return { ok: false }; } })(),
@@ -157,7 +184,7 @@ async function main() {
       const prev = JSON.parse(await fs.readFile(outPath, 'utf8'));
       if (Array.isArray(prev.history)) history = prev.history.slice(-29);
     } catch {}
-    history.push({ t: result.generatedAt, S, level });
+    history.push({ t: result.generatedAt, S, level, M: darkMatter });
     result.history = history;
     await fs.writeFile(outPath, JSON.stringify(result, null, 2) + '\n', 'utf8');
   }
@@ -166,6 +193,8 @@ async function main() {
     console.log('🌌 Entropy S=' + S + ' (' + level + ') — mismatch ' + mismatches.length + ' · drafts ' + drafts + ' · refused ' + refused + ' · disabled ' + disabled + ' · failed ' + failed);
     console.log('   ' + advice);
     console.log('   💜 dark energy D=' + darkEnergy + ' (dissent ' + plansWithDissent + '/' + plansTotal + ' plans) — ' + deAdvice);
+    console.log('   🌑 dark matter M=' + darkMatter + ' (' + dmLevel + ') — orphan ' + orphans.length + ' · disabled ' + disabled + ' — ' + dmAdvice);
+    if (orphans.length) console.log('   orphan: ' + orphans.map(o => o.type + '/' + o.name).join(', '));
     if (mismatches.length) console.log('   mismatch: ' + mismatches.map(m => m.type + '/' + m.name).join(', '));
     if (missing.length) console.log('   missing: ' + missing.map(m => m.type + '/' + m.name).join(', '));
     console.log('   black holes: ' + blackHoles.map(b => b.id).join(', '));
