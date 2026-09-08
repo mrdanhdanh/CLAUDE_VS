@@ -43,6 +43,7 @@
 | KN-019 | 2026-09-08 | Perceived vs Measured Productivity — dev kỳ vọng AI nhanh hơn 24% nhưng đo được chậm hơn 19% (METR) mà vẫn tin là nhanh hơn | Productivity đánh bằng cảm nhận (vibes) không đo bằng evidence → gap giữa perceived và measured không bao giờ bị phát hiện | Mọi claim tốc độ/ROI phải đo bằng metrics (session logs, diff stat, token cost, rework count) — không nhận vibes | `process` `metrics` `benchmark` `evidence` |
 | KN-020 | 2026-09-08 | Generate easy, trust hard — agent đẻ code nhanh nhưng không thể tin nếu không review kỹ | Model được reward để giải task, không để cho code đúng → output luôn cần verification; "AI loves overcomplicating things" | Mọi output agent phải qua review/benchmark gate (continuous benchmarking = foundation của self-evolving agents); radically simplify thay vì thêm phức tạp | `process` `verification` `review` `minimal` |
 | KN-021 | 2026-09-08 | Governance rule-based cứng không scale — agent tìm lỗ để né rule, block-everything chặn cả user hợp lệ | Agent có vô số cách encode 1 hành vi nên deny-list không bắt hết; RBAC cứng không phục vụ nhu cầu access khác nhau | Governance phải đo + evolve: RBAC linh hoạt, self-learning gate, đo vi phạm theo role — bổ sung lớp động cho policy.json tĩnh (KN-012) | `process` `governance` `security` `rbac` |
+| KN-022 | 2026-09-08 | Pipeline in a trench coat — phần lớn "agent" là pipeline giả danh; agency là cost phải justify | Model không tự quyết control flow trong đa số hệ thống; free-roaming loop đắt, nondeterministic, không test được trong khi path vốn đã biết | Vẽ được flowchart trước khi chạy → build pipeline; agency chỉ đáng trả khi (1) outcome rẻ để verify VÀ (2) verification để lại dấu vết bền vững | `process` `architecture` `agent` `minimal` |
 
 > Dòng ví dụ trên sẽ bị thay khi có bug thật đầu tiên — giữ format.
 
@@ -474,12 +475,33 @@
   - Why3: Deny-list tĩnh không đủ → vì policy phải phản ánh ngữ cảnh (ai, khi nào, làm gì) chứ không chỉ pattern text.
   - Why4: Chưa đo vi phạm theo ngữ cảnh → vì thiếu telemetry per-role.
   - Why5 (Root): Governance tĩnh không tự học — cần gate đo được + RBAC linh hoạt, evolve dần theo vi phạm thực tế.
-- **Cách sửa:** Giữ policy.json tĩnh làm lõi fail-closed (KN-012 — chưa thay vì chưa có bằng chứng cần thay), nhưng đo thêm: vi phạm per-actor trong audit stats; lộ trình evolve sang RBAC linh hoạt + self-learning gate khi số refused/false-positive tăng.
+- **Cách sửa:** Giữ policy.json tĩnh làm lõi fail-closed (KN-012 — chưa thay vì chưa có bằng chứng cần thay), nhưng đo thêm: vi phạm per-actor trong audit stats; lộ trình evolve sang RBAC linh hoạt + self-learning gate khi số refused/false-positive tăng. Ref Grith (grith-ai/grith, 2026-09): mô hình 3 vùng risk-score (<3 allow · 3–8 queue chờ human duyệt · >8 deny) — vùng giữa chính là Take the Wheel, evolve từ binary deny/allow sang risk-score; thêm supervision-escape enforcement (chặn agent spawn tiến trình con không giám sát: docker/tmux) vào deny-list khi cần.
 - **Cách phòng tránh:**
   - Đừng belief deny-list là đủ vĩnh viễn — đo refused rate + false positive định kỳ (cosmic-scale entropy).
   - Rule mới phải có evidence vi phạm thật, không thêm rule vì "sợ" (minimal-ladder cho policy).
   - Take the Wheel (human takeover) vẫn là fallback cuối — governance không thay human judgment.
 - **Tags:** `process` `governance` `security` `rbac`
+- **Người ghi:** YUNIE / auto-learn
+
+### KN-022 — Pipeline in a trench coat — agency là cost phải justify
+
+- **Ngày:** 2026-09-08
+- **Bug report:** N/A — bài học rút từ "Most 'AI Agents' Are Just If-Statements in a Trench Coat" (James Anderson, DEV.to 2026-09-08, 23 reactions) + comment Baptiste Le Bouquin & Salman Parvez
+- **Severity:** major
+- **Triệu chứng:** Hệ thống gọi là "agent" (planner + tools + reasoning loop) chạy production: chậm, đắt, fail không reproduce — logs cho thấy nó làm cùng 3 bước mỗi run (extract, transform, respond), không bao giờ dùng autonomy để làm gì khác. Demo ấn tượng, Wednesday vẫn phải debug forensics trên "quyết định tự chủ" ở step 4 không kiểm soát được.
+- **Nguyên nhân gốc (5 Whys):**
+  - Why1: Hệ thống nondeterministic, khó debug → vì model được trao quyền chọn control flow tại runtime.
+  - Why2: Trao quyền dù path đã biết → vì "agentic" là từ đẹp trong demo/pitch, không phải nhu cầu của task.
+  - Why3: Không ai phân biệt agent vs pipeline → vì thiếu test rõ ràng.
+  - Why4: Test "path có thay đổi không" cũng chưa đủ → vì có path thay đổi nhưng verify rẻ (scraper, retry sau 429) vẫn an toàn.
+  - Why5 (Root): Thiếu tiêu chí cost-based: agency chỉ đáng trả khi (1) outcome rẻ để verify VÀ (2) verification để lại dấu vết bền vững (audit record) — thiếu 1 trong 2 thì autonomy là pure downside.
+- **Cách sửa:** Litmus: vẽ được flowchart trước khi chạy → build pipeline (fixed steps, LLM call ở chỗ thật sự cần thông minh, control flow mình sở hữu). Harness v2 đã đúng: 8 phase cố định + agent chỉ quyết nội dung trong phase, không quyết path. Chỉ thêm agency tại điểm fixed path chứng minh fail, và không hơn.
+- **Cách phòng tránh:**
+  - Trước khi build "agent": hỏi "vẽ được flowchart không?" — vẽ được thì pipeline.
+  - Agency phải justify: outcome rẻ verify + check để lại record (audit.jsonl, bug.md) — "trench coat fine as long as the person inside checks the pockets".
+  - Multi-agent reconciliation phải deterministic (rule mình sở hữu), không "whoever spoke last wins" — conflict để lại thành record cho human, không ép consensus giả.
+  - Boring pipeline là senior move: hệ thống sống qua Wednesday gần như luôn boring hơn hệ thống thắng demo.
+- **Tags:** `process` `architecture` `agent` `minimal`
 - **Người ghi:** YUNIE / auto-learn
 
 <!-- Thêm bài học mới theo template dưới — copy block này -->
@@ -559,6 +581,10 @@
 - ❌ Nhồi phức tạp vì "AI giỏi mà" — AI loves overcomplicating things, job của mình là radically simplify (KN-020).
 - ❌ Cứ tin deny-list bắt hết hành vi nguy hiểm — agent có vô số cách encode 1 hành vi (KN-021).
 - ❌ Thêm rule policy vì "sợ" mà không có evidence vi phạm thật (KN-021).
+- ❌ Gọi hệ thống là "agent" khi vẽ được flowchart trước khi chạy — pipeline giả danh, đắt và khó debug vô ích (KN-022).
+- ❌ Trao model quyền chọn control flow cho path vốn đã biết — trả token để model deliberates về route mình đã biết (KN-022).
+- ❌ Agency không có cheap check per-step — freedom không kiểm tra = nondeterminism không debug được (KN-022).
+- ❌ Multi-agent reconciliation kiểu "whoever spoke last wins" — phải deterministic rule + conflict để lại thành record (KN-022).
 
 ## Checklist phòng tránh chung
 
@@ -599,6 +625,8 @@
 - [ ] Output agent đã qua test/review gate trước khi trust, không tin vì "trông đúng"? (KN-020)
 - [ ] Setup mới đã benchmark ≥2 cách (AAR) trước khi chốt, không theo hype? (KN-020)
 - [ ] Rule/policy mới có evidence vi phạm thật, refused/false-positive có được đo không? (KN-021)
+- [ ] Trước khi build "agent" đã hỏi "vẽ được flowchart không?" — vẽ được thì pipeline? (KN-022)
+- [ ] Agency (nếu có) thỏa cả 2: outcome rẻ verify + verification để lại record bền vững? (KN-022)
 
 *File này do `/fixbug` tự động cập nhật. Mọi luồng khác phải đọc để không lặp lại lỗi cũ.*
-*UpdatedAt: 2026-09-08T15:10:00Z — Maintained by YUNIE / Harness v2 — KN-019/020/021 added (bài học từ "My Little AI Factory" dominis.blog + METR study: measured > perceived, trust hard, governance evolve) — KN-015 added (Pages 2 workflows + eval-gate Node 18 CJS) — KN-014 added (MCP stdio smoke hang + verify order + regex m flag — DisCo Phase 3) — KN-013 added (Ponytail ladder integration: minimal-ladder + lean-product) — Fix: Bảng tóm tắt reorder KN-005↔KN-006 + thêm KN-009 (đã có detail nhưng thiếu ở bảng) — Presets bổ sung auto-researcher (đồng bộ registry) — KN-011 added (Random disable Step button) — KN-010 added (AAR pattern) — KN-009 bổ sung detail section (slot máy chủ AI — hardcode config) — KN-008 added (dotnet build file lock MSB3027) — KN-007 added (Auto-Learn) — KN-006 added (N5 UI polish) — KN-005 added (Bug Blindness)*
+*UpdatedAt: 2026-09-08T16:05:00Z — Maintained by YUNIE / Harness v2 — KN-022 added (pipeline in a trench coat — agency cost-based test, DEV.to James Anderson) + KN-021 bổ sung lộ trình Grith risk-score (allow/queue/deny + supervision-escape) — KN-019/020/021 added (bài học từ "My Little AI Factory" dominis.blog + METR study: measured > perceived, trust hard, governance evolve) — KN-015 added (Pages 2 workflows + eval-gate Node 18 CJS) — KN-014 added (MCP stdio smoke hang + verify order + regex m flag — DisCo Phase 3) — KN-013 added (Ponytail ladder integration: minimal-ladder + lean-product) — Fix: Bảng tóm tắt reorder KN-005↔KN-006 + thêm KN-009 (đã có detail nhưng thiếu ở bảng) — Presets bổ sung auto-researcher (đồng bộ registry) — KN-011 added (Random disable Step button) — KN-010 added (AAR pattern) — KN-009 bổ sung detail section (slot máy chủ AI — hardcode config) — KN-008 added (dotnet build file lock MSB3027) — KN-007 added (Auto-Learn) — KN-006 added (N5 UI polish) — KN-005 added (Bug Blindness)*
