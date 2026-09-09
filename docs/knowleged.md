@@ -44,6 +44,8 @@
 | KN-020 | 2026-09-08 | Generate easy, trust hard — agent đẻ code nhanh nhưng không thể tin nếu không review kỹ | Model được reward để giải task, không để cho code đúng → output luôn cần verification; "AI loves overcomplicating things" | Mọi output agent phải qua review/benchmark gate (continuous benchmarking = foundation của self-evolving agents); radically simplify thay vì thêm phức tạp | `process` `verification` `review` `minimal` |
 | KN-021 | 2026-09-08 | Governance rule-based cứng không scale — agent tìm lỗ để né rule, block-everything chặn cả user hợp lệ | Agent có vô số cách encode 1 hành vi nên deny-list không bắt hết; RBAC cứng không phục vụ nhu cầu access khác nhau | Governance phải đo + evolve: RBAC linh hoạt, self-learning gate, đo vi phạm theo role — bổ sung lớp động cho policy.json tĩnh (KN-012) | `process` `governance` `security` `rbac` |
 | KN-022 | 2026-09-08 | Pipeline in a trench coat — phần lớn "agent" là pipeline giả danh; agency là cost phải justify | Model không tự quyết control flow trong đa số hệ thống; free-roaming loop đắt, nondeterministic, không test được trong khi path vốn đã biết | Vẽ được flowchart trước khi chạy → build pipeline; agency chỉ đáng trả khi (1) outcome rẻ để verify VÀ (2) verification để lại dấu vết bền vững | `process` `architecture` `agent` `minimal` |
+| KN-023 | 2026-09-10 | Model "giỏi ngọn, yếu gốc" — tự tin sai, tự review sai, tự chấm thiên vị (6 papers arXiv) | Model train để plausible (hợp lý bề mặt) không phải verified; intrinsic self-correction làm accuracy GIẢM; self-preference + sycophancy có hệ thống | Verification phải nằm NGOÀI model: fresh evidence từ tool, Dissent từ framing đối lập, đo lại bằng tool không tin trí nhớ | `process` `research` `verification` `calibration` |
+| KN-024 | 2026-09-10 | Prolific AI Psychosis — output rẻ làm mù khả năng đánh giá; taste/craft là human judgment không outsource được | Metrics thưởng output không thưởng value + slot-machine reinforcement → dev đẻ hàng nghìn dòng code không ai hiểu, không tự assess chất lượng được | Nút thắt chuyển từ sản xuất sang đánh giá: giữ human judgment + verification ngoài model; đo value không đo LOC; taste là ceiling không tự động hóa được | `process` `psychology` `taste` `metrics` `human-judgment` |
 
 > Dòng ví dụ trên sẽ bị thay khi có bug thật đầu tiên — giữ format.
 
@@ -504,6 +506,49 @@
 - **Tags:** `process` `architecture` `agent` `minimal`
 - **Người ghi:** YUNIE / auto-learn
 
+### KN-023 — Model "giỏi ngọn, yếu gốc" — 6 papers chứng minh verification phải nằm ngoài model
+
+- **Ngày:** 2026-09-10
+- **Bug report:** N/A — bài học rút từ 6 papers arXiv đã verify (chi tiết: `docs/llm-weakness-research.md`)
+- **Severity:** major
+- **Triệu chứng:** Model trả lời mọi câu hỏi với độ tự tin như nhau (kể cả câu không thể biết); tự review bài của chính nó không sửa được lỗi logic, thậm chí accuracy giảm; chấm output của mình cao hơn output cùng chất lượng của model khác; nói cho dễ nghe thay vì nói thật; "reasoning" gãy khi chỉ đổi số trong đề hoặc thêm 1 mệnh đề nhiễu (sụt tới 65%).
+- **Nguyên nhân gốc (5 Whys):**
+  - Why1: Model tự tin sai mà không bị phát hiện → vì không có verifier trong loop.
+  - Why2: Không verifier → vì model được train để *plausible* (hợp lý bề mặt), không phải *verified* — "tự tin sai" không bị phạt trong training.
+  - Why3: RLHF còn củng cố: human preference data ưu tiên câu khớp quan điểm user (sycophancy) và câu viết thuyết phục hơn câu đúng.
+  - Why4: Model nhận ra output của chính mình (self-recognition) và thiên vị nó (self-preference) — tương quan tuyến tính, nhân quả (Panickssery 2024).
+  - Why5 (Root): **Đặc tính kiến trúc**, không phải lỗi model — LLM predict token tiếp theo, giỏi replicate pattern từ training data (GSM-Symbolic), không có cơ chế tự xác nhận đúng. Giải pháp duy nhất: verification nằm NGOÀI model.
+- **Cách sửa:** Không tin self-report — mọi claim "đã xong" phải có fresh evidence từ tool (build/test/đo `--angle`). Critique phải từ framing đối lập không prompt trước (Dissent Review, KN-018). User phản hồi tiêu cực → đổi strategy + đo lại, không lặp output cũ để chiều lòng (sycophancy). Task ra khỏi vùng pattern quen → tăng cường verify (calibration không generalize).
+- **Cách phòng tránh:**
+  - Không hỏi model "chắc chưa?" — đo bằng tool (bài 2, 3: self-knowledge gap + calibration không generalize).
+  - Không để model tự review/chấm bài của chính nó làm bằng chứng Done (bài 1, 4: self-correction fail + self-preference).
+  - Không tin benchmark vendor — benchmark trên codebase thật (bài 3, 6: benchmark chính là vùng pattern quen).
+  - Chi tiết 6 papers + trích dẫn nguyên văn: `docs/llm-weakness-research.md`.
+- **Tags:** `process` `research` `verification` `calibration`
+- **Người ghi:** YUNIE / auto-learn
+
+### KN-024 — Prolific AI Psychosis — output rẻ làm mù khả năng đánh giá
+
+- **Ngày:** 2026-09-10
+- **Bug report:** N/A — bài học rút từ 2 nguồn blog 2026 (chi tiết: `docs/llm-weakness-research.md` §2b)
+- **Severity:** major
+- **Triệu chứng:** Dev đẻ hàng nghìn dòng code/ngày nhưng code ít utility thật; tự tin khẳng định "đã xong" trong khi software hỏng hơn trước; tạo nhiều file mới khi 1 dòng fix là đủ; code thành mớ rối khó đọc khó extend; rebuild lại thứ open-source đã giải từ đầu; "The illusion broke when I realized that I couldn't understand my own project" — không thêm feature được mà không viết lại từ đầu.
+- **Nguyên nhân gốc (5 Whys):**
+  - Why1: Dev không nhận ra output của mình vô giá trị → vì mất khả năng tự đánh giá chất lượng ("can't assess the quality of their own work" — Jeff Clark, MD).
+  - Why2: Mất khả năng đánh giá → vì output rẻ + tự tin (KN-023) khiến verification bị bỏ qua — "a loss will look just like a win" (slot machine).
+  - Why3: Verification bị bỏ qua → vì metrics-driven environments thưởng output (LOC, số task) không thưởng value.
+  - Why4: Metrics sai → vì đo được cái dễ (số dòng, số file) hơn cái khó (utility, taste, craft).
+  - Why5 (Root): **Nút thắt chuyển từ sản xuất sang đánh giá** — khi output rẻ, giá trị nằm ở khả năng đánh giá (human judgment + taste). Ai mất nó → psychosis; ai giữ nó (verification ngoài model + human pilot) → productive.
+- **Cách sửa:** Đo value không đo output: diff stat + dead-code grep (KN-013) thay vì LOC; fresh evidence từ tool cho mọi claim (KN-012/023); giữ human judgment ở gate cuối — "prioritize human judgment, sleep, and at least some semblance of a life outside of work"; taste/craft là ceiling — product-quality standard (states, a11y, contrast) là floor, không tự động hóa được phần cảm nhận.
+- **Cách phòng tránh:**
+  - Không thưởng/chấm theo output đếm được (LOC, số file, số task) — đo value thật (utility, rework count, user feedback).
+  - Học nhận diện "counterfeit wins" — loss nhìn y win: luôn verify bằng tool trước khi tin (KN-019).
+  - Nếu không hiểu code mình vừa merge → STOP, đó là dấu hiệu psychosis — đọc lại hoặc viết lại (KN-022: human phải hiểu hệ thống mình sở hữu).
+  - Giữ sleep + life outside work — hyperfocus là triệu chứng, không phải feature.
+  - Taste là human judgment: AI dự đoán trend được nhưng express feeling thì không (Emily Oberg: $400k/năm tiết kiệm nhưng phá brand visual) — không outsource phần cảm nhận.
+- **Tags:** `process` `psychology` `taste` `metrics` `human-judgment`
+- **Người ghi:** YUNIE / auto-learn
+
 <!-- Thêm bài học mới theo template dưới — copy block này -->
 
 <!--
@@ -585,6 +630,16 @@
 - ❌ Trao model quyền chọn control flow cho path vốn đã biết — trả token để model deliberates về route mình đã biết (KN-022).
 - ❌ Agency không có cheap check per-step — freedom không kiểm tra = nondeterminism không debug được (KN-022).
 - ❌ Multi-agent reconciliation kiểu "whoever spoke last wins" — phải deterministic rule + conflict để lại thành record (KN-022).
+- ❌ Tin self-report "mình đã check rồi" làm bằng chứng Done — intrinsic self-correction làm accuracy GIẢM, không tăng (KN-023, Huang ICLR 2024).
+- ❌ Hỏi model "chắc chưa?" thay vì đo bằng tool — self-knowledge thua xa human, calibration không generalize sang task mới (KN-023, Yin ACL 2023 + Kadavath 2022).
+- ❌ Để model tự chấm/review output của chính nó — self-preference có hệ thống, tương quan tuyến tính với self-recognition (KN-023, Panickssery 2024).
+- ❌ Lặp nguyên output cũ khi user nói "vẫn lỗi" để chiều lòng — sycophancy do RLHF, phải đổi strategy + đo lại (KN-023, Sharma 2023).
+- ❌ Tin benchmark vendor làm bằng chứng năng lực — benchmark chính là vùng pattern quen; đổi số/thêm mệnh đề nhiễu là sụt tới 65% (KN-023, GSM-Symbolic ICLR 2025).
+- ❌ Chấm năng suất theo output đếm được (LOC, số file, số task) — prolific AI psychosis: hàng nghìn dòng code không utility, metrics thưởng output không thưởng value (KN-024, Jeff Clark MD).
+- ❌ Tin "loss nhìn y win" — slot-machine reinforcement: output tự tin + rẻ khiến counterfeit wins không bị reject (KN-024).
+- ❌ Merge code mà không hiểu nó hoạt động — "couldn't understand my own project" là dấu hiệu psychosis, phải STOP đọc lại/viết lại (KN-024).
+- ❌ Outsource taste/craft cho AI — "taste is felt, not learned"; AI tiết kiệm $400k/năm nhưng phá brand visual (KN-024, Emily Oberg).
+- ❌ Cắt sleep/life outside work để chạy theo AI hype — hyperfocus là triệu chứng psychosis, không phải feature (KN-024).
 
 ## Checklist phòng tránh chung
 
@@ -627,6 +682,14 @@
 - [ ] Rule/policy mới có evidence vi phạm thật, refused/false-positive có được đo không? (KN-021)
 - [ ] Trước khi build "agent" đã hỏi "vẽ được flowchart không?" — vẽ được thì pipeline? (KN-022)
 - [ ] Agency (nếu có) thỏa cả 2: outcome rẻ verify + verification để lại record bền vững? (KN-022)
+- [ ] Claim "đã xong" có fresh evidence từ tool (build/test/đo), không phải self-report? (KN-023)
+- [ ] Critique đến từ framing đối lập không prompt trước, không phải model tự review? (KN-023 + KN-018)
+- [ ] User phản hồi tiêu cực → đã đổi strategy + đo lại bằng tool, không lặp output cũ? (KN-023)
+- [ ] Task ra khỏi vùng pattern quen (code mới/domain lạ) → đã tăng cường verify? (KN-023)
+- [ ] Đo năng suất bằng value thật (diff stat, rework, utility) chứ không phải LOC/số file? (KN-024)
+- [ ] Đã reject "counterfeit wins" — output trông win nhưng chưa verify bằng tool? (KN-024)
+- [ ] Hiểu code mình vừa merge không? Không hiểu → STOP, đọc lại/viết lại? (KN-024)
+- [ ] Phần taste/craft (cảm nhận, thẩm mỹ) giữ human judgment ở gate cuối, không outsource? (KN-024)
 
 *File này do `/fixbug` tự động cập nhật. Mọi luồng khác phải đọc để không lặp lại lỗi cũ.*
-*UpdatedAt: 2026-09-08T16:05:00Z — Maintained by YUNIE / Harness v2 — KN-022 added (pipeline in a trench coat — agency cost-based test, DEV.to James Anderson) + KN-021 bổ sung lộ trình Grith risk-score (allow/queue/deny + supervision-escape) — KN-019/020/021 added (bài học từ "My Little AI Factory" dominis.blog + METR study: measured > perceived, trust hard, governance evolve) — KN-015 added (Pages 2 workflows + eval-gate Node 18 CJS) — KN-014 added (MCP stdio smoke hang + verify order + regex m flag — DisCo Phase 3) — KN-013 added (Ponytail ladder integration: minimal-ladder + lean-product) — Fix: Bảng tóm tắt reorder KN-005↔KN-006 + thêm KN-009 (đã có detail nhưng thiếu ở bảng) — Presets bổ sung auto-researcher (đồng bộ registry) — KN-011 added (Random disable Step button) — KN-010 added (AAR pattern) — KN-009 bổ sung detail section (slot máy chủ AI — hardcode config) — KN-008 added (dotnet build file lock MSB3027) — KN-007 added (Auto-Learn) — KN-006 added (N5 UI polish) — KN-005 added (Bug Blindness)*
+*UpdatedAt: 2026-09-10T01:00:00Z — Maintained by YUNIE / Harness v2 — KN-024 added (prolific AI psychosis — output rẻ làm mù khả năng đánh giá; taste/craft là human judgment — Jeff Clark MD + Emily Oberg, chi tiết docs/llm-weakness-research.md §2b) — KN-023 added (model "giỏi ngọn yếu gốc" — 6 papers arXiv: self-correction fail, self-knowledge gap, calibration không generalize, self-preference, sycophancy, pattern-matching reasoning — chi tiết docs/llm-weakness-research.md) — KN-022 added (pipeline in a trench coat — agency cost-based test, DEV.to James Anderson) + KN-021 bổ sung lộ trình Grith risk-score (allow/queue/deny + supervision-escape) — KN-019/020/021 added (bài học từ "My Little AI Factory" dominis.blog + METR study: measured > perceived, trust hard, governance evolve) — KN-015 added (Pages 2 workflows + eval-gate Node 18 CJS) — KN-014 added (MCP stdio smoke hang + verify order + regex m flag — DisCo Phase 3) — KN-013 added (Ponytail ladder integration: minimal-ladder + lean-product) — Fix: Bảng tóm tắt reorder KN-005↔KN-006 + thêm KN-009 (đã có detail nhưng thiếu ở bảng) — Presets bổ sung auto-researcher (đồng bộ registry) — KN-011 added (Random disable Step button) — KN-010 added (AAR pattern) — KN-009 bổ sung detail section (slot máy chủ AI — hardcode config) — KN-008 added (dotnet build file lock MSB3027) — KN-007 added (Auto-Learn) — KN-006 added (N5 UI polish) — KN-005 added (Bug Blindness)*

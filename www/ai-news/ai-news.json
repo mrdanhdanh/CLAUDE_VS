@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-09T07:04:57.055Z",
+  "generatedAt": "2026-09-09T17:36:50.967Z",
   "generatedBy": "YUNIE × Last30Days",
   "version": 2,
   "description": "Tin AI mới nhất — tổng hợp từ Last30Days (HN, GitHub, DEV.to, Reddit, Hugging Face, arXiv) trong 30 ngày qua. Chủ đề: AI. Tự động cập nhật bởi YUNIE.",
@@ -57,7 +57,7 @@
     {
       "id": "hf-Qwen_Qwen3_8-27B",
       "title": "🤗 Qwen/Qwen3.8-27B — trending on Hugging Face",
-      "summary": "Model trending: image-text-to-text, 14419 likes, 6712160 downloads. transformers",
+      "summary": "Model trending: image-text-to-text, 14494 likes, 6712160 downloads. transformers",
       "source": "Hugging Face",
       "sourceUrl": "https://huggingface.co/Qwen/Qwen3.8-27B",
       "category": "products",
@@ -72,7 +72,7 @@
     {
       "id": "hf-sentence-transformers_all-MiniLM-L6-v2",
       "title": "🤗 sentence-transformers/all-MiniLM-L6-v2 — trending on Hugging Face",
-      "summary": "Model trending: sentence-similarity, 5648 likes, 253331994 downloads. sentence-transformers",
+      "summary": "Model trending: sentence-similarity, 5701 likes, 253331994 downloads. sentence-transformers",
       "source": "Hugging Face",
       "sourceUrl": "https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2",
       "category": "products",
@@ -85,24 +85,24 @@
       ]
     },
     {
-      "id": "hf-Qwen_Qwen3_8-Flash-Next",
-      "title": "🤗 Qwen/Qwen3.8-Flash-Next — trending on Hugging Face",
-      "summary": "Model trending: image-text-to-text, 5015 likes, 503263 downloads. transformers",
+      "id": "hf-openai-community_gpt2",
+      "title": "🤗 openai-community/gpt2 — trending on Hugging Face",
+      "summary": "Model trending: text-generation, 3831 likes, 14770863 downloads. transformers",
       "source": "Hugging Face",
-      "sourceUrl": "https://huggingface.co/Qwen/Qwen3.8-Flash-Next",
+      "sourceUrl": "https://huggingface.co/openai-community/gpt2",
       "category": "products",
       "date": "2026-09-09",
       "hot": true,
       "tags": [
         "Hugging Face",
-        "image-text-to-text",
+        "text-generation",
         "transformers"
       ]
     },
     {
       "id": "hf-unsloth_Qwen3_8-27B-GGUF",
       "title": "🤗 unsloth/Qwen3.8-27B-GGUF — trending on Hugging Face",
-      "summary": "Model trending: model, 3718 likes, 10675683 downloads. ",
+      "summary": "Model trending: model, 3766 likes, 10675683 downloads. ",
       "source": "Hugging Face",
       "sourceUrl": "https://huggingface.co/unsloth/Qwen3.8-27B-GGUF",
       "category": "products",
@@ -116,7 +116,7 @@
     {
       "id": "hf-Lightricks_LTX-2_5",
       "title": "🤗 Lightricks/LTX-2.5 — trending on Hugging Face",
-      "summary": "Model trending: image-to-video, 3194 likes, 1644796 downloads. diffusion-single-file",
+      "summary": "Model trending: image-to-video, 3243 likes, 1644796 downloads. diffusion-single-file",
       "source": "Hugging Face",
       "sourceUrl": "https://huggingface.co/Lightricks/LTX-2.5",
       "category": "products",
@@ -131,7 +131,7 @@
     {
       "id": "hf-XHToken_Spark-X2_5-4B",
       "title": "🤗 XHToken/Spark-X2.5-4B — trending on Hugging Face",
-      "summary": "Model trending: text-generation, 870 likes, 10661 downloads. transformers",
+      "summary": "Model trending: text-generation, 986 likes, 10661 downloads. transformers",
       "source": "Hugging Face",
       "sourceUrl": "https://huggingface.co/XHToken/Spark-X2.5-4B",
       "category": "products",
@@ -146,7 +146,7 @@
     {
       "id": "hf-openbmb_MiniCPM5-2B",
       "title": "🤗 openbmb/MiniCPM5-2B — trending on Hugging Face",
-      "summary": "Model trending: text-generation, 758 likes, 2879 downloads. transformers",
+      "summary": "Model trending: text-generation, 857 likes, 2879 downloads. transformers",
       "source": "Hugging Face",
       "sourceUrl": "https://huggingface.co/openbmb/MiniCPM5-2B",
       "category": "products",
@@ -161,7 +161,7 @@
     {
       "id": "hf-ISTA-DASLab_Qwen3_8-27B-GSQ-RCO-GGUF",
       "title": "🤗 ISTA-DASLab/Qwen3.8-27B-GSQ-RCO-GGUF — trending on Hugging Face",
-      "summary": "Model trending: image-text-to-text, 673 likes, 479597 downloads. gguf",
+      "summary": "Model trending: image-text-to-text, 716 likes, 479597 downloads. gguf",
       "source": "Hugging Face",
       "sourceUrl": "https://huggingface.co/ISTA-DASLab/Qwen3.8-27B-GSQ-RCO-GGUF",
       "category": "products",
@@ -176,7 +176,7 @@
     {
       "id": "hf-google_timesfm-3_0-pytorch",
       "title": "🤗 google/timesfm-3.0-pytorch — trending on Hugging Face",
-      "summary": "Model trending: time-series-forecasting, 650 likes, 444052 downloads. ",
+      "summary": "Model trending: time-series-forecasting, 684 likes, 444052 downloads. ",
       "source": "Hugging Face",
       "sourceUrl": "https://huggingface.co/google/timesfm-3.0-pytorch",
       "category": "products",
@@ -190,7 +190,7 @@
     {
       "id": "hf-DavidAU_Qwen3_8-27B-TURBO-Fable-Cold-Fusion-735-882-Heretic-Uncensored-NEO-CODER-MAX-MTP-GGUF",
       "title": "🤗 DavidAU/Qwen3.8-27B-TURBO-Fable-Cold-Fusion-735-882-Heretic-Uncensored-NEO-CODER-MAX-MTP-GGUF — trending on Hugging Face",
-      "summary": "Model trending: image-text-to-text, 372 likes, 348753 downloads. ",
+      "summary": "Model trending: image-text-to-text, 403 likes, 348753 downloads. ",
       "source": "Hugging Face",
       "sourceUrl": "https://huggingface.co/DavidAU/Qwen3.8-27B-TURBO-Fable-Cold-Fusion-735-882-Heretic-Uncensored-NEO-CODER-MAX-MTP-GGUF",
       "category": "products",
@@ -202,11 +202,11 @@
       ]
     },
     {
-      "id": "hn-49621223",
-      "title": "AI Has a Discovery Problem",
-      "summary": "AI Has a Discovery Problem — 16 points, 8 comments on HN.",
+      "id": "hn-49628880",
+      "title": "Defining AI Psychosis. Part 2: \"Prolific AI Psychosis\"",
+      "summary": "Defining AI Psychosis. Part 2: \"Prolific AI Psychosis\" — 50 points, 31 comments on HN.",
       "source": "Hacker News",
-      "sourceUrl": "https://mhacevedo.com/posts/the-discovery-problem",
+      "sourceUrl": "https://jeffs.blog/p/defining-ai-psychosis-part-2-prolific",
       "category": "products",
       "date": "2026-09-09",
       "hot": false,
@@ -214,63 +214,15 @@
         "HN",
         "AI",
         "story",
-        "author_miguelacevedo"
+        "author_euthymiclabs"
       ]
     },
     {
-      "id": "hn-49621712",
-      "title": "More than 10% probability AI will wipe out humanity within ten years",
-      "summary": "More than 10% probability AI will wipe out humanity within ten years — 3 points, 1 comments on HN.",
+      "id": "hn-49628888",
+      "title": "Good Taste Can't Be Taught, Bought or Learned, Sorry AI",
+      "summary": "Good Taste Can't Be Taught, Bought or Learned, Sorry AI — 17 points, 7 comments on HN.",
       "source": "Hacker News",
-      "sourceUrl": "https://www.forbes.com/sites/siladityaray/2026/09/09/anthropic-alignment-lead-warns-ai-could-kill-all-humans-as-researcher-quits/",
-      "category": "safety",
-      "date": "2026-09-09",
-      "hot": false,
-      "tags": [
-        "HN",
-        "AI",
-        "story",
-        "author_nothrowaways"
-      ]
-    },
-    {
-      "id": "hn-49621461",
-      "title": "Google: AI agents harvested credentials in under six hours",
-      "summary": "Google: AI agents harvested credentials in under six hours — 3 points, 0 comments on HN.",
-      "source": "Hacker News",
-      "sourceUrl": "https://cloud.google.com/blog/topics/threat-intelligence/from-prompting-to-autonomy-the-evolution-of-adversarial-ai",
-      "category": "big-tech",
-      "date": "2026-09-09",
-      "hot": false,
-      "tags": [
-        "HN",
-        "AI",
-        "story",
-        "author_lbw1215"
-      ]
-    },
-    {
-      "id": "hn-49621425",
-      "title": "Show HN: AI-first open-source alternative to Microsoft and Google Office",
-      "summary": "InjOffice — AI-first open-source alternative to Microsoft Office and Google Workspace — 3 points, 3 comments on HN.",
-      "source": "Hacker News",
-      "sourceUrl": "https://github.com/injectinglabs/injoffice",
-      "category": "big-tech",
-      "date": "2026-09-09",
-      "hot": false,
-      "tags": [
-        "HN",
-        "AI",
-        "story",
-        "author_nickpismenkov"
-      ]
-    },
-    {
-      "id": "hn-49621246",
-      "title": "Show HN: Estimate your AI CO2 footprint",
-      "summary": "Show HN: Estimate your AI CO2 footprint — 3 points, 0 comments on HN.",
-      "source": "Hacker News",
-      "sourceUrl": "https://llmfootprint.fyi/",
+      "sourceUrl": "https://emilyoberg.substack.com/p/good-taste-cant-be-taught-bought",
       "category": "products",
       "date": "2026-09-09",
       "hot": false,
@@ -278,12 +230,60 @@
         "HN",
         "AI",
         "story",
-        "author_wyre"
+        "author_cdrnsf"
+      ]
+    },
+    {
+      "id": "hn-49629382",
+      "title": "Muse's Social Media Handle Is Stolen by New Meta AI Tool",
+      "summary": "Muse's Social Media Handle Is Stolen by New Meta AI Tool — 16 points, 4 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://www.realitytea.com/2026/09/09/muse-band-meta-ai-social-media-handle/",
+      "category": "big-tech",
+      "date": "2026-09-09",
+      "hot": false,
+      "tags": [
+        "HN",
+        "AI",
+        "story",
+        "author_erremerre"
+      ]
+    },
+    {
+      "id": "hn-49629432",
+      "title": "I rank the open-source AI agents that launched in the last 30 days",
+      "summary": "I rank the open-source AI agents that launched in the last 30 days — 8 points, 2 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://www.theagenticleaderboard.com/",
+      "category": "products",
+      "date": "2026-09-09",
+      "hot": false,
+      "tags": [
+        "HN",
+        "AI",
+        "story",
+        "author_theagenticleade"
+      ]
+    },
+    {
+      "id": "hn-49629118",
+      "title": "Teaching an AI My Taste",
+      "summary": "Teaching an AI My Taste — 5 points, 0 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://lonriesberg.com/posts/teaching-an-ai-my-taste/",
+      "category": "products",
+      "date": "2026-09-09",
+      "hot": false,
+      "tags": [
+        "HN",
+        "AI",
+        "story",
+        "author_speckx"
       ]
     }
   ],
   "meta": {
-    "fetchedAt": "2026-09-09T07:04:57.055Z",
+    "fetchedAt": "2026-09-09T17:36:50.967Z",
     "topic": "AI",
     "total": 15,
     "hot": 9,
