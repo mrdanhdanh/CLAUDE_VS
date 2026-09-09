@@ -499,6 +499,37 @@
     .ladder-step.done .ladder-check{background:var(--cosmos-success);color:#fff}
     .ladder-step:not(.done) .ladder-check{border:1px solid rgba(255,255,255,.12);color:transparent}
 
+    /* ===== Quantum Decision lab ===== */
+    .qd-options{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;width:100%;max-width:360px}
+    .qd-option{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:12px;padding:10px 8px;text-align:center;cursor:pointer;transition:all .3s cubic-bezier(.22,1,.36,1)}
+    .qd-option:hover{background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.14);transform:translateY(-2px)}
+    .qd-option strong{display:block;font:800 14px var(--font-mono);color:#fff}
+    .qd-option span{display:block;font:500 9.5px var(--font-mono);color:var(--cosmos-text-muted);margin:2px 0 8px;letter-spacing:.04em;text-transform:uppercase}
+    .qd-amp{height:5px;background:rgba(255,255,255,.08);border-radius:999px;overflow:hidden}
+    .qd-amp i{display:block;height:100%;border-radius:inherit;background:linear-gradient(90deg,#7c3aed,#a78bfa);transition:width .5s cubic-bezier(.22,1,.36,1)}
+    .qd-option:nth-child(2) .qd-amp i{background:linear-gradient(90deg,#06b6d4,#67e8f9)}
+    .qd-option:nth-child(3) .qd-amp i{background:linear-gradient(90deg,#f59e0b,#fcd34d)}
+    .qd-pct{display:block;margin-top:6px;font:600 10px var(--font-mono);color:var(--cosmos-text-muted);font-style:normal}
+    .qd-options.superposed .qd-amp i{animation:qd-breathe 2.4s ease-in-out infinite}
+    .qd-options.superposed .qd-option:nth-child(2) .qd-amp i{animation-delay:.3s}
+    .qd-options.superposed .qd-option:nth-child(3) .qd-amp i{animation-delay:.6s}
+    @keyframes qd-breathe{0%,100%{opacity:1}50%{opacity:.6}}
+    .qd-option.winner{border-color:rgba(124,58,237,.5);background:rgba(124,58,237,.12);box-shadow:0 0 20px rgba(124,58,237,.25);transform:scale(1.05)}
+    .qd-option.lost{opacity:.35;filter:grayscale(.7);transform:scale(.96)}
+    .qd-coherence{width:100%;max-width:360px;margin-top:12px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:12px;padding:12px}
+    .qd-coh-head{display:flex;justify-content:space-between;align-items:center;font:700 11px var(--font-mono);letter-spacing:.06em;text-transform:uppercase;color:var(--cosmos-text-muted)}
+    .qd-coh-head b{font:700 13px var(--font-mono);color:#6ee7b7}
+    .qd-coherence.warn .qd-coh-head b{color:#fcd34d}
+    .qd-coherence.danger .qd-coh-head b{color:#fca5a5}
+    .qd-coh-bar{height:6px;background:rgba(255,255,255,.08);border-radius:999px;margin-top:8px;overflow:hidden}
+    .qd-coh-bar i{display:block;height:100%;border-radius:inherit;background:linear-gradient(90deg,#10b981,#6ee7b7);transition:width .3s ease, background .3s ease}
+    .qd-coherence.warn .qd-coh-bar i{background:linear-gradient(90deg,#f59e0b,#fcd34d)}
+    .qd-coherence.danger .qd-coh-bar i{background:linear-gradient(90deg,#ef4444,#fca5a5)}
+    .qd-signals{margin-top:8px;font:500 10.5px var(--font-mono);color:var(--cosmos-text-dim);line-height:1.5;min-height:16px}
+    .qd-coherence.danger .qd-signals{color:#fca5a5}
+    @media(max-width:480px){.qd-options{grid-template-columns:1fr}}
+    @media(prefers-reduced-motion:reduce){.qd-options.superposed .qd-amp i{animation:none}}
+
     /* ===== Integration ===== */
     .integration{
       display:grid;gap:12px;
@@ -1184,7 +1215,7 @@
       <div class="container">
         <div class="section-head">
           <h2 id="lab-title"><small>Lab tương tác</small>Chạm để cảm nhận lượng tử</h2>
-          <p>6 thí nghiệm — 4 cũ + 2 mới: <b>Black Hole</b> (bottleneck) + <b>Schrödinger</b> (Heisenbug). Thử kéo, bấm, đo, thả.</p>
+          <p>7 thí nghiệm — 4 cũ + 3 mới: <b>Black Hole</b> (bottleneck), <b>Schrödinger</b> (Heisenbug) + <b>Quantum Decision</b> (superposition + decoherence). Thử kéo, bấm, đo, thả.</p>
           <a href="#integration">→ Áp vào Harness sao?</a>
           <a href="./scale.html" style="margin-left:8px">→ Dashboard entropy</a>
         </div>
@@ -1354,6 +1385,50 @@
               <div class="lab-hint">Peek = quan sát nhẹ (import) cũng làm đổi kết quả — Heisenbug!</div>
             </div>
           </div>
+
+          <!-- Quantum Decision -->
+          <div class="lab-card">
+            <div class="lab-head">
+              <h3><span>⚛️</span> Quantum Decision</h3>
+              <span class="lab-badge">Superposition + Decoherence</span>
+            </div>
+            <div class="lab-body">
+              <p><strong>Superposition</strong>: giữ 3 phương án song song tới khi có <b>data</b> — collapse theo biên độ, không random mù. <strong>Decoherence</strong>: quá nhiều workaround → hệ mất kết dính.</p>
+              <div class="lab-demo" style="align-items:stretch;justify-content:flex-start">
+                <div class="qd-options superposed" id="qdOptions" role="group" aria-label="3 phương án song song">
+                  <div class="qd-option" tabindex="0" role="button" aria-label="Phương án A: Native-first">
+                    <strong>A</strong><span>Native-first</span>
+                    <div class="qd-amp"><i style="width:33%"></i></div>
+                    <em class="qd-pct">33%</em>
+                  </div>
+                  <div class="qd-option" tabindex="0" role="button" aria-label="Phương án B: Reuse-first">
+                    <strong>B</strong><span>Reuse-first</span>
+                    <div class="qd-amp"><i style="width:34%"></i></div>
+                    <em class="qd-pct">34%</em>
+                  </div>
+                  <div class="qd-option" tabindex="0" role="button" aria-label="Phương án C: Hybrid">
+                    <strong>C</strong><span>Hybrid</span>
+                    <div class="qd-amp"><i style="width:33%"></i></div>
+                    <em class="qd-pct">33%</em>
+                  </div>
+                </div>
+                <div class="qd-coherence" id="qdCoherence">
+                  <div class="qd-coh-head"><span>🔗 Kết dính hệ</span><b id="qdCohVal">100%</b></div>
+                  <div class="qd-coh-bar" id="qdCohBar" role="meter" aria-label="Mức kết dính hệ" aria-valuemin="0" aria-valuemax="100" aria-valuenow="100"><i id="qdCohFill" style="width:100%"></i></div>
+                  <div class="qd-signals" id="qdSignals" aria-live="polite">— chưa có workaround —</div>
+                </div>
+              </div>
+              <div class="lab-controls">
+                <button class="btn btn-primary" id="btnQdData" type="button">📊 Nạp data</button>
+                <button class="btn btn-primary" id="btnQdCollapse" type="button">⚡ Collapse</button>
+                <button class="btn btn-ghost" id="btnQdReset" type="button">↺ Superposition lại</button>
+                <button class="btn btn-ghost" id="btnQdWorkaround" type="button">🧩 Thêm workaround</button>
+                <button class="btn btn-ghost" id="btnQdRepair" type="button">🧹 Trả nợ</button>
+                <button class="btn btn-ghost" id="btnQdReal" type="button">📡 Đo thật</button>
+              </div>
+              <div class="lab-hint" id="qdHint">3 phương án đang song song — nạp data để dịch biên độ, rồi collapse</div>
+            </div>
+          </div>
         </div>
       </div>
     </section>
@@ -1466,10 +1541,10 @@
           <p>Sếp nói đúng — vũ trụ + lượng tử khai thác dài hơi. YUNIE gợi ý 3 hướng.</p>
         </div>
         <div class="future-grid">
-          <div class="future-card">
-            <h4>⚛️ Lượng tử cho Decision</h4>
-            <p>Dùng <strong>superposition</strong> để giữ 3 phương án song song tới khi có data, <strong>decoherence</strong> để phát hiện khi hệ mất kết dính (quá nhiều workaround).</p>
-            <span class="eta">→ Q1 2027 · instruction: quantum-decision</span>
+          <div class="future-card" style="border-color:rgba(16,185,129,.25)">
+            <h4>⚛️ Lượng tử cho Decision <span class="tag" style="color:#6ee7b7;background:rgba(16,185,129,.15);border-color:rgba(16,185,129,.25);vertical-align:middle">✅ Done</span></h4>
+            <p>Dùng <strong>superposition</strong> giữ 3 phương án song song tới khi có data (collapse theo biên độ, không random mù), <strong>decoherence</strong> phát hiện hệ mất kết dính khi quá nhiều workaround — đo thật từ scale.json.</p>
+            <span class="eta">→ Shipped 2026-09-10 · <a href="#lab" style="color:#c4b5fd">thử lab ⚛️</a></span>
           </div>
           <div class="future-card">
             <h4>🔬 Lab mở rộng</h4>
@@ -1968,6 +2043,102 @@
       box.setAttribute('tabindex','0'); box.setAttribute('role','button'); box.setAttribute('aria-label','Hộp Schrödinger, bấm để mở');
       box.addEventListener('keydown', (e)=>{ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); if(!opened) open(); }});
       render();
+    })();
+
+    // ===== Quantum Decision — superposition theo data + decoherence =====
+    (function(){
+      const optionsEl=$('#qdOptions');
+      const optEls=optionsEl?[...optionsEl.querySelectorAll('.qd-option')]:[];
+      const cohWrap=$('#qdCoherence'), cohVal=$('#qdCohVal'), cohBar=$('#qdCohBar'), cohFill=$('#qdCohFill'), signals=$('#qdSignals');
+      const hint=$('#qdHint');
+      const btnData=$('#btnQdData'), btnCollapse=$('#btnQdCollapse'), btnReset=$('#btnQdReset');
+      const btnWork=$('#btnQdWorkaround'), btnRepair=$('#btnQdRepair'), btnReal=$('#btnQdReal');
+      if(!optionsEl || !btnCollapse) return;
+      const NAMES=['Native-first','Reuse-first','Hybrid'];
+      const SIGNALS=['HACK comment','TODO dồn đống','workaround tạm-thế','fix lệch gốc','bypass validation','đoán thay đo'];
+      let amps=[33,34,33], dataRound=-1, collapsed=false, winner=-1, workarounds=0;
+      function coherence(){ return Math.max(0, 100 - workarounds*18); }
+      function renderOpts(){
+        optEls.forEach((el,i)=>{
+          const pct=Math.round(amps[i]);
+          el.querySelector('.qd-amp i').style.width=pct+'%';
+          el.querySelector('.qd-pct').textContent=pct+'%';
+          el.classList.toggle('winner', collapsed && winner===i);
+          el.classList.toggle('lost', collapsed && winner!==i);
+        });
+        optionsEl.classList.toggle('superposed', !collapsed);
+      }
+      function renderCoh(){
+        const c=coherence();
+        cohVal.textContent=c+'%';
+        cohFill.style.width=c+'%';
+        cohBar.setAttribute('aria-valuenow', String(c));
+        cohWrap.classList.toggle('warn', c<70 && c>=40);
+        cohWrap.classList.toggle('danger', c<40);
+        signals.textContent = workarounds===0 ? '— chưa có workaround —' : '⚠️ '+workarounds+' tín hiệu: '+SIGNALS.slice(0,workarounds).join(' · ');
+        return c;
+      }
+      function renderHint(extra){
+        const c=coherence();
+        if(c<40) hint.innerHTML='⚠️ <b>Decoherence!</b> Hệ mất kết dính — trả nợ (fix workaround) trước khi thêm feature mới (KN-024)';
+        else if(collapsed) hint.innerHTML='⚡ Collapse → <b>'+NAMES[winner]+'</b> thắng theo data · Kết dính hệ: '+c+'%';
+        else hint.innerHTML=(extra||'3 phương án đang song song — nạp data để dịch biên độ, rồi collapse')+' · Kết dính: '+c+'%';
+      }
+      btnData.addEventListener('click', ()=>{
+        if(collapsed){ toast('Đã collapse — bấm ↺ Superposition lại'); return; }
+        dataRound=(dataRound+1)%3;
+        amps=amps.map((a,i)=> i===dataRound ? a+16 : Math.max(8, a-8));
+        renderOpts(); renderHint('📊 Data về: <b>'+NAMES[dataRound]+'</b> được ủng hộ — biên độ dịch');
+        toast('📊 Nạp data → biên độ '+NAMES[dataRound]+' tăng');
+      });
+      btnCollapse.addEventListener('click', ()=>{
+        if(collapsed){ toast('Đã collapse rồi — ↺ để superposition lại'); return; }
+        winner=amps.indexOf(Math.max(...amps));
+        collapsed=true;
+        renderOpts(); renderHint();
+        optionsEl.animate([{transform:'scale(1)'},{transform:'scale(1.02)'},{transform:'scale(1)'}],{duration:350});
+        toast('⚡ Collapse → '+NAMES[winner]+' thắng theo data (không random mù)');
+      });
+      btnReset.addEventListener('click', ()=>{
+        amps=[33,34,33]; dataRound=-1; collapsed=false; winner=-1;
+        renderOpts(); renderHint(); toast('↺ Superposition lại — 3 phương án sống song song');
+      });
+      btnWork.addEventListener('click', ()=>{
+        if(workarounds>=6){ toast('Đầy 6 tín hiệu — hệ decoherence hoàn toàn!'); return; }
+        workarounds++;
+        const c=renderCoh(); renderHint();
+        if(c<40){ cohWrap.animate([{transform:'translateX(0)'},{transform:'translateX(-4px)'},{transform:'translateX(4px)'},{transform:'translateX(0)'}],{duration:300}); toast('⚠️ Decoherence! Kết dính '+c+'% — trả nợ ngay'); }
+        else toast('🧩 +1 workaround — kết dính còn '+c+'%');
+      });
+      btnRepair.addEventListener('click', ()=>{
+        if(workarounds===0){ toast('Không có nợ — hệ đang kết dính tốt'); return; }
+        workarounds=Math.max(0, workarounds-2);
+        const c=renderCoh(); renderHint();
+        toast('🧹 Trả nợ — kết dính phục hồi lên '+c+'%');
+      });
+      btnReal.addEventListener('click', async ()=>{
+        btnReal.disabled=true;
+        try{
+          const res=await fetch('./scale.json',{cache:'no-store'});
+          const j=await res.json();
+          const p=(j.entropy&&j.entropy.parts)||{};
+          const S=(j.entropy&&j.entropy.S)||0;
+          workarounds=Math.min(6, Math.round((p.mismatch*10+p.drafts*5+p.refused*2+p.failed*5)/18));
+          const c=renderCoh();
+          hint.innerHTML='📡 Đo thật từ scale.json: S='+S+' ('+((j.entropy&&j.entropy.level)||'?')+') → kết dính <b>'+c+'%</b>'+(c<40?' — decoherence!':'');
+          toast('📡 Kết dính thật: '+c+'% (S='+S+')');
+        }catch(e){ toast('⚠️ Không tải được scale.json — giữ demo'); }
+        btnReal.disabled=false;
+      });
+      optEls.forEach((el,i)=>{
+        el.addEventListener('click', ()=>{
+          if(collapsed){ toast('Đã collapse — ↺ để superposition lại'); return; }
+          amps=amps.map((a,j)=> j===i ? a+10 : Math.max(8, a-5));
+          renderOpts(); renderHint('👆 Bạn tin <b>'+NAMES[i]+'</b> — biên độ dịch nhẹ (chưa collapse)');
+        });
+        el.addEventListener('keydown', (e)=>{ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); el.click(); }});
+      });
+      renderOpts(); renderCoh(); renderHint();
     })();
 
     // ===== Copy philosophy =====

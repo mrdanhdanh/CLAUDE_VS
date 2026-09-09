@@ -198,6 +198,42 @@
     @media(min-width:900px){.stage:not(.portrait):not(.auto-portrait) .layout-split{grid-template-columns:1.05fr .95fr}}
     .stage.portrait .layout-split,.stage.auto-portrait .layout-split{grid-template-columns:1fr}
 
+    /* === YUNIE polish — staggered reveal khi slide active === */
+    @keyframes revealIn{from{opacity:0;transform:translateY(16px);filter:blur(5px)}to{opacity:1;transform:translateY(0);filter:blur(0)}}
+    .slide.active .slide-inner > *{animation:revealIn .55s cubic-bezier(.22,1,.36,1) backwards}
+    .slide.active .slide-inner > *:nth-child(1){animation-delay:.04s}
+    .slide.active .slide-inner > *:nth-child(2){animation-delay:.12s}
+    .slide.active .slide-inner > *:nth-child(3){animation-delay:.2s}
+    .slide.active .slide-inner > *:nth-child(4){animation-delay:.28s}
+    .slide.active .layout-split > *{animation:revealIn .55s cubic-bezier(.22,1,.36,1) backwards}
+    .slide.active .layout-split > *:nth-child(1){animation-delay:.06s}
+    .slide.active .layout-split > *:nth-child(2){animation-delay:.16s}
+    .slide.active li{animation:revealIn .45s cubic-bezier(.22,1,.36,1) backwards}
+    .slide.active li:nth-child(1){animation-delay:.22s}
+    .slide.active li:nth-child(2){animation-delay:.3s}
+    .slide.active li:nth-child(3){animation-delay:.38s}
+    .slide.active li:nth-child(4){animation-delay:.46s}
+    .slide.active .mini-card{animation:revealIn .5s cubic-bezier(.22,1,.36,1) backwards}
+    .slide.active .mini-card:nth-child(1){animation-delay:.2s}
+    .slide.active .mini-card:nth-child(2){animation-delay:.28s}
+    .slide.active .mini-card:nth-child(3){animation-delay:.36s}
+    .slide.active .mini-card:nth-child(4){animation-delay:.44s}
+    .slide.active .tag{animation:revealIn .4s cubic-bezier(.22,1,.36,1) backwards}
+    .slide.active .tag:nth-child(1){animation-delay:.3s}
+    .slide.active .tag:nth-child(2){animation-delay:.36s}
+    .slide.active .tag:nth-child(3){animation-delay:.42s}
+    .slide.active .tag:nth-child(4){animation-delay:.48s}
+
+    /* === YUNIE polish — tương tác hover === */
+    .slide-visual{transition:transform .25s cubic-bezier(.22,1,.36,1), box-shadow .25s ease;will-change:transform}
+    .slide-visual.is-tilting{transition:transform .08s linear}
+    .slide-visual:hover{box-shadow:0 12px 40px rgba(0,0,0,.5), 0 0 32px rgba(124,58,237,.16)}
+    .mini-card:hover{transform:translateY(-3px);border-color:rgba(124,58,237,.35);background:rgba(255,255,255,.07);box-shadow:0 8px 24px rgba(0,0,0,.35), 0 0 18px rgba(124,58,237,.12)}
+    .tag{transition:transform .18s ease, background .18s ease, border-color .18s ease, color .18s ease}
+    .tag:hover{transform:translateY(-2px) scale(1.04);border-color:rgba(255,255,255,.28);color:#fff}
+    .spotlight{position:absolute;inset:0;z-index:2;pointer-events:none;opacity:0;transition:opacity .4s ease;mix-blend-mode:screen;background:radial-gradient(340px 340px at var(--sx,50%) var(--sy,50%), rgba(167,139,250,.15), rgba(6,182,214,.07) 40%, transparent 70%)}
+    .stage.spot-on .spotlight{opacity:1}
+
     /* center play */
     .center-play{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%) scale(.9);z-index:12;width:64px;height:64px;border-radius:50%;display:grid;place-items:center;background:rgba(0,0,0,.45);border:1px solid rgba(255,255,255,.14);backdrop-filter:blur(12px) saturate(140%);color:#fff;cursor:pointer;opacity:0;pointer-events:none;transition:all .25s ease;box-shadow:0 8px 24px rgba(0,0,0,.4)}
     .center-play.show{opacity:1;pointer-events:auto;transform:translate(-50%,-50%) scale(1)}
@@ -267,7 +303,7 @@
     .toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%) translateY(12px);background:rgba(15,23,42,.92);color:#fff;border:1px solid rgba(255,255,255,.12);padding:10px 16px;border-radius:999px;font:500 13px var(--font-sans);backdrop-filter:blur(12px) saturate(140%);box-shadow:var(--shadow-lg);opacity:0;pointer-events:none;transition:all .25s ease;z-index:60;white-space:nowrap}
     .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
     kbd{font:600 10px var(--font-mono);background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);border-bottom-width:2px;padding:2px 5px;border-radius:6px;color:var(--cosmos-text)}
-    @media(prefers-reduced-motion:reduce){.slide{transition:none}.brand-mark{animation:none}.eyebrow i{animation:none}}
+    @media(prefers-reduced-motion:reduce){.slide{transition:none}.brand-mark{animation:none}.eyebrow i{animation:none}.slide.active .slide-inner > *,.slide.active .layout-split > *,.slide.active li,.slide.active .mini-card,.slide.active .tag{animation:none}.slide-visual{transition:none;will-change:auto}.spotlight{display:none}}
     /* fullscreen */
     .clip-wrap:fullscreen{padding:0;background:#000}
     .clip-wrap:fullscreen .header{display:none}
@@ -312,6 +348,7 @@
         <div class="stage-bg" aria-hidden="true"><canvas id="starfield" width="960" height="540"></canvas></div>
         <div class="vignette" aria-hidden="true"></div>
         <div class="grain" aria-hidden="true"></div>
+        <div class="spotlight" id="spotlight" aria-hidden="true"></div>
 
         <div class="story-bar" id="storyBar" aria-hidden="true"></div>
         <div class="stage-top" aria-hidden="true">
@@ -980,7 +1017,7 @@
                   <h2>Vũ trụ còn <span>giãn nở</span>. Đã chụp được 15 vùng — sếp muốn đi tiếp đâu?</h2>
                   <div class="mini-grid cols-2">
                     <div class="mini-card" style="border-color:rgba(16,185,129,.25);background:linear-gradient(135deg, rgba(16,185,129,.08), rgba(255,255,255,.03))"><h4><i>✅</i> Đã chụp xong — vũ trụ hôm nay</h4><p><strong>System Map 15 vùng</strong> · <strong>Cosmic Calendar</strong> · <strong>Observatory</strong> (audit chain + ΔS sparkline) — toàn bộ đo từ dữ liệu thật.</p><span class="tag" style="margin-top:6px;display:inline-block;color:#6ee7b7;border-color:rgba(16,185,129,.3)">shipped · index.html#map · #calendar · #observatory</span></div>
-                    <div class="mini-card"><h4><i>⚛️</i> Lượng tử cho Decision</h4><p><strong>Superposition</strong> giữ 3 phương án tới khi có data, <strong>decoherence</strong> phát hiện hệ mất kết dính.</p><span class="tag accent" style="margin-top:6px">→ Q1 2027 · quantum-decision</span></div>
+                    <div class="mini-card"><h4><i>⚛️</i> Lượng tử cho Decision</h4><p><strong>Superposition</strong> giữ 3 phương án tới khi có data (collapse theo biên độ), <strong>decoherence</strong> phát hiện hệ mất kết dính.</p><span class="tag" style="margin-top:6px;display:inline-block;color:#6ee7b7;border-color:rgba(16,185,129,.3)">✅ shipped · index.html#lab</span></div>
                     <div class="mini-card"><h4><i>🔬</i> Lab mở rộng</h4><p><strong>Double-slit</strong> (quan sát làm đổi kết quả), <strong>multiverse</strong> (A/B test như đa vũ trụ).</p><span class="tag accent" style="margin-top:6px">→ 2027 · lab-*.html</span></div>
                     <div class="mini-card"><h4><i>🫧</i> Multiverse picker</h4><p>Chọn <strong>preset</strong> như chọn vũ trụ con để sống — web-product, api-minimal, lean-product.</p><span class="tag accent" style="margin-top:6px">→ backlog · registry presets/</span></div>
                   </div>
@@ -1710,6 +1747,47 @@
     lastTs=performance.now();
     raf=requestAnimationFrame(tick);
     setTimeout(()=> toast('Clip tự chạy 6s/slide · Kéo timeline để tua · Xoay điện thoại để đổi tỉ lệ · F fullscreen'), 900);
+  </script>
+
+  <script>
+    // YUNIE polish — cursor spotlight + 3D tilt (chỉ pointer:fine, tôn trọng reduced-motion)
+    (function(){
+      const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const fine=matchMedia('(pointer: fine)').matches;
+      if(reduce || !fine) return;
+      const stage=document.getElementById('stage');
+      const spot=document.getElementById('spotlight');
+      if(!stage) return;
+      // spotlight lerp theo con trỏ
+      let tx=50, ty=50, cx=50, cy=50, rafId=null;
+      function loop(){
+        cx+=(tx-cx)*.12; cy+=(ty-cy)*.12;
+        if(spot){ spot.style.setProperty('--sx',cx.toFixed(2)+'%'); spot.style.setProperty('--sy',cy.toFixed(2)+'%'); }
+        if(Math.abs(tx-cx)>.05 || Math.abs(ty-cy)>.05) rafId=requestAnimationFrame(loop); else rafId=null;
+      }
+      stage.addEventListener('pointermove',(e)=>{
+        const r=stage.getBoundingClientRect();
+        tx=(e.clientX-r.left)/r.width*100; ty=(e.clientY-r.top)/r.height*100;
+        stage.classList.add('spot-on');
+        if(!rafId) rafId=requestAnimationFrame(loop);
+      });
+      stage.addEventListener('pointerleave',()=>{ stage.classList.remove('spot-on'); });
+      // 3D tilt nhẹ cho slide-visual
+      document.querySelectorAll('.slide-visual').forEach(v=>{
+        let raf=null;
+        v.addEventListener('pointermove',(e)=>{
+          if(raf) return;
+          const r=v.getBoundingClientRect();
+          const px=(e.clientX-r.left)/r.width-.5, py=(e.clientY-r.top)/r.height-.5;
+          raf=requestAnimationFrame(()=>{
+            v.classList.add('is-tilting');
+            v.style.transform='perspective(900px) rotateY('+(px*7).toFixed(2)+'deg) rotateX('+(-py*7).toFixed(2)+'deg) scale(1.015)';
+            raf=null;
+          });
+        });
+        v.addEventListener('pointerleave',()=>{ v.classList.remove('is-tilting'); v.style.transform=''; });
+      });
+    })();
   </script>
 </body>
 </html>
