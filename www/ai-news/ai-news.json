@@ -1,13 +1,13 @@
 {
-  "generatedAt": "2026-09-08T14:47:38.256Z",
+  "generatedAt": "2026-09-09T07:04:57.055Z",
   "generatedBy": "YUNIE × Last30Days",
   "version": 2,
-  "description": "Tin AI mới nhất — tổng hợp từ Last30Days (HN, GitHub, DEV.to, Reddit, Hugging Face, arXiv) trong 7 ngày qua. Chủ đề: AI. Tự động cập nhật bởi YUNIE.",
+  "description": "Tin AI mới nhất — tổng hợp từ Last30Days (HN, GitHub, DEV.to, Reddit, Hugging Face, arXiv) trong 30 ngày qua. Chủ đề: AI. Tự động cập nhật bởi YUNIE.",
   "last30days": {
     "enabled": true,
     "topic": "AI",
-    "since": "2026-09-01",
-    "days": 7,
+    "since": "2026-08-10",
+    "days": 30,
     "sources": [
       "Hacker News (Algolia, free)",
       "GitHub Search (free)",
@@ -57,11 +57,11 @@
     {
       "id": "hf-Qwen_Qwen3_8-27B",
       "title": "🤗 Qwen/Qwen3.8-27B — trending on Hugging Face",
-      "summary": "Model trending: image-text-to-text, 14347 likes, 6712160 downloads. transformers",
+      "summary": "Model trending: image-text-to-text, 14419 likes, 6712160 downloads. transformers",
       "source": "Hugging Face",
       "sourceUrl": "https://huggingface.co/Qwen/Qwen3.8-27B",
       "category": "products",
-      "date": "2026-09-08",
+      "date": "2026-09-09",
       "hot": true,
       "tags": [
         "Hugging Face",
@@ -70,13 +70,28 @@
       ]
     },
     {
+      "id": "hf-sentence-transformers_all-MiniLM-L6-v2",
+      "title": "🤗 sentence-transformers/all-MiniLM-L6-v2 — trending on Hugging Face",
+      "summary": "Model trending: sentence-similarity, 5648 likes, 253331994 downloads. sentence-transformers",
+      "source": "Hugging Face",
+      "sourceUrl": "https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2",
+      "category": "products",
+      "date": "2026-09-09",
+      "hot": true,
+      "tags": [
+        "Hugging Face",
+        "sentence-similarity",
+        "sentence-transformers"
+      ]
+    },
+    {
       "id": "hf-Qwen_Qwen3_8-Flash-Next",
       "title": "🤗 Qwen/Qwen3.8-Flash-Next — trending on Hugging Face",
-      "summary": "Model trending: image-text-to-text, 5002 likes, 503263 downloads. transformers",
+      "summary": "Model trending: image-text-to-text, 5015 likes, 503263 downloads. transformers",
       "source": "Hugging Face",
       "sourceUrl": "https://huggingface.co/Qwen/Qwen3.8-Flash-Next",
       "category": "products",
-      "date": "2026-09-08",
+      "date": "2026-09-09",
       "hot": true,
       "tags": [
         "Hugging Face",
@@ -87,11 +102,11 @@
     {
       "id": "hf-unsloth_Qwen3_8-27B-GGUF",
       "title": "🤗 unsloth/Qwen3.8-27B-GGUF — trending on Hugging Face",
-      "summary": "Model trending: model, 3675 likes, 10675683 downloads. ",
+      "summary": "Model trending: model, 3718 likes, 10675683 downloads. ",
       "source": "Hugging Face",
       "sourceUrl": "https://huggingface.co/unsloth/Qwen3.8-27B-GGUF",
       "category": "products",
-      "date": "2026-09-08",
+      "date": "2026-09-09",
       "hot": true,
       "tags": [
         "Hugging Face",
@@ -101,11 +116,11 @@
     {
       "id": "hf-Lightricks_LTX-2_5",
       "title": "🤗 Lightricks/LTX-2.5 — trending on Hugging Face",
-      "summary": "Model trending: image-to-video, 3134 likes, 1644796 downloads. diffusion-single-file",
+      "summary": "Model trending: image-to-video, 3194 likes, 1644796 downloads. diffusion-single-file",
       "source": "Hugging Face",
       "sourceUrl": "https://huggingface.co/Lightricks/LTX-2.5",
       "category": "products",
-      "date": "2026-09-08",
+      "date": "2026-09-09",
       "hot": true,
       "tags": [
         "Hugging Face",
@@ -116,11 +131,11 @@
     {
       "id": "hf-XHToken_Spark-X2_5-4B",
       "title": "🤗 XHToken/Spark-X2.5-4B — trending on Hugging Face",
-      "summary": "Model trending: text-generation, 813 likes, 10661 downloads. transformers",
+      "summary": "Model trending: text-generation, 870 likes, 10661 downloads. transformers",
       "source": "Hugging Face",
       "sourceUrl": "https://huggingface.co/XHToken/Spark-X2.5-4B",
       "category": "products",
-      "date": "2026-09-08",
+      "date": "2026-09-09",
       "hot": true,
       "tags": [
         "Hugging Face",
@@ -129,28 +144,28 @@
       ]
     },
     {
-      "id": "hf-deepseek-ai_DeepSeek-V4-Flash-Vision-Exp",
-      "title": "🤗 deepseek-ai/DeepSeek-V4-Flash-Vision-Exp — trending on Hugging Face",
-      "summary": "Model trending: image-text-to-text, 812 likes, 313547 downloads. transformers",
+      "id": "hf-openbmb_MiniCPM5-2B",
+      "title": "🤗 openbmb/MiniCPM5-2B — trending on Hugging Face",
+      "summary": "Model trending: text-generation, 758 likes, 2879 downloads. transformers",
       "source": "Hugging Face",
-      "sourceUrl": "https://huggingface.co/deepseek-ai/DeepSeek-V4-Flash-Vision-Exp",
+      "sourceUrl": "https://huggingface.co/openbmb/MiniCPM5-2B",
       "category": "products",
-      "date": "2026-09-08",
+      "date": "2026-09-09",
       "hot": true,
       "tags": [
         "Hugging Face",
-        "image-text-to-text",
+        "text-generation",
         "transformers"
       ]
     },
     {
       "id": "hf-ISTA-DASLab_Qwen3_8-27B-GSQ-RCO-GGUF",
       "title": "🤗 ISTA-DASLab/Qwen3.8-27B-GSQ-RCO-GGUF — trending on Hugging Face",
-      "summary": "Model trending: image-text-to-text, 622 likes, 479597 downloads. gguf",
+      "summary": "Model trending: image-text-to-text, 673 likes, 479597 downloads. gguf",
       "source": "Hugging Face",
       "sourceUrl": "https://huggingface.co/ISTA-DASLab/Qwen3.8-27B-GSQ-RCO-GGUF",
       "category": "products",
-      "date": "2026-09-08",
+      "date": "2026-09-09",
       "hot": true,
       "tags": [
         "Hugging Face",
@@ -161,11 +176,11 @@
     {
       "id": "hf-google_timesfm-3_0-pytorch",
       "title": "🤗 google/timesfm-3.0-pytorch — trending on Hugging Face",
-      "summary": "Model trending: time-series-forecasting, 613 likes, 444052 downloads. ",
+      "summary": "Model trending: time-series-forecasting, 650 likes, 444052 downloads. ",
       "source": "Hugging Face",
       "sourceUrl": "https://huggingface.co/google/timesfm-3.0-pytorch",
       "category": "products",
-      "date": "2026-09-08",
+      "date": "2026-09-09",
       "hot": true,
       "tags": [
         "Hugging Face",
@@ -173,44 +188,13 @@
       ]
     },
     {
-      "id": "hf-openbmb_MiniCPM5-2B",
-      "title": "🤗 openbmb/MiniCPM5-2B — trending on Hugging Face",
-      "summary": "Model trending: text-generation, 575 likes, 2879 downloads. transformers",
-      "source": "Hugging Face",
-      "sourceUrl": "https://huggingface.co/openbmb/MiniCPM5-2B",
-      "category": "products",
-      "date": "2026-09-08",
-      "hot": true,
-      "tags": [
-        "Hugging Face",
-        "text-generation",
-        "transformers"
-      ]
-    },
-    {
-      "id": "hn-49610538",
-      "title": "LibreOffice breaks download records after declaring it has no AI features",
-      "summary": "LibreOffice breaks download records after declaring it has no AI features — 140 points, 35 comments on HN.",
-      "source": "Hacker News",
-      "sourceUrl": "https://manualdousuario.net/en/libreoffice-download-record-no-ai/",
-      "category": "products",
-      "date": "2026-09-08",
-      "hot": true,
-      "tags": [
-        "HN",
-        "AI",
-        "story",
-        "author_rpgbr"
-      ]
-    },
-    {
       "id": "hf-DavidAU_Qwen3_8-27B-TURBO-Fable-Cold-Fusion-735-882-Heretic-Uncensored-NEO-CODER-MAX-MTP-GGUF",
       "title": "🤗 DavidAU/Qwen3.8-27B-TURBO-Fable-Cold-Fusion-735-882-Heretic-Uncensored-NEO-CODER-MAX-MTP-GGUF — trending on Hugging Face",
-      "summary": "Model trending: image-text-to-text, 327 likes, 348753 downloads. ",
+      "summary": "Model trending: image-text-to-text, 372 likes, 348753 downloads. ",
       "source": "Hugging Face",
       "sourceUrl": "https://huggingface.co/DavidAU/Qwen3.8-27B-TURBO-Fable-Cold-Fusion-735-882-Heretic-Uncensored-NEO-CODER-MAX-MTP-GGUF",
       "category": "products",
-      "date": "2026-09-08",
+      "date": "2026-09-09",
       "hot": false,
       "tags": [
         "Hugging Face",
@@ -218,79 +202,94 @@
       ]
     },
     {
-      "id": "hn-49610229",
-      "title": "We Must Return to the Office to Use AI in Person",
-      "summary": "We Must Return to the Office to Use AI in Person — 35 points, 1 comments on HN.",
+      "id": "hn-49621223",
+      "title": "AI Has a Discovery Problem",
+      "summary": "AI Has a Discovery Problem — 16 points, 8 comments on HN.",
       "source": "Hacker News",
-      "sourceUrl": "https://www.mcsweeneys.net/articles/why-we-must-return-to-the-office-to-use-ai-in-person",
+      "sourceUrl": "https://mhacevedo.com/posts/the-discovery-problem",
       "category": "products",
-      "date": "2026-09-08",
+      "date": "2026-09-09",
       "hot": false,
       "tags": [
         "HN",
         "AI",
         "story",
-        "author_cainxinth"
+        "author_miguelacevedo"
       ]
     },
     {
-      "id": "dev-4603458",
-      "title": "Most 'AI Agents' Are Just If-Statements in a Trench Coat",
-      "summary": "I built an agent last year, and I was proud of it.  It had a planner. It had tools. It had a... — 23 reactions, 10 comments on DEV.to.",
-      "source": "DEV.to",
-      "sourceUrl": "https://dev.to/james_anderson_h/most-ai-agents-are-just-if-statements-in-a-trench-coat-3960",
-      "category": "products",
-      "date": "2026-09-08",
-      "hot": false,
-      "tags": [
-        "DEV.to",
-        "ai",
-        "ai",
-        "softwareengineering"
-      ]
-    },
-    {
-      "id": "hn-49610410",
-      "title": "AI may have just solved a million-dollar math problem",
-      "summary": "AI may have just solved a million-dollar math problem — 5 points, 4 comments on HN.",
+      "id": "hn-49621712",
+      "title": "More than 10% probability AI will wipe out humanity within ten years",
+      "summary": "More than 10% probability AI will wipe out humanity within ten years — 3 points, 1 comments on HN.",
       "source": "Hacker News",
-      "sourceUrl": "https://www.scientificamerican.com/article/ai-may-have-just-solved-a-million-dollar-math-problem-the-field-will-never-be-the-same/",
-      "category": "products",
-      "date": "2026-09-08",
+      "sourceUrl": "https://www.forbes.com/sites/siladityaray/2026/09/09/anthropic-alignment-lead-warns-ai-could-kill-all-humans-as-researcher-quits/",
+      "category": "safety",
+      "date": "2026-09-09",
       "hot": false,
       "tags": [
         "HN",
         "AI",
         "story",
-        "author_lanstin"
+        "author_nothrowaways"
       ]
     },
     {
-      "id": "hn-49610464",
-      "title": "My Little AI Factory",
-      "summary": "My Little AI Factory — 4 points, 0 comments on HN.",
+      "id": "hn-49621461",
+      "title": "Google: AI agents harvested credentials in under six hours",
+      "summary": "Google: AI agents harvested credentials in under six hours — 3 points, 0 comments on HN.",
       "source": "Hacker News",
-      "sourceUrl": "https://dominis.blog/blog/my-little-ai-factory/",
-      "category": "products",
-      "date": "2026-09-08",
+      "sourceUrl": "https://cloud.google.com/blog/topics/threat-intelligence/from-prompting-to-autonomy-the-evolution-of-adversarial-ai",
+      "category": "big-tech",
+      "date": "2026-09-09",
       "hot": false,
       "tags": [
         "HN",
         "AI",
         "story",
-        "author_dominis"
+        "author_lbw1215"
+      ]
+    },
+    {
+      "id": "hn-49621425",
+      "title": "Show HN: AI-first open-source alternative to Microsoft and Google Office",
+      "summary": "InjOffice — AI-first open-source alternative to Microsoft Office and Google Workspace — 3 points, 3 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://github.com/injectinglabs/injoffice",
+      "category": "big-tech",
+      "date": "2026-09-09",
+      "hot": false,
+      "tags": [
+        "HN",
+        "AI",
+        "story",
+        "author_nickpismenkov"
+      ]
+    },
+    {
+      "id": "hn-49621246",
+      "title": "Show HN: Estimate your AI CO2 footprint",
+      "summary": "Show HN: Estimate your AI CO2 footprint — 3 points, 0 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://llmfootprint.fyi/",
+      "category": "products",
+      "date": "2026-09-09",
+      "hot": false,
+      "tags": [
+        "HN",
+        "AI",
+        "story",
+        "author_wyre"
       ]
     }
   ],
   "meta": {
-    "fetchedAt": "2026-09-08T14:47:38.256Z",
+    "fetchedAt": "2026-09-09T07:04:57.055Z",
     "topic": "AI",
     "total": 15,
-    "hot": 10,
+    "hot": 9,
     "sources": [
       "Hugging Face",
-      "Hacker News",
-      "DEV.to"
+      "Hacker News"
     ]
   }
 }
