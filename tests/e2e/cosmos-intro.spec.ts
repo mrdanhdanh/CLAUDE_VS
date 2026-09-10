@@ -94,10 +94,10 @@ test.describe('COSMOS intro', () => {
     await expect(page.locator('#intro')).toBeHidden({ timeout: 2000 });
   });
 
-  test('skip bằng click bất kỳ đâu (sau grace period 600ms)', async ({ page }) => {
+  test('skip bằng click bất kỳ đâu (sau grace period 1000ms)', async ({ page }) => {
     await page.goto(PAGE);
     await expect(page.locator('#intro')).toBeVisible();
-    await page.waitForTimeout(750); // qua grace period chống click nhầm
+    await page.waitForTimeout(1200); // qua grace period chống click nhầm (PC: click focus cửa sổ)
     await page.mouse.click(240, 560);
     await expect(page.locator('#intro')).toBeHidden({ timeout: 2000 });
   });
@@ -121,7 +121,7 @@ test.describe('COSMOS intro', () => {
     await expect(page.locator('#intro')).toBeHidden({ timeout: 2000 });
   });
 
-  test('reduced-motion → bản tĩnh, không flash/particle, reveal nhanh', async ({ page }) => {
+  test('reduced-motion → bản nhẹ (chỉ opacity), có hint giải thích, reveal ~3.5s', async ({ page }) => {
     await page.emulateMedia({ reducedMotion: 'reduce' });
     await page.goto(PAGE);
     const intro = page.locator('#intro');
@@ -135,13 +135,17 @@ test.describe('COSMOS intro', () => {
     expect(decor.flash).toBe('none');
     expect(decor.core).toBe('none');
 
-    // Char hiện tĩnh ngay (không animation)
+    // Char fade nhẹ (opacity-only) — chờ qua stagger rồi đo
+    await page.waitForTimeout(1500);
     const charOpacity = await page.evaluate(
       () => parseFloat(getComputedStyle(document.querySelector('.intro-char') as Element).opacity)
     );
     expect(charOpacity).toBeGreaterThan(0.9);
 
-    await expect(intro).toBeHidden({ timeout: 5000 });
+    // Hint phải nói rõ vì sao bản nhẹ (tránh user tưởng "trang không có hiệu ứng" — KN-031)
+    await expect(page.locator('.intro-hint')).toContainText(/giảm chuyển động/i);
+
+    await expect(intro).toBeHidden({ timeout: 6000 });
   });
 });
 

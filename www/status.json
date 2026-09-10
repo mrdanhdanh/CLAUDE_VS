@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-10T16:07:01.975Z",
+  "generatedAt": "2026-09-10T16:25:24.517Z",
   "generatedBy": "YUNIE",
   "version": 1,
   "counts": {
@@ -400,7 +400,7 @@
   "health": {
     "errors": 0,
     "status": "ok",
-    "lastCheck": "2026-09-10T16:07:01.975Z",
+    "lastCheck": "2026-09-10T16:25:24.517Z",
     "checks": [
       "get_errors: pass (0 errors)",
       "registry: 18 instructions (18 total) - 18 skills - 9 agents - 7 prompts - 1 hook — all enabled",
@@ -410,8 +410,8 @@
       "www: polished — responsive 375/768/1280, a11y, states, animation 150-300ms",
       "workflow: www/** -> Pages (upload-artifact path: www) — exists: true + eval job gate",
       "library: www/library/ MCP v1.2.0 (5 tools: search + iterative + list/get/status, router+cache, redacted) + library-rag instruction",
-      "auto-learn: 30 KN, 17 bugs, 0 drafts — suggest/log/propose/status (<50ms, IDF, tiếng Việt)",
-      "governance: audit 10 (Ed25519 receipt P0-4) · policy 9 deny/2 allow (ok) · credentials 0 keys plain",
+      "auto-learn: 31 KN, 18 bugs, 0 drafts — suggest/log/propose/status (<50ms, IDF, tiếng Việt)",
+      "governance: audit 11 (Ed25519 receipt P0-4) · policy 9 deny/2 allow (ok) · credentials 0 keys plain",
       "platform: agents 3 (3 built-in, 0 remote) · mcp 3 vendors/3 grants (library 1.2.0 read-only) · components 3/3 pub · routines 1/1 enabled",
       "collaboration: KN-018 — dissentGate ✅ · whoDidYouThinkWith ✅ · critic ✅ · fund-the-friction ✅ (ok)",
       "n5-blazor: www/n5-blazor/ 7 trang static + app.css + data.js + site.js — 100% Pages"
@@ -616,35 +616,18 @@
     }
   },
   "learn": {
-    "knTotal": 30,
-    "bugsTotal": 17,
+    "knTotal": 31,
+    "bugsTotal": 18,
     "drafts": 0
   },
   "governance": {
     "audit": {
-      "total": 10,
-      "permitted": 10,
+      "total": 11,
+      "permitted": 11,
       "refused": 0,
       "failed": 0,
-      "lastTs": "2026-09-10T15:54:07.578Z",
+      "lastTs": "2026-09-10T16:07:41.870Z",
       "tail": [
-        {
-          "ts": "2026-09-10T14:55:19.078Z",
-          "actor": "YUNIE",
-          "tool": "edit",
-          "target": ".github/harness/scripts/procedural-graph.mjs+experience-funnel.mjs+consistency-gap.mjs",
-          "decision": "permitted",
-          "rule": "allow-all",
-          "durationMs": null,
-          "error": null,
-          "intent": "implement-3-upgrades-done",
-          "requestId": "252f27",
-          "prevHash": "3aaa892fbf312353",
-          "policyDigest": "162346288ec03771",
-          "hash": "b9eb9386eb61312d",
-          "sig": "lZhIXU0bc3dcAzHbWlmtTcThY32q6POGewz6h6zkP_eKyJSYVx-FsSPwb-XYCcmQlcWsuEwkk_bmMyNfh2tnDw",
-          "pub": "MCowBQYDK2VwAyEAY8PlU0KjXp4HJUUlNlVZdaXHUmDagUMm8rUrEShTPXo"
-        },
         {
           "ts": "2026-09-10T14:57:51.483Z",
           "actor": "YUNIE",
@@ -712,6 +695,23 @@
           "hash": "0f978238e239ae2b",
           "sig": "9ikaEAKoIZxaEqMIVzpFfBeIb7fsbObVLh4KZy-vcJCnoRFuSgDy0nQ7NILSuXcvz5gFqB27mw3nzdbj7AqBBA",
           "pub": "MCowBQYDK2VwAyEAY8PlU0KjXp4HJUUlNlVZdaXHUmDagUMm8rUrEShTPXo"
+        },
+        {
+          "ts": "2026-09-10T16:07:41.870Z",
+          "actor": "YUNIE",
+          "tool": "shell",
+          "target": "git push",
+          "decision": "permitted",
+          "rule": "allow-all",
+          "durationMs": null,
+          "error": null,
+          "intent": null,
+          "requestId": "61ccc6",
+          "prevHash": "0f978238e239ae2b",
+          "policyDigest": "162346288ec03771",
+          "hash": "31d25a15177d0843",
+          "sig": "19lwqoSKLEZPbOXVgvafjFqglAqHHMVo20Bm8hZGhacXruYoLRNI45L0d1LboVd6gT-BqgDHy1BYV4g3Dpm4DQ",
+          "pub": "MCowBQYDK2VwAyEAY8PlU0KjXp4HJUUlNlVZdaXHUmDagUMm8rUrEShTPXo"
         }
       ]
     },
@@ -720,7 +720,7 @@
       "deny": 9,
       "allow": 2,
       "status": "ok",
-      "lastCheck": "2026-09-10T16:07:01.851Z"
+      "lastCheck": "2026-09-10T16:25:24.354Z"
     },
     "credentials": {
       "count": 0,

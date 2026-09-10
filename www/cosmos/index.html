@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="color-scheme" content="dark light" />
-  <script>/* Intro gate — che nội dung từ frame đầu; no-JS = không có intro. Fail-safe 9s: engine intro không chạy được → tự mở nội dung (không bao giờ kẹt màn đen). */(function(){try{var d=document.documentElement;d.classList.add('intro-on');setTimeout(function(){if(!window.__introOn)d.classList.remove('intro-on');},9000);}catch(e){}})();</script>
+  <script>/* Intro gate — che nội dung từ frame đầu; no-JS = không có intro. Fail-safe 9s: ENGINE intro không chạy được (script lỗi/bị chặn) → tự mở nội dung, không bao giờ kẹt màn đen. Engine sống → tự quản việc mở (hỗ trợ tab ẩn, KN-031). */(function(){try{var d=document.documentElement;d.classList.add('intro-on');setTimeout(function(){if(!window.__introEngine)d.classList.remove('intro-on');},9000);}catch(e){}})();</script>
   <meta name="description" content="COSMOS · QUANTUM — Triết lý 2 tầng cho Harness v2. Vũ trụ (Macro) + Lượng tử (Micro) = Process là định luật, verify là quan sát." />
   <title>COSMOS · QUANTUM — Triết lý Harness v2</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -1028,12 +1028,23 @@
     .intro-progress{position:absolute;left:0;right:0;bottom:0;height:3px;z-index:3;background:rgba(255,255,255,.07)}
     .intro-progress i{display:block;height:100%;width:0;background:linear-gradient(90deg,#7c3aed,#06b6d4,#f59e0b);box-shadow:0 0 12px rgba(124,58,237,.6);transition:width 4.8s linear}
     @media(prefers-reduced-motion:reduce){
+      /* Bản nhẹ: CHỈ opacity — không dịch chuyển/scale/blur/particle (an toàn tiền đình) nhưng VẪN có nhịp fade
+         để user không tưởng "trang không có hiệu ứng" (KN-031) */
       .intro{transition-duration:.4s}
       .intro-canvas,.intro-flash,.intro-core{display:none}
       .intro.done{transform:none}
-      .intro-char,.intro-char.dot,.intro-underline,.intro-sub,.intro-tagline,.intro-hint,.intro-skip{opacity:1 !important;transform:none !important;filter:none !important;animation:none !important}
       .intro-title{letter-spacing:.08em;text-indent:.08em;transition:none}
+      .intro-char{transform:none;filter:none}
+      .intro-underline{transform:scaleX(1)}
+      .intro.play .intro-char,.intro.play .intro-char.dot{animation:introCalmFade .7s ease both;animation-delay:calc(.35s + var(--i,0)*.035s)}
+      .intro.play .intro-char.dot{animation:introCalmFade .7s ease calc(.35s + var(--i,0)*.035s) both, introDot 3s ease-in-out 2.6s infinite}
+      .intro.play .intro-underline{animation:introCalmFade .9s ease 1.15s both}
+      .intro.play .intro-sub{animation:introCalmFade .8s ease 1.35s both}
+      .intro.play .intro-tagline{animation:introCalmFade .8s ease 1.75s both}
+      .intro.play .intro-hint{animation:introCalmFade .9s ease 2.1s both}
+      .intro-skip{opacity:1;animation:none}
     }
+    @keyframes introCalmFade{from{opacity:0}to{opacity:1}}
   </style>
 </head>
 <body>
@@ -1852,13 +1863,23 @@ test('checkout', async () =&gt; {
       const intro = $('#intro');
       const htmlEl = document.documentElement;
       if(!intro){ htmlEl.classList.remove('intro-on'); return; }
+      window.__introEngine = true;   // engine sống → head fail-safe (9s) nhường quyền tự quản (hỗ trợ defer tab ẩn)
       const skipBtn = $('#introSkip'), bar = $('#introProgress'), titleEl = $('#introTitle');
       const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
-      const TOTAL = reduced ? 1800 : 5000;               // auto-reveal
+      const TOTAL = reduced ? 3500 : 5000;               // auto-reveal (reduced: bản nhẹ nhưng vẫn có nhịp fade)
       const EXIT_MS = reduced ? 400 : 650, EXIT_FAST = 300;
-      let finished = false, raf = 0, resizeFn = null;
+      let finished = false, raf = 0, resizeFn = null, started = false, startedAt = 0, t0 = 0;
       const timers = [];
-      const startedAt = performance.now();               // mốc grace period chống click nhầm (600ms)
+
+      // Reduced-motion (Windows "Animation effects" tắt) → bản nhẹ + NÓI RÕ lý do,
+      // để user không tưởng "trang không có hiệu ứng" (KN-031)
+      if(reduced){
+        try{
+          console.info('[YUNIE intro] prefers-reduced-motion=reduce → bản nhẹ. Bật "Animation effects" (Windows → Settings → Accessibility → Visual effects) để xem bản đầy đủ.');
+          const hint = intro.querySelector('.intro-hint');
+          if(hint) hint.innerHTML = 'Chế độ giảm chuyển động đang bật → bản nhẹ · Bật <b>Animation effects</b> trong Windows để xem đầy đủ · <kbd>Esc</kbd> để vào ngay';
+        }catch(e){}
+      }
 
       // Dựng title theo từng ký tự (stagger) — "COSMOS · QUANTUM"; word-wrapper chống bẻ giữa chữ ở màn nhỏ
       try{
@@ -1922,21 +1943,28 @@ test('checkout', async () =&gt; {
         }, instant ? EXIT_FAST : EXIT_MS + 80));
       }
 
-      // Fail-safe: auto-finish được schedule TRƯỚC mọi thứ nặng
-      timers.push(setTimeout(()=>finish(false), TOTAL));
+      // ===== Kickoff — chỉ chạy khi tab THỰC SỰ hiển thị =====
+      // (mở link trong tab nền: intro không được chạy "vô hình" rồi hết trước khi user kịp xem — KN-031)
+      function start(){
+        if(started || finished) return;
+        started = true;
+        startedAt = performance.now();          // grace period tính từ lúc intro THẬT SỰ bắt đầu
+        t0 = performance.now();                 // đồng hồ canvas bắt đầu cùng lúc
+        timers.push(setTimeout(()=>finish(false), TOTAL));  // fail-safe auto-finish
+        if(bar){
+          bar.style.transitionDuration = Math.round(TOTAL*0.95) + 'ms';
+          requestAnimationFrame(()=>{ bar.style.width = '100%'; });
+        }
+        // Timeline CSS: thêm .play sau khi overlay đã render
+        requestAnimationFrame(()=>requestAnimationFrame(()=>intro.classList.add('play')));
+      }
+      const onVisible = ()=>{ if(document.hidden) return; document.removeEventListener('visibilitychange', onVisible); start(); };
+      if(document.hidden) document.addEventListener('visibilitychange', onVisible); else start();
 
       skipBtn && skipBtn.addEventListener('click', ()=>finish(true));
-      // Click bất kỳ đâu để vào ngay — grace period 600ms chống click nhầm khi vừa mở preview
-      intro.addEventListener('click', ()=>{ if(performance.now() - startedAt < 600) return; finish(true); });
+      // Click bất kỳ đâu để vào ngay — grace period 1000ms chống click nhầm khi vừa mở / click focus cửa sổ trên PC
+      intro.addEventListener('click', ()=>{ if(performance.now() - startedAt < 1000) return; finish(true); });
       window.addEventListener('keydown', onKey, true);
-
-      // Progress bar (chạy nền suốt thời lượng)
-      if(bar){
-        bar.style.transitionDuration = Math.round(TOTAL*0.95) + 'ms';
-        requestAnimationFrame(()=>{ bar.style.width = '100%'; });
-      }
-      // Timeline CSS: thêm .play sau khi overlay đã render
-      requestAnimationFrame(()=>requestAnimationFrame(()=>intro.classList.add('play')));
 
       // --- Canvas Big Bang: singularity → burst particles + shockwave ---
       try{
@@ -1948,7 +1976,7 @@ test('checkout', async () =&gt; {
             const BURST_T = 850;                       // khớp introCore/introFlash (.82s)
             const COLORS = [[255,255,255],[167,139,250],[103,232,249],[251,191,36],[236,72,153]];
             let w = 0, h = 0, cx = 0, cy = 0, parts = [], burstAt = 0;
-            const t0 = performance.now();
+            // t0 (outer let) — set trong start(): burst chỉ bắt đầu khi user THỰC SỰ thấy intro
             const resize = ()=>{
               w = intro.clientWidth; h = intro.clientHeight;
               canvas.width = Math.max(1, w*DPR); canvas.height = Math.max(1, h*DPR);
@@ -1973,6 +2001,7 @@ test('checkout', async () =&gt; {
             }
             (function frame(){
               if(finished) return;
+              if(!t0){ raf = requestAnimationFrame(frame); return; }   // chờ start() (tab ẩn chưa chạy)
               const now = performance.now(), t = now - t0;
               ctx.clearRect(0,0,w,h);
               if(t >= BURST_T && !burstAt) burst();
@@ -2018,7 +2047,7 @@ test('checkout', async () =&gt; {
           }
         }
 
-      window.__introOn = true;   // engine hoàn tất — head fail-safe (9s) đứng yên
+      window.__introOn = true;   // engine armed (diagnostics; head fail-safe dùng __introEngine)
       }catch(e){}
     })();
 

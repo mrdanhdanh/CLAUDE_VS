@@ -52,6 +52,7 @@
 | KN-028 | 2026-09-10 | Intro COSMOS: hạt Big Bang nổ từ góc thay vì tâm — quên gọi `resize()` + 8/8 behavior test xanh giả | Canvas buffer mặc định 300×150 (w=h=cx=cy=0 vì `resize()` không được invoke) bị CSS kéo giãn; test chỉ assert visible/hidden, không assert geometry | Define setup xong phải invoke ngay; assert invariant hình học (`canvas.width===clientWidth`) trong test; visual evidence bắt bug mà behavior test bỏ lọt | `ui` `animation` `canvas` `verify` `bug-blindness` |
 | KN-029 | 2026-09-10 | View ở VS Code "không thấy hiệu ứng intro" — Google Fonts render-blocking chặn TOÀN BỘ inline script | `<link rel=stylesheet>` third-party trong head là **script-blocking** (không chỉ render): engine intro cuối body không execute đến khi fonts load xong (10-20s mạng chậm) → overlay đứng hình → click nhầm → skip | Third-party CSS luôn async (`media="print" onload`) + noscript; fail-safe mở nội dung khi engine fail; grace 600ms chống click nhầm; glyph chi tiết vẽ bằng CSS | `ui` `perf` `font` `script-blocking` `verify` |
 | KN-030 | 2026-09-10 | `GET /.agent/audit.jsonl 404` trên Pages — observatory luôn hiện demo thay vì data thật | Fetch trỏ ra ngoài deploy root (`../../.agent/` — Pages chỉ deploy `www/`) + fetch relative phân giải sai khi URL bỏ slash cuối (`/cosmos` + `./x` → `/x`) | Tài nguyên ngoài `www/` phải **mirror** vào (generate + commit như `scale.json`); dùng helper `dirBase(pathname)` robust mọi dạng URL; spec assert không-404 + data "thật" | `data` `pages` `fetch` `url` `verify` |
+| KN-031 | 2026-09-10 | Edge PC "không thấy hiệu ứng intro" (phone thấy) — Windows tắt Animation effects → `prefers-reduced-motion: reduce` → bản rút gọn cũ (opacity:1 !important + animation:none) hiện static 1.8s | Reduced-motion branch strip **mọi** animation kể cả fade opacity an toàn → static pop-in "trông như không có hiệu ứng"; cộng: intro chạy khi tab ẩn + grace 600ms quá ngắn cho click focus PC | Reduced-motion chỉ cắt chuyển động nguy hiểm (translate/scale/parallax), giữ fade opacity có nhịp + hint nói rõ lý do; defer timeline khi tab ẩn; grace 1000ms; test trên Edge thật (`channel: 'msedge'`) + poll pixels thay wall-clock | `ui` `a11y` `reduced-motion` `edge` `verify` |
 
 > Dòng ví dụ trên sẽ bị thay khi có bug thật đầu tiên — giữ format.
 
@@ -685,6 +686,28 @@
 - **Tags:** `data` `pages` `fetch` `url` `verify`
 - **Người ghi:** YUNIE / fixbug (user console report → repro bằng server log + Playwright)
 
+### KN-031 — Edge PC "không thấy hiệu ứng" do reduced-motion bị xử lý quá tay
+
+- **Ngày:** 2026-09-10
+- **Bug report:** `.agent/bugs/2026-09-10-edge-pc-khong-thay-hieu-ung-intro-reduced-motion/bug.md`
+- **Severity:** major
+- **Triệu chứng:** User: "trên điện thoại coi được, Edge PC không coi được hiệu ứng". Thực tế Edge PC: intro hiện chữ **static cái rụp** ~1.8s rồi mở — không fade/particle/chuyển động gì. Phone (animation bật): full Big Bang.
+- **Nguyên nhân gốc (5 Whys):**
+  - Why1: Edge PC rơi vào nhánh `prefers-reduced-motion` (Windows tắt "Animation effects").
+  - Why2: Nhánh reduced cũ strip **mọi** animation/transition kể cả fade opacity vô hại → static pop-in.
+  - Why3: Không phân biệt chuyển động nguy hiểm tiền đình (translate/scale/parallax) vs fade opacity an toàn — cắt tất cả.
+  - Why4: Không test trên đúng môi trường user (Edge thật + reduced-motion) → không ai thấy bản reduced "trống".
+  - Why5 (Root): Reduced-motion bị hiểu là "xóa sạch hiệu ứng" thay vì "giữ hiệu ứng an toàn + nói rõ lý do khi rút gọn".
+- **Cách sửa:** Bản reduced "calm cinematic" chỉ opacity (fade stagger ~3.5s, dot pulse); hint nói rõ "Bật Animation effects trong Windows để xem đầy đủ" + `console.info`; defer start (t0 + .play + auto-finish) tới khi tab visible; grace click 1000ms; head fail-safe chuyển sang `window.__introEngine`; spec Edge thật (`channel:'msedge'`) + pixel poll.
+- **Cách phòng tránh:**
+  - Reduced-motion chỉ cắt **chuyển động** (translate/scale/parallax/spin) — fade opacity là an toàn, phải giữ để trải nghiệm còn "có nhịp".
+  - Khi rút gọn trải nghiệm vì setting của user → **nói rõ lý do trong UI** (hint ngắn) — đừng để user tưởng sản phẩm lỗi.
+  - Overlay/animation có timeline phải defer khi `document.hidden` — không chạy vô hình ở tab nền.
+  - "Không thấy hiệu ứng" → đo trên **đúng môi trường user** (Edge thật qua `channel:'msedge'`, emulate reduced-motion), không chỉ chromium default.
+  - Test animation bằng **poll state** (pixel/class), không wall-clock cố định (cold-start làm flaky).
+- **Tags:** `ui` `a11y` `reduced-motion` `edge` `verify`
+- **Người ghi:** YUNIE / fixbug (user report → repro trên Edge thật)
+
 <!-- Thêm bài học mới theo template dưới — copy block này -->
 
 <!--
@@ -712,6 +735,10 @@
 - ❌ Fetch tài nguyên NGOÀI deploy root (`../../.agent/...` khi Pages chỉ có `www/`) → 404, fallback demo che bug (KN-030).
 - ❌ Fetch relative không tính URL bỏ slash cuối (`/cosmos` + `./x` → `/x` 404) — phải qua helper `dirBase` (KN-030).
 - ❌ Test chỉ assert UI text khi có fallback demo → "demo" vẫn xanh giả; phải assert network không-404 + badge "thật" (KN-030).
+- ❌ Reduced-motion = `opacity:1 !important; animation:none !important` cho toàn bộ overlay → static pop-in, user tưởng "trang không có hiệu ứng" (KN-031).
+- ❌ Rút gọn trải nghiệm vì setting của user mà không nói lý do trong UI (KN-031).
+- ❌ Timeline intro chạy khi tab ở background → user switch về là đã hết (KN-031).
+- ❌ Test animation bằng wall-clock cố định (Edge cold-start → flaky); phải poll state + test trên Edge thật khi user dùng Edge (KN-031).
 - ❌ Không reproduce trước khi sửa → sửa nhầm chỗ.
 - ❌ Sửa xong không test regression → tạo bug mới.
 - ❌ Không ghi bài học → bug cũ lặp lại.
@@ -854,14 +881,17 @@
 - [ ] Self-improvement không phụ thuộc verified answers — dùng SOLID majority pseudo-reference? (KN-027)
 - [ ] Setup function (resize/init) đã được invoke ngay sau define, không chỉ addEventListener? (KN-028)
 - [ ] Third-party CSS/fonts đã async (media=print onload / self-host) — không chặn script của trang? (KN-029)
-- [ ] Overlay che nội dung đã có fail-safe tự mở khi engine fail (không kẹt màn đen)? (KN-029)
+- [ ] Overlay che nội dung đã có fail-safe tự mở khi engine fail (không kẹt màn đen)? (KN
+- [ ] Bản reduced-motion vẫn "có nhịp" (opacity-only fades) + hint nói rõ lý do khi bị rút gọn? (KN-031)
+- [ ] Timeline/overlay defer khi tab ẩn — không chạy vô hình? (KN-031)
+- [ ] "Không thấy hiệu ứng" đã test trên đúng môi trường user (Edge thật/reduced-motion) + poll thay wall-clock? (KN-031)-029)
 - [ ] Skip click-anywhere đã có grace period chống click nhầm? (KN-029)
 - [ ] Mọi fetch trong `www/` chỉ trỏ tài nguyên TRONG `www/` (ngoài thì mirror vào)? (KN-030)
 - [ ] Fetch dùng `dirBase` — test cả URL không slash cuối + `.html` + `/`? (KN-030)
 - [ ] Spec assert network không-404 (không chỉ UI text — fallback demo che bug)? (KN-030)
 - [ ] Hiệu ứng toạ độ (canvas/parallax) đã có assert geometry (buffer == display size)? (KN-028)
 - [ ] Đã chụp screenshot từng stage animation làm visual evidence trước khi claim Done? (KN-028)
-- [ ] Playwright đã stub external render-blocking (fonts/CDN) để test deterministic? (KN-028)
+- [ ] Playwright đã stub7:20:00Z — Maintained by YUNIE / Harness v2 — KN-031 added (user report "Edge PC không thấy hiệu ứng, phone thấy": Windows tắt Animation effects → reduced-motion → bản rút gọn quá tay; fix calm fade + hint + defer tab ẩn + Edge-real spec)st deterministic? (KN-028)
 
 *File này do `/fixbug` tự động cập nhật. Mọi luồng khác phải đọc để không lặp lại lỗi cũ.*
 *UpdatedAt: 2026-09-10T16:55:00Z — Maintained by YUNIE / Harness v2 — KN-030 added (user console 404: fetch ngoài deploy root + relative URL không slash cuối — mirror www/cosmos/audit.json + dirBase helper; spec assert network no-404) — KN-029 added (Google Fonts script-blocking chặn toàn bộ inline script — async fonts + fail-safe + grace period) — KN-028 added (intro COSMOS cinematic: canvas quên invoke resize() → burst từ góc + 8/8 behavior test xanh giả — visual evidence bắt; verify screenshot từng stage + stub fonts cho test deterministic) — KN-025/026/027 added (10 papers self-improving 2026-09-08/09: Procedural Graphs + A-JIT, Experience Funnel + ADMET-EvO, FEEs + Consistency Gap + SOLID — chi tiết www/library/export.json 10 arXiv books) — KN-024 added (prolific AI psychosis — output rẻ làm mù khả năng đánh giá; taste/craft là human judgment — Jeff Clark MD + Emily Oberg, chi tiết docs/llm-weakness-research.md §2b) — KN-023 added (model "giỏi ngọn yếu gốc" — 6 papers arXiv: self-correction fail, self-knowledge gap, calibration không generalize, self-preference, sycophancy, pattern-matching reasoning — chi tiết docs/llm-weakness-research.md) — KN-022 added (pipeline in a trench coat — agency cost-based test, DEV.to James Anderson) + KN-021 bổ sung lộ trình Grith risk-score (allow/queue/deny + supervision-escape) — KN-019/020/021 added (bài học từ "My Little AI Factory" dominis.blog + METR study: measured > perceived, trust hard, governance evolve) — KN-015 added (Pages 2 workflows + eval-gate Node 18 CJS) — KN-014 added (MCP stdio smoke hang + verify order + regex m flag — DisCo Phase 3) — KN-013 added (Ponytail ladder integration: minimal-ladder + lean-product) — Fix: Bảng tóm tắt reorder KN-005↔KN-006 + thêm KN-009 (đã có detail nhưng thiếu ở bảng) — Presets bổ sung auto-researcher (đồng bộ registry) — KN-011 added (Random disable Step button) — KN-010 added (AAR pattern) — KN-009 bổ sung detail section (slot máy chủ AI — hardcode config) — KN-008 added (dotnet build file lock MSB3027) — KN-007 added (Auto-Learn) — KN-006 added (N5 UI polish) — KN-005 added (Bug Blindness)*
