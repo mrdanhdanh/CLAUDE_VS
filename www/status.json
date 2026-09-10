@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-09T17:44:31.360Z",
+  "generatedAt": "2026-09-10T15:23:10.446Z",
   "generatedBy": "YUNIE",
   "version": 1,
   "counts": {
@@ -308,7 +308,9 @@
     "n5-static-polish",
     "openbot-governance",
     "openbot-governance-phase2",
+    "quantum-decision",
     "quat-4-mon",
+    "self-improving-upgrades",
     "skill-registry",
     "status-redesign",
     "status-ui-v2",
@@ -396,18 +398,18 @@
   "health": {
     "errors": 0,
     "status": "ok",
-    "lastCheck": "2026-09-09T17:44:31.360Z",
+    "lastCheck": "2026-09-10T15:23:10.446Z",
     "checks": [
       "get_errors: pass (0 errors)",
       "registry: 18 instructions (18 total) - 18 skills - 9 agents - 7 prompts - 1 hook — all enabled",
       "harness: 2.2-done — P0 (RAG loop, tool hardening, planning JSON, receipt Ed25519) + P1 (multi-agent, observability, protocols, context, memory, deploy) + P2 (MAF workflows, CUA guardrails, local SLM, setup doctor)",
-      "scripts: 19 harness .mjs (plan-validate, handoff, reflect, trace, eval-gate, deploy-check, agent-card, context, memory, workflow, cua-guard, local, setup-doctor)",
-      "eval-gate: PASS (syntax + MCP smoke + plan-validate)",
+      "scripts: 22 harness .mjs (plan-validate, handoff, reflect, trace, eval-gate, deploy-check, agent-card, context, memory, workflow, cua-guard, local, setup-doctor, procedural-graph, experience-funnel, consistency-gap)",
+      "eval-gate: PASS (syntax + MCP smoke + plan-validate + self-improving)",
       "www: polished — responsive 375/768/1280, a11y, states, animation 150-300ms",
       "workflow: www/** -> Pages (upload-artifact path: www) — exists: true + eval job gate",
       "library: www/library/ MCP v1.2.0 (5 tools: search + iterative + list/get/status, router+cache, redacted) + library-rag instruction",
-      "auto-learn: 24 KN, 13 bugs, 0 drafts — suggest/log/propose/status (<50ms, IDF, tiếng Việt)",
-      "governance: audit 3 (Ed25519 receipt P0-4) · policy 9 deny/2 allow (ok) · credentials 0 keys plain",
+      "auto-learn: 27 KN, 14 bugs, 0 drafts — suggest/log/propose/status (<50ms, IDF, tiếng Việt)",
+      "governance: audit 9 (Ed25519 receipt P0-4) · policy 9 deny/2 allow (ok) · credentials 0 keys plain",
       "platform: agents 3 (3 built-in, 0 remote) · mcp 3 vendors/3 grants (library 1.2.0 read-only) · components 3/3 pub · routines 1/1 enabled",
       "collaboration: KN-018 — dissentGate ✅ · whoDidYouThinkWith ✅ · critic ✅ · fund-the-friction ✅ (ok)",
       "n5-blazor: www/n5-blazor/ 7 trang static + app.css + data.js + site.js — 100% Pages"
@@ -491,6 +493,29 @@
     "whoDidYouThinkWith": true,
     "criticAgent": true,
     "fundTheFriction": true,
+    "status": "ok"
+  },
+  "selfImproving": {
+    "kn": [
+      "KN-025",
+      "KN-026",
+      "KN-027"
+    ],
+    "proceduralGraph": {
+      "triplets": 8,
+      "rejected": 0,
+      "ok": true,
+      "workflow": "harness-8phase"
+    },
+    "funnel": {
+      "states": 2,
+      "policies": 0,
+      "evidence": 1
+    },
+    "consistency": {
+      "records": 2,
+      "lastGap": 0
+    },
     "status": "ok"
   },
   "yunie": {
@@ -589,67 +614,101 @@
     }
   },
   "learn": {
-    "knTotal": 24,
-    "bugsTotal": 13,
+    "knTotal": 27,
+    "bugsTotal": 14,
     "drafts": 0
   },
   "governance": {
     "audit": {
-      "total": 3,
-      "permitted": 3,
+      "total": 9,
+      "permitted": 9,
       "refused": 0,
       "failed": 0,
-      "lastTs": "2026-09-06T15:23:28.005Z",
+      "lastTs": "2026-09-10T15:09:41.668Z",
       "tail": [
         {
-          "ts": "2026-09-06T09:09:00.653Z",
-          "actor": "YUNIE",
-          "tool": "edit",
-          "target": "www/cosmos.html",
-          "decision": "permitted",
-          "rule": "allow-all",
-          "durationMs": null,
-          "error": null,
-          "intent": null,
-          "requestId": "951355",
-          "prevHash": "GENESIS",
-          "policyDigest": "162346288ec03771",
-          "hash": "0a2fbeaf3018eda2",
-          "sig": "uDFM7r6n3_x8FR7VwrFKtgH5zjRX0oNO8WhUnuh-Tds6oCEOVlxU_AXSCyeYdno3eNVUr_U4D0K1hDrOmm1BDg",
-          "pub": "MCowBQYDK2VwAyEAY8PlU0KjXp4HJUUlNlVZdaXHUmDagUMm8rUrEShTPXo"
-        },
-        {
-          "ts": "2026-09-06T09:09:00.756Z",
-          "actor": "YUNIE",
-          "tool": "edit",
-          "target": "www/cosmos/index.html",
-          "decision": "permitted",
-          "rule": "allow-all",
-          "durationMs": null,
-          "error": null,
-          "intent": null,
-          "requestId": "c09bd0",
-          "prevHash": "0a2fbeaf3018eda2",
-          "policyDigest": "162346288ec03771",
-          "hash": "2fbe0d021293a642",
-          "sig": "zl0LyQI3MXyAZbv3E5zlCQvquU2kZ9rfsv3r3trjBuSQ-ftMLSbCJBMJdJ1kWnzoYMi6sVT7vgD6-tYlIkgjDw",
-          "pub": "MCowBQYDK2VwAyEAY8PlU0KjXp4HJUUlNlVZdaXHUmDagUMm8rUrEShTPXo"
-        },
-        {
-          "ts": "2026-09-06T15:23:28.005Z",
+          "ts": "2026-09-10T14:53:27.333Z",
           "actor": "YUNIE",
           "tool": "shell",
-          "target": "git add www/cosmos .agent/plans/cosmos-macro-expansion",
+          "target": "node www/ai-news/fetch.mjs --dry",
           "decision": "permitted",
           "rule": "allow-all",
           "durationMs": null,
           "error": null,
           "intent": null,
-          "requestId": "16200c",
-          "prevHash": "2fbe0d021293a642",
+          "requestId": "e52f51",
+          "prevHash": "409b97090d3e9a8e",
           "policyDigest": "162346288ec03771",
-          "hash": "60d22e03dd399f5b",
-          "sig": "Co0Y9dKEFt613sdmG8pd0Q9rqEqTxgxS7K2ACWTWm3nVrbss4hNiy5Tfy2Q_XYwagAOyrLk6pQkxEtqiA3LLDQ",
+          "hash": "3aaa892fbf312353",
+          "sig": "KXHZlA1PNLHG5zrPrdOEzY5KtRuU6ZpiFuG6vqO7P13gvyNS1G1rPcyxhXJGZu-7Taf3jHJRsbrxTEOCawB_Cw",
+          "pub": "MCowBQYDK2VwAyEAY8PlU0KjXp4HJUUlNlVZdaXHUmDagUMm8rUrEShTPXo"
+        },
+        {
+          "ts": "2026-09-10T14:55:19.078Z",
+          "actor": "YUNIE",
+          "tool": "edit",
+          "target": ".github/harness/scripts/procedural-graph.mjs+experience-funnel.mjs+consistency-gap.mjs",
+          "decision": "permitted",
+          "rule": "allow-all",
+          "durationMs": null,
+          "error": null,
+          "intent": "implement-3-upgrades-done",
+          "requestId": "252f27",
+          "prevHash": "3aaa892fbf312353",
+          "policyDigest": "162346288ec03771",
+          "hash": "b9eb9386eb61312d",
+          "sig": "lZhIXU0bc3dcAzHbWlmtTcThY32q6POGewz6h6zkP_eKyJSYVx-FsSPwb-XYCcmQlcWsuEwkk_bmMyNfh2tnDw",
+          "pub": "MCowBQYDK2VwAyEAY8PlU0KjXp4HJUUlNlVZdaXHUmDagUMm8rUrEShTPXo"
+        },
+        {
+          "ts": "2026-09-10T14:57:51.483Z",
+          "actor": "YUNIE",
+          "tool": "shell",
+          "target": "node www/ai-news/fetch.mjs --topic AI",
+          "decision": "permitted",
+          "rule": "allow-all",
+          "durationMs": null,
+          "error": null,
+          "intent": null,
+          "requestId": "4c97e5",
+          "prevHash": "b9eb9386eb61312d",
+          "policyDigest": "162346288ec03771",
+          "hash": "5f4b762d9a32e107",
+          "sig": "Cqqu4ARg-s15EVE33ZVKj_H9_ibfxU8kDVuyffCaGMoPfKOaOWfaWjOXm06-ICH6GuQnredZThjAvq-4CljfDw",
+          "pub": "MCowBQYDK2VwAyEAY8PlU0KjXp4HJUUlNlVZdaXHUmDagUMm8rUrEShTPXo"
+        },
+        {
+          "ts": "2026-09-10T14:59:47.638Z",
+          "actor": "YUNIE",
+          "tool": "shell",
+          "target": "node www/ai-news/fetch.mjs",
+          "decision": "permitted",
+          "rule": "allow-all",
+          "durationMs": null,
+          "error": null,
+          "intent": null,
+          "requestId": "417856",
+          "prevHash": "5f4b762d9a32e107",
+          "policyDigest": "162346288ec03771",
+          "hash": "5ea4ae434eb8c94f",
+          "sig": "5dm906WubQM7sCO9mKbSFoPaCoGorqY0YiwziJ8kiWMiVK7QQMY6-HvI6Y9O-pAhLEABaYoDyWW82tn7WVE_Bg",
+          "pub": "MCowBQYDK2VwAyEAY8PlU0KjXp4HJUUlNlVZdaXHUmDagUMm8rUrEShTPXo"
+        },
+        {
+          "ts": "2026-09-10T15:09:41.668Z",
+          "actor": "YUNIE",
+          "tool": "edit",
+          "target": "www/ai-news/fetch.mjs + ai-news.js + index.html (HackerNoon source)",
+          "decision": "permitted",
+          "rule": "allow-all",
+          "durationMs": null,
+          "error": null,
+          "intent": null,
+          "requestId": "b492a9",
+          "prevHash": "5ea4ae434eb8c94f",
+          "policyDigest": "162346288ec03771",
+          "hash": "b3d2e603c201b932",
+          "sig": "moqv8uFXPPwzgF737e10wG0MaNdVGamw11-nwfFAd2oI8VxQbc21nFc_lkuLeBtkQ2sHoQhdY3HgXd95Z8BoBA",
           "pub": "MCowBQYDK2VwAyEAY8PlU0KjXp4HJUUlNlVZdaXHUmDagUMm8rUrEShTPXo"
         }
       ]
@@ -659,7 +718,7 @@
       "deny": 9,
       "allow": 2,
       "status": "ok",
-      "lastCheck": "2026-09-09T17:44:31.236Z"
+      "lastCheck": "2026-09-10T15:23:10.332Z"
     },
     "credentials": {
       "count": 0,
