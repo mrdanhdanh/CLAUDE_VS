@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-10T17:37:32.756Z",
+  "generatedAt": "2026-09-10T17:43:28.065Z",
   "generatedBy": "YUNIE",
   "version": 1,
   "counts": {
@@ -279,6 +279,7 @@
     "auto-learn",
     "cosmic-scale-dark-matter",
     "cosmos-freshness-upgrade",
+    "cosmos-future-roads",
     "cosmos-intro",
     "cosmos-macro-expansion",
     "cosmos-observatory",
@@ -401,7 +402,7 @@
   "health": {
     "errors": 0,
     "status": "ok",
-    "lastCheck": "2026-09-10T17:37:32.756Z",
+    "lastCheck": "2026-09-10T17:43:28.065Z",
     "checks": [
       "get_errors: pass (0 errors)",
       "registry: 18 instructions (18 total) - 18 skills - 9 agents - 7 prompts - 1 hook — all enabled",
@@ -412,7 +413,7 @@
       "workflow: www/** -> Pages (upload-artifact path: www) — exists: true + eval job gate",
       "library: www/library/ MCP v1.2.0 (5 tools: search + iterative + list/get/status, router+cache, redacted) + library-rag instruction",
       "auto-learn: 32 KN, 19 bugs, 0 drafts — suggest/log/propose/status (<50ms, IDF, tiếng Việt)",
-      "governance: audit 18 (Ed25519 receipt P0-4) · policy 9 deny/2 allow (ok) · credentials 0 keys plain",
+      "governance: audit 19 (Ed25519 receipt P0-4) · policy 9 deny/2 allow (ok) · credentials 0 keys plain",
       "platform: agents 3 (3 built-in, 0 remote) · mcp 3 vendors/3 grants (library 1.2.0 read-only) · components 3/3 pub · routines 2/2 enabled",
       "collaboration: KN-018 — dissentGate ✅ · whoDidYouThinkWith ✅ · critic ✅ · fund-the-friction ✅ (ok)",
       "n5-blazor: www/n5-blazor/ 7 trang static + app.css + data.js + site.js — 100% Pages"
@@ -623,29 +624,12 @@
   },
   "governance": {
     "audit": {
-      "total": 18,
-      "permitted": 18,
+      "total": 19,
+      "permitted": 19,
       "refused": 0,
       "failed": 0,
-      "lastTs": "2026-09-10T17:37:32.361Z",
+      "lastTs": "2026-09-10T17:41:48.357Z",
       "tail": [
-        {
-          "ts": "2026-09-10T17:14:40.515Z",
-          "actor": "YUNIE",
-          "tool": "shell",
-          "target": "git push",
-          "decision": "permitted",
-          "rule": "allow-all",
-          "durationMs": null,
-          "error": null,
-          "intent": null,
-          "requestId": "9ee895",
-          "prevHash": "d031ac89541b17a1",
-          "policyDigest": "162346288ec03771",
-          "hash": "f90e296bfac55da4",
-          "sig": "FitLjWYHqlYbqXj98p6zq8bsY5xdCNMUBeF8VeEaG8_o5ci1rs2jx2qLXx_ltYCMWEq0IviZqib6jOyNPkRXBw",
-          "pub": "MCowBQYDK2VwAyEAY8PlU0KjXp4HJUUlNlVZdaXHUmDagUMm8rUrEShTPXo"
-        },
         {
           "ts": "2026-09-10T17:21:48.967Z",
           "actor": "YUNIE",
@@ -713,6 +697,23 @@
           "hash": "3f0f665b1283a596",
           "sig": "lGvMILmrr_19SNeHED5fRdryRBT6CJnhZFH_JZfjtyLnGyzYOBb28DrCI8ZkxAGYFaR8XuvMkz2dgtbSRNHMAw",
           "pub": "MCowBQYDK2VwAyEAY8PlU0KjXp4HJUUlNlVZdaXHUmDagUMm8rUrEShTPXo"
+        },
+        {
+          "ts": "2026-09-10T17:41:48.357Z",
+          "actor": "YUNIE",
+          "tool": "edit",
+          "target": "cosmos-future-roads: future section 6 de tai moi, go 4 card Done + spec verify",
+          "decision": "permitted",
+          "rule": "allow-all",
+          "durationMs": null,
+          "error": null,
+          "intent": null,
+          "requestId": "8c5efe",
+          "prevHash": "3f0f665b1283a596",
+          "policyDigest": "162346288ec03771",
+          "hash": "d424b17dc606027b",
+          "sig": "27vHPqGdrujX-f9xh9rp7HTN0ZFHzYvAcVFyQnwNQl1I80PXefMhdT-3GMwcoI2VMWCBt2SSIrEfpiMCA9VpBQ",
+          "pub": "MCowBQYDK2VwAyEAY8PlU0KjXp4HJUUlNlVZdaXHUmDagUMm8rUrEShTPXo"
         }
       ]
     },
@@ -721,7 +722,7 @@
       "deny": 9,
       "allow": 2,
       "status": "ok",
-      "lastCheck": "2026-09-10T17:37:32.568Z"
+      "lastCheck": "2026-09-10T17:43:27.872Z"
     },
     "credentials": {
       "count": 0,
@@ -789,7 +790,7 @@
     "D": 9,
     "G": 3,
     "M": 0,
-    "generatedAt": "2026-09-10T17:35:03.799Z",
-    "points": 6
+    "generatedAt": "2026-09-10T17:43:27.669Z",
+    "points": 7
   }
 }

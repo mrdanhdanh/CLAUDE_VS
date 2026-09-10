@@ -1,0 +1,42 @@
+import { test, expect } from '@playwright/test';
+
+/**
+ * Future Roads — section "Khai thác tương lai" chỉ chứa đề tài CHƯA làm:
+ * - gỡ toàn bộ card ✅ Done (đã ship) để danh sách giữ tính "tương lai"
+ * - còn ≥6 đề tài mới, mỗi đề tài có ETA
+ * Evidence → .agent/plans/cosmos-future-roads/verify/
+ */
+
+const SHOTS = '.agent/plans/cosmos-future-roads/verify';
+
+test('future section — 6 đề tài mới, không còn card Done', async ({ page }) => {
+  const errors: string[] = [];
+  page.on('pageerror', (e) => errors.push(String(e)));
+  await page.goto('/cosmos/index.html');
+  await page.keyboard.press('Escape');
+  await expect(page.locator('#intro')).toBeHidden({ timeout: 3000 });
+
+  const section = page.locator('section[aria-labelledby="future-title"]');
+  const cards = section.locator('.future-card');
+  await expect(cards).toHaveCount(6);
+
+  // đã gỡ hết card đã-xong: không tag Done, không chữ "✅ Done"
+  await expect(section.locator('.future-card .tag')).toHaveCount(0);
+  await expect(section).not.toContainText('✅ Done');
+
+  // đề tài mới phải xuất hiện
+  await expect(section).toContainText('Cosmic Web');
+  await expect(section).toContainText('Hawking');
+  await expect(section).toContainText('CMB');
+  await expect(section).toContainText('LIGO');
+  await expect(section).toContainText('Quantum Error Correction');
+  await expect(section).toContainText('Wormhole');
+  // mỗi card có ETA
+  await expect(section.locator('.future-card .eta')).toHaveCount(6);
+
+  expect(errors).toEqual([]);
+
+  await section.scrollIntoViewIfNeeded();
+  await page.waitForTimeout(900); // chờ reveal animation (.reveal .6s) hoàn tất trước khi chụp evidence
+  await page.screenshot({ path: `${SHOTS}/future-roads.png` });
+});

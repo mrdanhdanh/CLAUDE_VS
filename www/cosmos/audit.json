@@ -1,7 +1,7 @@
 {
-  "generatedAt": "2026-09-10T17:37:32.565Z",
+  "generatedAt": "2026-09-10T17:43:27.871Z",
   "source": ".agent/audit.jsonl",
-  "total": 18,
+  "total": 19,
   "events": [
     {
       "ts": "2026-09-06T09:09:00.653Z",
@@ -307,6 +307,23 @@
       "policyDigest": "162346288ec03771",
       "hash": "3f0f665b1283a596",
       "sig": "lGvMILmrr_19SNeHED5fRdryRBT6CJnhZFH_JZfjtyLnGyzYOBb28DrCI8ZkxAGYFaR8XuvMkz2dgtbSRNHMAw",
+      "pub": "MCowBQYDK2VwAyEAY8PlU0KjXp4HJUUlNlVZdaXHUmDagUMm8rUrEShTPXo"
+    },
+    {
+      "ts": "2026-09-10T17:41:48.357Z",
+      "actor": "YUNIE",
+      "tool": "edit",
+      "target": "cosmos-future-roads: future section 6 de tai moi, go 4 card Done + spec verify",
+      "decision": "permitted",
+      "rule": "allow-all",
+      "durationMs": null,
+      "error": null,
+      "intent": null,
+      "requestId": "8c5efe",
+      "prevHash": "3f0f665b1283a596",
+      "policyDigest": "162346288ec03771",
+      "hash": "d424b17dc606027b",
+      "sig": "27vHPqGdrujX-f9xh9rp7HTN0ZFHzYvAcVFyQnwNQl1I80PXefMhdT-3GMwcoI2VMWCBt2SSIrEfpiMCA9VpBQ",
       "pub": "MCowBQYDK2VwAyEAY8PlU0KjXp4HJUUlNlVZdaXHUmDagUMm8rUrEShTPXo"
     }
   ]

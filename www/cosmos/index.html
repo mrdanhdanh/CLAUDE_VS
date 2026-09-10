@@ -1849,33 +1849,38 @@ test('checkout', async () =&gt; {
       <div class="container">
         <div class="section-head">
           <h2 id="future-title"><small>Khai thác tương lai</small>Đề tài này còn đào sâu được gì?</h2>
-          <p>Vũ trụ + lượng tử khai thác dài hơi — YUNIE ship dần: 4/5 hướng đã done, còn Wormhole (context teleport) đang nghiên cứu.</p>
+          <p>4 hướng cũ đã ship và gỡ khỏi danh sách — còn 6 đề tài mới, đo được, ship dần theo quý. Gõ tên đề tài là YUNIE vào pipeline ngay.</p>
         </div>
         <div class="future-grid">
-          <div class="future-card" style="border-color:rgba(16,185,129,.25)">
-            <h4>⚛️ Lượng tử cho Decision <span class="tag" style="color:#6ee7b7;background:rgba(16,185,129,.15);border-color:rgba(16,185,129,.25);vertical-align:middle">✅ Done</span></h4>
-            <p>Dùng <strong>superposition</strong> giữ 3 phương án song song tới khi có data (collapse theo biên độ, không random mù), <strong>decoherence</strong> phát hiện hệ mất kết dính khi quá nhiều workaround — đo thật từ scale.json.</p>
-            <span class="eta">→ Shipped 2026-09-10 · <a href="#lab" style="color:#c4b5fd">thử lab ⚛️</a></span>
+          <div class="future-card">
+            <h4>🕸️ Cosmic Web — Entangle v2</h4>
+            <p><code>entangle.mjs</code> v1 đã có; v2 vẽ <strong>mạng nhện vũ trụ</strong> cho cả repo: <strong>cluster</strong> (cụm file hay đổi cùng nhau → gộp 1 plan), <strong>hub</strong> (≥10 reverse refs → sửa là phải test rộng), <strong>dead filament</strong> (không ai trỏ tới → ứng viên xoá).</p>
+            <span class="eta">→ Q4 2026 · entangle.mjs --graph + scale.json</span>
           </div>
-          <div class="future-card" style="border-color:rgba(16,185,129,.25)">
-            <h4>🔬 Lab mở rộng <span class="tag" style="color:#6ee7b7;background:rgba(16,185,129,.15);border-color:rgba(16,185,129,.25);vertical-align:middle">✅ Done</span></h4>
-            <p>Đã ship 3 lab: <strong>double-slit</strong> (quan sát làm sụp đổ sóng → 2 vệt hạt), <strong>Schrödinger's Bug</strong> (flaky test vừa pass vừa fail → fix gốc), <strong>multiverse</strong> (A/B như tách nhánh vũ trụ → ship nhánh thắng).</p>
-            <span class="eta">→ Shipped 2026-09-10 · <a href="#lab" style="color:#c4b5fd">thử 3 lab mới 🧪</a></span>
+          <div class="future-card">
+            <h4>⚫ Hawking Radiation — Bug bay hơi</h4>
+            <p>Lỗ đen không "ăn" thì bay hơi. Draft mở <strong>&gt;30 ngày</strong> tự escalate (nhắc mỗi routine), <strong>&gt;90 ngày</strong> tự đóng kèm ghi chú hoặc chuyển hoá KN. Nợ phân rã theo thời gian thay vì tích tụ tới heat death.</p>
+            <span class="eta">→ Q4 2026 · auto-learn watchdog</span>
           </div>
-          <div class="future-card" style="border-color:rgba(16,185,129,.25)">
-            <h4>❄️ Heat Death — Entropy Budget <span class="tag" style="color:#6ee7b7;background:rgba(16,185,129,.15);border-color:rgba(16,185,129,.25);vertical-align:middle">✅ Done</span></h4>
-            <p>Gate đã ship: <code>cosmic-scale.mjs --budget 10</code> → <strong>exit 1 khi S vượt ngân sách</strong> — dùng làm PRD constraint / Verify gate, buộc trả nợ entropy trước khi thêm feature. One-liner: <code>npm run cosmos:check</code>.</p>
-            <span class="eta">→ Shipped 2026-09-11 · budget gate + npm run cosmos:refresh</span>
+          <div class="future-card">
+            <h4>🌡️ CMB Anisotropy — Bản đồ điểm lạnh</h4>
+            <p>Đo phân bố KN theo <strong>tag × thời gian</strong>: điểm lạnh (ít KN nhưng bug hay nổ) = vùng trời sắp có biến → ưu tiên viết KN; KN <strong>0 tham chiếu</strong> trong bugs/plans → gộp hoặc xoá cho CMB sạch.</p>
+            <span class="eta">→ Q1 2027 · auto-learn.mjs stats --heatmap</span>
+          </div>
+          <div class="future-card">
+            <h4>🌊 Gravitational Waves — Trạm LIGO</h4>
+            <p>Refactor lớn = 2 thiên hà sáp nhập, sóng lan ra. Chạy <code>entangle.mjs</code> + <code>get_errors</code> trên <strong>cả cụm refs</strong>: ref gãy / test đỏ ở file không sửa = ripple chưa cắt. Cảnh báo tự động khi diff chạm file hub.</p>
+            <span class="eta">→ Q2 2027 · entangle --changed + verify gate</span>
+          </div>
+          <div class="future-card">
+            <h4>⚛️ Quantum Error Correction — Lab syndrome</h4>
+            <p>Lab #12: inject lỗi vào feature (bit-flip) → <strong>RED test</strong> phát hiện đúng file:line như đo syndrome; sửa 1 lần là GREEN. Chạm <strong>3-fix limit</strong> → mô phỏng escalate human takeover.</p>
+            <span class="eta">→ Q1 2027 · www/cosmos Lab #12 + tdd-gate</span>
           </div>
           <div class="future-card">
             <h4>🌀 Wormhole — Context Teleport</h4>
             <p><strong>Hố giãn không gian giữa subtask:</strong> context.mjs <code>isolate</code> nén context mỗi subtask thành 1 cổng hẹp — agent đi qua wormhole chỉ mang summary ≤1000 chars, không lôi cả vũ trụ theo. Chống distraction + confusion (Lesson 12).</p>
-            <span class="eta">→ Q1 2027 · context.mjs isolate + harness-workflow</span>
-          </div>
-          <div class="future-card" style="border-color:rgba(16,185,129,.25)">
-            <h4>🌉 Entanglement Graph <span class="tag" style="color:#6ee7b7;background:rgba(16,185,129,.15);border-color:rgba(16,185,129,.25);vertical-align:middle">✅ Done</span></h4>
-            <p>Đã ship <code>entangle.mjs</code>: <code>node .github/harness/scripts/entangle.mjs --file &lt;path&gt;</code> → <strong>forward refs</strong> (nó trỏ tới ai) + <strong>reverse refs</strong> (ai trỏ tới nó, kèm số dòng) — verify cả cụm, không chỉ file vừa sửa. 0 deps.</p>
-            <span class="eta">→ Shipped 2026-09-11 · chạy thử: <code>npm run entangle -- --file www/cosmos/index.html</code></span>
+            <span class="eta">→ Q1 2027 · context.mjs isolate</span>
           </div>
         </div>
       </div>
