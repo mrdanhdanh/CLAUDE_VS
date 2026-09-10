@@ -59,14 +59,15 @@ test.describe('COSMOS intro', () => {
     expect(canvasSize.h).toBe(canvasSize.ch);
 
     await page.screenshot({ path: `${SHOTS}/intro-1280-early.png` });
-    await page.waitForTimeout(1600); // stage title + sub
+    await page.waitForTimeout(3000); // stage title crystallized (v3: reveal ~2.9s)
     await page.screenshot({ path: `${SHOTS}/intro-1280-title.png` });
   });
 
   test('auto-reveal sau khi chạy xong timeline', async ({ page }) => {
     await page.goto(PAGE);
     await expect(page.locator('html')).toHaveClass(/intro-on/);
-    await expect(page.locator('#intro')).toBeHidden({ timeout: 9000 });
+    // v3: 5.6s timeline + 560ms collapse exit + 650ms fade ≈ 6.9s
+    await expect(page.locator('#intro')).toBeHidden({ timeout: 12000 });
     await expect(page.locator('html')).not.toHaveClass(/intro-on/);
 
     // Scroll mở lại + nền hết inert + nội dung hiện

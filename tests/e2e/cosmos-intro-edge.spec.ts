@@ -66,9 +66,10 @@ test.describe('COSMOS intro @ real Edge', () => {
       .toBeGreaterThan(0);
     console.log('[EDGE] painted pixels (center sample) =', await countPixels());
 
-    await at(1200, 'edge-1280-burst.png');    // ~1.2s: Big Bang flash + streaks reach đỉnh
-    await at(2400, 'edge-1280-title.png');    // ~2.4s: title stagger xong + underline sweep
-    await at(4600, 'edge-1280-swirl.png');    // ~4.6s: galaxy xoáy + nebula ổn định (v2)
+    await at(1200, 'edge-1280-burst.png');    // ~1.2s: Big Bang flare + shockwave + warp
+    await at(2700, 'edge-1280-crystal.png');  // ~2.7s: particles hội tụ thành typography (v3 §7)
+    await at(3500, 'edge-1280-title.png');    // ~3.5s: title settled + light sweep (v3 §9)
+    await at(4600, 'edge-1280-swirl.png');    // ~4.6s: camera peak — galaxy xoáy + nebula
 
     // Auto-reveal hoàn tất
     await expect(intro).toBeHidden({ timeout: 9000 });

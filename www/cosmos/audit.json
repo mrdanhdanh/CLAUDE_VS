@@ -1,7 +1,7 @@
 {
-  "generatedAt": "2026-09-10T16:53:15.714Z",
+  "generatedAt": "2026-09-10T17:12:44.400Z",
   "source": ".agent/audit.jsonl",
-  "total": 12,
+  "total": 13,
   "events": [
     {
       "ts": "2026-09-06T09:09:00.653Z",
@@ -205,6 +205,23 @@
       "policyDigest": "162346288ec03771",
       "hash": "58df24b57e2813ea",
       "sig": "Te-Ea6W9h1vD2F9pvbfzdCsEogB9gJTDCs68uFUB5BH6joxXIhrjPuTTdSxfAMXXnBNhY0J_oU7QfqghIDW0CQ",
+      "pub": "MCowBQYDK2VwAyEAY8PlU0KjXp4HJUUlNlVZdaXHUmDagUMm8rUrEShTPXo"
+    },
+    {
+      "ts": "2026-09-10T16:55:52.462Z",
+      "actor": "YUNIE",
+      "tool": "shell",
+      "target": "git push",
+      "decision": "permitted",
+      "rule": "allow-all",
+      "durationMs": null,
+      "error": null,
+      "intent": null,
+      "requestId": "1b1824",
+      "prevHash": "58df24b57e2813ea",
+      "policyDigest": "162346288ec03771",
+      "hash": "d031ac89541b17a1",
+      "sig": "O73a7qmLrKW8ZU09XRsV2fAxetxoqiw430obhkE6F-shJaSbJ64Hb-pt6W5OkeBJmJ65wNYYOSZ6ykPSKmMHCw",
       "pub": "MCowBQYDK2VwAyEAY8PlU0KjXp4HJUUlNlVZdaXHUmDagUMm8rUrEShTPXo"
     }
   ]

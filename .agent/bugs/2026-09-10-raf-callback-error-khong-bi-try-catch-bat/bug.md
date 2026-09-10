@@ -103,7 +103,7 @@
 
 - `docs/knowleged.md#KN-032`
 - Evidence: `.agent/plans/cosmos-intro/verify/edge-1280-*.png`
-- Commit fix: `(điền sau khi push)`
+- Commit fix: `da1c28d` (pushed 2026-09-10)
 
 ---
 *Điền bởi YUNIE / fixbug — 2026-09-10.*

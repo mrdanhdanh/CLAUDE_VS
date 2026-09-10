@@ -974,12 +974,12 @@
     html.intro-on .intro{display:flex}
     html.intro-on,html.intro-on body{overflow:hidden}
     .intro::after{content:"";position:absolute;inset:0;pointer-events:none;background:radial-gradient(120% 90% at 50% 45%, transparent 30%, rgba(0,0,0,.6) 100%)}
-    .intro.done{opacity:0;transform:scale(1.12);pointer-events:none}
+    .intro.done{opacity:0;transform:scale(1.02);pointer-events:none}
     .intro.fast{transition-duration:.28s}
     .intro-canvas{position:absolute;inset:0;width:100%;height:100%}
     .intro-flash{position:absolute;inset:-20%;pointer-events:none;opacity:0;background:radial-gradient(closest-side at 50% 50%, #fff, rgba(196,181,253,.8) 30%, rgba(124,58,237,.28) 55%, transparent 72%)}
-    .intro.play .intro-flash{animation:introFlash .95s ease-out .82s both}
-    @keyframes introFlash{0%{opacity:0}9%{opacity:.95}100%{opacity:0}}
+    .intro.play .intro-flash{animation:introFlash .6s ease-out .84s both}
+    @keyframes introFlash{0%{opacity:0}10%{opacity:.98}26%{opacity:.42}100%{opacity:0}}
     .intro-core{position:absolute;left:50%;top:50%;width:12px;height:12px;margin:-6px 0 0 -6px;border-radius:50%;background:#fff;box-shadow:0 0 18px 6px rgba(167,139,250,.95),0 0 60px 24px rgba(6,182,214,.45);opacity:0}
     .intro.play .intro-core{animation:introCore 1.05s ease-in-out both}
     @keyframes introCore{0%{opacity:0;transform:scale(.4)}14%{opacity:1;transform:scale(1)}60%{opacity:1;transform:scale(1.5)}76%{opacity:1;transform:scale(4)}100%{opacity:0;transform:scale(90)}}
@@ -988,29 +988,43 @@
       margin:0;font:800 clamp(28px,7vw,62px)/1.15 var(--font-display);color:#fff;
       letter-spacing:.3em;text-indent:.3em;
       text-shadow:0 0 26px rgba(124,58,237,.55),0 0 70px rgba(6,182,214,.3);
-      transition:letter-spacing 1.1s ease .15s, text-indent 1.1s ease .15s;
+      transition:letter-spacing 1.1s ease 2.9s, text-indent 1.1s ease 2.9s;
     }
     .intro.play .intro-title{letter-spacing:.08em;text-indent:.08em}
     .intro-char{display:inline-block;opacity:0;transform:translateY(26px) scale(.88);filter:blur(12px)}
     .intro-word{display:inline-block;white-space:nowrap}
-    .intro.play .intro-char{animation:introChar .7s cubic-bezier(.16,.8,.24,1) both;animation-delay:calc(1.3s + var(--i,0)*.045s)}
-    @keyframes introChar{to{opacity:1;transform:none;filter:blur(0)}}
+    /* §7 — title kết tinh: mỗi glyph là 1 "quantum collapse" (flash sáng → đặc) */
+    .intro.play .intro-char{animation:introCharCollapse .62s cubic-bezier(.16,.8,.24,1) both;animation-delay:calc(2.9s + var(--i,0)*.045s)}
+    @keyframes introCharCollapse{
+      0%{opacity:0;transform:scale(1.32);filter:blur(3px)}
+      40%{opacity:1;transform:scale(1.04);filter:blur(0);text-shadow:0 0 34px rgba(255,255,255,.95),0 0 90px rgba(103,232,249,.75)}
+      70%{text-shadow:0 0 20px rgba(255,240,210,.7),0 0 60px rgba(124,58,237,.5)}
+      100%{opacity:1;transform:none;filter:blur(0);text-shadow:0 0 0 rgba(0,0,0,0)}
+    }
     .intro-char.dot{color:transparent;position:relative;text-shadow:none}
     /* Vẽ dấu chấm bằng CSS — không phụ thuộc glyph "·" của font (fallback render thành ô vuông khi CDN chậm) */
     .intro-char.dot::before{content:"";position:absolute;left:50%;top:50%;width:.16em;height:.16em;border-radius:50%;background:var(--cosmos-accent);transform:translate(-50%,-50%);box-shadow:0 0 18px rgba(245,158,11,.85)}
-    .intro.play .intro-char.dot{animation:introChar .7s cubic-bezier(.16,.8,.24,1) calc(1.3s + var(--i,0)*.045s) both, introDot 2.4s ease-in-out 3s infinite}
+    .intro.play .intro-char.dot{animation:introCharCollapse .62s cubic-bezier(.16,.8,.24,1) calc(2.9s + var(--i,0)*.045s) both, introDot 3s ease-in-out 4.15s infinite}
     @keyframes introDot{0%,100%{opacity:1}50%{opacity:.4}}
+    /* §10 — dot như hạt lượng tử: tách 3 → orbit → merge (1 lần, sau khi chữ settle) */
+    .intro.revealed .intro-char.dot::before{animation:introDotQuantum .62s ease 3.42s both}
+    @keyframes introDotQuantum{
+      0%{box-shadow:0 0 18px rgba(245,158,11,.85);transform:translate(-50%,-50%) scale(1)}
+      35%{box-shadow:-16px -3px 10px rgba(255,220,140,.9),15px 4px 10px rgba(140,220,255,.85);transform:translate(-50%,-50%) scale(.85)}
+      65%{box-shadow:0 -16px 10px rgba(167,139,250,.9),0 15px 10px rgba(103,232,249,.85);transform:translate(-50%,-50%) scale(.85)}
+      100%{box-shadow:0 0 18px rgba(245,158,11,.85);transform:translate(-50%,-50%) scale(1)}
+    }
     .intro-underline{width:min(420px,70%);height:2px;margin:22px auto 0;background:linear-gradient(90deg,transparent,#7c3aed,#06b6d4,#f59e0b,transparent);transform:scaleX(0);opacity:0}
-    .intro.play .intro-underline{animation:introSweep 1s cubic-bezier(.16,.8,.24,1) 2.15s both}
+    .intro.play .intro-underline{animation:introSweep 1s cubic-bezier(.16,.8,.24,1) 3.5s both}
     @keyframes introSweep{from{transform:scaleX(0);opacity:0}to{transform:scaleX(1);opacity:.9}}
     .intro-sub{margin:18px 0 0;font:600 clamp(11px,1.6vw,13px)/1.7 var(--font-mono);letter-spacing:.22em;text-transform:uppercase;color:#67e8f9;opacity:0}
-    .intro.play .intro-sub{animation:introRise .8s cubic-bezier(.16,.8,.24,1) 2.35s both}
+    .intro.play .intro-sub{animation:introRise .8s cubic-bezier(.16,.8,.24,1) 3.7s both}
     .intro-tagline{margin:12px 0 0;font:500 13px/1.6 var(--font-sans);color:var(--cosmos-text-muted);opacity:0}
-    .intro.play .intro-tagline{animation:introRise .8s ease 3.05s both}
+    .intro.play .intro-tagline{animation:introRise .8s ease 3.9s both}
     @keyframes introRise{from{opacity:0;transform:translateY(14px);filter:blur(6px)}to{opacity:1;transform:none;filter:blur(0)}}
     .intro-hint{position:absolute;left:0;right:0;bottom:26px;margin:0;font:500 11px var(--font-mono);letter-spacing:.08em;color:var(--cosmos-text-dim);opacity:0}
     .intro-hint kbd{font:600 10px var(--font-mono);color:var(--cosmos-text);background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.16);border-bottom-width:2px;border-radius:5px;padding:2px 6px}
-    .intro.play .intro-hint{animation:introFade .8s ease 3.2s both}
+    .intro.play .intro-hint{animation:introFade .8s ease 4.05s both}
     @keyframes introFade{from{opacity:0}to{opacity:1}}
     .intro-skip{
       position:absolute;top:18px;right:18px;z-index:3;
@@ -1027,11 +1041,15 @@
     .intro-skip:focus-visible{outline:2px solid var(--cosmos-primary);outline-offset:2px}
     .intro-progress{position:absolute;left:0;right:0;bottom:0;height:3px;z-index:3;background:rgba(255,255,255,.07)}
     .intro-progress i{display:block;height:100%;width:0;background:linear-gradient(90deg,#7c3aed,#06b6d4,#f59e0b);box-shadow:0 0 12px rgba(124,58,237,.6);transition:width 4.8s linear}
+    /* §9 — light sweep 1 lần qua typography (dải highlight mảnh, không phải gradient text) */
+    .intro-sweep{position:absolute;left:0;top:4%;width:34%;height:110%;pointer-events:none;opacity:0;mix-blend-mode:screen;filter:blur(1px);transform:translate(-160%,0) skewX(-18deg);background:linear-gradient(100deg,transparent,rgba(255,255,255,.9),rgba(103,232,249,.55),transparent)}
+    .intro.revealed .intro-sweep{animation:introSweepLight .95s cubic-bezier(.35,.6,.3,1) 3.5s both}
+    @keyframes introSweepLight{0%{opacity:0;transform:translate(-160%,0) skewX(-18deg)}12%{opacity:.9}85%{opacity:.8}100%{opacity:0;transform:translate(420%,0) skewX(-18deg)}}
     @media(prefers-reduced-motion:reduce){
       /* Bản nhẹ: CHỈ opacity — không dịch chuyển/scale/blur/particle (an toàn tiền đình) nhưng VẪN có nhịp fade
          để user không tưởng "trang không có hiệu ứng" (KN-031) */
       .intro{transition-duration:.4s}
-      .intro-canvas,.intro-flash,.intro-core{display:none}
+      .intro-canvas,.intro-flash,.intro-core,.intro-sweep{display:none}
       .intro.done{transform:none}
       .intro-title{letter-spacing:.08em;text-indent:.08em;transition:none}
       .intro-char{transform:none;filter:none}
@@ -1055,6 +1073,7 @@
     <div class="intro-core" aria-hidden="true"></div>
     <div class="intro-content">
       <h1 class="intro-title" id="introTitle" aria-label="COSMOS · QUANTUM"></h1>
+      <div class="intro-sweep" aria-hidden="true"></div>
       <div class="intro-underline" aria-hidden="true"></div>
       <p class="intro-sub">Process là định luật · Verify là quan sát</p>
       <p class="intro-tagline">8 phase · 1 vũ trụ · 0 đoán</p>
@@ -1866,9 +1885,9 @@ test('checkout', async () =&gt; {
       window.__introEngine = true;   // engine sống → head fail-safe (9s) nhường quyền tự quản (hỗ trợ defer tab ẩn)
       const skipBtn = $('#introSkip'), bar = $('#introProgress'), titleEl = $('#introTitle');
       const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
-      const TOTAL = reduced ? 3500 : 5600;               // auto-reveal (v2 cinematic: switch có thời gian "đã" hơn)
+      const TOTAL = reduced ? 3500 : 5600;               // auto-reveal; v3: +560ms collapse exit trước khi fade
       const EXIT_MS = reduced ? 400 : 650, EXIT_FAST = 300;
-      let finished = false, raf = 0, resizeFn = null, started = false, startedAt = 0, t0 = 0;
+      let finished = false, raf = 0, resizeFn = null, started = false, startedAt = 0, t0 = 0, collapsing = false, collapseAt = 0, collapsed = false;
       const timers = [];
 
       // Reduced-motion (Windows "Animation effects" tắt) → bản nhẹ + NÓI RÕ lý do,
@@ -1922,10 +1941,17 @@ test('checkout', async () =&gt; {
         if(e.key === 'Escape' || e.key === 'Esc'){ e.preventDefault(); finish(true); }
       };
       function finish(instant){
-        if(finished) return; finished = true;
+        if(finished) return;
+        // §14 — cinematic exit: auto-finish chạy cú "universe → one point" trước khi fade
+        if(!instant && !reduced && started && !collapsing){
+          collapsing = true; collapseAt = performance.now();
+          timers.push(setTimeout(()=>{ collapsing = false; collapsed = true; finish(true); }, 560));
+          return;
+        }
+        finished = true;
         cancelAnimationFrame(raf);
         timers.forEach(clearTimeout);
-        if(instant) intro.classList.add('fast');
+        if(instant && !collapsed) intro.classList.add('fast');   // skip = fade nhanh; post-collapse = fade đầy
         intro.classList.add('done');
         timers.push(setTimeout(()=>{
           intro.style.display = 'none';
@@ -1940,7 +1966,7 @@ test('checkout', async () =&gt; {
           if(resizeFn) window.removeEventListener('resize', resizeFn);
           const main = $('#main');
           if(main){ try{ main.setAttribute('tabindex','-1'); main.focus({preventScroll:true}); main.removeAttribute('tabindex'); }catch(e){} }
-        }, instant ? EXIT_FAST : EXIT_MS + 80));
+        }, (instant && !collapsed) ? EXIT_FAST : EXIT_MS + 80));
       }
 
       // ===== Kickoff — chỉ chạy khi tab THỰC SỰ hiển thị =====
@@ -1957,6 +1983,8 @@ test('checkout', async () =&gt; {
         }
         // Timeline CSS: thêm .play sau khi overlay đã render
         requestAnimationFrame(()=>requestAnimationFrame(()=>intro.classList.add('play')));
+        // §9/§10 — mốc reveal (light sweep + dot quantum) khớp lúc crystal hoàn tất
+        if(!reduced) timers.push(setTimeout(()=>{ if(!finished) intro.classList.add('revealed'); }, 2900));
       }
       const onVisible = ()=>{ if(document.hidden) return; document.removeEventListener('visibilitychange', onVisible); start(); };
       if(document.hidden) document.addEventListener('visibilitychange', onVisible); else start();
@@ -1966,18 +1994,38 @@ test('checkout', async () =&gt; {
       intro.addEventListener('click', ()=>{ if(performance.now() - startedAt < 1000) return; finish(true); });
       window.addEventListener('keydown', onKey, true);
 
-      // --- Canvas CINEMATIC v2: Big Bang lens-flare → spiral galaxy + nebula (refs 2026-09-10) ---
-      // Pre-render sprites 1 lần (puff nebula + distant galaxy) → giữ 60fps; particle budget scale theo diện tích
+      // --- Canvas CINEMATIC v3 — narrative: BOOM → CHAOS → SILENCE → COSMOS (spec 2026-09-10) ---
+      // 5 depth layers + parallax camera · spiral arms thật · stellar birth · title crystallize · collapse exit
       try{
         const canvas = $('#introCanvas');
         if(canvas && !reduced){
           const ctx = canvas.getContext('2d');
           if(ctx){
             const DPR = Math.min(devicePixelRatio || 1, 2);
-            const BANG_T = 850;                        // khớp introFlash (.82s)
-            let w = 0, h = 0, cx = 0, cy = 0, vscale = 1;
-            let stars = [], parts = [], puffs = [], waves = [], debris = [];
-            let bangAt = 0, lastNow = 0;
+            const BANG_T = 850;                        // khớp introFlash (~.85s)
+            let w = 0, h = 0, cx = 0, cy = 0, mDim = 0, vscale = 1, cam = 1;
+            let stars = [], storm = [], spiral = [], puffs = [], debris = [], waves = [], sparks = [], crystal = [], flyers = [];
+            let bangAt = 0, lastNow = 0, crystalBuilt = false, flyNext = 3.0;
+
+            // ---- helpers (narrative v3) ----
+            const clamp01 = v => v < 0 ? 0 : v > 1 ? 1 : v;
+            const lerpN = (a, b, ts) => a + (b - a) * ts;
+            const easeOutCubic = p => { p = clamp01(p); return 1 - Math.pow(1 - p, 3); };
+            function gauss(){ let u = 0, v = 0; while(!u) u = Math.random(); while(!v) v = Math.random(); return Math.sqrt(-2 * Math.log(u)) * Math.cos(6.283 * v); }
+            // §12 camera — push-in rất nhẹ vào galaxy theo timeline
+            function camAt(ts){
+              if(ts < 0.85) return 1;
+              if(ts < 1.30) return lerpN(1.02, 1, (ts - 0.85) / 0.45);
+              if(ts < 2.40) return lerpN(1, 1.015, (ts - 1.30) / 1.10);
+              if(ts < 3.60) return lerpN(1.015, 1.035, (ts - 2.40) / 1.20);
+              if(ts < 4.60) return lerpN(1.035, 1.06, (ts - 3.60) / 1.00);
+              if(ts < 5.60) return lerpN(1.06, 1.04, (ts - 4.60) / 1.00);
+              return 1.04;
+            }
+            // §8 silence envelope 2.05–2.30s (0→1→0)
+            const silAt = ts => (ts > 2.05 && ts < 2.30) ? Math.sin((ts - 2.05) / 0.25 * Math.PI) : 0;
+            // §7 crystal convergence 2.30 → 2.85s
+            const cryAt = ts => clamp01((ts - 2.30) / 0.55);
 
             // ---- Sprite factories ----
             const PUFF_PAL = [
@@ -2035,88 +2083,191 @@ test('checkout', async () =&gt; {
               canvas.width = Math.max(1, w*DPR); canvas.height = Math.max(1, h*DPR);
               canvas.style.width = w+'px'; canvas.style.height = h+'px';
               ctx.setTransform(DPR,0,0,DPR,0,0);
-              cx = w/2; cy = h/2;
-              vscale = Math.max(.7, Math.min(w,h)/640);
-              initStars();
+              cx = w/2; cy = h/2; mDim = Math.min(w,h);
+              vscale = Math.max(.7, mDim/640);
+              buildStars();
             };
-            function initStars(){
-              const n = Math.max(90, Math.min(240, Math.floor((w*h)/8000)));
-              stars = Array.from({length:n}, ()=>{
-                const L = [(Math.random()*1.1+.3), (Math.random()*1.1+.3), (Math.random()*1.1+.3)][(Math.random()*3)|0];
-                return {x:Math.random()*w, y:Math.random()*h, s:L,
-                        dx:(Math.random()-.5)*.05, dy:(Math.random()-.5)*.04,
-                        tw:.5+Math.random()*1.6, ph:Math.random()*6.28,
-                        c:Math.random()>.86?(Math.random()>.5?'124,58,237':'6,182,214'):'255,255,255'};
-              });
-            }
-            resizeFn = resize;
-            window.addEventListener('resize', resizeFn);
-            resize();                                  // KN-028: đo kích thước NGAY (không thì cx,cy=0 → sai tâm)
-
-            function spawnAll(){
-              // galaxy particles — vortex
-              const n = Math.max(150, Math.min(420, Math.floor((w*h)/4300)));
-              parts = [];
+            // §11 — micro-stars procedural: sinh dần theo thời gian, 95% mờ/4% dim/1% bright + diffraction
+            function buildStars(){
+              const n = Math.max(120, Math.min(260, Math.floor((w*h)/6500)));
+              stars = [];
               for(let i=0;i<n;i++){
-                const a = Math.random()*6.283;
-                const sp = (.5+Math.random()*5.6)*vscale;
-                parts.push({
-                  x:cx, y:cy, px:cx, py:cy,
-                  vx:Math.cos(a)*sp, vy:Math.sin(a)*sp,
-                  r:.5+Math.random()*1.5,
-                  c:P_COLORS[(Math.random()*P_COLORS.length)|0],
-                  swirl:(30+Math.random()*110)*vscale*(Math.random()>.14?1:-1),  // ~86% cùng chiều → galaxy xoáy
-                  pull:(10+Math.random()*30)*vscale
+                const r = Math.random();
+                const bright = r < 0.012, dim = r < 0.32;
+                stars.push({
+                  x: Math.random()*w, y: Math.random()*h,
+                  s: bright ? 1.7+Math.random()*.8 : dim ? 1.0+Math.random()*.4 : .5+Math.random()*.5,
+                  depth: .08+Math.random()*.34,
+                  birthT: 950+Math.random()*1450 + (Math.random()<.14 ? 800+Math.random()*600 : 0),
+                  tw: .5+Math.random()*1.7, ph: Math.random()*6.28,
+                  c: (bright && Math.random()<.6) ? (Math.random()<.5?'124,58,237':'6,182,214') : '255,255,255',
+                  bright: bright
                 });
               }
-              // nebula puffs — spawn dạng ĐĨA quanh tâm (galactic plane), xoáy chậm giữ khối lâu tàn
+            }
+            // §1 storm — burst ngắn khi Big Bang (firework rồi tắt, galaxy tiếp quản)
+            function spawnStorm(){
+              storm = [];
+              const n = Math.max(90, Math.min(200, Math.floor((w*h)/8000)));
+              for(let i=0;i<n;i++){
+                const a = Math.random()*6.283, sp = (2+Math.random()*9)*vscale;
+                storm.push({x:cx, y:cy, vx:Math.cos(a)*sp, vy:Math.sin(a)*sp,
+                  r:.5+Math.random()*1.5, c:P_COLORS[(Math.random()*P_COLORS.length)|0], born:0});
+              }
+            }
+            // §3 — spiral arms THẬT (logarithmic-ish): r/θ/w + 2-3 major + 2-3 minor, 86% cùng chiều
+            function buildSpiral(){
+              spiral = [];
+              const maxR = mDim*.52;
+              const n = Math.max(240, Math.min(480, Math.floor((w*h)/4200)));
+              const MAJ = [0, 2.094, 4.189], MIN = [0.95, 3.60, 5.40];
+              const PIN = [[255,255,255],[103,232,249],[167,139,250]];
+              const POUT = [[167,139,250],[244,114,182],[251,146,60],[103,232,249]];
+              for(let i=0;i<n;i++){
+                const minorP = Math.random()<.22;
+                const armA = minorP ? MIN[(Math.random()*3)|0] : MAJ[(Math.random()*3)|0];
+                const rFrac = .05+.95*Math.pow(Math.random(),.68);      // density cao gần nucleus
+                const rr = maxR*rFrac;
+                const scat = (.16+.34*(1-rFrac))*(minorP?1.3:1);
+                const th = armA+rFrac*3.05+gauss()*scat;                // wind-up tạo cánh xoắn
+                const dir = Math.random()<.86?1:-1;                     // 86% cùng chiều
+                const w0 = dir*(.0030+Math.random()*.0026)/(.30+rFrac*1.55);   // inner quay nhanh hơn
+                const pal = rFrac<.45 ? PIN : POUT;
+                spiral.push({
+                  r: rr, th: th, w: w0,
+                  depth: .38+Math.random()*.42,
+                  size: .5+Math.random()*1.4,
+                  col: pal[(Math.random()*pal.length)|0],
+                  alphaB: Math.random()<.09 ? .22+Math.random()*.18 : .55+Math.random()*.45,
+                  spawnT: 1150+Math.random()*700
+                });
+              }
+            }
+            // §5 — nebula flow: xoáy quanh tâm theo toạ độ cực + lớp mây nền lớn (depth)
+            function buildPuffs(){
               puffs = [];
               for(let i=0;i<20;i++){
                 const a = Math.random()*6.283;
-                const d = Math.pow(Math.random(),.62)*.36*Math.min(w,h);      // cluster nghiêng về tâm
+                const d = Math.pow(Math.random(),.62)*.36*mDim;
                 puffs.push({
                   sp:(Math.random()*puffSprites.length)|0,
-                  ca:a, cd:d,                                                  // toạ độ cực → xoáy quanh tâm
-                  spin:(Math.random()>.5?1:-1)*(.001+.0018*Math.random()),     // rad/frame quanh tâm
-                  dr:.05+Math.random()*.3,                                     // px/frame trôi ra
-                  sc:(1.4+Math.random()*2.6)*Math.max(.8, Math.min(w,h)/680),
+                  ca:a, cd:d,
+                  spin:(Math.random()>.5?1:-1)*(.001+.0018*Math.random()),
+                  dr:.05+Math.random()*.3,
+                  sc:(1.4+Math.random()*2.6)*Math.max(.8, mDim/680),
                   rot:Math.random()*6.283, vr:(Math.random()-.5)*.003,
-                  a0:.16+Math.random()*.2, born:0
+                  a0:.16+Math.random()*.2, born:0,
+                  depth:.30+Math.random()*.32
                 });
               }
-              // distant galaxies (debris)
+              for(let i=0;i<5;i++){                                     // mây nền lớn (background layer)
+                const a = Math.random()*6.283;
+                puffs.push({
+                  sp:(Math.random()*puffSprites.length)|0,
+                  ca:a, cd:(.30+Math.random()*.25)*mDim,
+                  spin:(Math.random()>.5?1:-1)*.0006,
+                  dr:.02+Math.random()*.08,
+                  sc:(2.6+Math.random()*1.6)*Math.max(.8, mDim/680),
+                  rot:Math.random()*6.283, vr:(Math.random()-.5)*.0015,
+                  a0:.07+Math.random()*.08, born:0,
+                  depth:.16+Math.random()*.12
+                });
+              }
+            }
+            function buildDebris(){
               debris = [];
               for(let i=0;i<10;i++){
                 const a = Math.random()*6.283;
-                const d = Math.min(w,h)*(.16+Math.random()*.5);
+                const d = mDim*(.16+Math.random()*.5);
                 debris.push({
                   x:cx+Math.cos(a)*d, y:cy+Math.sin(a)*d,
                   vx:Math.cos(a)*(.1+Math.random()*.3)*vscale, vy:Math.sin(a)*(.1+Math.random()*.3)*vscale,
                   sc:.35+Math.random()*1.1, rot:Math.random()*6.283, vr:(Math.random()-.5)*.002,
-                  warm:Math.random()>.5, a:.1+Math.random()*.22, born:0
+                  warm:Math.random()>.5, a:.1+Math.random()*.22, born:0,
+                  depth:.12+Math.random()*.2
                 });
               }
-              // shockwave rings (cam ấm ngoài → trắng trong)
-              const m = Math.min(w,h);
-              waves = [
-                {sp:m*1.05, c:[251,146,60], lw:3.2, a:.5, off:0},
-                {sp:m*.82,  c:[103,232,249], lw:1.5, a:.38, off:.09},
-                {sp:m*1.42, c:[255,255,255], lw:1,   a:.22, off:.2}
-              ];
             }
+            // §4 — stellar birth: 16 sao lần lượt ignite (compress → flare → steady)
+            function buildSparks(){
+              sparks = [];
+              for(let i=0;i<16;i++){
+                const a = Math.random()*6.283, d = (.14+Math.random()*.30)*mDim;
+                sparks.push({
+                  x: cx+Math.cos(a)*d, y: cy+Math.sin(a)*d*.72,
+                  depth: .42+Math.random()*.3,
+                  t0: 1.72+i*.034+Math.random()*.05,
+                  ph: Math.random()*6.28, big: Math.random()<.28
+                });
+              }
+            }
+            // §7 — crystal: sample glyph pixel → điểm hội tụ về typography
+            function buildCrystal(){
+              if(crystalBuilt) return; crystalBuilt = true;
+              try{
+                const fs = Math.max(30, Math.min(62, w*.07));
+                const off = document.createElement('canvas');
+                off.width = Math.ceil(Math.min(w*.92, 980));
+                off.height = Math.ceil(fs*1.9);
+                const o = off.getContext('2d');
+                o.fillStyle = '#fff'; o.textAlign = 'center'; o.textBaseline = 'middle';
+                o.font = '800 '+fs+'px "Plus Jakarta Sans","Space Grotesk",system-ui,sans-serif';
+                try{ o.letterSpacing = Math.round(fs*.08)+'px'; }catch(e){}
+                o.fillText('COSMOS · QUANTUM', off.width/2, off.height/2);
+                const data = o.getImageData(0,0,off.width,off.height).data;
+                const pts = [];
+                for(let y=0;y<off.height;y+=3){
+                  for(let x=0;x<off.width;x+=3){
+                    if(data[(y*off.width+x)*4+3]>128) pts.push([x,y]);
+                  }
+                }
+                for(let i=pts.length-1;i>0;i--){ const j=(Math.random()*(i+1))|0; const t2=pts[i]; pts[i]=pts[j]; pts[j]=t2; }
+                const cap = Math.min(pts.length, 500);
+                const oy = cy-mDim*.035;
+                crystal = [];
+                for(let i=0;i<cap;i++){
+                  const q = pts[i];
+                  const a = Math.random()*6.283, d2 = (.08+Math.random()*.42)*mDim;
+                  crystal.push({
+                    sx: cx+Math.cos(a)*d2, sy: cy+Math.sin(a)*d2*.7,
+                    tx: cx+(q[0]-off.width/2), ty: oy+(q[1]-off.height/2),
+                    delay: Math.random()*.30
+                  });
+                }
+              }catch(e){ crystal = []; }
+            }
+            resizeFn = resize;
+            window.addEventListener('resize', resizeFn);
+            resize();                                  // KN-028: đo kích thước NGAY (không thì cx,cy=0 → sai tâm)
 
             (function frame(){
               if(finished) return;
               if(!t0){ raf = requestAnimationFrame(frame); return; }   // chờ start() (tab ẩn chưa chạy)
               const now = performance.now();
               const t = now - t0;
+              const T = t/1000;
               const dt = Math.min(3, lastNow ? (now-lastNow)/16.67 : 1);
               lastNow = now;
-              if(t >= BANG_T && !bangAt){ bangAt = now; spawnAll(); }
+              if(t >= BANG_T && !bangAt){
+                bangAt = now;
+                spawnStorm(); buildSpiral(); buildPuffs(); buildDebris(); buildSparks();
+                const mn = mDim;
+                waves = [
+                  {sp:mn*1.05, c:[251,146,60], lw:3.2, a:.5, off:0},
+                  {sp:mn*.82,  c:[103,232,249], lw:1.5, a:.38, off:.09},
+                  {sp:mn*1.42, c:[255,255,255], lw:1,   a:.22, off:.2}
+                ];
+              }
               const age = bangAt ? (now-bangAt)/1000 : 0;
-              const T = t/1000;                          // giây — pulse nhẹ cho nucleus/puffs
+              const sil = silAt(T);                       // §8 silence 2.05–2.30s
+              const dim = 1-.62*sil;
+              const cry = cryAt(T);                       // §7 crystal 2.30→2.85s
+              const cT = collapsing ? (now-collapseAt)/1000 : 0;
+              const exitFade = collapsing ? clamp01(1-cT/.55) : 0;
+              cam = camAt(T)+(collapsing ? cT*.025 : 0);  // §12 camera push-in + §14
+              const galDim = (1-.32*cry)*(1-exitFade*.9); // crystal chỉ dim nhẹ — galaxy vẫn sống khi camera push in
 
-              // nền vũ trụ sâu (depth wash) + sao parallax
+              // ---------- nền vũ trụ sâu + silence darken ----------
               ctx.globalCompositeOperation = 'source-over';
               const bgg = ctx.createRadialGradient(cx, cy, 0, cx, cy, Math.max(w,h)*.75);
               bgg.addColorStop(0,'rgba(14,20,45,1)');
@@ -2124,124 +2275,231 @@ test('checkout', async () =&gt; {
               bgg.addColorStop(1,'rgba(3,4,12,1)');
               ctx.fillStyle = bgg;
               ctx.fillRect(0,0,w,h);
+              if(sil > 0){ ctx.fillStyle = 'rgba(0,0,0,'+(.34*sil).toFixed(3)+')'; ctx.fillRect(0,0,w,h); }
+
+              // ---------- LAYER 1: micro-stars — sinh dần (§11) + warp khi shockwave qua (§1) ----------
               for(const s of stars){
-                s.ph += .02*s.tw*dt; s.x += s.dx*dt; s.y += s.dy*dt;
-                if(s.x<0)s.x=w; if(s.x>w)s.x=0; if(s.y<0)s.y=h; if(s.y>h)s.y=0;
+                s.ph += .02*s.tw*dt;
+                const born = t - s.birthT;
+                if(born < 0) continue;
+                const bf = clamp01(born/450);
+                let sx = cx + (s.x-cx)*(1+(cam-1)*s.depth);
+                let sy = cy + (s.y-cy)*(1+(cam-1)*s.depth);
+                if(bangAt && age < 1.1){
+                  const dx0 = sx-cx, dy0 = sy-cy, rd = Math.sqrt(dx0*dx0+dy0*dy0)||1;
+                  const R = 6+age*mDim*.9;
+                  const dR = Math.abs(rd-R);
+                  if(dR < 160){
+                    const push = (1-dR/160)*30*vscale*Math.max(0,1-age/1.1);
+                    sx += dx0/rd*push; sy += dy0/rd*push;
+                  }
+                }
                 const tw = .55+.45*Math.sin(s.ph);
-                ctx.fillStyle = 'rgba('+s.c+','+(.5*tw).toFixed(3)+')';
-                ctx.fillRect(s.x, s.y, s.s, s.s);
+                const base = s.bright ? .95 : (s.s > 1 ? .5 : .30);
+                let a = base*tw*bf*dim*(1-exitFade*.85);
+                if(born < 260) a *= 1+.9*Math.sin(clamp01(born/260)*Math.PI);   // pop khi sinh
+                if(a <= .015) continue;
+                ctx.fillStyle = 'rgba('+s.c+','+a.toFixed(3)+')';
+                if(s.bright){
+                  ctx.fillRect(sx-s.s/2, sy-s.s/2, s.s, s.s);
+                  ctx.fillRect(sx-s.s*2.2, sy-.35, s.s*4.4, .7);       // diffraction cross
+                  ctx.fillRect(sx-.35, sy-s.s*2.2, .7, s.s*4.4);
+                } else {
+                  ctx.fillRect(sx, sy, s.s, s.s);
+                }
               }
 
               ctx.globalCompositeOperation = 'lighter';
 
-              // nebula puffs — volumetric: xoáy quanh tâm (đĩa dẹt trục y) + lớn dần, giữ khối lâu tàn
-              for(const p of puffs){
-                p.born += dt/60;
-                const life = Math.min(1, p.born/.9);
-                p.ca += p.spin*dt; p.cd += p.dr*dt*.06;
-                p.x = cx + Math.cos(p.ca)*p.cd;
-                p.y = cy + Math.sin(p.ca)*p.cd*.62;
-                p.rot += p.vr*dt;
-                const sc = p.sc*(.7+.3*life)*(1+p.born*.04);
-                const sz = 220*sc;
-                ctx.save();
-                ctx.translate(p.x,p.y); ctx.rotate(p.rot);
-                ctx.globalAlpha = Math.max(0, p.a0*life*(.85+.15*Math.sin(t*.0013+p.rot)));
-                ctx.drawImage(puffSprites[p.sp], -sz/2, -sz/2, sz, sz);
-                ctx.restore();
-              }
-              ctx.globalAlpha = 1;
-
-              // distant galaxies — debris trôi ra
+              // ---------- LAYER 2: distant galaxies (depth far) ----------
               for(const d of debris){
                 d.born += dt/60;
                 d.x += d.vx*dt*.1; d.y += d.vy*dt*.1; d.rot += d.vr*dt;
                 const sc = d.sc*(.6+.4*Math.min(1,d.born/1.2));
                 const sz = 64*sc;
+                const dx = cx+(d.x-cx)*(1+(cam-1)*d.depth);
+                const dy = cy+(d.y-cy)*(1+(cam-1)*d.depth);
                 ctx.save();
-                ctx.translate(d.x,d.y); ctx.rotate(d.rot);
-                ctx.globalAlpha = Math.max(0, d.a*Math.min(1,d.born/1.1));
+                ctx.translate(dx,dy); ctx.rotate(d.rot);
+                ctx.globalAlpha = Math.max(0, d.a*Math.min(1,d.born/1.1)*dim*(1-exitFade));
                 ctx.drawImage(d.warm?galWarm:galCool, -sz/2, -sz/2, sz, sz*.5);
                 ctx.restore();
               }
               ctx.globalAlpha = 1;
 
-              // shockwave rings
+              // ---------- LAYER 3: nebula puffs — flow (§5) ----------
+              for(const p of puffs){
+                p.born += dt/60;
+                const life = Math.min(1, p.born/.9);
+                p.ca += p.spin*dt; p.cd += p.dr*dt*.06;
+                const pxw = cx + Math.cos(p.ca)*p.cd;
+                const pyw = cy + Math.sin(p.ca)*p.cd*.62;
+                p.rot += p.vr*dt;
+                const sc = p.sc*(.7+.3*life)*(1+p.born*.04);
+                const sz = 220*sc;
+                const sx = cx+(pxw-cx)*(1+(cam-1)*p.depth);
+                const sy = cy+(pyw-cy)*(1+(cam-1)*p.depth);
+                ctx.save();
+                ctx.translate(sx,sy); ctx.rotate(p.rot);
+                ctx.globalAlpha = Math.max(0, p.a0*life*(.85+.15*Math.sin(t*.0013+p.rot))*dim*galDim*(1-exitFade*.9));
+                ctx.drawImage(puffSprites[p.sp], -sz/2, -sz/2, sz, sz);
+                ctx.restore();
+              }
+              ctx.globalAlpha = 1;
+
+              // shockwave rings — space reacts (§1)
               for(const wv of waves){
                 const wa = age - wv.off;
                 if(wa <= 0) continue;
                 const r = 6 + wa*wv.sp;
-                const al = Math.max(0, wv.a - wa*.4);
+                const al = Math.max(0, (wv.a - wa*.4)*(1-exitFade));
                 if(al <= .01) continue;
                 ctx.beginPath(); ctx.arc(cx,cy,r,0,6.283);
                 ctx.strokeStyle = 'rgba('+wv.c[0]+','+wv.c[1]+','+wv.c[2]+','+al.toFixed(3)+')';
                 ctx.lineWidth = wv.lw; ctx.stroke();
               }
 
-              // galactic nucleus — core glow BỀN sau flash (ref galaxy: tâm sáng không tắt)
+              // ---------- LAYER 4: nucleus + Einstein ring (§6) ----------
               if(bangAt){
-                const m = Math.min(w,h);
                 const rise = Math.min(1, age*.9);
-                const nR = m*(.15 + .015*Math.sin(T*2.2));
+                const nR = mDim*(.15 + .015*Math.sin(T*2.2));
+                const nA = .30*rise*dim*galDim*(1-exitFade*.4);
                 const gN = ctx.createRadialGradient(cx,cy,0,cx,cy,nR*1.6);
-                gN.addColorStop(0,'rgba(255,246,230,'+(.30*rise).toFixed(3)+')');
-                gN.addColorStop(.35,'rgba(196,181,253,'+(.14*rise).toFixed(3)+')');
-                gN.addColorStop(.7,'rgba(96,165,250,'+(.07*rise).toFixed(3)+')');
+                gN.addColorStop(0,'rgba(255,246,230,'+nA.toFixed(3)+')');
+                gN.addColorStop(.35,'rgba(196,181,253,'+(nA*.47).toFixed(3)+')');
+                gN.addColorStop(.7,'rgba(96,165,250,'+(nA*.23).toFixed(3)+')');
                 gN.addColorStop(1,'rgba(96,165,250,0)');
                 ctx.fillStyle = gN;
                 ctx.fillRect(cx-nR*1.6,cy-nR*1.6,nR*3.2,nR*3.2);
-              }
-
-              // galaxy particles — vortex physics + motion streaks
-              for(const p of parts){
-                p.px = p.x; p.py = p.y;
-                const dx = p.x-cx, dy = p.y-cy, dd = Math.sqrt(dx*dx+dy*dy)||1;
-                const s1 = (p.pull*60)/(dd+80);
-                const s2 = (p.swirl*60)/(dd+120);
-                p.vx += ((-dx/dd)*s1 + (-dy/dd)*s2)*dt*.06;
-                p.vy += ((-dy/dd)*s1 + ( dx/dd)*s2)*dt*.06;
-                const drag = Math.pow(.982, dt);
-                p.vx*=drag; p.vy*=drag;
-                p.x += p.vx*dt; p.y += p.vy*dt;
-                const tx = p.x - p.vx*3.2, ty = p.y - p.vy*3.2;   // streak 3 frame → motion-blur
-                const al = Math.min(.8, age*.9)*.85;
-                ctx.beginPath(); ctx.moveTo(tx,ty); ctx.lineTo(p.x,p.y);
-                ctx.strokeStyle = 'rgba('+p.c[0]+','+p.c[1]+','+p.c[2]+','+al.toFixed(3)+')';
-                ctx.lineWidth = p.r; ctx.stroke();
-                if(p.r > 1.2){
-                  ctx.beginPath(); ctx.arc(p.x,p.y,p.r*.9,0,6.283);
-                  ctx.fillStyle = 'rgba('+p.c[0]+','+p.c[1]+','+p.c[2]+','+Math.min(.95, al*1.1).toFixed(3)+')';
-                  ctx.fill();
+                // Einstein ring rất nhẹ quanh nucleus
+                const er = nR*.62, erA = .10*rise*dim*(1-exitFade);
+                if(erA > .01){
+                  ctx.save(); ctx.translate(cx,cy); ctx.scale(1,.6);
+                  ctx.beginPath(); ctx.arc(0,0,er,0,6.283);
+                  ctx.strokeStyle = 'rgba(200,215,255,'+erA.toFixed(3)+')'; ctx.lineWidth = 1.2; ctx.stroke();
+                  ctx.beginPath(); ctx.arc(0,0,er*1.06,0,6.283);
+                  ctx.strokeStyle = 'rgba(120,180,255,'+(erA*.6).toFixed(3)+')'; ctx.lineWidth = .8; ctx.stroke();
+                  ctx.restore();
                 }
               }
 
-              // BIG BANG: flash core + lens streak ngang (ref ảnh 3) + tia sáng quay
-              const flash = bangAt ? Math.max(0, 1 - age/1.35) : 0;
+              // ---------- LAYER 5: spiral galaxy — real arms (§3) + lensing (§6) + collapse (§14) ----------
+              if(bangAt){
+                const ringR = mDim*.095;
+                for(const p of spiral){
+                  const spawnT = p.spawnT/1000;
+                  if(T < spawnT) continue;
+                  const form = easeOutCubic(clamp01((T-spawnT)/0.8));   // fly out & wind up
+                  let rr = p.r*(0.22+0.78*form);
+                  p.th += p.w*dt*(2.6-1.4*form);                        // spin-up khi hình thành
+                  // gravitational lensing: tăng vận tốc góc khi qua vùng vành
+                  const dd = Math.abs(rr-ringR);
+                  if(dd < mDim*.05){ p.th += dt*.010*(1-dd/(mDim*.05)); }
+                  if(collapsing) rr *= Math.pow(.90,dt);                // hút về tâm
+                  if(rr < 6) continue;
+                  const pxw = cx + Math.cos(p.th)*rr;
+                  const pyw = cy + Math.sin(p.th)*rr*.62;               // galactic plane
+                  const sx = cx+(pxw-cx)*(1+(cam-1)*p.depth);
+                  const sy = cy+(pyw-cy)*(1+(cam-1)*p.depth);
+                  const vT = p.w*rr*(collapsing?2.6:1);
+                  const tx = sx-Math.sin(p.th)*vT*26, ty = sy+Math.cos(p.th)*vT*26*.62;
+                  const aB = p.alphaB*.9*form*dim*galDim*(1-exitFade*.95);
+                  if(aB <= .02) continue;
+                  ctx.beginPath(); ctx.moveTo(tx,ty); ctx.lineTo(sx,sy);
+                  ctx.strokeStyle = 'rgba('+p.col[0]+','+p.col[1]+','+p.col[2]+','+(aB*.75).toFixed(3)+')';
+                  ctx.lineWidth = p.size*(collapsing?1.3:1); ctx.stroke();
+                  if(p.size > 1.15){
+                    ctx.beginPath(); ctx.arc(sx,sy,p.size*.85,0,6.283);
+                    ctx.fillStyle = 'rgba('+p.col[0]+','+p.col[1]+','+p.col[2]+','+aB.toFixed(3)+')';
+                    ctx.fill();
+                  }
+                }
+              }
+
+              // storm dust — burst ngắn của Big Bang
+              for(const d of storm){
+                d.born += dt/60;
+                d.x += d.vx*dt; d.y += d.vy*dt;
+                d.vx *= Math.pow(.985,dt); d.vy *= Math.pow(.985,dt);
+                const life = Math.max(0, 1-d.born/1.6);
+                if(life <= 0) continue;
+                const sx = cx+(d.x-cx)*(1+(cam-1)*.6);
+                const sy = cy+(d.y-cy)*(1+(cam-1)*.6);
+                const a = life*.9*dim*(1-exitFade);
+                if(a <= .02) continue;
+                ctx.beginPath();
+                ctx.moveTo(cx+(sx-cx)*.86, cy+(sy-cy)*.86);
+                ctx.lineTo(sx,sy);
+                ctx.strokeStyle = 'rgba('+d.c[0]+','+d.c[1]+','+d.c[2]+','+a.toFixed(3)+')';
+                ctx.lineWidth = d.r; ctx.stroke();
+              }
+
+              // ---------- stellar birth (§4): compress → flare → steady ----------
+              for(const s of sparks){
+                const tt = T-s.t0;
+                if(tt < 0) continue;
+                const sx = cx+(s.x-cx)*(1+(cam-1)*s.depth);
+                const sy = cy+(s.y-cy)*(1+(cam-1)*s.depth);
+                const tw = .75+.25*Math.sin(T*2.6+s.ph);
+                const baseA = dim*(1-exitFade*.9);
+                if(tt < .16){
+                  const p2 = tt/.16;
+                  ctx.beginPath(); ctx.arc(sx,sy,1.5+7*p2,0,6.283);
+                  ctx.strokeStyle = 'rgba(255,240,210,'+(.5*p2*baseA).toFixed(3)+')';
+                  ctx.lineWidth = 1.4; ctx.stroke();
+                  ctx.beginPath(); ctx.arc(sx,sy,1.2+2.4*p2,0,6.283);
+                  ctx.fillStyle = 'rgba(255,255,255,'+(.85*p2*baseA).toFixed(3)+')'; ctx.fill();
+                } else if(tt < .46){
+                  const p2 = (tt-.16)/.30, fade = 1-p2;
+                  const LN = (s.big?30:16)*(1+p2*.6);
+                  const nRays = s.big?6:4;
+                  for(let k=0;k<nRays;k++){
+                    const ang = k*6.283/nRays+.5;
+                    ctx.beginPath(); ctx.moveTo(sx,sy);
+                    ctx.lineTo(sx+Math.cos(ang)*LN, sy+Math.sin(ang)*LN);
+                    ctx.strokeStyle = 'rgba(255,244,222,'+(.55*fade*baseA).toFixed(3)+')';
+                    ctx.lineWidth = 1.1; ctx.stroke();
+                  }
+                  ctx.beginPath(); ctx.arc(sx,sy,2.6,0,6.283);
+                  ctx.fillStyle = 'rgba(255,255,255,'+(.9*fade*baseA).toFixed(3)+')'; ctx.fill();
+                } else {
+                  ctx.beginPath(); ctx.arc(sx,sy,s.big?1.9:1.3,0,6.283);
+                  ctx.fillStyle = 'rgba(255,250,240,'+(.8*tw*baseA).toFixed(3)+')'; ctx.fill();
+                  if(s.big){
+                    ctx.fillRect(sx-5,sy-.3,10,.6); ctx.fillRect(sx-.3,sy-5,.6,10);
+                  }
+                }
+              }
+
+              // ---------- BIG BANG flare (§1): flash 1 frame gần trắng + lens streak rất ngắn + rays ----------
+              const flash = bangAt ? Math.max(0, 1 - age/0.9) : 0;
               if(flash > .01){
-                const m = Math.min(w,h);
-                const R = m*(.12 + .55*(1-flash));
+                const R = mDim*(.10+.5*(1-flash));
                 const g1 = ctx.createRadialGradient(cx,cy,0,cx,cy,R);
                 g1.addColorStop(0,'rgba(255,255,255,'+(.98*flash).toFixed(3)+')');
-                g1.addColorStop(.22,'rgba(255,238,205,'+(.8*flash).toFixed(3)+')');
-                g1.addColorStop(.52,'rgba(251,146,60,'+(.38*flash).toFixed(3)+')');
+                g1.addColorStop(.2,'rgba(255,238,205,'+(.85*flash).toFixed(3)+')');
+                g1.addColorStop(.5,'rgba(251,146,60,'+(.4*flash).toFixed(3)+')');
                 g1.addColorStop(1,'rgba(251,146,60,0)');
                 ctx.fillStyle = g1;
                 ctx.fillRect(cx-R,cy-R,R*2,R*2);
-                // lens streak ngang — ellipse kéo giãn 2 lớp
-                ctx.save(); ctx.translate(cx,cy); ctx.scale(8,.5);
-                const g2 = ctx.createRadialGradient(0,0,0,0,0,R*.85);
-                g2.addColorStop(0,'rgba(255,240,220,'+(.75*flash).toFixed(3)+')');
-                g2.addColorStop(.5,'rgba(251,146,60,'+(.3*flash).toFixed(3)+')');
-                g2.addColorStop(1,'rgba(251,146,60,0)');
-                ctx.fillStyle = g2; ctx.beginPath(); ctx.arc(0,0,R*.85,0,6.283); ctx.fill();
-                ctx.restore();
-                ctx.save(); ctx.translate(cx,cy); ctx.scale(14,.06);
-                const g3 = ctx.createRadialGradient(0,0,0,0,0,R*.7);
-                g3.addColorStop(0,'rgba(255,255,255,'+(.9*flash).toFixed(3)+')');
-                g3.addColorStop(1,'rgba(255,255,255,0)');
-                ctx.fillStyle = g3; ctx.beginPath(); ctx.arc(0,0,R*.7,0,6.283); ctx.fill();
-                ctx.restore();
-                // tia sáng quay chậm
+                // lens streak — như một vết cắt ánh sáng (chỉ ~0.35s đầu)
+                const streakA = Math.max(0, 1-age/0.35);
+                if(streakA > .01){
+                  ctx.save(); ctx.translate(cx,cy); ctx.scale(15,.05);
+                  const g3 = ctx.createRadialGradient(0,0,0,0,0,R*.8);
+                  g3.addColorStop(0,'rgba(255,255,255,'+(.95*streakA).toFixed(3)+')');
+                  g3.addColorStop(1,'rgba(255,255,255,0)');
+                  ctx.fillStyle = g3; ctx.beginPath(); ctx.arc(0,0,R*.8,0,6.283); ctx.fill();
+                  ctx.restore();
+                  ctx.save(); ctx.translate(cx,cy); ctx.scale(9,.4);
+                  const g2 = ctx.createRadialGradient(0,0,0,0,0,R*.75);
+                  g2.addColorStop(0,'rgba(255,240,220,'+(.7*streakA).toFixed(3)+')');
+                  g2.addColorStop(.6,'rgba(251,146,60,'+(.25*streakA).toFixed(3)+')');
+                  g2.addColorStop(1,'rgba(251,146,60,0)');
+                  ctx.fillStyle = g2; ctx.beginPath(); ctx.arc(0,0,R*.75,0,6.283); ctx.fill();
+                  ctx.restore();
+                }
+                // tia sáng quay — chỉ trong lúc flash
                 const raysN = 14, spin = t*.00008;
                 const L = Math.max(w,h)*.62*(1.15-flash*.5);
                 for(let i=0;i<raysN;i++){
@@ -2252,12 +2510,88 @@ test('checkout', async () =&gt; {
                   lg.addColorStop(.3,'rgba(251,146,60,'+(.22*flash).toFixed(3)+')');
                   lg.addColorStop(1,'rgba(251,146,60,0)');
                   ctx.fillStyle = lg;
-                  ctx.fillRect(0,-1.4,L,2.8);
+                  ctx.fillRect(0,-1.3,L,2.6);
                   ctx.restore();
                 }
               }
 
+              // ---------- crystal: particles → typography (§7) ----------
+              if(T >= 2.30){
+                buildCrystal();
+                const fadeOut = 1-clamp01((T-2.92)/0.35);
+                for(const c of crystal){
+                  const p2 = easeOutCubic(clamp01((T-2.30-c.delay)/0.5));
+                  if(p2 <= 0) continue;
+                  const cxp = c.sx+(c.tx-c.sx)*p2, cyp = c.sy+(c.ty-c.sy)*p2;
+                  const a = (.25+.75*p2)*fadeOut*(1-exitFade);
+                  if(a <= .01) continue;
+                  ctx.beginPath(); ctx.arc(cxp,cyp,p2>.97?1.35:1.75-p2*.4,0,6.283);
+                  ctx.fillStyle = 'rgba(255,248,232,'+(a*.95).toFixed(3)+')'; ctx.fill();
+                  if(p2 < 1){
+                    const p3 = easeOutCubic(clamp01((T-2.30-c.delay)/0.5-0.08));
+                    const tx2 = c.sx+(c.tx-c.sx)*p3, ty2 = c.sy+(c.ty-c.sy)*p3;
+                    ctx.beginPath(); ctx.moveTo(tx2,ty2); ctx.lineTo(cxp,cyp);
+                    ctx.strokeStyle = 'rgba(190,205,255,'+(a*.3).toFixed(3)+')';
+                    ctx.lineWidth = 1; ctx.stroke();
+                  }
+                }
+                // đóm sáng nhẹ trước khi chữ hiện (nhịp "silence → COSMOS")
+                const preA = clamp01((T-2.78)/0.12)*(1-clamp01((T-2.92)/0.2));
+                if(preA > 0){
+                  const gy = cy-mDim*.035;
+                  const gP = ctx.createRadialGradient(cx,gy,0,cx,gy,mDim*.16);
+                  gP.addColorStop(0,'rgba(255,255,255,'+(.22*preA).toFixed(3)+')');
+                  gP.addColorStop(1,'rgba(255,255,255,0)');
+                  ctx.fillStyle = gP;
+                  ctx.fillRect(cx-mDim*.16, gy-mDim*.16, mDim*.32, mDim*.32);
+                }
+              }
+
+              // ---------- exit collapse: universe → one point (§14) ----------
+              if(collapsing){
+                const cp = clamp01(cT/.5);
+                const gE = ctx.createRadialGradient(cx,cy,0,cx,cy,mDim*(.05+.10*cp));
+                gE.addColorStop(0,'rgba(255,250,240,'+(.9*cp).toFixed(3)+')');
+                gE.addColorStop(.5,'rgba(255,220,180,'+(.4*cp).toFixed(3)+')');
+                gE.addColorStop(1,'rgba(255,220,180,0)');
+                ctx.fillStyle = gE;
+                ctx.fillRect(cx-mDim*.18,cy-mDim*.18,mDim*.36,mDim*.36);
+              }
+
               ctx.globalCompositeOperation = 'source-over';
+
+              // ---------- fly-through particles (screen-space, §13) ----------
+              if(!collapsing){
+                if(T > 3.0 && T < 5.05 && T > flyNext){
+                  flyNext = T+0.14+Math.random()*0.12;
+                  flyers.push({
+                    ang: Math.random()*6.283,
+                    d: mDim*(.45+Math.random()*.22),
+                    sp: (16+Math.random()*22)*vscale*1.5,
+                    life: 0, max: .8+Math.random()*.5,
+                    w: 1+Math.random()*1.2,
+                    col: Math.random()<.55 ? [103,232,249] : (Math.random()<.5 ? [255,220,180] : [196,181,253])
+                  });
+                }
+                for(let i=flyers.length-1;i>=0;i--){
+                  const f = flyers[i];
+                  f.life += dt/60; f.d += f.sp*dt;
+                  const p2 = f.life/f.max;
+                  if(p2 >= 1){ flyers.splice(i,1); continue; }
+                  const al = Math.sin(p2*Math.PI)*.5*dim;
+                  if(al <= .01) continue;
+                  const dirx = Math.cos(f.ang), diry = Math.sin(f.ang)*.8;
+                  const x1 = cx+dirx*f.d, y1 = cy+diry*f.d;
+                  const len = 24+p2*110;
+                  const x0 = cx+dirx*(f.d-len), y0 = cy+diry*(f.d-len);
+                  const lg = ctx.createLinearGradient(x0,y0,x1,y1);
+                  lg.addColorStop(0,'rgba('+f.col[0]+','+f.col[1]+','+f.col[2]+',0)');
+                  lg.addColorStop(1,'rgba('+f.col[0]+','+f.col[1]+','+f.col[2]+','+al.toFixed(3)+')');
+                  ctx.strokeStyle = lg; ctx.lineWidth = f.w*(.6+p2*.7);
+                  ctx.beginPath(); ctx.moveTo(x0,y0); ctx.lineTo(x1,y1); ctx.stroke();
+                }
+              }
+
               raf = requestAnimationFrame(frame);
             })();
           }

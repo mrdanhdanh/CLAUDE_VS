@@ -66,20 +66,31 @@ Canvas API + CSS animations + `requestAnimationFrame` — **0 dependency, 0 file
 | **Debris** | 10 distant-galaxy sprites (ellipse gradient warm/cool) trôi ra + xoay | ảnh 3 (galaxies nền) |
 
 **Perf budget:** sprite pre-render 1 lần; particle count scale theo diện tích (150-420); DPR cap 2; pixel poll sample center 400×400. **Timeline:** TOTAL 5000→5600ms (thêm thời gian ngắm galaxy). Reduced-motion giữ bản calm cũ (không canvas).
-**Verify:** Edge thật 3 mốc (1.2s burst / 2.4s title / 4.6s swirl) — screenshots trong `verify/`.
+**Verify:** Edge thật 3 mốc (1.2s burst / 2.7s crystal / 4.6s swirl) — screenshots trong `verify/`.
 
 ---
 
-## V2 — Cinematic upgrade (2026-09-10, refs: planet-nebula / galaxy-swirl / big-bang-flare)
+## V3 — Narrative upgrade: BOOM → CHAOS → SILENCE → COSMOS (2026-09-10)
 
-> User: "chưa đủ wao" + 3 ảnh ref → nâng engine từ burst đơn giản lên sequence cinematic 4 tầng.
+> User spec: "không chỉ tăng particle/glow — làm vũ trụ được SINH RA trước mắt". 14 điểm, mỗi effect phải trả lời "vũ trụ đang được sinh ra?".
 
-| Tầng | Kỹ thuật | Ref |
-|------|----------|-----|
-| **Big Bang** | Core gradient 3 stop + **lens streak ngang** (ellipse kéo giãn 8×/14×) + 14 tia quay chậm + 3 shockwave rings (cam→cyan→trắng) | ảnh 3 (flare cam trắng) |
-| **Galaxy swirl** | ~150-420 particles vortex (86% cùng chiều xoáy) + motion streaks 3-frame + **galactic nucleus glow** bền (không tắt sau flash) | ảnh 2 (xoáy xanh-tím-đỏ) |
-| **Nebula volumetric** | 20 puff sprites pre-render (6 palette: blue/violet/pink/orange/cyan/cream + noise texture), spawn dạng **đĩa (galactic plane)**, xoáy quanh tâm bằng toạ độ cực, lớn dần | ảnh 1 + 2 (mây khí dày) |
-| **Debris** | 10 distant-galaxy sprites (ellipse gradient warm/cool) trôi ra + xoay | ảnh 3 (galaxies nền) |
+| # | Điểm spec | Kỹ thuật |
+|---|-----------|----------|
+| §1 | Big Bang bẻ cong màn hình | Flash sắc (peak ~60ms) + **lens streak như vết cắt** (chỉ 0.35s) + starfield **warp** khi shockwave đi qua (displacement radial band 160px) + storm dust ngắn hạn |
+| §2 | 5 depth layers | stars(.08-.42) → debris(.12-.32) → puffs(.16-.62) → spiral(.38-.80) → crystal. Parallax: `screen = center + (world−center)·(1+(cam−1)·depth)` |
+| §3 | Spiral arms thật | Polar model `(r, θ, w)`: 3 major + 3 minor arms, `θ = arm + (r/R)·3.05 + gauss·scatter`, density `rFrac^0.68`, `w ∝ 1/(0.3+1.55rFrac)`, 86% cùng chiều; orbit dẹt trục y (.62) |
+| §4 | Stellar birth | 16 sao: compress (0.16s ring co) → flare (0.3s, 4-6 tia) → steady point; 28% big có diffraction cross |
+| §5 | Nebula flow | Polar orbit + shear (spin/dr) + 5 mây nền lớn (depth .16-.28) |
+| §6 | Gravitational lensing | Angular speedup đỉnh ở vành Einstein (`+dt·.010·(1−dR/W)`) + Einstein ring 2 vòng mờ (ellipse .6) quanh nucleus |
+| §7 | Title kết tinh | Offscreen canvas render glyph → sample alpha step 3px → ≤500 particle bay từ đĩa galaxy về đúng pixel chữ (easeOutCubic + delay + trail); crossfade DOM chars với **collapse flash** (glow trắng → đặc) |
+| §8 | Silence | Envelope 2.05-2.30s: `sin(p·π)` → dim 62% tất cả + nền tối thêm 34% |
+| §9 | Light sweep | Dải gradient mảnh (skewX −18°, mix-blend screen) chạy 1 lần lúc 3.5s |
+| §10 | Dot quantum | box-shadow 2 copies: tách → orbit → merge (0.62s, 1 lần lúc 3.42s) |
+| §11 | Micro-stars procedural | birthT 0.95-3.5s (14% sinh muộn), 95% mờ / 4% dim / 1% bright + diffraction; pop khi sinh |
+| §12 | Camera move | `camAt(T)`: 1.00 → 1.02 (bang) → 1.00 → 1.015 → 1.035 → 1.06 (peak 4.6s) → 1.04; collapse +0.025 |
+| §13 | Fly-through | ~10 streak screen-space (3.0-5.05s), radial outward, len 24→134px, alpha sin envelope |
+| §14 | Exit collapse | Auto-finish → 560ms "universe → one point": spiral `r ×= 0.90^dt`, spin ×2.6, nucleus collapse flash; skip = instant (bỏ collapse) |
 
-**Perf budget:** sprite pre-render 1 lần; particle count scale theo diện tích (150-420); DPR cap 2; pixel poll sample center 400×400. **Timeline:** TOTAL 5000→5600ms (thêm thời gian ngắm galaxy). Reduced-motion giữ bản calm cũ (không canvas).
-**Verify:** Edge thật 3 mốc (1.2s burst / 2.4s title / 4.6s swirl) — screenshots trong `verify/`.
+**Timeline V3:** BOOM .85 → CHAOS .88-2.05 → SILENCE 2.05-2.30 → CRYSTAL 2.30-2.85 → COSMOS 2.9-3.5 (chars 2.9 + i·.045) → sweep 3.5 · dot-quantum 3.42 · sub 3.7 · tagline 3.9 · hint 4.05 → camera peak 4.6 → collapse 5.6 (+560ms) → fade → mở trang ≈ 6.9s.
+**Verify:** Edge thật 4 mốc (1.2 burst / 2.7 crystal / 3.5 title / 4.6 peak) + no-pageerror (KN-032) — full suite 12/12.
+**Nguyên tắc (user):** "Không thêm hiệu ứng chỉ để nhiều hơn — mỗi effect phải làm vũ trụ như đang được sinh ra."
