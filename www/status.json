@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-10T15:23:10.446Z",
+  "generatedAt": "2026-09-10T16:07:01.975Z",
   "generatedBy": "YUNIE",
   "version": 1,
   "counts": {
@@ -278,7 +278,9 @@
     "archify-demo",
     "auto-learn",
     "cosmic-scale-dark-matter",
+    "cosmos-intro",
     "cosmos-macro-expansion",
+    "cosmos-observatory",
     "cosmos-p0-upgrade",
     "custom-registry",
     "design-showcase-72",
@@ -398,7 +400,7 @@
   "health": {
     "errors": 0,
     "status": "ok",
-    "lastCheck": "2026-09-10T15:23:10.446Z",
+    "lastCheck": "2026-09-10T16:07:01.975Z",
     "checks": [
       "get_errors: pass (0 errors)",
       "registry: 18 instructions (18 total) - 18 skills - 9 agents - 7 prompts - 1 hook — all enabled",
@@ -408,8 +410,8 @@
       "www: polished — responsive 375/768/1280, a11y, states, animation 150-300ms",
       "workflow: www/** -> Pages (upload-artifact path: www) — exists: true + eval job gate",
       "library: www/library/ MCP v1.2.0 (5 tools: search + iterative + list/get/status, router+cache, redacted) + library-rag instruction",
-      "auto-learn: 27 KN, 14 bugs, 0 drafts — suggest/log/propose/status (<50ms, IDF, tiếng Việt)",
-      "governance: audit 9 (Ed25519 receipt P0-4) · policy 9 deny/2 allow (ok) · credentials 0 keys plain",
+      "auto-learn: 30 KN, 17 bugs, 0 drafts — suggest/log/propose/status (<50ms, IDF, tiếng Việt)",
+      "governance: audit 10 (Ed25519 receipt P0-4) · policy 9 deny/2 allow (ok) · credentials 0 keys plain",
       "platform: agents 3 (3 built-in, 0 remote) · mcp 3 vendors/3 grants (library 1.2.0 read-only) · components 3/3 pub · routines 1/1 enabled",
       "collaboration: KN-018 — dissentGate ✅ · whoDidYouThinkWith ✅ · critic ✅ · fund-the-friction ✅ (ok)",
       "n5-blazor: www/n5-blazor/ 7 trang static + app.css + data.js + site.js — 100% Pages"
@@ -614,35 +616,18 @@
     }
   },
   "learn": {
-    "knTotal": 27,
-    "bugsTotal": 14,
+    "knTotal": 30,
+    "bugsTotal": 17,
     "drafts": 0
   },
   "governance": {
     "audit": {
-      "total": 9,
-      "permitted": 9,
+      "total": 10,
+      "permitted": 10,
       "refused": 0,
       "failed": 0,
-      "lastTs": "2026-09-10T15:09:41.668Z",
+      "lastTs": "2026-09-10T15:54:07.578Z",
       "tail": [
-        {
-          "ts": "2026-09-10T14:53:27.333Z",
-          "actor": "YUNIE",
-          "tool": "shell",
-          "target": "node www/ai-news/fetch.mjs --dry",
-          "decision": "permitted",
-          "rule": "allow-all",
-          "durationMs": null,
-          "error": null,
-          "intent": null,
-          "requestId": "e52f51",
-          "prevHash": "409b97090d3e9a8e",
-          "policyDigest": "162346288ec03771",
-          "hash": "3aaa892fbf312353",
-          "sig": "KXHZlA1PNLHG5zrPrdOEzY5KtRuU6ZpiFuG6vqO7P13gvyNS1G1rPcyxhXJGZu-7Taf3jHJRsbrxTEOCawB_Cw",
-          "pub": "MCowBQYDK2VwAyEAY8PlU0KjXp4HJUUlNlVZdaXHUmDagUMm8rUrEShTPXo"
-        },
         {
           "ts": "2026-09-10T14:55:19.078Z",
           "actor": "YUNIE",
@@ -710,6 +695,23 @@
           "hash": "b3d2e603c201b932",
           "sig": "moqv8uFXPPwzgF737e10wG0MaNdVGamw11-nwfFAd2oI8VxQbc21nFc_lkuLeBtkQ2sHoQhdY3HgXd95Z8BoBA",
           "pub": "MCowBQYDK2VwAyEAY8PlU0KjXp4HJUUlNlVZdaXHUmDagUMm8rUrEShTPXo"
+        },
+        {
+          "ts": "2026-09-10T15:54:07.578Z",
+          "actor": "YUNIE",
+          "tool": "shell",
+          "target": "git push",
+          "decision": "permitted",
+          "rule": "allow-all",
+          "durationMs": null,
+          "error": null,
+          "intent": null,
+          "requestId": "43026f",
+          "prevHash": "b3d2e603c201b932",
+          "policyDigest": "162346288ec03771",
+          "hash": "0f978238e239ae2b",
+          "sig": "9ikaEAKoIZxaEqMIVzpFfBeIb7fsbObVLh4KZy-vcJCnoRFuSgDy0nQ7NILSuXcvz5gFqB27mw3nzdbj7AqBBA",
+          "pub": "MCowBQYDK2VwAyEAY8PlU0KjXp4HJUUlNlVZdaXHUmDagUMm8rUrEShTPXo"
         }
       ]
     },
@@ -718,7 +720,7 @@
       "deny": 9,
       "allow": 2,
       "status": "ok",
-      "lastCheck": "2026-09-10T15:23:10.332Z"
+      "lastCheck": "2026-09-10T16:07:01.851Z"
     },
     "credentials": {
       "count": 0,

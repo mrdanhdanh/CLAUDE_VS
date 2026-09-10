@@ -84,6 +84,7 @@ async function main() {
 
   // governance stats (audit/policy/credentials) — học OpenBot
   let governance = { audit: { total: 0, permitted: 0, refused: 0, failed: 0, lastTs: null, tail: [] }, policy: { version: 1, deny: 0, allow: 0, status: 'ok', lastCheck: null }, credentials: { count: 0, status: 'ok', enc: false } };
+  let cosmosAudit = null; // mirror công khai cho www/cosmos/audit.json (observatory không fetch được .agent/ trên Pages)
   try {
     // audit
     const auditPath = path.join(ROOT, '.agent', 'audit.jsonl');
@@ -106,6 +107,12 @@ async function main() {
         try { tail.push(JSON.parse(line)); } catch {}
       }
       governance.audit = { total: lines.length, permitted, refused, failed, lastTs, tail };
+      // mirror cho cosmos observatory — public trên Pages (www/ deploy, .agent/ không tồn tại ở đó)
+      const cosmosEvents = [];
+      for (const line of lines.slice(-50)) {
+        try { cosmosEvents.push(JSON.parse(line)); } catch {}
+      }
+      cosmosAudit = { generatedAt: new Date().toISOString(), source: '.agent/audit.jsonl', total: lines.length, events: cosmosEvents };
     }
     // policy
     const policyPath = path.join(ROOT, '.agent', 'policy.json');
@@ -397,6 +404,15 @@ async function main() {
   // validate JSON
   JSON.parse(await fs.readFile(STATUS_PATH, 'utf8'));
   console.log(`   JSON valid ✅`);
+
+  // www/cosmos/audit.json — mirror công khai cho observatory (Pages chỉ deploy www/, không có .agent/)
+  if (cosmosAudit) {
+    const COSMOS_AUDIT_PATH = path.join(WWW_DIR, 'cosmos', 'audit.json');
+    await fs.mkdir(path.dirname(COSMOS_AUDIT_PATH), { recursive: true });
+    await fs.writeFile(COSMOS_AUDIT_PATH, JSON.stringify(cosmosAudit, null, 2) + '\n', 'utf8');
+    JSON.parse(await fs.readFile(COSMOS_AUDIT_PATH, 'utf8'));
+    console.log(`✅ Generated ${path.relative(ROOT, COSMOS_AUDIT_PATH)} (${cosmosAudit.events.length} events, total ${cosmosAudit.total}) — JSON valid ✅`);
+  }
 }
 
 main().catch(e=>{ console.error(e); process.exit(1); });

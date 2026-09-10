@@ -1839,6 +1839,14 @@ test('checkout', async () =&gt; {
       toastEl._t = setTimeout(()=> toastEl.classList.remove('show'), ms);
     }
 
+    // URL thư mục của trang — robust cả khi URL không có '/' cuối (serve redirect /cosmos/index.html → /cosmos)
+    // fetch('./x') từ '/cosmos' sẽ phân giải sai thành '/x' → 404 (KN-030)
+    function dirBase(p){
+      if(p.endsWith('/')) return p;
+      const last=p.slice(p.lastIndexOf('/')+1);
+      return last.includes('.') ? p.slice(0,p.lastIndexOf('/')+1) : p+'/';
+    }
+
     // ===== INTRO CINEMATIC — Big Bang → Reveal (skip: nút / Esc / click) =====
     (function(){
       const intro = $('#intro');
@@ -2323,7 +2331,7 @@ test('checkout', async () =&gt; {
       let S=0, sucked=0, realS=null;
       async function syncReal(){
         try{
-          const res=await fetch('./scale.json',{cache:'no-store'});
+          const res=await fetch(dirBase(location.pathname)+'scale.json',{cache:'no-store'});
           if(!res.ok) throw new Error('HTTP '+res.status);
           const j=await res.json();
           realS=j?.entropy?.S ?? 0;
@@ -2536,7 +2544,7 @@ test('checkout', async () =&gt; {
       btnReal.addEventListener('click', async ()=>{
         btnReal.disabled=true;
         try{
-          const res=await fetch('./scale.json',{cache:'no-store'});
+          const res=await fetch(dirBase(location.pathname)+'scale.json',{cache:'no-store'});
           const j=await res.json();
           const p=(j.entropy&&j.entropy.parts)||{};
           const S=(j.entropy&&j.entropy.S)||0;
@@ -2784,7 +2792,7 @@ Process là định luật, verify là quan sát.`;
     (function(){
       const MAPS=[
         {ico:'📡', map:'CMB — Bức xạ nền', file:'docs/knowleged.md', link:'../../docs/knowleged.md', desc:'Tri thức gốc của vũ trụ — bài học từ bug (KN-001→015). Mọi agent PHẢI đọc trước khi code: đây là phông nền mà mọi quyết định in trên đó.'},
-        {ico:'💡', map:'Nón ánh sáng', file:'.agent/audit.jsonl', link:'../../.agent/audit.jsonl', desc:'Append-only + hash-chain: mọi event để lại dấu vết nhân quả, không ai sửa được quá khứ. Chain vỡ = nghịch lý thời gian → điều tra ngay.'},
+        {ico:'💡', map:'Nón ánh sáng', file:'.agent/audit.jsonl → mirror: www/cosmos/audit.json', link:'./audit.json', desc:'Append-only + hash-chain: mọi event để lại dấu vết nhân quả, không ai sửa được quá khứ. Chain vỡ = nghịch lý thời gian → điều tra ngay. (Nguồn thật .agent/audit.jsonl — Pages đọc mirror do generate-status.mjs sinh.)'},
         {ico:'⚖️', map:'Định luật + Event Horizon', file:'.agent/policy.json', link:'../../.agent/policy.json', desc:'Deny trước allow, fail-closed. Qua event horizon (refused) là phải human takeover — agent không tự fix loop.'},
         {ico:'🌑', map:'Vật chất tối', file:'.agent/credentials.enc.json', link:'', desc:'Tồn tại, có khối lượng (AES-256-GCM) nhưng không nhìn thấy trực tiếp — never logged, không plain trong .env.'},
         {ico:'📶', map:'Pulsar', file:'.agent/routines.json', link:'', desc:'Nhịp phát đều theo cron (floor 15m, cap 20, 10 fails → off). Kỷ luật lịch trình như nhịp xung sao neutron.'},
@@ -2873,12 +2881,15 @@ Process là định luật, verify là quan sát.`;
         history:[{t:'2026-09-04T09:00:00Z',S:0},{t:'2026-09-04T18:00:00Z',S:0},{t:'2026-09-05T10:00:00Z',S:3},{t:'2026-09-05T19:00:00Z',S:8},{t:'2026-09-06T08:00:00Z',S:12},{t:'2026-09-06T09:22:04Z',S:12}]
       };
 
+      // dirBase + loadAudit — mirror công khai www/cosmos/audit.json (generate-status.mjs sinh từ .agent/audit.jsonl)
+      // Pages chỉ deploy www/ nên KHÔNG fetch được ../../.agent/audit.jsonl (404, KN-030)
       async function loadAudit(){
         try{
-          const res=await fetch('../../.agent/audit.jsonl',{cache:'no-store'});
+          const res=await fetch(dirBase(location.pathname)+'audit.json',{cache:'no-store'});
           if(!res.ok) throw 0;
-          const events=(await res.text()).split('\n').map(l=>l.trim()).filter(Boolean).map(JSON.parse);
-          if(!Array.isArray(events) || !events.length) throw 0;
+          const j=await res.json();
+          const events=Array.isArray(j) ? j : (Array.isArray(j.events) ? j.events : null);
+          if(!events || !events.length) throw 0;
           return {events, real:true};
         }catch{ return {events:DEMO_AUDIT, real:false}; }
       }
@@ -2910,7 +2921,7 @@ Process là định luật, verify là quan sát.`;
 
       async function loadScale(){
         try{
-          const res=await fetch('./scale.json',{cache:'no-store'});
+          const res=await fetch(dirBase(location.pathname)+'scale.json',{cache:'no-store'});
           if(!res.ok) throw 0;
           const j=await res.json();
           if(!j || !Array.isArray(j.history) || !j.history.length) throw 0;

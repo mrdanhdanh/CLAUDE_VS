@@ -51,6 +51,7 @@
 | KN-027 | 2026-09-10 | Feedback-Enriched Environments + Consistency Gap + SOLID self-distillation (2609.08404v1, 2609.08832v1, 2609.09957v1) | RL long-horizon bị reward sparsity; agent 77% per-run nhưng chỉ 53% all-5 (gap 24); self-improvement phụ thuộc verified answers | FEEs: chuyển từ action guidance sang observation enrichment + intra-group feedback consistency; Consistency Analyzer + Guideline Generator; SOLID: cluster objectives, majority artifact làm pseudo-reference, group-relative advantages | `process` `rl` `consistency` `self-distillation` `verification` `scaffold` |
 | KN-028 | 2026-09-10 | Intro COSMOS: hạt Big Bang nổ từ góc thay vì tâm — quên gọi `resize()` + 8/8 behavior test xanh giả | Canvas buffer mặc định 300×150 (w=h=cx=cy=0 vì `resize()` không được invoke) bị CSS kéo giãn; test chỉ assert visible/hidden, không assert geometry | Define setup xong phải invoke ngay; assert invariant hình học (`canvas.width===clientWidth`) trong test; visual evidence bắt bug mà behavior test bỏ lọt | `ui` `animation` `canvas` `verify` `bug-blindness` |
 | KN-029 | 2026-09-10 | View ở VS Code "không thấy hiệu ứng intro" — Google Fonts render-blocking chặn TOÀN BỘ inline script | `<link rel=stylesheet>` third-party trong head là **script-blocking** (không chỉ render): engine intro cuối body không execute đến khi fonts load xong (10-20s mạng chậm) → overlay đứng hình → click nhầm → skip | Third-party CSS luôn async (`media="print" onload`) + noscript; fail-safe mở nội dung khi engine fail; grace 600ms chống click nhầm; glyph chi tiết vẽ bằng CSS | `ui` `perf` `font` `script-blocking` `verify` |
+| KN-030 | 2026-09-10 | `GET /.agent/audit.jsonl 404` trên Pages — observatory luôn hiện demo thay vì data thật | Fetch trỏ ra ngoài deploy root (`../../.agent/` — Pages chỉ deploy `www/`) + fetch relative phân giải sai khi URL bỏ slash cuối (`/cosmos` + `./x` → `/x`) | Tài nguyên ngoài `www/` phải **mirror** vào (generate + commit như `scale.json`); dùng helper `dirBase(pathname)` robust mọi dạng URL; spec assert không-404 + data "thật" | `data` `pages` `fetch` `url` `verify` |
 
 > Dòng ví dụ trên sẽ bị thay khi có bug thật đầu tiên — giữ format.
 
@@ -663,6 +664,27 @@
 - **Tags:** `ui` `perf` `font` `script-blocking` `verify`
 - **Người ghi:** YUNIE / fixbug (user report → repro bằng Playwright route treo)
 
+### KN-030 — Fetch ra ngoài deploy root + relative URL không slash cuối → 404 trên Pages
+
+- **Ngày:** 2026-09-10
+- **Bug report:** `.agent/bugs/2026-09-10-observatory-fetch-404-ngoai-www-va-relative-url/bug.md`
+- **Severity:** major
+- **Triệu chứng:** Console trên trang Pages: `GET https://mrdanhdanh.github.io/.agent/audit.jsonl 404`. Observator "Event Horizon" luôn hiện demo (`✅ Chain OK — demo`) thay vì chuỗi audit thật; card "Nón ánh sáng" bấm 404. Trên local `npx serve` thì cả audit lẫn scale đều `fetch fail` (URL bị redirect `/cosmos/index.html → /cosmos` mất slash cuối).
+- **Nguyên nhân gốc (5 Whys):**
+  - Why1: Fetch 404 → không có data thật, rơi về demo fallback.
+  - Why2 (Pages): `.agent/` ngoài `www/` — Pages chỉ deploy `www/`; `../../` leo lên host root → `/.agent/audit.jsonl` không tồn tại.
+  - Why3 (local): `fetch('./x')` phân giải theo document URL — `/cosmos` (không slash cuối) coi segment cuối là file → `'./x'` → `/x`.
+  - Why4: Code giả định URL luôn có `/` cuối hoặc `.html` + `.agent/` truy cập được từ web root.
+  - Why5 (Root): Trang static không được giả định vị trí file ngoài deploy root hay hình dạng URL — tài nguyên phải nằm trong `www/` và URL phân giải phải robust mọi dạng path.
+- **Cách sửa:** (1) `generate-status.mjs` sinh mirror công khai `www/cosmos/audit.json` (50 events tail) — pattern giống `scale.json`; (2) helper toàn cục `dirBase(pathname)` xử lý đúng `/cosmos/`, `/cosmos`, `/cosmos/index.html`; (3) cả 4 fetch site dùng `dirBase(location.pathname)+'file.json'`; (4) card link → `./audit.json`; (5) spec `cosmos-observatory.spec.ts` assert badge "thật" + mirror 200 + không 404 `.agent`.
+- **Cách phòng tránh:**
+  - Trang static (Pages) **chỉ fetch trong `www/`** — tài nguyên ngoài (`.agent/`, `docs/`, root repo) phải **mirror vào** qua generator + commit.
+  - Relative fetch phải qua helper `dirBase` — không giả định slash cuối. Test cả URL dạng `/path`, `/path/`, `/path/index.html`.
+  - Spec phải assert **không có 404 nào** (bắt network response), không chỉ assert UI text — fallback demo che bug (xanh giả).
+  - Test trên **≥2 host** (serve local + Pages) cho mọi trang có fetch.
+- **Tags:** `data` `pages` `fetch` `url` `verify`
+- **Người ghi:** YUNIE / fixbug (user console report → repro bằng server log + Playwright)
+
 <!-- Thêm bài học mới theo template dưới — copy block này -->
 
 <!--
@@ -687,6 +709,9 @@
 - ❌ Để `<link rel=stylesheet>` third-party (Google Fonts) blocking trong head — nó chặn luôn EXECUTION của mọi inline script phía sau, app "chết đứng" trên mạng chậm (KN-029).
 - ❌ Overlay che nội dung không có fail-safe timer độc lập engine → engine fail là kẹt màn đen vĩnh viễn (KN-029).
 - ❌ Click-anywhere-skip không grace period → user click nhầm lúc mới mở là mất intro (KN-029).
+- ❌ Fetch tài nguyên NGOÀI deploy root (`../../.agent/...` khi Pages chỉ có `www/`) → 404, fallback demo che bug (KN-030).
+- ❌ Fetch relative không tính URL bỏ slash cuối (`/cosmos` + `./x` → `/x` 404) — phải qua helper `dirBase` (KN-030).
+- ❌ Test chỉ assert UI text khi có fallback demo → "demo" vẫn xanh giả; phải assert network không-404 + badge "thật" (KN-030).
 - ❌ Không reproduce trước khi sửa → sửa nhầm chỗ.
 - ❌ Sửa xong không test regression → tạo bug mới.
 - ❌ Không ghi bài học → bug cũ lặp lại.
@@ -827,13 +852,16 @@
 - [ ] Long-horizon RL đã thử environment-side adaptation (FEEs) trước khi nhồi agent-side SFT? (KN-027)
 - [ ] Đã đo consistency gap (all-5 vs per-run) cho production reliability? (KN-027)
 - [ ] Self-improvement không phụ thuộc verified answers — dùng SOLID majority pseudo-reference? (KN-027)
-- [ ] Setup function (resize/init) đã được invoke ngay sau define, không chỉ addEventListener
+- [ ] Setup function (resize/init) đã được invoke ngay sau define, không chỉ addEventListener? (KN-028)
 - [ ] Third-party CSS/fonts đã async (media=print onload / self-host) — không chặn script của trang? (KN-029)
 - [ ] Overlay che nội dung đã có fail-safe tự mở khi engine fail (không kẹt màn đen)? (KN-029)
-- [ ] Skip click-anywhere đã có grace period chống click nhầm? (KN-029)? (KN-028)
+- [ ] Skip click-anywhere đã có grace period chống click nhầm? (KN-029)
+- [ ] Mọi fetch trong `www/` chỉ trỏ tài nguyên TRONG `www/` (ngoài thì mirror vào)? (KN-030)
+- [ ] Fetch dùng `dirBase` — test cả URL không slash cuối + `.html` + `/`? (KN-030)
+- [ ] Spec assert network không-404 (không chỉ UI text — fallback demo che bug)? (KN-030)
 - [ ] Hiệu ứng toạ độ (canvas/parallax) đã có assert geometry (buffer == display size)? (KN-028)
 - [ ] Đã chụp screenshot từng stage animation làm visual evidence trước khi claim Done? (KN-028)
-- [ ] Playwright đã stub6:40:00Z — Maintained by YUNIE / Harness v2 — KN-029 added (user report "view ở VS Code không thấy hiệu ứng": Google Fonts script-blocking chặn toàn bộ inline script — fix async fonts + fail-safe + grace period; regression test route treo fonts)st deterministic? (KN-028)
+- [ ] Playwright đã stub external render-blocking (fonts/CDN) để test deterministic? (KN-028)
 
 *File này do `/fixbug` tự động cập nhật. Mọi luồng khác phải đọc để không lặp lại lỗi cũ.*
-*UpdatedAt: 2026-09-10T15:55:00Z — Maintained by YUNIE / Harness v2 — KN-028 added (intro COSMOS cinematic: canvas quên invoke resize() → burst từ góc + 8/8 behavior test xanh giả — visual evidence bắt; verify screenshot từng stage + stub fonts cho test deterministic) — KN-025/026/027 added (10 papers self-improving 2026-09-08/09: Procedural Graphs + A-JIT, Experience Funnel + ADMET-EvO, FEEs + Consistency Gap + SOLID — chi tiết www/library/export.json 10 arXiv books) — KN-024 added (prolific AI psychosis — output rẻ làm mù khả năng đánh giá; taste/craft là human judgment — Jeff Clark MD + Emily Oberg, chi tiết docs/llm-weakness-research.md §2b) — KN-023 added (model "giỏi ngọn yếu gốc" — 6 papers arXiv: self-correction fail, self-knowledge gap, calibration không generalize, self-preference, sycophancy, pattern-matching reasoning — chi tiết docs/llm-weakness-research.md) — KN-022 added (pipeline in a trench coat — agency cost-based test, DEV.to James Anderson) + KN-021 bổ sung lộ trình Grith risk-score (allow/queue/deny + supervision-escape) — KN-019/020/021 added (bài học từ "My Little AI Factory" dominis.blog + METR study: measured > perceived, trust hard, governance evolve) — KN-015 added (Pages 2 workflows + eval-gate Node 18 CJS) — KN-014 added (MCP stdio smoke hang + verify order + regex m flag — DisCo Phase 3) — KN-013 added (Ponytail ladder integration: minimal-ladder + lean-product) — Fix: Bảng tóm tắt reorder KN-005↔KN-006 + thêm KN-009 (đã có detail nhưng thiếu ở bảng) — Presets bổ sung auto-researcher (đồng bộ registry) — KN-011 added (Random disable Step button) — KN-010 added (AAR pattern) — KN-009 bổ sung detail section (slot máy chủ AI — hardcode config) — KN-008 added (dotnet build file lock MSB3027) — KN-007 added (Auto-Learn) — KN-006 added (N5 UI polish) — KN-005 added (Bug Blindness)*
+*UpdatedAt: 2026-09-10T16:55:00Z — Maintained by YUNIE / Harness v2 — KN-030 added (user console 404: fetch ngoài deploy root + relative URL không slash cuối — mirror www/cosmos/audit.json + dirBase helper; spec assert network no-404) — KN-029 added (Google Fonts script-blocking chặn toàn bộ inline script — async fonts + fail-safe + grace period) — KN-028 added (intro COSMOS cinematic: canvas quên invoke resize() → burst từ góc + 8/8 behavior test xanh giả — visual evidence bắt; verify screenshot từng stage + stub fonts cho test deterministic) — KN-025/026/027 added (10 papers self-improving 2026-09-08/09: Procedural Graphs + A-JIT, Experience Funnel + ADMET-EvO, FEEs + Consistency Gap + SOLID — chi tiết www/library/export.json 10 arXiv books) — KN-024 added (prolific AI psychosis — output rẻ làm mù khả năng đánh giá; taste/craft là human judgment — Jeff Clark MD + Emily Oberg, chi tiết docs/llm-weakness-research.md §2b) — KN-023 added (model "giỏi ngọn yếu gốc" — 6 papers arXiv: self-correction fail, self-knowledge gap, calibration không generalize, self-preference, sycophancy, pattern-matching reasoning — chi tiết docs/llm-weakness-research.md) — KN-022 added (pipeline in a trench coat — agency cost-based test, DEV.to James Anderson) + KN-021 bổ sung lộ trình Grith risk-score (allow/queue/deny + supervision-escape) — KN-019/020/021 added (bài học từ "My Little AI Factory" dominis.blog + METR study: measured > perceived, trust hard, governance evolve) — KN-015 added (Pages 2 workflows + eval-gate Node 18 CJS) — KN-014 added (MCP stdio smoke hang + verify order + regex m flag — DisCo Phase 3) — KN-013 added (Ponytail ladder integration: minimal-ladder + lean-product) — Fix: Bảng tóm tắt reorder KN-005↔KN-006 + thêm KN-009 (đã có detail nhưng thiếu ở bảng) — Presets bổ sung auto-researcher (đồng bộ registry) — KN-011 added (Random disable Step button) — KN-010 added (AAR pattern) — KN-009 bổ sung detail section (slot máy chủ AI — hardcode config) — KN-008 added (dotnet build file lock MSB3027) — KN-007 added (Auto-Learn) — KN-006 added (N5 UI polish) — KN-005 added (Bug Blindness)*
