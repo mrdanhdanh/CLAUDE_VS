@@ -4,11 +4,14 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="color-scheme" content="dark light" />
+  <script>/* Intro gate — che nội dung từ frame đầu; no-JS = không có intro. Fail-safe 9s: engine intro không chạy được → tự mở nội dung (không bao giờ kẹt màn đen). */(function(){try{var d=document.documentElement;d.classList.add('intro-on');setTimeout(function(){if(!window.__introOn)d.classList.remove('intro-on');},9000);}catch(e){}})();</script>
   <meta name="description" content="COSMOS · QUANTUM — Triết lý 2 tầng cho Harness v2. Vũ trụ (Macro) + Lượng tử (Micro) = Process là định luật, verify là quan sát." />
   <title>COSMOS · QUANTUM — Triết lý Harness v2</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@700;800&family=JetBrains+Mono:wght@400;500;600&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+  <!-- Fonts async (media=print onload): KHÔNG block render/script — trước đây là stylesheet blocking làm intro chết đứng 10-20s khi CDN chậm (KN-029) -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@700;800&family=JetBrains+Mono:wght@400;500;600&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+  <noscript><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@700;800&family=JetBrains+Mono:wght@400;500;600&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet"></noscript>
   <style>
     /* ===== COSMOS · QUANTUM — Design System ===== */
     :root{
@@ -960,9 +963,99 @@
       .bh-stage{height:140px}
       .schrodinger-stage{height:140px}
     }
+    /* ===== INTRO CINEMATIC — Big Bang → Reveal (skip: nút / Esc / click) ===== */
+    .intro{
+      display:none;position:fixed;inset:0;z-index:1000;
+      flex-direction:column;align-items:center;justify-content:center;
+      text-align:center;padding:24px;background:#03040c;overflow:hidden;
+      transition:opacity .65s ease, transform .65s ease;
+    }
+    .intro:focus{outline:none}
+    html.intro-on .intro{display:flex}
+    html.intro-on,html.intro-on body{overflow:hidden}
+    .intro::after{content:"";position:absolute;inset:0;pointer-events:none;background:radial-gradient(120% 90% at 50% 45%, transparent 30%, rgba(0,0,0,.6) 100%)}
+    .intro.done{opacity:0;transform:scale(1.12);pointer-events:none}
+    .intro.fast{transition-duration:.28s}
+    .intro-canvas{position:absolute;inset:0;width:100%;height:100%}
+    .intro-flash{position:absolute;inset:-20%;pointer-events:none;opacity:0;background:radial-gradient(closest-side at 50% 50%, #fff, rgba(196,181,253,.8) 30%, rgba(124,58,237,.28) 55%, transparent 72%)}
+    .intro.play .intro-flash{animation:introFlash .95s ease-out .82s both}
+    @keyframes introFlash{0%{opacity:0}9%{opacity:.95}100%{opacity:0}}
+    .intro-core{position:absolute;left:50%;top:50%;width:12px;height:12px;margin:-6px 0 0 -6px;border-radius:50%;background:#fff;box-shadow:0 0 18px 6px rgba(167,139,250,.95),0 0 60px 24px rgba(6,182,214,.45);opacity:0}
+    .intro.play .intro-core{animation:introCore 1.05s ease-in-out both}
+    @keyframes introCore{0%{opacity:0;transform:scale(.4)}14%{opacity:1;transform:scale(1)}60%{opacity:1;transform:scale(1.5)}76%{opacity:1;transform:scale(4)}100%{opacity:0;transform:scale(90)}}
+    .intro-content{position:relative;z-index:2;max-width:1060px}
+    .intro-title{
+      margin:0;font:800 clamp(28px,7vw,62px)/1.15 var(--font-display);color:#fff;
+      letter-spacing:.3em;text-indent:.3em;
+      text-shadow:0 0 26px rgba(124,58,237,.55),0 0 70px rgba(6,182,214,.3);
+      transition:letter-spacing 1.1s ease .15s, text-indent 1.1s ease .15s;
+    }
+    .intro.play .intro-title{letter-spacing:.08em;text-indent:.08em}
+    .intro-char{display:inline-block;opacity:0;transform:translateY(26px) scale(.88);filter:blur(12px)}
+    .intro-word{display:inline-block;white-space:nowrap}
+    .intro.play .intro-char{animation:introChar .7s cubic-bezier(.16,.8,.24,1) both;animation-delay:calc(1.3s + var(--i,0)*.045s)}
+    @keyframes introChar{to{opacity:1;transform:none;filter:blur(0)}}
+    .intro-char.dot{color:transparent;position:relative;text-shadow:none}
+    /* Vẽ dấu chấm bằng CSS — không phụ thuộc glyph "·" của font (fallback render thành ô vuông khi CDN chậm) */
+    .intro-char.dot::before{content:"";position:absolute;left:50%;top:50%;width:.16em;height:.16em;border-radius:50%;background:var(--cosmos-accent);transform:translate(-50%,-50%);box-shadow:0 0 18px rgba(245,158,11,.85)}
+    .intro.play .intro-char.dot{animation:introChar .7s cubic-bezier(.16,.8,.24,1) calc(1.3s + var(--i,0)*.045s) both, introDot 2.4s ease-in-out 3s infinite}
+    @keyframes introDot{0%,100%{opacity:1}50%{opacity:.4}}
+    .intro-underline{width:min(420px,70%);height:2px;margin:22px auto 0;background:linear-gradient(90deg,transparent,#7c3aed,#06b6d4,#f59e0b,transparent);transform:scaleX(0);opacity:0}
+    .intro.play .intro-underline{animation:introSweep 1s cubic-bezier(.16,.8,.24,1) 2.15s both}
+    @keyframes introSweep{from{transform:scaleX(0);opacity:0}to{transform:scaleX(1);opacity:.9}}
+    .intro-sub{margin:18px 0 0;font:600 clamp(11px,1.6vw,13px)/1.7 var(--font-mono);letter-spacing:.22em;text-transform:uppercase;color:#67e8f9;opacity:0}
+    .intro.play .intro-sub{animation:introRise .8s cubic-bezier(.16,.8,.24,1) 2.35s both}
+    .intro-tagline{margin:12px 0 0;font:500 13px/1.6 var(--font-sans);color:var(--cosmos-text-muted);opacity:0}
+    .intro.play .intro-tagline{animation:introRise .8s ease 3.05s both}
+    @keyframes introRise{from{opacity:0;transform:translateY(14px);filter:blur(6px)}to{opacity:1;transform:none;filter:blur(0)}}
+    .intro-hint{position:absolute;left:0;right:0;bottom:26px;margin:0;font:500 11px var(--font-mono);letter-spacing:.08em;color:var(--cosmos-text-dim);opacity:0}
+    .intro-hint kbd{font:600 10px var(--font-mono);color:var(--cosmos-text);background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.16);border-bottom-width:2px;border-radius:5px;padding:2px 6px}
+    .intro.play .intro-hint{animation:introFade .8s ease 3.2s both}
+    @keyframes introFade{from{opacity:0}to{opacity:1}}
+    .intro-skip{
+      position:absolute;top:18px;right:18px;z-index:3;
+      display:inline-flex;align-items:center;gap:8px;cursor:pointer;
+      appearance:none;font:600 13px var(--font-sans);color:var(--cosmos-text);
+      background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.14);
+      border-radius:var(--radius-full);padding:9px 16px;
+      -webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);
+      opacity:0;animation:introFade .6s ease .3s both;
+      transition:background .18s ease, border-color .18s ease, transform .18s ease;
+    }
+    .intro-skip:hover{background:rgba(255,255,255,.12);border-color:rgba(255,255,255,.3);transform:translateY(-1px)}
+    .intro-skip:active{transform:scale(.97)}
+    .intro-skip:focus-visible{outline:2px solid var(--cosmos-primary);outline-offset:2px}
+    .intro-progress{position:absolute;left:0;right:0;bottom:0;height:3px;z-index:3;background:rgba(255,255,255,.07)}
+    .intro-progress i{display:block;height:100%;width:0;background:linear-gradient(90deg,#7c3aed,#06b6d4,#f59e0b);box-shadow:0 0 12px rgba(124,58,237,.6);transition:width 4.8s linear}
+    @media(prefers-reduced-motion:reduce){
+      .intro{transition-duration:.4s}
+      .intro-canvas,.intro-flash,.intro-core{display:none}
+      .intro.done{transform:none}
+      .intro-char,.intro-char.dot,.intro-underline,.intro-sub,.intro-tagline,.intro-hint,.intro-skip{opacity:1 !important;transform:none !important;filter:none !important;animation:none !important}
+      .intro-title{letter-spacing:.08em;text-indent:.08em;transition:none}
+    }
   </style>
 </head>
 <body>
+  <!-- ===== INTRO CINEMATIC — Big Bang → Reveal · skip: nút / Esc / click ===== -->
+  <div class="intro" id="intro" role="dialog" aria-modal="true" aria-label="Intro COSMOS · QUANTUM" tabindex="-1">
+    <canvas class="intro-canvas" id="introCanvas" aria-hidden="true"></canvas>
+    <div class="intro-flash" aria-hidden="true"></div>
+    <div class="intro-core" aria-hidden="true"></div>
+    <div class="intro-content">
+      <h1 class="intro-title" id="introTitle" aria-label="COSMOS · QUANTUM"></h1>
+      <div class="intro-underline" aria-hidden="true"></div>
+      <p class="intro-sub">Process là định luật · Verify là quan sát</p>
+      <p class="intro-tagline">8 phase · 1 vũ trụ · 0 đoán</p>
+    </div>
+    <button class="intro-skip" id="introSkip" type="button">
+      Bỏ qua intro
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 4l10 8-10 8V4z"/><path d="M19 5v14"/></svg>
+    </button>
+    <div class="intro-progress" aria-hidden="true"><i id="introProgress"></i></div>
+    <p class="intro-hint">Nhấn <kbd>Esc</kbd> hoặc click để vào ngay →</p>
+  </div>
+
   <a class="skip-link" href="#main">Bỏ qua đến nội dung chính</a>
   <div class="scroll-progress" aria-hidden="true"><div class="scroll-progress-bar" id="scrollProgressBar"></div></div>
   <div class="floating-orbs" aria-hidden="true">
@@ -1745,6 +1838,181 @@ test('checkout', async () =&gt; {
       clearTimeout(toastEl._t);
       toastEl._t = setTimeout(()=> toastEl.classList.remove('show'), ms);
     }
+
+    // ===== INTRO CINEMATIC — Big Bang → Reveal (skip: nút / Esc / click) =====
+    (function(){
+      const intro = $('#intro');
+      const htmlEl = document.documentElement;
+      if(!intro){ htmlEl.classList.remove('intro-on'); return; }
+      const skipBtn = $('#introSkip'), bar = $('#introProgress'), titleEl = $('#introTitle');
+      const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const TOTAL = reduced ? 1800 : 5000;               // auto-reveal
+      const EXIT_MS = reduced ? 400 : 650, EXIT_FAST = 300;
+      let finished = false, raf = 0, resizeFn = null;
+      const timers = [];
+      const startedAt = performance.now();               // mốc grace period chống click nhầm (600ms)
+
+      // Dựng title theo từng ký tự (stagger) — "COSMOS · QUANTUM"; word-wrapper chống bẻ giữa chữ ở màn nhỏ
+      try{
+        if(titleEl){
+          let i = 0;
+          const frag = document.createDocumentFragment();
+          const addWord = (word)=>{
+            const wEl = document.createElement('span');
+            wEl.className = 'intro-word';
+            for(const ch of word){
+              const s = document.createElement('span');
+              s.className = 'intro-char' + (ch === '·' ? ' dot' : '');
+              s.style.setProperty('--i', i++);
+              s.textContent = ch;
+              wEl.appendChild(s);
+            }
+            frag.appendChild(wEl);
+          };
+          'COSMOS · QUANTUM'.split(' ').forEach((word, idx)=>{
+            if(idx) frag.appendChild(document.createTextNode(' '));
+            addWord(word);
+          });
+          titleEl.appendChild(frag);
+        }
+      }catch(e){}
+
+      // Focus vào dialog + khoá nền (aria-hidden + inert), nhớ giá trị cũ để khôi phục đúng
+      const bgEls = [...document.body.children].filter(el => el !== intro && el.tagName !== 'SCRIPT');
+      const prevAria = new Map();
+      try{
+        intro.focus({preventScroll:true});
+        bgEls.forEach(el=>{
+          prevAria.set(el, el.getAttribute('aria-hidden'));
+          el.setAttribute('aria-hidden','true');
+          if('inert' in el) el.inert = true;
+        });
+      }catch(e){}
+
+      const onKey = (e)=>{
+        if(e.key === 'Escape' || e.key === 'Esc'){ e.preventDefault(); finish(true); }
+      };
+      function finish(instant){
+        if(finished) return; finished = true;
+        cancelAnimationFrame(raf);
+        timers.forEach(clearTimeout);
+        if(instant) intro.classList.add('fast');
+        intro.classList.add('done');
+        timers.push(setTimeout(()=>{
+          intro.style.display = 'none';
+          intro.setAttribute('aria-hidden','true');
+          htmlEl.classList.remove('intro-on');
+          bgEls.forEach(el=>{
+            const v = prevAria.get(el);
+            if(v === null) el.removeAttribute('aria-hidden'); else el.setAttribute('aria-hidden', v);
+            if('inert' in el) el.inert = false;
+          });
+          window.removeEventListener('keydown', onKey, true);
+          if(resizeFn) window.removeEventListener('resize', resizeFn);
+          const main = $('#main');
+          if(main){ try{ main.setAttribute('tabindex','-1'); main.focus({preventScroll:true}); main.removeAttribute('tabindex'); }catch(e){} }
+        }, instant ? EXIT_FAST : EXIT_MS + 80));
+      }
+
+      // Fail-safe: auto-finish được schedule TRƯỚC mọi thứ nặng
+      timers.push(setTimeout(()=>finish(false), TOTAL));
+
+      skipBtn && skipBtn.addEventListener('click', ()=>finish(true));
+      // Click bất kỳ đâu để vào ngay — grace period 600ms chống click nhầm khi vừa mở preview
+      intro.addEventListener('click', ()=>{ if(performance.now() - startedAt < 600) return; finish(true); });
+      window.addEventListener('keydown', onKey, true);
+
+      // Progress bar (chạy nền suốt thời lượng)
+      if(bar){
+        bar.style.transitionDuration = Math.round(TOTAL*0.95) + 'ms';
+        requestAnimationFrame(()=>{ bar.style.width = '100%'; });
+      }
+      // Timeline CSS: thêm .play sau khi overlay đã render
+      requestAnimationFrame(()=>requestAnimationFrame(()=>intro.classList.add('play')));
+
+      // --- Canvas Big Bang: singularity → burst particles + shockwave ---
+      try{
+        const canvas = $('#introCanvas');
+        if(canvas && !reduced){
+          const ctx = canvas.getContext('2d');
+          if(ctx){
+            const DPR = Math.min(devicePixelRatio || 1, 2);
+            const BURST_T = 850;                       // khớp introCore/introFlash (.82s)
+            const COLORS = [[255,255,255],[167,139,250],[103,232,249],[251,191,36],[236,72,153]];
+            let w = 0, h = 0, cx = 0, cy = 0, parts = [], burstAt = 0;
+            const t0 = performance.now();
+            const resize = ()=>{
+              w = intro.clientWidth; h = intro.clientHeight;
+              canvas.width = Math.max(1, w*DPR); canvas.height = Math.max(1, h*DPR);
+              canvas.style.width = w+'px'; canvas.style.height = h+'px';
+              ctx.setTransform(DPR,0,0,DPR,0,0);
+              cx = w/2; cy = h/2;
+            };
+            resizeFn = resize;
+            window.addEventListener('resize', resizeFn);
+            resize();                                  // ← đo kích thước ngay (không thì cx,cy=0 → burst từ góc)
+            function burst(){
+              if(!w || !h) resize();                   // guard: nếu viewport đổi/khởi tạo trễ
+              burstAt = performance.now();
+              const n = Math.max(90, Math.min(260, Math.floor((w*h)/7000)));
+              const scale = Math.max(.7, Math.min(w,h)/620);
+              parts = Array.from({length:n}, ()=>{
+                const a = Math.random()*Math.PI*2;
+                const sp = (1.2 + Math.random()*7.6)*scale;
+                const c = COLORS[Math.random() < .42 ? 0 : 1 + Math.floor(Math.random()*4)];
+                return {x:cx, y:cy, vx:Math.cos(a)*sp, vy:Math.sin(a)*sp, r:.6+Math.random()*1.7, c, tw:.02+Math.random()*.05, ph:Math.random()*6.28};
+              });
+            }
+            (function frame(){
+              if(finished) return;
+              const now = performance.now(), t = now - t0;
+              ctx.clearRect(0,0,w,h);
+              if(t >= BURST_T && !burstAt) burst();
+              if(burstAt){
+                const age = (now - burstAt)/1000;
+                // shockwave 2 vòng
+                const sr = 6 + age*Math.min(w,h)*.85;
+                const so = Math.max(0, .55 - age*.42);
+                if(so > .01){
+                  ctx.beginPath(); ctx.arc(cx,cy,sr,0,Math.PI*2);
+                  ctx.strokeStyle = 'rgba(167,139,250,'+so.toFixed(3)+')'; ctx.lineWidth = 2.5; ctx.stroke();
+                  ctx.beginPath(); ctx.arc(cx,cy,sr*.82,0,Math.PI*2);
+                  ctx.strokeStyle = 'rgba(103,232,249,'+(so*.7).toFixed(3)+')'; ctx.lineWidth = 1.2; ctx.stroke();
+                }
+                // lõi sáng đầu burst
+                if(age < .7){
+                  const rr = 160*Math.max(.3, Math.min(2, age*4));
+                  const g = ctx.createRadialGradient(cx,cy,0,cx,cy,rr);
+                  g.addColorStop(0, 'rgba(255,240,250,'+(0.5*(1-age/.7)).toFixed(3)+')');
+                  g.addColorStop(1, 'transparent');
+                  ctx.fillStyle = g; ctx.fillRect(0,0,w,h);
+                }
+                let alive = 0;
+                for(const p of parts){
+                  p.x += p.vx; p.y += p.vy; p.vx *= .988; p.vy *= .988;
+                  const life = Math.max(0, 1 - age/2.6);
+                  if(life <= 0) continue;
+                  alive++; p.ph += p.tw;
+                  const a = life*(.6 + .4*Math.sin(p.ph))*.95;
+                  ctx.beginPath();
+                  ctx.arc(p.x, p.y, Math.max(.2, p.r*(.4 + life*.6)), 0, Math.PI*2);
+                  ctx.fillStyle = 'rgba('+p.c[0]+','+p.c[1]+','+p.c[2]+','+a.toFixed(3)+')';
+                  if(p.c[0] !== 255 || p.c[1] !== 255 || p.c[2] !== 255){
+                    ctx.shadowColor = 'rgba('+p.c[0]+','+p.c[1]+','+p.c[2]+',.8)'; ctx.shadowBlur = 6;
+                  }
+                  ctx.fill();
+                  ctx.shadowBlur = 0;
+                }
+                if(alive === 0 && age > 3) return;   // hết hạt → dừng loop
+              }
+              raf = requestAnimationFrame(frame);
+            })();
+          }
+        }
+
+      window.__introOn = true;   // engine hoàn tất — head fail-safe (9s) đứng yên
+      }catch(e){}
+    })();
 
     // ===== Starfield Canvas =====
     (function(){

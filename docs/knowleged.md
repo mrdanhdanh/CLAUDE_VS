@@ -49,6 +49,8 @@
 | KN-025 | 2026-09-10 | Procedural Graphs — Self-Evolving Execution Structures (2609.09153v1) + A-JIT (2609.10248v1) | Agent chọn action qua unconstrained generation trên history dài → mất track, lặp vô ích, tool sai thứ tự | Procedural Graph tổ chức (procedure, relation, procedure) + guidance model bias next action + LLM refiner contrast failed/success để edit topology, giữ rejected edits | `process` `agent` `self-evolving` `procedural-graph` `a-jit` |
 | KN-026 | 2026-09-10 | Experience Funnel — State-Policy Alternating Loop (2609.08919v1) + ADMET-EvO evidence-gated (2609.10121v1) | Experience rời rạc không thành competence tái dùng; state text nhanh nhưng phụ thuộc context, policy parametric gọn nhưng chậm update | Alternating loop: distill trajectory → explicit textual state (fast) → identify useful behavior → consolidate vào policy via transition-aware distillation (slow) + evidence-gated carry forward | `process` `self-evolving` `memory` `evidence` `funnel` |
 | KN-027 | 2026-09-10 | Feedback-Enriched Environments + Consistency Gap + SOLID self-distillation (2609.08404v1, 2609.08832v1, 2609.09957v1) | RL long-horizon bị reward sparsity; agent 77% per-run nhưng chỉ 53% all-5 (gap 24); self-improvement phụ thuộc verified answers | FEEs: chuyển từ action guidance sang observation enrichment + intra-group feedback consistency; Consistency Analyzer + Guideline Generator; SOLID: cluster objectives, majority artifact làm pseudo-reference, group-relative advantages | `process` `rl` `consistency` `self-distillation` `verification` `scaffold` |
+| KN-028 | 2026-09-10 | Intro COSMOS: hạt Big Bang nổ từ góc thay vì tâm — quên gọi `resize()` + 8/8 behavior test xanh giả | Canvas buffer mặc định 300×150 (w=h=cx=cy=0 vì `resize()` không được invoke) bị CSS kéo giãn; test chỉ assert visible/hidden, không assert geometry | Define setup xong phải invoke ngay; assert invariant hình học (`canvas.width===clientWidth`) trong test; visual evidence bắt bug mà behavior test bỏ lọt | `ui` `animation` `canvas` `verify` `bug-blindness` |
+| KN-029 | 2026-09-10 | View ở VS Code "không thấy hiệu ứng intro" — Google Fonts render-blocking chặn TOÀN BỘ inline script | `<link rel=stylesheet>` third-party trong head là **script-blocking** (không chỉ render): engine intro cuối body không execute đến khi fonts load xong (10-20s mạng chậm) → overlay đứng hình → click nhầm → skip | Third-party CSS luôn async (`media="print" onload`) + noscript; fail-safe mở nội dung khi engine fail; grace 600ms chống click nhầm; glyph chi tiết vẽ bằng CSS | `ui` `perf` `font` `script-blocking` `verify` |
 
 > Dòng ví dụ trên sẽ bị thay khi có bug thật đầu tiên — giữ format.
 
@@ -618,6 +620,49 @@
 - **Tags:** `process` `rl` `consistency` `self-distillation` `verification` `scaffold`
 - **Người ghi:** YUNIE / auto-learn
 
+### KN-028 — Canvas quên invoke `resize()` → burst sai gốc + behavior test xanh giả
+
+- **Ngày:** 2026-09-10
+- **Bug report:** `.agent/bugs/2026-09-10-intro-burst-tu-goc-do-quen-goi-resize/bug.md`
+- **Severity:** major
+- **Triệu chứng:** Intro cinematic COSMOS — 240 hạt Big Bang nổ từ **góc trên-trái (0,0)** thay vì tâm màn hình; canvas bị kéo giãn (hạt to/mờ bất thường: buffer 300×150 mặc định bị CSS scale lên 1280×720). Trong khi đó **8/8 Playwright test PASS** (cover/skip/reveal đều đúng) → xanh giả, suýt ship bug.
+- **Nguyên nhân gốc (5 Whys):**
+  - Why1: Hạt spawn tại `(cx,cy)=(0,0)` — vì `cx,cy` chưa bao giờ được gán.
+  - Why2: `cx,cy` chỉ gán trong `resize()` — vì `resize()` chưa bao giờ chạy lần nào.
+  - Why3: Code chỉ **define** `resize()` + `addEventListener('resize', resizeFn)` — **thiếu invoke `resize()` khởi tạo**.
+  - Why4: Không test nào assert invariant "canvas buffer == kích thước hiển thị" → behavior test không thể bắt.
+  - Why5 (Root): Invariant hình học chỉ tồn tại trong đầu người viết, không trong test — chỉ **visual evidence (screenshot)** bắt được.
+- **Cách sửa:** Thêm `resize();` ngay sau đăng ký listener + guard `if(!w||!h) resize()` trong `burst()` (chống khởi tạo trễ/viewport đổi); thêm assert `canvas.width===clientWidth && canvas.height===clientHeight` vào spec; screenshot từng stage làm evidence (`.agent/plans/cosmos-intro/verify/`).
+- **Cách phòng tránh:**
+  - Pattern "define setup → addEventListener" **phải kèm invoke ngay** — define không phải là chạy.
+  - Mọi effect dùng toạ độ/kích thước (canvas, parallax, viewBox) phải có **assert invariant hình học** trong test — không chỉ assert visible/hidden (KN-023: verification ngoài model).
+  - Animation phải có **visual evidence từng stage** (screenshot) trước khi claim Done — behavior test xanh ≠ hiệu ứng đúng (KN-005 Bug Blindness).
+  - Playwright test với external render-blocking (Google Fonts CSS) phải **stub route** để deterministic — nếu không, `load` event trễ 10-20s làm timeline chạy xong trước khi test assert → flaky giả.
+- **Tags:** `ui` `animation` `canvas` `verify` `bug-blindness`
+- **Người ghi:** YUNIE / fixbug (self-caught qua screenshot evidence)
+
+### KN-029 — Google Fonts script-blocking làm intro "không hiện" trên mạng chậm
+
+- **Ngày:** 2026-09-10
+- **Bug report:** `.agent/bugs/2026-09-10-google-fonts-chan-script-intro-khong-hien/bug.md`
+- **Severity:** major
+- **Triệu chứng:** User báo "view ở VS Code không thấy hiệu ứng intro". Thực tế: 10-20s đầu overlay đứng hình (nền đen + nút skip + progress 0%, không chữ vì chars do JS inject); hoặc user click sớm → skip tức thì → không cảm nhận được gì.
+- **Nguyên nhân gốc (5 Whys):**
+  - Why1: Engine intro (inline script cuối body) không execute trong 10-20s đầu.
+  - Why2: Inline script đứng SAU một stylesheet chưa load xong bị **block execution** (spec: "a style sheet that is blocking scripts") — third-party CSS block SCRIPT, không chỉ render.
+  - Why3: `<link>` Google Fonts là stylesheet blocking thường (không async) → mạng chậm VN giữ toàn bộ JS của trang làm con tin.
+  - Why4: Gate `intro-on` (script trong head, chạy được) che nội dung ngay → user thấy màn đen đứng hình thay vì fallback bình thường → tệ hơn không có intro.
+  - Why5 (Root): Third-party CSS nhúng kiểu blocking + overlay che nội dung không fail-safe — đường loading bị khóa vào 1 CDN ngoài.
+- **Cách sửa:** (1) Fonts async `media="print" onload="this.media='all'"` + `<noscript>`; (2) fail-safe 9s ở head gate (engine không chạy → tự mở nội dung); (3) grace period 600ms cho click-anywhere; (4) dấu "·" vẽ bằng CSS circle (fallback font render ô vuông); (5) `window.__introOn=true` đặt cuối IIFE.
+- **Cách phòng tránh:**
+  - Third-party CSS (fonts/CDN) **luôn async** hoặc self-host — không bao giờ để chặn first script của trang.
+  - Overlay che nội dung phải có **fail-safe timer độc lập với engine** (engine fail → tự mở nội dung, không bao giờ kẹt màn đen).
+  - Skip kiểu click-anywhere phải có **grace period (~600ms)** chống click nhầm khi vừa mở.
+  - Chi tiết thiết kế (dot, divider) không phụ thuộc glyph font — vẽ bằng CSS để deterministic.
+  - Regression test: route treo fonts CDN → assert engine vẫn chạy ngay (`cosmos-intro.spec.ts`).
+- **Tags:** `ui` `perf` `font` `script-blocking` `verify`
+- **Người ghi:** YUNIE / fixbug (user report → repro bằng Playwright route treo)
+
 <!-- Thêm bài học mới theo template dưới — copy block này -->
 
 <!--
@@ -639,6 +684,9 @@
 ## Anti-patterns tích lũy (Đừng lặp lại)
 
 - ❌ Fix triệu chứng, không tìm root cause.
+- ❌ Để `<link rel=stylesheet>` third-party (Google Fonts) blocking trong head — nó chặn luôn EXECUTION của mọi inline script phía sau, app "chết đứng" trên mạng chậm (KN-029).
+- ❌ Overlay che nội dung không có fail-safe timer độc lập engine → engine fail là kẹt màn đen vĩnh viễn (KN-029).
+- ❌ Click-anywhere-skip không grace period → user click nhầm lúc mới mở là mất intro (KN-029).
 - ❌ Không reproduce trước khi sửa → sửa nhầm chỗ.
 - ❌ Sửa xong không test regression → tạo bug mới.
 - ❌ Không ghi bài học → bug cũ lặp lại.
@@ -658,6 +706,9 @@
 - ❌ Fix bug encoding bằng cách xóa dấu tiếng Việt — phải giữ UTF-8 chuẩn (KN-006).
 - ❌ Dùng PowerShell here-string cho file UTF-8 tiếng Việt → corrupt (KN-006).
 - ❌ NavMenu minimal không có badge/grouping/aria-label (KN-006).
+- ❌ Define setup function (resize/init) xong tưởng đã chạy — quên invoke khởi tạo → canvas buffer 300×150 bị CSS kéo giãn, hạt nổ từ góc (KN-028).
+- ❌ Behavior test xanh (visible/hidden) mà không assert geometry invariant → hiệu ứng sai vị trí vẫn PASS (KN-028).
+- ❌ Để Playwright phụ thuộc external render-blocking (fonts CDN) → `load` trễ làm test flaky giả (KN-028).
 - ❌ Code mà không `suggest` KN liên quan trước — dễ lặp bug cũ (KN-007).
 - ❌ Gặp lỗi mà không `log` ngay — để trôi, mất context (KN-007).
 - ❌ Fix xong mà không `propose` KN mới — bài học không được lưu (KN-007).
@@ -776,6 +827,13 @@
 - [ ] Long-horizon RL đã thử environment-side adaptation (FEEs) trước khi nhồi agent-side SFT? (KN-027)
 - [ ] Đã đo consistency gap (all-5 vs per-run) cho production reliability? (KN-027)
 - [ ] Self-improvement không phụ thuộc verified answers — dùng SOLID majority pseudo-reference? (KN-027)
+- [ ] Setup function (resize/init) đã được invoke ngay sau define, không chỉ addEventListener
+- [ ] Third-party CSS/fonts đã async (media=print onload / self-host) — không chặn script của trang? (KN-029)
+- [ ] Overlay che nội dung đã có fail-safe tự mở khi engine fail (không kẹt màn đen)? (KN-029)
+- [ ] Skip click-anywhere đã có grace period chống click nhầm? (KN-029)? (KN-028)
+- [ ] Hiệu ứng toạ độ (canvas/parallax) đã có assert geometry (buffer == display size)? (KN-028)
+- [ ] Đã chụp screenshot từng stage animation làm visual evidence trước khi claim Done? (KN-028)
+- [ ] Playwright đã stub6:40:00Z — Maintained by YUNIE / Harness v2 — KN-029 added (user report "view ở VS Code không thấy hiệu ứng": Google Fonts script-blocking chặn toàn bộ inline script — fix async fonts + fail-safe + grace period; regression test route treo fonts)st deterministic? (KN-028)
 
 *File này do `/fixbug` tự động cập nhật. Mọi luồng khác phải đọc để không lặp lại lỗi cũ.*
-*UpdatedAt: 2026-09-10T14:30:00Z — Maintained by YUNIE / Harness v2 — KN-025/026/027 added (10 papers self-improving 2026-09-08/09: Procedural Graphs + A-JIT, Experience Funnel + ADMET-EvO, FEEs + Consistency Gap + SOLID — chi tiết www/library/export.json 10 arXiv books) — KN-024 added (prolific AI psychosis — output rẻ làm mù khả năng đánh giá; taste/craft là human judgment — Jeff Clark MD + Emily Oberg, chi tiết docs/llm-weakness-research.md §2b) — KN-023 added (model "giỏi ngọn yếu gốc" — 6 papers arXiv: self-correction fail, self-knowledge gap, calibration không generalize, self-preference, sycophancy, pattern-matching reasoning — chi tiết docs/llm-weakness-research.md) — KN-022 added (pipeline in a trench coat — agency cost-based test, DEV.to James Anderson) + KN-021 bổ sung lộ trình Grith risk-score (allow/queue/deny + supervision-escape) — KN-019/020/021 added (bài học từ "My Little AI Factory" dominis.blog + METR study: measured > perceived, trust hard, governance evolve) — KN-015 added (Pages 2 workflows + eval-gate Node 18 CJS) — KN-014 added (MCP stdio smoke hang + verify order + regex m flag — DisCo Phase 3) — KN-013 added (Ponytail ladder integration: minimal-ladder + lean-product) — Fix: Bảng tóm tắt reorder KN-005↔KN-006 + thêm KN-009 (đã có detail nhưng thiếu ở bảng) — Presets bổ sung auto-researcher (đồng bộ registry) — KN-011 added (Random disable Step button) — KN-010 added (AAR pattern) — KN-009 bổ sung detail section (slot máy chủ AI — hardcode config) — KN-008 added (dotnet build file lock MSB3027) — KN-007 added (Auto-Learn) — KN-006 added (N5 UI polish) — KN-005 added (Bug Blindness)*
+*UpdatedAt: 2026-09-10T15:55:00Z — Maintained by YUNIE / Harness v2 — KN-028 added (intro COSMOS cinematic: canvas quên invoke resize() → burst từ góc + 8/8 behavior test xanh giả — visual evidence bắt; verify screenshot từng stage + stub fonts cho test deterministic) — KN-025/026/027 added (10 papers self-improving 2026-09-08/09: Procedural Graphs + A-JIT, Experience Funnel + ADMET-EvO, FEEs + Consistency Gap + SOLID — chi tiết www/library/export.json 10 arXiv books) — KN-024 added (prolific AI psychosis — output rẻ làm mù khả năng đánh giá; taste/craft là human judgment — Jeff Clark MD + Emily Oberg, chi tiết docs/llm-weakness-research.md §2b) — KN-023 added (model "giỏi ngọn yếu gốc" — 6 papers arXiv: self-correction fail, self-knowledge gap, calibration không generalize, self-preference, sycophancy, pattern-matching reasoning — chi tiết docs/llm-weakness-research.md) — KN-022 added (pipeline in a trench coat — agency cost-based test, DEV.to James Anderson) + KN-021 bổ sung lộ trình Grith risk-score (allow/queue/deny + supervision-escape) — KN-019/020/021 added (bài học từ "My Little AI Factory" dominis.blog + METR study: measured > perceived, trust hard, governance evolve) — KN-015 added (Pages 2 workflows + eval-gate Node 18 CJS) — KN-014 added (MCP stdio smoke hang + verify order + regex m flag — DisCo Phase 3) — KN-013 added (Ponytail ladder integration: minimal-ladder + lean-product) — Fix: Bảng tóm tắt reorder KN-005↔KN-006 + thêm KN-009 (đã có detail nhưng thiếu ở bảng) — Presets bổ sung auto-researcher (đồng bộ registry) — KN-011 added (Random disable Step button) — KN-010 added (AAR pattern) — KN-009 bổ sung detail section (slot máy chủ AI — hardcode config) — KN-008 added (dotnet build file lock MSB3027) — KN-007 added (Auto-Learn) — KN-006 added (N5 UI polish) — KN-005 added (Bug Blindness)*
