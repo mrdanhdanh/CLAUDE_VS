@@ -381,6 +381,23 @@ async function main() {
     platform
   };
 
+  // cosmos — mirror cosmic-scale (www/cosmos/scale.json): S/D/G/M + độ tươi cho STATUS (KHÔNG sửa tay)
+  let cosmos = { available: false };
+  try {
+    const sj = JSON.parse(await fs.readFile(path.join(WWW_DIR, 'cosmos', 'scale.json'), 'utf8'));
+    cosmos = {
+      available: true,
+      S: sj.entropy?.S ?? null,
+      level: sj.entropy?.level ?? null,
+      D: sj.darkEnergy?.D ?? null,
+      G: sj.gravity?.G ?? null,
+      M: sj.darkMatter?.M ?? null,
+      generatedAt: sj.generatedAt ?? null,
+      points: Array.isArray(sj.history) ? sj.history.length : 0,
+    };
+  } catch {}
+  out.cosmos = cosmos;
+
   // keep registry as simplified for dashboard (enabled + description)
   // but also keep full registry for counts
   // For dashboard, registry should be {skills:{name:{enabled,description}}, ...}

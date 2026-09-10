@@ -21,11 +21,15 @@ user-invocable: true
 ```bash
 node .github/harness/scripts/cosmic-scale.mjs
 node .github/harness/scripts/cosmic-scale.mjs --json --out www/cosmos/scale.json
+node .github/harness/scripts/cosmic-scale.mjs --budget 10   # Heat Death gate — exit 1 khi S vượt ngân sách
+npm run cosmos:refresh                                       # refresh scale.json + status.json + mirror audit
 ```
 - Đọc `registry.json` vs filesystem → `mismatch` (drift)
 - Đếm `drafts` (bug mở), `refused`/`failed` (audit 200 events gần nhất), `disabled`
 - Tính `S = mismatch*10 + drafts*5 + refused*2 + disabled*1 + failed*5`
 - Thang: `low <10` · `medium <25` · `high >=25`
+- Đo kèm: `D = (1 − dissentRatio) × 10` (decollaboration, KN-018) · `G = cutRatio × 10` (scope control — % plans có dòng CẮT/YAGNI) · `M = orphan×2 + disabled×1` (hidden complexity)
+- Trước khi sửa file lớn: `node .github/harness/scripts/entangle.mjs --file <path>` — forward/reverse refs để biết entanglement
 
 ### 2. Chẩn đoán (Diagnose)
 - `S low` → vũ trụ ổn định, giữ nhịp audit + generate-status
@@ -42,17 +46,18 @@ node .github/harness/scripts/cosmic-scale.mjs --json --out www/cosmos/scale.json
 - `www/cosmos/index.html` Lab #5 (Black Hole) + #6 (Schrödinger) demo trực quan
 
 ## Integration với Harness v2
-- **Trước Implement:** chạy `cosmic-scale.mjs` — nếu `high` thì fix hệ trước
-- **Verify:** ghi `S` vào plan/bug, kèm `generate-status.mjs` để đồng bộ
+- **Trước Implement:** chạy `cosmic-scale.mjs` — nếu `high` thì fix hệ trước; `--budget <n>` dùng làm gate (exit 1) trong PRD constraint / CI
+- **Verify:** ghi `S` (kèm D/G/M) vào plan/bug, chạy `npm run cosmos:refresh` để đồng bộ dashboard + STATUS
 - **PRD:** có thể ghi `Entropy budget: S <10` như constraint
 
 ## References
-- `.github/harness/scripts/cosmic-scale.mjs` — script đo (Node 18+, 0 deps)
+- `.github/harness/scripts/cosmic-scale.mjs` — đo S/D/G/M + `--budget` gate (Node 18+, 0 deps)
+- `.github/harness/scripts/entangle.mjs` — entanglement graph (forward/reverse refs)
 - `www/cosmos/scale.html` — dashboard (đọc `scale.json`)
-- `www/cosmos/index.html` — Lab Black Hole + Schrödinger
+- `www/cosmos/index.html` — Lab Black Hole + Schrödinger + Dark Energy vs Gravity
 - `.github/skills/cosmic-quantum/SKILL.md` — triết lý 2 tầng + System Map 15
 - `.github/instructions/cosmic-quantum.instructions.md` — rule 7 System Map + 8 New Theory
 - `docs/knowleged.md` — KN-008, KN-014, KN-015 (bottleneck + Heisenbug)
 
 ---
-*Skill: cosmic-scale — Đo vũ trụ bằng số. S = mismatch*10 + drafts*5 + refused*2 + disabled*1 + failed*5*
+*Skill: cosmic-scale — Đo vũ trụ bằng số. S = mismatch*10 + drafts*5 + refused*2 + disabled*1 + failed*5 · D = (1−dissentRatio)×10 · G = cutRatio×10*

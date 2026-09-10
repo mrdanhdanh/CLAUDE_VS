@@ -45,11 +45,13 @@ applyTo: "**"
 - Khi PRD ghi Macro, ưu tiên dùng đúng tên map này để mọi agent hiểu chung.
 
 ### 8. New Theory — đo được (vũ trụ học thật)
-- **Dark Energy ↔ scope creep:** đối trọng là gravity = `minimal-ladder` + YAGNI. Đo bằng diff stat mỗi Verify.
-- **Entropy ↔ tech debt:** `S = mismatch×10 + drafts×5 + refused×2 + disabled×1 + failed×5`. Đo bằng `node .github/harness/scripts/cosmic-scale.mjs`. S <10 low, <25 medium, ≥25 high → phải bơm năng lượng (audit + polish + generate-status).
+- **Dark Energy ↔ decollaboration:** `D = (1 − dissentRatio) × 10` — % plans thiếu Dissent/"Who did you think with?" (KN-018). Đối trọng là Dissent Review gate + `fund-the-friction`.
+- **Gravity ↔ scope control:** `G = cutRatio × 10` — % plans có dòng CẮT/YAGNI (đối trọng scope creep). Đối trọng thi hành là `minimal-ladder`. Scope creep không còn đo bằng dark energy — dark energy là decollaboration.
+- **Entropy ↔ tech debt:** `S = mismatch×10 + drafts×5 + refused×2 + disabled×1 + failed×5`. Đo bằng `node .github/harness/scripts/cosmic-scale.mjs`. S <10 low, <25 medium, ≥25 high → phải bơm năng lượng (audit + polish + generate-status). Gate: `--budget <n>` exit 1 khi vượt ngân sách (Heat Death gate — dùng ở PRD constraint + Verify).
 - **Black Hole ↔ bottleneck:** KN-008 (file lock), KN-015 (Pages env) + dynamic (audit failed, mismatch). Qua event horizon → human takeover, không cố fix loop.
 - **Schrödinger ↔ Heisenbug:** KN-014 — quan sát (import/test) làm đổi kết quả. Lab `cosmos.html` #6 demo.
-- Xem dashboard: `www/cosmos/scale.html` (đọc `scale.json`, không sửa tay).
+- **Entanglement ↔ `entangle.mjs`:** sửa 1 file → liệt kê forward/reverse refs (ai trỏ tới nó) — Verify cả cụm, không chỉ file vừa sửa.
+- Xem dashboard: `www/cosmos/scale.html` (đọc `scale.json`, không sửa tay). Refresh 1 lệnh: `npm run cosmos:refresh`.
 ## Ví dụ
 
 ```md

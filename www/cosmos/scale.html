@@ -70,6 +70,10 @@
     .tag.low{color:#6ee7b7;background:rgba(16,185,129,.15);border-color:rgba(16,185,129,.25)}
     .tag.medium{color:#fcd34d;background:rgba(245,158,11,.15);border-color:rgba(245,158,11,.25)}
     .tag.high{color:#fca5a5;background:rgba(239,68,68,.15);border-color:rgba(239,68,68,.25)}
+    .fresh{display:inline-flex;align-items:center;gap:4px;font:600 10px var(--font-mono);letter-spacing:.04em;padding:3px 8px;border-radius:var(--radius-full);border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.06);color:var(--cosmos-text-muted)}
+    .fresh.ok{color:#6ee7b7;background:rgba(16,185,129,.12);border-color:rgba(16,185,129,.22)}
+    .fresh.warn{color:#fcd34d;background:rgba(245,158,11,.12);border-color:rgba(245,158,11,.22)}
+    .fresh.bad{color:#fca5a5;background:rgba(239,68,68,.12);border-color:rgba(239,68,68,.22)}
     /* Gauge */
     .gauge-wrap{display:flex;flex-direction:column;align-items:center;gap:12px}
     .gauge{width:180px;height:180px;border-radius:50%;position:relative;display:grid;place-items:center;background:conic-gradient(from 270deg, var(--g1) 0deg, var(--g2) 120deg, var(--g3) 240deg, var(--g1) 360deg);padding:10px;box-shadow:0 8px 32px rgba(0,0,0,.4)}
@@ -160,7 +164,10 @@
                 </div>
               </div>
               <div class="parts" id="parts" aria-label="Thành phần entropy"></div>
-              <div style="font:400 11px var(--font-mono);color:var(--cosmos-text-dim);text-align:center" id="generatedAt">—</div>
+              <div style="display:flex;gap:8px;align-items:center;justify-content:center;flex-wrap:wrap">
+                <div style="font:400 11px var(--font-mono);color:var(--cosmos-text-dim)" id="generatedAt">—</div>
+                <span class="fresh" id="freshBadge">⏳ đang đo tuổi…</span>
+              </div>
             </div>
           </div>
           <div class="card">
@@ -187,8 +194,9 @@
             <div class="parts" id="deParts" aria-label="Thành phần dark energy"></div>
           </div>
           <div class="card">
-            <h3>.Gravity — đối trọng</h3>
-            <p style="margin-bottom:12px">Gravity = Dissent Review gate + fund-the-friction + Critic agent. Mỗi PRD mới thêm <code>Who did you think with?</code> là bơm 1 đơn vị gravity.</p>
+            <h3>🧲 Gravity G — đối trọng scope control</h3>
+            <p style="margin-bottom:12px">G = tỉ lệ plans có dòng <strong>CẮT / YAGNI</strong> ×10 (minimal-ladder). Gravity yếu khi scope phình. Dark Energy đo decollaboration (KN-018) — Dissent gate + fund-the-friction vẫn là lực hấp dẫn xã hội.</p>
+            <div class="parts" id="gravityParts" aria-label="Thành phần gravity"></div>
             <div class="code-block" id="deCode">darkEnergy: —</div>
           </div>
         </div>
@@ -230,8 +238,9 @@
             <span class="tag" id="tlAvg">avg —</span>
             <span class="tag" style="color:#c4b5fd;background:rgba(124,58,237,.12);border-color:rgba(124,58,237,.25)">— S (entropy)</span>
             <span class="tag" style="color:#94a3b8;background:rgba(148,163,184,.1);border-color:rgba(148,163,184,.2)">-- M (dark matter)</span>
+            <span class="tag" style="color:#fcd34d;background:rgba(245,158,11,.12);border-color:rgba(245,158,11,.25)">-- G (gravity)</span>
           </div>
-          <canvas id="timelineChart" width="1040" height="240" style="width:100%;height:auto" role="img" aria-label="Biểu đồ entropy S và dark matter M theo thời gian"></canvas>
+          <canvas id="timelineChart" width="1040" height="240" style="width:100%;height:auto" role="img" aria-label="Biểu đồ entropy S, dark matter M và gravity G theo thời gian"></canvas>
           <p style="margin-top:12px;font:400 11px var(--font-mono);color:var(--cosmos-text-dim)">Mỗi lần chạy <code>cosmic-scale.mjs --out</code> ghi 1 điểm. Tối đa 30 điểm gần nhất. Vạch ngang: ngưỡng medium (10) / high (25).</p>
         </div>
       </div>
@@ -259,11 +268,11 @@
           <p>Công thức và map đã gắn vào skill cosmic-quantum + cosmic-scale.</p>
         </div>
         <div class="grid-3">
-          <div class="card"><h3>🌌 Dark Energy ↔ Scope creep</h3><p>Giãn nở gia tốc như feature phình. Đối trọng là gravity = minimal-ladder + YAGNI. Đo bằng diff stat mỗi Verify.</p><span class="tag">S tăng khi thêm không cần</span></div>
+          <div class="card"><h3>💜 Dark Energy ↔ Decollaboration</h3><p>D = (1−dissentRatio)×10 — AI tiện quá làm human ngừng nghĩ chung (KN-018). Đối trọng: Dissent Review + fund-the-friction. Scope creep đo riêng ở Gravity G (YAGNI/minimal-ladder).</p><span class="tag">D cao = ít dissent</span></div>
           <div class="card"><h3>🕳️ Black Hole ↔ Bottleneck</h3><p>KN-008 file lock, KN-015 Pages env. Qua event horizon → human takeover, không loop.</p><span class="tag">horizon = takeover</span></div>
           <div class="card"><h3>🐱 Schrödinger ↔ Heisenbug</h3><p>KN-014 import làm treo — quan sát làm đổi kết quả. Lab cosmos #6 demo.</p><span class="tag">đo là đổi</span></div>
         </div>
-        <div class="code-block" style="margin-top:16px">S = mismatch×10 + drafts×5 + refused×2 + disabled×1 + failed×5 · low &lt;10 · medium &lt;25 · high ≥25 · Δx·Δp ≥ ħ/2 ↔ get_errors chính xác thì build mờ</div>
+        <div class="code-block" style="margin-top:16px">S = mismatch×10 + drafts×5 + refused×2 + disabled×1 + failed×5 · low &lt;10 · medium &lt;25 · high ≥25 · gate: --budget N (exit 1) · D = (1−dissentRatio)×10 · G = cutRatio×10 · Δx·Δp ≥ ħ/2 ↔ get_errors chính xác thì build mờ</div>
       </div>
     </section>
 
@@ -309,6 +318,18 @@
         partsEl.appendChild(row);
       }
       $('#generatedAt').textContent='Đo lúc: '+(j.generatedAt||'—')+' · by '+(j.generatedBy||'—');
+      const fb=$('#freshBadge');
+      if(fb){
+        const ts=j.generatedAt? new Date(j.generatedAt).getTime():NaN;
+        if(isNaN(ts)){ fb.textContent='⏳ không rõ tuổi'; fb.className='fresh'; }
+        else{
+          const ageH=(Date.now()-ts)/36e5;
+          const ageTxt=ageH<1?'<1h':ageH<48?Math.round(ageH)+'h':Math.round(ageH/24)+' ngày';
+          if(ageH<24){ fb.textContent='🟢 tươi · '+ageTxt; fb.className='fresh ok'; }
+          else if(ageH<72){ fb.textContent='🟡 hơi cũ · '+ageTxt; fb.className='fresh warn'; }
+          else{ fb.textContent='🔴 cũ · '+ageTxt+' — chạy npm run cosmos:refresh'; fb.className='fresh bad'; }
+        }
+      }
       const counts=j.counts||{};
       const cg=$('#countsGrid'); cg.innerHTML='';
       for(const [k,v] of [['KN',counts.knTotal],['Bugs',counts.bugsTotal],['Audit',counts.auditTotal]]){
@@ -329,6 +350,21 @@
       const badge=document.createElement('div'); badge.className='gauge-level '+deLevel; badge.style.marginTop='12px'; badge.style.display='inline-block'; badge.style.padding='4px 12px'; badge.style.borderRadius='999px';
       badge.textContent='D='+D+' ('+deLevel+')'; deParts.appendChild(badge);
       $('#deCode').textContent='darkEnergy: '+JSON.stringify(de,null,2);
+      // gravity — scope control (YAGNI)
+      const gr=j.gravity||{};
+      const G=gr.G ?? null;
+      const gp=$('#gravityParts');
+      if(gp){
+        gp.innerHTML='';
+        const gRows=[['Plans có CẮT/YAGNI',gr.plansWithCut??'—'],['Tổng plans',gr.plansTotal??'—'],['Cut ratio',gr.plansTotal?Math.round((gr.plansWithCut||0)/gr.plansTotal*100)+'%':'—']];
+        for(const [k,v] of gRows){
+          const row=document.createElement('div'); row.className='part';
+          row.innerHTML=`<span>${k}</span><b>${v}</b>`; gp.appendChild(row);
+        }
+        const gBadge=document.createElement('div'); gBadge.className='gauge-level '+(gr.level||'low'); gBadge.style.marginTop='12px'; gBadge.style.display='inline-block'; gBadge.style.padding='4px 12px'; gBadge.style.borderRadius='999px';
+        gBadge.textContent=G!=null? 'G='+G+' ('+(gr.level||'low')+')' : 'G=— (chạy lại cosmic-scale.mjs)';
+        gp.appendChild(gBadge);
+      }
       const bh=j.blackHoles||[]; const list=$('#bhList'); list.innerHTML='';
       if(bh.length===0){ list.innerHTML='<div class="card"><p>Không có black hole — vũ trụ sạch!</p></div>'; }
       else bh.forEach(b=>{
@@ -369,7 +405,7 @@
       const ctx=c.getContext('2d'); const w=c.width, hh=c.height;
       const padL=34,padR=12,padT=14,padB=26;
       ctx.clearRect(0,0,w,hh);
-      const max=Math.max(25,...h.map(p=>p.S||0),...(h.map(p=>p.M||0)));
+      const max=Math.max(25,...h.map(p=>p.S||0),...(h.map(p=>p.M||0)),...h.map(p=>p.G||0));
       const yOf=v=>padT+((hh-padT-padB)*(1-(v/max)));
       const xOf=i=>h.length===1? (padL+(w-padL-padR)/2) : padL+((w-padL-padR)*(i/(h.length-1)));
       // gridlines + threshold
@@ -384,6 +420,8 @@
       // M line (dark matter, dashed gray)
       ctx.strokeStyle='rgba(148,163,184,.55)'; ctx.lineWidth=1.5; ctx.setLineDash([5,4]); ctx.beginPath();
       h.forEach((p,i)=>{ const x=xOf(i),y=yOf(p.M||0); i===0?ctx.moveTo(x,y):ctx.lineTo(x,y); }); ctx.stroke(); ctx.setLineDash([]);
+      // G line (gravity, dotted amber)
+      if(h.some(p=>p.G!=null)){ ctx.strokeStyle='rgba(245,158,11,.6)'; ctx.lineWidth=1.4; ctx.setLineDash([2,3]); ctx.beginPath(); h.forEach((p,i)=>{ const x=xOf(i),y=yOf(p.G||0); i===0?ctx.moveTo(x,y):ctx.lineTo(x,y); }); ctx.stroke(); ctx.setLineDash([]); }
       // S line
       ctx.strokeStyle='#7c3aed'; ctx.lineWidth=2.5; ctx.beginPath();
       h.forEach((p,i)=>{ const x=xOf(i),y=yOf(p.S||0); i===0?ctx.moveTo(x,y):ctx.lineTo(x,y); }); ctx.stroke();

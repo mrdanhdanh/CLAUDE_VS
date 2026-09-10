@@ -34,7 +34,7 @@
     ".claude/rules/context-engineering.md": "0d6380fc8c852f43d59fc850d23badfc34763ca127c776055411a07aeb851bff",
     ".claude/rules/cua-safety.md": "26f6594d794d4ada001b7cdcd7fdba61f4d5e8279cfc894e818a548be4028771",
     ".claude/rules/awesome-design.md": "fae43f3fe500c648d21696b1f635b1e7153b3dfbebaa4e5fb0e776e27c4dc544",
-    ".claude/rules/cosmic-quantum.md": "f53d8830e947818ce85b79133eb12cdf0ce8190d59c1e02cade3501e41fc077c",
+    ".claude/rules/cosmic-quantum.md": "9d489f51994989f41aa54806cd28bce5f3ec30fb0500f46361053921a94dd8e4",
     ".claude/rules/fund-the-friction.md": "f76b9666077ed1ae952bbe1fd9c900564813256e4993a96f783b7de1455f7184",
     "CLAUDE.md": "6cfdfd671a6b06c05a3e265f10e36e84974cb1dbad3c456cc7ce820de4928fde",
     ".claude/skills/claude-harness": {
@@ -79,31 +79,31 @@
     },
     ".claude/skills/harness-build-config": {
       "dir": true,
-      "digest": "376a235108853e25f3b08ba69bad1b6ff032f1cd8d46eadbe6a595f965fdc055"
+      "digest": "cd51e52845fadbb41aa6f9e300625b19b0f3f3c0f9202c79c46feefcebdb9b0f"
     },
     ".claude/skills/harness-governance": {
       "dir": true,
-      "digest": "8237973e2a7c5b84404bee3c77c1f9317ea331d9510dae1f4e3265daddc429cd"
+      "digest": "75439f4d96fe798bfeb54d3de3183151563747472dbc7efe16e7bb3d8448dedf"
     },
     ".claude/skills/harness-minimal": {
       "dir": true,
-      "digest": "4f5b2fa25f59f68721ba5ddac2ee8d2c552953f98ae88bf60d7c575bfc3ab533"
+      "digest": "e16476854d90f372dd23c0a6e77d625b5c7155a0269ffa7d15155f1082d45500"
     },
     ".claude/skills/harness-process": {
       "dir": true,
-      "digest": "f35238c31bfa120a696dbe4290fd64bf3644e2305ae13b541a9d1aae23ac3589"
+      "digest": "510e7b6f02d99549b272377cfa90b15028da560ea0409b6bc493086222399f59"
     },
     ".claude/skills/harness-web-ui": {
       "dir": true,
-      "digest": "ff0dee564dc3d35715242a7ead73b2663abfcaebfd0ea7c8d4594339fa1abd89"
+      "digest": "883868ef7f5bef9d948c6d94d68231800542e65eeff3c142764fd7d4ae6132d4"
     },
     ".claude/skills/cosmic-quantum": {
       "dir": true,
-      "digest": "11858460f50368fd1a56cab6de58c4cf4154cfe573fc2f7f25d0ee92d95a4598"
+      "digest": "02d4b870993697ae7afa022e91f778f83f0500c55f18311e93dc005929ea7e4e"
     },
     ".claude/skills/cosmic-scale": {
       "dir": true,
-      "digest": "2ca22ebc97ca2d3b66905866fd221b9ba5eaa47569d85b6e9ce333c2e89434f6"
+      "digest": "06a2ee5fb96e9c45561822e44948627feeca79b3061491cc40d7dbf6b5920c0b"
     },
     ".claude/skills/archify": {
       "dir": true,

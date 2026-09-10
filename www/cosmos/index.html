@@ -777,7 +777,20 @@
     .mv-vs{align-self:center;font:800 11px var(--font-mono);color:var(--cosmos-text-dim);background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);width:28px;height:28px;border-radius:50%;display:grid;place-items:center;margin:0 auto}
     .mv-winner-line{font:600 11px var(--font-mono);color:var(--cosmos-text-muted);text-align:center;min-height:18px}
     .mv-winner-line b{color:#6ee7b7}
-    @media(prefers-reduced-motion:reduce){.sb-badge{animation:none}.mv-universe .mv-bar i{transition:none}}
+    /* ===== Dark Energy vs Gravity lab ===== */
+    .dg-stage{width:100%;max-width:360px;display:flex;flex-direction:column;gap:10px;align-items:center}
+    .dg-galaxy{position:relative;width:190px;height:120px;display:grid;place-items:center;transition:transform .5s cubic-bezier(.22,1,.36,1)}
+    .dg-galaxy .dg-core{width:26px;height:26px;border-radius:50%;background:radial-gradient(circle at 30% 30%,#c4b5fd,#7c3aed 60%,#4c1d95);box-shadow:0 0 18px rgba(124,58,237,.6);z-index:2}
+    .dg-galaxy .dg-dot{position:absolute;left:50%;top:50%;width:8px;height:8px;margin:-4px 0 0 -4px;border-radius:50%;background:rgba(103,232,249,.9);box-shadow:0 0 8px rgba(6,182,212,.6);transition:transform .5s cubic-bezier(.22,1,.36,1)}
+    .dg-galaxy.contracting .dg-dot{background:rgba(252,211,77,.9);box-shadow:0 0 8px rgba(245,158,11,.6)}
+    .dg-galaxy.heat .dg-core{background:radial-gradient(circle at 30% 30%,#fca5a5,#ef4444 60%,#7f1d1d);box-shadow:0 0 22px rgba(239,68,68,.7)}
+    .dg-balance{display:flex;width:100%;height:8px;border-radius:999px;overflow:hidden;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.06)}
+    .dg-balance i{display:block;height:100%;transition:width .4s ease}
+    .dg-balance .dg-de{background:linear-gradient(90deg,#7c3aed,#ec4899)}
+    .dg-balance .dg-gr{background:linear-gradient(90deg,#f59e0b,#fcd34d)}
+    .dg-status{font:600 11px var(--font-mono);color:var(--cosmos-text-muted);text-align:center;min-height:18px}
+    .dg-status b{color:#fff}
+    @media(prefers-reduced-motion:reduce){.sb-badge{animation:none}.mv-universe .mv-bar i{transition:none}.dg-galaxy,.dg-galaxy .dg-dot,.dg-balance i{transition:none}}
 
     /* ===== Scroll Progress ===== */
     .scroll-progress{position:fixed;top:0;left:0;right:0;height:3px;z-index:100;background:rgba(255,255,255,.06);pointer-events:none}
@@ -1155,7 +1168,7 @@
               <span class="meta-pill">🚀 Tunneling: <b>ladder 7 nấc</b></span>
             </div>
             <div class="hero-actions">
-              <a class="btn btn-primary" href="./slides.html">🎞️ Xem Slides (12 slides · Fullscreen)</a>
+              <a class="btn btn-primary" href="./slides.html">🎞️ Xem Slides (15 slides · Fullscreen)</a>
               <a class="btn btn-ghost" href="#lab">🧪 Mở Lab tương tác</a>
               <a class="btn btn-ghost" href="#pipeline">📜 Xem pipeline vũ trụ</a>
               <button class="btn btn-ghost" id="btnCopyPhilosophy" type="button">📋 Copy triết lý</button>
@@ -1385,7 +1398,7 @@
       <div class="container">
         <div class="section-head">
           <h2 id="lab-title"><small>Lab tương tác</small>Chạm để cảm nhận lượng tử</h2>
-          <p>10 thí nghiệm: Superposition, Entanglement, Heisenberg, Tunneling, <b>Black Hole</b>, <b>Schrödinger</b>, <b>Quantum Decision</b> + 3 mới <b>Double-slit</b> (quan sát đổi kết quả), <b>Schrödinger's Bug</b> (flaky test), <b>Multiverse</b> (A/B). Thử kéo, bấm, đo, thả.</p>
+          <p>11 thí nghiệm: Superposition, Entanglement, Heisenberg, Tunneling, <b>Black Hole</b>, <b>Schrödinger</b>, <b>Quantum Decision</b>, <b>Double-slit</b> (quan sát đổi kết quả), <b>Schrödinger's Bug</b> (flaky test), <b>Multiverse</b> (A/B) + mới <b>Dark Energy vs Gravity</b> (YAGNI đối trọng scope creep). Thử kéo, bấm, đo, thả.</p>
           <a href="#integration">→ Áp vào Harness sao?</a>
           <a href="./scale.html" style="margin-left:8px">→ Dashboard entropy</a>
         </div>
@@ -1701,6 +1714,32 @@ test('checkout', async () =&gt; {
               <div class="lab-hint" id="mvHint">B thật nhỉnh hơn A 5% — ít traffic thì nhiễu thắng, nhiều traffic thì thật thắng</div>
             </div>
           </div>
+
+          <!-- Dark Energy vs Gravity -->
+          <div class="lab-card">
+            <div class="lab-head">
+              <h3><span>🧲</span> Dark Energy vs Gravity — giãn hay co</h3>
+              <span class="lab-badge">KN-013 · YAGNI</span>
+            </div>
+            <div class="lab-body">
+              <p>Mỗi feature thêm vào là <strong>dark energy</strong> đẩy vũ trụ giãn (scope creep). Mỗi lần áp <strong>CẮT/YAGNI</strong> là <strong>gravity</strong> kéo lại. Giữ cân bằng để không heat death.</p>
+              <div class="lab-demo">
+                <div class="dg-stage" role="group" aria-label="Vũ trụ giãn nở theo scope">
+                  <div class="dg-galaxy" id="dgGalaxy" aria-hidden="true"></div>
+                  <div class="dg-balance" role="img" aria-label="Cân bằng dark energy và gravity">
+                    <i class="dg-de" id="dgDeBar" style="width:50%"></i><i class="dg-gr" id="dgGrBar" style="width:50%"></i>
+                  </div>
+                  <div class="dg-status" id="dgStatus" aria-live="polite">Cân bằng · D=0 · G=0</div>
+                </div>
+              </div>
+              <div class="lab-controls">
+                <button class="btn btn-primary" id="btnDgExpand" type="button">🌌 +1 feature</button>
+                <button class="btn btn-ghost" id="btnDgContract" type="button">🧲 Áp YAGNI</button>
+                <button class="btn btn-ghost" id="btnDgReset" type="button">↺ Reset</button>
+              </div>
+              <div class="lab-hint" id="dgHint">Bấm qua lại để thấy vũ trụ giãn (D↑) rồi co (G↑). Số thật: đọc scale.json mỗi lần refresh</div>
+            </div>
+          </div>
         </div>
       </div>
     </section>
@@ -1810,7 +1849,7 @@ test('checkout', async () =&gt; {
       <div class="container">
         <div class="section-head">
           <h2 id="future-title"><small>Khai thác tương lai</small>Đề tài này còn đào sâu được gì?</h2>
-          <p>Sếp nói đúng — vũ trụ + lượng tử khai thác dài hơi. YUNIE gợi ý 3 hướng.</p>
+          <p>Vũ trụ + lượng tử khai thác dài hơi — YUNIE ship dần: 4/5 hướng đã done, còn Wormhole (context teleport) đang nghiên cứu.</p>
         </div>
         <div class="future-grid">
           <div class="future-card" style="border-color:rgba(16,185,129,.25)">
@@ -1823,20 +1862,20 @@ test('checkout', async () =&gt; {
             <p>Đã ship 3 lab: <strong>double-slit</strong> (quan sát làm sụp đổ sóng → 2 vệt hạt), <strong>Schrödinger's Bug</strong> (flaky test vừa pass vừa fail → fix gốc), <strong>multiverse</strong> (A/B như tách nhánh vũ trụ → ship nhánh thắng).</p>
             <span class="eta">→ Shipped 2026-09-10 · <a href="#lab" style="color:#c4b5fd">thử 3 lab mới 🧪</a></span>
           </div>
-          <div class="future-card">
-            <h4>❄️ Heat Death — Entropy Budget</h4>
-            <p>Mỗi PRD khai báo <strong>Entropy budget: S &lt;10</strong> như constraint — gate ở Verify: S vượt ngân sách thì chặn merge, buộc trả nợ (fix mismatch/draft) trước khi thêm feature mới. Vũ trụ không thêm cấu trúc mà không trả entropy.</p>
-            <span class="eta">→ Q1 2027 · cosmic-scale gate + policy rule</span>
+          <div class="future-card" style="border-color:rgba(16,185,129,.25)">
+            <h4>❄️ Heat Death — Entropy Budget <span class="tag" style="color:#6ee7b7;background:rgba(16,185,129,.15);border-color:rgba(16,185,129,.25);vertical-align:middle">✅ Done</span></h4>
+            <p>Gate đã ship: <code>cosmic-scale.mjs --budget 10</code> → <strong>exit 1 khi S vượt ngân sách</strong> — dùng làm PRD constraint / Verify gate, buộc trả nợ entropy trước khi thêm feature. One-liner: <code>npm run cosmos:check</code>.</p>
+            <span class="eta">→ Shipped 2026-09-11 · budget gate + npm run cosmos:refresh</span>
           </div>
           <div class="future-card">
             <h4>🌀 Wormhole — Context Teleport</h4>
             <p><strong>Hố giãn không gian giữa subtask:</strong> context.mjs <code>isolate</code> nén context mỗi subtask thành 1 cổng hẹp — agent đi qua wormhole chỉ mang summary ≤1000 chars, không lôi cả vũ trụ theo. Chống distraction + confusion (Lesson 12).</p>
             <span class="eta">→ Q1 2027 · context.mjs isolate + harness-workflow</span>
           </div>
-          <div class="future-card">
-            <h4>🌉 Entanglement Graph</h4>
-            <p><strong>Map file↔file như rối lượng tử:</strong> sửa 1 file → graph chỉ ra entanglement nào vỡ (CSS ↔ HTML ↔ JS, schema ↔ API ↔ test). Đo bằng grep import/reference — Verify chạy get_errors trên cả cụm, không chỉ file vừa sửa.</p>
-            <span class="eta">→ Q2 2027 · script entangle.mjs + scale.json</span>
+          <div class="future-card" style="border-color:rgba(16,185,129,.25)">
+            <h4>🌉 Entanglement Graph <span class="tag" style="color:#6ee7b7;background:rgba(16,185,129,.15);border-color:rgba(16,185,129,.25);vertical-align:middle">✅ Done</span></h4>
+            <p>Đã ship <code>entangle.mjs</code>: <code>node .github/harness/scripts/entangle.mjs --file &lt;path&gt;</code> → <strong>forward refs</strong> (nó trỏ tới ai) + <strong>reverse refs</strong> (ai trỏ tới nó, kèm số dòng) — verify cả cụm, không chỉ file vừa sửa. 0 deps.</p>
+            <span class="eta">→ Shipped 2026-09-11 · chạy thử: <code>npm run entangle -- --file www/cosmos/index.html</code></span>
           </div>
         </div>
       </div>
@@ -3356,6 +3395,40 @@ test('checkout', async () =&gt; {
       render();
     })();
 
+    // ===== Dark Energy vs Gravity — vũ trụ giãn/co theo scope =====
+    (function(){
+      const galaxy=$('#dgGalaxy'), deBar=$('#dgDeBar'), grBar=$('#dgGrBar'), status=$('#dgStatus'), hint=$('#dgHint');
+      const btnE=$('#btnDgExpand'), btnC=$('#btnDgContract'), btnR=$('#btnDgReset');
+      if(!galaxy || !btnE) return;
+      const core=document.createElement('div'); core.className='dg-core'; galaxy.appendChild(core);
+      const DOTS=[...Array(14)].map((_,i)=>{
+        const d=document.createElement('span'); d.className='dg-dot'; d.dataset.angle=String(i*(360/14)); galaxy.appendChild(d); return d;
+      });
+      let D=0, G=0;
+      function render(){
+        const total=Math.max(1,D+G);
+        const scale=Math.max(0.55, Math.min(1.9, 0.72 + D*0.09 - G*0.06));
+        galaxy.style.transform='scale('+scale+')';
+        galaxy.classList.toggle('heat', D-G>=5);
+        galaxy.classList.toggle('contracting', G>D);
+        DOTS.forEach((d)=>{ const a=Number(d.dataset.angle)*Math.PI/180; const rad=52+(D-G)*4; d.style.transform='translate('+Math.cos(a)*rad+'px,'+Math.sin(a)*rad+'px)'; });
+        deBar.style.width=Math.round(D/total*100)+'%';
+        grBar.style.width=Math.round(G/total*100)+'%';
+        const mode = D-G>=5 ? '🔥 Dark energy thắng — vũ trụ loãng dần (scope creep)' : D>G ? '🌌 Đang giãn — thêm YAGNI để kéo lại' : G>D ? '🧲 Gravity thắng — vũ trụ co lại gọn gàng' : '⚖️ Cân bằng — giữ nhịp';
+        status.innerHTML=mode+' · <b>D='+D+'</b> · <b>G='+G+'</b>';
+      }
+      btnE.addEventListener('click', ()=>{ D++; render(); toast('🌌 +1 feature — dark energy tăng'); });
+      btnC.addEventListener('click', ()=>{ G++; render(); toast('🧲 Áp YAGNI — gravity kéo vũ trụ co lại'); });
+      btnR.addEventListener('click', ()=>{ D=0; G=0; render(); toast('↺ Về cân bằng'); });
+      render();
+      // số thật từ scale.json (nếu có) — chỉ hiển thị, không thay demo
+      fetch(dirBase(location.pathname)+'scale.json',{cache:'no-store'}).then(r=>r.ok?r.json():null).then(j=>{
+        if(!j) return;
+        const rD=j.darkEnergy?.D, rG=j.gravity?.G;
+        if(rD!=null||rG!=null) hint.textContent='Thật (scale.json): D='+(rD??'—')+' · G='+(rG??'—')+' — refresh: npm run cosmos:refresh';
+      }).catch(()=>{});
+    })();
+
     // ===== Copy philosophy =====
     $('#btnCopyPhilosophy')?.addEventListener('click', async ()=>{
       const text=`COSMOS · QUANTUM — Triết lý Harness v2
@@ -3515,20 +3588,31 @@ Process là định luật, verify là quan sát.`;
         const level=(data.entropy?.level || (S>=25?'high':S>=10?'medium':'low')).toUpperCase();
         const M=data.darkMatter?.M ?? 0;
         const mLevel=data.darkMatter?.level || (M>=15?'high':M>=5?'medium':'low');
+        const D=data.darkEnergy?.D ?? 0;
+        const Gv=data.gravity?.G ?? null;
+        const ts=data.generatedAt? new Date(data.generatedAt).getTime():NaN;
+        const ageH=isNaN(ts)? NaN : (Date.now()-ts)/36e5;
+        const ageTxt=isNaN(ageH)? null : ageH<1?'<1h':ageH<48?Math.round(ageH)+'h':Math.round(ageH/24)+' ngày';
         deStats.innerHTML=`
           <div class="de-stat ${S>=25?'hot':S>=10?'warn':''}"><span>Entropy S</span><b>${Number(S)} <small>${level}</small></b></div>
           <div class="de-stat"><span>ΔS giãn nở</span><b>${dS>0?'+':''}${Number(dS)}</b></div>
+          <div class="de-stat"><span>💜 Dark Energy D</span><b>${Number(D)} <small>${D>5?'high':D>0?'medium':'low'}</small></b></div>
+          <div class="de-stat"><span>🧲 Gravity G</span><b>${Gv==null?'—':Number(Gv)} <small>${Gv==null?'—':(Gv>=6?'high':Gv>=3?'medium':'low')}</small></b></div>
           <div class="de-stat"><span>🌑 Dark Matter M</span><b>${Number(M)} <small>${mLevel}</small></b></div>
           <div class="de-stat"><span>Điểm đo</span><b>${hist.length}</b></div>`;
-        deBadge.textContent = real ? '✅ scale.json — thật' : '⚠️ demo (fetch fail)';
+        deBadge.textContent = real ? ('✅ scale.json — thật' + (ageTxt && ageH>=72 ? ' · 🔴 cũ '+ageTxt : ageTxt && ageH>=24 ? ' · 🟡 '+ageTxt : '')) : '⚠️ demo (fetch fail)';
         deBadge.classList.remove('loading','broken');
         if(!real) deBadge.classList.add('broken');
         deHint.innerHTML = (dS>0
-          ? `<b>Dark Energy thắng:</b> S tăng +${dS} — vũ trụ giãn (scope creep). Đối trọng là gravity: minimal-ladder + YAGNI, đo lại bằng cosmic-scale.mjs.`
+          ? `<b>Giãn nở:</b> S tăng +${dS} — thêm cấu trúc không trả entropy. Đối trọng: 🧲 YAGNI (Gravity G=${Gv??'—'}) + trả nợ mismatch/draft.`
           : dS<0
-            ? `<b>Gravity thắng:</b> S giảm ${dS} — vũ trụ co lại (audit + polish có hiệu lực). Giữ nhịp!`
+            ? `<b>Co lại:</b> S giảm ${dS} — audit + polish có hiệu lực. Giữ nhịp!`
             : `<b>Cân bằng:</b> S giữ nguyên ${S} — vũ trụ ổn định. Giữ nhịp audit + generate-status đều.`)
-          + (M>0 ? ` <b>Dark matter M=${M} (${mLevel}):</b> có hidden complexity — <a href="./scale.html#darkmatter" style="color:#c4b5fd">xem orphan map</a>.` : ' Dark matter M=0 — registry nhìn thấy hết vũ trụ ✅');
+          + (M>0 ? ` <b>Dark matter M=${M} (${mLevel}):</b> có hidden complexity — <a href="./scale.html#darkmatter" style="color:#c4b5fd">xem orphan map</a>.` : ' Dark matter M=0 — registry nhìn thấy hết vũ trụ ✅')
+          + (D>0 || Gv!=null ? ` 💜 D=${D} (decollaboration) · 🧲 G=${Gv??'—'} (scope control).` : '')
+          + (real && ageTxt ? (ageH<24
+              ? ` ⏱ <b>Đo lúc:</b> ${esc(fmtTime(data.generatedAt))} (${ageTxt} trước) — 🟢 tươi.`
+              : ` ⏱ <b>Đo lúc:</b> ${esc(fmtTime(data.generatedAt))} (${ageTxt} trước) — ${ageH<72?'🟡 hơi cũ':'🔴 cũ'}: chạy <code>npm run cosmos:refresh</code>.`) : '');
         drawSpark(hist);
       }
       function drawSpark(hist){

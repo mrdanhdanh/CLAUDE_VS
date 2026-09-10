@@ -76,7 +76,7 @@ user-invocable: true
 
 | Harness có sẵn | Map vũ trụ | Vì sao hợp |
 |----------------|------------|------------|
-| `docs/knowleged.md` (15 KN) | **CMB — bức xạ nền** | Tín hiệu mờ từ mọi vụ nổ quá khứ, agent nào cũng phải đọc trước khi code |
+| `docs/knowleged.md` (32 KN) | **CMB — bức xạ nền** | Tín hiệu mờ từ mọi vụ nổ quá khứ, agent nào cũng phải đọc trước khi code |
 | `.agent/audit.jsonl` (`prevHash→hash`) | **Nón ánh sáng + mạng lưới vũ trụ** | Chuỗi nhân quả — `verify` là kiểm tra tính nhân quả |
 | `.agent/policy.json` (deny trước allow) | **Định luật vật lý + chân trời sự kiện** | `refused` = không thoát như event horizon; luật vỡ là deny all |
 | `.agent/credentials.enc.json` | **Vật chất tối** | Khối lượng vô hình giữ thiên hà, never logged, chỉ đếm |
@@ -85,7 +85,7 @@ user-invocable: true
 | `.github/harness/registry.json` | **Danh mục sao (Messier)** | Catalog 48 thiên thể; lệch filesystem là drift vũ trụ |
 | `presets/` (full/web-product/api-minimal) | **Đa vũ trụ** | `preset apply` là nhảy vũ trụ song song |
 | `**/.disabled/` | **Thiên hà ngủ đông** | Không xóa, chỉ ngủ — cần là đánh thức |
-| `.agent/bugs/` + `.agent/plans/` (~40 plans) | **Tàn tích supernova + hệ hành tinh** | Mỗi bug nổ gieo nguyên tố mới (KN); mỗi plan là hệ sao |
+| `.agent/bugs/` + `.agent/plans/` (55+ plans) | **Tàn tích supernova + hệ hành tinh** | Mỗi bug nổ gieo nguyên tố mới (KN); mỗi plan là hệ sao |
 | `auto-learn.mjs` suggest/log/propose | **Khảo sát bầu trời (SDSS)** | Quét CMB → phát hiện → ghi catalog tự động |
 | `context.mjs` quarantine/compress/isolate | **Bộ lọc vũ trụ khả kiến** | Window có hạn như chân trời — phải lọc mới nhìn xa |
 | `awesome-design-md/` (74 designs) | **Hubble Deep Field** | 74 thiên hà để soi vibe cosmic dark / quantum light |
@@ -94,10 +94,11 @@ user-invocable: true
 
 ## New Theory — Mở rộng (vũ trụ học thật)
 
-- **Dark Energy ↔ Scope creep:** vũ trụ giãn nở gia tốc như feature phình. Đối trọng là gravity = `minimal-ladder` + YAGNI. Đo bằng diff stat mỗi Verify.
-- **Entropy / Heat death ↔ Tech debt:** không bơm năng lượng (audit + `generate-status` + polish) thì hệ drift tới hỗn loạn. Meter: `S = mismatch + dead-code + drafts`.
+- **Dark Energy ↔ Decollaboration:** `D = (1 − dissentRatio) × 10` — plans thiếu Dissent Review (KN-018). Đối trọng: Dissent gate + `fund-the-friction`.
+- **Gravity ↔ Scope control:** `G = cutRatio × 10` — % plans có dòng CẮT/YAGNI. Đối trọng thi hành: `minimal-ladder` (scope creep gộp về đây, không còn gọi là dark energy).
+- **Entropy / Heat death ↔ Tech debt:** không bơm năng lượng (audit + `generate-status` + polish) thì hệ drift tới hỗn loạn. Meter: `S = mismatch×10 + drafts×5 + refused×2 + disabled×1 + failed×5`; gate `--budget <n>` exit 1 khi vượt ngân sách.
 - **Black Hole ↔ Bottleneck:** `MSB3027 file lock` (KN-008), `2 workflow giành Pages env` (KN-015) — kỳ dị mà velocity không thoát. Qua event horizon là phải human takeover.
-- **Cosmic web ↔ Entanglement graph:** audit hash + `Entangled with:` vẽ thành filament — sửa 1 file kéo theo chòm nào.
+- **Cosmic web ↔ Entanglement graph:** audit hash + `Entangled with:` vẽ thành filament — `entangle.mjs --file <path>` liệt kê forward/reverse refs; sửa 1 file là biết kéo theo chòm nào.
 - **Double-slit + Schrödinger's bug ↔ Heisenbug:** KN-014 smoke treo vì import side-effect — quan sát làm đổi kết quả.
 - **Quantum error correction ↔ 3-fix limit + TDD gate:** RED-GREEN-REFACTOR là mã sửa lỗi, `verify` là syndrome measurement.
 - **Chân không lượng tử ↔ Flaky:** BOM, path `\` vs `/`, `node --check` CJS — dao động nền, cần quarantine trước.
@@ -109,6 +110,8 @@ Công thức Lab: bất định $\Delta x \cdot \Delta p \ge \hbar/2$ ↔ `get_e
 - `.github/instructions/cosmic-quantum.instructions.md` — rule enforce
 - `www/cosmos/index.html` (canonical) — demo visual vũ trụ + lượng tử
 - `www/cosmos/scale.html` — dashboard entropy + black-hole (skill cosmic-scale)
+- `.github/harness/scripts/cosmic-scale.mjs` — đo S/D/G/M · `--budget` gate · `npm run cosmos:refresh`
+- `.github/harness/scripts/entangle.mjs` — entanglement graph (forward/reverse refs, 0 deps)
 - `.github/skills/cosmic-scale/SKILL.md` — đo entropy, bottleneck, dark-matter map
 - `awesome-design-md/` — 74 DESIGN.md cho vibe cosmic/quantum
 - Sách gợi ý (nếu có trong `www/library/`): search `vũ trụ`, `lượng tử`, `quantum`, `cosmos` qua MCP `search_library`

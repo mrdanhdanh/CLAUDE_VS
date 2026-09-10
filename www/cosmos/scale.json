@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-08T16:58:37.379Z",
+  "generatedAt": "2026-09-10T17:35:03.799Z",
   "generatedBy": "cosmic-scale.mjs",
   "entropy": {
     "S": 0,
@@ -14,11 +14,19 @@
     }
   },
   "darkEnergy": {
-    "D": 10,
-    "dissentRatio": 0.04,
-    "plansTotal": 51,
-    "plansWithDissent": 2,
+    "D": 9,
+    "dissentRatio": 0.09,
+    "plansTotal": 55,
+    "plansWithDissent": 5,
     "advice": "Dark energy cao — decollaboration đang nở rộng: áp KN-018 cho mọi PRD mới (Who did you think with?)."
+  },
+  "gravity": {
+    "G": 3,
+    "level": "medium",
+    "cutRatio": 0.29,
+    "plansTotal": 55,
+    "plansWithCut": 16,
+    "advice": "Gravity vừa — thêm dòng CẮT/YAGNI vào PRD mới để giữ scope."
   },
   "darkMatter": {
     "M": 0,
@@ -29,9 +37,9 @@
     "disabledGalaxies": 0
   },
   "counts": {
-    "knTotal": 22,
-    "bugsTotal": 13,
-    "auditTotal": 3
+    "knTotal": 32,
+    "bugsTotal": 19,
+    "auditTotal": 16
   },
   "mismatches": [],
   "missing": [],
@@ -79,6 +87,14 @@
       "S": 0,
       "level": "low",
       "M": 0
+    },
+    {
+      "t": "2026-09-10T17:35:03.799Z",
+      "S": 0,
+      "level": "low",
+      "M": 0,
+      "D": 9,
+      "G": 3
     }
   ]
 }

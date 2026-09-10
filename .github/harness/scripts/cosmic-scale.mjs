@@ -3,9 +3,11 @@
  * cosmic-scale.mjs — đo entropy vũ trụ (tech debt) + black-hole (bottleneck) + dark-matter map
  * Usage:
  *   node .github/harness/scripts/cosmic-scale.mjs [--json] [--out www/cosmos/scale.json]
+ *   node .github/harness/scripts/cosmic-scale.mjs --budget 10   # Heat Death gate: exit 1 nếu S vượt ngân sách
  * No deps, Node 18+. Idempotent — chỉ đọc, không sửa (trừ file --out).
  * Thang S: low <10 · medium <25 · high >=25
  *   S = mismatch*10 + drafts*5 + refused*2 + disabled*1 + failed*5
+ * Gravity G = cutRatio*10 (scope control — % plans có dòng CẮT/YAGNI) — đối trọng định lượng của scope creep.
  */
 import fs from 'node:fs/promises';
 import { existsSync } from 'node:fs';
@@ -41,6 +43,8 @@ async function main() {
   const asJson = args.includes('--json');
   const outIdx = args.indexOf('--out');
   const outPath = outIdx !== -1 && args[outIdx + 1] ? path.resolve(ROOT, args[outIdx + 1]) : null;
+  const budgetIdx = args.indexOf('--budget');
+  const budget = budgetIdx !== -1 && args[budgetIdx + 1] ? Number(args[budgetIdx + 1]) : null;
 
   let registry = {};
   try { registry = JSON.parse(await fs.readFile(REGISTRY_PATH, 'utf8')); }
@@ -133,7 +137,7 @@ async function main() {
 
   // 5. dark energy — decollaboration (KN-018): tỉ lệ plans CÓ Dissent ("Who did you think with?")
   const PLANS_DIR = path.join(ROOT, '.agent', 'plans');
-  let plansTotal = 0, plansWithDissent = 0;
+  let plansTotal = 0, plansWithDissent = 0, plansWithCut = 0;
   try {
     const entries = await fs.readdir(PLANS_DIR, { withFileTypes: true });
     for (const e of entries) {
@@ -142,11 +146,22 @@ async function main() {
         const prd = await fs.readFile(path.join(PLANS_DIR, e.name, 'prd.md'), 'utf8');
         plansTotal++;
         if (/who did you think with\?/i.test(prd) || /dissent review/i.test(prd)) plansWithDissent++;
+        if (/yagni/i.test(prd) || /^[-*]\s*\*{0,2}cắt/im.test(prd)) plansWithCut++;
       } catch {}
     }
   } catch {}
   const dissentRatio = plansTotal ? plansWithDissent / plansTotal : 1;
   const darkEnergy = Math.round((1 - dissentRatio) * 10);
+
+  // gravity — scope control: % plans có dòng CẮT/YAGNI (đối trọng của scope creep; đo được offline)
+  const cutRatio = plansTotal ? plansWithCut / plansTotal : 0;
+  const gravity = Math.round(cutRatio * 10);
+  const gLevel = gravity < 3 ? 'low' : gravity < 6 ? 'medium' : 'high';
+  const gAdvice = gLevel === 'high'
+    ? 'Gravity mạnh — đa số PRD có dòng CẮT/YAGNI: scope được kiểm soát tốt.'
+    : gLevel === 'medium'
+      ? 'Gravity vừa — thêm dòng CẮT/YAGNI vào PRD mới để giữ scope.'
+      : 'Gravity yếu — ít PRD có dòng CẮT/YAGNI: scope dễ phình (dark energy thắng).';
   const deAdvice = darkEnergy === 0
     ? 'Gravity thắng — mọi plan đều có Dissent/Who did you think with.'
     : darkEnergy <= 5
@@ -167,6 +182,7 @@ async function main() {
     generatedBy: 'cosmic-scale.mjs',
     entropy: { S, level, advice, parts: { mismatch: mismatches.length, drafts, refused, disabled, failed } },
     darkEnergy: { D: darkEnergy, dissentRatio: Math.round(dissentRatio * 100) / 100, plansTotal, plansWithDissent, advice: deAdvice },
+    gravity: { G: gravity, level: gLevel, cutRatio: Math.round(cutRatio * 100) / 100, plansTotal, plansWithCut, advice: gAdvice },
     darkMatter: { M: darkMatter, level: dmLevel, advice: dmAdvice, orphans, orphanCount: orphans.length, disabledGalaxies: disabled },
     counts: { knTotal, bugsTotal, auditTotal },
     mismatches, missing, blackHoles,
@@ -184,7 +200,7 @@ async function main() {
       const prev = JSON.parse(await fs.readFile(outPath, 'utf8'));
       if (Array.isArray(prev.history)) history = prev.history.slice(-29);
     } catch {}
-    history.push({ t: result.generatedAt, S, level, M: darkMatter });
+    history.push({ t: result.generatedAt, S, level, M: darkMatter, D: darkEnergy, G: gravity });
     result.history = history;
     await fs.writeFile(outPath, JSON.stringify(result, null, 2) + '\n', 'utf8');
   }
@@ -193,12 +209,22 @@ async function main() {
     console.log('🌌 Entropy S=' + S + ' (' + level + ') — mismatch ' + mismatches.length + ' · drafts ' + drafts + ' · refused ' + refused + ' · disabled ' + disabled + ' · failed ' + failed);
     console.log('   ' + advice);
     console.log('   💜 dark energy D=' + darkEnergy + ' (dissent ' + plansWithDissent + '/' + plansTotal + ' plans) — ' + deAdvice);
+    console.log('   🧲 gravity G=' + gravity + ' (' + gLevel + ') — CẮT/YAGNI ' + plansWithCut + '/' + plansTotal + ' plans — ' + gAdvice);
     console.log('   🌑 dark matter M=' + darkMatter + ' (' + dmLevel + ') — orphan ' + orphans.length + ' · disabled ' + disabled + ' — ' + dmAdvice);
     if (orphans.length) console.log('   orphan: ' + orphans.map(o => o.type + '/' + o.name).join(', '));
     if (mismatches.length) console.log('   mismatch: ' + mismatches.map(m => m.type + '/' + m.name).join(', '));
     if (missing.length) console.log('   missing: ' + missing.map(m => m.type + '/' + m.name).join(', '));
     console.log('   black holes: ' + blackHoles.map(b => b.id).join(', '));
     if (outPath) console.log('   wrote ' + path.relative(ROOT, outPath));
+  }
+
+  // Heat Death gate (--budget): S vượt ngân sách → exit 1, buộc trả nợ entropy trước khi thêm feature
+  if (budget != null && !Number.isNaN(budget)) {
+    if (S > budget) {
+      console.error('❌ ENTROPY BUDGET VƯỢT: S=' + S + ' > budget ' + budget + ' — trả nợ (mismatch/draft/refused) trước khi thêm feature mới.');
+      process.exit(1);
+    }
+    console.log('   ✅ Trong ngân sách entropy: S=' + S + ' ≤ ' + budget);
   }
 }
 

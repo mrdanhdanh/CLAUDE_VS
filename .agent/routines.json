@@ -7,5 +7,14 @@
     "enabled": true,
     "fails": 0,
     "createdAt": "2026-09-02T15:13:40.298Z"
+  },
+  {
+    "id": "5e97bf",
+    "cron": "0 8 * * *",
+    "prompt": "refresh cosmic scale: npm run cosmos:refresh — dong bo www/cosmos/scale.json + status.json + audit mirror; bao cao neu S/D/G bat thuong",
+    "agent": "general",
+    "enabled": true,
+    "fails": 0,
+    "createdAt": "2026-09-10T17:35:15.600Z"
   }
 ]
