@@ -1,0 +1,58 @@
+{
+  "version": 1,
+  "workflow": "harness-8phase",
+  "triplets": [
+    {
+      "from": "explore",
+      "rel": "enables",
+      "to": "clarify",
+      "source": "workflow:harness-8phase"
+    },
+    {
+      "from": "clarify",
+      "rel": "enables",
+      "to": "prd",
+      "source": "workflow:harness-8phase"
+    },
+    {
+      "from": "prd",
+      "rel": "enables",
+      "to": "design",
+      "source": "workflow:harness-8phase"
+    },
+    {
+      "from": "design",
+      "rel": "requires",
+      "to": "approval",
+      "source": "workflow:harness-8phase"
+    },
+    {
+      "from": "approval",
+      "rel": "unlocks",
+      "to": "plan",
+      "source": "workflow:harness-8phase"
+    },
+    {
+      "from": "plan",
+      "rel": "enables",
+      "to": "implement",
+      "source": "workflow:harness-8phase"
+    },
+    {
+      "from": "implement",
+      "rel": "branches-to",
+      "to": "polish",
+      "source": "workflow:harness-8phase"
+    },
+    {
+      "from": "polish",
+      "rel": "enables",
+      "to": "verify",
+      "source": "workflow:harness-8phase"
+    }
+  ],
+  "rejected": [],
+  "createdAt": "2026-09-10T14:51:14.484Z",
+  "paper": "Procedural Graphs 2609.09153v1 + A-JIT 2609.10248v1 (KN-025)",
+  "updatedAt": "2026-09-10T14:51:14.485Z"
+}

@@ -1,0 +1,24 @@
+{
+  "version": 1,
+  "records": [
+    {
+      "ts": "2026-09-10T14:51:39.848Z",
+      "kind": "consistency",
+      "n": 5,
+      "perRun": 0.8,
+      "allN": 0,
+      "gap": 80,
+      "reliable": false
+    },
+    {
+      "ts": "2026-09-10T14:51:40.038Z",
+      "kind": "consistency",
+      "n": 5,
+      "perRun": 1,
+      "allN": 1,
+      "gap": 0,
+      "reliable": true
+    }
+  ],
+  "updatedAt": "2026-09-10T14:51:40.042Z"
+}

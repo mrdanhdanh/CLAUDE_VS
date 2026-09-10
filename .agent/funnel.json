@@ -1,0 +1,41 @@
+{
+  "version": 1,
+  "states": [
+    {
+      "id": "state-mtvnaz2n",
+      "ts": "2026-09-10T14:51:32.495Z",
+      "summary": "Distilled từ 1 dòng trajectory: 1 fail signals, 1 pass signals.",
+      "fails": [
+        "build pass, test fail at verify, retry pass"
+      ],
+      "passes": [
+        "build pass, test fail at verify, retry pass"
+      ],
+      "hypothesis": "Falsifiable: fix \"build pass, test fail at verify, retry pass\" sẽ giảm fail ở vòng sau.",
+      "editable": true
+    },
+    {
+      "id": "state-mtvnaz7a",
+      "ts": "2026-09-10T14:51:32.662Z",
+      "summary": "Distilled từ 1 dòng trajectory: 1 fail signals, 1 pass signals.",
+      "fails": [
+        "verify fail flaky, retry pass stable"
+      ],
+      "passes": [
+        "verify fail flaky, retry pass stable"
+      ],
+      "hypothesis": "Falsifiable: fix \"verify fail flaky, retry pass stable\" sẽ giảm fail ở vòng sau.",
+      "editable": true
+    }
+  ],
+  "policies": [],
+  "evidence": [
+    {
+      "ts": "2026-09-10T14:51:28.225Z",
+      "hypothesis": "FEEs enrich observation reduces timeout",
+      "axis": "model",
+      "outcome": "supported"
+    }
+  ],
+  "updatedAt": "2026-09-10T14:51:32.673Z"
+}

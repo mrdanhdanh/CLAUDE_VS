@@ -1,0 +1,269 @@
+{
+  "schema_version": 1,
+  "diagram_type": "sequence",
+  "meta": {
+    "title": "YUNIE — Task → STATUS → Pages Deploy",
+    "quality_profile": "showcase",
+    "viewBox": [
+      1050,
+      560
+    ],
+    "views": [
+      {
+        "id": "task-loop",
+        "label": "Task loop",
+        "focus": [
+          "user",
+          "yunie",
+          "harness",
+          "registry"
+        ],
+        "note": "User idea through YUNIE and Harness pipeline to registry update."
+      },
+      {
+        "id": "governance",
+        "label": "Governance",
+        "focus": [
+          "harness",
+          "policy",
+          "audit"
+        ],
+        "note": "Every tool call passes the policy gate and appends to the audit chain."
+      },
+      {
+        "id": "deploy",
+        "label": "Deploy",
+        "focus": [
+          "yunie",
+          "www",
+          "pages"
+        ],
+        "note": "Status regeneration and GitHub Pages deployment."
+      }
+    ]
+  },
+  "participants": [
+    {
+      "id": "user",
+      "type": "external",
+      "label": "User",
+      "sublabel": "sếp"
+    },
+    {
+      "id": "yunie",
+      "type": "frontend",
+      "label": "YUNIE",
+      "sublabel": "You & I · 24/7"
+    },
+    {
+      "id": "harness",
+      "type": "backend",
+      "label": "Harness",
+      "sublabel": "8-phase pipeline"
+    },
+    {
+      "id": "policy",
+      "type": "security",
+      "label": "Policy Gate",
+      "sublabel": "deny → allow"
+    },
+    {
+      "id": "audit",
+      "type": "messagebus",
+      "label": "Audit",
+      "sublabel": "hash chain"
+    },
+    {
+      "id": "registry",
+      "type": "database",
+      "label": "Registry",
+      "sublabel": "registry.json v2"
+    },
+    {
+      "id": "www",
+      "type": "frontend",
+      "label": "STATUS Site",
+      "sublabel": "www/"
+    },
+    {
+      "id": "pages",
+      "type": "cloud",
+      "label": "GitHub Pages",
+      "sublabel": "deploy"
+    }
+  ],
+  "segments": [
+    {
+      "from": 117,
+      "to": 257,
+      "label": "Task"
+    },
+    {
+      "from": 268,
+      "to": 401,
+      "label": "Governance"
+    },
+    {
+      "from": 405,
+      "to": 500,
+      "label": "Deploy"
+    }
+  ],
+  "messages": [
+    {
+      "id": "task",
+      "from": "user",
+      "to": "yunie",
+      "y": 160,
+      "label": "giao task",
+      "variant": "default"
+    },
+    {
+      "id": "pipeline",
+      "from": "yunie",
+      "to": "harness",
+      "y": 177,
+      "label": "run 8 phases",
+      "variant": "emphasis"
+    },
+    {
+      "id": "tool-call",
+      "from": "harness",
+      "to": "policy",
+      "y": 205,
+      "label": "policy-check",
+      "variant": "security"
+    },
+    {
+      "id": "verdict",
+      "from": "policy",
+      "to": "harness",
+      "y": 242,
+      "label": "permitted / refused",
+      "variant": "return"
+    },
+    {
+      "id": "audit-log",
+      "from": "harness",
+      "to": "audit",
+      "y": 274,
+      "label": "append event",
+      "variant": "dashed"
+    },
+    {
+      "id": "audit-hash",
+      "from": "audit",
+      "to": "harness",
+      "y": 303,
+      "label": "prevHash → hash",
+      "variant": "return"
+    },
+    {
+      "id": "registry-write",
+      "from": "harness",
+      "to": "registry",
+      "y": 344,
+      "label": "enable/disable",
+      "variant": "emphasis"
+    },
+    {
+      "id": "registry-ok",
+      "from": "registry",
+      "to": "harness",
+      "y": 380,
+      "label": "saved",
+      "variant": "return"
+    },
+    {
+      "id": "status-gen",
+      "from": "yunie",
+      "to": "www",
+      "y": 415,
+      "label": "generate status.json",
+      "variant": "default"
+    },
+    {
+      "id": "pages-deploy",
+      "from": "www",
+      "to": "pages",
+      "y": 448,
+      "label": "push → deploy",
+      "variant": "emphasis"
+    },
+    {
+      "id": "report",
+      "from": "yunie",
+      "to": "user",
+      "y": 470,
+      "label": "báo cáo + link",
+      "variant": "return"
+    }
+  ],
+  "activations": [
+    {
+      "participant": "yunie",
+      "from": 160,
+      "to": 472,
+      "type": "frontend"
+    },
+    {
+      "participant": "harness",
+      "from": 173,
+      "to": 383,
+      "type": "backend"
+    },
+    {
+      "participant": "policy",
+      "from": 206,
+      "to": 241,
+      "type": "security"
+    },
+    {
+      "participant": "audit",
+      "from": 270,
+      "to": 307,
+      "type": "messagebus"
+    },
+    {
+      "participant": "registry",
+      "from": 340,
+      "to": 383,
+      "type": "database"
+    },
+    {
+      "participant": "www",
+      "from": 410,
+      "to": 452,
+      "type": "frontend"
+    }
+  ],
+  "cards": [
+    {
+      "dot": "cyan",
+      "title": "Task loop",
+      "items": [
+        "User idea → YUNIE → Harness 8 phases",
+        "Todo-driven, get_errors sau mỗi edit",
+        "YUNIE nhớ context, không bắt user lặp lại"
+      ]
+    },
+    {
+      "dot": "rose",
+      "title": "Governance",
+      "items": [
+        "Mọi tool call qua policy gate (deny trước allow, fail-closed)",
+        "Audit append-only hash chain — verify sau mỗi session",
+        "Secrets AES-256-GCM, never logged"
+      ]
+    },
+    {
+      "dot": "emerald",
+      "title": "Deploy",
+      "items": [
+        "status.json regenerate từ registry.json (không sửa tay)",
+        "Copy file vào www/ → Pages tự deploy",
+        "Verify: JSON.parse + serve 200 + visual-check"
+      ]
+    }
+  ]
+}
