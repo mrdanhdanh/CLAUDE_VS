@@ -1,6 +1,6 @@
 ---
 name: harness-process
-description: "Task-agnostic lessons 'Process & Self-Improvement' chưng cất từ docs/knowleged.md (3 KN: KN-005, KN-007, KN-010) + .agent/bugs/. Use when task chạm process, quality, ux, perf, a11y, knowledge, automation, dx, self-improving, benchmark — áp Cách phòng tránh trước khi code, tránh lặp bug cũ. DisCo-lite, regenerate bằng distill-agnostic.mjs."
+description: "Task-agnostic lessons 'Process & Self-Improvement' chưng cất từ docs/knowleged.md (12 KN: KN-005, KN-007, KN-010, KN-014, KN-016, KN-018, KN-019, KN-023, KN-024, KN-025, KN-026, KN-027) + .agent/bugs/. Use when task chạm process, quality, ux, perf, a11y, knowledge, automation, dx, self-improving, benchmark — áp Cách phòng tránh trước khi code, tránh lặp bug cũ. DisCo-lite, regenerate bằng distill-agnostic.mjs."
 user-invocable: false
 ---
 
@@ -10,11 +10,11 @@ user-invocable: false
 
 ## When to Use
 
-- Task chạm theme **Process & Self-Improvement** (tags: process, quality, ux, perf, a11y, knowledge, automation, dx, self-improving, benchmark, aar)
+- Task chạm theme **Process & Self-Improvement** (tags: process, quality, ux, perf, a11y, knowledge, automation, dx, self-improving, benchmark, aar, mcp, testing, regex, windows, fs, collaboration, diversity, pilot-in-command, metrics, evidence, research, verification, calibration, psychology, taste, human-judgment, agent, self-evolving, procedural-graph, a-jit, memory, funnel, rl, consistency, self-distillation, scaffold)
 - Trước khi code/fix — áp **Cách phòng tránh** ngay để không lặp bug cũ
 - Review/plan — check anti-patterns bên dưới
 
-## Bài học (3 KN)
+## Bài học (12 KN)
 
 ### KN-005 — Bug Blindness — mù bug do workaround vô thức + fan bias (major)
 - **Bài học:** Chữa mù bug: fresh eyes, test như user mới, chỉ ra bug liên tục, không workaround vô thức, dogfooding có ý thức
@@ -46,6 +46,91 @@ user-invocable: false
   - Log benchmark results vào `.agent/benchmarks/<slug>-benchmark.md`.
   - `auto-researcher.mjs --task "xxx" --report` để chạy full AAR loop.
 
+### KN-014 — Smoke test treo khi import MCP stdio server + verify order + regex m flag (minor)
+- **Bài học:** Cấm import module khởi động server trong smoke one-liner; self-verify chạy sau khi mọi file đã ghi; regex `^`/`$` multi-line luôn thêm flag `m`
+- **Bug report:** .agent/bugs/2026-09-04-import-mcp-stdio-server-trong-smoke-test-gay-treo-/bug.md
+- **Cách phòng tránh:**
+  - KHÔNG import module khởi động server (stdio/HTTP) trong smoke test one-liner — server chờ input vĩnh viễn → treo terminal.
+  - Smoke MCP: gọi qua functions nội bộ (router) hoặc spawn process với stdin đóng + timeout.
+  - Self-verify phải chạy SAU khi mọi file đã ghi — nếu check phụ thuộc file sinh sau, ghi tạm (pre-checks) trước rồi verify final.
+  - Regex `^`/`$` cho nội dung multi-line luôn thêm flag `m`.
+  - Lệnh shell có ngoặc unquoted trong zsh → quote hoặc heredoc (tránh lỗi "unknown sort specifier").
+
+### KN-016 — harness-manager disable fail EPERM trên Windows (fs.rename folder bị chặn) (major)
+- **Bài học:** Wrap rename bằng `safeRename()`: thử `fs.rename`, bắt EPERM/EXDEV/EBUSY → fallback `fs.cp` + `fs.rm`
+- **Bug report:** .agent/bugs/2026-09-06-archify-skill-port/bug.md
+- **Cách phòng tránh:**
+  - Mọi script move file/folder trên Windows dùng wrapper rename có fallback, không gọi `fs.rename` trần.
+  - Gặp EPERM rename: thử PowerShell `Move-Item` để xác nhận OS cho phép → nếu OK thì chắc chắn là fallback thiếu, không phải permission.
+  - Không đoán "chắc chạy được" — test disable/enable thật sau khi thêm skill mới.
+
+### KN-018 — Waymo effect / Decollaboration — AI tiện quá khiến human ngừng nghĩ chung (major)
+- **Bài học:** Dissent Review gate ở Clarify/Verify: mỗi PRD phải có 1 framing đối lập không prompt trước; trả lời "Who did you think with?"; human giữ pilot-in-command
+- **Bug report:** —
+- **Cách phòng tránh:**
+  - Mọi PRD/Design phải trả lời "Who did you think with?" nghiêm túc như "What did you publish?".
+  - Human giữ pilot-in-command: agent là crew (analyst/critic/planner), human quyết question + path + conclusions.
+  - Outsource writing ≠ skip thinking — viết PRD/design là forcing function, không delegate toàn bộ.
+  - Coi collaboration là infrastructure: fund workshop/visit/co-location/unstructured time, không cắt khi budget căng.
+  - Khi output rẻ đi, thứ quý đảo ngược: thinking together là scarce resource — bảo vệ nó.
+
+### KN-019 — Perceived vs Measured Productivity — claim tốc độ phải đo, không nhận vibes (major)
+- **Bài học:** Mọi claim tốc độ/ROI phải đo bằng metrics (session logs, diff stat, token cost, rework count) — không nhận vibes
+- **Bug report:** —
+- **Cách phòng tránh:**
+  - Trước khi claim "nhanh hơn/tốt hơn": hỏi "đo bằng gì?" — không metrics thì nói rõ confidence LOW.
+  - Ghi scoreboard diff stat mỗi Verify (đã có trong minimal-ladder).
+  - Nhớ gap perceived vs measured là có hệ thống — chính dev trong study cũng sai sau khi được đo.
+
+### KN-023 — Model "giỏi ngọn, yếu gốc" — 6 papers chứng minh verification phải nằm ngoài model (major)
+- **Bài học:** Verification phải nằm NGOÀI model: fresh evidence từ tool, Dissent từ framing đối lập, đo lại bằng tool không tin trí nhớ
+- **Bug report:** docs/llm-weakness-research.md
+- **Cách phòng tránh:**
+  - Không hỏi model "chắc chưa?" — đo bằng tool (bài 2, 3: self-knowledge gap + calibration không generalize).
+  - Không để model tự review/chấm bài của chính nó làm bằng chứng Done (bài 1, 4: self-correction fail + self-preference).
+  - Không tin benchmark vendor — benchmark trên codebase thật (bài 3, 6: benchmark chính là vùng pattern quen).
+  - Chi tiết 6 papers + trích dẫn nguyên văn: `docs/llm-weakness-research.md`.
+
+### KN-024 — Prolific AI Psychosis — output rẻ làm mù khả năng đánh giá (major)
+- **Bài học:** Nút thắt chuyển từ sản xuất sang đánh giá: giữ human judgment + verification ngoài model; đo value không đo LOC; taste là ceiling không tự động hóa được
+- **Bug report:** docs/llm-weakness-research.md
+- **Cách phòng tránh:**
+  - Không thưởng/chấm theo output đếm được (LOC, số file, số task) — đo value thật (utility, rework count, user feedback).
+  - Học nhận diện "counterfeit wins" — loss nhìn y win: luôn verify bằng tool trước khi tin (KN-019).
+  - Nếu không hiểu code mình vừa merge → STOP, đó là dấu hiệu psychosis — đọc lại hoặc viết lại (KN-022: human phải hiểu hệ thống mình sở hữu).
+  - Giữ sleep + life outside work — hyperfocus là triệu chứng, không phải feature.
+  - Taste là human judgment: AI dự đoán trend được nhưng express feeling thì không (Emily Oberg: $400k/năm tiết kiệm nhưng phá brand visual) — không outsource phần cảm nhận.
+
+### KN-025 — Procedural Graphs + A-JIT — Self-Evolving Execution Structures (2609.09153v1, 2609.10248v1) (major)
+- **Bài học:** Procedural Graph tổ chức (procedure, relation, procedure) + guidance model bias next action + LLM refiner contrast failed/success để edit topology, giữ rejected edits
+- **Bug report:** www/library/export.json
+- **Cách phòng tránh:**
+  - Mọi agent long-horizon phải có explicit procedural structure (graph/workflow), không để unconstrained generation tự quyết thứ tự.
+  - Guidance bias không dictate — solver vẫn quyết, graph chỉ gợi ý.
+  - Self-evolution loop phải có held-out validation + rejected memory, không commit bừa.
+  - Harness 8-phase đã là procedural graph thô — cần formalize thành `procedural-graph.json` với (procedure, relation, procedure) triplets + guidance.
+  - A-JIT: harness + traces phải quan sát usage để specialize, không ship static rồi bỏ.
+
+### KN-026 — Experience Funnel + ADMET-EvO — State-Policy Alternating Loop & Evidence-Gated Evolution (2609.08919v1, 2609.10121v1) (major)
+- **Bài học:** Alternating loop: distill trajectory → explicit textual state (fast) → identify useful behavior → consolidate vào policy via transition-aware distillation (slow) + evidence-gated carry forward
+- **Bug report:** www/library/export.json
+- **Cách phòng tránh:**
+  - Mọi self-evolution phải có 2 tốc độ: fast state (text, editable) + slow policy (parametric, consolidated) — không chỉ 1.
+  - Distill trajectory thành explicit state trước, validate nhanh, rồi mới consolidate vào policy — không consolidate trực tiếp từ raw trajectory.
+  - Evidence-gated: mọi hypothesis phải falsifiable, test qua interventions, carry supported/rejected/inconclusive — không overfit internal validation.
+  - Harness: knowleged.md là explicit state, instructions/skills là policy — cần funnel loop giữa chúng, không chỉ append.
+  - Đo cumulative fitting time + task-normalized score, không chỉ per-task accuracy.
+
+### KN-027 — Feedback-Enriched Environments + Consistency Gap + SOLID — Self-Improvement Without Verified Answers (2609.08404v1, 2609.08832v1, 2609.09957v1) (major)
+- **Bài học:** FEEs: chuyển từ action guidance sang observation enrichment + intra-group feedback consistency; Consistency Analyzer + Guideline Generator; SOLID: cluster objectives, majority artifact làm pseudo-reference, group-relative advantages
+- **Bug report:** www/library/export.json
+- **Cách phòng tránh:**
+  - Long-horizon RL: ưu tiên environment-side adaptation (FEEs) trước khi nhồi agent-side SFT — enrich observation, không chỉ guide action.
+  - Đo consistency gap (all-5 vs per-run) như metric chính cho production reliability, không chỉ per-run pass rate.
+  - Mọi self-evolution phải có Consistency Analyzer + Guideline Generator → episodic memory, không chỉ retry.
+  - Self-improvement không cần verified answers: dùng SOLID pattern — multiple rollouts → cluster → majority pseudo-reference → group-relative advantages.
+  - Intra-group feedback consistency là boundary — nếu feedback trong group không consistent → optimization unstable, phải fix environment trước.
+
 ## Anti-patterns (đừng lặp lại)
 
 - - ❌ Chọn fix ngẫu hiên khi có nhiều cách → áp dụng AAR pattern: propose 3 → benchmark → keep best (KN-010).
@@ -58,9 +143,40 @@ user-invocable: false
 - - ❌ Gặp lỗi mà không `log` ngay — để trôi, mất context (KN-007).
 - - ❌ Fix xong mà không `propose` KN mới — bài học không được lưu (KN-007).
 - - ❌ Tự ghi `knowleged.md` tay không qua propose — sai format, thiếu ID (KN-007).
+- - ❌ Import module khởi động server (stdio/HTTP) trong smoke test one-liner — server chờ stdin vĩnh viễn, terminal treo (KN-014).
+- - ❌ Self-verify chạy trước khi file cần check được ghi — check phụ thuộc file sinh sau phải ghi tạm (pre-checks) rồi verify final (KN-014).
+- - ❌ Regex `^`/`$` trên nội dung multi-line thiếu flag `m` — chỉ match đầu/cuối string, không match đầu dòng (KN-014).
+- - ❌ Gọi `fs.rename` folder trần trên Windows — watcher giữ handle → EPERM; dùng wrapper có fallback cp+rm (KN-016).
+- - ❌ Gặp EPERM rename mà kết luận "permission sai" — test PowerShell `Move-Item` trước để phân biệt watcher-lock vs ACL (KN-016).
+- - ❌ Redirect mọi conversation sang chatbot vì tiện — decollaboration diễn ra "never by decision, always by convenience" (KN-018).
+- - ❌ Để AI viết PRD/design 1 phát xong, không có framing đối lập — outsource writing = skip thinking (KN-018).
+- - ❌ Thưởng velocity mà không đo diversity — individual productivity tăng nhưng ideas thu hẹp (KN-018).
+- - ❌ Cắt workshop/travel/co-location khi budget căng — đó chính là hạ tầng của serendipity (KN-018).
+- - ❌ Đánh giá AI productivity bằng cảm nhận ("nhanh hơn hẳn!") không có metrics — METR: kỳ vọng +24%, thực tế −19% (KN-019).
+- - ❌ Claim "setup này xịn" mà không đo — trải nghiệm trôi chảy ≠ tiến độ thật (KN-019).
+- - ❌ Tin self-report "mình đã check rồi" làm bằng chứng Done — intrinsic self-correction làm accuracy GIẢM, không tăng (KN-023, Huang ICLR 2024).
+- - ❌ Hỏi model "chắc chưa?" thay vì đo bằng tool — self-knowledge thua xa human, calibration không generalize sang task mới (KN-023, Yin ACL 2023 + Kadavath 2022).
+- - ❌ Để model tự chấm/review output của chính nó — self-preference có hệ thống, tương quan tuyến tính với self-recognition (KN-023, Panickssery 2024).
+- - ❌ Lặp nguyên output cũ khi user nói "vẫn lỗi" để chiều lòng — sycophancy do RLHF, phải đổi strategy + đo lại (KN-023, Sharma 2023).
+- - ❌ Tin benchmark vendor làm bằng chứng năng lực — benchmark chính là vùng pattern quen; đổi số/thêm mệnh đề nhiễu là sụt tới 65% (KN-023, GSM-Symbolic ICLR 2025).
+- - ❌ Chấm năng suất theo output đếm được (LOC, số file, số task) — prolific AI psychosis: hàng nghìn dòng code không utility, metrics thưởng output không thưởng value (KN-024, Jeff Clark MD).
+- - ❌ Tin "loss nhìn y win" — slot-machine reinforcement: output tự tin + rẻ khiến counterfeit wins không bị reject (KN-024).
+- - ❌ Merge code mà không hiểu nó hoạt động — "couldn't understand my own project" là dấu hiệu psychosis, phải STOP đọc lại/viết lại (KN-024).
+- - ❌ Outsource taste/craft cho AI — "taste is felt, not learned"; AI tiết kiệm $400k/năm nhưng phá brand visual (KN-024, Emily Oberg).
+- - ❌ Cắt sleep/life outside work để chạy theo AI hype — hyperfocus là triệu chứng psychosis, không phải feature (KN-024).
+- - ❌ Agent long-horizon không có procedural structure explicit — unconstrained generation tự quyết thứ tự → lạc, lặp vô ích (KN-025).
+- - ❌ Guidance dictate thay vì bias — graph ép solver làm theo, mất khả năng quyết của solver (KN-025).
+- - ❌ Self-evolution commit bừa không qua held-out validation + không giữ rejected edits → lặp lại lỗi cũ (KN-025).
+- - ❌ Chỉ dùng 1 tốc độ (chỉ state hoặc chỉ policy) — không có alternating loop fast state + slow policy (KN-026).
+- - ❌ Consolidate trực tiếp từ raw trajectory vào policy — không distill qua explicit textual state trước (KN-026).
+- - ❌ Hypothesis không falsifiable, không test qua interventions, không carry supported/rejected/inconclusive → overfit internal validation (KN-026).
+- - ❌ RL long-horizon chỉ nhồi agent-side SFT — không thử environment-side adaptation (FEEs) trước (KN-027).
+- - ❌ Chỉ đo per-run pass rate, không đo consistency gap all-5 vs per-run → tưởng reliable nhưng production flip (KN-027).
+- - ❌ Self-improvement phụ thuộc verified answers/external evaluator — không dùng SOLID majority pseudo-reference (KN-027).
+- - ❌ Bỏ qua intra-group feedback consistency — feedback trong group không consistent mà vẫn optimize → unstable (KN-027).
 
 ## Nguồn
 
-- `docs/knowleged.md` — KN-005, KN-007, KN-010
+- `docs/knowleged.md` — KN-005, KN-007, KN-010, KN-014, KN-016, KN-018, KN-019, KN-023, KN-024, KN-025, KN-026, KN-027
 - Chi tiết đầy đủ: `references/evidence.md` (progressive disclosure)
 - Regenerate: `node .github/harness/scripts/distill-agnostic.mjs`

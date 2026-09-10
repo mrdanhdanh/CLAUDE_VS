@@ -729,6 +729,53 @@
       font:400 10px var(--font-mono);color:var(--cosmos-text-dim);text-align:center;
     }
 
+    /* ===== Double-slit lab ===== */
+    .ds-stage{width:100%;max-width:360px;display:flex;flex-direction:column;gap:10px;align-items:stretch}
+    .ds-screen-wrap{position:relative;background:rgba(0,0,0,.35);border:1px solid rgba(255,255,255,.08);border-radius:12px;overflow:hidden}
+    .ds-canvas{display:block;width:100%;height:150px}
+    .ds-mode{position:absolute;top:8px;left:50%;transform:translateX(-50%);font:700 10px var(--font-mono);letter-spacing:.06em;text-transform:uppercase;padding:4px 10px;border-radius:999px;border:1px solid rgba(255,255,255,.1);background:rgba(0,0,0,.5);color:var(--cosmos-text-muted);white-space:nowrap}
+    .ds-mode.wave{color:#67e8f9;background:rgba(6,182,214,.15);border-color:rgba(6,182,214,.35)}
+    .ds-mode.particle{color:#fcd34d;background:rgba(245,158,11,.15);border-color:rgba(245,158,11,.35)}
+    .ds-stats{display:flex;gap:8px}
+    .ds-stat{flex:1;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:10px;padding:8px;text-align:center}
+    .ds-stat b{display:block;font:700 15px var(--font-mono);color:#fff}
+    .ds-stat span{font:500 9.5px var(--font-mono);letter-spacing:.06em;text-transform:uppercase;color:var(--cosmos-text-dim)}
+
+    /* ===== Schrödinger's Bug lab (flaky test) ===== */
+    .sb-stage{width:100%;max-width:360px;display:flex;flex-direction:column;gap:10px}
+    .sb-code{background:#0b1120;border:1px solid rgba(255,255,255,.08);border-radius:10px;padding:10px 12px;font:500 11px/1.6 var(--font-mono);color:#c4b5fd;overflow-x:auto;white-space:pre}
+    .sb-code .cm{color:var(--cosmos-text-dim)}
+    .sb-badge-row{display:flex;align-items:center;justify-content:center;gap:8px}
+    .sb-badge{font:700 12px var(--font-mono);letter-spacing:.06em;text-transform:uppercase;padding:6px 14px;border-radius:999px;border:1px solid rgba(124,58,237,.4);background:rgba(124,58,237,.15);color:#c4b5fd;animation:pulse 1.5s ease infinite}
+    .sb-badge.pass{color:#6ee7b7;background:rgba(16,185,129,.15);border-color:rgba(16,185,129,.4);animation:none}
+    .sb-badge.fail{color:#fca5a5;background:rgba(239,68,68,.15);border-color:rgba(239,68,68,.4);animation:none}
+    .sb-history{display:flex;flex-wrap:wrap;gap:5px;justify-content:center;min-height:18px}
+    .sb-dot{width:14px;height:14px;border-radius:50%;display:grid;place-items:center;font-size:8px;font-weight:800}
+    .sb-dot.p{background:rgba(16,185,129,.25);border:1px solid rgba(16,185,129,.5);color:#6ee7b7}
+    .sb-dot.f{background:rgba(239,68,68,.25);border:1px solid rgba(239,68,68,.5);color:#fca5a5}
+    .sb-dot.s{background:rgba(124,58,237,.2);border:1px dashed rgba(124,58,237,.5);color:#c4b5fd}
+    .sb-stats{display:flex;gap:8px}
+    .sb-stats .ds-stat b.flaky{color:#fcd34d}
+
+    /* ===== Multiverse lab (A/B) ===== */
+    .mv-stage{width:100%;max-width:360px;display:flex;flex-direction:column;gap:10px}
+    .mv-branch{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+    @media(max-width:420px){.mv-branch{grid-template-columns:1fr}}
+    .mv-universe{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:12px;padding:12px;text-align:center;transition:all .3s;position:relative}
+    .mv-universe h5{margin:0 0 4px;font:700 12px var(--font-display);color:#fff}
+    .mv-universe small{font:500 10px var(--font-mono);color:var(--cosmos-text-dim)}
+    .mv-universe .mv-rate{font:800 20px var(--font-mono);color:#fff;margin:6px 0 2px}
+    .mv-universe .mv-bar{height:6px;background:rgba(255,255,255,.08);border-radius:999px;overflow:hidden;margin-top:8px}
+    .mv-universe .mv-bar i{display:block;height:100%;border-radius:inherit;transition:width .5s ease}
+    .mv-universe.a .mv-bar i{background:linear-gradient(90deg,#7c3aed,#a78bfa)}
+    .mv-universe.b .mv-bar i{background:linear-gradient(90deg,#06b6d4,#67e8f9)}
+    .mv-universe.winner{border-color:rgba(16,185,129,.5);background:rgba(16,185,129,.1);box-shadow:0 0 16px rgba(16,185,129,.2)}
+    .mv-universe.loser{opacity:.55;filter:grayscale(.5)}
+    .mv-vs{align-self:center;font:800 11px var(--font-mono);color:var(--cosmos-text-dim);background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);width:28px;height:28px;border-radius:50%;display:grid;place-items:center;margin:0 auto}
+    .mv-winner-line{font:600 11px var(--font-mono);color:var(--cosmos-text-muted);text-align:center;min-height:18px}
+    .mv-winner-line b{color:#6ee7b7}
+    @media(prefers-reduced-motion:reduce){.sb-badge{animation:none}.mv-universe .mv-bar i{transition:none}}
+
     /* ===== Scroll Progress ===== */
     .scroll-progress{position:fixed;top:0;left:0;right:0;height:3px;z-index:100;background:rgba(255,255,255,.06);pointer-events:none}
     .scroll-progress-bar{height:100%;width:0%;background:linear-gradient(90deg,#7c3aed,#06b6d4,#f59e0b);transition:width .08s linear;box-shadow:0 0 8px rgba(124,58,237,.5)}
@@ -1215,7 +1262,7 @@
       <div class="container">
         <div class="section-head">
           <h2 id="lab-title"><small>Lab tương tác</small>Chạm để cảm nhận lượng tử</h2>
-          <p>7 thí nghiệm — 4 cũ + 3 mới: <b>Black Hole</b> (bottleneck), <b>Schrödinger</b> (Heisenbug) + <b>Quantum Decision</b> (superposition + decoherence). Thử kéo, bấm, đo, thả.</p>
+          <p>10 thí nghiệm: Superposition, Entanglement, Heisenberg, Tunneling, <b>Black Hole</b>, <b>Schrödinger</b>, <b>Quantum Decision</b> + 3 mới <b>Double-slit</b> (quan sát đổi kết quả), <b>Schrödinger's Bug</b> (flaky test), <b>Multiverse</b> (A/B). Thử kéo, bấm, đo, thả.</p>
           <a href="#integration">→ Áp vào Harness sao?</a>
           <a href="./scale.html" style="margin-left:8px">→ Dashboard entropy</a>
         </div>
@@ -1429,6 +1476,108 @@
               <div class="lab-hint" id="qdHint">3 phương án đang song song — nạp data để dịch biên độ, rồi collapse</div>
             </div>
           </div>
+
+          <!-- Double-slit -->
+          <div class="lab-card">
+            <div class="lab-head">
+              <h3><span>🌊</span> Double-slit — Quan sát đổi kết quả</h3>
+              <span class="lab-badge">KN-014 · Heisenbug</span>
+            </div>
+            <div class="lab-body">
+              <p>Không nhìn → hạt đi qua <strong>cả 2 khe</strong> (giao thoa sóng). Đặt máy đo ở khe → sóng <strong>sụp đổ</strong> thành 2 vệt hạt. Như KN-014: import/test làm đổi hành vi.</p>
+              <div class="lab-demo">
+                <div class="ds-stage" role="group" aria-label="Thí nghiệm hai khe">
+                  <div class="ds-screen-wrap">
+                    <canvas class="ds-canvas" id="dsCanvas" width="640" height="300" aria-label="Màn hình giao thoa" role="img"></canvas>
+                    <div class="ds-mode wave" id="dsMode">🌊 SÓNG · không quan sát</div>
+                  </div>
+                  <div class="ds-stats">
+                    <div class="ds-stat"><b id="dsCount">0</b><span>hạt đã bắn</span></div>
+                    <div class="ds-stat"><b id="dsFringe">—</b><span>vân giao thoa</span></div>
+                    <div class="ds-stat"><b id="dsWhich">—</b><span>which-path info</span></div>
+                  </div>
+                </div>
+              </div>
+              <div class="lab-controls">
+                <button class="btn btn-primary" id="btnDsFire" type="button">🔫 Bắn 1 hạt</button>
+                <button class="btn btn-ghost" id="btnDsBurst" type="button">💥 Bắn 200 hạt</button>
+                <button class="btn btn-ghost" id="btnDsObserve" type="button" aria-pressed="false">👁️ Đặt máy đo</button>
+                <button class="btn btn-ghost" id="btnDsReset" type="button">↺ Reset màn</button>
+              </div>
+              <div class="lab-hint" id="dsHint">Chưa quan sát = vân sóng · Bật máy đo để thấy sóng sụp đổ</div>
+            </div>
+          </div>
+
+          <!-- Schrödinger's Bug -->
+          <div class="lab-card">
+            <div class="lab-head">
+              <h3><span>🐞</span> Schrödinger's Bug — Flaky test</h3>
+              <span class="lab-badge">KN-014 · Flaky</span>
+            </div>
+            <div class="lab-body">
+              <p>Bug vừa <strong>tồn tại vừa không</strong> tới khi chạy test — pass/fail ngẫu nhiên do race/timing. Fix thật = sửa gốc, không phải <em>rerun tới khi xanh</em> (KN-012).</p>
+              <div class="lab-demo" style="align-items:stretch;justify-content:flex-start">
+                <div class="sb-stage" role="group" aria-label="Flaky test Schrödinger">
+                  <div class="sb-code"><span class="cm">// test flaky: race 50/50 — rerun không phải fix</span>
+test('checkout', async () =&gt; {
+  await race([pay(), timeout(50)]);
+  expect(paid).toBe(true); <span class="cm">// ← sụp đổ khi đo</span>
+})</div>
+                  <div class="sb-badge-row"><div class="sb-badge" id="sbBadge" role="status" aria-live="polite">◈ SUPERPOSITION · chưa chạy</div></div>
+                  <div class="sb-history" id="sbHistory" aria-label="Lịch sử chạy test"></div>
+                  <div class="sb-stats">
+                    <div class="ds-stat"><b id="sbPass" style="color:#6ee7b7">0</b><span>pass ✓</span></div>
+                    <div class="ds-stat"><b id="sbFail" style="color:#fca5a5">0</b><span>fail ✗</span></div>
+                    <div class="ds-stat"><b id="sbFlaky" class="flaky">—</b><span>độ flaky</span></div>
+                  </div>
+                </div>
+              </div>
+              <div class="lab-controls">
+                <button class="btn btn-primary" id="btnSbRun" type="button">▶ Chạy 1 lần</button>
+                <button class="btn btn-ghost" id="btnSbRun10" type="button">⏩ Chạy 10 lần</button>
+                <button class="btn btn-ghost" id="btnSbFix" type="button">🔧 Fix gốc (await)</button>
+                <button class="btn btn-ghost" id="btnSbReset" type="button">↺ Reset</button>
+              </div>
+              <div class="lab-hint" id="sbHint">Chạy vài lần để thấy vừa pass vừa fail · Fix gốc mới hết flaky</div>
+            </div>
+          </div>
+
+          <!-- Multiverse -->
+          <div class="lab-card">
+            <div class="lab-head">
+              <h3><span>🪐</span> Multiverse — A/B như đa vũ trụ</h3>
+              <span class="lab-badge">A/B test</span>
+            </div>
+            <div class="lab-body">
+              <p>Mỗi variant là <strong>1 vũ trụ nhánh</strong>. Đổ traffic vào cả hai, đo conversion — vũ trụ thắng được <strong>ship</strong>, vũ trụ thua bị cắt tỉa.</p>
+              <div class="lab-demo" style="align-items:stretch;justify-content:flex-start">
+                <div class="mv-stage" role="group" aria-label="A/B test đa vũ trụ">
+                  <div class="mv-branch">
+                    <div class="mv-universe a" id="mvA">
+                      <h5>🅰️ Vũ trụ A</h5><small id="mvCountA">0 visits</small>
+                      <div class="mv-rate" id="mvRateA">—</div>
+                      <small>conversion</small>
+                      <div class="mv-bar"><i id="mvBarA" style="width:0%"></i></div>
+                    </div>
+                    <div class="mv-universe b" id="mvB">
+                      <h5>🅱️ Vũ trụ B</h5><small id="mvCountB">0 visits</small>
+                      <div class="mv-rate" id="mvRateB">—</div>
+                      <small>conversion (+5% thật)</small>
+                      <div class="mv-bar"><i id="mvBarB" style="width:0%"></i></div>
+                    </div>
+                  </div>
+                  <div class="mv-winner-line" id="mvWinner" aria-live="polite">— chưa đủ data (cần ≥100 visits mỗi nhánh) —</div>
+                </div>
+              </div>
+              <div class="lab-controls">
+                <button class="btn btn-primary" id="btnMvTraffic" type="button">🚦 +100 visits</button>
+                <button class="btn btn-ghost" id="btnMvBurst" type="button">🌊 +1000 visits</button>
+                <button class="btn btn-ghost" id="btnMvShip" type="button">🚀 Ship vũ trụ thắng</button>
+                <button class="btn btn-ghost" id="btnMvReset" type="button">↺ Tách nhánh lại</button>
+              </div>
+              <div class="lab-hint" id="mvHint">B thật nhỉnh hơn A 5% — ít traffic thì nhiễu thắng, nhiều traffic thì thật thắng</div>
+            </div>
+          </div>
         </div>
       </div>
     </section>
@@ -1546,10 +1695,10 @@
             <p>Dùng <strong>superposition</strong> giữ 3 phương án song song tới khi có data (collapse theo biên độ, không random mù), <strong>decoherence</strong> phát hiện hệ mất kết dính khi quá nhiều workaround — đo thật từ scale.json.</p>
             <span class="eta">→ Shipped 2026-09-10 · <a href="#lab" style="color:#c4b5fd">thử lab ⚛️</a></span>
           </div>
-          <div class="future-card">
-            <h4>🔬 Lab mở rộng</h4>
-            <p>Thêm lab: <strong>double-slit</strong> (quan sát làm đổi kết quả), <strong>Schrödinger's bug</strong> (bug vừa tồn tại vừa không tới khi test), <strong>multiverse</strong> (A/B test như đa vũ trụ).</p>
-            <span class="eta">→ 2027 · www/cosmos/lab-*.html</span>
+          <div class="future-card" style="border-color:rgba(16,185,129,.25)">
+            <h4>🔬 Lab mở rộng <span class="tag" style="color:#6ee7b7;background:rgba(16,185,129,.15);border-color:rgba(16,185,129,.25);vertical-align:middle">✅ Done</span></h4>
+            <p>Đã ship 3 lab: <strong>double-slit</strong> (quan sát làm sụp đổ sóng → 2 vệt hạt), <strong>Schrödinger's Bug</strong> (flaky test vừa pass vừa fail → fix gốc), <strong>multiverse</strong> (A/B như tách nhánh vũ trụ → ship nhánh thắng).</p>
+            <span class="eta">→ Shipped 2026-09-10 · <a href="#lab" style="color:#c4b5fd">thử 3 lab mới 🧪</a></span>
           </div>
           <div class="future-card">
             <h4>❄️ Heat Death — Entropy Budget</h4>
@@ -2139,6 +2288,217 @@
         el.addEventListener('keydown', (e)=>{ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); el.click(); }});
       });
       renderOpts(); renderCoh(); renderHint();
+    })();
+
+    // ===== Double-slit — quan sát làm sụp đổ sóng =====
+    (function(){
+      const canvas=$('#dsCanvas'), modeEl=$('#dsMode');
+      const elCount=$('#dsCount'), elFringe=$('#dsFringe'), elWhich=$('#dsWhich'), hint=$('#dsHint');
+      const btnFire=$('#btnDsFire'), btnBurst=$('#btnDsBurst'), btnObs=$('#btnDsObserve'), btnReset=$('#btnDsReset');
+      if(!canvas || !btnFire) return;
+      const ctx=canvas.getContext('2d');
+      const W=640, H=300, SRC_X=46, BAR_X=260, SCR_X=560, CY=H/2;
+      const SLIT1=CY-42, SLIT2=CY+42;
+      let observed=false, hits=[];
+      const gauss=()=>{ let u=0,v=0; while(!u)u=Math.random(); while(!v)v=Math.random(); return Math.sqrt(-2*Math.log(u))*Math.cos(2*Math.PI*v); };
+      function sampleY(){
+        if(!observed){
+          // giao thoa: envelope Gauss × cos² — rejection sampling
+          for(let k=0;k<40;k++){
+            const y=CY+gauss()*62;
+            if(y<8||y>H-8) continue;
+            const interf=Math.pow(Math.cos((y-CY)*0.085),2);
+            const env=Math.exp(-Math.pow(y-CY,2)/(2*70*70));
+            if(Math.random() < interf*0.9+env*0.1) return y;
+          }
+          return CY+gauss()*55;
+        }
+        // đã quan sát: 2 vệt Gauss quanh từng khe
+        const c=Math.random()<0.5?SLIT1:SLIT2;
+        return Math.min(H-8, Math.max(8, c+gauss()*13));
+      }
+      function draw(){
+        ctx.clearRect(0,0,W,H);
+        const bg=ctx.createLinearGradient(0,0,0,H);
+        bg.addColorStop(0,'rgba(124,58,237,.06)'); bg.addColorStop(1,'rgba(6,182,214,.04)');
+        ctx.fillStyle=bg; ctx.fillRect(0,0,W,H);
+        // nguồn
+        ctx.beginPath(); ctx.arc(SRC_X,CY,9,0,Math.PI*2);
+        ctx.fillStyle='#fbbf24'; ctx.shadowColor='rgba(251,191,36,.8)'; ctx.shadowBlur=12; ctx.fill(); ctx.shadowBlur=0;
+        ctx.fillStyle='rgba(148,163,184,.9)'; ctx.font='11px JetBrains Mono, monospace'; ctx.textAlign='center';
+        ctx.fillText('nguồn', SRC_X, CY+28);
+        // tia từ nguồn tới khe
+        ctx.strokeStyle='rgba(251,191,36,.25)'; ctx.lineWidth=1;
+        ctx.beginPath(); ctx.moveTo(SRC_X+10,CY-4); ctx.lineTo(BAR_X,SLIT1); ctx.moveTo(SRC_X+10,CY+4); ctx.lineTo(BAR_X,SLIT2); ctx.stroke();
+        // barrier 2 khe
+        ctx.fillStyle='rgba(255,255,255,.14)';
+        ctx.fillRect(BAR_X,10,8,SLIT1-10-14); ctx.fillRect(BAR_X,SLIT1+14,8,SLIT2-14-(SLIT1+14)); ctx.fillRect(BAR_X,SLIT2+14,8,H-10-(SLIT2+14));
+        ctx.fillStyle='rgba(148,163,184,.9)'; ctx.fillText('2 khe', BAR_X+4, H-14);
+        // máy đo (khi bật)
+        if(observed){
+          ctx.fillStyle='rgba(245,158,11,.9)'; ctx.font='13px sans-serif'; ctx.textAlign='center';
+          ctx.fillText('👁️', BAR_X+4, SLIT1-20); ctx.fillText('👁️', BAR_X+4, SLIT2+24);
+          ctx.fillStyle='rgba(252,211,77,.9)'; ctx.font='10px JetBrains Mono, monospace';
+          ctx.fillText('máy đo: BẬT', BAR_X+4, 24);
+        }
+        // màn
+        ctx.fillStyle='rgba(255,255,255,.2)'; ctx.fillRect(SCR_X,10,4,H-20);
+        ctx.fillStyle='rgba(148,163,184,.9)'; ctx.fillText('màn', SCR_X+2, H-14);
+        // hits
+        for(const h of hits){
+          ctx.beginPath(); ctx.arc(SCR_X+2+(h.j||0), h.y, 2.1, 0, Math.PI*2);
+          ctx.fillStyle=h.m==='w'?'rgba(103,232,249,.9)':'rgba(252,211,77,.9)';
+          ctx.fill();
+        }
+      }
+      function renderStats(){
+        elCount.textContent=hits.length;
+        elWhich.textContent=observed?'có (biết khe)':'không';
+        if(!hits.length) elFringe.textContent='—';
+        else if(!observed) elFringe.textContent=hits.length>=100?'rõ (5 vân)':hits.length>=20?'mờ dần…':'đang hình thành…';
+        else elFringe.textContent='mất (2 vệt)';
+        modeEl.textContent=observed?'👁️ HẠT · đang quan sát':'🌊 SÓNG · không quan sát';
+        modeEl.className='ds-mode '+(observed?'particle':'wave');
+        if(hint) hint.innerHTML=observed
+          ? '👁️ Máy đo BẬT → sóng <b>sụp đổ</b> thành 2 vệt hạt · Tắt máy đo + reset để thấy sóng lại'
+          : '🌊 Chưa quan sát → hạt đi qua <b>cả 2 khe</b> (vân giao thoa) · Bật máy đo để thấy sụp đổ';
+      }
+      function fire(n){
+        for(let i=0;i<n;i++) hits.push({y:sampleY(), m:observed?'p':'w', j:(Math.random()-0.5)*3});
+        draw(); renderStats();
+      }
+      btnFire.addEventListener('click', ()=>{ fire(1); toast(observed?'🔫 1 hạt → vệt hạt':'🔫 1 hạt → góp vào vân sóng'); });
+      btnBurst.addEventListener('click', ()=>{ fire(200); toast(observed?'💥 200 hạt → 2 vệt rõ':'💥 200 hạt → vân giao thoa rõ'); });
+      btnObs.addEventListener('click', ()=>{
+        observed=!observed;
+        btnObs.setAttribute('aria-pressed', String(observed));
+        btnObs.textContent=observed?'🙈 Tắt máy đo':'👁️ Đặt máy đo';
+        hits=[]; draw(); renderStats();
+        toast(observed?'👁️ Máy đo BẬT — sóng sụp đổ!':'🙈 Máy đo TẮT — sóng trở lại!');
+      });
+      btnReset.addEventListener('click', ()=>{ hits=[]; draw(); renderStats(); toast('↺ Reset màn — bắn lại từ đầu'); });
+      draw(); renderStats();
+    })();
+
+    // ===== Schrödinger's Bug — flaky test vừa pass vừa fail =====
+    (function(){
+      const badge=$('#sbBadge'), hist=$('#sbHistory');
+      const elP=$('#sbPass'), elF=$('#sbFail'), elFl=$('#sbFlaky'), hint=$('#sbHint');
+      const btnRun=$('#btnSbRun'), btnRun10=$('#btnSbRun10'), btnFix=$('#btnSbFix'), btnReset=$('#btnSbReset');
+      if(!badge || !btnRun) return;
+      let pass=0, fail=0, fixed=false, running=false;
+      function render(last){
+        elP.textContent=pass; elF.textContent=fail;
+        const total=pass+fail;
+        badge.classList.remove('pass','fail');
+        if(!total){ badge.textContent='◈ SUPERPOSITION · chưa chạy'; }
+        else if(fixed){ badge.textContent='✓ DETERMINISTIC · đã fix gốc'; badge.classList.add('pass'); }
+        else if(last==='p'){ badge.textContent='✓ PASS · …nhưng chưa chắc'; badge.classList.add('pass'); }
+        else { badge.textContent='✗ FAIL · bug tồn tại?'; badge.classList.add('fail'); }
+        if(fixed) elFl.textContent='0% ✅';
+        else if(total<4) elFl.textContent='—';
+        else if(pass&&fail){ elFl.textContent=Math.round(Math.min(pass,fail)/total*100)+'% ⚠️'; }
+        else elFl.textContent='0% (chưa lộ)';
+        if(hint) hint.innerHTML=fixed
+          ? '🔧 Đã <b>await đúng</b> — chạy 10 lần vẫn xanh · Fix gốc, không rerun cầu may (KN-012)'
+          : total>=4&&pass&&fail
+            ? '⚠️ Vừa pass vừa fail = <b>FLAKY</b> · Rerun tới xanh là reward hacking — bấm Fix gốc!'
+            : 'Chạy vài lần để thấy vừa pass vừa fail · Fix gốc mới hết flaky';
+      }
+      function dot(r){
+        const d=document.createElement('span');
+        d.className='sb-dot '+(fixed?'s':r==='p'?'p':'f');
+        d.textContent=fixed?'✓':r==='p'?'✓':'✗';
+        d.title=fixed?'deterministic pass':r==='p'?'pass':'fail';
+        hist.appendChild(d);
+        while(hist.children.length>30) hist.removeChild(hist.firstChild);
+      }
+      function once(){
+        const r=fixed?'p':(Math.random()<0.5?'p':'f');
+        if(r==='p')pass++; else fail++;
+        dot(r); render(r);
+        return r;
+      }
+      btnRun.addEventListener('click', ()=>{
+        const r=once();
+        toast(r==='p'?'✓ Pass… nhưng lần sau thì sao?':'✗ Fail! Bug vừa lộ diện');
+      });
+      btnRun10.addEventListener('click', ()=>{
+        if(running) return; running=true; btnRun10.disabled=true;
+        let i=0;
+        (function step(){
+          once();
+          if(++i<10){ setTimeout(step, 90); }
+          else{
+            running=false; btnRun10.disabled=false;
+            const total=pass+fail;
+            toast(pass&&fail&&!fixed?`⏩ 10 lần: ${pass}✓/${fail}✗ — FLAKY rõ!`:`⏩ 10 lần: ${pass}✓/${fail}✗`);
+          }
+        })();
+      });
+      btnFix.addEventListener('click', ()=>{
+        if(fixed){ toast('Đã fix rồi — chạy 10 lần kiểm chứng đi'); return; }
+        fixed=true; render('p');
+        toast('🔧 Fix gốc: await pay() đúng — hết race, hết flaky');
+      });
+      btnReset.addEventListener('click', ()=>{
+        pass=0; fail=0; fixed=false; hist.innerHTML=''; render();
+        toast('↺ Reset — bug lại superposition');
+      });
+      render();
+    })();
+
+    // ===== Multiverse — A/B test như tách nhánh vũ trụ =====
+    (function(){
+      const uA=$('#mvA'), uB=$('#mvB');
+      const cA=$('#mvCountA'), cB=$('#mvCountB'), rA=$('#mvRateA'), rB=$('#mvRateB');
+      const bA=$('#mvBarA'), bB=$('#mvBarB'), win=$('#mvWinner'), hint=$('#mvHint');
+      const btnT=$('#btnMvTraffic'), btnBurst=$('#btnMvBurst'), btnShip=$('#btnMvShip'), btnReset=$('#btnMvReset');
+      if(!uA || !btnT) return;
+      const RA=0.12, RB=0.17; // B thật hơn A 5%
+      let vA=0, vB=0, kA=0, kB=0, shipped=false;
+      function add(n){
+        for(let i=0;i<n;i++){
+          if(Math.random()<0.5){ vA++; if(Math.random()<RA)kA++; }
+          else { vB++; if(Math.random()<RB)kB++; }
+        }
+      }
+      function rate(k,v){ return v?k/v*100:0; }
+      function render(){
+        cA.textContent=vA+' visits · '+kA+' conv';
+        cB.textContent=vB+' visits · '+kB+' conv';
+        const pa=rate(kA,vA), pb=rate(kB,vB);
+        rA.textContent=vA?pa.toFixed(1)+'%':'—';
+        rB.textContent=vB?pb.toFixed(1)+'%':'—';
+        bA.style.width=Math.min(100,pa*4)+'%';
+        bB.style.width=Math.min(100,pb*4)+'%';
+        uA.classList.remove('winner','loser'); uB.classList.remove('winner','loser');
+        if(shipped){
+          const w=pb>=pa?'B':'A', l=w==='B'?'A':'B';
+          (w==='B'?uB:uA).classList.add('winner');
+          (l==='B'?uB:uA).classList.add('loser');
+          win.innerHTML=`🚀 Đã ship <b>vũ trụ ${w}</b> — vũ trụ ${l} bị cắt tỉa · A=${pa.toFixed(1)}% B=${pb.toFixed(1)}%`;
+        } else if(vA>=100&&vB>=100){
+          const lead=pb>=pa?'B':'A', diff=Math.abs(pb-pa).toFixed(1);
+          win.innerHTML=`Vũ trụ <b>${lead}</b> đang dẫn +${diff}% · n=${vA+vB} · ${vA+vB>=1000?'đủ data → Ship được rồi!':'thêm traffic để chắc hơn'}`;
+        } else {
+          win.textContent='— chưa đủ data (cần ≥100 visits mỗi nhánh) —';
+        }
+      }
+      btnT.addEventListener('click', ()=>{ if(shipped){toast('Đã ship — reset để tách nhánh lại');return;} add(100); render(); toast('🚦 +100 visits vào cả 2 vũ trụ'); });
+      btnBurst.addEventListener('click', ()=>{ if(shipped){toast('Đã ship — reset để tách nhánh lại');return;} add(1000); render(); toast('🌊 +1000 visits — nhiễu tan, thật lộ!'); });
+      btnShip.addEventListener('click', ()=>{
+        if(shipped){ toast('Đã ship rồi!'); return; }
+        if(vA<100||vB<100){ toast('⚠️ Chưa đủ data — thêm traffic đã!'); return; }
+        shipped=true; render();
+        const pb=rate(kB,vB), pa=rate(kA,vA);
+        toast(`🚀 Ship vũ trụ ${pb>=pa?'B':'A'}! Nhánh kia collapse`);
+      });
+      btnReset.addEventListener('click', ()=>{
+        vA=vB=kA=kB=0; shipped=false; render();
+        toast('↺ Tách nhánh lại — 2 vũ trụ mới tinh');
+      });
+      render();
     })();
 
     // ===== Copy philosophy =====

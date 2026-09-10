@@ -30,15 +30,23 @@ Read docs/knowleged.md  # <— bước 0, không bỏ
 | Phase | Output | Bỏ được? |
 |-------|--------|----------|
 | **Explore** | Tóm tắt codebase, pattern | ❌ |
-| **Clarify** | Câu hỏi + giả định chốt | Rút gọn nếu rõ |
+| **Clarify** | Câu hỏi + giả định chốt + **Dissent Review** (≥1 framing đối lập không prompt trước, KN-018) | Rút gọn nếu rõ — Dissent không bỏ |
 | **PRD** | `.agent/plans/<task>/prd.md` | ❌ (mini 5 dòng cũng phải có) |
 | **Design** | `.agent/plans/<task>/design.md` (palette, wireframe, states) | ❌ |
 | **Plan** | `.agent/plans/<task>/plan.md` + `TodoWrite` | ❌ |
 | **Implement** | Code todo-driven, `IDE diagnostics` sau mỗi edit | ❌ |
 | **Polish** | Responsive 375/768/1280, states, animation, a11y | ❌ — giao diện xấu = chưa xong |
-| **Verify** | build/test/lint pass + visual check | ❌ |
+| **Verify** | build/test/lint pass + visual check + **Dissent Review** (1 critique độc lập: rival work / assumption sai / giải pháp khác, KN-018) | ❌ |
 
 Với task nhỏ (1-2 file): rút gọn Explore(quick) → Clarify(1 câu) → PRD mini → Design mini → Plan(3 todos) → Implement → Polish → Verify. **Không bỏ Polish.**
+
+### Dissent Review Gate (KN-018 — Waymo effect / decollaboration)
+
+- Mọi PRD phải có dòng `Who did you think with?: <tên người/agent đối lập + framing đã cân nhắc>`.
+- ≥1 **framing đối lập không prompt trước**: rival work, assumption sai, giải pháp khác đáng cân nhắc. AI chỉ “challenge đúng mức được yêu cầu” — buộc phải yêu cầu 1 critique ngoài phạm vi.
+- Human giữ **pilot-in-command**: agent là crew (analyst/critic/planner), human quyết question + path + conclusions (Dashun Wang, Nature 03/2026).
+- Outsource writing ≠ skip thinking: PRD/Design là forcing function, không delegate toàn bộ.
+- Collaboration là infrastructure: không cắt workshop/review/pari khi gấp — friction quý phải giữ (fund the friction).
 
 ## Pipeline /fixbug (Bug — gọn nhẹ, bounded repair loop)
 

@@ -225,6 +225,26 @@ async function main() {
     }
   } catch {}
 
+  // self-improving metrics — KN-025/026/027 (procedural graph + funnel + consistency)
+  async function buildSelfImproving() {
+    const si = { kn: ['KN-025', 'KN-026', 'KN-027'], proceduralGraph: { triplets: 0, rejected: 0, ok: false }, funnel: { states: 0, policies: 0, evidence: 0 }, consistency: { records: 0, lastGap: null } };
+    try {
+      const g = JSON.parse(await fs.readFile(path.join(ROOT, '.agent', 'procedural-graph.json'), 'utf8'));
+      si.proceduralGraph = { triplets: g.triplets?.length || 0, rejected: g.rejected?.length || 0, ok: (g.triplets?.length || 0) > 0, workflow: g.workflow || null };
+    } catch {}
+    try {
+      const f = JSON.parse(await fs.readFile(path.join(ROOT, '.agent', 'funnel.json'), 'utf8'));
+      si.funnel = { states: f.states?.length || 0, policies: f.policies?.length || 0, evidence: f.evidence?.length || 0 };
+    } catch {}
+    try {
+      const c = JSON.parse(await fs.readFile(path.join(ROOT, '.agent', 'consistency.json'), 'utf8'));
+      const last = (c.records || []).slice(-1)[0] || null;
+      si.consistency = { records: c.records?.length || 0, lastGap: last ? last.gap : null };
+    } catch {}
+    si.status = si.proceduralGraph.ok ? 'ok' : 'init-needed';
+    return si;
+  }
+
   // collaboration metrics — KN-018 (Waymo effect / decollaboration)
   const collaboration = {
     kn: 'KN-018',
@@ -258,8 +278,8 @@ async function main() {
     `get_errors: pass (0 errors)`,
     `registry: ${counts.instructions.enabled} instructions (${counts.instructions.total} total) - ${counts.skills.enabled} skills - ${counts.agents.enabled} agents - ${counts.prompts.enabled} prompts - ${counts.hooks.enabled} hook — all enabled`,
     `harness: 2.2-done — P0 (RAG loop, tool hardening, planning JSON, receipt Ed25519) + P1 (multi-agent, observability, protocols, context, memory, deploy) + P2 (MAF workflows, CUA guardrails, local SLM, setup doctor)`,
-    `scripts: ${scriptCount} harness .mjs (plan-validate, handoff, reflect, trace, eval-gate, deploy-check, agent-card, context, memory, workflow, cua-guard, local, setup-doctor)`,
-    `eval-gate: ${evalStatus} (syntax + MCP smoke + plan-validate)`,
+    `scripts: ${scriptCount} harness .mjs (plan-validate, handoff, reflect, trace, eval-gate, deploy-check, agent-card, context, memory, workflow, cua-guard, local, setup-doctor, procedural-graph, experience-funnel, consistency-gap)`,
+    `eval-gate: ${evalStatus} (syntax + MCP smoke + plan-validate + self-improving)`,
     `www: polished — responsive 375/768/1280, a11y, states, animation 150-300ms`,
     `workflow: www/** -> Pages (upload-artifact path: www) — exists: ${existsSync(path.join(GITHUB_DIR, 'workflows', 'pages.yml'))} + eval job gate`,
     `library: www/library/ MCP v1.2.0 (5 tools: search + iterative + list/get/status, router+cache, redacted) + library-rag instruction`,
@@ -312,6 +332,7 @@ async function main() {
       note: existing.pages?.note || 'Copy file mới vào www/ là tự deploy lên GitHub Pages (workflow upload toàn bộ www).'
     },
     collaboration: collaboration,
+    selfImproving: await buildSelfImproving(),
     yunie: {
       name: 'YUNIE',
       fullName: 'Your Unified Navigator for Intelligent Execution',

@@ -40,6 +40,7 @@ Idea → Explore → Clarify → PRD → Design → Plan → Implement → Polis
 ### Với task nhỏ (1-2 file) thì sao?
 Vẫn phải qua pipeline nhưng **rút gọn**: Explore (quick) → Clarify (1 câu) → PRD mini (5 dòng) → Design mini (palette + layout) → Plan (3 todos) → Implement → Polish → Verify. Không bỏ Polish.
 **Làm thật, không nói suông:** PRD/Design/Plan mini phải ghi ra file `.agent/plans/<task>/` + `manage_todo_list` trước khi code. Cấm chỉ nói "đang mapping" mà không có output — user đã phải nhắc "thử lại, nhớ áp dụng harness" (chronicle 2026-09-03).
+**Checklist mini (không có = chưa được code):** `Explore quick` → `Clarify 1 câu` → ghi `.agent/plans/<task>/prd.md|design.md|plan.md` (mini 5 dòng) + `manage_todo_list` → mới code. Xem `docs/harness-flow.md`.
 
 ## 3. Product Quality Standard (UI/UX)
 
@@ -61,6 +62,7 @@ Mọi sản phẩm web PHẢI đạt:
 - Performance: không layout shift, image có size
 
 > Nếu giao diện xấu → **chưa được gọi là xong**, phải qua Polish phase.
+**Verify visual (bắt buộc trước Done):** check 375/768/1280 + states hover/focus/active + đo animation `--angle` bằng Playwright (KN-003) + screenshot. Chi tiết: `.github/instructions/product-quality.instructions.md`.
 
 ## 3b. Static-Site Persistence (Pages là static — nói rõ từ PRD)
 
@@ -74,6 +76,7 @@ Mọi sản phẩm web PHẢI đạt:
 - Chỉ 1 todo `in-progress` tại 1 thời điểm
 - Sau mỗi edit: `get_errors` → fix ngay → mới `completed`
 - Không in code block chờ user copy — tự tạo file
+- **Fix bug:** `Reproduce` có evidence → `Root Cause` file:line + 5 Whys → `Fix` tối thiểu → `Verify` lại reproduce + `get_errors` affected files. Không reproduce = không edit. Xem `docs/knowleged.md` + `systematic-debugging` skill.
 
 ## 5. Tool Priority
 
@@ -98,6 +101,7 @@ Mọi sản phẩm web PHẢI đạt:
 - **Wise loading:** Chỉ load khi `description`/`applyTo` match task. Đừng bật 20 thứ cùng lúc.
 - **Lệnh:** `node .github/harness/scripts/harness-manager.mjs <list|status|enable|disable|install|create|preset|sync|help>`
 - **STATUS:** `www/status.json` không sửa tay — luôn regenerate từ `registry.json` (`generate-status.mjs`), verify `JSON.parse` + `serve www` 200 (KN-002)
+- **Link Pages:** mọi `href/src` trong `www/` phải relative (`./` không `/`) — verify `grep href` + `npx serve www` 200. Chi tiết: `docs/knowleged.md` KN-002.
 - Chi tiết: `.github/skills/custom-registry/SKILL.md` + `.github/instructions/custom-registry.instructions.md`
 
 ## 5c. Slash Command Contract
@@ -140,6 +144,7 @@ Mọi sản phẩm web PHẢI đạt:
 - ❌ PRD trang static không ghi `Persistence · F5 · Scope` — để user phát hiện sau 2 vòng sửa (chronicle 2026-09-03)
 - ❌ Khi user nói "thử lại / vẫn lỗi / lặp lại" mà lặp nguyên output cũ — phải đổi strategy, diff file trước/sau, đo lại bằng tool
 - ❌ Ở mode YUNIE mà trả lời như Copilot thường (sai persona/ngôn ngữ) — xem `yunie.agent.md` §Identity-Mode (chronicle 2026-09-03)
+- ❌ Fix bug không reproduce/root cause — sửa triệu chứng thay vì gốc (chronicle 2026-08-31 `cd881000` random disable)
 
 ---
 *Harness v2: Process > Model. Idea nhỏ → Product đẹp. Mọi model đều chạy cùng pipeline.*

@@ -1,10 +1,11 @@
 # Evidence — harness-build-config (DisCo arXiv:2609.02749v1 §3.2 (task-agnostic))
 
-> Substrate layer của skill — full text từ docs/knowleged.md. Sinh tự động 2026-09-04T09:13:35.828Z.
+> Substrate layer của skill — full text từ docs/knowleged.md. Sinh tự động 2026-09-10T14:54:40.984Z.
 
-## Bug reports liên quan (1/11 bugs)
+## Bug reports liên quan (2/13 bugs)
 
 - `.agent/bugs/2026-08-30-dotnet-build-fail-do-file-lock-n5blazor-exe-ang-ch/bug.md` — Bug: dotnet build fail do file lock N5Blazor.exe đang chạy
+- `.agent/bugs/2026-09-04-pages-deploy-conflict-2-workflows/bug.md` — Bug: pages deploy conflict 2 workflows
 
 ## Full KN details
 
@@ -57,3 +58,25 @@
   - Trước khi deploy, test bằng **release build ở máy khác** — fresh eyes (KN-005).
 - **Tags:** `config` `api` `build` `dx`
 - **Người ghi:** YUNIE / harness
+
+---
+
+### KN-015 — GitHub Pages deploy fail — 2 workflows cùng `github-pages` env + eval-gate Node 18 CJS
+
+- **Ngày:** 2026-09-04
+- **Bug report:** `.agent/bugs/2026-09-04-pages-deploy-conflict-2-workflows/bug.md`
+- **Severity:** major
+- **Triệu chứng:** (1) Push `www/**` trigger `pages.yml` deploy, đồng thời `ai-news.yml` cũng deploy `www/` với `environment: github-pages` → GitHub Pages chỉ cho 1 deployment → job thứ 2 cancel/fail. (2) Trên CI Node 18, `eval-gate --scope www/library` báo `❌ syntax: failed: www/library/app.js` dù local Node 22 PASS.
+- **Nguyên nhân gốc (5 Whys):**
+  - Why1: Deploy fail → vì 2 workflow cùng giành `github-pages` env + `deploy-pages@v4`.
+  - Why2: Cùng giành → vì `ai-news.yml` copy 3 bước deploy từ `pages.yml` dù chỉ cần commit `ai-news.json`.
+  - Why3: Copy deploy → vì muốn ai-news tự deploy sau commit, không nghĩ tới concurrency.
+  - Why4: Eval FAIL chỉ trên CI → vì `node --check` trên Node 18 coi `.js` là CJS, gặp `import` là lỗi; Node 20+ tự nhận ESM nên pass.
+  - Why5 (Root): Thiếu quy tắc: (a) chỉ 1 workflow được `deploy-pages` với `github-pages` env; (b) `eval-gate` phải robust qua Node version — ESM `.js` phải check qua temp `.mjs`.
+- **Cách sửa:** (1) `ai-news.yml`: bỏ `pages: write`/`id-token: write`, bỏ `environment: github-pages`, bỏ 3 steps `Setup Pages`/`Upload artifact`/`Deploy`, chỉ `git push` và log `pages.yml will deploy`. (2) `eval-gate.mjs` `checkSyntax`: detect ESM `.js` (`/^\s*(import|export)\s/m`) thì copy sang temp `.mjs` rồi `node --check` temp, xóa temp sau. Kết quả: `eval-gate` PASS trên cả Node 18 và 22, Pages chỉ 1 deployer.
+- **Cách phòng tránh:**
+  - 1 repo = 1 deployer cho `github-pages` env — workflow data chỉ `contents: write`, không `pages`/`id-token`, không `environment: github-pages`.
+  - `eval-gate` ESM `.js` → temp `.mjs` trước `node --check` để robust Node 18/22.
+  - Khi thêm workflow mới đụng `www/`, check `grep -r "github-pages" .github/workflows/` trước khi merge.
+- **Tags:** `build` `deploy` `ci` `workflow` `pages`
+- **Người ghi:** YUNIE / fixbug

@@ -3,7 +3,8 @@
   "form": "task-agnostic",
   "anchor": {
     "knowleged": [
-      "KN-012"
+      "KN-012",
+      "KN-021"
     ],
     "bugs": [
       ".agent/bugs/2026-09-03-agent-test-mutate-reward-hacking/bug.md"
@@ -14,7 +15,9 @@
     "governance",
     "tdd",
     "safety",
-    "reward-hacking"
+    "reward-hacking",
+    "security",
+    "rbac"
   ],
   "evidence": [
     ".agent/bugs/2026-09-03-agent-test-mutate-reward-hacking/bug.md"
@@ -39,6 +42,6 @@
   ],
   "gaps": [],
   "verdict": "G-accepted",
-  "generatedAt": "2026-09-04T09:13:35.827Z",
+  "generatedAt": "2026-09-10T14:54:40.976Z",
   "paper": "DisCo arXiv:2609.02749v1 §3.2 (task-agnostic)"
 }

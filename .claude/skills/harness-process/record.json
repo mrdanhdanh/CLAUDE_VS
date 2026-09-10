@@ -5,11 +5,27 @@
     "knowleged": [
       "KN-005",
       "KN-007",
-      "KN-010"
+      "KN-010",
+      "KN-014",
+      "KN-016",
+      "KN-018",
+      "KN-019",
+      "KN-023",
+      "KN-024",
+      "KN-025",
+      "KN-026",
+      "KN-027"
     ],
     "bugs": [
       ".agent/bugs/2026-08-30-bug-blindness/bug.md",
-      ".agent/bugs/auto-learn/bug.md"
+      ".agent/bugs/auto-learn/bug.md",
+      ".agent/bugs/2026-09-04-import-mcp-stdio-server-trong-smoke-test-gay-treo-/bug.md",
+      ".agent/bugs/2026-09-06-archify-skill-port/bug.md",
+      "docs/llm-weakness-research.md",
+      "docs/llm-weakness-research.md",
+      "www/library/export.json",
+      "www/library/export.json",
+      "www/library/export.json"
     ]
   },
   "capabilities": [
@@ -23,11 +39,44 @@
     "dx",
     "self-improving",
     "benchmark",
-    "aar"
+    "aar",
+    "mcp",
+    "testing",
+    "regex",
+    "windows",
+    "fs",
+    "collaboration",
+    "diversity",
+    "pilot-in-command",
+    "metrics",
+    "evidence",
+    "research",
+    "verification",
+    "calibration",
+    "psychology",
+    "taste",
+    "human-judgment",
+    "agent",
+    "self-evolving",
+    "procedural-graph",
+    "a-jit",
+    "memory",
+    "funnel",
+    "rl",
+    "consistency",
+    "self-distillation",
+    "scaffold"
   ],
   "evidence": [
     ".agent/bugs/2026-08-30-bug-blindness/bug.md",
-    ".agent/bugs/auto-learn/bug.md"
+    ".agent/bugs/auto-learn/bug.md",
+    ".agent/bugs/2026-09-04-import-mcp-stdio-server-trong-smoke-test-gay-treo-/bug.md",
+    ".agent/bugs/2026-09-06-archify-skill-port/bug.md",
+    "docs/llm-weakness-research.md",
+    "docs/llm-weakness-research.md",
+    "www/library/export.json",
+    "www/library/export.json",
+    "www/library/export.json"
   ],
   "checks": [
     {
@@ -49,6 +98,6 @@
   ],
   "gaps": [],
   "verdict": "G-accepted",
-  "generatedAt": "2026-09-04T09:13:35.830Z",
+  "generatedAt": "2026-09-10T14:54:41.003Z",
   "paper": "DisCo arXiv:2609.02749v1 §3.2 (task-agnostic)"
 }

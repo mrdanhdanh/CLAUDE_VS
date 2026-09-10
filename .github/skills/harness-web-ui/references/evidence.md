@@ -1,8 +1,8 @@
 # Evidence — harness-web-ui (DisCo arXiv:2609.02749v1 §3.2 (task-agnostic))
 
-> Substrate layer của skill — full text từ docs/knowleged.md. Sinh tự động 2026-09-04T09:13:35.830Z.
+> Substrate layer của skill — full text từ docs/knowleged.md. Sinh tự động 2026-09-10T14:54:41.003Z.
 
-## Bug reports liên quan (5/11 bugs)
+## Bug reports liên quan (5/13 bugs)
 
 - `.agent/bugs/2026-08-29-rainbow-animated/bug.md` — Bug: Rainbow border không xoay (animated)
 - `.agent/bugs/2026-08-29-status-ui/bug.md` — Bug: Trang STATUS www/ giao diện chưa hợp lý — layout, responsive, registry render sai
@@ -117,4 +117,28 @@
   - Tạo helper `setStepEnabled(bool)` nếu có nhiều nơi đụng
   - Test manual: sau mỗi action (Random, Reset, Start) check tất cả button states
 - **Tags:** `ui` `state` `ux` `button`
+- **Người ghi:** YUNIE / fixbug
+
+---
+
+### KN-017 — Archify diagram tràn first-screen + text quá nhỏ — viewBox ratio math
+
+- **Ngày:** 2026-09-06
+- **Bug report:** `.agent/bugs/2026-09-06-archify-skill-port/bug.md` (phần viewport-overflow)
+- **Severity:** major
+- **Triệu chứng:** Diagram deliver pass 9/9 showcase checks nhưng `visual-check` fail `viewer/viewport-overflow` (scrollHeight 1415–2004 > innerHeight 900–1320) hoặc `composition/desktop-readability` (projectedFontPx 4.8–5.9 < 6). Sửa width thì vỡ text, sửa height thì tràn dọc — bế tắc 2 đầu.
+- **Nguyên nhân gốc (5 Whys):**
+  - Why1: Render tràn dọc → vì diagram height × scale > viewport height trừ chrome (~586px @1440×900).
+  - Why2: Scale nhỏ → vì `scale = availableDiagramWidth (~930px) / viewBoxWidth`.
+  - Why3: viewBoxWidth quá lớn (1400) → scale 0.66 → text context 7.3px × 0.66 = 4.8px < 6px minimum.
+  - Why4: viewBoxWidth nhỏ (772) → scale 1.2 nhưng height 652 × 1.2 = 785px > 586px → tràn.
+  - Why5 (Root): Thiếu **ratio math** — phải chọn viewBox width thỏa đồng thời 2 ràng buộc: `scale ≥ 0.822` (text ≥6px) VÀ `height × scale ≤ ~586px`.
+- **Cách sửa:** Tính sweet spot: `width ∈ [1035, 1131]` cho height ~652 (workflow: `[1100, 652]` pass cả 2) và `[1050, 560]` cho sequence (nén y theo tỉ lệ `560/720`, giữ min y 160, spread messages ≥28px, nâng cụm cuối tránh legend). Sau mỗi lần đổi viewBox: rescale toàn bộ `y` (messages/activations/segments) theo tỉ lệ, rồi `deliver` + `visual-check` lại.
+- **Cách phòng tránh:**
+  - Workflow/sequence: ưu tiên viewBox **dẹt** (ratio ≥ 1.7:1) — architecture 1255×424 pass ngay lần đầu.
+  - Công thức nhanh: `maxHeight = 586 / (930/width)` → chọn `width = maxHeight × ratio mong muốn`, kiểm tra `930/width ≥ 0.822`.
+  - Đổi viewBox → nhớ rescale toàn bộ tọa độ y, không chỉ meta.
+  - Luôn chạy `visual-check` (cần `ARCHIFY_CHROME` trỏ Edge/Chrome) sau `deliver` — 9/9 showcase checks KHÔNG bao gồm browser containment.
+  - Đọc `supportedFixes` của validator — nó luôn chỉ đúng đường (bỏ fromSide/toSide, dùng labelAt gợi ý, route preset conflict → thả auto).
+- **Tags:** `ui` `diagram` `archify` `responsive` `verify`
 - **Người ghi:** YUNIE / fixbug

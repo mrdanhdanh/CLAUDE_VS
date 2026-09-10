@@ -4,11 +4,13 @@
   "anchor": {
     "knowleged": [
       "KN-008",
-      "KN-009"
+      "KN-009",
+      "KN-015"
     ],
     "bugs": [
       ".agent/bugs/2026-08-30-dotnet-build-fail-do-file-lock-n5blazor-exe-ang-ch/bug.md",
-      ".agent/bugs/<slug>/bug.md"
+      ".agent/bugs/<slug>/bug.md",
+      ".agent/bugs/2026-09-04-pages-deploy-conflict-2-workflows/bug.md"
     ]
   },
   "capabilities": [
@@ -17,11 +19,16 @@
     "dx",
     "dotnet",
     "config",
-    "api"
+    "api",
+    "deploy",
+    "ci",
+    "workflow",
+    "pages"
   ],
   "evidence": [
     ".agent/bugs/2026-08-30-dotnet-build-fail-do-file-lock-n5blazor-exe-ang-ch/bug.md",
-    ".agent/bugs/<slug>/bug.md"
+    ".agent/bugs/<slug>/bug.md",
+    ".agent/bugs/2026-09-04-pages-deploy-conflict-2-workflows/bug.md"
   ],
   "checks": [
     {
@@ -43,6 +50,6 @@
   ],
   "gaps": [],
   "verdict": "G-accepted",
-  "generatedAt": "2026-09-04T09:13:35.829Z",
+  "generatedAt": "2026-09-10T14:54:40.995Z",
   "paper": "DisCo arXiv:2609.02749v1 §3.2 (task-agnostic)"
 }

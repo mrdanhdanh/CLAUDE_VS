@@ -17,6 +17,9 @@ const ROOT = path.resolve(__dirname, '..', '..', '..');
 const EXP_PATH = path.join(ROOT, '.agent', 'memory', 'experience.jsonl');
 
 const STRATEGIES = [
+  // KN-027: consistency-aware strategies — Consistency Analyzer pinpoint flip + Guideline → episodic
+  { id: 'consistency-check', label: 'Đo consistency gap: chạy lại N lần, so all-N vs per-run (KN-027) — gap >10 → Consistency Analyzer + Guideline vào episodic', when: (out, attempt) => /flaky|inconsistent|sometimes|gap|unreliable|pass.*fail|fail.*pass/i.test(out) || attempt >= 2 },
+  { id: 'enrich-env', label: 'FEEs: enrich observation thay vì guide action — thêm context/state-space, check intra-group feedback consistency (KN-027)', when: (out) => /sparse|reward|long-horizon|stuck|no signal/i.test(out) },
   { id: 'narrow-scope', label: 'Thu hẹp scope: chỉ sửa 1 file, 1 lỗi tại 1 thời điểm', when: (out, attempt) => /multiple|many|scope|all/i.test(out) || attempt >= 3 },
   { id: 'reorder', label: 'Đổi thứ tự: fix lỗi đầu tiên trong log trước, bỏ qua lỗi sau (có thể là hệ quả)', when: (out) => /error|fail/i.test(out) },
   { id: 'test-first', label: 'Thêm test trước: viết failing test tái hiện lỗi rồi mới sửa (tdd-gate)', when: (out) => /test|spec|assert/i.test(out) },

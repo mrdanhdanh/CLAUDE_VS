@@ -73,7 +73,7 @@ user-invocable: "true"
 - **Plan:** Mỗi todo ghi `Entangled with: <files>` + `Ladder nấc: <1-7>`
 - **Verify:** Checklist thêm `Đã đo (IDE diagnostics/build) chưa? Entanglement có vỡ không?`
 
-## System Map — Harness → Cosmos (đủ 48 thực thể)
+## System Map — Harness → Cosmos (đủ 15 map)
 
 | Harness có sẵn | Map vũ trụ | Vì sao hợp |
 |----------------|------------|------------|
@@ -108,7 +108,7 @@ Công thức Lab: bất định $\Delta x \cdot \Delta p \ge \hbar/2$ ↔ `IDE d
 ## References
 - `docs/harness-flow.md` — pipeline 8 phase (ánh xạ vũ trụ)
 - `.github/instructions/cosmic-quantum.instructions.md` — rule enforce
-- `www/cosmos.html` + `www/cosmos/index.html` (mirror) — demo visual vũ trụ + lượng tử
+- `www/cosmos/index.html` (canonical) — demo visual vũ trụ + lượng tử
 - `www/cosmos/scale.html` — dashboard entropy + black-hole (skill cosmic-scale)
 - `.github/skills/cosmic-scale/SKILL.md` — đo entropy, bottleneck, dark-matter map
 - `awesome-design-md/` — 74 DESIGN.md cho vibe cosmic/quantum

@@ -8,7 +8,8 @@
       "KN-003",
       "KN-004",
       "KN-006",
-      "KN-011"
+      "KN-011",
+      "KN-017"
     ],
     "bugs": [
       ".agent/bugs/2026-08-29-modal-esc/bug.md",
@@ -16,7 +17,8 @@
       ".agent/bugs/2026-08-29-rainbow-animated/bug.md",
       ".agent/bugs/2026-08-30-grid2-rainbow-hover/bug.md",
       ".agent/bugs/2026-08-30-n5-ui-polish/bug.md",
-      ".agent/bugs/2026-08-31-random-step-btn-disabled/bug.md"
+      ".agent/bugs/2026-08-31-random-step-btn-disabled/bug.md",
+      ".agent/bugs/2026-09-06-archify-skill-port/bug.md"
     ]
   },
   "capabilities": [
@@ -32,7 +34,10 @@
     "contrast",
     "state",
     "ux",
-    "button"
+    "button",
+    "diagram",
+    "archify",
+    "verify"
   ],
   "evidence": [
     ".agent/bugs/2026-08-29-modal-esc/bug.md",
@@ -40,7 +45,8 @@
     ".agent/bugs/2026-08-29-rainbow-animated/bug.md",
     ".agent/bugs/2026-08-30-grid2-rainbow-hover/bug.md",
     ".agent/bugs/2026-08-30-n5-ui-polish/bug.md",
-    ".agent/bugs/2026-08-31-random-step-btn-disabled/bug.md"
+    ".agent/bugs/2026-08-31-random-step-btn-disabled/bug.md",
+    ".agent/bugs/2026-09-06-archify-skill-port/bug.md"
   ],
   "checks": [
     {
@@ -62,6 +68,6 @@
   ],
   "gaps": [],
   "verdict": "G-accepted",
-  "generatedAt": "2026-09-04T09:13:35.831Z",
+  "generatedAt": "2026-09-10T14:54:41.010Z",
   "paper": "DisCo arXiv:2609.02749v1 §3.2 (task-agnostic)"
 }

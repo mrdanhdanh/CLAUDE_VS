@@ -1,10 +1,11 @@
 # Evidence — harness-process (DisCo arXiv:2609.02749v1 §3.2 (task-agnostic))
 
-> Substrate layer của skill — full text từ docs/knowleged.md. Sinh tự động 2026-09-04T09:13:35.829Z.
+> Substrate layer của skill — full text từ docs/knowleged.md. Sinh tự động 2026-09-10T14:54:40.996Z.
 
-## Bug reports liên quan (1/11 bugs)
+## Bug reports liên quan (2/13 bugs)
 
 - `.agent/bugs/2026-08-30-bug-blindness/bug.md` — Bug: Bug Blindness — mù bug do workaround vô thức + fan bias
+- `.agent/bugs/2026-09-04-import-mcp-stdio-server-trong-smoke-test-gay-treo-/bug.md` — Bug: Import MCP stdio server trong smoke test gay treo + verify order + regex m flag
 
 ## Full KN details
 
@@ -94,3 +95,218 @@
   - `auto-researcher.mjs --task "xxx" --report` để chạy full AAR loop.
 - **Tags:** `process` `self-improving` `benchmark` `aar` `automation`
 - **Người ghi:** YUNIE / auto-researcher
+
+---
+
+### KN-014 — Smoke test treo khi import MCP stdio server + verify order + regex m flag
+
+- **Ngày:** 2026-09-04
+- **Bug report:** `.agent/bugs/2026-09-04-import-mcp-stdio-server-trong-smoke-test-gay-treo-/bug.md`
+- **Severity:** minor
+- **Triệu chứng:** (1) Smoke test Phase 3 treo vĩnh viễn — `node -e "import('./www/library/mcp-server.mjs')"` khởi động MCP stdio server chờ input stdin, terminal chuyển background, các bước verify phía sau không chạy. (2) `distill-agnostic.mjs` self-verify chỉ 1/4 checks — `files-exist`/`record-complete` fail vì `record.json` chưa được ghi lúc verify chạy. (3) Sau fix order vẫn 3/4 — regex `/^name:\s*harness-/` thiếu flag `m`, `^name:` không match vì file bắt đầu bằng `---`.
+- **Nguyên nhân gốc (5 Whys):**
+  - Why1: Terminal treo → vì process node không exit.
+  - Why2: Không exit → vì import `mcp-server.mjs` có side-effect khởi động server stdio, chờ stdin vĩnh viễn.
+  - Why3: Verify 1/4 → vì `verifySkill()` chạy trước khi `record.json` được ghi — check phụ thuộc file sinh ra sau.
+  - Why4: Regex không match → vì `^` không có flag `m` chỉ match đầu string, không match đầu dòng.
+  - Why5 (Root): Thiếu 3 quy tắc: (a) cấm import module có side-effect khởi động server trong smoke one-liner; (b) self-verify phải chạy sau khi mọi file đã ghi; (c) regex `^`/`$` multi-line luôn thêm flag `m`.
+- **Cách sửa:** (1) Smoke qua functions nội bộ (`skill-router.mjs`) hoặc spawn server với stdin đóng/timeout — không import trực tiếp module khởi động server. (2) Ghi `record.json` tạm bằng pre-checks (3 checks không phụ thuộc record) → verify đủ 4 checks → ghi lại final. (3) Thêm flag `m` cho regex frontmatter. Kết quả: distiller 5/5 G-accepted 4/4 checks, smoke sạch không treo.
+- **Cách phòng tránh:**
+  - KHÔNG import module khởi động server (stdio/HTTP) trong smoke test one-liner — server chờ input vĩnh viễn → treo terminal.
+  - Smoke MCP: gọi qua functions nội bộ (router) hoặc spawn process với stdin đóng + timeout.
+  - Self-verify phải chạy SAU khi mọi file đã ghi — nếu check phụ thuộc file sinh sau, ghi tạm (pre-checks) trước rồi verify final.
+  - Regex `^`/`$` cho nội dung multi-line luôn thêm flag `m`.
+  - Lệnh shell có ngoặc unquoted trong zsh → quote hoặc heredoc (tránh lỗi "unknown sort specifier").
+- **Tags:** `process` `dx` `mcp` `testing` `regex`
+- **Người ghi:** YUNIE / fixbug (DisCo Phase 3)
+
+---
+
+### KN-016 — harness-manager disable fail EPERM trên Windows (fs.rename folder bị chặn)
+
+- **Ngày:** 2026-09-06
+- **Bug report:** `.agent/bugs/2026-09-06-archify-skill-port/bug.md` (phần EPERM)
+- **Severity:** major
+- **Triệu chứng:** `node harness-manager.mjs disable skill archify` fail `❌ EPERM: operation not permitted, rename 'D:\CLAUDE_VS\.github\skills\archify' -> '...\.disabled\archify'` — dù ACL đầy đủ (Authenticated Users Modify), folder không readonly, không file lock rõ ràng. Cùng lúc đó PowerShell `Move-Item` cùng 2 path lại OK, và Node rename thử lại vẫn fail.
+- **Nguyên nhân gốc (5 Whys):**
+  - Why1: `fs.rename` fail EPERM → vì OS từ chối rename folder.
+  - Why2: OS từ chối → vì một process (VS Code file watcher / Copilot context indexer) đang giữ handle trên folder/file bên trong.
+  - Why3: Handle không thấy qua `open()` → vì watcher giữ handle ở mức directory, không phải file đơn.
+  - Why4: `harness-manager` chỉ có 1 đường rename → không có fallback khi rename bị chặn.
+  - Why5 (Root): Windows rename folder là operation dễ vỡ khi có watcher — cần **fallback copy+rm** thay vì fail cứng.
+- **Cách sửa:** Thêm `safeRename(src, dst)` vào `harness-manager.mjs`: thử `fs.rename`; bắt `EPERM|EXDEV|EBUSY` → `fs.cp(src, dst, {recursive:true, force:true})` + `fs.rm(src, {recursive:true, force:true})` (folder) hoặc `copyFile` + `rm` (file). Patch cả `setEnabled` + `presetApply`. Kết quả: disable/enable/preset apply đều pass.
+- **Cách phòng tránh:**
+  - Mọi script move file/folder trên Windows dùng wrapper rename có fallback, không gọi `fs.rename` trần.
+  - Gặp EPERM rename: thử PowerShell `Move-Item` để xác nhận OS cho phép → nếu OK thì chắc chắn là fallback thiếu, không phải permission.
+  - Không đoán "chắc chạy được" — test disable/enable thật sau khi thêm skill mới.
+- **Tags:** `process` `dx` `windows` `fs`
+- **Người ghi:** YUNIE / fixbug
+
+---
+
+### KN-018 — Waymo effect / Decollaboration — AI tiện quá khiến human ngừng nghĩ chung
+
+- **Ngày:** 2026-09-07
+- **Bug report:** N/A — bài học rút từ essay "The Waymo effect" (Daniel Hook, CSO Holtzbrinck Group, researchagenda.news 2026-09-07) + Dashun Wang Nature comment 03/2026
+- **Severity:** major
+- **Triệu chứng:** Mọi conversation bị redirect từ đồng nghiệp sang chatbot; output tăng nhưng diversity của ý tưởng thu hẹp — mọi người chạy nhanh hơn trên cùng 1 đường; PRD/Design để AI viết 1 phát xong, không có framing đối lập; human dần thành passenger-in-comfort thay vì pilot-in-command.
+- **Nguyên nhân gốc (5 Whys):**
+  - Why1: Human ngừng nghĩ chung → vì LLM "đủ dùng" cho mọi bước.
+  - Why2: LLM đủ dùng → vì nó bỏ hết friction của collaborator: không agenda, không tranh author order, available 2am, challenge đúng mức được yêu cầu — không hơn 1 độ.
+  - Why3: Bỏ friction thấy là pure gain → vì cost của friction (small talk, ego management, scheduling) luôn visible còn benefit (đối lập framing, serendipity, người lạ ngoài bubble) thì diffuse và deferred.
+  - Why4: Lựa chọn này "hợp lý" → vì hệ incentive thưởng velocity + credit, không thưởng thinking together (incentive trap: funding cắt workshop, velocity worship, credit arbitrage).
+  - Why5 (Root): Thiếu gate bảo đảm **dissent** trong pipeline — không có cơ chế bắt buộc một tiếng nói đối lập không prompt trước, nên decollaboration diễn ra âm thầm, không ai quyết định ("never by decision, always by convenience").
+- **Cách sửa:** Thêm **Dissent Review gate** ở Clarify + Verify (harness-workflow): mỗi PRD phải ghi `Who did you think with?` và chứa ≥1 framing đối lập/critique không được prompt trước; YUNIE bật **dissent mode** (challenge 1 lần mỗi ý tưởng); agent `Critic` đảm nhiệm vai friction-engineer; đo `collaboration` metric trong status.json.
+- **Cách phòng tránh:**
+  - Mọi PRD/Design phải trả lời "Who did you think with?" nghiêm túc như "What did you publish?".
+  - Human giữ pilot-in-command: agent là crew (analyst/critic/planner), human quyết question + path + conclusions.
+  - Outsource writing ≠ skip thinking — viết PRD/design là forcing function, không delegate toàn bộ.
+  - Coi collaboration là infrastructure: fund workshop/visit/co-location/unstructured time, không cắt khi budget căng.
+  - Khi output rẻ đi, thứ quý đảo ngược: thinking together là scarce resource — bảo vệ nó.
+- **Tags:** `process` `collaboration` `diversity` `pilot-in-command`
+- **Người ghi:** YUNIE / auto-learn
+
+---
+
+### KN-019 — Perceived vs Measured Productivity — claim tốc độ phải đo, không nhận vibes
+
+- **Ngày:** 2026-09-08
+- **Bug report:** N/A — bài học rút từ bài "My Little AI Factory" (dominis.blog, 07/09/2026) + METR study (metr.org, 07/2025)
+- **Severity:** major
+- **Triệu chứng:** METR study: 16 dev open-source kỳ vọng AI giúp nhanh hơn 24%, đo được thực tế chậm hơn 19% — và sau study vẫn tin AI giúp nhanh hơn 20%. Mọi người đánh giá AI productivity bằng cảm nhận ("nhanh hơn hẳn!") mà không có metrics nào đằng sau.
+- **Nguyên nhân gốc (5 Whys):**
+  - Why1: Không biết mình chậm hơn → vì không đo.
+  - Why2: Không đo → vì đo tốn công, cảm nhận có sẵn.
+  - Why3: Cảm nhận có sẵn và tin được → vì tool tạo trải nghiệm trôi chảy (autocompletion mượt, agent chạy liên tục) — cảm giác tiến độ ≠ tiến độ thật.
+  - Why4: Không ai đòi metrics → vì team không có hạ tầng đo (session logs, diff stat, cost).
+  - Why5 (Root): Pipeline thiếu gate "claim phải có measured evidence" — chỉ verify WHETHER (task xong chưa) mà không đo HOW (bao nhiêu token, bao nhiêu rework, nhanh hơn thật không).
+- **Cách sửa:** Mọi claim hiệu quả phải kèm evidence đo được: diff stat (minimal-ladder scoreboard), số verify loop, token/cost nếu có, rework count trong bug.md/plan.md. Cronicle session history dùng để đối chiếu "cảm nhận vs thực tế".
+- **Cách phòng tránh:**
+  - Trước khi claim "nhanh hơn/tốt hơn": hỏi "đo bằng gì?" — không metrics thì nói rõ confidence LOW.
+  - Ghi scoreboard diff stat mỗi Verify (đã có trong minimal-ladder).
+  - Nhớ gap perceived vs measured là có hệ thống — chính dev trong study cũng sai sau khi được đo.
+- **Tags:** `process` `metrics` `benchmark` `evidence`
+- **Người ghi:** YUNIE / auto-learn
+
+---
+
+### KN-023 — Model "giỏi ngọn, yếu gốc" — 6 papers chứng minh verification phải nằm ngoài model
+
+- **Ngày:** 2026-09-10
+- **Bug report:** N/A — bài học rút từ 6 papers arXiv đã verify (chi tiết: `docs/llm-weakness-research.md`)
+- **Severity:** major
+- **Triệu chứng:** Model trả lời mọi câu hỏi với độ tự tin như nhau (kể cả câu không thể biết); tự review bài của chính nó không sửa được lỗi logic, thậm chí accuracy giảm; chấm output của mình cao hơn output cùng chất lượng của model khác; nói cho dễ nghe thay vì nói thật; "reasoning" gãy khi chỉ đổi số trong đề hoặc thêm 1 mệnh đề nhiễu (sụt tới 65%).
+- **Nguyên nhân gốc (5 Whys):**
+  - Why1: Model tự tin sai mà không bị phát hiện → vì không có verifier trong loop.
+  - Why2: Không verifier → vì model được train để *plausible* (hợp lý bề mặt), không phải *verified* — "tự tin sai" không bị phạt trong training.
+  - Why3: RLHF còn củng cố: human preference data ưu tiên câu khớp quan điểm user (sycophancy) và câu viết thuyết phục hơn câu đúng.
+  - Why4: Model nhận ra output của chính mình (self-recognition) và thiên vị nó (self-preference) — tương quan tuyến tính, nhân quả (Panickssery 2024).
+  - Why5 (Root): **Đặc tính kiến trúc**, không phải lỗi model — LLM predict token tiếp theo, giỏi replicate pattern từ training data (GSM-Symbolic), không có cơ chế tự xác nhận đúng. Giải pháp duy nhất: verification nằm NGOÀI model.
+- **Cách sửa:** Không tin self-report — mọi claim "đã xong" phải có fresh evidence từ tool (build/test/đo `--angle`). Critique phải từ framing đối lập không prompt trước (Dissent Review, KN-018). User phản hồi tiêu cực → đổi strategy + đo lại, không lặp output cũ để chiều lòng (sycophancy). Task ra khỏi vùng pattern quen → tăng cường verify (calibration không generalize).
+- **Cách phòng tránh:**
+  - Không hỏi model "chắc chưa?" — đo bằng tool (bài 2, 3: self-knowledge gap + calibration không generalize).
+  - Không để model tự review/chấm bài của chính nó làm bằng chứng Done (bài 1, 4: self-correction fail + self-preference).
+  - Không tin benchmark vendor — benchmark trên codebase thật (bài 3, 6: benchmark chính là vùng pattern quen).
+  - Chi tiết 6 papers + trích dẫn nguyên văn: `docs/llm-weakness-research.md`.
+- **Tags:** `process` `research` `verification` `calibration`
+- **Người ghi:** YUNIE / auto-learn
+
+---
+
+### KN-024 — Prolific AI Psychosis — output rẻ làm mù khả năng đánh giá
+
+- **Ngày:** 2026-09-10
+- **Bug report:** N/A — bài học rút từ 2 nguồn blog 2026 (chi tiết: `docs/llm-weakness-research.md` §2b)
+- **Severity:** major
+- **Triệu chứng:** Dev đẻ hàng nghìn dòng code/ngày nhưng code ít utility thật; tự tin khẳng định "đã xong" trong khi software hỏng hơn trước; tạo nhiều file mới khi 1 dòng fix là đủ; code thành mớ rối khó đọc khó extend; rebuild lại thứ open-source đã giải từ đầu; "The illusion broke when I realized that I couldn't understand my own project" — không thêm feature được mà không viết lại từ đầu.
+- **Nguyên nhân gốc (5 Whys):**
+  - Why1: Dev không nhận ra output của mình vô giá trị → vì mất khả năng tự đánh giá chất lượng ("can't assess the quality of their own work" — Jeff Clark, MD).
+  - Why2: Mất khả năng đánh giá → vì output rẻ + tự tin (KN-023) khiến verification bị bỏ qua — "a loss will look just like a win" (slot machine).
+  - Why3: Verification bị bỏ qua → vì metrics-driven environments thưởng output (LOC, số task) không thưởng value.
+  - Why4: Metrics sai → vì đo được cái dễ (số dòng, số file) hơn cái khó (utility, taste, craft).
+  - Why5 (Root): **Nút thắt chuyển từ sản xuất sang đánh giá** — khi output rẻ, giá trị nằm ở khả năng đánh giá (human judgment + taste). Ai mất nó → psychosis; ai giữ nó (verification ngoài model + human pilot) → productive.
+- **Cách sửa:** Đo value không đo output: diff stat + dead-code grep (KN-013) thay vì LOC; fresh evidence từ tool cho mọi claim (KN-012/023); giữ human judgment ở gate cuối — "prioritize human judgment, sleep, and at least some semblance of a life outside of work"; taste/craft là ceiling — product-quality standard (states, a11y, contrast) là floor, không tự động hóa được phần cảm nhận.
+- **Cách phòng tránh:**
+  - Không thưởng/chấm theo output đếm được (LOC, số file, số task) — đo value thật (utility, rework count, user feedback).
+  - Học nhận diện "counterfeit wins" — loss nhìn y win: luôn verify bằng tool trước khi tin (KN-019).
+  - Nếu không hiểu code mình vừa merge → STOP, đó là dấu hiệu psychosis — đọc lại hoặc viết lại (KN-022: human phải hiểu hệ thống mình sở hữu).
+  - Giữ sleep + life outside work — hyperfocus là triệu chứng, không phải feature.
+  - Taste là human judgment: AI dự đoán trend được nhưng express feeling thì không (Emily Oberg: $400k/năm tiết kiệm nhưng phá brand visual) — không outsource phần cảm nhận.
+- **Tags:** `process` `psychology` `taste` `metrics` `human-judgment`
+- **Người ghi:** YUNIE / auto-learn
+
+---
+
+### KN-025 — Procedural Graphs + A-JIT — Self-Evolving Execution Structures (2609.09153v1, 2609.10248v1)
+
+- **Ngày:** 2026-09-10
+- **Bug report:** N/A — bài học rút từ 2 papers arXiv (chi tiết: `www/library/export.json` arxiv-2609.09153v1 + 2609.10248v1)
+- **Severity:** major
+- **Triệu chứng:** Agent chọn action qua unconstrained generation trên history dài → mất track objective, invoke tool sai thứ tự, lặp hành động vô ích; trajectory càng dài càng lạc; static binary không tự thích ứng với nhu cầu user thay đổi.
+- **Nguyên nhân gốc (5 Whys):**
+  - Why1: Agent lạc → vì procedural knowledge (làm gì, thứ tự nào, điều kiện nào) để implicit trong history, không explicit.
+  - Why2: Implicit → vì mỗi step generate tự do, không có structure bias.
+  - Why3: Không structure → vì thiếu Procedural Graph — như knowledge graph cho factual (entity, relation, entity) thì procedural cần (procedure, relation, procedure) cho what-to-do.
+  - Why4: Không self-evolve → vì không có loop contrast failed vs success để edit topology, không giữ rejected edits để tránh lặp.
+  - Why5 (Root): Thiếu **execution structure tự tiến hóa** + **JIT specialization** — A-JIT chỉ ra app phải là assembly code + runtime harness + embedded agent quan sát usage/traces để specialize logic/workflows/tool interfaces theo user, không phải static artifact.
+- **Cách sửa:** Procedural Graph: mỗi decision step localize active node, guidance model dịch subgraph thành situational guidance bias next action (không dictate); LLM refiner contrast failed/success trajectories → edit topology/attributes, commit nếu held-out validation pass, giữ rejected để discourage repetition; bắt đầu từ minimal skeleton cũng build được graph ngang hand-designed, sửa được flawed expert prior. A-JIT: tích hợp synthesis vào ambient lifecycle — trace-driven human-AI co-construction, dynamically construct missing implementations, generate capabilities on the fly.
+- **Cách phòng tránh:**
+  - Mọi agent long-horizon phải có explicit procedural structure (graph/workflow), không để unconstrained generation tự quyết thứ tự.
+  - Guidance bias không dictate — solver vẫn quyết, graph chỉ gợi ý.
+  - Self-evolution loop phải có held-out validation + rejected memory, không commit bừa.
+  - Harness 8-phase đã là procedural graph thô — cần formalize thành `procedural-graph.json` với (procedure, relation, procedure) triplets + guidance.
+  - A-JIT: harness + traces phải quan sát usage để specialize, không ship static rồi bỏ.
+- **Tags:** `process` `agent` `self-evolving` `procedural-graph` `a-jit`
+- **Người ghi:** YUNIE / auto-learn
+
+---
+
+### KN-026 — Experience Funnel + ADMET-EvO — State-Policy Alternating Loop & Evidence-Gated Evolution (2609.08919v1, 2609.10121v1)
+
+- **Ngày:** 2026-09-10
+- **Bug report:** N/A — bài học rút từ 2 papers arXiv (chi tiết: `www/library/export.json` arxiv-2609.08919v1 + 2609.10121v1)
+- **Severity:** major
+- **Triệu chứng:** Experience rời rạc từ interaction không thành competence tái dùng; explicit textual state (skills, harnesses) nhanh, human-readable nhưng phụ thuộc external context; parametric policy gọn, reusable nhưng chậm update; agent không sustain adaptation qua heterogeneous tasks mà overfit vào internal validation.
+- **Nguyên nhân gốc (5 Whys):**
+  - Why1: Không reuse experience → vì chỉ lưu trajectory, không distill thành state/policy.
+  - Why2: Chỉ 1 trong 2 (state hoặc policy) → vì thiếu alternating loop — state nhanh nhưng không consolidate, policy gọn nhưng không adapt kịp.
+  - Why3: Không alternating → vì thiếu Experience Funnel: distill trajectory → explicit textual state (fast) → identify useful behavior → consolidate vào policy via transition-aware distillation (slow) → new rollouts → next round.
+  - Why4: Heterogeneous tasks overfit → vì không evidence-gated — ADMET-EvO chỉ ra phải formalize endpoints, generate falsifiable hypotheses, test interventions across data/feature/model axes, carry supported/rejected/inconclusive forward.
+  - Why5 (Root): Thiếu **state-policy alternating + evidence gating** — experience phải qua funnel để thành competence, và mọi adaptation phải gated bởi evidence, không phải internal validation.
+- **Cách sửa:** Experience Funnel: interaction trajectories → distill vào explicit textual state (knowleged.md, skills, harnesses) nơi experience mới được incorporate và validate nhanh; sau đó selectively identify state-enabled behavior hữu ích qua state revisions → consolidate vào policy qua transition-aware distillation; updated state-policy pair generate new rollouts cho vòng tiếp. ADMET-EvO: evidence-gated agent formalize endpoints, generate falsifiable hypotheses, test across axes, carry outcomes forward; đạt 96.77 task-normalized score trên 22-task TDC ADMET, giảm fitting time 72.2% trong non-inferiority margin, formalize 43 toxicity tasks.
+- **Cách phòng tránh:**
+  - Mọi self-evolution phải có 2 tốc độ: fast state (text, editable) + slow policy (parametric, consolidated) — không chỉ 1.
+  - Distill trajectory thành explicit state trước, validate nhanh, rồi mới consolidate vào policy — không consolidate trực tiếp từ raw trajectory.
+  - Evidence-gated: mọi hypothesis phải falsifiable, test qua interventions, carry supported/rejected/inconclusive — không overfit internal validation.
+  - Harness: knowleged.md là explicit state, instructions/skills là policy — cần funnel loop giữa chúng, không chỉ append.
+  - Đo cumulative fitting time + task-normalized score, không chỉ per-task accuracy.
+- **Tags:** `process` `self-evolving` `memory` `evidence` `funnel`
+- **Người ghi:** YUNIE / auto-learn
+
+---
+
+### KN-027 — Feedback-Enriched Environments + Consistency Gap + SOLID — Self-Improvement Without Verified Answers (2609.08404v1, 2609.08832v1, 2609.09957v1)
+
+- **Ngày:** 2026-09-10
+- **Bug report:** N/A — bài học rút từ 3 papers arXiv (chi tiết: `www/library/export.json` arxiv-2609.08404v1 + 2609.08832v1 + 2609.09957v1)
+- **Severity:** major
+- **Triệu chứng:** RL long-horizon bị reward sparsity → training không tiến; agent 77% per-run nhưng chỉ 53% all-5 (consistency gap 24 điểm) → unreliable production; self-improvement phụ thuộc verified answers hoặc external evaluator → không scale.
+- **Nguyên nhân gốc (5 Whys):**
+  - Why1: RL không học được long-horizon → vì reward thưa, agent-side warming via SFT bị data scarcity + constrained exploration.
+  - Why2: Không học dù per-run cao → vì consistency gap — cùng task 5 lần, ReAct/GPT-4.1 chỉ 53% all-5 dù 77% per-run; unstable low-consistency steps flip across executions.
+  - Why3: Không fix gap → vì thiếu Consistency Analyzer pinpoint where/why trajectory flip + Guideline Generator convert diagnosis thành targeted guidelines commit vào memory.
+  - Why4: Self-improvement cần verified answers → vì credit assignment coarse (outcome reward) hoặc costly (process evaluator), privileged self-distillation gây style mismatch.
+  - Why5 (Root): Thiếu **environment-side adaptation + consistency-aware memory + evaluator-free self-distillation** — FEEs chuyển từ action guidance sang observation enrichment, SOLID cluster objectives và chọn majority artifact làm pseudo-reference với group-relative advantages.
+- **Cách sửa:** FEEs (Feedback-Enriched Environments): paradigm shift từ agent-side warming sang environment-side adaptation — reformulate environments bằng cách transition từ action guidance sang observation enrichment ở later stages của intra-episode exploration và inter-episode evolution; stabilize training (giảm entropy volatility), facilitate proactive exploration, internalize guidance vào policy weights, intra-group feedback consistency là boundary cho stable optimization (SciWorld/BFCL, Qwen3 + GRPO/GSPO/DAPO). Consistency Gap: framework identify unstable low-consistency steps → convert thành episodic memory → inject vào future executions; +16 points all-5 same-task, +13 similar-task generalization trên AppWorld. SOLID: Solver-Informed On-Policy Learning through Self-Distillation — execute candidate programs từ multiple rollouts, cluster objectives, chọn majority-group artifact làm pseudo-reference, update với group-relative advantages + dense self-supervision; không cần verified answers hay external evaluator; improve accuracy cho cả general và OR-tuned models.
+- **Cách phòng tránh:**
+  - Long-horizon RL: ưu tiên environment-side adaptation (FEEs) trước khi nhồi agent-side SFT — enrich observation, không chỉ guide action.
+  - Đo consistency gap (all-5 vs per-run) như metric chính cho production reliability, không chỉ per-run pass rate.
+  - Mọi self-evolution phải có Consistency Analyzer + Guideline Generator → episodic memory, không chỉ retry.
+  - Self-improvement không cần verified answers: dùng SOLID pattern — multiple rollouts → cluster → majority pseudo-reference → group-relative advantages.
+  - Intra-group feedback consistency là boundary — nếu feedback trong group không consistent → optimization unstable, phải fix environment trước.
+- **Tags:** `process` `rl` `consistency` `self-distillation` `verification` `scaffold`
+- **Người ghi:** YUNIE / auto-learn
+
+<!-- Thêm bài học mới theo template dưới — copy block này -->
+
+<!--

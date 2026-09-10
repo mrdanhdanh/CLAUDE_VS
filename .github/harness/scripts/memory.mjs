@@ -12,6 +12,9 @@
  *   node memory.mjs episodic --log --task "P1-5" --outcome "pass" --note "..."
  *   node memory.mjs episodic --list
  * Storage: .agent/memory/*.jsonl (working/short gitignored, persona/episodic committed).
+ * KN-026: experience-funnel.mjs là alternating loop trên tiers này —
+ *   fast state (working/short, editable) → slow policy (long/persona) via
+ *   `experience-funnel.mjs distill|consolidate|evidence` + evidence-gated.
  * No deps, Node 18+
  */
 import fs from 'node:fs';

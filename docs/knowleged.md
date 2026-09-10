@@ -46,6 +46,9 @@
 | KN-022 | 2026-09-08 | Pipeline in a trench coat — phần lớn "agent" là pipeline giả danh; agency là cost phải justify | Model không tự quyết control flow trong đa số hệ thống; free-roaming loop đắt, nondeterministic, không test được trong khi path vốn đã biết | Vẽ được flowchart trước khi chạy → build pipeline; agency chỉ đáng trả khi (1) outcome rẻ để verify VÀ (2) verification để lại dấu vết bền vững | `process` `architecture` `agent` `minimal` |
 | KN-023 | 2026-09-10 | Model "giỏi ngọn, yếu gốc" — tự tin sai, tự review sai, tự chấm thiên vị (6 papers arXiv) | Model train để plausible (hợp lý bề mặt) không phải verified; intrinsic self-correction làm accuracy GIẢM; self-preference + sycophancy có hệ thống | Verification phải nằm NGOÀI model: fresh evidence từ tool, Dissent từ framing đối lập, đo lại bằng tool không tin trí nhớ | `process` `research` `verification` `calibration` |
 | KN-024 | 2026-09-10 | Prolific AI Psychosis — output rẻ làm mù khả năng đánh giá; taste/craft là human judgment không outsource được | Metrics thưởng output không thưởng value + slot-machine reinforcement → dev đẻ hàng nghìn dòng code không ai hiểu, không tự assess chất lượng được | Nút thắt chuyển từ sản xuất sang đánh giá: giữ human judgment + verification ngoài model; đo value không đo LOC; taste là ceiling không tự động hóa được | `process` `psychology` `taste` `metrics` `human-judgment` |
+| KN-025 | 2026-09-10 | Procedural Graphs — Self-Evolving Execution Structures (2609.09153v1) + A-JIT (2609.10248v1) | Agent chọn action qua unconstrained generation trên history dài → mất track, lặp vô ích, tool sai thứ tự | Procedural Graph tổ chức (procedure, relation, procedure) + guidance model bias next action + LLM refiner contrast failed/success để edit topology, giữ rejected edits | `process` `agent` `self-evolving` `procedural-graph` `a-jit` |
+| KN-026 | 2026-09-10 | Experience Funnel — State-Policy Alternating Loop (2609.08919v1) + ADMET-EvO evidence-gated (2609.10121v1) | Experience rời rạc không thành competence tái dùng; state text nhanh nhưng phụ thuộc context, policy parametric gọn nhưng chậm update | Alternating loop: distill trajectory → explicit textual state (fast) → identify useful behavior → consolidate vào policy via transition-aware distillation (slow) + evidence-gated carry forward | `process` `self-evolving` `memory` `evidence` `funnel` |
+| KN-027 | 2026-09-10 | Feedback-Enriched Environments + Consistency Gap + SOLID self-distillation (2609.08404v1, 2609.08832v1, 2609.09957v1) | RL long-horizon bị reward sparsity; agent 77% per-run nhưng chỉ 53% all-5 (gap 24); self-improvement phụ thuộc verified answers | FEEs: chuyển từ action guidance sang observation enrichment + intra-group feedback consistency; Consistency Analyzer + Guideline Generator; SOLID: cluster objectives, majority artifact làm pseudo-reference, group-relative advantages | `process` `rl` `consistency` `self-distillation` `verification` `scaffold` |
 
 > Dòng ví dụ trên sẽ bị thay khi có bug thật đầu tiên — giữ format.
 
@@ -549,6 +552,72 @@
 - **Tags:** `process` `psychology` `taste` `metrics` `human-judgment`
 - **Người ghi:** YUNIE / auto-learn
 
+### KN-025 — Procedural Graphs + A-JIT — Self-Evolving Execution Structures (2609.09153v1, 2609.10248v1)
+
+- **Ngày:** 2026-09-10
+- **Bug report:** N/A — bài học rút từ 2 papers arXiv (chi tiết: `www/library/export.json` arxiv-2609.09153v1 + 2609.10248v1)
+- **Severity:** major
+- **Triệu chứng:** Agent chọn action qua unconstrained generation trên history dài → mất track objective, invoke tool sai thứ tự, lặp hành động vô ích; trajectory càng dài càng lạc; static binary không tự thích ứng với nhu cầu user thay đổi.
+- **Nguyên nhân gốc (5 Whys):**
+  - Why1: Agent lạc → vì procedural knowledge (làm gì, thứ tự nào, điều kiện nào) để implicit trong history, không explicit.
+  - Why2: Implicit → vì mỗi step generate tự do, không có structure bias.
+  - Why3: Không structure → vì thiếu Procedural Graph — như knowledge graph cho factual (entity, relation, entity) thì procedural cần (procedure, relation, procedure) cho what-to-do.
+  - Why4: Không self-evolve → vì không có loop contrast failed vs success để edit topology, không giữ rejected edits để tránh lặp.
+  - Why5 (Root): Thiếu **execution structure tự tiến hóa** + **JIT specialization** — A-JIT chỉ ra app phải là assembly code + runtime harness + embedded agent quan sát usage/traces để specialize logic/workflows/tool interfaces theo user, không phải static artifact.
+- **Cách sửa:** Procedural Graph: mỗi decision step localize active node, guidance model dịch subgraph thành situational guidance bias next action (không dictate); LLM refiner contrast failed/success trajectories → edit topology/attributes, commit nếu held-out validation pass, giữ rejected để discourage repetition; bắt đầu từ minimal skeleton cũng build được graph ngang hand-designed, sửa được flawed expert prior. A-JIT: tích hợp synthesis vào ambient lifecycle — trace-driven human-AI co-construction, dynamically construct missing implementations, generate capabilities on the fly.
+- **Cách phòng tránh:**
+  - Mọi agent long-horizon phải có explicit procedural structure (graph/workflow), không để unconstrained generation tự quyết thứ tự.
+  - Guidance bias không dictate — solver vẫn quyết, graph chỉ gợi ý.
+  - Self-evolution loop phải có held-out validation + rejected memory, không commit bừa.
+  - Harness 8-phase đã là procedural graph thô — cần formalize thành `procedural-graph.json` với (procedure, relation, procedure) triplets + guidance.
+  - A-JIT: harness + traces phải quan sát usage để specialize, không ship static rồi bỏ.
+- **Tags:** `process` `agent` `self-evolving` `procedural-graph` `a-jit`
+- **Người ghi:** YUNIE / auto-learn
+
+### KN-026 — Experience Funnel + ADMET-EvO — State-Policy Alternating Loop & Evidence-Gated Evolution (2609.08919v1, 2609.10121v1)
+
+- **Ngày:** 2026-09-10
+- **Bug report:** N/A — bài học rút từ 2 papers arXiv (chi tiết: `www/library/export.json` arxiv-2609.08919v1 + 2609.10121v1)
+- **Severity:** major
+- **Triệu chứng:** Experience rời rạc từ interaction không thành competence tái dùng; explicit textual state (skills, harnesses) nhanh, human-readable nhưng phụ thuộc external context; parametric policy gọn, reusable nhưng chậm update; agent không sustain adaptation qua heterogeneous tasks mà overfit vào internal validation.
+- **Nguyên nhân gốc (5 Whys):**
+  - Why1: Không reuse experience → vì chỉ lưu trajectory, không distill thành state/policy.
+  - Why2: Chỉ 1 trong 2 (state hoặc policy) → vì thiếu alternating loop — state nhanh nhưng không consolidate, policy gọn nhưng không adapt kịp.
+  - Why3: Không alternating → vì thiếu Experience Funnel: distill trajectory → explicit textual state (fast) → identify useful behavior → consolidate vào policy via transition-aware distillation (slow) → new rollouts → next round.
+  - Why4: Heterogeneous tasks overfit → vì không evidence-gated — ADMET-EvO chỉ ra phải formalize endpoints, generate falsifiable hypotheses, test interventions across data/feature/model axes, carry supported/rejected/inconclusive forward.
+  - Why5 (Root): Thiếu **state-policy alternating + evidence gating** — experience phải qua funnel để thành competence, và mọi adaptation phải gated bởi evidence, không phải internal validation.
+- **Cách sửa:** Experience Funnel: interaction trajectories → distill vào explicit textual state (knowleged.md, skills, harnesses) nơi experience mới được incorporate và validate nhanh; sau đó selectively identify state-enabled behavior hữu ích qua state revisions → consolidate vào policy qua transition-aware distillation; updated state-policy pair generate new rollouts cho vòng tiếp. ADMET-EvO: evidence-gated agent formalize endpoints, generate falsifiable hypotheses, test across axes, carry outcomes forward; đạt 96.77 task-normalized score trên 22-task TDC ADMET, giảm fitting time 72.2% trong non-inferiority margin, formalize 43 toxicity tasks.
+- **Cách phòng tránh:**
+  - Mọi self-evolution phải có 2 tốc độ: fast state (text, editable) + slow policy (parametric, consolidated) — không chỉ 1.
+  - Distill trajectory thành explicit state trước, validate nhanh, rồi mới consolidate vào policy — không consolidate trực tiếp từ raw trajectory.
+  - Evidence-gated: mọi hypothesis phải falsifiable, test qua interventions, carry supported/rejected/inconclusive — không overfit internal validation.
+  - Harness: knowleged.md là explicit state, instructions/skills là policy — cần funnel loop giữa chúng, không chỉ append.
+  - Đo cumulative fitting time + task-normalized score, không chỉ per-task accuracy.
+- **Tags:** `process` `self-evolving` `memory` `evidence` `funnel`
+- **Người ghi:** YUNIE / auto-learn
+
+### KN-027 — Feedback-Enriched Environments + Consistency Gap + SOLID — Self-Improvement Without Verified Answers (2609.08404v1, 2609.08832v1, 2609.09957v1)
+
+- **Ngày:** 2026-09-10
+- **Bug report:** N/A — bài học rút từ 3 papers arXiv (chi tiết: `www/library/export.json` arxiv-2609.08404v1 + 2609.08832v1 + 2609.09957v1)
+- **Severity:** major
+- **Triệu chứng:** RL long-horizon bị reward sparsity → training không tiến; agent 77% per-run nhưng chỉ 53% all-5 (consistency gap 24 điểm) → unreliable production; self-improvement phụ thuộc verified answers hoặc external evaluator → không scale.
+- **Nguyên nhân gốc (5 Whys):**
+  - Why1: RL không học được long-horizon → vì reward thưa, agent-side warming via SFT bị data scarcity + constrained exploration.
+  - Why2: Không học dù per-run cao → vì consistency gap — cùng task 5 lần, ReAct/GPT-4.1 chỉ 53% all-5 dù 77% per-run; unstable low-consistency steps flip across executions.
+  - Why3: Không fix gap → vì thiếu Consistency Analyzer pinpoint where/why trajectory flip + Guideline Generator convert diagnosis thành targeted guidelines commit vào memory.
+  - Why4: Self-improvement cần verified answers → vì credit assignment coarse (outcome reward) hoặc costly (process evaluator), privileged self-distillation gây style mismatch.
+  - Why5 (Root): Thiếu **environment-side adaptation + consistency-aware memory + evaluator-free self-distillation** — FEEs chuyển từ action guidance sang observation enrichment, SOLID cluster objectives và chọn majority artifact làm pseudo-reference với group-relative advantages.
+- **Cách sửa:** FEEs (Feedback-Enriched Environments): paradigm shift từ agent-side warming sang environment-side adaptation — reformulate environments bằng cách transition từ action guidance sang observation enrichment ở later stages của intra-episode exploration và inter-episode evolution; stabilize training (giảm entropy volatility), facilitate proactive exploration, internalize guidance vào policy weights, intra-group feedback consistency là boundary cho stable optimization (SciWorld/BFCL, Qwen3 + GRPO/GSPO/DAPO). Consistency Gap: framework identify unstable low-consistency steps → convert thành episodic memory → inject vào future executions; +16 points all-5 same-task, +13 similar-task generalization trên AppWorld. SOLID: Solver-Informed On-Policy Learning through Self-Distillation — execute candidate programs từ multiple rollouts, cluster objectives, chọn majority-group artifact làm pseudo-reference, update với group-relative advantages + dense self-supervision; không cần verified answers hay external evaluator; improve accuracy cho cả general và OR-tuned models.
+- **Cách phòng tránh:**
+  - Long-horizon RL: ưu tiên environment-side adaptation (FEEs) trước khi nhồi agent-side SFT — enrich observation, không chỉ guide action.
+  - Đo consistency gap (all-5 vs per-run) như metric chính cho production reliability, không chỉ per-run pass rate.
+  - Mọi self-evolution phải có Consistency Analyzer + Guideline Generator → episodic memory, không chỉ retry.
+  - Self-improvement không cần verified answers: dùng SOLID pattern — multiple rollouts → cluster → majority pseudo-reference → group-relative advantages.
+  - Intra-group feedback consistency là boundary — nếu feedback trong group không consistent → optimization unstable, phải fix environment trước.
+- **Tags:** `process` `rl` `consistency` `self-distillation` `verification` `scaffold`
+- **Người ghi:** YUNIE / auto-learn
+
 <!-- Thêm bài học mới theo template dưới — copy block này -->
 
 <!--
@@ -640,6 +709,16 @@
 - ❌ Merge code mà không hiểu nó hoạt động — "couldn't understand my own project" là dấu hiệu psychosis, phải STOP đọc lại/viết lại (KN-024).
 - ❌ Outsource taste/craft cho AI — "taste is felt, not learned"; AI tiết kiệm $400k/năm nhưng phá brand visual (KN-024, Emily Oberg).
 - ❌ Cắt sleep/life outside work để chạy theo AI hype — hyperfocus là triệu chứng psychosis, không phải feature (KN-024).
+- ❌ Agent long-horizon không có procedural structure explicit — unconstrained generation tự quyết thứ tự → lạc, lặp vô ích (KN-025).
+- ❌ Guidance dictate thay vì bias — graph ép solver làm theo, mất khả năng quyết của solver (KN-025).
+- ❌ Self-evolution commit bừa không qua held-out validation + không giữ rejected edits → lặp lại lỗi cũ (KN-025).
+- ❌ Chỉ dùng 1 tốc độ (chỉ state hoặc chỉ policy) — không có alternating loop fast state + slow policy (KN-026).
+- ❌ Consolidate trực tiếp từ raw trajectory vào policy — không distill qua explicit textual state trước (KN-026).
+- ❌ Hypothesis không falsifiable, không test qua interventions, không carry supported/rejected/inconclusive → overfit internal validation (KN-026).
+- ❌ RL long-horizon chỉ nhồi agent-side SFT — không thử environment-side adaptation (FEEs) trước (KN-027).
+- ❌ Chỉ đo per-run pass rate, không đo consistency gap all-5 vs per-run → tưởng reliable nhưng production flip (KN-027).
+- ❌ Self-improvement phụ thuộc verified answers/external evaluator — không dùng SOLID majority pseudo-reference (KN-027).
+- ❌ Bỏ qua intra-group feedback consistency — feedback trong group không consistent mà vẫn optimize → unstable (KN-027).
 
 ## Checklist phòng tránh chung
 
@@ -690,6 +769,13 @@
 - [ ] Đã reject "counterfeit wins" — output trông win nhưng chưa verify bằng tool? (KN-024)
 - [ ] Hiểu code mình vừa merge không? Không hiểu → STOP, đọc lại/viết lại? (KN-024)
 - [ ] Phần taste/craft (cảm nhận, thẩm mỹ) giữ human judgment ở gate cuối, không outsource? (KN-024)
+- [ ] Agent long-horizon có explicit procedural structure (graph/workflow), không unconstrained generation? (KN-025)
+- [ ] Self-evolution có held-out validation + rejected memory, không commit bừa? (KN-025)
+- [ ] Self-evolution có 2 tốc độ: fast state (text) + slow policy (parametric) với alternating loop? (KN-026)
+- [ ] Hypothesis falsifiable, test qua interventions, carry supported/rejected/inconclusive? (KN-026)
+- [ ] Long-horizon RL đã thử environment-side adaptation (FEEs) trước khi nhồi agent-side SFT? (KN-027)
+- [ ] Đã đo consistency gap (all-5 vs per-run) cho production reliability? (KN-027)
+- [ ] Self-improvement không phụ thuộc verified answers — dùng SOLID majority pseudo-reference? (KN-027)
 
 *File này do `/fixbug` tự động cập nhật. Mọi luồng khác phải đọc để không lặp lại lỗi cũ.*
-*UpdatedAt: 2026-09-10T01:00:00Z — Maintained by YUNIE / Harness v2 — KN-024 added (prolific AI psychosis — output rẻ làm mù khả năng đánh giá; taste/craft là human judgment — Jeff Clark MD + Emily Oberg, chi tiết docs/llm-weakness-research.md §2b) — KN-023 added (model "giỏi ngọn yếu gốc" — 6 papers arXiv: self-correction fail, self-knowledge gap, calibration không generalize, self-preference, sycophancy, pattern-matching reasoning — chi tiết docs/llm-weakness-research.md) — KN-022 added (pipeline in a trench coat — agency cost-based test, DEV.to James Anderson) + KN-021 bổ sung lộ trình Grith risk-score (allow/queue/deny + supervision-escape) — KN-019/020/021 added (bài học từ "My Little AI Factory" dominis.blog + METR study: measured > perceived, trust hard, governance evolve) — KN-015 added (Pages 2 workflows + eval-gate Node 18 CJS) — KN-014 added (MCP stdio smoke hang + verify order + regex m flag — DisCo Phase 3) — KN-013 added (Ponytail ladder integration: minimal-ladder + lean-product) — Fix: Bảng tóm tắt reorder KN-005↔KN-006 + thêm KN-009 (đã có detail nhưng thiếu ở bảng) — Presets bổ sung auto-researcher (đồng bộ registry) — KN-011 added (Random disable Step button) — KN-010 added (AAR pattern) — KN-009 bổ sung detail section (slot máy chủ AI — hardcode config) — KN-008 added (dotnet build file lock MSB3027) — KN-007 added (Auto-Learn) — KN-006 added (N5 UI polish) — KN-005 added (Bug Blindness)*
+*UpdatedAt: 2026-09-10T14:30:00Z — Maintained by YUNIE / Harness v2 — KN-025/026/027 added (10 papers self-improving 2026-09-08/09: Procedural Graphs + A-JIT, Experience Funnel + ADMET-EvO, FEEs + Consistency Gap + SOLID — chi tiết www/library/export.json 10 arXiv books) — KN-024 added (prolific AI psychosis — output rẻ làm mù khả năng đánh giá; taste/craft là human judgment — Jeff Clark MD + Emily Oberg, chi tiết docs/llm-weakness-research.md §2b) — KN-023 added (model "giỏi ngọn yếu gốc" — 6 papers arXiv: self-correction fail, self-knowledge gap, calibration không generalize, self-preference, sycophancy, pattern-matching reasoning — chi tiết docs/llm-weakness-research.md) — KN-022 added (pipeline in a trench coat — agency cost-based test, DEV.to James Anderson) + KN-021 bổ sung lộ trình Grith risk-score (allow/queue/deny + supervision-escape) — KN-019/020/021 added (bài học từ "My Little AI Factory" dominis.blog + METR study: measured > perceived, trust hard, governance evolve) — KN-015 added (Pages 2 workflows + eval-gate Node 18 CJS) — KN-014 added (MCP stdio smoke hang + verify order + regex m flag — DisCo Phase 3) — KN-013 added (Ponytail ladder integration: minimal-ladder + lean-product) — Fix: Bảng tóm tắt reorder KN-005↔KN-006 + thêm KN-009 (đã có detail nhưng thiếu ở bảng) — Presets bổ sung auto-researcher (đồng bộ registry) — KN-011 added (Random disable Step button) — KN-010 added (AAR pattern) — KN-009 bổ sung detail section (slot máy chủ AI — hardcode config) — KN-008 added (dotnet build file lock MSB3027) — KN-007 added (Auto-Learn) — KN-006 added (N5 UI polish) — KN-005 added (Bug Blindness)*

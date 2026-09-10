@@ -178,6 +178,67 @@ async function fetchLiveHuggingFace() {
     score: m.likes || 0,
   }));
 }
+async function fetchLiveHackerNoon(topic = 'AI', days = 30) {
+  // HackerNoon RSS free, no key — nhưng không có CORS header nên browser phải qua rss2json (CORS *, free, no key)
+  // Probe 2026-09-10: /tagged/ai/feed → 50 items, /feed → 20 items RSS 2.0
+  const feeds = ['https://hackernoon.com/tagged/ai/feed', 'https://hackernoon.com/feed'];
+  const since = days > 0 ? Date.now() - days * 24 * 60 * 60 * 1000 : 0;
+  const topicLow = (topic || '').toLowerCase().trim();
+  const topicWords = topicLow.split(/[\s\-]+/).filter(w => w.length > 2 && w !== 'the' && w !== 'and');
+  const isGeneralAI = topicLow === 'ai';
+  const stripHtml = (s) => {
+    const d = document.createElement('div');
+    d.innerHTML = s || '';
+    return (d.textContent || '').replace(/\s+/g, ' ').trim();
+  };
+  const all = [];
+  for (const feedUrl of feeds) {
+    try {
+      const api = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(feedUrl)}`;
+      const res = await fetch(api, { headers: { 'Accept': 'application/json' } });
+      if (!res.ok) continue;
+      const j = await res.json();
+      const items = j.items || [];
+      for (const it of items) {
+        const title = it.title || 'Untitled';
+        const summaryRaw = stripHtml(it.description || it.content || title);
+        const link = (it.link || 'https://hackernoon.com').split('?')[0] || 'https://hackernoon.com';
+        const pubTime = it.pubDate ? new Date(it.pubDate).getTime() : 0;
+        if (since && pubTime && pubTime < since) continue;
+        const cats = it.categories || [];
+        const text = `${title} ${summaryRaw} ${cats.join(' ')}`.toLowerCase();
+        if (!isGeneralAI && topicWords.length > 0) {
+          const hitPhrase = topicLow.length > 3 && text.includes(topicLow);
+          const hitWord = topicWords.some(w => text.includes(w));
+          if (!hitPhrase && !hitWord) continue;
+        }
+        const slug = link.split('/').filter(Boolean).pop() || title.slice(0, 30);
+        const cleanSlug = slug.replace(/[^a-zA-Z0-9-]+/g, '-').slice(0, 60);
+        const ageDays = pubTime ? (Date.now() - pubTime) / (24 * 60 * 60 * 1000) : 99;
+        all.push({
+          id: `hnoon-${cleanSlug}`,
+          title,
+          summary: (summaryRaw.slice(0, 180) + (it.author ? ` — by ${it.author} on HackerNoon.` : '')).slice(0, 220),
+          source: 'HackerNoon',
+          sourceUrl: link,
+          category: liveCategorize(title, summaryRaw),
+          date: fmtDateShort(pubTime || Date.now()),
+          hot: ageDays <= 3,
+          tags: ['HackerNoon', ...(cats.slice(0, 1)), topic].filter(Boolean).slice(0, 3),
+          score: ageDays <= 3 ? 100 : ageDays <= 7 ? 50 : 10,
+        });
+        if (all.length >= 8) break;
+      }
+    } catch { /* bỏ qua feed lỗi — các nguồn khác vẫn render */ }
+    if (all.length >= 8) break;
+  }
+  const seen = new Set();
+  return all.filter(a => {
+    if (seen.has(a.sourceUrl)) return false;
+    seen.add(a.sourceUrl);
+    return true;
+  }).sort((a, b) => (new Date(b.date) - new Date(a.date)) || ((b.hot ? 1 : 0) - (a.hot ? 1 : 0))).slice(0, 8);
+}
 let isLiveFetching = false;
 let isSearching = false;
 let searchKeyword = '';
@@ -235,7 +296,7 @@ function updateRefreshButtonState() {
     btn.disabled = false;
     btn.style.opacity = '';
     btn.style.pointerEvents = '';
-    btn.title = 'Lấy tin mới trực tiếp từ HN + GitHub (không cần VS Code) — mỗi giờ 1 lần';
+    btn.title = 'Lấy tin mới trực tiếp từ HN + GitHub + HackerNoon (không cần VS Code) — mỗi giờ 1 lần';
     if (textEl && textEl.dataset.originalText) textEl.textContent = textEl.dataset.originalText;
     if (cooldownTimer) { clearInterval(cooldownTimer); cooldownTimer = null; }
     return false;
@@ -267,22 +328,23 @@ async function handleLiveRefresh() {
   const btn = $('#btnRefresh');
   isLiveFetching = true;
   if (btn) { btn.disabled = true; btn.style.opacity = '0.6'; btn.style.pointerEvents = 'none'; }
-  toast('Đang lấy tin mới từ HN + GitHub… ⏳', 4000);
+  toast('Đang lấy tin mới từ HN + GitHub + HackerNoon… ⏳', 4000);
   // show loading in grids
   const hotGrid = $('#hotGrid'), allGrid = $('#allGrid');
-  if (hotGrid) hotGrid.innerHTML = '<div class="empty-state"><div class="empty-icon">⏳</div><p>Đang fetch trực tiếp từ Hacker News + GitHub + DEV.to + Reddit + Hugging Face…</p><p class="small muted" style="font-size:12px;margin-top:6px">Chạy ngay trên trình duyệt, không cần VS Code</p></div>';
+  if (hotGrid) hotGrid.innerHTML = '<div class="empty-state"><div class="empty-icon">⏳</div><p>Đang fetch trực tiếp từ Hacker News + GitHub + DEV.to + Reddit + Hugging Face + HackerNoon…</p><p class="small muted" style="font-size:12px;margin-top:6px">Chạy ngay trên trình duyệt, không cần VS Code</p></div>';
   if (allGrid) allGrid.innerHTML = '';
   try {
-    const [hn, gh, dev, rd, hf] = await Promise.all([
+    const [hn, gh, dev, rd, hf, hnoon] = await Promise.all([
       fetchLiveHN('AI', 30),
       fetchLiveGitHub('AI', 30).catch(()=>[]),
       fetchLiveDevTo('AI', 30).catch(()=>[]),
       fetchLiveReddit('AI', 30).catch(()=>[]),
       fetchLiveHuggingFace().catch(()=>[]),
+      fetchLiveHackerNoon('AI', 30).catch(()=>[]),
     ]);
-    const live = [...hn, ...gh, ...dev, ...rd, ...hf];
+    const live = [...hn, ...gh, ...dev, ...rd, ...hf, ...hnoon];
     const seen = new Set();
-    const merged = [...hn, ...gh].filter(a => {
+    const merged = live.filter(a => {
       const k = a.title.toLowerCase().slice(0,40);
       if (seen.has(k)) return false;
       seen.add(k); return true;
@@ -303,7 +365,7 @@ async function handleLiveRefresh() {
       generatedBy: 'YUNIE × Live (trình duyệt)',
       articles: articles.map(a=>({ id:a.id, title:a.title, summary:a.summary, source:a.source, sourceUrl:a.sourceUrl, category:a.category, date:a.date, hot:!!a.hot, tags:(a.tags||[]).slice(0,5) })),
       meta: { fetchedAt: new Date().toISOString(), topic:'AI', total: articles.length, hot: articles.filter(a=>a.hot).length, sources:[...new Set(articles.map(a=>a.source))] },
-      last30days: { ...(data.last30days||{}), topic:'AI', since: fmtDateShort(Date.now()-30*24*60*60*1000), sources:['Hacker News (live)','GitHub (live)','DEV.to (live)','Reddit (live)','Hugging Face (live)'], engine:'Live fetch trực tiếp trên trình duyệt (không cần VS Code)' }
+      last30days: { ...(data.last30days||{}), topic:'AI', since: fmtDateShort(Date.now()-30*24*60*60*1000), sources:['Hacker News (live)','GitHub (live)','DEV.to (live)','Reddit (live)','Hugging Face (live)','HackerNoon (live)'], engine:'Live fetch trực tiếp trên trình duyệt (không cần VS Code)' }
     };
     // update hero meta
     const genEl = $('#metaGenerated'); if (genEl) genEl.textContent = fmtDate(data.generatedAt);
@@ -410,21 +472,22 @@ async function handleSearch() {
   if (btn) { btn.disabled = true; btn.style.opacity = '0.6'; }
   toast(`Đang tìm "${kw}" trong ${days===0?'không giới hạn':days+' ngày'}… ⏳`, 3000);
   const hotGrid = $('#hotGrid'), allGrid = $('#allGrid');
-  if (hotGrid) hotGrid.innerHTML = '<div class="empty-state"><div class="empty-icon">🔍</div><p>Đang tìm tin hot cho "' + escapeHtml(kw) + '"…</p><p class="small muted" style="font-size:12px;margin-top:6px">HN + GitHub + DEV.to + Reddit + Hugging Face · giữ chuẩn hot như Cập nhật</p></div>';
+  if (hotGrid) hotGrid.innerHTML = '<div class="empty-state"><div class="empty-icon">🔍</div><p>Đang tìm tin hot cho "' + escapeHtml(kw) + '"…</p><p class="small muted" style="font-size:12px;margin-top:6px">HN + GitHub + DEV.to + Reddit + Hugging Face + HackerNoon · giữ chuẩn hot như Cập nhật</p></div>';
   if (allGrid) allGrid.innerHTML = '';
   const statusEl = $('#searchStatus');
   if (statusEl) { statusEl.hidden = false; statusEl.textContent = `Đang tìm "${kw}"…`; }
   try {
-    const [hn, gh, dev, rd, hf] = await Promise.all([
+    const [hn, gh, dev, rd, hf, hnoon] = await Promise.all([
       fetchLiveHN(kw, days),
       fetchLiveGitHub(kw, days).catch(()=>[]),
       fetchLiveDevTo(kw, days).catch(()=>[]),
       fetchLiveReddit(kw, days).catch(()=>[]),
       fetchLiveHuggingFace().catch(()=>[]),
+      fetchLiveHackerNoon(kw, days).catch(()=>[]),
     ]);
-    const live = [...hn, ...gh, ...dev, ...rd, ...hf];
+    const live = [...hn, ...gh, ...dev, ...rd, ...hf, ...hnoon];
     const seen = new Set();
-    const merged = [...hn, ...gh].filter(a => {
+    const merged = live.filter(a => {
       const k = a.title.toLowerCase().slice(0,40);
       if (seen.has(k)) return false;
       seen.add(k); return true;
@@ -462,7 +525,7 @@ async function handleSearch() {
       generatedBy: `YUNIE × Tìm kiếm "${kw}"`,
       articles: articles.map(a=>({ id:a.id, title:a.title, summary:a.summary, source:a.source, sourceUrl:a.sourceUrl, category:a.category, date:a.date, hot:!!a.hot, tags:(a.tags||[]).slice(0,5) })),
       meta: { fetchedAt: new Date().toISOString(), topic: kw, total: articles.length, hot: articles.filter(a=>a.hot).length, sources:[...new Set(articles.map(a=>a.source))] },
-      last30days: { ...(data.last30days||{}), topic: kw, since: days===0 ? 'không giới hạn' : fmtDateShort(Date.now()-days*24*60*60*1000), sources:['Hacker News (live)','GitHub (live)','DEV.to (live)','Reddit (live)','Hugging Face (live)'], engine:'Tìm kiếm live — HN + GitHub + DEV.to + Reddit + Hugging Face, giữ chuẩn hot' }
+      last30days: { ...(data.last30days||{}), topic: kw, since: days===0 ? 'không giới hạn' : fmtDateShort(Date.now()-days*24*60*60*1000), sources:['Hacker News (live)','GitHub (live)','DEV.to (live)','Reddit (live)','Hugging Face (live)','HackerNoon (live)'], engine:'Tìm kiếm live — HN + GitHub + DEV.to + Reddit + Hugging Face + HackerNoon, giữ chuẩn hot' }
     };
     const genEl = $('#metaGenerated'); if (genEl) genEl.textContent = fmtDate(data.generatedAt);
     const byEl = $('#metaBy'); if (byEl) byEl.textContent = data.generatedBy;
@@ -689,7 +752,7 @@ function renderLast30DaysBadge(d) {
   // Also update hero description if needed
   const heroDesc = document.querySelector('.hero-card p');
   if (heroDesc && meta.skill) {
-    heroDesc.innerHTML = `Tổng hợp tin AI 30 ngày qua qua <span class="kbd">Last30Days</span> (${escapeHtml(meta.skill)}) — HN Algolia + GitHub, scored by upvotes/stars. Chạy <span class="kbd">node www/ai-news/fetch.mjs --topic "AI"</span> để làm mới.`;
+    heroDesc.innerHTML = `Tổng hợp tin AI 30 ngày qua qua <span class="kbd">Last30Days</span> (${escapeHtml(meta.skill)}) — HN Algolia + GitHub + HackerNoon, scored by upvotes/stars. Chạy <span class="kbd">node www/ai-news/fetch.mjs --topic "AI"</span> để làm mới.`;
   }
 }
 

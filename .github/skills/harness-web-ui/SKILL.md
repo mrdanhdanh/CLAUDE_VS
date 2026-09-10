@@ -1,6 +1,6 @@
 ---
 name: harness-web-ui
-description: "Task-agnostic lessons 'Web UI & UX' chưng cất từ docs/knowleged.md (6 KN: KN-001, KN-002, KN-003, KN-004, KN-006, KN-011) + .agent/bugs/. Use when task chạm ui, a11y, css, responsive, data, animation, spacing, i18n, theme, contrast — áp Cách phòng tránh trước khi code, tránh lặp bug cũ. DisCo-lite, regenerate bằng distill-agnostic.mjs."
+description: "Task-agnostic lessons 'Web UI & UX' chưng cất từ docs/knowleged.md (7 KN: KN-001, KN-002, KN-003, KN-004, KN-006, KN-011, KN-017) + .agent/bugs/. Use when task chạm ui, a11y, css, responsive, data, animation, spacing, i18n, theme, contrast — áp Cách phòng tránh trước khi code, tránh lặp bug cũ. DisCo-lite, regenerate bằng distill-agnostic.mjs."
 user-invocable: false
 ---
 
@@ -10,11 +10,11 @@ user-invocable: false
 
 ## When to Use
 
-- Task chạm theme **Web UI & UX** (tags: ui, a11y, css, responsive, data, animation, spacing, i18n, theme, contrast, state, ux, button)
+- Task chạm theme **Web UI & UX** (tags: ui, a11y, css, responsive, data, animation, spacing, i18n, theme, contrast, state, ux, button, diagram, archify, verify)
 - Trước khi code/fix — áp **Cách phòng tránh** ngay để không lặp bug cũ
 - Review/plan — check anti-patterns bên dưới
 
-## Bài học (6 KN)
+## Bài học (7 KN)
 
 ### KN-001 — Ví dụ: Modal không đóng khi bấm ESC (minor)
 - **Bài học:** Mọi overlay/modal phải có ESC + focus trap + aria
@@ -66,6 +66,16 @@ user-invocable: false
   - Tạo helper `setStepEnabled(bool)` nếu có nhiều nơi đụng
   - Test manual: sau mỗi action (Random, Reset, Start) check tất cả button states
 
+### KN-017 — Archify diagram tràn first-screen + text quá nhỏ — viewBox ratio math (major)
+- **Bài học:** Chọn viewBox width trong sweet spot [1035, 1131] để đồng thời thỏa `scale ≥ 0.822` và `height×scale ≤ ~586px`; luôn chạy `visual-check` sau `deliver`
+- **Bug report:** .agent/bugs/2026-09-06-archify-skill-port/bug.md
+- **Cách phòng tránh:**
+  - Workflow/sequence: ưu tiên viewBox **dẹt** (ratio ≥ 1.7:1) — architecture 1255×424 pass ngay lần đầu.
+  - Công thức nhanh: `maxHeight = 586 / (930/width)` → chọn `width = maxHeight × ratio mong muốn`, kiểm tra `930/width ≥ 0.822`.
+  - Đổi viewBox → nhớ rescale toàn bộ tọa độ y, không chỉ meta.
+  - Luôn chạy `visual-check` (cần `ARCHIFY_CHROME` trỏ Edge/Chrome) sau `deliver` — 9/9 showcase checks KHÔNG bao gồm browser containment.
+  - Đọc `supportedFixes` của validator — nó luôn chỉ đúng đường (bỏ fromSide/toSide, dùng labelAt gợi ý, route preset conflict → thả auto).
+
 ## Anti-patterns (đừng lặp lại)
 
 - - ❌ Viết `status.json` tay không qua generator → data shape lệch với render (KN-002).
@@ -79,9 +89,13 @@ user-invocable: false
 - - ❌ Dùng PowerShell here-string cho file UTF-8 tiếng Việt → corrupt (KN-006).
 - - ❌ NavMenu minimal không có badge/grouping/aria-label (KN-006).
 - - ❌ `hideAll()` disable button rồi caller không re-enable → Random xong không step được (KN-011).
+- - ❌ Chọn viewBox gần vuông (772×652) cho diagram — render tràn first-screen; ưu tiên ratio dẹt ≥1.7:1 (KN-017).
+- - ❌ Đổi viewBox width mà không tính scale text — width 1400 → scale 0.66 → text < 6px fail readability (KN-017).
+- - ❌ Đổi viewBox mà không rescale tọa độ y (messages/activations/segments) — messages rơi ngoài readable timeline (KN-017).
+- - ❌ Tin 9/9 showcase checks là đủ — nó không bao gồm browser containment; phải chạy `visual-check` với `ARCHIFY_CHROME` (KN-017).
 
 ## Nguồn
 
-- `docs/knowleged.md` — KN-001, KN-002, KN-003, KN-004, KN-006, KN-011
+- `docs/knowleged.md` — KN-001, KN-002, KN-003, KN-004, KN-006, KN-011, KN-017
 - Chi tiết đầy đủ: `references/evidence.md` (progressive disclosure)
 - Regenerate: `node .github/harness/scripts/distill-agnostic.mjs`

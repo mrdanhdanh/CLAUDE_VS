@@ -1,8 +1,8 @@
 # Evidence — harness-minimal (DisCo arXiv:2609.02749v1 §3.2 (task-agnostic))
 
-> Substrate layer của skill — full text từ docs/knowleged.md. Sinh tự động 2026-09-04T09:13:35.827Z.
+> Substrate layer của skill — full text từ docs/knowleged.md. Sinh tự động 2026-09-10T14:54:40.976Z.
 
-## Bug reports liên quan (1/11 bugs)
+## Bug reports liên quan (1/13 bugs)
 
 - `.agent/bugs/2026-09-03-n5blazor-ladder-trial-dead-code/bug.md` — Bug: N5Blazor ladder trial dead code
 
@@ -30,6 +30,47 @@
 - **Tags:** `process` `minimal` `ponytail` `yagni` `dx`
 - **Người ghi:** YUNIE / harness
 
-<!-- Thêm bài học mới theo template dưới — copy block này -->
+---
 
-<!--
+### KN-020 — Generate easy, trust hard — output agent phải qua review/benchmark gate
+
+- **Ngày:** 2026-09-08
+- **Bug report:** N/A — bài học rút từ "My Little AI Factory" (dominis.blog): Superglue thành công vì review tay từng thay đổi; BERBench sinh ra vì "no matter which magic setup, không thể tin code mà không review kỹ"
+- **Severity:** major
+- **Triệu chứng:** Agent đẻ code rất nhanh, nhiều setup "magic" (harness/model/skill/MCP) nhưng không có setup nào cho code đáng tin không cần human review; ở scale, human không đủ sức review hết.
+- **Nguyên nhân gốc (5 Whys):**
+  - Why1: Code phải review kỹ → vì model bị reward để giải task, không để cho code đúng.
+  - Why2: Model tối ưu task-completion → vì training signal là success rate, không phải trustworthiness.
+  - Why3: Vibe-check setup không cải thiện trust → vì biến cấu hình (harness/model/skill) không thay đổi nhu cầu verification.
+  - Why4: Không có cách so sánh setup → vì thiếu benchmark deterministic trên codebase thật.
+  - Why5 (Root): Thiếu continuous benchmarking + review gate trong pipeline — tin output vì nó trông ổn, không phải vì đã đo.
+- **Cách sửa:** Giữ + siết các gate có sẵn: `tdd-gate` (RED trước), `verify` fresh evidence, Dissent Review; benchmark 2-3 cách (AAR, KN-010) trước khi chốt setup. "AI loves overcomplicating things" — áp minimal-ladder để radically simplify thay vì thêm phức tạp.
+- **Cách phòng tránh:**
+  - Không bao giờ trust agent output vì "trông đúng" — phải có test/measure (KN-012: check HOW not WHETHER).
+  - Continuous benchmarking là foundation của self-evolving agents — benchmark định kỳ, keep best.
+  - Radically simplify: mỗi task thêm phức tạp → hỏi YAGNI gate (KN-013).
+- **Tags:** `process` `verification` `review` `minimal`
+- **Người ghi:** YUNIE / auto-learn
+
+---
+
+### KN-022 — Pipeline in a trench coat — agency là cost phải justify
+
+- **Ngày:** 2026-09-08
+- **Bug report:** N/A — bài học rút từ "Most 'AI Agents' Are Just If-Statements in a Trench Coat" (James Anderson, DEV.to 2026-09-08, 23 reactions) + comment Baptiste Le Bouquin & Salman Parvez
+- **Severity:** major
+- **Triệu chứng:** Hệ thống gọi là "agent" (planner + tools + reasoning loop) chạy production: chậm, đắt, fail không reproduce — logs cho thấy nó làm cùng 3 bước mỗi run (extract, transform, respond), không bao giờ dùng autonomy để làm gì khác. Demo ấn tượng, Wednesday vẫn phải debug forensics trên "quyết định tự chủ" ở step 4 không kiểm soát được.
+- **Nguyên nhân gốc (5 Whys):**
+  - Why1: Hệ thống nondeterministic, khó debug → vì model được trao quyền chọn control flow tại runtime.
+  - Why2: Trao quyền dù path đã biết → vì "agentic" là từ đẹp trong demo/pitch, không phải nhu cầu của task.
+  - Why3: Không ai phân biệt agent vs pipeline → vì thiếu test rõ ràng.
+  - Why4: Test "path có thay đổi không" cũng chưa đủ → vì có path thay đổi nhưng verify rẻ (scraper, retry sau 429) vẫn an toàn.
+  - Why5 (Root): Thiếu tiêu chí cost-based: agency chỉ đáng trả khi (1) outcome rẻ để verify VÀ (2) verification để lại dấu vết bền vững (audit record) — thiếu 1 trong 2 thì autonomy là pure downside.
+- **Cách sửa:** Litmus: vẽ được flowchart trước khi chạy → build pipeline (fixed steps, LLM call ở chỗ thật sự cần thông minh, control flow mình sở hữu). Harness v2 đã đúng: 8 phase cố định + agent chỉ quyết nội dung trong phase, không quyết path. Chỉ thêm agency tại điểm fixed path chứng minh fail, và không hơn.
+- **Cách phòng tránh:**
+  - Trước khi build "agent": hỏi "vẽ được flowchart không?" — vẽ được thì pipeline.
+  - Agency phải justify: outcome rẻ verify + check để lại record (audit.jsonl, bug.md) — "trench coat fine as long as the person inside checks the pockets".
+  - Multi-agent reconciliation phải deterministic (rule mình sở hữu), không "whoever spoke last wins" — conflict để lại thành record cho human, không ép consensus giả.
+  - Boring pipeline là senior move: hệ thống sống qua Wednesday gần như luôn boring hơn hệ thống thắng demo.
+- **Tags:** `process` `architecture` `agent` `minimal`
+- **Người ghi:** YUNIE / auto-learn

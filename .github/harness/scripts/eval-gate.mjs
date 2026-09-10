@@ -90,6 +90,26 @@ function checkPlans() {
   return { name: 'plan-validate', pass: failed.length === 0, detail: failed.length ? `failed: ${failed.join(', ')}` : `${plans.length} plans pass` };
 }
 
+function checkSelfImproving() {
+  // KN-025/026/027: 3 seams phải healthy — procedural graph init + funnel status + consistency records
+  const details = [];
+  let pass = true;
+  try {
+    const g = JSON.parse(fs.readFileSync(path.join(ROOT, '.agent', 'procedural-graph.json'), 'utf8'));
+    if (Array.isArray(g.triplets) && g.triplets.length > 0) details.push(`procedural-graph ${g.triplets.length} triplets`);
+    else { pass = false; details.push('procedural-graph empty'); }
+  } catch { pass = false; details.push('procedural-graph missing (chạy --init)'); }
+  try {
+    const f = JSON.parse(fs.readFileSync(path.join(ROOT, '.agent', 'funnel.json'), 'utf8'));
+    details.push(`funnel ${f.states?.length || 0} states/${f.evidence?.length || 0} evidence`);
+  } catch { details.push('funnel empty (chưa distill — ok nếu mới)'); }
+  try {
+    const c = JSON.parse(fs.readFileSync(path.join(ROOT, '.agent', 'consistency.json'), 'utf8'));
+    details.push(`consistency ${c.records?.length || 0} records`);
+  } catch { details.push('consistency empty (chưa check — ok nếu mới)'); }
+  return { name: 'self-improving', pass, detail: details.join(' · ') };
+}
+
 function parseArgs(argv) {
   const out = {};
   for (let i = 0; i < argv.length; i++) {
@@ -116,8 +136,9 @@ function main() {
     checks.push(checkPlans());
   }
   if (scope === 'harness' || scope === 'all') {
-    checks.push(checkSyntax(['.github/harness/scripts/plan-validate.mjs', '.github/harness/scripts/handoff.mjs', '.github/harness/scripts/reflect.mjs', '.github/harness/scripts/trace.mjs', '.agent/scripts/audit.mjs']));
+    checks.push(checkSyntax(['.github/harness/scripts/plan-validate.mjs', '.github/harness/scripts/handoff.mjs', '.github/harness/scripts/reflect.mjs', '.github/harness/scripts/trace.mjs', '.agent/scripts/audit.mjs', '.github/harness/scripts/procedural-graph.mjs', '.github/harness/scripts/experience-funnel.mjs', '.github/harness/scripts/consistency-gap.mjs']));
     checks.push(checkPlans());
+    checks.push(checkSelfImproving());
   }
   // default scope www/library already covered; if custom scope unknown, run all
   if (!checks.length) {

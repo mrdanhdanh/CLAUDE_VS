@@ -9,6 +9,9 @@
  *   node workflow.mjs status --run <runId>
  * Checkpoints: .agent/runs/<runId>.json (gitignored).
  * Integrates handoff/trace/audit best-effort (never blocks run).
+ * KN-025: procedural-graph.mjs là explicit structure của workflow này —
+ *   chạy `procedural-graph.mjs --init --from-workflow <name>` để formalize thành
+ *   (procedure, relation, procedure) triplets + guidance bias (không dictate).
  * No deps, Node 18+
  */
 import fs from 'node:fs';

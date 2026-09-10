@@ -3,7 +3,8 @@
  * YUNIE × Last30Days — AI News Fetcher (Node.js bridge)
  * Fetches AI news via free APIs (no keys) and updates ai-news.json
  * Works with Node 18+ (fetch built-in), no Python 3.12 needed.
- * Sources: HN Algolia (free), GitHub Trending (free)
+ * Sources: HN Algolia (free), GitHub Trending (free), DEV.to (free),
+ *   Reddit (free), Hugging Face (free), arXiv (free), HackerNoon RSS (free)
  * Usage: node www/ai-news/fetch.mjs [--dry] [--topic "AI agents"] [--days 7|30|90|180|0]
  *   --days 0 = không giới hạn (bỏ filter thời gian)
  */
@@ -207,8 +208,98 @@ async function fetchHuggingFace() {
   }
 }
 
+async function fetchHackerNoon(topic = TOPIC, days = DAYS) {
+  // HackerNoon RSS (free, no key): general feed (20 items) + AI tag feed (50 items)
+  // Probe 2026-09-10: /feed → 20 items RSS 2.0, /tagged/ai/feed → 50 items, no CORS header (Node OK, browser via rss2json)
+  const feeds = ['https://hackernoon.com/tagged/ai/feed', 'https://hackernoon.com/feed'];
+  const since = days > 0 ? Date.now() - days * 24 * 60 * 60 * 1000 : 0;
+  const topicLow = (topic || '').toLowerCase().trim();
+  const topicWords = topicLow.split(/[\s\-]+/).filter(w => w.length > 2 && w !== 'the' && w !== 'and');
+  const isGeneralAI = topicLow === 'ai';
+  const stripCdata = (s) => (s || '').replace(/<!\[CDATA\[([\s\S]*?)\]\]>/g, '$1').trim();
+  const stripHtml = (s) => (s || '').replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim();
+  const pickTag = (block, tag) => {
+    const m = block.match(new RegExp(`<${tag}[^>]*>([\\s\\S]*?)</${tag}>`, 'i'));
+    return m ? stripCdata(m[1]) : '';
+  };
+  try {
+    const all = [];
+    for (const feedUrl of feeds) {
+      console.log(`[HackerNoon] fetching ${feedUrl}`);
+      try {
+        const res = await fetch(feedUrl, { headers: { 'User-Agent': 'YUNIE-last30days/1.0' } });
+        if (!res.ok) throw new Error(`HackerNoon ${res.status}`);
+        const xml = await res.text();
+        const items = [...xml.matchAll(/<item>([\s\S]*?)<\/item>/g)];
+        console.log(`[HackerNoon] got ${items.length} items from ${feedUrl}`);
+        for (const m of items) {
+          const block = m[1];
+          const title = stripHtml(pickTag(block, 'title'));
+          const descRaw = pickTag(block, 'description') || pickTag(block, 'content:encoded');
+          const summary = stripHtml(descRaw);
+          const linkRaw = stripCdata((block.match(/<link>([\s\S]*?)<\/link>/i) || [])[1] || '');
+          const link = (linkRaw || 'https://hackernoon.com').split('?')[0] || 'https://hackernoon.com';
+          const pubDateRaw = pickTag(block, 'pubDate');
+          const pubTime = pubDateRaw ? new Date(pubDateRaw).getTime() : 0;
+          if (since && pubTime && pubTime < since) continue;
+          const author = stripHtml(pickTag(block, 'dc:creator')) || 'HackerNoon';
+          const cats = [...block.matchAll(/<category[^>]*>([\s\S]*?)<\/category>/gi)].map(c => stripHtml(stripCdata(c[1]))).filter(Boolean);
+          const text = `${title} ${summary} ${cats.join(' ')}`.toLowerCase();
+          if (!isGeneralAI && topicWords.length > 0) {
+            const hitPhrase = topicLow.length > 3 && text.includes(topicLow);
+            const hitWord = topicWords.some(w => text.includes(w));
+            if (!hitPhrase && !hitWord) continue;
+          }
+          const slug = link.split('/').filter(Boolean).pop() || title.slice(0, 30);
+          const cleanSlug = slug.replace(/[^a-zA-Z0-9-]+/g, '-').slice(0, 60);
+          const ageDays = pubTime ? (Date.now() - pubTime) / (24 * 60 * 60 * 1000) : 99;
+          all.push({
+            id: `hnoon-${cleanSlug}`,
+            title: title || 'Untitled',
+            summary: (summary.slice(0, 180) + (author ? ` — by ${author} on HackerNoon.` : '')).slice(0, 220),
+            source: 'HackerNoon',
+            sourceUrl: link,
+            category: categorize(title, summary),
+            date: pubTime ? fmtDate(pubTime) : fmtDate(Date.now()),
+            hot: ageDays <= 3,
+            tags: ['HackerNoon', ...(cats.slice(0, 1)), topic].filter(Boolean).slice(0, 3),
+            score: ageDays <= 3 ? 100 : ageDays <= 7 ? 50 : 10,
+            _time: pubTime || 0,
+          });
+        }
+      } catch (e) {
+        console.warn(`[HackerNoon] feed failed ${feedUrl}:`, e.message);
+      }
+    }
+    // Dedupe by link, newest first, top 8
+    const seen = new Set();
+    const deduped = all.filter(a => {
+      if (seen.has(a.sourceUrl)) return false;
+      seen.add(a.sourceUrl);
+      return true;
+    });
+    deduped.sort((a, b) => b._time - a._time);
+    console.log(`[HackerNoon] kept ${Math.min(deduped.length, 8)} articles for topic "${topic}"`);
+    return deduped.slice(0, 8).map(({ _time, ...a }) => a);
+  } catch (e) {
+    console.warn('[HackerNoon] failed:', e.message);
+    return [];
+  }
+}
+
 async function fetchArxiv(topic = TOPIC, days = DAYS) {
-  const url = `https://export.arxiv.org/api/query?search_query=all:${encodeURIComponent(topic)}&sortBy=submittedDate&sortOrder=descending&max_results=10`;
+  // Phrase query for multi-word topics — tránh arXiv parse "self-improving AI" thành OR (thấy 88k kết quả nhiễu PASCAL)
+  // Dùng all:"phrase" khi có space/hyphen; với self-improving mở rộng thêm self-evolving + recursive self-improvement
+  let arxivQuery;
+  const low = topic.toLowerCase();
+  if (low.includes('self-improving') || low.includes('self improving')) {
+    arxivQuery = 'all:"self-improving" OR all:"self-evolving" OR all:"recursive self-improvement"';
+  } else if (topic.includes(' ') || topic.includes('-')) {
+    arxivQuery = `all:"${topic}"`;
+  } else {
+    arxivQuery = `all:${topic}`;
+  }
+  const url = `https://export.arxiv.org/api/query?search_query=${encodeURIComponent(arxivQuery)}&sortBy=submittedDate&sortOrder=descending&max_results=10`;
   console.log(`[arXiv] fetching ${url}`);
   try {
     const res = await fetch(url, { headers: { 'User-Agent': 'YUNIE-last30days/1.0' } });
@@ -225,17 +316,20 @@ async function fetchArxiv(topic = TOPIC, days = DAYS) {
       const published = pick('published');
       const link = (block.match(/<id>(https?:\/\/arxiv\.org\/abs\/[^<]+)<\/id>/) || [])[1] || 'https://arxiv.org';
       if (days > 0 && published && new Date(published).getTime() < Date.now() - days*24*60*60*1000) return null;
+      const cat = categorize(title, summary);
+      // Boost self-improving papers so they rank above generic HF trending
+      const isSelfImproving = cat === 'self-improving' || /self-(improving|evolving|training)|recursive self-improvement|RSI/i.test(title + ' ' + summary);
       return {
         id: `ax-${link.split('/abs/')[1] || title.slice(0, 20)}`,
         title: title || 'Untitled paper',
         summary: summary.slice(0, 220),
         source: 'arXiv',
         sourceUrl: link,
-        category: categorize(title, summary),
+        category: cat,
         date: fmtDate(published),
-        hot: false,
+        hot: isSelfImproving ? true : false,
         tags: ['arXiv', 'paper', topic].slice(0, 3),
-        score: 0,
+        score: isSelfImproving ? 800 : 0,
       };
     }).filter(Boolean);
   } catch (e) {
@@ -246,29 +340,62 @@ async function fetchArxiv(topic = TOPIC, days = DAYS) {
 
 async function main() {
   console.log(`🌐 YUNIE × Last30Days — fetching "${TOPIC}" (${SINCE_LABEL})`);
-  const [hn, gh, dev, rd, hf, ax] = await Promise.all([
+  const [hn, gh, dev, rd, hf, ax, hnoon] = await Promise.all([
     fetchHN(TOPIC, DAYS),
     fetchGitHubTrendingAI(TOPIC, DAYS),
     fetchDevTo(TOPIC, DAYS),
     fetchReddit(TOPIC, DAYS),
     fetchHuggingFace(),
     fetchArxiv(TOPIC, DAYS),
+    fetchHackerNoon(TOPIC, DAYS),
   ]);
 
   // Merge and dedupe by title
   const seen = new Set();
-  const merged = [...hn, ...gh, ...dev, ...rd, ...hf, ...ax].filter(a => {
+  const merged = [...hn, ...gh, ...dev, ...rd, ...hf, ...ax, ...hnoon].filter(a => {
     const key = a.title.toLowerCase().slice(0,40);
     if (seen.has(key)) return false;
     seen.add(key);
     return true;
   });
 
-  // Sort: newest first (freshness), then hot, then score — so today’s HN always on top
-  merged.sort((a,b) => (new Date(b.date) - new Date(a.date)) || (b.hot - a.hot) || (b.score - a.score));
+  // Sort: self-improving boost first, then newest, then hot, then score
+  // For self-improving topics, arXiv RSI papers should surface even if HF has higher raw likes
+  const isSelfImprovingTopic = /self-improving|self improving|self-evolving|RSI/i.test(TOPIC);
+  if (isSelfImprovingTopic) {
+    merged.sort((a,b) => {
+      const aBoost = a.category === 'self-improving' || a.source === 'arXiv' ? 1 : 0;
+      const bBoost = b.category === 'self-improving' || b.source === 'arXiv' ? 1 : 0;
+      if (bBoost !== aBoost) return bBoost - aBoost;
+      return (new Date(b.date) - new Date(a.date)) || (b.hot - a.hot) || (b.score - a.score);
+    });
+  } else {
+    merged.sort((a,b) => (new Date(b.date) - new Date(a.date)) || (b.hot - a.hot) || (b.score - a.score));
+  }
 
-  // Keep top 15
-  const fresh = merged.slice(0, 15);
+  // Keep top 15 — but for self-improving, ensure at least 5 arXiv/self-improving in top 15
+  let fresh = merged.slice(0, 15);
+  if (isSelfImprovingTopic) {
+    const arxivInTop = fresh.filter(a => a.source === 'arXiv' || a.category === 'self-improving').length;
+    if (arxivInTop < 5) {
+      const arxivPool = merged.filter(a => (a.source === 'arXiv' || a.category === 'self-improving') && !fresh.some(f=>f.id===a.id));
+      const need = Math.min(5 - arxivInTop, arxivPool.length);
+      // Replace lowest-ranked non-arXiv in fresh with top arXiv
+      for (let i=0; i<need; i++) {
+        // find last non-arXiv/non-self-improving to replace
+        let idx = -1;
+        for (let j=fresh.length-1; j>=0; j--) if (fresh[j].source !== 'arXiv' && fresh[j].category !== 'self-improving') { idx=j; break; }
+        if (idx !== -1) fresh[idx] = arxivPool[i];
+      }
+      // re-sort fresh to keep date order within boosted group
+      fresh.sort((a,b) => {
+        const aBoost = a.category === 'self-improving' || a.source === 'arXiv' ? 1 : 0;
+        const bBoost = b.category === 'self-improving' || b.source === 'arXiv' ? 1 : 0;
+        if (bBoost !== aBoost) return bBoost - aBoost;
+        return (new Date(b.date) - new Date(a.date)) || (b.hot - a.hot) || (b.score - a.score);
+      });
+    }
+  }
 
   // Load existing to preserve categories and merge if fresh is thin
   let existing = null;
@@ -294,16 +421,16 @@ async function main() {
     generatedAt: new Date().toISOString(),
     generatedBy: 'YUNIE × Last30Days',
     version: 2,
-    description: `Tin AI mới nhất — tổng hợp từ Last30Days (HN, GitHub, DEV.to, Reddit, Hugging Face, arXiv) trong ${DAYS===0?'không giới hạn':DAYS+' ngày'} qua. Chủ đề: ${TOPIC}. Tự động cập nhật bởi YUNIE.`,
+    description: `Tin AI mới nhất — tổng hợp từ Last30Days (HN, GitHub, DEV.to, Reddit, Hugging Face, arXiv, HackerNoon) trong ${DAYS===0?'không giới hạn':DAYS+' ngày'} qua. Chủ đề: ${TOPIC}. Tự động cập nhật bởi YUNIE.`,
     last30days: {
       enabled: true,
       topic: TOPIC,
       since: DAYS===0 ? 'không giới hạn' : fmtDate(Date.now() - DAYS*24*60*60*1000),
       days: DAYS,
-      sources: ['Hacker News (Algolia, free)', 'GitHub Search (free)', 'DEV.to (free)', 'Reddit r/MachineLearning (free)', 'Hugging Face trending (free)', 'arXiv (free)', 'Web (Brave/Perplexity when key)'],
-      engine: 'Node.js bridge (no Python 3.12 needed) — HN Algolia + GitHub API + DEV.to + Reddit + Hugging Face + arXiv, scored by upvotes/stars/reactions/likes',
+      sources: ['Hacker News (Algolia, free)', 'GitHub Search (free)', 'DEV.to (free)', 'Reddit r/MachineLearning (free)', 'Hugging Face trending (free)', 'arXiv (free)', 'HackerNoon RSS (free)', 'Web (Brave/Perplexity when key)'],
+      engine: 'Node.js bridge (no Python 3.12 needed) — HN Algolia + GitHub API + DEV.to + Reddit + Hugging Face + arXiv + HackerNoon RSS, scored by upvotes/stars/reactions/likes',
       skill: 'mvanhorn/last30days-skill v3.23.0 (61k ⭐)',
-      note: 'Full Last30Days engine (X/YouTube/TikTok/Polymarket) cần Python 3.12 + API keys. Bridge này dùng 6 nguồn free (HN, GitHub, DEV.to, Reddit, Hugging Face, arXiv), đủ cho ai-news. Cài Python 3.12 để chạy full: python3.12 .github/skills/last30days/scripts/last30days.py "AI" --emit=json',
+      note: 'Full Last30Days engine (X/YouTube/TikTok/Polymarket) cần Python 3.12 + API keys. Bridge này dùng 7 nguồn free (HN, GitHub, DEV.to, Reddit, Hugging Face, arXiv, HackerNoon), đủ cho ai-news. Cài Python 3.12 để chạy full: python3.12 .github/skills/last30days/scripts/last30days.py "AI" --emit=json',
     },
     categories,
     articles: articles.map(a => ({

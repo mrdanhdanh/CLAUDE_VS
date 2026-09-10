@@ -2,6 +2,14 @@
 
 > Template cho Phase Design — định nghĩa giao diện đẹp trước khi code.
 
+## 0. Design Source (world-class, chống slop)
+- **awesome-design-md:** `slug · score · path` (VD: `linear.app · 8.2 · awesome-design-md/design-md/linear.app/DESIGN.md`)
+- **Seed-derived:** suy ra từ seed string (không reveal chuỗi): color/layout/typo nào do seed gợi ý
+- **Taste direction:** 1 hướng đã chốt (VD: isometric 3D city) + 2 hướng đã loại + lý do
+- **Critic Score:** `x/10` + top 3 gaps + số vòng (max 2) — hoặc `n/a` + lý do (VD: không có browser)
+- **Cut Log:** đã xóa gì (VD: glow hồng, label thừa, container rỗng) + % cut ước lượng
+- **Anti-slop:** gradient tím mặc định PASS/FAIL · text-trái-graphic-phải PASS/FAIL · glow/container thừa PASS/FAIL
+
 ## 1. Design System
 
 ### Palette

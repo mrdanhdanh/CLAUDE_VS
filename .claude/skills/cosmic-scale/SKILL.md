@@ -40,7 +40,7 @@ node .github/harness/scripts/cosmic-scale.mjs --json --out www/cosmos/scale.json
 
 ### 4. Dashboard
 - `www/cosmos/scale.html` đọc `scale.json` (không sửa tay) — gauge entropy, list black holes, dark-matter map
-- `www/cosmos.html` Lab #5 (Black Hole) + #6 (Schrödinger) demo trực quan
+- `www/cosmos/index.html` Lab #5 (Black Hole) + #6 (Schrödinger) demo trực quan
 
 ## Integration với Harness v2
 - **Trước Implement:** chạy `cosmic-scale.mjs` — nếu `high` thì fix hệ trước
@@ -50,7 +50,7 @@ node .github/harness/scripts/cosmic-scale.mjs --json --out www/cosmos/scale.json
 ## References
 - `.github/harness/scripts/cosmic-scale.mjs` — script đo (Node 18+, 0 deps)
 - `www/cosmos/scale.html` — dashboard (đọc `scale.json`)
-- `www/cosmos.html` — Lab Black Hole + Schrödinger
+- `www/cosmos/index.html` — Lab Black Hole + Schrödinger
 - `.github/skills/cosmic-quantum/SKILL.md` — triết lý 2 tầng + System Map 15
 - `.github/instructions/cosmic-quantum.instructions.md` — rule 7 System Map + 8 New Theory
 - `docs/knowleged.md` — KN-008, KN-014, KN-015 (bottleneck + Heisenbug)
