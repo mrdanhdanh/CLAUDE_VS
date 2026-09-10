@@ -51,3 +51,35 @@ Skip (nút/Esc/click): exit nhanh 0.28s. Reduced-motion: bản tĩnh — title+s
 
 ## Native-first (minimal-ladder)
 Canvas API + CSS animations + `requestAnimationFrame` — **0 dependency, 0 file mới ngoài trang**. Không lib particle, không video asset.
+
+---
+
+## V2 — Cinematic upgrade (2026-09-10, refs: planet-nebula / galaxy-swirl / big-bang-flare)
+
+> User: "chưa đủ wao" + 3 ảnh ref → nâng engine từ burst đơn giản lên sequence cinematic 4 tầng.
+
+| Tầng | Kỹ thuật | Ref |
+|------|----------|-----|
+| **Big Bang** | Core gradient 3 stop + **lens streak ngang** (ellipse kéo giãn 8×/14×) + 14 tia quay chậm + 3 shockwave rings (cam→cyan→trắng) | ảnh 3 (flare cam trắng) |
+| **Galaxy swirl** | ~150-420 particles vortex (86% cùng chiều xoáy) + motion streaks 3-frame + **galactic nucleus glow** bền (không tắt sau flash) | ảnh 2 (xoáy xanh-tím-đỏ) |
+| **Nebula volumetric** | 20 puff sprites pre-render (6 palette: blue/violet/pink/orange/cyan/cream + noise texture), spawn dạng **đĩa (galactic plane)**, xoáy quanh tâm bằng toạ độ cực, lớn dần | ảnh 1 + 2 (mây khí dày) |
+| **Debris** | 10 distant-galaxy sprites (ellipse gradient warm/cool) trôi ra + xoay | ảnh 3 (galaxies nền) |
+
+**Perf budget:** sprite pre-render 1 lần; particle count scale theo diện tích (150-420); DPR cap 2; pixel poll sample center 400×400. **Timeline:** TOTAL 5000→5600ms (thêm thời gian ngắm galaxy). Reduced-motion giữ bản calm cũ (không canvas).
+**Verify:** Edge thật 3 mốc (1.2s burst / 2.4s title / 4.6s swirl) — screenshots trong `verify/`.
+
+---
+
+## V2 — Cinematic upgrade (2026-09-10, refs: planet-nebula / galaxy-swirl / big-bang-flare)
+
+> User: "chưa đủ wao" + 3 ảnh ref → nâng engine từ burst đơn giản lên sequence cinematic 4 tầng.
+
+| Tầng | Kỹ thuật | Ref |
+|------|----------|-----|
+| **Big Bang** | Core gradient 3 stop + **lens streak ngang** (ellipse kéo giãn 8×/14×) + 14 tia quay chậm + 3 shockwave rings (cam→cyan→trắng) | ảnh 3 (flare cam trắng) |
+| **Galaxy swirl** | ~150-420 particles vortex (86% cùng chiều xoáy) + motion streaks 3-frame + **galactic nucleus glow** bền (không tắt sau flash) | ảnh 2 (xoáy xanh-tím-đỏ) |
+| **Nebula volumetric** | 20 puff sprites pre-render (6 palette: blue/violet/pink/orange/cyan/cream + noise texture), spawn dạng **đĩa (galactic plane)**, xoáy quanh tâm bằng toạ độ cực, lớn dần | ảnh 1 + 2 (mây khí dày) |
+| **Debris** | 10 distant-galaxy sprites (ellipse gradient warm/cool) trôi ra + xoay | ảnh 3 (galaxies nền) |
+
+**Perf budget:** sprite pre-render 1 lần; particle count scale theo diện tích (150-420); DPR cap 2; pixel poll sample center 400×400. **Timeline:** TOTAL 5000→5600ms (thêm thời gian ngắm galaxy). Reduced-motion giữ bản calm cũ (không canvas).
+**Verify:** Edge thật 3 mốc (1.2s burst / 2.4s title / 4.6s swirl) — screenshots trong `verify/`.

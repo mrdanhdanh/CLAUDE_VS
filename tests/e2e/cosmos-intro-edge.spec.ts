@@ -28,7 +28,7 @@ test.describe('COSMOS intro @ real Edge', () => {
     page.on('console', (m) => { if (m.type() === 'error') errors.push('[console] ' + m.text()); });
     page.on('pageerror', (e) => errors.push('[pageerror] ' + e.message));
 
-    await page.goto(PAGE);
+    await page.goto(PAGE, { waitUntil: 'domcontentloaded' });
 
     const reduced = await page.evaluate(() => matchMedia('(prefers-reduced-motion: reduce)').matches);
     console.log('[EDGE] prefers-reduced-motion =', reduced);
@@ -45,24 +45,30 @@ test.describe('COSMOS intro @ real Edge', () => {
     expect(canvasSize.h).toBe(canvasSize.ch);
     console.log('[EDGE] canvas buffer =', canvasSize.w, 'x', canvasSize.h);
 
-    // Đợi burst nổ + hạt vẽ — POLL thay vì wall-clock cố định (Edge cold-start timing khác nhau;
-    // hạt sống từ ~0.85s đến ~3.4s của timeline, đo cố định sẽ miss trên máy chậm)
+    // Neo thời gian vào lúc intro START (.play) — không phải lúc goto resolve (tránh trượt mốc)
+    await expect(intro).toHaveClass(/play/, { timeout: 8000 });
+    const t0 = Date.now();
+    const at = async (ms: number, name: string) => {
+      await page.waitForTimeout(Math.max(0, ms - (Date.now() - t0)));
+      await page.screenshot({ path: `${SHOTS}/${name}` });
+    };
+
+    // Pixel check (sample vùng trung tâm — nhẹ hơn full getImageData)
     const countPixels = () => page.evaluate(() => {
       const c = document.getElementById('introCanvas') as HTMLCanvasElement;
       const ctx = c.getContext('2d')!;
-      const d = ctx.getImageData(0, 0, c.width, c.height).data;
+      const d = ctx.getImageData((c.width>>1)-200, (c.height>>1)-200, 400, 400).data;
       let n = 0;
       for (let i = 3; i < d.length; i += 4) if (d[i] > 0) n++;
       return n;
     });
     await expect.poll(countPixels, { timeout: 6000, intervals: [150, 250, 400] })
       .toBeGreaterThan(0);
-    const painted = await countPixels();
-    console.log('[EDGE] painted pixels =', painted);
+    console.log('[EDGE] painted pixels (center sample) =', await countPixels());
 
-    await page.screenshot({ path: `${SHOTS}/edge-1280-burst.png` });
-    await page.waitForTimeout(1200);
-    await page.screenshot({ path: `${SHOTS}/edge-1280-title.png` });
+    await at(1200, 'edge-1280-burst.png');    // ~1.2s: Big Bang flash + streaks reach đỉnh
+    await at(2400, 'edge-1280-title.png');    // ~2.4s: title stagger xong + underline sweep
+    await at(4600, 'edge-1280-swirl.png');    // ~4.6s: galaxy xoáy + nebula ổn định (v2)
 
     // Auto-reveal hoàn tất
     await expect(intro).toBeHidden({ timeout: 9000 });

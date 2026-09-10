@@ -81,9 +81,13 @@ test.describe('COSMOS intro', () => {
   });
 
   test('skip bằng nút → reveal ngay', async ({ page }) => {
-    await page.goto(PAGE);
+    // domcontentloaded: intro hiện từ first paint → click sớm, không chờ load đầy đủ
+    // (worker chậm + canvas v2 → đợi 'load' dễ trượt cửa sổ 5.6s, click rơi vào exit-fade có pointer-events:none)
+    await page.goto(PAGE, { waitUntil: 'domcontentloaded' });
+    const intro = page.locator('#intro');
+    await expect(intro).toBeVisible();
     await page.locator('#introSkip').click();
-    await expect(page.locator('#intro')).toBeHidden({ timeout: 2000 });
+    await expect(intro).toBeHidden({ timeout: 3000 });
     await expect(page.locator('html')).not.toHaveClass(/intro-on/);
   });
 

@@ -53,6 +53,7 @@
 | KN-029 | 2026-09-10 | View ở VS Code "không thấy hiệu ứng intro" — Google Fonts render-blocking chặn TOÀN BỘ inline script | `<link rel=stylesheet>` third-party trong head là **script-blocking** (không chỉ render): engine intro cuối body không execute đến khi fonts load xong (10-20s mạng chậm) → overlay đứng hình → click nhầm → skip | Third-party CSS luôn async (`media="print" onload`) + noscript; fail-safe mở nội dung khi engine fail; grace 600ms chống click nhầm; glyph chi tiết vẽ bằng CSS | `ui` `perf` `font` `script-blocking` `verify` |
 | KN-030 | 2026-09-10 | `GET /.agent/audit.jsonl 404` trên Pages — observatory luôn hiện demo thay vì data thật | Fetch trỏ ra ngoài deploy root (`../../.agent/` — Pages chỉ deploy `www/`) + fetch relative phân giải sai khi URL bỏ slash cuối (`/cosmos` + `./x` → `/x`) | Tài nguyên ngoài `www/` phải **mirror** vào (generate + commit như `scale.json`); dùng helper `dirBase(pathname)` robust mọi dạng URL; spec assert không-404 + data "thật" | `data` `pages` `fetch` `url` `verify` |
 | KN-031 | 2026-09-10 | Edge PC "không thấy hiệu ứng intro" (phone thấy) — Windows tắt Animation effects → `prefers-reduced-motion: reduce` → bản rút gọn cũ (opacity:1 !important + animation:none) hiện static 1.8s | Reduced-motion branch strip **mọi** animation kể cả fade opacity an toàn → static pop-in "trông như không có hiệu ứng"; cộng: intro chạy khi tab ẩn + grace 600ms quá ngắn cho click focus PC | Reduced-motion chỉ cắt chuyển động nguy hiểm (translate/scale/parallax), giữ fade opacity có nhịp + hint nói rõ lý do; defer timeline khi tab ẩn; grace 1000ms; test trên Edge thật (`channel: 'msedge'`) + poll pixels thay wall-clock | `ui` `a11y` `reduced-motion` `edge` `verify` |
+| KN-032 | 2026-09-10 | Engine v2 throw `T is not defined` trong rAF callback → intro **đứng hình im lặng** (không crash trang) | Khai báo thiếu khi rewrite + lỗi trong `requestAnimationFrame` **không bị try/catch đồng bộ bắt** (async) → throw trước dòng schedule rAF → loop chết không báo gì | Browser test PHẢI assert "no pageerror/console error" ngay sau rewrite; freeze animation = nghi lỗi async trước khi nghi logic; test bắt được nhờ assertion Edge spec | `ui` `canvas` `animation` `verify` `error-handling` |
 
 > Dòng ví dụ trên sẽ bị thay khi có bug thật đầu tiên — giữ format.
 
@@ -708,6 +709,26 @@
 - **Tags:** `ui` `a11y` `reduced-motion` `edge` `verify`
 - **Người ghi:** YUNIE / fixbug (user report → repro trên Edge thật)
 
+### KN-032 — rAF callback throw không bị try/catch bắt → animation chết im lặng
+
+- **Ngày:** 2026-09-10
+- **Bug report:** `.agent/bugs/2026-09-10-raf-callback-error-khong-bi-try-catch-bat/bug.md`
+- **Severity:** major
+- **Triệu chứng:** Intro v2 rewrite xong — chạy tới ~0.85s rồi **đứng im** (frame đóng băng, không crash trang, không message cho user). Edge spec fail qua assertion "no pageerror": `[pageerror] T is not defined`.
+- **Nguyên nhân gốc (5 Whys):**
+  - Why1: `T` (`Math.sin(T*2.2)` trong galactic nucleus glow) chưa khai báo khi rewrite v2.
+  - Why2: Throw xảy ra trong **rAF callback** — chạy async, KHÔNG nằm trong `try{...}catch(e){}` bao quanh phần setup engine (try/catch chỉ bắt lỗi đồng bộ lúc đăng ký).
+  - Why3: Throw trước `raf = requestAnimationFrame(frame)` → loop không schedule lại → chết im lặng.
+  - Why4: Rewrite lớn không chạy assertion "no-console-error" trên browser thật ngay sau khi viết.
+  - Why5 (Root): Thiếu nguyên tắc: engine rAF phải được gate bằng browser test assert no-pageerror — vì lỗi async không bị try/catch đồng bộ bắt và thất bại kiểu "đứng hình" rất khó thấy bằng mắt.
+- **Cách sửa:** Khai báo `const T = t/1000;` (fix ở nguồn, không bọc try/catch toàn frame để khỏi che lỗi thật); giữ assertion no-pageerror trong `cosmos-intro-edge.spec.ts` làm lưới an toàn thường trực.
+- **Cách phòng tránh:**
+  - Mọi engine rAF (canvas/animation): browser test PHẢI assert **no pageerror/console error** — chạy ngay sau rewrite lớn.
+  - Freeze animation = nghi lỗi async (rAF/setTimeout) trước khi nghi logic vật lý.
+  - Rewrite lớn: rà các biến dùng-xong-chưa-khai-báo (đặc biệt sau khi tách/ghép hàm) — syntax check của IDE không bắt được ReferenceError.
+- **Tags:** `ui` `canvas` `animation` `verify` `error-handling`
+- **Người ghi:** YUNIE / fixbug (Edge spec tự bắt trong session)
+
 <!-- Thêm bài học mới theo template dưới — copy block này -->
 
 <!--
@@ -739,6 +760,7 @@
 - ❌ Rút gọn trải nghiệm vì setting của user mà không nói lý do trong UI (KN-031).
 - ❌ Timeline intro chạy khi tab ở background → user switch về là đã hết (KN-031).
 - ❌ Test animation bằng wall-clock cố định (Edge cold-start → flaky); phải poll state + test trên Edge thật khi user dùng Edge (KN-031).
+- ❌ Throw trong rAF callback tưởng được try/catch ngoài bắt — lỗi async → engine đứng hình im lặng; browser test thiếu assert no-pageerror là mù (KN-032).
 - ❌ Không reproduce trước khi sửa → sửa nhầm chỗ.
 - ❌ Sửa xong không test regression → tạo bug mới.
 - ❌ Không ghi bài học → bug cũ lặp lại.
@@ -884,7 +906,9 @@
 - [ ] Overlay che nội dung đã có fail-safe tự mở khi engine fail (không kẹt màn đen)? (KN
 - [ ] Bản reduced-motion vẫn "có nhịp" (opacity-only fades) + hint nói rõ lý do khi bị rút gọn? (KN-031)
 - [ ] Timeline/overlay defer khi tab ẩn — không chạy vô hình? (KN-031)
-- [ ] "Không thấy hiệu ứng" đã test trên đúng môi trường user (Edge thật/reduced-motion) + poll thay wall-clock? (KN-031)-029)
+- [ ] "Không thấy hiệu ứng" đã test trên đúng môi trường user (Edge thật/reduced-motion) + poll thay wall-clock? (KN-031)
+- [ ] Engine rAF (canvas/animation) có browser test assert no-pageerror/console-error không? (KN-032)
+- [ ] Animation freeze → đã nghi lỗi async (rAF) trước khi nghi logic? (KN-032)-029)
 - [ ] Skip click-anywhere đã có grace period chống click nhầm? (KN-029)
 - [ ] Mọi fetch trong `www/` chỉ trỏ tài nguyên TRONG `www/` (ngoài thì mirror vào)? (KN-030)
 - [ ] Fetch dùng `dirBase` — test cả URL không slash cuối + `.html` + `/`? (KN-030)

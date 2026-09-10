@@ -118,7 +118,7 @@
 ## References
 
 - `docs/knowleged.md#KN-031`
-- Commit fix: `(sẽ điền sau khi push)`
+- Commit fix: `2057adc` (pushed 2026-09-10)
 - Evidence: `.agent/plans/cosmos-intro/verify/edge-*.png`
 
 ---
