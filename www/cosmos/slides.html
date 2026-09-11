@@ -412,7 +412,7 @@
                   <h2>Một tầng <span>không đủ</span> để ra sản phẩm.</h2>
                   <p>Chỉ lo <strong>hệ thống</strong> thì thiếu thực thi. Chỉ lo <strong>thực thi</strong> thì hệ thống hỗn loạn. Harness cần cả hai — như vũ trụ cần <strong>không gian</strong> và <strong>hạt</strong>.</p>
                   <ul>
-                    <li><strong>Không Macro:</strong> mỗi plan/skill tự mọc → không cấu trúc, scope phình (dark energy)</li>
+                    <li><strong>Không Macro:</strong> mỗi plan/skill tự mọc → không cấu trúc, scope creep (G thấp) + decollaboration (D↑)</li>
                     <li><strong>Không Micro:</strong> không đo → không biết pass/fail, Heisenbug sống mãi</li>
                     <li><strong>Có cả hai:</strong> Macro cho <em>quy luật</em>, Micro cho <em>sự thật</em></li>
                   </ul>
@@ -526,7 +526,7 @@
                   <ul>
                     <li class="quantum"><strong>Superposition → trước Clarify:</strong> mọi ý tưởng đồng thời tồn tại</li>
                     <li class="quantum"><strong>Sụp đổ → Clarify:</strong> hỏi 1 câu chốt → 1 thực tại</li>
-                    <li class="quantum"><strong>Entanglement:</strong> sửa Design → Implement đổi tức thì</li>
+                    <li class="quantum"><strong>Entanglement:</strong> ràng buộc phase — sửa Design → Implement/Polish đổi cùng cụm (1 đổi → toàn hệ đổi)</li>
                     <li class="quantum"><strong>Bất định → get_errors:</strong> không đo = không biết</li>
                   </ul>
                   <div class="tag-row"><span class="tag quantum">Không đoán — phải đo</span><span class="tag quantum">1 đổi → toàn hệ đổi</span></div>
@@ -765,10 +765,10 @@
               <div class="layout-split">
                 <div>
                   <div class="eyebrow"><i></i> 10 · Đài quan sát — đo dữ liệu thật</div>
-                  <h2>Chain <span>với nhau</span> thành nón ánh sáng. Entropy <span>giãn nở</span> như dark energy.</h2>
+                  <h2>Chain <span>với nhau</span> thành nón ánh sáng. Entropy &amp; dark energy — <span>đo số thật</span>.</h2>
                   <div class="mini-grid cols-2">
-                    <div class="mini-card"><h4><i>🕳️</i> Event Horizon — audit chain</h4><p>Mỗi event audit = 1 photon với <code>hash</code>, nối <code>prevHash</code> thành chuỗi nhân quả. <strong>Chain OK</strong> = nhân quả thông · <strong>chain vỡ</strong> = nghịch lý thời gian. Event refused/failed = rơi qua chân trời → <strong>human takeover</strong>.</p><p style="margin-top:4px;font:500 10px var(--font-mono);color:var(--cosmos-cyan)">Đang đọc .agent/audit.jsonl thật</p></div>
-                    <div class="mini-card"><h4><i>🌌</i> Dark Energy — scope creep</h4><p>ΔS &gt; 0 = vũ trụ <strong>giãn nhanh</strong> (scope creep thắng). Đối trọng là gravity: minimal-ladder + YAGNI. Sparkline đo từ history trong <code>scale.json</code> — có vạch ngưỡng S=10 / S=25.</p><p style="margin-top:4px;font:500 10px var(--font-mono);color:var(--cosmos-accent)">Hiện tại: S=0 LOW · ΔS=0 — cân bằng</p></div>
+                    <div class="mini-card"><h4><i>🕳️</i> Event Horizon — audit chain</h4><p>Mỗi event audit = 1 photon với <code>hash</code>, nối <code>prevHash</code> thành chuỗi nhân quả. <strong>Chain OK</strong> = nhân quả thông · <strong>chain vỡ</strong> = nghịch lý thời gian. Event refused/failed = rơi qua chân trời → <strong>human takeover</strong>.</p><p style="margin-top:4px;font:500 10px var(--font-mono);color:var(--cosmos-cyan)">Đọc audit.jsonl thật — mirror www/cosmos/audit.json (KN-030)</p></div>
+                    <div class="mini-card"><h4><i>🌌</i> Dark Energy — decollaboration</h4><p>D = (1−dissentRatio)×10 — plans thiếu Dissent/“Who did you think with?” (KN-018), đối trọng: Dissent gate + fund-the-friction. Scope creep đo riêng ở Gravity G = cutRatio×10 (YAGNI/minimal-ladder). Entropy S = tech debt — sparkline history <code>scale.json</code>, ngưỡng S=10 / S=25.</p><p style="margin-top:4px;font:500 10px var(--font-mono);color:var(--cosmos-accent)">Hiện tại: S=0 LOW · D=9 · G=3 — số thật từ scale.json</p></div>
                   </div>
                 </div>
                 <div class="slide-visual cosmic-visual" aria-hidden="true">
@@ -789,14 +789,14 @@
                       <text x="34" y="78" font-size="5.5" fill="#10b981">permitted</text><text x="166" y="78" font-size="5.5" fill="#ec4899">refused</text>
                       <text x="100" y="98" font-size="6" fill="#94a3b8">prevHash → hash · chain OK ✓</text>
                       <text x="100" y="112" font-size="6" fill="#f9a8d4">refused → qua horizon = takeover</text>
-                      <text x="300" y="26" font-size="7" fill="#e2e8f0">dark energy — ΔS</text>
+                      <text x="300" y="26" font-size="7" fill="#e2e8f0">entropy S — tech debt</text>
                       <path d="M 230 190 L 250 188 L 270 184 L 290 176 L 310 168 L 330 158 L 350 142 L 370 132" fill="none" stroke="url(#spark2)" stroke-width="2.5" stroke-linecap="round"/>
                       <line x1="220" y1="160" x2="380" y2="160" stroke="rgba(255,255,255,.1)" stroke-width="1" stroke-dasharray="3 4"/>
                       <text x="228" y="156" font-size="5" fill="#64748b">S=10</text>
                       <line x1="220" y1="120" x2="380" y2="120" stroke="rgba(255,255,255,.1)" stroke-width="1" stroke-dasharray="3 4"/>
                       <text x="228" y="116" font-size="5" fill="#64748b">S=25</text>
                       <circle cx="370" cy="132" r="4" fill="#fbbf24" style="filter:drop-shadow(0 0 6px rgba(245,158,11,.8))"/>
-                      <text x="300" y="212" font-size="6" fill="#fcd34d">ΔS &gt; 0 → gravity = ladder + YAGNI</text>
+                      <text x="300" y="212" font-size="6" fill="#fcd34d">ΔS &gt; 0 → audit + polish (bơm năng lượng)</text>
                     </g>
                   </svg>
                   <div class="caption">🔭 Đài quan sát ở index.html#observatory — đọc audit.jsonl + scale.json thật</div>
@@ -814,7 +814,7 @@
                   <h2>Chạm để <span>cảm nhận</span> lượng tử.</h2>
                   <div class="mini-grid cols-2">
                     <div class="mini-card"><h4><i>🌀</i> Superposition → Collapse</h4><p>Trước Clarify, mọi ý tưởng <strong>đồng thời tồn tại</strong>. Bấm <em>Collapse</em> để sụp đổ về 1 thực tại.</p></div>
-                    <div class="mini-card"><h4><i>🔗</i> Entanglement</h4><p>Hai hạt vướng víu: <strong>đổi một → đổi cả hai</strong> tức thì. Như sửa <code>Design</code> thì <code>Implement</code> đổi theo.</p></div>
+                    <div class="mini-card"><h4><i>🔗</i> Entanglement</h4><p>Hai hạt vướng víu: <strong>đo một → biết ngay kết quả hạt kia</strong> — tương quan no-signaling, không truyền tin. Như ràng buộc <code>Design</code> ↔ <code>Implement</code> đổi cùng nhau.</p></div>
                   </div>
                   <p style="margin-top:8px;font:500 10px var(--font-mono);color:var(--cosmos-cyan)">→ Thử thật ở <a href="./index.html#lab" style="color:var(--cosmos-cyan)">cosmos#lab</a></p>
                 </div>
@@ -850,7 +850,7 @@
                       <text x="0" y="-14" text-anchor="middle" font-family="JetBrains Mono" font-size="5" font-weight="700" fill="#a78bfa">⟷ entangled</text>
                     </g>
                     <text x="300" y="182" text-anchor="middle" font-family="JetBrains Mono" font-size="7" font-weight="700" fill="#67e8f9">entanglement — 1 đổi, cả hai đổi</text>
-                    <text x="300" y="194" text-anchor="middle" font-family="JetBrains Mono" font-size="6" fill="#64748b">sửa Design → Code đổi tức thì</text>
+                    <text x="300" y="194" text-anchor="middle" font-family="JetBrains Mono" font-size="6" fill="#64748b">no-signaling: đo A → biết B · không truyền tin</text>
                   </svg>
                   <div class="caption">🌀 Superposition + 🔗 Entanglement — chạm để cảm nhận lượng tử</div>
                 </div>
@@ -1017,8 +1017,8 @@
                   <h2>Vũ trụ còn <span>giãn nở</span>. Đã chụp được 15 vùng — sếp muốn đi tiếp đâu?</h2>
                   <div class="mini-grid cols-2">
                     <div class="mini-card" style="border-color:rgba(16,185,129,.25);background:linear-gradient(135deg, rgba(16,185,129,.08), rgba(255,255,255,.03))"><h4><i>✅</i> Đã chụp xong — vũ trụ hôm nay</h4><p><strong>System Map 15 vùng</strong> · <strong>Cosmic Calendar</strong> · <strong>Observatory</strong> (audit chain + ΔS sparkline) — toàn bộ đo từ dữ liệu thật.</p><span class="tag" style="margin-top:6px;display:inline-block;color:#6ee7b7;border-color:rgba(16,185,129,.3)">shipped · index.html#map · #calendar · #observatory</span></div>
-                    <div class="mini-card"><h4><i>⚛️</i> Lượng tử cho Decision</h4><p><strong>Superposition</strong> giữ 3 phương án tới khi có data (collapse theo biên độ), <strong>decoherence</strong> phát hiện hệ mất kết dính.</p><span class="tag" style="margin-top:6px;display:inline-block;color:#6ee7b7;border-color:rgba(16,185,129,.3)">✅ shipped · index.html#lab</span></div>
-                    <div class="mini-card"><h4><i>🔬</i> Lab mở rộng</h4><p><strong>Double-slit</strong> (quan sát làm đổi kết quả), <strong>multiverse</strong> (A/B test như đa vũ trụ).</p><span class="tag accent" style="margin-top:6px">→ 2027 · lab-*.html</span></div>
+                    <div class="mini-card"><h4><i>⚛️</i> Lượng tử cho Decision</h4><p><strong>Superposition</strong> giữ 3 phương án tới khi có data (collapse theo xác suất |biên độ|² — Born rule), <strong>decoherence</strong> phát hiện hệ mất kết dính.</p><span class="tag" style="margin-top:6px;display:inline-block;color:#6ee7b7;border-color:rgba(16,185,129,.3)">✅ shipped · index.html#lab</span></div>
+                    <div class="mini-card"><h4><i>🔬</i> Lab đầy đủ — 11 thí nghiệm</h4><p><strong>Double-slit</strong> (quan sát đổi kết quả), <strong>multiverse</strong> (A/B), <strong>Dark Energy vs Gravity</strong> (D decollaboration · G scope control).</p><span class="tag" style="margin-top:6px;display:inline-block;color:#6ee7b7;border-color:rgba(16,185,129,.3)">✅ shipped · index.html#lab</span></div>
                     <div class="mini-card"><h4><i>🫧</i> Multiverse picker</h4><p>Chọn <strong>preset</strong> như chọn vũ trụ con để sống — web-product, api-minimal, lean-product.</p><span class="tag accent" style="margin-top:6px">→ backlog · registry presets/</span></div>
                   </div>
                   <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:12px">

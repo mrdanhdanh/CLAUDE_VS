@@ -59,6 +59,8 @@
 | KN-035 | 2026-09-11 | Negative Self-Distillation — imitate trace "confident" làm hỏng complex reasoning (2609.11699v1) | OPSD ép student imitate trace tự tin giả (privileged info) → suppress uncertainty + phạt exploratory/self-corrective; unlearning naive phạt cả linguistic tokens → hỏng nền ngôn ngữ | Học bằng diverge khỏi flawed reasoning tự sinh (negative teacher) + dynamic gating chỉ đánh reasoning-critical tokens; giữ uncertainty + exploration | `process` `self-distillation` `reasoning` `uncertainty` |
 | KN-036 | 2026-09-11 | Auto-RecSys + Cognitive Digital Twin — cognitive-procedural separation + dual-loop (2609.10922v1, 2609.09625v1) | Long feedback loop → serial bất khả thi; LLM sinh cả reasoning lẫn operation → fail operational correctness; experience không tích lũy nếu playbook chỉ giữ success | Tách cognitive (skill file NL) ↔ procedural (script deterministic enforce); dual-loop: Execution Evolution (ghi failed + crystallize success) + Idea Evolution; feedback đóng vòng lên cả representation | `process` `harness` `architecture` `self-evolving` `playbook` |
 | KN-037 | 2026-09-11 | Evals Gap — build/test/lint xanh nhưng chất lượng output open-ended không ai đo (Andrew Ng, Agentic AI Playbook 2026) | Verify chỉ đo WHETHER (chạy được) không đo HOW WELL; thiếu component evals + E2E evals + error analysis + đo latency/cost | Thêm Evals Gate vào Verify: rubric trước → component evals (từng bước) → E2E evals (goal achieved) → error analysis (aggregate cross-task) — "single biggest predictor" theo Ng | `process` `verification` `evals` `agentic-patterns` |
+| KN-038 | 2026-09-11 | Trang cosmos lệch tài liệu: entanglement "đổi tức thì" (sai no-signaling) + Born rule thiếu bình phương xác suất + dark energy v1 "scope creep" còn sót trong khi v2 = decollaboration (KN-018) | Content viết trước khi có library để verify; re-define metric v1→v2 không grep sweep toàn bộ nơi đề cập → drift giữa trang và source of truth | Science metaphor verify 2 lớp (vật lý thật qua library MCP + metric semantics qua instruction/scale.json); re-define metric phải grep sweep `www/`+`docs/`+`.github/`; claim dễ hiểu nhầm → label "ẩn dụ vs vật lý thật" | `ui` `data` `verify` `docs` `physics` `content-drift` |
+| KN-039 | 2026-09-11 | Lệnh PowerShell chứa `??` fail parse — `Unexpected token '??' in expression or statement` (2 lần/session: verify URL + kill port) | Agent sinh lệnh theo cú pháp PS 7+ (null-coalescing `??`, `?.`, ternary) — Windows PowerShell 5.1 không hỗ trợ; rule §5d trước đó chỉ cấm `&&`, chưa nêu `??` | Cấm cú pháp PS 7+ trong lệnh/script PS: `??` → `if (-not $x) { $x = 'default' }`, ternary → if/else; gặp `Unexpected token` → viết lại toàn lệnh rồi mới re-run · **2026-09-12:** local nâng pwsh **7.6.6** (user-space, no admin) + VS Code default terminal "PowerShell 7"; đo trên 7.6.6: `??`/`&&` OK, `$var?.prop` không brace **sai lặng** (dùng `${var}?.prop`) | `process` `dx` `windows` `powershell` `scripts` |
 
 > Dòng ví dụ trên sẽ bị thay khi có bug thật đầu tiên — giữ format.
 
@@ -845,6 +847,49 @@
 - **Tags:** `process` `verification` `evals` `agentic-patterns`
 - **Người ghi:** YUNIE / auto-learn
 
+### KN-038 — Trang cosmos lệch tài liệu: physics shorthand + metric drift
+
+- **Ngày:** 2026-09-11
+- **Bug report:** `.agent/bugs/2026-09-11-cosmos-page-lech-tai-lieu-no-signaling-born-rule-d/bug.md`
+- **Severity:** major
+- **Triệu chứng:** 3 nhóm nội dung lệch trên `www/cosmos/index.html` + `slides.html`: (1) entanglement "đổi một → đổi cả hai **tức thì**" — sai vật lý (no-signaling); (2) Born rule "collapse theo **biên độ**" — thiếu bình phương (xác suất = |biên độ|²); (3) dark energy = "scope creep" (stale v1) trong khi v2 = **decollaboration** (KN-018, D = (1−dissentRatio)×10). Trong khi `scale.html` đã đúng v2 → drift giữa các bề mặt cùng chủ đề.
+- **Nguyên nhân gốc (5 Whys):**
+  - Why1: Nội dung viết trước khi có tài liệu gốc để đối chiếu (library 12 tài liệu vũ trụ/lượng tử mới ingest 2026-09-11).
+  - Why2: Pop-sci shorthand không tách bạch "ẩn dụ vs vật lý thật" (entanglement ≠ truyền tin tức thời — no-signaling).
+  - Why3: Metric dark energy re-define v1→v2 (scope creep → decollaboration) nhưng chỉ cập nhật `scale.html` + instruction — không sweep `index.html`/`slides.html`.
+  - Why4: Không có quy trình grep khi đổi định nghĩa metric — single source of truth bị phân tán đa bề mặt.
+  - Why5 (Root): Thiếu gate "verify content vs source of truth" cho trang docs — Done tuyên bố mà không đối chiếu library/instruction/scale.json.
+- **Cách sửa:** Sửa tại nguồn theo tài liệu gốc (Horodecki chunk #57-58 "non-message-bearing correlations"; Tong QM chunk #112 Born rule xác suất = |an|²); label rõ "ẩn dụ vs vật lý thật"; align metric v2 (D = decollaboration · G = scope control); 15 edits / 2 files + grep sweep xác nhận 0 cụm cũ còn sót (index) + sweep tiếp slides đợt 2 (4 chỗ: "tức thì" ×2, tag stale lab 2027, audit mirror).
+- **Cách phòng tránh:**
+  - Trang dùng science metaphor: verify 2 lớp — **vật lý thật** (library MCP citations) + **metric semantics** (instruction + `scale.json`).
+  - Re-define metric → grep sweep `www/` + `docs/` + `.github/` tìm mọi tham chiếu cũ TRƯỚC khi Done.
+  - Claim dễ gây hiểu nhầm ("tức thì", "truyền tin", "nhân quả") → ghi rõ "ẩn dụ vs vật lý thật" (no-signaling).
+  - Đối chiếu chéo các bề mặt cùng chủ đề (`scale.html` đúng v2 vs `index.html`/`slides.html` lệch) → phát hiện drift sớm.
+- **Tags:** `ui` `data` `verify` `docs` `physics` `content-drift`
+- **Người ghi:** YUNIE / /fixbug
+
+### KN-039 — PS 5.1 không hỗ trợ `??` — lệnh PowerShell fail parse "Unexpected token"
+
+- **Ngày:** 2026-09-11
+- **Bug report:** `.agent/bugs/2026-09-11-ps-5-1-khong-ho-tro-trong-lenh-powershell/bug.md`
+- **Severity:** major
+- **Triệu chứng:** Lệnh PowerShell fail ngay khi parse: `Unexpected token '??' in expression or statement` (kèm `Missing closing '}'`). Dính 2 lần trong 1 session: (1) verify URL `($code ?? 'NO-RESP')`; (2) kill port 3187 `($p.ProcessName ?? 'unknown')` — lệnh không chạy, phải viết lại + re-run.
+- **Nguyên nhân gốc (5 Whys):**
+  - Why1: Lệnh chứa `??` — null-coalescing, cú pháp PowerShell 7+.
+  - Why2: Máy chạy Windows PowerShell 5.1 (`powershell`) — không hỗ trợ `??`, `?.`, `??=`, ternary `? :`.
+  - Why3: Agent sinh lệnh theo thói quen JS/TS (`??` quen tay) — training data nghiêng cú pháp hiện đại.
+  - Why4: Rule §5d chỉ cấm `&&`, chưa nêu `??`/`?.`/ternary → không có guardrail khi sinh lệnh.
+  - Why5 (Root): Thiếu "PS 5.1 syntax contract" đầy đủ trong rule + chưa có KN → lặp lại cùng lỗi.
+- **Cách sửa:** Rewrite ngay: `($x ?? 'default')` → `if (-not $x) { $x = 'default' }` (hoặc `$y = if ($x) { $x } else { 'default' }`); grep sweep `??` trong ngữ cảnh PowerShell → 0 sót; bổ sung rule §5d + KN-039.
+- **Cách phòng tránh:**
+  - Sinh lệnh PowerShell: chỉ cú pháp 5.1 — `??` → `if (-not ...)`, `?.` → `if ($a -and $a.b)`, ternary → if/else, `&&` → `;`.
+  - `??` trong `.mjs`/Node vẫn hợp lệ — chỉ cấm trong LỆNH PowerShell / `.ps1`.
+  - Gặp `Unexpected token '??'` → viết lại TOÀN lệnh rồi mới re-run, không lặp y nguyên (KN-023).
+  - Trước Done: grep sweep lệnh mới sinh (plan/docs/session) xem còn cú pháp PS 7.
+- **Cập nhật 2026-09-12 (root fix môi trường):** Cài pwsh **7.6.6** user-space — tải zip win-x64 từ GitHub release → extract `%LOCALAPPDATA%\Programs\PowerShell\7.6.6` (ZipFile + Unblock-File, không cần admin) + user PATH; VS Code user settings: `terminal.integrated.defaultProfile.windows` + `automationProfile.windows` = "PowerShell 7". **Đo trên 7.6.6:** `??` ✅ · `&&` ✅ · `?.` ⚠️ — `$var?.prop` (không brace) bị tokenizer nuốt `?` vào tên biến → kết quả sai lặng (`$s='abc'; $s?.Length` → 0, không phải 3); phải viết `${var}?.prop`. `.Length`/`.Count` trên `$null` → 0 (intrinsic) — dễ nhầm với giá trị thật. **Từ PS 5.1 gọi pwsh `-Command` chứa `"` → quote bị nuốt** (native arg mangling — đo được 2 lần) → dùng `-File` hoặc mở terminal pwsh trực tiếp. Contract 5.1 vẫn giữ cho artifact commit repo (portability floor).
+- **Tags:** `process` `dx` `windows` `powershell` `scripts`
+- **Người ghi:** YUNIE / /fixbug
+
 <!-- Thêm bài học mới theo template dưới — copy block này -->
 
 <!--
@@ -967,6 +1012,10 @@
 - ❌ Verify xong build/test/lint là claim Done cho output open-ended — "chạy được" ≠ "tốt đến đâu"; phải có evals: rubric + component/E2E + bằng chứng đo (KN-037).
 - ❌ Đánh giá output agent bằng "trông ổn" không rubric — critique thiếu tiêu chí = model tự khen mình (KN-037 + KN-023).
 - ❌ Chạy cả agentic loop / multi-agent cho task pipeline vẽ được flowchart — agency là cost phải justify (KN-037 + KN-022).
+- ❌ Re-define metric (D/G/S) mà không grep sweep `www/`+`docs/`+`.github/` — content drift giữa trang và source of truth (KN-038).
+- ❌ Science shorthand không tách bạch vật lý thật vs ẩn dụ — "đổi một → đổi cả hai tức thì" ngụ ý truyền tin FTL, sai no-signaling (KN-038).
+- ❌ Sinh lệnh PowerShell bằng cú pháp PS 7+ (`??`, `?.`, `??=`, ternary `? :`) — Windows PowerShell 5.1 fail parse `Unexpected token '??'`, lệnh không chạy (KN-039).
+- ❌ Gặp lỗi parse PS mà re-run y nguyên hoặc vá nửa vời — viết lại TOÀN lệnh theo cú pháp 5.1 rồi mới chạy (KN-039 + KN-023).
 
 ## Checklist phòng tránh chung
 
@@ -1048,6 +1097,9 @@
 - [ ] Đã chạy E2E eval (scenario thật, goal achieved) — không chỉ build/test xanh? (KN-037)
 - [ ] Failures cùng loại ≥2 → đã aggregate error analysis TRƯỚC khi fix (fix pattern, không fix instance)? (KN-037 + KN-034)
 - [ ] Pattern chọn có chủ đích (pipeline đủ thì không thêm agent loop)? (KN-037 + KN-022)
+- [ ] Trang dùng science metaphor: claim vật lý đã verify với tài liệu (library MCP) + label "ẩn dụ vs vật lý thật"? (KN-038)
+- [ ] Re-define metric xong: đã grep sweep `www/`+`docs/`+`.github/` tìm tham chiếu cũ? (KN-038)
+- [ ] Lệnh PS: session pwsh 7 (`$PSVersionTable` ≥ 7) → `??`/`&&` OK · `?.` chỉ dùng `${var}?.`; session 5.1 / file commit repo → giữ cú pháp 5.1? (KN-039)
 
 *File này do `/fixbug` tự động cập nhật. Mọi luồng khác phải đọc để không lặp lại lỗi cũ.*
-*UpdatedAt: 2026-09-11T15:50:00Z — Maintained by YUNIE / Harness v2 — KN-037 added (Andrew Ng "Agentic AI Playbook 2026" — evals discipline "single biggest predictor"; Evals Gate vào Verify + skill `evals-gate`; source `books/Andrew-Ng-Agentic-AI-Playbook-2026-Distilled.md`) — KN-033/034/035/036 added (6 papers self-improving round 2, 2026-09-09/10: RSI roadmap + Research RSI, Ecdysis failure diagnosis, Negative Self-Distillation, Auto-RecSys + Cognitive Digital Twins — chi tiết books/papers/ + www/library/export.json 6 arXiv books mới) — KN-030 added (user console 404: fetch ngoài deploy root + relative URL không slash cuối — mirror www/cosmos/audit.json + dirBase helper; spec assert network no-404) — KN-029 added (Google Fonts script-blocking chặn toàn bộ inline script — async fonts + fail-safe + grace period) — KN-028 added (intro COSMOS cinematic: canvas quên invoke resize() → burst từ góc + 8/8 behavior test xanh giả — visual evidence bắt; verify screenshot từng stage + stub fonts cho test deterministic) — KN-025/026/027 added (10 papers self-improving 2026-09-08/09: Procedural Graphs + A-JIT, Experience Funnel + ADMET-EvO, FEEs + Consistency Gap + SOLID — chi tiết www/library/export.json 10 arXiv books) — KN-024 added (prolific AI psychosis — output rẻ làm mù khả năng đánh giá; taste/craft là human judgment — Jeff Clark MD + Emily Oberg, chi tiết docs/llm-weakness-research.md §2b) — KN-023 added (model "giỏi ngọn yếu gốc" — 6 papers arXiv: self-correction fail, self-knowledge gap, calibration không generalize, self-preference, sycophancy, pattern-matching reasoning — chi tiết docs/llm-weakness-research.md) — KN-022 added (pipeline in a trench coat — agency cost-based test, DEV.to James Anderson) + KN-021 bổ sung lộ trình Grith risk-score (allow/queue/deny + supervision-escape) — KN-019/020/021 added (bài học từ "My Little AI Factory" dominis.blog + METR study: measured > perceived, trust hard, governance evolve) — KN-015 added (Pages 2 workflows + eval-gate Node 18 CJS) — KN-014 added (MCP stdio smoke hang + verify order + regex m flag — DisCo Phase 3) — KN-013 added (Ponytail ladder integration: minimal-ladder + lean-product) — Fix: Bảng tóm tắt reorder KN-005↔KN-006 + thêm KN-009 (đã có detail nhưng thiếu ở bảng) — Presets bổ sung auto-researcher (đồng bộ registry) — KN-011 added (Random disable Step button) — KN-010 added (AAR pattern) — KN-009 bổ sung detail section (slot máy chủ AI — hardcode config) — KN-008 added (dotnet build file lock MSB3027) — KN-007 added (Auto-Learn) — KN-006 added (N5 UI polish) — KN-005 added (Bug Blindness)*
+*UpdatedAt: 2026-09-11T17:20:00Z — Maintained by YUNIE / Harness v2 — KN-039 added (PS 5.1 không hỗ trợ `??` — lệnh PowerShell dùng cú pháp PS 7 fail parse 'Unexpected token'; cấm `??`/`?.`/`??=`/ternary/`&&` trong lệnh PS, thay bằng if(-not ...); rule §5d + bug `.agent/bugs/2026-09-11-ps-5-1-khong-ho-tro-trong-lenh-powershell/`) — KN-038 added (cosmos page lệch tài liệu: no-signaling + Born rule xác suất |biên độ|² + dark energy v2 decollaboration — verify content vs library MCP + metric grep sweep; bug `.agent/bugs/2026-09-11-cosmos-page-lech-tai-lieu-no-signaling-born-rule-d/`) — KN-037 added (Andrew Ng "Agentic AI Playbook 2026" — evals discipline "single biggest predictor"; Evals Gate vào Verify + skill `evals-gate`; source `books/Andrew-Ng-Agentic-AI-Playbook-2026-Distilled.md`) — KN-033/034/035/036 added (6 papers self-improving round 2, 2026-09-09/10: RSI roadmap + Research RSI, Ecdysis failure diagnosis, Negative Self-Distillation, Auto-RecSys + Cognitive Digital Twins — chi tiết books/papers/ + www/library/export.json 6 arXiv books mới) — KN-030 added (user console 404: fetch ngoài deploy root + relative URL không slash cuối — mirror www/cosmos/audit.json + dirBase helper; spec assert network no-404) — KN-029 added (Google Fonts script-blocking chặn toàn bộ inline script — async fonts + fail-safe + grace period) — KN-028 added (intro COSMOS cinematic: canvas quên invoke resize() → burst từ góc + 8/8 behavior test xanh giả — visual evidence bắt; verify screenshot từng stage + stub fonts cho test deterministic) — KN-025/026/027 added (10 papers self-improving 2026-09-08/09: Procedural Graphs + A-JIT, Experience Funnel + ADMET-EvO, FEEs + Consistency Gap + SOLID — chi tiết www/library/export.json 10 arXiv books) — KN-024 added (prolific AI psychosis — output rẻ làm mù khả năng đánh giá; taste/craft là human judgment — Jeff Clark MD + Emily Oberg, chi tiết docs/llm-weakness-research.md §2b) — KN-023 added (model "giỏi ngọn yếu gốc" — 6 papers arXiv: self-correction fail, self-knowledge gap, calibration không generalize, self-preference, sycophancy, pattern-matching reasoning — chi tiết docs/llm-weakness-research.md) — KN-022 added (pipeline in a trench coat — agency cost-based test, DEV.to James Anderson) + KN-021 bổ sung lộ trình Grith risk-score (allow/queue/deny + supervision-escape) — KN-019/020/021 added (bài học từ "My Little AI Factory" dominis.blog + METR study: measured > perceived, trust hard, governance evolve) — KN-015 added (Pages 2 workflows + eval-gate Node 18 CJS) — KN-014 added (MCP stdio smoke hang + verify order + regex m flag — DisCo Phase 3) — KN-013 added (Ponytail ladder integration: minimal-ladder + lean-product) — Fix: Bảng tóm tắt reorder KN-005↔KN-006 + thêm KN-009 (đã có detail nhưng thiếu ở bảng) — Presets bổ sung auto-researcher (đồng bộ registry) — KN-011 added (Random disable Step button) — KN-010 added (AAR pattern) — KN-009 bổ sung detail section (slot máy chủ AI — hardcode config) — KN-008 added (dotnet build file lock MSB3027) — KN-007 added (Auto-Learn) — KN-006 added (N5 UI polish) — KN-005 added (Bug Blindness)*

@@ -34,3 +34,37 @@
 - [ ] `prefers-reduced-motion: reduce` → không particle/flash/zoom, reveal ≤ 2.5s.
 - [ ] 375/768/1280: không tràn ngang, nút skip luôn thấy & bấm được.
 - [ ] `get_errors` sạch; Playwright spec `tests/e2e/cosmos-intro.spec.ts` pass.
+
+---
+
+## V4 — Directorial upgrade (2026-09-11)
+
+> Input: review code thật + 6 hạng mục ưu tiên (3×P0 + 3×P1). **Không thêm particle, không thêm glow** — đạo diễn lại motion + 3–4 visual event mạnh. Narrative mới khớp Cosmic Calendar phía dưới trang: **BOOM → MATTER → GRAVITY → LIFE → INTELLIGENCE**.
+
+### User stories V4
+1. Là visitor, tôi thấy **Big Bang có lực**: không gian co lại → WHITE CUT ~90ms → sóng xung kích bẻ cong hạt (star warp + debris reaction) — không phải "particle burst".
+2. Ở **1.4–2.0s** tôi thấy **một thiên hà thật** (silhouette rõ: 2 nhánh lớn grand-design + 2 nhánh phụ, vành cắt rõ, nhân sáng ◉) — không phải "đám hạt xoáy".
+3. Title hình thành theo **3 giai đoạn**: hút → outline tinh thể (edge pixels) → fill → white collapse → chữ trắng hoàn chỉnh ("được tạo ra", không phải text animation).
+4. **First Light** (2.83–2.99s): galaxy mờ đi, nhân ◉ → ✦, pulse trắng cực mềm chạy xuyên chữ (~140–220ms) — signature shot.
+5. **Camera có quán tính**: kick lúc Big Bang (overshoot nhẹ), lùi về cho galaxy đọc rõ, rồi bay vào chậm — camera vật lý, không timeline cứng.
+6. **Quantum Observation**: nhiễu hạt quanh chữ (superposition) → đúng lúc subtitle "Verify là quan sát" hiện, nhiễu **sụp đổ thành 2 hàng điểm trật tự** cyan — biến slogan thành hành động thị giác.
+7. Frame **4.6s là hero shot**: galaxy sống, nhân sáng, nebula sâu, flyer bay qua camera, COSMOS · QUANTUM sạch ở giữa — screenshot phải đọc được "đây là một vũ trụ".
+
+### Acceptance criteria V4 — ✅ 2026-09-11
+- [x] WHITE CUT ≤ 120ms + pre-bang contraction đo được — screenshot frozen `v4-0800-contract.png` (singularity swell + dim) ✓
+- [x] Camera: kick vùng 1.0–1.4s cam > 1.02 (đo 1.0273) · settle ≈ 1.02 @2.0s · push > 1.035 @4.6s (đo 1.0463, Δ 3.5→4.6s = +0.028) ✓
+- [x] `__introDbg.qProg` = 0 trước 3.72s (đo 0 @3.5s), = 1 sau ~3.95s (đo 1 @4.6s), cloud 88 hạt ✓
+- [x] Screenshot 2.0s đạt rubric "reads as a galaxy" ✓ (2 nhánh grand-design + nhân sáng + vành rõ); screenshot 4.6s đạt rubric hero-frame 5/5 ✓
+- [x] No pageerror/console error (metrics + 12 evidence pages); suite cũ 11/11 + 6/6 spec cosmos khác ✓
+- [x] Reduced-motion: không đổi hành vi (Edge spec pass, fade-only) ✓
+
+### Non-goals V4 (CẮT — user explicit)
+- ❌ Thêm particle / thêm glow · ❌ viết lại engine · ❌ đổi tổng thời lượng 5.6s + exit 560ms · ❌ sửa test cũ (chỉ thêm script verify mới)
+
+### Persistence · F5 · Scope
+`Persistence: none · F5: replay mỗi lần tải · Scope: per-load` (không đổi so với V1)
+
+### Dissent Review (KN-018)
+- **Who did you think with?:** Critic framing — "title solidify nhanh (0.3s) có thể mất chất 'từng ký tự kết tinh' của V3; silhouette galaxy 2 nhánh có thể trông 'ít sao' hơn 6 nhánh".
+- **Đối trọng đã xử lý:** giữ stagger nhỏ (.014s, không zero) để còn nhịp; giữ minor arms + dust field để không mất độ dày; verify bằng screenshot 2.0s + 4.6s trước khi chốt.
+- **Assumption có thể sai:** "2 major arms đọc ra galaxy nhanh hơn 3+3" — nếu screenshot phản đối, đổi hằng số MAJ/MIN (1 dòng).

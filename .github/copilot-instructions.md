@@ -110,12 +110,15 @@ Mọi sản phẩm web PHẢI đạt:
 - Cách gọi: gõ `/` → chọn trong list → điền `task` → `Enter`. Yêu cầu **Agent mode** (dropdown Chat).
 - Nếu không hiện gợi ý: `Developer: Reload Window` → kiểm tra `agent: agent` trong frontmatter và `chat.mcp.enabled`.
 
-## 5d. Windows Script Contract (PowerShell 5.1 — BẮT BUỘC)
+## 5d. Windows Script Contract (pwsh 7 local · PS 5.1 compatibility floor — BẮT BUỘC)
 
-- Chạy script: `run_in_terminal` mode `sync`, dùng `;` không dùng `&&`, path dùng `/` hoặc `path.join`
+- **Local terminal = PowerShell 7** (user-space `%LOCALAPPDATA%\Programs\PowerShell\7.6.6`, VS Code default profile "PowerShell 7"). Lệnh ad-hoc: chạy `$PSVersionTable.PSVersion` — Major ≥ 7 → cú pháp hiện đại OK; session 5.1 → viết 5.1.
+- **Cú pháp pwsh 7 đã đo trên 7.6.6:** `??` ✅ · `&&`/`||` ✅ · `?.` ⚠️ chỉ đúng khi biến có brace — `${var}?.prop`; `$var?.prop` (không brace) bị tokenizer nuốt `?` vào tên biến → sai lặng (đo: `$s='abc'; $s?.Length` → 0). Ưu tiên `if ($a -and $a.b)`.
+- **File commit vào repo** (`.ps1`, workflows, snippet trong docs): giữ **5.1-compatible** — Windows nào cũng có 5.1, CI pwsh chạy được cả 2. `??` → `if (-not $x) { $x = 'default' }` · ternary → if/else · `&&` → `;`. (`.mjs`/Node không bị giới hạn — `??` hợp lệ.)
 - `.ps1` luôn UTF-8 **with BOM**, `.mjs` thêm `try/catch` + `process.exit(1)` khi lỗi
 - Sau mỗi script: check `exit code` + `get_errors`, không đoán "chắc chạy được"
-- Chi tiết: `docs/knowleged.md` KN-003/KN-004 (encoding, path separator)
+- Gặp `Unexpected token '??'` → session đang là 5.1 → viết lại TOÀN lệnh theo cú pháp 5.1 rồi re-run (KN-039 + KN-023)
+- Chi tiết: `docs/knowleged.md` KN-003/KN-004 (encoding, path separator) + KN-039 (PS 5.1 vs pwsh 7 contract)
 
 ## 6. Memory
 
@@ -138,6 +141,7 @@ Mọi sản phẩm web PHẢI đạt:
 - ❌ Sửa file trực tiếp mà không qua `harness-manager` (lệch `registry.json`)
 - ❌ Khi user nói "thử lại / vẫn lỗi / lặp lại" mà lặp nguyên output cũ — phải đổi strategy, diff file trước/sau, đo lại bằng tool
 - ❌ Viết script kiểu *nix trên Windows (dùng `&&`, path `\`, `.ps1` không BOM) → lỗi vặt PowerShell 5.1 (xem §5d)
+- ❌ Sinh lệnh PS 7+ (`??`/ternary) khi session chưa verify là pwsh 7, hoặc `$var?.prop` không brace (tokenizer nuốt `?` → sai lặng), hoặc nhét cú pháp 7+ vào `.ps1`/snippet commit repo (KN-039)
 - ❌ Verify animation bằng mắt thường thay vì đo `--angle` bằng Playwright (KN-003/KN-004)
 - ❌ Sửa `www/status.json` tay thay vì regenerate từ `registry.json` (KN-002)
 - ❌ Nói "nút chạy được trên Pages" suông — phải có bằng chứng: `curl -I` CORS + `grep addEventListener` + test cache/F5 (chronicle 2026-09-03)
