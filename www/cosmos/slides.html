@@ -139,6 +139,9 @@
     .tag.cosmos{color:#c4b5fd;background:rgba(124,58,237,.15);border-color:rgba(124,58,237,.25)}
     .tag.quantum{color:#67e8f9;background:rgba(6,182,214,.15);border-color:rgba(6,182,214,.25)}
     .tag.accent{color:#fcd34d;background:rgba(245,158,11,.15);border-color:rgba(245,158,11,.25)}
+    .eta-chip{font:600 9px var(--font-mono);font-style:normal;letter-spacing:.05em;color:#67e8f9;background:rgba(6,182,214,.12);border:1px solid rgba(6,182,214,.24);padding:2px 7px;border-radius:999px;white-space:nowrap;margin-left:auto}
+    .shipped-line{font:500 10.5px/1.5 var(--font-sans);color:rgba(167,243,208,.95);background:rgba(16,185,129,.08);border:1px solid rgba(16,185,129,.22);border-radius:10px;padding:6px 10px;margin:0}
+    .shipped-line b{color:#6ee7b7}
     .slide-visual{position:relative;min-height:160px;border-radius:16px;overflow:hidden;border:1px solid rgba(255,255,255,.10);background:#050a1a;display:flex;align-items:center;justify-content:center;padding:0;flex-shrink:0;isolation:isolate}
     .slide-visual::before{content:"";position:absolute;inset:0;background:
       radial-gradient(600px 300px at 20% 0%, rgba(124,58,237,.22), transparent 60%),
@@ -213,6 +216,8 @@
     .slide.active li:nth-child(2){animation-delay:.3s}
     .slide.active li:nth-child(3){animation-delay:.38s}
     .slide.active li:nth-child(4){animation-delay:.46s}
+    .slide.active li:nth-child(5){animation-delay:.54s}
+    .slide.active li:nth-child(6){animation-delay:.62s}
     .slide.active .mini-card{animation:revealIn .5s cubic-bezier(.22,1,.36,1) backwards}
     .slide.active .mini-card:nth-child(1){animation-delay:.2s}
     .slide.active .mini-card:nth-child(2){animation-delay:.28s}
@@ -356,12 +361,12 @@
             <span class="stage-badge" id="stageBadge">01 / 15</span>
             <span class="stage-title" id="stageTitle">Cover — Big Bang</span>
           </div>
-          <span class="stage-top-right" id="stageTime">00:00 / 01:12</span>
+          <span class="stage-top-right" id="stageTime">00:00 / 01:30</span>
         </div>
 
         <div class="slides" id="slides">
           <!-- 1 COVER -->
-          <section class="slide active" data-title="Cover — Big Bang" data-num="01" id="s1" role="group" aria-roledescription="slide" aria-label="1 trên 12">
+          <section class="slide active" data-title="Cover — Big Bang" data-num="01" id="s1" role="group" aria-roledescription="slide" aria-label="1 trên 15">
             <div class="slide-inner">
               <div class="layout-split">
                 <div>
@@ -404,7 +409,7 @@
           </section>
 
           <!-- 2 WHY -->
-          <section class="slide" data-title="Vì sao 2 tầng?" data-num="02" id="s2" role="group" aria-roledescription="slide" aria-label="2 trên 12">
+          <section class="slide" data-title="Vì sao 2 tầng?" data-num="02" id="s2" role="group" aria-roledescription="slide" aria-label="2 trên 15">
             <div class="slide-inner">
               <div class="layout-split">
                 <div>
@@ -464,7 +469,7 @@
           </section>
 
           <!-- 3 MACRO -->
-          <section class="slide" data-title="Tầng Vũ Trụ — Macro" data-num="03" id="s3" role="group" aria-roledescription="slide" aria-label="3 trên 12">
+          <section class="slide" data-title="Tầng Vũ Trụ — Macro" data-num="03" id="s3" role="group" aria-roledescription="slide" aria-label="3 trên 15">
             <div class="slide-inner">
               <div class="layout-split">
                 <div>
@@ -516,7 +521,7 @@
           </section>
 
           <!-- 4 MICRO -->
-          <section class="slide" data-title="Tầng Lượng Tử — Micro" data-num="04" id="s4" role="group" aria-roledescription="slide" aria-label="4 trên 12">
+          <section class="slide" data-title="Tầng Lượng Tử — Micro" data-num="04" id="s4" role="group" aria-roledescription="slide" aria-label="4 trên 15">
             <div class="slide-inner">
               <div class="layout-split">
                 <div>
@@ -569,7 +574,7 @@
           </section>
 
           <!-- 5 PIPELINE OVERVIEW -->
-          <section class="slide" data-title="Pipeline 8 phase" data-num="05" id="s5" role="group" aria-roledescription="slide" aria-label="5 trên 12">
+          <section class="slide" data-title="Pipeline 8 phase" data-num="05" id="s5" role="group" aria-roledescription="slide" aria-label="5 trên 15">
             <div class="slide-inner" style="justify-content:center">
               <div style="text-align:center;max-width:720px;margin:0 auto">
                 <div class="eyebrow" style="margin:0 auto"><i></i> 05 · Pipeline 8 phase — Tiến hóa vũ trụ</div>
@@ -615,7 +620,7 @@
           </section>
 
           <!-- 6 PIPELINE 1-4 -->
-          <section class="slide" data-title="Pipeline 1 → 4" data-num="06" id="s6" role="group" aria-roledescription="slide" aria-label="6 trên 12">
+          <section class="slide" data-title="Pipeline 1 → 4" data-num="06" id="s6" role="group" aria-roledescription="slide" aria-label="6 trên 15">
             <div class="slide-inner">
               <div style="text-align:center;max-width:640px;margin:0 auto">
                 <div class="eyebrow" style="margin:0 auto"><i></i> 06 · Pipeline 1 → 4</div>
@@ -649,7 +654,7 @@
           </section>
 
           <!-- 7 PIPELINE 5-8 -->
-          <section class="slide" data-title="Pipeline 5 → 8" data-num="07" id="s7" role="group" aria-roledescription="slide" aria-label="7 trên 12">
+          <section class="slide" data-title="Pipeline 5 → 8" data-num="07" id="s7" role="group" aria-roledescription="slide" aria-label="7 trên 15">
             <div class="slide-inner">
               <div style="text-align:center;max-width:640px;margin:0 auto">
                 <div class="eyebrow" style="margin:0 auto"><i></i> 07 · Pipeline 5 → 8</div>
@@ -768,7 +773,7 @@
                   <h2>Chain <span>với nhau</span> thành nón ánh sáng. Entropy &amp; dark energy — <span>đo số thật</span>.</h2>
                   <div class="mini-grid cols-2">
                     <div class="mini-card"><h4><i>🕳️</i> Event Horizon — audit chain</h4><p>Mỗi event audit = 1 photon với <code>hash</code>, nối <code>prevHash</code> thành chuỗi nhân quả. <strong>Chain OK</strong> = nhân quả thông · <strong>chain vỡ</strong> = nghịch lý thời gian. Event refused/failed = rơi qua chân trời → <strong>human takeover</strong>.</p><p style="margin-top:4px;font:500 10px var(--font-mono);color:var(--cosmos-cyan)">Đọc audit.jsonl thật — mirror www/cosmos/audit.json (KN-030)</p></div>
-                    <div class="mini-card"><h4><i>🌌</i> Dark Energy — decollaboration</h4><p>D = (1−dissentRatio)×10 — plans thiếu Dissent/“Who did you think with?” (KN-018), đối trọng: Dissent gate + fund-the-friction. Scope creep đo riêng ở Gravity G = cutRatio×10 (YAGNI/minimal-ladder). Entropy S = tech debt — sparkline history <code>scale.json</code>, ngưỡng S=10 / S=25.</p><p style="margin-top:4px;font:500 10px var(--font-mono);color:var(--cosmos-accent)">Hiện tại: S=0 LOW · D=9 · G=3 — số thật từ scale.json</p></div>
+                    <div class="mini-card"><h4><i>🌌</i> Dark Energy — decollaboration</h4><p>D = (1−dissentRatio)×10 — plans thiếu Dissent/“Who did you think with?” (KN-018), đối trọng: Dissent gate + fund-the-friction. Scope creep đo riêng ở Gravity G = cutRatio×10 (YAGNI/minimal-ladder). Entropy S = tech debt — sparkline history <code>scale.json</code>, ngưỡng S=10 / S=25.</p><p style="margin-top:4px;font:500 10px var(--font-mono);color:var(--cosmos-accent)">Hiện tại: S=0 LOW · D=8 · G=3 — số thật từ scale.json</p></div>
                   </div>
                 </div>
                 <div class="slide-visual cosmic-visual" aria-hidden="true">
@@ -810,7 +815,7 @@
             <div class="slide-inner">
               <div class="layout-split">
                 <div>
-                  <div class="eyebrow"><i></i> 08 · Lab — Superposition & Entanglement</div>
+                  <div class="eyebrow"><i></i> 11 · Lab — Superposition & Entanglement</div>
                   <h2>Chạm để <span>cảm nhận</span> lượng tử.</h2>
                   <div class="mini-grid cols-2">
                     <div class="mini-card"><h4><i>🌀</i> Superposition → Collapse</h4><p>Trước Clarify, mọi ý tưởng <strong>đồng thời tồn tại</strong>. Bấm <em>Collapse</em> để sụp đổ về 1 thực tại.</p></div>
@@ -1014,20 +1019,24 @@
               <div class="layout-split">
                 <div>
                   <div class="eyebrow"><i></i> 15 · Tương lai & Hành động</div>
-                  <h2>Vũ trụ còn <span>giãn nở</span>. Đã chụp được 15 vùng — sếp muốn đi tiếp đâu?</h2>
-                  <div class="mini-grid cols-2">
-                    <div class="mini-card" style="border-color:rgba(16,185,129,.25);background:linear-gradient(135deg, rgba(16,185,129,.08), rgba(255,255,255,.03))"><h4><i>✅</i> Đã chụp xong — vũ trụ hôm nay</h4><p><strong>System Map 15 vùng</strong> · <strong>Cosmic Calendar</strong> · <strong>Observatory</strong> (audit chain + ΔS sparkline) — toàn bộ đo từ dữ liệu thật.</p><span class="tag" style="margin-top:6px;display:inline-block;color:#6ee7b7;border-color:rgba(16,185,129,.3)">shipped · index.html#map · #calendar · #observatory</span></div>
-                    <div class="mini-card"><h4><i>⚛️</i> Lượng tử cho Decision</h4><p><strong>Superposition</strong> giữ 3 phương án tới khi có data (collapse theo xác suất |biên độ|² — Born rule), <strong>decoherence</strong> phát hiện hệ mất kết dính.</p><span class="tag" style="margin-top:6px;display:inline-block;color:#6ee7b7;border-color:rgba(16,185,129,.3)">✅ shipped · index.html#lab</span></div>
-                    <div class="mini-card"><h4><i>🔬</i> Lab đầy đủ — 11 thí nghiệm</h4><p><strong>Double-slit</strong> (quan sát đổi kết quả), <strong>multiverse</strong> (A/B), <strong>Dark Energy vs Gravity</strong> (D decollaboration · G scope control).</p><span class="tag" style="margin-top:6px;display:inline-block;color:#6ee7b7;border-color:rgba(16,185,129,.3)">✅ shipped · index.html#lab</span></div>
-                    <div class="mini-card"><h4><i>🫧</i> Multiverse picker</h4><p>Chọn <strong>preset</strong> như chọn vũ trụ con để sống — web-product, api-minimal, lean-product.</p><span class="tag accent" style="margin-top:6px">→ backlog · registry presets/</span></div>
-                  </div>
-                  <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:12px">
-                    <a class="btn btn-primary" href="./index.html#map">🗺️ Xem System Map</a>
+                  <h2>Vũ trụ còn <span>giãn nở</span> — <span>6 đề tài mới</span> chờ khảo sát.</h2>
+                  <p class="shipped-line"><b>✅ Đã ship &amp; gỡ backlog:</b> Quantum Decision · Lab 11 · Heat Death · Entanglement Graph</p>
+                  <ul style="gap:4px;margin-top:6px">
+                    <li>🕸️ <strong>Cosmic Web — Entangle v2</strong>: cluster · hub · dead filament <span class="eta-chip">Q4 2026</span></li>
+                    <li>⚫ <strong>Hawking Radiation — Bug bay hơi</strong>: draft &gt;30d tự escalate <span class="eta-chip">Q4 2026</span></li>
+                    <li>🌡️ <strong>CMB Anisotropy — Điểm lạnh</strong>: heatmap KN tag×time <span class="eta-chip">Q1 2027</span></li>
+                    <li>🌊 <strong>Gravitational Waves — LIGO</strong>: đo ripple cả cụm refs <span class="eta-chip">Q2 2027</span></li>
+                    <li>⚛️ <strong>Quantum Error Correction</strong>: Lab #12 — bit-flip syndrome <span class="eta-chip">Q1 2027</span></li>
+                    <li>🌀 <strong>Wormhole — Context Teleport</strong>: isolate ≤1000 chars <span class="eta-chip">Q1 2027</span></li>
+                  </ul>
+                  <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:6px">
+                    <a class="btn btn-primary" href="./index.html#future-title">🚀 6 đề tài mới</a>
+                    <a class="btn btn-ghost" href="./index.html#map">🗺️ System Map</a>
                     <a class="btn btn-ghost" href="./index.html#observatory">🔭 Đài quan sát</a>
-                    <a class="btn btn-ghost" href="./index.html">← Về COSMOS</a>
                     <a class="btn btn-ghost" href="./scale.html">📊 Dashboard entropy</a>
+                    <a class="btn btn-ghost" href="./index.html">← Về COSMOS</a>
                   </div>
-                  <p style="margin-top:8px;font:500 10px var(--font-mono);color:var(--cosmos-text-dim)">Process là định luật, verify là quan sát · YUNIE trực 24/7 ✨</p>
+                  <p style="margin-top:4px;font:500 10px var(--font-mono);color:var(--cosmos-text-dim)">Process là định luật, verify là quan sát · YUNIE trực 24/7 ✨</p>
                 </div>
                 <div class="slide-visual cosmic-visual" aria-hidden="true">
                   <div class="nebula" style="width:280px;height:160px;left:-20px;top:-20px;background:radial-gradient(ellipse at 30% 30%, rgba(124,58,237,.26), transparent 70%)"></div>
@@ -1082,7 +1091,7 @@
               <button class="ctrl-btn" id="btnNext" type="button" aria-label="Tiếp (→)">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13 5l7 7-7 7"/><path d="M3 5l7 7-7 7"/></svg>
               </button>
-              <span class="time" id="timeLabel"><b>00:00</b> / 01:12</span>
+              <span class="time" id="timeLabel"><b>00:00</b> / 01:30</span>
             </div>
             <div class="controls-right">
               <span class="hint"><kbd>Space</kbd> play · <kbd>←</kbd><kbd>→</kbd> · <kbd>F</kbd> fullscreen · <kbd>O</kbd> overview</span>

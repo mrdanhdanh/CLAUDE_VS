@@ -1,7 +1,7 @@
 {
-  "generatedAt": "2026-09-11T17:05:30.092Z",
+  "generatedAt": "2026-09-11T23:04:30.283Z",
   "source": ".agent/audit.jsonl",
-  "total": 26,
+  "total": 29,
   "events": [
     {
       "ts": "2026-09-06T09:09:00.653Z",
@@ -443,6 +443,57 @@
       "policyDigest": "162346288ec03771",
       "hash": "283974d4e0f3bfea",
       "sig": "0K8ojIWMyg2XVo4NLYFLjEhAYoEiAOqR1QfXyGp8FDtHahU1YPw1cTtVGVOZRtF_Xb_FV7-ai7EJk4fR_PmEBQ",
+      "pub": "MCowBQYDK2VwAyEAY8PlU0KjXp4HJUUlNlVZdaXHUmDagUMm8rUrEShTPXo"
+    },
+    {
+      "ts": "2026-09-11T17:05:30.452Z",
+      "actor": "YUNIE",
+      "tool": "edit",
+      "target": "docs/knowleged.md + .github/copilot-instructions.md (KN-039 PS 5.1 ?? fix)",
+      "decision": "permitted",
+      "rule": "allow-all",
+      "durationMs": null,
+      "error": null,
+      "intent": "fixbug ps51 nullish operator",
+      "requestId": "596a26",
+      "prevHash": "283974d4e0f3bfea",
+      "policyDigest": "162346288ec03771",
+      "hash": "fdafff2156993d0b",
+      "sig": "S795_ON53YwFITZsVW2gdMx_USzhzaU632i4Fb58V7rCKK8bkQDjp1xhQb2tQ1tLhkIdF11zdz9uHjkEUzXdAA",
+      "pub": "MCowBQYDK2VwAyEAY8PlU0KjXp4HJUUlNlVZdaXHUmDagUMm8rUrEShTPXo"
+    },
+    {
+      "ts": "2026-09-11T17:13:46.064Z",
+      "actor": "YUNIE",
+      "tool": "shell",
+      "target": "install PowerShell 7.6.6 user-space + VS Code terminal profile + rule/KN update",
+      "decision": "permitted",
+      "rule": "allow-all",
+      "durationMs": null,
+      "error": null,
+      "intent": "ps51 nullish root fix - upgrade shell",
+      "requestId": "72dde9",
+      "prevHash": "fdafff2156993d0b",
+      "policyDigest": "162346288ec03771",
+      "hash": "a31d2daac3548944",
+      "sig": "dxeN_mlrZeBjCEnNHS-co9nIrRoi9fqUDwaClK5TLbTim62GlKQyyDGEfruv-47Iu3-ioL5OikIKp_j166cXCQ",
+      "pub": "MCowBQYDK2VwAyEAY8PlU0KjXp4HJUUlNlVZdaXHUmDagUMm8rUrEShTPXo"
+    },
+    {
+      "ts": "2026-09-11T23:04:29.287Z",
+      "actor": "YUNIE",
+      "tool": "shell",
+      "target": "npm run cosmos:refresh",
+      "decision": "permitted",
+      "rule": "allow-all",
+      "durationMs": null,
+      "error": null,
+      "intent": null,
+      "requestId": "269eb4",
+      "prevHash": "a31d2daac3548944",
+      "policyDigest": "162346288ec03771",
+      "hash": "b4fa22d14b9a16f7",
+      "sig": "kWOywfSHRYGlLx23Xpb9JzeH3Njq64MlVZAot2Vpm0w4KZvVpN0-t7WKNjx_0lUCXmUooHExXZi4BYUB7uBlBA",
       "pub": "MCowBQYDK2VwAyEAY8PlU0KjXp4HJUUlNlVZdaXHUmDagUMm8rUrEShTPXo"
     }
   ]
