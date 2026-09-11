@@ -213,6 +213,9 @@
 
     /* ===== Sections ===== */
     .section{padding:32px 0}
+    /* Anchor không bị sticky header che khi click scroll-dot / #lab / #pipeline
+       (+28 bù 18px dịch của reveal translate lúc scrollIntoView chưa settle) */
+    section[id]{scroll-margin-top:calc(var(--header-h) + 28px)}
     .section-head{
       display:flex;flex-wrap:wrap;align-items:end;justify-content:space-between;gap:12px;
       margin-bottom:20px;
@@ -347,6 +350,7 @@
     .lab-grid{display:grid;gap:16px}
     @media(min-width:900px){.lab-grid{grid-template-columns:1fr 1fr}}
     .lab-card{
+      display:flex;flex-direction:column;
       background:linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.02));
       border:1px solid var(--cosmos-border);
       border-radius:var(--radius-lg);
@@ -365,7 +369,7 @@
       padding:4px 8px;border-radius:var(--radius-full);
       background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.08);color:var(--cosmos-text-muted);
     }
-    .lab-body{padding:20px}
+    .lab-body{padding:20px;flex:1;display:flex;flex-direction:column}
     .lab-body p{margin:0 0 14px;font:400 12.5px/1.6 var(--font-sans);color:var(--cosmos-text-muted)}
     .lab-demo{
       background:rgba(0,0,0,.25);
@@ -373,6 +377,7 @@
       border-radius:var(--radius-md);
       padding:16px;
       min-height:140px;
+      flex:1;
       display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;
       position:relative;overflow:hidden;
     }
@@ -401,15 +406,15 @@
       cursor:pointer;
       box-shadow:0 4px 16px rgba(0,0,0,.3);
     }
-    .super-card:nth-child(1){background:linear-gradient(135deg, rgba(124,58,237,.85), rgba(99,102,241,.7));transform:translateX(-36px) rotate(-6deg) scale(.95);z-index:1}
+    .super-card:nth-child(1){background:linear-gradient(135deg, rgba(124,58,237,.85), rgba(99,102,241,.7));transform:translateX(-44px) rotate(-7deg) scale(.92);z-index:1;filter:blur(.6px);opacity:.88}
     .super-card:nth-child(2){background:linear-gradient(135deg, rgba(6,182,214,.85), rgba(16,185,129,.7));transform:translateX(0) rotate(0deg) scale(1);z-index:2}
-    .super-card:nth-child(3){background:linear-gradient(135deg, rgba(245,158,11,.85), rgba(236,72,153,.7));transform:translateX(36px) rotate(6deg) scale(.95);z-index:1}
+    .super-card:nth-child(3){background:linear-gradient(135deg, rgba(245,158,11,.85), rgba(236,72,153,.7));transform:translateX(44px) rotate(7deg) scale(.92);z-index:1;filter:blur(.6px);opacity:.88}
     .superposition-stack.collapsed .super-card{opacity:0;transform:translateX(0) rotate(0) scale(.8);pointer-events:none}
-    .superposition-stack.collapsed .super-card.chosen{opacity:1;transform:translateX(0) rotate(0) scale(1.15);z-index:3;box-shadow:0 8px 32px rgba(0,0,0,.4)}
-    .superposition-stack .super-card:hover{transform:translateX(var(--tx,0)) rotate(var(--r,0)) scale(1.02) translateY(-2px)}
-    .super-card:nth-child(1){--tx:-36px;--r:-6deg}
+    .superposition-stack.collapsed .super-card.chosen{opacity:1;transform:translateX(0) rotate(0) scale(1.15);z-index:3;box-shadow:0 8px 32px rgba(0,0,0,.4);filter:none}
+    .superposition-stack .super-card:hover{transform:translateX(var(--tx,0)) rotate(var(--r,0)) scale(1.02) translateY(-2px);filter:none;opacity:1}
+    .super-card:nth-child(1){--tx:-44px;--r:-7deg}
     .super-card:nth-child(2){--tx:0px;--r:0deg}
-    .super-card:nth-child(3){--tx:36px;--r:6deg}
+    .super-card:nth-child(3){--tx:44px;--r:7deg}
 
     /* Entanglement demo */
     .entangle-area{
@@ -796,9 +801,11 @@
     .scroll-progress{position:fixed;top:0;left:0;right:0;height:3px;z-index:100;background:rgba(255,255,255,.06);pointer-events:none}
     .scroll-progress-bar{height:100%;width:0%;background:linear-gradient(90deg,#7c3aed,#06b6d4,#f59e0b);transition:width .08s linear;box-shadow:0 0 8px rgba(124,58,237,.5)}
     /* ===== Reveal on scroll ===== */
-    .reveal{opacity:0;transform:translateY(18px);transition:opacity .6s ease, transform .6s ease}
-    .reveal.in{opacity:1;transform:none}
-    @media(prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none;transition:none}}
+    /* Dùng property `translate` (không phải `transform`) — tách kênh khỏi hover lift của .card/.phase,
+       trước đây `.reveal.in{transform:none}` cùng specificity đứng sau đè `.card:hover` → hover chết lặng */
+    .reveal{opacity:0;translate:0 18px;transition:opacity .6s ease, translate .6s ease}
+    .reveal.in{opacity:1;translate:0 0}
+    @media(prefers-reduced-motion:reduce){.reveal{opacity:1;translate:0 0;transition:none}}
     /* ===== Floating orbs (parallax) ===== */
     .floating-orbs{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden}
     .orb{position:absolute;border-radius:50%;filter:blur(40px);opacity:.18;will-change:transform}
@@ -3570,9 +3577,9 @@ Process là định luật, verify là quan sát.`;
     // ===== System Map 15 vùng — Harness → Cosmos =====
     (function(){
       const MAPS=[
-        {ico:'📡', map:'CMB — Bức xạ nền', file:'docs/knowleged.md', link:'../../docs/knowleged.md', desc:'Tri thức gốc của vũ trụ — bài học từ bug (KN-001→015). Mọi agent PHẢI đọc trước khi code: đây là phông nền mà mọi quyết định in trên đó.'},
+        {ico:'📡', map:'CMB — Bức xạ nền', file:'docs/knowleged.md', link:'https://github.com/mrdanhdanh/CLAUDE_VS/blob/main/docs/knowleged.md', desc:'Tri thức gốc của vũ trụ — bài học từ bug (KN-001→015). Mọi agent PHẢI đọc trước khi code: đây là phông nền mà mọi quyết định in trên đó.'},
         {ico:'💡', map:'Nón ánh sáng', file:'.agent/audit.jsonl → mirror: www/cosmos/audit.json', link:'./audit.json', desc:'Append-only + hash-chain: mọi event để lại dấu vết nhân quả, không ai sửa được quá khứ. Chain vỡ = nghịch lý thời gian → điều tra ngay. (Nguồn thật .agent/audit.jsonl — Pages đọc mirror do generate-status.mjs sinh.)'},
-        {ico:'⚖️', map:'Định luật + Event Horizon', file:'.agent/policy.json', link:'../../.agent/policy.json', desc:'Deny trước allow, fail-closed. Qua event horizon (refused) là phải human takeover — agent không tự fix loop.'},
+        {ico:'⚖️', map:'Định luật + Event Horizon', file:'.agent/policy.json', link:'https://github.com/mrdanhdanh/CLAUDE_VS/blob/main/.agent/policy.json', desc:'Deny trước allow, fail-closed. Qua event horizon (refused) là phải human takeover — agent không tự fix loop.'},
         {ico:'🌑', map:'Vật chất tối', file:'.agent/credentials.enc.json', link:'', desc:'Tồn tại, có khối lượng (AES-256-GCM) nhưng không nhìn thấy trực tiếp — never logged, không plain trong .env.'},
         {ico:'📶', map:'Pulsar', file:'.agent/routines.json', link:'', desc:'Nhịp phát đều theo cron (floor 15m, cap 20, 10 fails → off). Kỷ luật lịch trình như nhịp xung sao neutron.'},
         {ico:'🌟', map:'Quasar', file:'www/status.json', link:'../status.json', desc:'Nguồn sáng trung tâm — regenerate từ registry.json, không sửa tay. JSON.parse + serve 200 mới là thật (KN-002).'},
@@ -3591,7 +3598,8 @@ Process là định luật, verify là quan sát.`;
       const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
       function renderDetail(i){
         const m=MAPS[i];
-        detail.innerHTML=`<h4>${m.ico} ${esc(m.map)} <small>${esc(m.file)}</small></h4><p>${esc(m.desc)}</p>${m.link?`<a class="map-link" href="${m.link}" target="_blank" rel="noopener">→ mở ${esc(m.file)} ↗</a>`:''}`;
+        detail.innerHTML=`<h4>${m.ico} ${esc(m.map)} <small>${esc(m.file)}</small></h4><p>${esc(m.desc)}</p>${m.link?`<a class="map-link" href="${esc(m.link)}" target="_blank" rel="noopener">→ mở ${esc(m.file)} ↗</a>`:''}`;
+        fixRelLinks(detail);
       }
       MAPS.forEach((m,i)=>{
         const b=document.createElement('button');
@@ -3726,7 +3734,7 @@ Process là định luật, verify là quan sát.`;
           <div class="de-stat"><span>💜 Dark Energy D</span><b>${Number(D)} <small>${D>5?'high':D>0?'medium':'low'}</small></b></div>
           <div class="de-stat"><span>🧲 Gravity G</span><b>${Gv==null?'—':Number(Gv)} <small>${Gv==null?'—':(Gv>=6?'high':Gv>=3?'medium':'low')}</small></b></div>
           <div class="de-stat"><span>🌑 Dark Matter M</span><b>${Number(M)} <small>${mLevel}</small></b></div>
-          <div class="de-stat"><span>Điểm đo</span><b>${hist.length}</b></div>`;
+          <div class="de-stat"><span>Điểm đo</span><b>${hist.length} <small>điểm</small></b></div>`;
         deBadge.textContent = real ? ('✅ scale.json — thật' + (ageTxt && ageH>=72 ? ' · 🔴 cũ '+ageTxt : ageTxt && ageH>=24 ? ' · 🟡 '+ageTxt : '')) : '⚠️ demo (fetch fail)';
         deBadge.classList.remove('loading','broken');
         if(!real) deBadge.classList.add('broken');
@@ -3801,7 +3809,6 @@ Process là định luật, verify là quan sát.`;
       const heroBg=document.querySelector('.hero-bg');
       const pillars=[...document.querySelectorAll('.pillar-visual')];
       const pipeline=document.querySelector('.pipeline-visual');
-      const cards=[...document.querySelectorAll('.card')];
       const prefersReduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
       let ticking=false;
       // progress + parallax
@@ -3842,15 +3849,7 @@ Process là định luật, verify là quan sát.`;
             if(pipeline){
               pipeline.style.transform=`translate3d(0,${(y*0.03).toFixed(1)}px,0)`;
             }
-            cards.forEach((el,i)=>{
-              const rect=el.getBoundingClientRect();
-              const visible=rect.top < vh && rect.bottom > 0;
-              if(visible){
-                const progress=(vh - rect.top)/ (vh + rect.height);
-                const offset=(progress - 0.5)*8;
-                el.style.transform=`translate3d(0,${offset.toFixed(1)}px,0)`;
-              }
-            });
+            // (.card parallax 8px đã bỏ — vô hình nhưng từng đè cả reveal lẫn hover lift)
           }
         // dots active
         if(dots.length && sections.length){
@@ -3861,6 +3860,9 @@ Process là định luật, verify là quan sát.`;
           }
           dots.forEach(d=>d.classList.toggle('active', d.dataset.target===activeId));
         }
+          // Reveal fail-safe — sweep trong rAF: element đã vào viewport mà chưa .in → reveal ngay.
+          // Chống mọi trường hợp IO trượt (element cao hơn viewport, tab ẩn, throttle) — nội dung không bao giờ kẹt ẩn.
+          revealSweep();
           ticking=false;
         });
       }
@@ -3875,11 +3877,13 @@ Process là định luật, verify là quan sát.`;
       });
       // reveal
       if(!prefersReduced && 'IntersectionObserver' in window){
+        // threshold:0 (KHÔNG 0.12) — element cao hơn viewport/threshold không bao giờ đạt tỉ lệ 12%
+        // → #lab 6696px @375 tàng hình vĩnh viễn (bug 2026-09-12). Sweep fail-safe ở onScroll bổ trợ.
         const io=new IntersectionObserver((entries)=>{
           entries.forEach(e=>{
             if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }
           });
-        }, {threshold:0.12, rootMargin:'0px 0px -40px 0px'});
+        }, {threshold:0, rootMargin:'0px 0px -60px 0px'});
         document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
         // stagger timeline phases
         document.querySelectorAll('.timeline .phase').forEach((el,i)=>{
@@ -3895,9 +3899,26 @@ Process là định luật, verify là quan sát.`;
       } else {
         document.querySelectorAll('.reveal').forEach(el=>el.classList.add('in'));
       }
+      // Sweep độc lập khỏi scroll — chạy ở load + khi tab quay lại foreground (rAF bị throttle lúc ẩn)
+      function revealSweep(){
+        const line=window.innerHeight-40;
+        document.querySelectorAll('.reveal:not(.in)').forEach(el=>{
+          const r=el.getBoundingClientRect();
+          if(r.top < line && r.bottom > 0) el.classList.add('in');
+        });
+      }
+      window.addEventListener('load', revealSweep);
+      document.addEventListener('visibilitychange', revealSweep);
     })();
 
-    // ===== Smooth scroll for hero links =====
+    // ===== Smooth scroll for hero links + fix link tương đối './x' =====
+    // URL không '/' cuối (serve: /cosmos/index.html → redirect /cosmos) làm './x' phân giải thành '/x' → 404 (KN-030).
+    // Link tĩnh trong DOM + link render động (map detail) đều phải resolve qua dirBase.
+    function fixRelLinks(root=document){
+      const base=dirBase(location.pathname);
+      $$('a[href^="./"]', root).forEach(a=>a.setAttribute('href', base + a.getAttribute('href').slice(2)));
+    }
+    fixRelLinks();
     $$('a[href^="#"]').forEach(a=>{
       a.addEventListener('click', (e)=>{
         const id=a.getAttribute('href').slice(1);
