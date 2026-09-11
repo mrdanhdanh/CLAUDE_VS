@@ -1,6 +1,6 @@
 ---
 name: harness-web-ui
-description: "Task-agnostic lessons 'Web UI & UX' chưng cất từ docs/knowleged.md (7 KN: KN-001, KN-002, KN-003, KN-004, KN-006, KN-011, KN-017) + .agent/bugs/. Use when task chạm ui, a11y, css, responsive, data, animation, spacing, i18n, theme, contrast — áp Cách phòng tránh trước khi code, tránh lặp bug cũ. DisCo-lite, regenerate bằng distill-agnostic.mjs."
+description: "Task-agnostic lessons 'Web UI & UX' chưng cất từ docs/knowleged.md (12 KN: KN-001, KN-002, KN-003, KN-004, KN-006, KN-011, KN-017, KN-028, KN-029, KN-030, KN-031, KN-032) + .agent/bugs/. Use when task chạm ui, a11y, css, responsive, data, animation, spacing, i18n, theme, contrast — áp Cách phòng tránh trước khi code, tránh lặp bug cũ. DisCo-lite, regenerate bằng distill-agnostic.mjs."
 user-invocable: false
 ---
 
@@ -10,11 +10,11 @@ user-invocable: false
 
 ## When to Use
 
-- Task chạm theme **Web UI & UX** (tags: ui, a11y, css, responsive, data, animation, spacing, i18n, theme, contrast, state, ux, button, diagram, archify, verify)
+- Task chạm theme **Web UI & UX** (tags: ui, a11y, css, responsive, data, animation, spacing, i18n, theme, contrast, state, ux, button, diagram, archify, verify, canvas, bug-blindness, perf, font, script-blocking, pages, fetch, url, reduced-motion, edge, error-handling)
 - Trước khi code/fix — áp **Cách phòng tránh** ngay để không lặp bug cũ
 - Review/plan — check anti-patterns bên dưới
 
-## Bài học (7 KN)
+## Bài học (12 KN)
 
 ### KN-001 — Ví dụ: Modal không đóng khi bấm ESC (minor)
 - **Bài học:** Mọi overlay/modal phải có ESC + focus trap + aria
@@ -76,8 +76,65 @@ user-invocable: false
   - Luôn chạy `visual-check` (cần `ARCHIFY_CHROME` trỏ Edge/Chrome) sau `deliver` — 9/9 showcase checks KHÔNG bao gồm browser containment.
   - Đọc `supportedFixes` của validator — nó luôn chỉ đúng đường (bỏ fromSide/toSide, dùng labelAt gợi ý, route preset conflict → thả auto).
 
+### KN-028 — Canvas quên invoke `resize()` → burst sai gốc + behavior test xanh giả (major)
+- **Bài học:** Define setup xong phải invoke ngay; assert invariant hình học (`canvas.width===clientWidth`) trong test; visual evidence bắt bug mà behavior test bỏ lọt
+- **Bug report:** .agent/bugs/2026-09-10-intro-burst-tu-goc-do-quen-goi-resize/bug.md
+- **Cách phòng tránh:**
+  - Pattern "define setup → addEventListener" **phải kèm invoke ngay** — define không phải là chạy.
+  - Mọi effect dùng toạ độ/kích thước (canvas, parallax, viewBox) phải có **assert invariant hình học** trong test — không chỉ assert visible/hidden (KN-023: verification ngoài model).
+  - Animation phải có **visual evidence từng stage** (screenshot) trước khi claim Done — behavior test xanh ≠ hiệu ứng đúng (KN-005 Bug Blindness).
+  - Playwright test với external render-blocking (Google Fonts CSS) phải **stub route** để deterministic — nếu không, `load` event trễ 10-20s làm timeline chạy xong trước khi test assert → flaky giả.
+
+### KN-029 — Google Fonts script-blocking làm intro "không hiện" trên mạng chậm (major)
+- **Bài học:** Third-party CSS luôn async (`media="print" onload`) + noscript; fail-safe mở nội dung khi engine fail; grace 600ms chống click nhầm; glyph chi tiết vẽ bằng CSS
+- **Bug report:** .agent/bugs/2026-09-10-google-fonts-chan-script-intro-khong-hien/bug.md
+- **Cách phòng tránh:**
+  - Third-party CSS (fonts/CDN) **luôn async** hoặc self-host — không bao giờ để chặn first script của trang.
+  - Overlay che nội dung phải có **fail-safe timer độc lập với engine** (engine fail → tự mở nội dung, không bao giờ kẹt màn đen).
+  - Skip kiểu click-anywhere phải có **grace period (~600ms)** chống click nhầm khi vừa mở.
+  - Chi tiết thiết kế (dot, divider) không phụ thuộc glyph font — vẽ bằng CSS để deterministic.
+  - Regression test: route treo fonts CDN → assert engine vẫn chạy ngay (`cosmos-intro.spec.ts`).
+
+### KN-030 — Fetch ra ngoài deploy root + relative URL không slash cuối → 404 trên Pages (major)
+- **Bài học:** Tài nguyên ngoài `www/` phải **mirror** vào (generate + commit như `scale.json`); dùng helper `dirBase(pathname)` robust mọi dạng URL; spec assert không-404 + data "thật"
+- **Bug report:** .agent/bugs/2026-09-10-observatory-fetch-404-ngoai-www-va-relative-url/bug.md
+- **Cách phòng tránh:**
+  - Trang static (Pages) **chỉ fetch trong `www/`** — tài nguyên ngoài (`.agent/`, `docs/`, root repo) phải **mirror vào** qua generator + commit.
+  - Relative fetch phải qua helper `dirBase` — không giả định slash cuối. Test cả URL dạng `/path`, `/path/`, `/path/index.html`.
+  - Spec phải assert **không có 404 nào** (bắt network response), không chỉ assert UI text — fallback demo che bug (xanh giả).
+  - Test trên **≥2 host** (serve local + Pages) cho mọi trang có fetch.
+
+### KN-031 — Edge PC "không thấy hiệu ứng" do reduced-motion bị xử lý quá tay (major)
+- **Bài học:** Reduced-motion chỉ cắt chuyển động nguy hiểm (translate/scale/parallax), giữ fade opacity có nhịp + hint nói rõ lý do; defer timeline khi tab ẩn; grace 1000ms; test trên Edge thật (`channel: 'msedge'`) + poll pixels thay wall-clock
+- **Bug report:** .agent/bugs/2026-09-10-edge-pc-khong-thay-hieu-ung-intro-reduced-motion/bug.md
+- **Cách phòng tránh:**
+  - Reduced-motion chỉ cắt **chuyển động** (translate/scale/parallax/spin) — fade opacity là an toàn, phải giữ để trải nghiệm còn "có nhịp".
+  - Khi rút gọn trải nghiệm vì setting của user → **nói rõ lý do trong UI** (hint ngắn) — đừng để user tưởng sản phẩm lỗi.
+  - Overlay/animation có timeline phải defer khi `document.hidden` — không chạy vô hình ở tab nền.
+  - "Không thấy hiệu ứng" → đo trên **đúng môi trường user** (Edge thật qua `channel:'msedge'`, emulate reduced-motion), không chỉ chromium default.
+  - Test animation bằng **poll state** (pixel/class), không wall-clock cố định (cold-start làm flaky).
+
+### KN-032 — rAF callback throw không bị try/catch bắt → animation chết im lặng (major)
+- **Bài học:** Browser test PHẢI assert "no pageerror/console error" ngay sau rewrite; freeze animation = nghi lỗi async trước khi nghi logic; test bắt được nhờ assertion Edge spec
+- **Bug report:** .agent/bugs/2026-09-10-raf-callback-error-khong-bi-try-catch-bat/bug.md
+- **Cách phòng tránh:**
+  - Mọi engine rAF (canvas/animation): browser test PHẢI assert **no pageerror/console error** — chạy ngay sau rewrite lớn.
+  - Freeze animation = nghi lỗi async (rAF/setTimeout) trước khi nghi logic vật lý.
+  - Rewrite lớn: rà các biến dùng-xong-chưa-khai-báo (đặc biệt sau khi tách/ghép hàm) — syntax check của IDE không bắt được ReferenceError.
+
 ## Anti-patterns (đừng lặp lại)
 
+- - ❌ Để `<link rel=stylesheet>` third-party (Google Fonts) blocking trong head — nó chặn luôn EXECUTION của mọi inline script phía sau, app "chết đứng" trên mạng chậm (KN-029).
+- - ❌ Overlay che nội dung không có fail-safe timer độc lập engine → engine fail là kẹt màn đen vĩnh viễn (KN-029).
+- - ❌ Click-anywhere-skip không grace period → user click nhầm lúc mới mở là mất intro (KN-029).
+- - ❌ Fetch tài nguyên NGOÀI deploy root (`../../.agent/...` khi Pages chỉ có `www/`) → 404, fallback demo che bug (KN-030).
+- - ❌ Fetch relative không tính URL bỏ slash cuối (`/cosmos` + `./x` → `/x` 404) — phải qua helper `dirBase` (KN-030).
+- - ❌ Test chỉ assert UI text khi có fallback demo → "demo" vẫn xanh giả; phải assert network không-404 + badge "thật" (KN-030).
+- - ❌ Reduced-motion = `opacity:1 !important; animation:none !important` cho toàn bộ overlay → static pop-in, user tưởng "trang không có hiệu ứng" (KN-031).
+- - ❌ Rút gọn trải nghiệm vì setting của user mà không nói lý do trong UI (KN-031).
+- - ❌ Timeline intro chạy khi tab ở background → user switch về là đã hết (KN-031).
+- - ❌ Test animation bằng wall-clock cố định (Edge cold-start → flaky); phải poll state + test trên Edge thật khi user dùng Edge (KN-031).
+- - ❌ Throw trong rAF callback tưởng được try/catch ngoài bắt — lỗi async → engine đứng hình im lặng; browser test thiếu assert no-pageerror là mù (KN-032).
 - - ❌ Viết `status.json` tay không qua generator → data shape lệch với render (KN-002).
 - - ❌ Không test responsive 375/768/1280 trước khi commit `www/` (KN-002).
 - - ❌ Hardcode màu/spacing không dùng CSS variables (KN-002).
@@ -88,6 +145,9 @@ user-invocable: false
 - - ❌ Fix bug encoding bằng cách xóa dấu tiếng Việt — phải giữ UTF-8 chuẩn (KN-006).
 - - ❌ Dùng PowerShell here-string cho file UTF-8 tiếng Việt → corrupt (KN-006).
 - - ❌ NavMenu minimal không có badge/grouping/aria-label (KN-006).
+- - ❌ Define setup function (resize/init) xong tưởng đã chạy — quên invoke khởi tạo → canvas buffer 300×150 bị CSS kéo giãn, hạt nổ từ góc (KN-028).
+- - ❌ Behavior test xanh (visible/hidden) mà không assert geometry invariant → hiệu ứng sai vị trí vẫn PASS (KN-028).
+- - ❌ Để Playwright phụ thuộc external render-blocking (fonts CDN) → `load` trễ làm test flaky giả (KN-028).
 - - ❌ `hideAll()` disable button rồi caller không re-enable → Random xong không step được (KN-011).
 - - ❌ Chọn viewBox gần vuông (772×652) cho diagram — render tràn first-screen; ưu tiên ratio dẹt ≥1.7:1 (KN-017).
 - - ❌ Đổi viewBox width mà không tính scale text — width 1400 → scale 0.66 → text < 6px fail readability (KN-017).
@@ -96,6 +156,6 @@ user-invocable: false
 
 ## Nguồn
 
-- `docs/knowleged.md` — KN-001, KN-002, KN-003, KN-004, KN-006, KN-011, KN-017
+- `docs/knowleged.md` — KN-001, KN-002, KN-003, KN-004, KN-006, KN-011, KN-017, KN-028, KN-029, KN-030, KN-031, KN-032
 - Chi tiết đầy đủ: `references/evidence.md` (progressive disclosure)
 - Regenerate: `node .github/harness/scripts/distill-agnostic.mjs`

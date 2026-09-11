@@ -1,8 +1,8 @@
 # Evidence — harness-process (DisCo arXiv:2609.02749v1 §3.2 (task-agnostic))
 
-> Substrate layer của skill — full text từ docs/knowleged.md. Sinh tự động 2026-09-10T14:54:40.996Z.
+> Substrate layer của skill — full text từ docs/knowleged.md. Sinh tự động 2026-09-11T15:17:55.802Z.
 
-## Bug reports liên quan (2/13 bugs)
+## Bug reports liên quan (2/19 bugs)
 
 - `.agent/bugs/2026-08-30-bug-blindness/bug.md` — Bug: Bug Blindness — mù bug do workaround vô thức + fan bias
 - `.agent/bugs/2026-09-04-import-mcp-stdio-server-trong-smoke-test-gay-treo-/bug.md` — Bug: Import MCP stdio server trong smoke test gay treo + verify order + regex m flag
@@ -305,6 +305,102 @@
   - Self-improvement không cần verified answers: dùng SOLID pattern — multiple rollouts → cluster → majority pseudo-reference → group-relative advantages.
   - Intra-group feedback consistency là boundary — nếu feedback trong group không consistent → optimization unstable, phải fix environment trước.
 - **Tags:** `process` `rl` `consistency` `self-distillation` `verification` `scaffold`
+- **Người ghi:** YUNIE / auto-learn
+
+---
+
+### KN-033 — Recursive Self-Improvement — Roadmap 5 tầng autonomy + Research RSI (2609.11873v1, 2609.10702v1)
+
+- **Ngày:** 2026-09-11
+- **Bug report:** N/A — bài học rút từ 2 papers arXiv (chi tiết: `www/library/export.json` arxiv-2609.11873v1 + 2609.10702v1, nguồn `books/papers/`)
+- **Severity:** major
+- **Triệu chứng:** Hệ "self-improving" chỉ cải thiện capability ở instance hiện tại, không cải thiện chính quá trình cải thiện; không biết mình đang ở tầng autonomy nào; "học được" đo bằng performance quen thuộc — recovering familiar performance nhưng unseen inputs vẫn không dùng được computation đã học.
+- **Nguyên nhân gốc (5 Whys):**
+  - Why1: RSI bị hiểu hẹp — chỉ "improve capability", thiếu nửa sau: improve the **process** of future improvement.
+  - Why2: Thiếu khung đo tầng: improvement-execution → improvement-strategy → experience-acquisition → environment-adaptation → recursive meta-improvement (5 mức).
+  - Why3: LLM hiện tại "headroom closed" (HCI) — không tự tạo bước nhảy năng lực từ bên trong.
+  - Why4: Generalization test kém: controlled tasks cho thấy recover familiar performance ≠ unseen inputs dùng được learned computations.
+  - Why5 (Root): Thiếu principle-guided loop — experience phải tổ chức theo contextual dependencies cần cho prediction; tách riêng design (visible information / supervision / preservation) và test (learning / generalization / retention).
+- **Cách sửa:** Áp khung RSI: xác định tầng autonomy hiện tại → nâng dần; scenario-specific (software engineering ≠ scientific discovery ≠ embodied intelligence — tốc độ khác nhau); Research RSI — principle discovery → principle-guided improvement; continuation seeds từ cùng parent outperform ordinary continuation (42.02 → 42.25 qua 2 generations).
+- **Cách phòng tránh:**
+  - Tự đánh giá "self-improving" theo 5 tầng autonomy — đang ở tầng nào, tầng sau là gì.
+  - Không đòi meta-improvement khi mới ở execution autonomy (bỏ bước → ảo giác năng lực).
+  - Claim "học được" phải test riêng 3 thứ: learning / generalization / retention — không dùng performance quen thuộc.
+  - Cải thiện phải lưu vào process (knowleged/skills/harness), không chỉ fix instance — nửa giá trị RSI là process improvement.
+  - Scenario-specific: không copy timetable/approach giữa các domain khác tốc độ.
+- **Tags:** `process` `research` `rsi` `self-improving`
+- **Người ghi:** YUNIE / auto-learn
+
+---
+
+### KN-034 — Ecdysis — Failure diagnosis: model-specific vs harness-level, aggregate cross-task (2609.11677v1)
+
+- **Ngày:** 2026-09-11
+- **Bug report:** N/A — bài học rút từ 1 paper arXiv (chi tiết: `www/library/export.json` arxiv-2609.11677v1, nguồn `books/papers/`)
+- **Severity:** major
+- **Triệu chứng:** Harness evolution bằng iterative search trên từng failure riêng lẻ → time overhead lớn (repeated agent executions + code modifications) + overfit observed tasks/specific failure patterns → degrade generalization to unseen tasks; sửa mãi một failure mà root là systemic vẫn tái diễn.
+- **Nguyên nhân gốc (5 Whys):**
+  - Why1: Sửa theo instance → mỗi fix chỉ cover task đã thấy.
+  - Why2: Vì không phân biệt failure là model-specific deficiency hay systematic harness deficiency.
+  - Why3: Không phân biệt → vì thiếu principled failure diagnosis.
+  - Why4: Fix đơn lẻ sinh "unnecessary model-specific accommodation" — thay vì repair harness cấp hệ thống.
+  - Why5 (Root): Thiếu batch-level cross-instance failure aggregation: recurring cross-task failure patterns mới là tín hiệu harness-level thật.
+- **Cách sửa:** Gom failure evidence từ nhiều task instance cùng lúc → phân tích aggregated → tìm recurring cross-task pattern (harness deficiency) vs one-off (model-specific); multi-role diagnosis (Failure-Driven Collaborative Refinement) → refine harness modification spec lặp tới khi ổn. Kết quả paper: 1.84x speedup harness training + 18.56% reasoning accuracy.
+- **Cách phòng tránh:**
+  - Failure lặp ≥2 task → aggregate cross-task TRƯỚC khi sửa — tìm pattern chung thay vì fix từng case.
+  - Phân loại rõ trước khi fix: model-specific (prompt/context) hay harness-level (process/script/gate thiếu)?
+  - Fix harness-level = thêm gate/check/step vào process — không chỉ hạ prompt riêng lẻ.
+  - Verify fix trên UNSEEN tasks — không chỉ re-test task đã fail (kháng overfit).
+  - Đo cả chi phí (speedup) lẫn chất lượng (accuracy) — không đánh đổi mù.
+- **Tags:** `process` `harness` `failure-diagnosis` `self-evolving`
+- **Người ghi:** YUNIE / auto-learn
+
+---
+
+### KN-035 — Negative Self-Distillation — học bằng tránh flaws, giữ uncertainty (2609.11699v1)
+
+- **Ngày:** 2026-09-11
+- **Bug report:** N/A — bài học rút từ 1 paper arXiv (chi tiết: `www/library/export.json` arxiv-2609.11699v1, nguồn `books/papers/`)
+- **Severity:** major
+- **Triệu chứng:** Self-improvement kiểu "imitate solution đúng" (có privileged info) → model tự tin giả tạo, suppress uncertainty, phạt exploratory + self-corrective behavior → complex reasoning giảm; học từ example đúng làm mất khả năng nghi ngờ đúng chỗ.
+- **Nguyên nhân gốc (5 Whys):**
+  - Why1: Student bị ép imitate trace "artificially confident" → distribution méo.
+  - Why2: Confidence giả từ privileged-info conditioning → suppress expressions of uncertainty.
+  - Why3: Penalize exploratory/self-corrective behaviors — chính thứ cần để giải bài khó.
+  - Why4: Unlearning naive phạt mọi flawed token → confound với linguistic tokens → hỏng năng lực ngôn ngữ nền.
+  - Why5 (Root): Thiếu cơ chế học âm có gate — diverge khỏi flawed reasoning + chỉ nhắm reasoning-critical tokens.
+- **Cách sửa:** NSD pattern: model tự sinh negative condition (vd "careless reasoner") → push distribution away khỏi negative teacher; dynamic gating tự nhận diện + isolate reasoning-critical tokens → gradient chỉ đánh behavioral flaws, giữ linguistic priors; không cần ground-truth/external evaluator; outperform OPSD + label-free self-bootstrapping RL baselines.
+- **Cách phòng tránh:**
+  - Khi dạy (prompt/few-shot/reflect): đừng imitate "trace trông hoàn hảo" — giữ chỗ cho uncertainty + exploration.
+  - Ví dụ âm (failure case) giá trị cao — nhưng phải chỉ đích danh flaw (flaw-targeted), không phủ nhận toàn bộ output.
+  - Không suppress "tôi không chắc" — uncertainty đúng chỗ là capability, không phải lỗi.
+  - Học từ lỗi: tách "lỗi hành vi reasoning" khỏi "phần ngôn ngữ/diễn đạt đúng" — chỉ sửa phần lỗi (paper: gate token; người: gate scope).
+  - Ưu tiên học từ flaws tự sinh (self-generated negatives) hơn phụ thuộc reference đúng hoàn hảo.
+- **Tags:** `process` `self-distillation` `reasoning` `uncertainty`
+- **Người ghi:** YUNIE / auto-learn
+
+---
+
+### KN-036 — Auto-RecSys + Cognitive Digital Twin — cognitive-procedural separation + dual-loop evolution (2609.10922v1, 2609.09625v1)
+
+- **Ngày:** 2026-09-11
+- **Bug report:** N/A — bài học rút từ 2 papers arXiv (chi tiết: `www/library/export.json` arxiv-2609.10922v1 + 2609.09625v1, nguồn `books/papers/`)
+- **Severity:** major
+- **Triệu chứng:** Long-horizon autonomous research: feedback loop dài (training vài ngày) → serial iteration bất khả thi; system phức tạp + fragile infra → execution fail không recoverable; LLM tự do sinh cả reasoning lẫn operation → fail operational correctness; experience không tích lũy nếu playbook chỉ giữ success.
+- **Nguyên nhân gốc (5 Whys):**
+  - Why1: Serial exploration → vì không có distributed asynchronous execution (parallel experiments).
+  - Why2: State mất khi failure/session → vì không có centralized cross-server memory persistent + recoverable.
+  - Why3: LLM tự do sinh cả reasoning lẫn operation → vì KHÔNG tách cognitive (NL skill files) khỏi procedural (deterministic scripts enforce correctness).
+  - Why4: Experience không tích lũy → vì thiếu dual-loop: Execution Evolution (playbook ghi cả failed attempts + crystallize successes) + Idea Evolution (outcomes inform ideation).
+  - Why5 (Root): Feedback chưa đóng vòng lên chính representation: CDT — operational feedback phải refine cognitive experience VÀ update relationships/annotations → task sau evolve theo operation.
+- **Cách sửa:** Áp 3 harness designs: (1) parallel/async hóa chỗ được, (2) memory persistent + recoverable xuyên failure, (3) cognitive-procedural separation — skill file (NL) hướng dẫn reasoning, script deterministic enforce operational correctness (đúng kiến trúc Harness v2: skills = HOW, scripts = checks). Dual-loop: playbooks ghi failed + success; outcomes nuôi ideation. CDT: mỗi vòng operation update cả knowledge lẫn representation.
+- **Cách phòng tránh:**
+  - Reasoning (LLM) và correctness (script deterministic) phải tách path — đừng để LLM tự enforce operational invariants.
+  - Playbook phải ghi cả FAILED attempts, không chỉ successful pipelines — failed attempts là nửa knowledge.
+  - Memory persistent + recoverable xuyên session/failure — không để state chỉ nằm trong 1 run.
+  - Long loop → tìm cách parallel + async hóa thay vì chờ serial.
+  - Feedback loop phải đóng lên CẢ 2: experience refinement + representation update (quan hệ/annotation) — không chỉ append experience.
+- **Tags:** `process` `harness` `architecture` `self-evolving` `playbook`
 - **Người ghi:** YUNIE / auto-learn
 
 <!-- Thêm bài học mới theo template dưới — copy block này -->

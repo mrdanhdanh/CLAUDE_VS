@@ -1,14 +1,19 @@
 # Evidence — harness-web-ui (DisCo arXiv:2609.02749v1 §3.2 (task-agnostic))
 
-> Substrate layer của skill — full text từ docs/knowleged.md. Sinh tự động 2026-09-10T14:54:41.003Z.
+> Substrate layer của skill — full text từ docs/knowleged.md. Sinh tự động 2026-09-11T15:17:55.867Z.
 
-## Bug reports liên quan (5/13 bugs)
+## Bug reports liên quan (10/19 bugs)
 
 - `.agent/bugs/2026-08-29-rainbow-animated/bug.md` — Bug: Rainbow border không xoay (animated)
 - `.agent/bugs/2026-08-29-status-ui/bug.md` — Bug: Trang STATUS www/ giao diện chưa hợp lý — layout, responsive, registry render sai
 - `.agent/bugs/2026-08-30-grid2-rainbow-hover/bug.md` — Bug — grid-2 spacing + rainbow border không xoay khi hover
 - `.agent/bugs/2026-08-30-n5-ui-polish/bug.md` — 2026-08-30-n5-ui-polish
 - `.agent/bugs/2026-08-31-random-step-btn-disabled/bug.md` — Bug: Random làm disable nút ▶ Bước tiếp theo (Bài 004 & 005)
+- `.agent/bugs/2026-09-10-edge-pc-khong-thay-hieu-ung-intro-reduced-motion/bug.md` — Bug: edge-pc-khong-thay-hieu-ung-intro-reduced-motion
+- `.agent/bugs/2026-09-10-google-fonts-chan-script-intro-khong-hien/bug.md` — Bug: google-fonts-chan-script-intro-khong-hien
+- `.agent/bugs/2026-09-10-intro-burst-tu-goc-do-quen-goi-resize/bug.md` — Bug: intro-burst-tu-goc-do-quen-goi-resize
+- `.agent/bugs/2026-09-10-observatory-fetch-404-ngoai-www-va-relative-url/bug.md` — Bug: observatory-fetch-404-ngoai-www-va-relative-url
+- `.agent/bugs/2026-09-10-raf-callback-error-khong-bi-try-catch-bat/bug.md` — Bug: raf-callback-error-khong-bi-try-catch-bat
 
 ## Full KN details
 
@@ -142,3 +147,119 @@
   - Đọc `supportedFixes` của validator — nó luôn chỉ đúng đường (bỏ fromSide/toSide, dùng labelAt gợi ý, route preset conflict → thả auto).
 - **Tags:** `ui` `diagram` `archify` `responsive` `verify`
 - **Người ghi:** YUNIE / fixbug
+
+---
+
+### KN-028 — Canvas quên invoke `resize()` → burst sai gốc + behavior test xanh giả
+
+- **Ngày:** 2026-09-10
+- **Bug report:** `.agent/bugs/2026-09-10-intro-burst-tu-goc-do-quen-goi-resize/bug.md`
+- **Severity:** major
+- **Triệu chứng:** Intro cinematic COSMOS — 240 hạt Big Bang nổ từ **góc trên-trái (0,0)** thay vì tâm màn hình; canvas bị kéo giãn (hạt to/mờ bất thường: buffer 300×150 mặc định bị CSS scale lên 1280×720). Trong khi đó **8/8 Playwright test PASS** (cover/skip/reveal đều đúng) → xanh giả, suýt ship bug.
+- **Nguyên nhân gốc (5 Whys):**
+  - Why1: Hạt spawn tại `(cx,cy)=(0,0)` — vì `cx,cy` chưa bao giờ được gán.
+  - Why2: `cx,cy` chỉ gán trong `resize()` — vì `resize()` chưa bao giờ chạy lần nào.
+  - Why3: Code chỉ **define** `resize()` + `addEventListener('resize', resizeFn)` — **thiếu invoke `resize()` khởi tạo**.
+  - Why4: Không test nào assert invariant "canvas buffer == kích thước hiển thị" → behavior test không thể bắt.
+  - Why5 (Root): Invariant hình học chỉ tồn tại trong đầu người viết, không trong test — chỉ **visual evidence (screenshot)** bắt được.
+- **Cách sửa:** Thêm `resize();` ngay sau đăng ký listener + guard `if(!w||!h) resize()` trong `burst()` (chống khởi tạo trễ/viewport đổi); thêm assert `canvas.width===clientWidth && canvas.height===clientHeight` vào spec; screenshot từng stage làm evidence (`.agent/plans/cosmos-intro/verify/`).
+- **Cách phòng tránh:**
+  - Pattern "define setup → addEventListener" **phải kèm invoke ngay** — define không phải là chạy.
+  - Mọi effect dùng toạ độ/kích thước (canvas, parallax, viewBox) phải có **assert invariant hình học** trong test — không chỉ assert visible/hidden (KN-023: verification ngoài model).
+  - Animation phải có **visual evidence từng stage** (screenshot) trước khi claim Done — behavior test xanh ≠ hiệu ứng đúng (KN-005 Bug Blindness).
+  - Playwright test với external render-blocking (Google Fonts CSS) phải **stub route** để deterministic — nếu không, `load` event trễ 10-20s làm timeline chạy xong trước khi test assert → flaky giả.
+- **Tags:** `ui` `animation` `canvas` `verify` `bug-blindness`
+- **Người ghi:** YUNIE / fixbug (self-caught qua screenshot evidence)
+
+---
+
+### KN-029 — Google Fonts script-blocking làm intro "không hiện" trên mạng chậm
+
+- **Ngày:** 2026-09-10
+- **Bug report:** `.agent/bugs/2026-09-10-google-fonts-chan-script-intro-khong-hien/bug.md`
+- **Severity:** major
+- **Triệu chứng:** User báo "view ở VS Code không thấy hiệu ứng intro". Thực tế: 10-20s đầu overlay đứng hình (nền đen + nút skip + progress 0%, không chữ vì chars do JS inject); hoặc user click sớm → skip tức thì → không cảm nhận được gì.
+- **Nguyên nhân gốc (5 Whys):**
+  - Why1: Engine intro (inline script cuối body) không execute trong 10-20s đầu.
+  - Why2: Inline script đứng SAU một stylesheet chưa load xong bị **block execution** (spec: "a style sheet that is blocking scripts") — third-party CSS block SCRIPT, không chỉ render.
+  - Why3: `<link>` Google Fonts là stylesheet blocking thường (không async) → mạng chậm VN giữ toàn bộ JS của trang làm con tin.
+  - Why4: Gate `intro-on` (script trong head, chạy được) che nội dung ngay → user thấy màn đen đứng hình thay vì fallback bình thường → tệ hơn không có intro.
+  - Why5 (Root): Third-party CSS nhúng kiểu blocking + overlay che nội dung không fail-safe — đường loading bị khóa vào 1 CDN ngoài.
+- **Cách sửa:** (1) Fonts async `media="print" onload="this.media='all'"` + `<noscript>`; (2) fail-safe 9s ở head gate (engine không chạy → tự mở nội dung); (3) grace period 600ms cho click-anywhere; (4) dấu "·" vẽ bằng CSS circle (fallback font render ô vuông); (5) `window.__introOn=true` đặt cuối IIFE.
+- **Cách phòng tránh:**
+  - Third-party CSS (fonts/CDN) **luôn async** hoặc self-host — không bao giờ để chặn first script của trang.
+  - Overlay che nội dung phải có **fail-safe timer độc lập với engine** (engine fail → tự mở nội dung, không bao giờ kẹt màn đen).
+  - Skip kiểu click-anywhere phải có **grace period (~600ms)** chống click nhầm khi vừa mở.
+  - Chi tiết thiết kế (dot, divider) không phụ thuộc glyph font — vẽ bằng CSS để deterministic.
+  - Regression test: route treo fonts CDN → assert engine vẫn chạy ngay (`cosmos-intro.spec.ts`).
+- **Tags:** `ui` `perf` `font` `script-blocking` `verify`
+- **Người ghi:** YUNIE / fixbug (user report → repro bằng Playwright route treo)
+
+---
+
+### KN-030 — Fetch ra ngoài deploy root + relative URL không slash cuối → 404 trên Pages
+
+- **Ngày:** 2026-09-10
+- **Bug report:** `.agent/bugs/2026-09-10-observatory-fetch-404-ngoai-www-va-relative-url/bug.md`
+- **Severity:** major
+- **Triệu chứng:** Console trên trang Pages: `GET https://mrdanhdanh.github.io/.agent/audit.jsonl 404`. Observator "Event Horizon" luôn hiện demo (`✅ Chain OK — demo`) thay vì chuỗi audit thật; card "Nón ánh sáng" bấm 404. Trên local `npx serve` thì cả audit lẫn scale đều `fetch fail` (URL bị redirect `/cosmos/index.html → /cosmos` mất slash cuối).
+- **Nguyên nhân gốc (5 Whys):**
+  - Why1: Fetch 404 → không có data thật, rơi về demo fallback.
+  - Why2 (Pages): `.agent/` ngoài `www/` — Pages chỉ deploy `www/`; `../../` leo lên host root → `/.agent/audit.jsonl` không tồn tại.
+  - Why3 (local): `fetch('./x')` phân giải theo document URL — `/cosmos` (không slash cuối) coi segment cuối là file → `'./x'` → `/x`.
+  - Why4: Code giả định URL luôn có `/` cuối hoặc `.html` + `.agent/` truy cập được từ web root.
+  - Why5 (Root): Trang static không được giả định vị trí file ngoài deploy root hay hình dạng URL — tài nguyên phải nằm trong `www/` và URL phân giải phải robust mọi dạng path.
+- **Cách sửa:** (1) `generate-status.mjs` sinh mirror công khai `www/cosmos/audit.json` (50 events tail) — pattern giống `scale.json`; (2) helper toàn cục `dirBase(pathname)` xử lý đúng `/cosmos/`, `/cosmos`, `/cosmos/index.html`; (3) cả 4 fetch site dùng `dirBase(location.pathname)+'file.json'`; (4) card link → `./audit.json`; (5) spec `cosmos-observatory.spec.ts` assert badge "thật" + mirror 200 + không 404 `.agent`.
+- **Cách phòng tránh:**
+  - Trang static (Pages) **chỉ fetch trong `www/`** — tài nguyên ngoài (`.agent/`, `docs/`, root repo) phải **mirror vào** qua generator + commit.
+  - Relative fetch phải qua helper `dirBase` — không giả định slash cuối. Test cả URL dạng `/path`, `/path/`, `/path/index.html`.
+  - Spec phải assert **không có 404 nào** (bắt network response), không chỉ assert UI text — fallback demo che bug (xanh giả).
+  - Test trên **≥2 host** (serve local + Pages) cho mọi trang có fetch.
+- **Tags:** `data` `pages` `fetch` `url` `verify`
+- **Người ghi:** YUNIE / fixbug (user console report → repro bằng server log + Playwright)
+
+---
+
+### KN-031 — Edge PC "không thấy hiệu ứng" do reduced-motion bị xử lý quá tay
+
+- **Ngày:** 2026-09-10
+- **Bug report:** `.agent/bugs/2026-09-10-edge-pc-khong-thay-hieu-ung-intro-reduced-motion/bug.md`
+- **Severity:** major
+- **Triệu chứng:** User: "trên điện thoại coi được, Edge PC không coi được hiệu ứng". Thực tế Edge PC: intro hiện chữ **static cái rụp** ~1.8s rồi mở — không fade/particle/chuyển động gì. Phone (animation bật): full Big Bang.
+- **Nguyên nhân gốc (5 Whys):**
+  - Why1: Edge PC rơi vào nhánh `prefers-reduced-motion` (Windows tắt "Animation effects").
+  - Why2: Nhánh reduced cũ strip **mọi** animation/transition kể cả fade opacity vô hại → static pop-in.
+  - Why3: Không phân biệt chuyển động nguy hiểm tiền đình (translate/scale/parallax) vs fade opacity an toàn — cắt tất cả.
+  - Why4: Không test trên đúng môi trường user (Edge thật + reduced-motion) → không ai thấy bản reduced "trống".
+  - Why5 (Root): Reduced-motion bị hiểu là "xóa sạch hiệu ứng" thay vì "giữ hiệu ứng an toàn + nói rõ lý do khi rút gọn".
+- **Cách sửa:** Bản reduced "calm cinematic" chỉ opacity (fade stagger ~3.5s, dot pulse); hint nói rõ "Bật Animation effects trong Windows để xem đầy đủ" + `console.info`; defer start (t0 + .play + auto-finish) tới khi tab visible; grace click 1000ms; head fail-safe chuyển sang `window.__introEngine`; spec Edge thật (`channel:'msedge'`) + pixel poll.
+- **Cách phòng tránh:**
+  - Reduced-motion chỉ cắt **chuyển động** (translate/scale/parallax/spin) — fade opacity là an toàn, phải giữ để trải nghiệm còn "có nhịp".
+  - Khi rút gọn trải nghiệm vì setting của user → **nói rõ lý do trong UI** (hint ngắn) — đừng để user tưởng sản phẩm lỗi.
+  - Overlay/animation có timeline phải defer khi `document.hidden` — không chạy vô hình ở tab nền.
+  - "Không thấy hiệu ứng" → đo trên **đúng môi trường user** (Edge thật qua `channel:'msedge'`, emulate reduced-motion), không chỉ chromium default.
+  - Test animation bằng **poll state** (pixel/class), không wall-clock cố định (cold-start làm flaky).
+- **Tags:** `ui` `a11y` `reduced-motion` `edge` `verify`
+- **Người ghi:** YUNIE / fixbug (user report → repro trên Edge thật)
+
+---
+
+### KN-032 — rAF callback throw không bị try/catch bắt → animation chết im lặng
+
+- **Ngày:** 2026-09-10
+- **Bug report:** `.agent/bugs/2026-09-10-raf-callback-error-khong-bi-try-catch-bat/bug.md`
+- **Severity:** major
+- **Triệu chứng:** Intro v2 rewrite xong — chạy tới ~0.85s rồi **đứng im** (frame đóng băng, không crash trang, không message cho user). Edge spec fail qua assertion "no pageerror": `[pageerror] T is not defined`.
+- **Nguyên nhân gốc (5 Whys):**
+  - Why1: `T` (`Math.sin(T*2.2)` trong galactic nucleus glow) chưa khai báo khi rewrite v2.
+  - Why2: Throw xảy ra trong **rAF callback** — chạy async, KHÔNG nằm trong `try{...}catch(e){}` bao quanh phần setup engine (try/catch chỉ bắt lỗi đồng bộ lúc đăng ký).
+  - Why3: Throw trước `raf = requestAnimationFrame(frame)` → loop không schedule lại → chết im lặng.
+  - Why4: Rewrite lớn không chạy assertion "no-console-error" trên browser thật ngay sau khi viết.
+  - Why5 (Root): Thiếu nguyên tắc: engine rAF phải được gate bằng browser test assert no-pageerror — vì lỗi async không bị try/catch đồng bộ bắt và thất bại kiểu "đứng hình" rất khó thấy bằng mắt.
+- **Cách sửa:** Khai báo `const T = t/1000;` (fix ở nguồn, không bọc try/catch toàn frame để khỏi che lỗi thật); giữ assertion no-pageerror trong `cosmos-intro-edge.spec.ts` làm lưới an toàn thường trực.
+- **Cách phòng tránh:**
+  - Mọi engine rAF (canvas/animation): browser test PHẢI assert **no pageerror/console error** — chạy ngay sau rewrite lớn.
+  - Freeze animation = nghi lỗi async (rAF/setTimeout) trước khi nghi logic vật lý.
+  - Rewrite lớn: rà các biến dùng-xong-chưa-khai-báo (đặc biệt sau khi tách/ghép hàm) — syntax check của IDE không bắt được ReferenceError.
+- **Tags:** `ui` `canvas` `animation` `verify` `error-handling`
+- **Người ghi:** YUNIE / fixbug (Edge spec tự bắt trong session)

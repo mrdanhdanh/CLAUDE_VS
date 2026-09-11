@@ -1,7 +1,7 @@
 {
-  "generatedAt": "2026-09-10T17:43:27.871Z",
+  "generatedAt": "2026-09-11T15:17:56.161Z",
   "source": ".agent/audit.jsonl",
-  "total": 19,
+  "total": 21,
   "events": [
     {
       "ts": "2026-09-06T09:09:00.653Z",
@@ -324,6 +324,40 @@
       "policyDigest": "162346288ec03771",
       "hash": "d424b17dc606027b",
       "sig": "27vHPqGdrujX-f9xh9rp7HTN0ZFHzYvAcVFyQnwNQl1I80PXefMhdT-3GMwcoI2VMWCBt2SSIrEfpiMCA9VpBQ",
+      "pub": "MCowBQYDK2VwAyEAY8PlU0KjXp4HJUUlNlVZdaXHUmDagUMm8rUrEShTPXo"
+    },
+    {
+      "ts": "2026-09-10T17:44:07.123Z",
+      "actor": "YUNIE",
+      "tool": "shell",
+      "target": "git commit 125ffc5 + push origin main: cosmos future roads",
+      "decision": "permitted",
+      "rule": "allow-all",
+      "durationMs": null,
+      "error": null,
+      "intent": null,
+      "requestId": "a0c255",
+      "prevHash": "d424b17dc606027b",
+      "policyDigest": "162346288ec03771",
+      "hash": "f3769f085422b758",
+      "sig": "5xFY0ij5XjTIrK2r-jGAzaiXWVCULBCT3SQ_a5pc9t6mUt0dFy_Lk_uJLBKqKFa5jjupHPkYwDudVuopwigkDA",
+      "pub": "MCowBQYDK2VwAyEAY8PlU0KjXp4HJUUlNlVZdaXHUmDagUMm8rUrEShTPXo"
+    },
+    {
+      "ts": "2026-09-10T17:46:45.768Z",
+      "actor": "YUNIE",
+      "tool": "shell",
+      "target": "git rm --cached www/library/export.json + commit a066ca1 + push - nuoc di 1+2 theo library-rag: go file khoi repo, gitignore ap dung, Pages 404 verified",
+      "decision": "permitted",
+      "rule": "allow-all",
+      "durationMs": null,
+      "error": null,
+      "intent": null,
+      "requestId": "c2fca2",
+      "prevHash": "f3769f085422b758",
+      "policyDigest": "162346288ec03771",
+      "hash": "27ed5b04cc08a58e",
+      "sig": "YUI1hCEWK35sH0pcKVOxeTHWoaUCjPs4DcfuYwXiSf-2onD8IKu1e40Uk7AzWldkDxtwnY5bftN720p0dK6cAw",
       "pub": "MCowBQYDK2VwAyEAY8PlU0KjXp4HJUUlNlVZdaXHUmDagUMm8rUrEShTPXo"
     }
   ]

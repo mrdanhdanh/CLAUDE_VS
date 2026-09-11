@@ -54,6 +54,10 @@
 | KN-030 | 2026-09-10 | `GET /.agent/audit.jsonl 404` trên Pages — observatory luôn hiện demo thay vì data thật | Fetch trỏ ra ngoài deploy root (`../../.agent/` — Pages chỉ deploy `www/`) + fetch relative phân giải sai khi URL bỏ slash cuối (`/cosmos` + `./x` → `/x`) | Tài nguyên ngoài `www/` phải **mirror** vào (generate + commit như `scale.json`); dùng helper `dirBase(pathname)` robust mọi dạng URL; spec assert không-404 + data "thật" | `data` `pages` `fetch` `url` `verify` |
 | KN-031 | 2026-09-10 | Edge PC "không thấy hiệu ứng intro" (phone thấy) — Windows tắt Animation effects → `prefers-reduced-motion: reduce` → bản rút gọn cũ (opacity:1 !important + animation:none) hiện static 1.8s | Reduced-motion branch strip **mọi** animation kể cả fade opacity an toàn → static pop-in "trông như không có hiệu ứng"; cộng: intro chạy khi tab ẩn + grace 600ms quá ngắn cho click focus PC | Reduced-motion chỉ cắt chuyển động nguy hiểm (translate/scale/parallax), giữ fade opacity có nhịp + hint nói rõ lý do; defer timeline khi tab ẩn; grace 1000ms; test trên Edge thật (`channel: 'msedge'`) + poll pixels thay wall-clock | `ui` `a11y` `reduced-motion` `edge` `verify` |
 | KN-032 | 2026-09-10 | Engine v2 throw `T is not defined` trong rAF callback → intro **đứng hình im lặng** (không crash trang) | Khai báo thiếu khi rewrite + lỗi trong `requestAnimationFrame` **không bị try/catch đồng bộ bắt** (async) → throw trước dòng schedule rAF → loop chết không báo gì | Browser test PHẢI assert "no pageerror/console error" ngay sau rewrite; freeze animation = nghi lỗi async trước khi nghi logic; test bắt được nhờ assertion Edge spec | `ui` `canvas` `animation` `verify` `error-handling` |
+| KN-033 | 2026-09-11 | Recursive Self-Improvement — Roadmap 5 tầng + Research RSI (2609.11873v1, 2609.10702v1) | RSI bị hiểu hẹp (chỉ improve capability, không improve chính process của improvement); LLM hiện tại "headroom closed"; recover familiar performance ≠ unseen inputs dùng được computation đã học | Đo RSI theo 5 tầng autonomy (execution → strategy → experience → environment → meta); scenario-specific; test riêng learning / generalization / retention | `process` `research` `rsi` `self-improving` |
+| KN-034 | 2026-09-11 | Ecdysis — fix từng failure lẻ → model-specific accommodation mù + overfit (2609.11677v1) | Sửa theo instance không phân biệt model-specific vs harness-level deficiency; thiếu principled failure diagnosis → repeated execution đắt + degrade generalization | Aggregate cross-instance failures → recurring cross-task pattern = harness deficiency; multi-role diagnosis; verify trên unseen tasks (1.84x speedup, +18.56% accuracy) | `process` `harness` `failure-diagnosis` `self-evolving` |
+| KN-035 | 2026-09-11 | Negative Self-Distillation — imitate trace "confident" làm hỏng complex reasoning (2609.11699v1) | OPSD ép student imitate trace tự tin giả (privileged info) → suppress uncertainty + phạt exploratory/self-corrective; unlearning naive phạt cả linguistic tokens → hỏng nền ngôn ngữ | Học bằng diverge khỏi flawed reasoning tự sinh (negative teacher) + dynamic gating chỉ đánh reasoning-critical tokens; giữ uncertainty + exploration | `process` `self-distillation` `reasoning` `uncertainty` |
+| KN-036 | 2026-09-11 | Auto-RecSys + Cognitive Digital Twin — cognitive-procedural separation + dual-loop (2609.10922v1, 2609.09625v1) | Long feedback loop → serial bất khả thi; LLM sinh cả reasoning lẫn operation → fail operational correctness; experience không tích lũy nếu playbook chỉ giữ success | Tách cognitive (skill file NL) ↔ procedural (script deterministic enforce); dual-loop: Execution Evolution (ghi failed + crystallize success) + Idea Evolution; feedback đóng vòng lên cả representation | `process` `harness` `architecture` `self-evolving` `playbook` |
 
 > Dòng ví dụ trên sẽ bị thay khi có bug thật đầu tiên — giữ format.
 
@@ -729,6 +733,94 @@
 - **Tags:** `ui` `canvas` `animation` `verify` `error-handling`
 - **Người ghi:** YUNIE / fixbug (Edge spec tự bắt trong session)
 
+### KN-033 — Recursive Self-Improvement — Roadmap 5 tầng autonomy + Research RSI (2609.11873v1, 2609.10702v1)
+
+- **Ngày:** 2026-09-11
+- **Bug report:** N/A — bài học rút từ 2 papers arXiv (chi tiết: `www/library/export.json` arxiv-2609.11873v1 + 2609.10702v1, nguồn `books/papers/`)
+- **Severity:** major
+- **Triệu chứng:** Hệ "self-improving" chỉ cải thiện capability ở instance hiện tại, không cải thiện chính quá trình cải thiện; không biết mình đang ở tầng autonomy nào; "học được" đo bằng performance quen thuộc — recovering familiar performance nhưng unseen inputs vẫn không dùng được computation đã học.
+- **Nguyên nhân gốc (5 Whys):**
+  - Why1: RSI bị hiểu hẹp — chỉ "improve capability", thiếu nửa sau: improve the **process** of future improvement.
+  - Why2: Thiếu khung đo tầng: improvement-execution → improvement-strategy → experience-acquisition → environment-adaptation → recursive meta-improvement (5 mức).
+  - Why3: LLM hiện tại "headroom closed" (HCI) — không tự tạo bước nhảy năng lực từ bên trong.
+  - Why4: Generalization test kém: controlled tasks cho thấy recover familiar performance ≠ unseen inputs dùng được learned computations.
+  - Why5 (Root): Thiếu principle-guided loop — experience phải tổ chức theo contextual dependencies cần cho prediction; tách riêng design (visible information / supervision / preservation) và test (learning / generalization / retention).
+- **Cách sửa:** Áp khung RSI: xác định tầng autonomy hiện tại → nâng dần; scenario-specific (software engineering ≠ scientific discovery ≠ embodied intelligence — tốc độ khác nhau); Research RSI — principle discovery → principle-guided improvement; continuation seeds từ cùng parent outperform ordinary continuation (42.02 → 42.25 qua 2 generations).
+- **Cách phòng tránh:**
+  - Tự đánh giá "self-improving" theo 5 tầng autonomy — đang ở tầng nào, tầng sau là gì.
+  - Không đòi meta-improvement khi mới ở execution autonomy (bỏ bước → ảo giác năng lực).
+  - Claim "học được" phải test riêng 3 thứ: learning / generalization / retention — không dùng performance quen thuộc.
+  - Cải thiện phải lưu vào process (knowleged/skills/harness), không chỉ fix instance — nửa giá trị RSI là process improvement.
+  - Scenario-specific: không copy timetable/approach giữa các domain khác tốc độ.
+- **Tags:** `process` `research` `rsi` `self-improving`
+- **Người ghi:** YUNIE / auto-learn
+
+### KN-034 — Ecdysis — Failure diagnosis: model-specific vs harness-level, aggregate cross-task (2609.11677v1)
+
+- **Ngày:** 2026-09-11
+- **Bug report:** N/A — bài học rút từ 1 paper arXiv (chi tiết: `www/library/export.json` arxiv-2609.11677v1, nguồn `books/papers/`)
+- **Severity:** major
+- **Triệu chứng:** Harness evolution bằng iterative search trên từng failure riêng lẻ → time overhead lớn (repeated agent executions + code modifications) + overfit observed tasks/specific failure patterns → degrade generalization to unseen tasks; sửa mãi một failure mà root là systemic vẫn tái diễn.
+- **Nguyên nhân gốc (5 Whys):**
+  - Why1: Sửa theo instance → mỗi fix chỉ cover task đã thấy.
+  - Why2: Vì không phân biệt failure là model-specific deficiency hay systematic harness deficiency.
+  - Why3: Không phân biệt → vì thiếu principled failure diagnosis.
+  - Why4: Fix đơn lẻ sinh "unnecessary model-specific accommodation" — thay vì repair harness cấp hệ thống.
+  - Why5 (Root): Thiếu batch-level cross-instance failure aggregation: recurring cross-task failure patterns mới là tín hiệu harness-level thật.
+- **Cách sửa:** Gom failure evidence từ nhiều task instance cùng lúc → phân tích aggregated → tìm recurring cross-task pattern (harness deficiency) vs one-off (model-specific); multi-role diagnosis (Failure-Driven Collaborative Refinement) → refine harness modification spec lặp tới khi ổn. Kết quả paper: 1.84x speedup harness training + 18.56% reasoning accuracy.
+- **Cách phòng tránh:**
+  - Failure lặp ≥2 task → aggregate cross-task TRƯỚC khi sửa — tìm pattern chung thay vì fix từng case.
+  - Phân loại rõ trước khi fix: model-specific (prompt/context) hay harness-level (process/script/gate thiếu)?
+  - Fix harness-level = thêm gate/check/step vào process — không chỉ hạ prompt riêng lẻ.
+  - Verify fix trên UNSEEN tasks — không chỉ re-test task đã fail (kháng overfit).
+  - Đo cả chi phí (speedup) lẫn chất lượng (accuracy) — không đánh đổi mù.
+- **Tags:** `process` `harness` `failure-diagnosis` `self-evolving`
+- **Người ghi:** YUNIE / auto-learn
+
+### KN-035 — Negative Self-Distillation — học bằng tránh flaws, giữ uncertainty (2609.11699v1)
+
+- **Ngày:** 2026-09-11
+- **Bug report:** N/A — bài học rút từ 1 paper arXiv (chi tiết: `www/library/export.json` arxiv-2609.11699v1, nguồn `books/papers/`)
+- **Severity:** major
+- **Triệu chứng:** Self-improvement kiểu "imitate solution đúng" (có privileged info) → model tự tin giả tạo, suppress uncertainty, phạt exploratory + self-corrective behavior → complex reasoning giảm; học từ example đúng làm mất khả năng nghi ngờ đúng chỗ.
+- **Nguyên nhân gốc (5 Whys):**
+  - Why1: Student bị ép imitate trace "artificially confident" → distribution méo.
+  - Why2: Confidence giả từ privileged-info conditioning → suppress expressions of uncertainty.
+  - Why3: Penalize exploratory/self-corrective behaviors — chính thứ cần để giải bài khó.
+  - Why4: Unlearning naive phạt mọi flawed token → confound với linguistic tokens → hỏng năng lực ngôn ngữ nền.
+  - Why5 (Root): Thiếu cơ chế học âm có gate — diverge khỏi flawed reasoning + chỉ nhắm reasoning-critical tokens.
+- **Cách sửa:** NSD pattern: model tự sinh negative condition (vd "careless reasoner") → push distribution away khỏi negative teacher; dynamic gating tự nhận diện + isolate reasoning-critical tokens → gradient chỉ đánh behavioral flaws, giữ linguistic priors; không cần ground-truth/external evaluator; outperform OPSD + label-free self-bootstrapping RL baselines.
+- **Cách phòng tránh:**
+  - Khi dạy (prompt/few-shot/reflect): đừng imitate "trace trông hoàn hảo" — giữ chỗ cho uncertainty + exploration.
+  - Ví dụ âm (failure case) giá trị cao — nhưng phải chỉ đích danh flaw (flaw-targeted), không phủ nhận toàn bộ output.
+  - Không suppress "tôi không chắc" — uncertainty đúng chỗ là capability, không phải lỗi.
+  - Học từ lỗi: tách "lỗi hành vi reasoning" khỏi "phần ngôn ngữ/diễn đạt đúng" — chỉ sửa phần lỗi (paper: gate token; người: gate scope).
+  - Ưu tiên học từ flaws tự sinh (self-generated negatives) hơn phụ thuộc reference đúng hoàn hảo.
+- **Tags:** `process` `self-distillation` `reasoning` `uncertainty`
+- **Người ghi:** YUNIE / auto-learn
+
+### KN-036 — Auto-RecSys + Cognitive Digital Twin — cognitive-procedural separation + dual-loop evolution (2609.10922v1, 2609.09625v1)
+
+- **Ngày:** 2026-09-11
+- **Bug report:** N/A — bài học rút từ 2 papers arXiv (chi tiết: `www/library/export.json` arxiv-2609.10922v1 + 2609.09625v1, nguồn `books/papers/`)
+- **Severity:** major
+- **Triệu chứng:** Long-horizon autonomous research: feedback loop dài (training vài ngày) → serial iteration bất khả thi; system phức tạp + fragile infra → execution fail không recoverable; LLM tự do sinh cả reasoning lẫn operation → fail operational correctness; experience không tích lũy nếu playbook chỉ giữ success.
+- **Nguyên nhân gốc (5 Whys):**
+  - Why1: Serial exploration → vì không có distributed asynchronous execution (parallel experiments).
+  - Why2: State mất khi failure/session → vì không có centralized cross-server memory persistent + recoverable.
+  - Why3: LLM tự do sinh cả reasoning lẫn operation → vì KHÔNG tách cognitive (NL skill files) khỏi procedural (deterministic scripts enforce correctness).
+  - Why4: Experience không tích lũy → vì thiếu dual-loop: Execution Evolution (playbook ghi cả failed attempts + crystallize successes) + Idea Evolution (outcomes inform ideation).
+  - Why5 (Root): Feedback chưa đóng vòng lên chính representation: CDT — operational feedback phải refine cognitive experience VÀ update relationships/annotations → task sau evolve theo operation.
+- **Cách sửa:** Áp 3 harness designs: (1) parallel/async hóa chỗ được, (2) memory persistent + recoverable xuyên failure, (3) cognitive-procedural separation — skill file (NL) hướng dẫn reasoning, script deterministic enforce operational correctness (đúng kiến trúc Harness v2: skills = HOW, scripts = checks). Dual-loop: playbooks ghi failed + success; outcomes nuôi ideation. CDT: mỗi vòng operation update cả knowledge lẫn representation.
+- **Cách phòng tránh:**
+  - Reasoning (LLM) và correctness (script deterministic) phải tách path — đừng để LLM tự enforce operational invariants.
+  - Playbook phải ghi cả FAILED attempts, không chỉ successful pipelines — failed attempts là nửa knowledge.
+  - Memory persistent + recoverable xuyên session/failure — không để state chỉ nằm trong 1 run.
+  - Long loop → tìm cách parallel + async hóa thay vì chờ serial.
+  - Feedback loop phải đóng lên CẢ 2: experience refinement + representation update (quan hệ/annotation) — không chỉ append experience.
+- **Tags:** `process` `harness` `architecture` `self-evolving` `playbook`
+- **Người ghi:** YUNIE / auto-learn
+
 <!-- Thêm bài học mới theo template dưới — copy block này -->
 
 <!--
@@ -761,6 +853,10 @@
 - ❌ Timeline intro chạy khi tab ở background → user switch về là đã hết (KN-031).
 - ❌ Test animation bằng wall-clock cố định (Edge cold-start → flaky); phải poll state + test trên Edge thật khi user dùng Edge (KN-031).
 - ❌ Throw trong rAF callback tưởng được try/catch ngoài bắt — lỗi async → engine đứng hình im lặng; browser test thiếu assert no-pageerror là mù (KN-032).
+- ❌ Sửa từng failure riêng lẻ mà không aggregate cross-task → model-specific accommodation mù, overfit, degrade generalization (KN-034).
+- ❌ Bắt chước trace "confidently wrong" khi self-improve/dạy → suppress uncertainty + exploratory behavior; phải học từ flaws có gate (KN-035).
+- ❌ Trộn reasoning (LLM tự do) với operational correctness trong cùng 1 path → fail lặng; tách skill file NL + deterministic script (KN-036).
+- ❌ Đo "đã học được" bằng performance quen thuộc — recover familiar ≠ generalize unseen inputs (KN-033).
 - ❌ Không reproduce trước khi sửa → sửa nhầm chỗ.
 - ❌ Sửa xong không test regression → tạo bug mới.
 - ❌ Không ghi bài học → bug cũ lặp lại.
@@ -903,19 +999,24 @@
 - [ ] Self-improvement không phụ thuộc verified answers — dùng SOLID majority pseudo-reference? (KN-027)
 - [ ] Setup function (resize/init) đã được invoke ngay sau define, không chỉ addEventListener? (KN-028)
 - [ ] Third-party CSS/fonts đã async (media=print onload / self-host) — không chặn script của trang? (KN-029)
-- [ ] Overlay che nội dung đã có fail-safe tự mở khi engine fail (không kẹt màn đen)? (KN
+- [ ] Overlay che nội dung đã có fail-safe tự mở khi engine fail (không kẹt màn đen)? (KN-029)
 - [ ] Bản reduced-motion vẫn "có nhịp" (opacity-only fades) + hint nói rõ lý do khi bị rút gọn? (KN-031)
 - [ ] Timeline/overlay defer khi tab ẩn — không chạy vô hình? (KN-031)
 - [ ] "Không thấy hiệu ứng" đã test trên đúng môi trường user (Edge thật/reduced-motion) + poll thay wall-clock? (KN-031)
 - [ ] Engine rAF (canvas/animation) có browser test assert no-pageerror/console-error không? (KN-032)
-- [ ] Animation freeze → đã nghi lỗi async (rAF) trước khi nghi logic? (KN-032)-029)
+- [ ] Animation freeze → đã nghi lỗi async (rAF) trước khi nghi logic? (KN-032)
 - [ ] Skip click-anywhere đã có grace period chống click nhầm? (KN-029)
 - [ ] Mọi fetch trong `www/` chỉ trỏ tài nguyên TRONG `www/` (ngoài thì mirror vào)? (KN-030)
 - [ ] Fetch dùng `dirBase` — test cả URL không slash cuối + `.html` + `/`? (KN-030)
 - [ ] Spec assert network không-404 (không chỉ UI text — fallback demo che bug)? (KN-030)
 - [ ] Hiệu ứng toạ độ (canvas/parallax) đã có assert geometry (buffer == display size)? (KN-028)
 - [ ] Đã chụp screenshot từng stage animation làm visual evidence trước khi claim Done? (KN-028)
-- [ ] Playwright đã stub7:20:00Z — Maintained by YUNIE / Harness v2 — KN-031 added (user report "Edge PC không thấy hiệu ứng, phone thấy": Windows tắt Animation effects → reduced-motion → bản rút gọn quá tay; fix calm fade + hint + defer tab ẩn + Edge-real spec)st deterministic? (KN-028)
+- [ ] Playwright đã stub fonts để test deterministic? (KN-028)
+- [ ] Failure lặp lại ở nhiều task → đã aggregate cross-task tìm harness deficiency thay vì patch từng instance? (KN-034)
+- [ ] Self-improve/prompt có tránh imitate trace "confident" — giữ uncertainty + exploratory behavior? (KN-035)
+- [ ] Reasoning (skill file NL) đã tách khỏi execution (deterministic script) chưa? (KN-036)
+- [ ] Claim "học được" đã test riêng cả 3: learning / generalization / retention? (KN-033)
+- [ ] Playbook ghi cả FAILED attempts (không chỉ success pipelines)? (KN-036)
 
 *File này do `/fixbug` tự động cập nhật. Mọi luồng khác phải đọc để không lặp lại lỗi cũ.*
-*UpdatedAt: 2026-09-10T16:55:00Z — Maintained by YUNIE / Harness v2 — KN-030 added (user console 404: fetch ngoài deploy root + relative URL không slash cuối — mirror www/cosmos/audit.json + dirBase helper; spec assert network no-404) — KN-029 added (Google Fonts script-blocking chặn toàn bộ inline script — async fonts + fail-safe + grace period) — KN-028 added (intro COSMOS cinematic: canvas quên invoke resize() → burst từ góc + 8/8 behavior test xanh giả — visual evidence bắt; verify screenshot từng stage + stub fonts cho test deterministic) — KN-025/026/027 added (10 papers self-improving 2026-09-08/09: Procedural Graphs + A-JIT, Experience Funnel + ADMET-EvO, FEEs + Consistency Gap + SOLID — chi tiết www/library/export.json 10 arXiv books) — KN-024 added (prolific AI psychosis — output rẻ làm mù khả năng đánh giá; taste/craft là human judgment — Jeff Clark MD + Emily Oberg, chi tiết docs/llm-weakness-research.md §2b) — KN-023 added (model "giỏi ngọn yếu gốc" — 6 papers arXiv: self-correction fail, self-knowledge gap, calibration không generalize, self-preference, sycophancy, pattern-matching reasoning — chi tiết docs/llm-weakness-research.md) — KN-022 added (pipeline in a trench coat — agency cost-based test, DEV.to James Anderson) + KN-021 bổ sung lộ trình Grith risk-score (allow/queue/deny + supervision-escape) — KN-019/020/021 added (bài học từ "My Little AI Factory" dominis.blog + METR study: measured > perceived, trust hard, governance evolve) — KN-015 added (Pages 2 workflows + eval-gate Node 18 CJS) — KN-014 added (MCP stdio smoke hang + verify order + regex m flag — DisCo Phase 3) — KN-013 added (Ponytail ladder integration: minimal-ladder + lean-product) — Fix: Bảng tóm tắt reorder KN-005↔KN-006 + thêm KN-009 (đã có detail nhưng thiếu ở bảng) — Presets bổ sung auto-researcher (đồng bộ registry) — KN-011 added (Random disable Step button) — KN-010 added (AAR pattern) — KN-009 bổ sung detail section (slot máy chủ AI — hardcode config) — KN-008 added (dotnet build file lock MSB3027) — KN-007 added (Auto-Learn) — KN-006 added (N5 UI polish) — KN-005 added (Bug Blindness)*
+*UpdatedAt: 2026-09-11T15:30:00Z — Maintained by YUNIE / Harness v2 — KN-033/034/035/036 added (6 papers self-improving round 2, 2026-09-09/10: RSI roadmap + Research RSI, Ecdysis failure diagnosis, Negative Self-Distillation, Auto-RecSys + Cognitive Digital Twins — chi tiết books/papers/ + www/library/export.json 6 arXiv books mới) — KN-030 added (user console 404: fetch ngoài deploy root + relative URL không slash cuối — mirror www/cosmos/audit.json + dirBase helper; spec assert network no-404) — KN-029 added (Google Fonts script-blocking chặn toàn bộ inline script — async fonts + fail-safe + grace period) — KN-028 added (intro COSMOS cinematic: canvas quên invoke resize() → burst từ góc + 8/8 behavior test xanh giả — visual evidence bắt; verify screenshot từng stage + stub fonts cho test deterministic) — KN-025/026/027 added (10 papers self-improving 2026-09-08/09: Procedural Graphs + A-JIT, Experience Funnel + ADMET-EvO, FEEs + Consistency Gap + SOLID — chi tiết www/library/export.json 10 arXiv books) — KN-024 added (prolific AI psychosis — output rẻ làm mù khả năng đánh giá; taste/craft là human judgment — Jeff Clark MD + Emily Oberg, chi tiết docs/llm-weakness-research.md §2b) — KN-023 added (model "giỏi ngọn yếu gốc" — 6 papers arXiv: self-correction fail, self-knowledge gap, calibration không generalize, self-preference, sycophancy, pattern-matching reasoning — chi tiết docs/llm-weakness-research.md) — KN-022 added (pipeline in a trench coat — agency cost-based test, DEV.to James Anderson) + KN-021 bổ sung lộ trình Grith risk-score (allow/queue/deny + supervision-escape) — KN-019/020/021 added (bài học từ "My Little AI Factory" dominis.blog + METR study: measured > perceived, trust hard, governance evolve) — KN-015 added (Pages 2 workflows + eval-gate Node 18 CJS) — KN-014 added (MCP stdio smoke hang + verify order + regex m flag — DisCo Phase 3) — KN-013 added (Ponytail ladder integration: minimal-ladder + lean-product) — Fix: Bảng tóm tắt reorder KN-005↔KN-006 + thêm KN-009 (đã có detail nhưng thiếu ở bảng) — Presets bổ sung auto-researcher (đồng bộ registry) — KN-011 added (Random disable Step button) — KN-010 added (AAR pattern) — KN-009 bổ sung detail section (slot máy chủ AI — hardcode config) — KN-008 added (dotnet build file lock MSB3027) — KN-007 added (Auto-Learn) — KN-006 added (N5 UI polish) — KN-005 added (Bug Blindness)*

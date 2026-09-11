@@ -1,11 +1,11 @@
 {
-  "generatedAt": "2026-09-11T07:00:33.377Z",
+  "generatedAt": "2026-09-11T15:04:50.730Z",
   "generatedBy": "YUNIE × Last30Days",
   "version": 2,
-  "description": "Tin AI mới nhất — tổng hợp từ Last30Days (HN, GitHub, DEV.to, Reddit, Hugging Face, arXiv, HackerNoon) trong 30 ngày qua. Chủ đề: AI. Tự động cập nhật bởi YUNIE.",
+  "description": "Tin AI mới nhất — tổng hợp từ Last30Days (HN, GitHub, DEV.to, Reddit, Hugging Face, arXiv, HackerNoon) trong 30 ngày qua. Chủ đề: self-improving AI. Tự động cập nhật bởi YUNIE.",
   "last30days": {
     "enabled": true,
-    "topic": "AI",
+    "topic": "self-improving AI",
     "since": "2026-08-12",
     "days": 30,
     "sources": [
@@ -56,238 +56,243 @@
   ],
   "articles": [
     {
-      "id": "hf-Qwen_Qwen3_8-27B",
-      "title": "🤗 Qwen/Qwen3.8-27B — trending on Hugging Face",
-      "summary": "Model trending: image-text-to-text, 14673 likes, 7322476 downloads. transformers",
-      "source": "Hugging Face",
-      "sourceUrl": "https://huggingface.co/Qwen/Qwen3.8-27B",
-      "category": "products",
-      "date": "2026-09-11",
+      "id": "ax-2609.11873v1",
+      "title": "The Last AI Built by Humans: Toward Genuine Recursive Self-Improvement",
+      "summary": "Recursive self-improvement (RSI) enables AI systems to turn experience and feedback into persistent changes that improve both their capabilities and the process of future improvement. We first use the Headroom-Closed Ind",
+      "source": "arXiv",
+      "sourceUrl": "http://arxiv.org/abs/2609.11873v1",
+      "category": "big-tech",
+      "date": "2026-09-10",
       "hot": true,
       "tags": [
-        "Hugging Face",
-        "image-text-to-text",
-        "transformers"
+        "arXiv",
+        "paper",
+        "self-improving AI"
       ]
     },
     {
-      "id": "hf-unsloth_Qwen3_8-27B-GGUF",
-      "title": "🤗 unsloth/Qwen3.8-27B-GGUF — trending on Hugging Face",
-      "summary": "Model trending: model, 3858 likes, 11127203 downloads. ",
-      "source": "Hugging Face",
-      "sourceUrl": "https://huggingface.co/unsloth/Qwen3.8-27B-GGUF",
-      "category": "products",
-      "date": "2026-09-11",
+      "id": "ax-2609.11677v1",
+      "title": "Ecdysis: Efficient and Effective Training of Runtime Harnesses for LLM Agents",
+      "summary": "Self-evolving runtime harnesses can substantially improve the capabilities of large language model (LLM) agents and provide a promising paradigm for optimizing agent execution. Existing harness evolution methods typicall",
+      "source": "arXiv",
+      "sourceUrl": "http://arxiv.org/abs/2609.11677v1",
+      "category": "self-improving",
+      "date": "2026-09-10",
       "hot": true,
       "tags": [
-        "Hugging Face",
-        "model"
+        "arXiv",
+        "paper",
+        "self-improving AI"
       ]
     },
     {
-      "id": "hf-Lightricks_LTX-2_5",
-      "title": "🤗 Lightricks/LTX-2.5 — trending on Hugging Face",
-      "summary": "Model trending: image-to-video, 3403 likes, 1740572 downloads. diffusion-single-file",
-      "source": "Hugging Face",
-      "sourceUrl": "https://huggingface.co/Lightricks/LTX-2.5",
-      "category": "products",
-      "date": "2026-09-11",
+      "id": "ax-2609.10922v1",
+      "title": "Auto-RecSys: Harnessing Autonomous Research Agents for Industry-Scale Recommender System",
+      "summary": "Auto-research agents have shown the potential to automate hypothesis generation, experiment execution, and iterative refinement. However, scaling this paradigm to industry-scale recommendation models introduces two chall",
+      "source": "arXiv",
+      "sourceUrl": "http://arxiv.org/abs/2609.10922v1",
+      "category": "self-improving",
+      "date": "2026-09-10",
       "hot": true,
       "tags": [
-        "Hugging Face",
-        "image-to-video",
-        "diffusion-single-file"
+        "arXiv",
+        "paper",
+        "self-improving AI"
       ]
     },
     {
-      "id": "hf-deepseek-ai_DeepSeek-V4_1-Flash",
-      "title": "🤗 deepseek-ai/DeepSeek-V4.1-Flash — trending on Hugging Face",
-      "summary": "Model trending: image-text-to-text, 1515 likes, 6 downloads. transformers",
-      "source": "Hugging Face",
-      "sourceUrl": "https://huggingface.co/deepseek-ai/DeepSeek-V4.1-Flash",
-      "category": "products",
-      "date": "2026-09-11",
-      "hot": true,
+      "id": "ax-2609.11699v1",
+      "title": "Negative Self-Distillation: Learning to Reason by Avoiding Flaws",
+      "summary": "On-Policy Self-Distillation (OPSD) has emerged as a popular paradigm for large language model (LLM) self-improvement, allowing models to act as their own teachers by leveraging privileged information such as ground-truth",
+      "source": "arXiv",
+      "sourceUrl": "http://arxiv.org/abs/2609.11699v1",
+      "category": "safety",
+      "date": "2026-09-10",
+      "hot": false,
       "tags": [
-        "Hugging Face",
-        "image-text-to-text",
-        "transformers"
+        "arXiv",
+        "paper",
+        "self-improving AI"
       ]
     },
     {
-      "id": "hf-openbmb_MiniCPM5-2B",
-      "title": "🤗 openbmb/MiniCPM5-2B — trending on Hugging Face",
-      "summary": "Model trending: text-generation, 1137 likes, 42289 downloads. transformers",
-      "source": "Hugging Face",
-      "sourceUrl": "https://huggingface.co/openbmb/MiniCPM5-2B",
-      "category": "products",
-      "date": "2026-09-11",
+      "id": "ax-2609.10702v1",
+      "title": "Data-Efficient Language Modeling: From Frontier Advancement to Principle-Guided Model Improvement",
+      "summary": "Learning from limited text requires models to use context, generalize to new inputs, and retain useful capabilities. Qiushi Engine conducted a long-horizon, end-to-end autonomous research program on BabyLM 2026 Strict-Sm",
+      "source": "arXiv",
+      "sourceUrl": "http://arxiv.org/abs/2609.10702v1",
+      "category": "safety",
+      "date": "2026-09-09",
       "hot": true,
       "tags": [
-        "Hugging Face",
-        "text-generation",
-        "transformers"
+        "arXiv",
+        "paper",
+        "self-improving AI"
       ]
     },
     {
-      "id": "hf-XHToken_Spark-X2_5-4B",
-      "title": "🤗 XHToken/Spark-X2.5-4B — trending on Hugging Face",
-      "summary": "Model trending: text-generation, 1073 likes, 15930 downloads. transformers",
-      "source": "Hugging Face",
-      "sourceUrl": "https://huggingface.co/XHToken/Spark-X2.5-4B",
-      "category": "products",
-      "date": "2026-09-11",
+      "id": "ax-2609.10248v1",
+      "title": "A-JIT: Agentic Just-In-Time Software Construction",
+      "summary": "Traditional software delivery assumes a static paradigm: code is constructed prior to execution and deployed as a fixed artifact. We present Agentic Just-In-Time Software Construction (A-JIT), a paradigm that replaces st",
+      "source": "arXiv",
+      "sourceUrl": "http://arxiv.org/abs/2609.10248v1",
+      "category": "self-improving",
+      "date": "2026-09-09",
       "hot": true,
       "tags": [
-        "Hugging Face",
-        "text-generation",
-        "transformers"
+        "arXiv",
+        "paper",
+        "self-improving AI"
       ]
     },
     {
-      "id": "hf-ISTA-DASLab_Qwen3_8-27B-GSQ-RCO-GGUF",
-      "title": "🤗 ISTA-DASLab/Qwen3.8-27B-GSQ-RCO-GGUF — trending on Hugging Face",
-      "summary": "Model trending: image-text-to-text, 807 likes, 614850 downloads. gguf",
-      "source": "Hugging Face",
-      "sourceUrl": "https://huggingface.co/ISTA-DASLab/Qwen3.8-27B-GSQ-RCO-GGUF",
+      "id": "ax-2609.10121v2",
+      "title": "ADMET-EvO: a self-evolving scientific agent for sustained research across heterogeneous tasks",
+      "summary": "Scientific agents can move beyond automated model building by using accumulated evidence to revise both their questions and experimental strategies. The challenge is sustaining this adaptation across heterogeneous tasks ",
+      "source": "arXiv",
+      "sourceUrl": "http://arxiv.org/abs/2609.10121v2",
       "category": "products",
-      "date": "2026-09-11",
+      "date": "2026-09-09",
       "hot": true,
       "tags": [
-        "Hugging Face",
-        "image-text-to-text",
-        "gguf"
+        "arXiv",
+        "paper",
+        "self-improving AI"
       ]
     },
     {
-      "id": "hf-google_timesfm-3_0-pytorch",
-      "title": "🤗 google/timesfm-3.0-pytorch — trending on Hugging Face",
-      "summary": "Model trending: time-series-forecasting, 718 likes, 483787 downloads. ",
-      "source": "Hugging Face",
-      "sourceUrl": "https://huggingface.co/google/timesfm-3.0-pytorch",
-      "category": "products",
-      "date": "2026-09-11",
+      "id": "ax-2609.09957v1",
+      "title": "Beyond Verified Answers: Solver-Informed Self-Distillation for Bootstrapping Operations Research Language Models",
+      "summary": "Modern large language models (LLMs) can translate natural-language descriptions into operations research (OR) formulations. Post-training techniques including reinforcement learning and on-policy self-distillation have f",
+      "source": "arXiv",
+      "sourceUrl": "http://arxiv.org/abs/2609.09957v1",
+      "category": "safety",
+      "date": "2026-09-09",
       "hot": true,
       "tags": [
-        "Hugging Face",
-        "time-series-forecasting"
+        "arXiv",
+        "paper",
+        "self-improving AI"
       ]
     },
     {
-      "id": "hf-nex-agi_Nex-N2_5-mini",
-      "title": "🤗 nex-agi/Nex-N2.5-mini — trending on Hugging Face",
-      "summary": "Model trending: text-generation, 663 likes, 2444 downloads. transformers",
-      "source": "Hugging Face",
-      "sourceUrl": "https://huggingface.co/nex-agi/Nex-N2.5-mini",
+      "id": "ax-2609.09625v1",
+      "title": "From State Synchronization to Cognitive Self-Evolution: An Operational Architecture for Cognitive Digital Twins",
+      "summary": "As Digital Twin (DT) systems evolve beyond state synchronization toward task-oriented and knowledge-driven operation, Cognitive Digital Twins (CDTs) have emerged as an extension that incorporates cognitive capabilities i",
+      "source": "arXiv",
+      "sourceUrl": "http://arxiv.org/abs/2609.09625v1",
       "category": "products",
-      "date": "2026-09-11",
+      "date": "2026-09-09",
       "hot": true,
       "tags": [
-        "Hugging Face",
-        "text-generation",
-        "transformers"
+        "arXiv",
+        "paper",
+        "self-improving AI"
       ]
     },
     {
-      "id": "hf-nex-agi_Nex-N2_5-Pro",
-      "title": "🤗 nex-agi/Nex-N2.5-Pro — trending on Hugging Face",
-      "summary": "Model trending: text-generation, 586 likes, 3 downloads. transformers",
-      "source": "Hugging Face",
-      "sourceUrl": "https://huggingface.co/nex-agi/Nex-N2.5-Pro",
+      "id": "ax-2609.09153v1",
+      "title": "Procedural Graphs: Self-Evolving Execution Structures for LLM Agents",
+      "summary": "Large language models are increasingly deployed as agents that plan over long horizons and act through external tools. Most agents select actions through unconstrained generation over an accumulating history, leaving imp",
+      "source": "arXiv",
+      "sourceUrl": "http://arxiv.org/abs/2609.09153v1",
       "category": "products",
-      "date": "2026-09-11",
+      "date": "2026-09-08",
       "hot": true,
       "tags": [
-        "Hugging Face",
-        "text-generation",
-        "transformers"
+        "arXiv",
+        "paper",
+        "self-improving AI"
       ]
     },
     {
-      "id": "hnoon-the-end-of-prompt-and-hope-ai-development",
-      "title": "The End of Prompt-and-Hope AI Development",
-      "summary": "The shift from simple prompts to deterministic agent orchestration. This article explores why modern AI engineering requires compute budgeting, GraphRAG, and event-driven state mac — by Maksym Strizhov on HackerNoon.",
-      "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/the-end-of-prompt-and-hope-ai-development",
-      "category": "products",
-      "date": "2026-09-11",
-      "hot": true,
-      "tags": [
-        "HackerNoon",
-        "ai",
-        "AI"
-      ]
-    },
-    {
-      "id": "hnoon-why-speech-recognition-misses-human-context-dr-sunday-david-",
-      "title": "Why Speech Recognition Misses Human Context: Dr. Sunday David Ubur’s Affective Architecture",
-      "summary": "Dr. Sunday Ubur's research explores emotion-aware AI captions that preserve tone, urgency, and context for deaf and hard-of-hearing users. Read All — by Nica Furs on HackerNoon.",
-      "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/why-speech-recognition-misses-human-context-dr-sunday-david-uburs-affective-architecture",
-      "category": "products",
-      "date": "2026-09-11",
-      "hot": true,
-      "tags": [
-        "HackerNoon",
-        "speech-recognition",
-        "AI"
-      ]
-    },
-    {
-      "id": "hnoon-3-in-4-organizations-are-embracing-low-code-when-should-a-bu",
-      "title": "3 in 4 Organizations Are Embracing Low-Code: When Should a Business Build Instead of Buy?",
-      "summary": "From project management and customer service to human resources (HR) and finance, businesses have access to more prebuilt software options than ever before. Read All — by Dmytro Spilka on HackerNoon.",
-      "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/3-in-4-organizations-are-embracing-low-code-when-should-a-business-build-instead-of-buy",
-      "category": "products",
-      "date": "2026-09-11",
-      "hot": true,
-      "tags": [
-        "HackerNoon",
-        "low-code",
-        "AI"
-      ]
-    },
-    {
-      "id": "hnoon-ultra-4k-is-now-live-on-meshy-what-4k-geometry-changes-for-a",
-      "title": "Ultra 4K Is Now Live on Meshy: What 4K Geometry Changes for AI-Generated 3D Models",
-      "summary": "Meshy Ultra 4K brings 4K geometry resolution to AI 3D, preserving scales, folds, engravings, and other fine details directly in the model. Read All — by Meshy on HackerNoon.",
-      "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/ultra-4k-is-now-live-on-meshy-what-4k-geometry-changes-for-ai-generated-3d-models",
-      "category": "products",
-      "date": "2026-09-11",
-      "hot": true,
-      "tags": [
-        "HackerNoon",
-        "ai",
-        "AI"
-      ]
-    },
-    {
-      "id": "hn-49653699",
-      "title": "The Gemini app is now available for Windows",
-      "summary": "The Gemini app is now available for Windows — 20 points, 6 comments on HN.",
+      "id": "hn-49609555",
+      "title": "Novus – A self-improving AI agent that lives on an Android phone",
+      "summary": "Novus – A self-improving AI agent that lives on an Android phone — 2 points, 1 comments on HN.",
       "source": "Hacker News",
-      "sourceUrl": "https://blog.google/innovation-and-ai/products/gemini-app/gemini-app-now-on-windows/",
-      "category": "products",
-      "date": "2026-09-11",
+      "sourceUrl": "https://github.com/RexHuang/novus",
+      "category": "self-improving",
+      "date": "2026-09-08",
       "hot": false,
       "tags": [
         "HN",
-        "AI",
+        "self-improving AI",
         "story",
-        "author_quysala12"
+        "author_RexHuang"
+      ]
+    },
+    {
+      "id": "hn-49554680",
+      "title": "Using semantic benchmarks to build a self-improving text-to-query agent",
+      "summary": "Using semantic benchmarks to build a self-improving text-to-query agent — 3 points, 0 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://conversion.ai/blog/text-to-query-agent/",
+      "category": "self-improving",
+      "date": "2026-09-03",
+      "hot": false,
+      "tags": [
+        "HN",
+        "self-improving AI",
+        "story",
+        "author_jimmyl02"
+      ]
+    },
+    {
+      "id": "hn-49484813",
+      "title": "An Anthropic researcher just gave us a peek at self-improving AI",
+      "summary": "An Anthropic researcher just gave us a peek at self-improving AI — 4 points, 1 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://techcrunch.com/2026/08/28/an-anthropic-researcher-just-gave-us-a-peek-at-self-improving-ai/",
+      "category": "self-improving",
+      "date": "2026-08-28",
+      "hot": false,
+      "tags": [
+        "HN",
+        "self-improving AI",
+        "story",
+        "author_sbulaev"
+      ]
+    },
+    {
+      "id": "hn-49339427",
+      "title": "Prime Agent: A Self-Improving RLM Agent",
+      "summary": "Prime Agent: A Self-Improving RLM Agent — 4 points, 0 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://github.com/PrimeIntellect-ai/prime-agent",
+      "category": "self-improving",
+      "date": "2026-08-18",
+      "hot": false,
+      "tags": [
+        "HN",
+        "self-improving AI",
+        "story",
+        "author_rzk"
+      ]
+    },
+    {
+      "id": "hn-49323136",
+      "title": "Red queen hypothesis – A new way forward for self-improving AI",
+      "summary": "Red queen hypothesis – A new way forward for self-improving AI — 103 points, 28 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://www.cst.cam.ac.uk/news/red-queen-hypothesis-new-way-forward-self-improving-ai",
+      "category": "self-improving",
+      "date": "2026-08-16",
+      "hot": true,
+      "tags": [
+        "HN",
+        "self-improving AI",
+        "story",
+        "author_hardlianotion"
       ]
     }
   ],
   "meta": {
-    "fetchedAt": "2026-09-11T07:00:33.377Z",
-    "topic": "AI",
+    "fetchedAt": "2026-09-11T15:04:50.731Z",
+    "topic": "self-improving AI",
     "total": 15,
-    "hot": 14,
+    "hot": 10,
     "sources": [
-      "Hugging Face",
-      "HackerNoon",
+      "arXiv",
       "Hacker News"
     ]
   }
