@@ -1,6 +1,6 @@
 ---
 name: harness-process
-description: "Task-agnostic lessons 'Process & Self-Improvement' chưng cất từ docs/knowleged.md (16 KN: KN-005, KN-007, KN-010, KN-014, KN-016, KN-018, KN-019, KN-023, KN-024, KN-025, KN-026, KN-027, KN-033, KN-034, KN-035, KN-036) + .agent/bugs/. Use when task chạm process, quality, ux, perf, a11y, knowledge, automation, dx, self-improving, benchmark — áp Cách phòng tránh trước khi code, tránh lặp bug cũ. DisCo-lite, regenerate bằng distill-agnostic.mjs."
+description: "Task-agnostic lessons 'Process & Self-Improvement' chưng cất từ docs/knowleged.md (17 KN: KN-005, KN-007, KN-010, KN-014, KN-016, KN-018, KN-019, KN-023, KN-024, KN-025, KN-026, KN-027, KN-033, KN-034, KN-035, KN-036, KN-037) + .agent/bugs/. Use when task chạm process, quality, ux, perf, a11y, knowledge, automation, dx, self-improving, benchmark — áp Cách phòng tránh trước khi code, tránh lặp bug cũ. DisCo-lite, regenerate bằng distill-agnostic.mjs."
 user-invocable: false
 ---
 
@@ -10,11 +10,11 @@ user-invocable: false
 
 ## When to Use
 
-- Task chạm theme **Process & Self-Improvement** (tags: process, quality, ux, perf, a11y, knowledge, automation, dx, self-improving, benchmark, aar, mcp, testing, regex, windows, fs, collaboration, diversity, pilot-in-command, metrics, evidence, research, verification, calibration, psychology, taste, human-judgment, agent, self-evolving, procedural-graph, a-jit, memory, funnel, rl, consistency, self-distillation, scaffold, rsi, harness, failure-diagnosis, reasoning, uncertainty, architecture, playbook)
+- Task chạm theme **Process & Self-Improvement** (tags: process, quality, ux, perf, a11y, knowledge, automation, dx, self-improving, benchmark, aar, mcp, testing, regex, windows, fs, collaboration, diversity, pilot-in-command, metrics, evidence, research, verification, calibration, psychology, taste, human-judgment, agent, self-evolving, procedural-graph, a-jit, memory, funnel, rl, consistency, self-distillation, scaffold, rsi, harness, failure-diagnosis, reasoning, uncertainty, architecture, playbook, evals, agentic-patterns)
 - Trước khi code/fix — áp **Cách phòng tránh** ngay để không lặp bug cũ
 - Review/plan — check anti-patterns bên dưới
 
-## Bài học (16 KN)
+## Bài học (17 KN)
 
 ### KN-005 — Bug Blindness — mù bug do workaround vô thức + fan bias (major)
 - **Bài học:** Chữa mù bug: fresh eyes, test như user mới, chỉ ra bug liên tục, không workaround vô thức, dogfooding có ý thức
@@ -171,6 +171,17 @@ user-invocable: false
   - Long loop → tìm cách parallel + async hóa thay vì chờ serial.
   - Feedback loop phải đóng lên CẢ 2: experience refinement + representation update (quan hệ/annotation) — không chỉ append experience.
 
+### KN-037 — Evals Gap — "single biggest predictor" là evals discipline (Andrew Ng, Agentic AI Playbook 2026) (major)
+- **Bài học:** Thêm Evals Gate vào Verify: rubric trước → component evals (từng bước) → E2E evals (goal achieved) → error analysis (aggregate cross-task) — "single biggest predictor" theo Ng
+- **Bug report:** books/Andrew-Ng-Agentic-AI-Playbook-2026-Distilled.md
+- **Cách phòng tránh:**
+  - Trước Verify: viết rubric tiêu chí cụ thể — không đánh giá "trông ổn", không để model tự khen mình (KN-023).
+  - Component evals: plan đúng chưa → implement đúng chưa → output đúng chưa — verify từng bước, không chỉ nhìn kết quả cuối.
+  - E2E evals: chạy scenario thật từ đầu đến cuối, đo goal achieved — build xanh ≠ chất lượng.
+  - Error analysis: failures cùng loại ≥2 → aggregate TRƯỚC khi fix (KN-034); fix pattern không fix instance.
+  - Chọn pattern có chủ đích theo task, không mặc định thêm agentic loop (KN-022).
+  - Claim "nhanh hơn/tốt hơn" phải kèm số đo — không vibes (KN-019).
+
 ## Anti-patterns (đừng lặp lại)
 
 - - ❌ Sửa từng failure riêng lẻ mà không aggregate cross-task → model-specific accommodation mù, overfit, degrade generalization (KN-034).
@@ -218,9 +229,12 @@ user-invocable: false
 - - ❌ Chỉ đo per-run pass rate, không đo consistency gap all-5 vs per-run → tưởng reliable nhưng production flip (KN-027).
 - - ❌ Self-improvement phụ thuộc verified answers/external evaluator — không dùng SOLID majority pseudo-reference (KN-027).
 - - ❌ Bỏ qua intra-group feedback consistency — feedback trong group không consistent mà vẫn optimize → unstable (KN-027).
+- - ❌ Verify xong build/test/lint là claim Done cho output open-ended — "chạy được" ≠ "tốt đến đâu"; phải có evals: rubric + component/E2E + bằng chứng đo (KN-037).
+- - ❌ Đánh giá output agent bằng "trông ổn" không rubric — critique thiếu tiêu chí = model tự khen mình (KN-037 + KN-023).
+- - ❌ Chạy cả agentic loop / multi-agent cho task pipeline vẽ được flowchart — agency là cost phải justify (KN-037 + KN-022).
 
 ## Nguồn
 
-- `docs/knowleged.md` — KN-005, KN-007, KN-010, KN-014, KN-016, KN-018, KN-019, KN-023, KN-024, KN-025, KN-026, KN-027, KN-033, KN-034, KN-035, KN-036
+- `docs/knowleged.md` — KN-005, KN-007, KN-010, KN-014, KN-016, KN-018, KN-019, KN-023, KN-024, KN-025, KN-026, KN-027, KN-033, KN-034, KN-035, KN-036, KN-037
 - Chi tiết đầy đủ: `references/evidence.md` (progressive disclosure)
 - Regenerate: `node .github/harness/scripts/distill-agnostic.mjs`

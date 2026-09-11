@@ -13,7 +13,7 @@ Idea → Explore → Clarify → PRD → Design → Plan → Implement → Polis
 - **Model-agnostic:** GPT / Claude / Gemini đều chạy cùng pipeline — chất lượng đến từ **process**, không phụ thuộc model.
 - **Product-driven:** Mọi task phải ra sản phẩm dùng được, UI đẹp, UX mượt.
 - **Todo-driven:** Mọi task >2 bước phải `manage_todo_list`, 1 todo `in-progress` tại 1 thời điểm, `get_errors` sau mỗi edit.
-- **Verify before Done:** Không `task_complete` khi chưa build/test/lint pass + visual check.
+- **Verify before Done:** Không `task_complete` khi chưa build/test/lint pass + visual check + **Evals Gate** (KN-037 — rubric + component/E2E evals cho output open-ended).
 
 ---
 
@@ -190,7 +190,7 @@ flowchart LR
 | **Plan** | Chia nhỏ để code | PRD + Design | `.agent/plans/<slug>/plan.md` + `manage_todo_list` | `manage_todo_list` | `Plan` | ❌ |
 | **Implement** | Code todo-driven **+ TDD Gate** | Plan + todos | Files code (RED→GREEN→REFACTOR) | `tdd-gate` skill, `replace_string_in_file`, `multi_replace`, `get_errors` | `Implement` | ❌ |
 | **Polish** | Làm đẹp + UX | Code + Design | Responsive, states, animation, a11y | `read_file`, `replace`, `open_browser_page` | `Polish` | ❌ |
-| **Verify** | Đảm bảo chất lượng **+ verification-before-completion** | Code | build/test/lint pass + visual check (fresh evidence) | `systematic-debugging` Phase 4.3, `get_errors`, `run_in_terminal` | `Verify` | ❌ |
+| **Verify** | Đảm bảo chất lượng **+ Evals Gate (KN-037)** + verification-before-completion | Code | build/test/lint pass + visual check + evals (rubric/component/E2E nếu open-ended) — fresh evidence | `evals-gate` skill, `systematic-debugging` Phase 4.3, `get_errors`, `run_in_terminal` | `Verify` | ❌ |
 
 ### Outputs mẫu (Focus Flow demo)
 
@@ -244,7 +244,7 @@ Chi tiết: `.github/prompts/fixbug.prompt.md` · `.github/instructions/harness-
 
 ---
 
-## 5c. Skills mới — TDD Gate + Systematic Debugging (từ obra/superpowers)
+## 5c. Skills — TDD Gate · Systematic Debugging · Evals Gate
 
 > Adapted cho Harness v2 — không copy nguyên, đã tích hợp với `auto-learn`, `knowleged.md`, `dotnet test`, `get_errors` phân tầng.
 
@@ -252,6 +252,7 @@ Chi tiết: `.github/prompts/fixbug.prompt.md` · `.github/instructions/harness-
 |-------|----------|---------|----------|
 | `tdd-gate` | `NO PRODUCTION CODE WITHOUT A FAILING TEST FIRST` | Mọi production code change (feature, bug fix, refactor) | `/harness` Implement + `/fixbug` Fix — mỗi todo có code phải có test fail trước (RED→verify FAIL→GREEN→verify PASS→REFACTOR) |
 | `systematic-debugging` | `NO FIXES WITHOUT ROOT CAUSE INVESTIGATION FIRST` | Mọi bug, test failure, build failure | `/fixbug` 4 phase (Root Cause → Pattern → Hypothesis → Implementation) + `/harness` Verify khi phát hiện bug — 3-fix limit → question architecture |
+| `evals-gate` | `NO DONE WITHOUT EVALS FOR OPEN-ENDED OUTPUT` | Output open-ended (UI/plan/report/agent), trước claim Done | `/harness` Verify + `/fixbug` Verify — rubric + component/E2E evals + error analysis (KN-037, Andrew Ng 2026) |
 
 **TDD Gate (RED-GREEN-REFACTOR):**
 - RED: 1 behavior, tên rõ, test real code → `dotnet test --filter` phải FAIL đúng lý do
@@ -265,7 +266,12 @@ Chi tiết: `.github/prompts/fixbug.prompt.md` · `.github/instructions/harness-
 3. Hypothesis & Testing — single hypothesis, minimal change, verify
 4. Implementation — TDD fix (dùng `tdd-gate`), single fix, verification-before-completion (fresh evidence), 3-fix limit → question architecture
 
-Chi tiết: `.github/skills/tdd-gate/SKILL.md` · `.github/skills/systematic-debugging/SKILL.md` · Gốc: `obra/superpowers`
+**Evals Gate (KN-037 — Andrew Ng "Agentic AI Playbook 2026"):**
+- build/test/lint = WHETHER (chạy được); evals = HOW WELL (tốt đến đâu) — "single biggest predictor" theo Ng
+- Rubric TRƯỚC → component evals (từng bước) → E2E evals (scenario thật, goal achieved) → error analysis (aggregate, fix pattern — KN-034)
+- 4 patterns có chủ đích: Reflection · Tool Use · Planning · Multi-Agent — vẽ được flowchart → pipeline, không thêm agent loop (KN-022)
+
+Chi tiết: `.github/skills/tdd-gate/SKILL.md` · `.github/skills/systematic-debugging/SKILL.md` · `.github/skills/evals-gate/SKILL.md` · Gốc: `obra/superpowers` + Andrew Ng (Agentic AI)
 
 ---
 
@@ -296,7 +302,7 @@ flowchart TD
 | `/plan <task>` | Chỉ tạo PRD + Design + Plan (chưa code) |
 | `/implement` | Chỉ implement plan đã duyệt (todo-driven) |
 | `/polish [target]` | Chỉ polish UI/UX theo product-quality |
-| `/verify` | Chỉ verify build/test/lint + visual |
+| `/verify` | Verify build/test/lint + visual + evals (rubric/E2E nếu output open-ended — KN-037) |
 
 Tham chiếu: `.github/skills/claude-harness/SKILL.md` · `.github/prompts/harness.prompt.md` · `.github/copilot-instructions.md`
 

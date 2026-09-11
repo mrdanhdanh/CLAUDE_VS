@@ -1,6 +1,6 @@
 # Evidence — harness-process (DisCo arXiv:2609.02749v1 §3.2 (task-agnostic))
 
-> Substrate layer của skill — full text từ docs/knowleged.md. Sinh tự động 2026-09-11T15:17:55.802Z.
+> Substrate layer của skill — full text từ docs/knowleged.md. Sinh tự động 2026-09-11T15:42:43.685Z.
 
 ## Bug reports liên quan (2/19 bugs)
 
@@ -401,6 +401,31 @@
   - Long loop → tìm cách parallel + async hóa thay vì chờ serial.
   - Feedback loop phải đóng lên CẢ 2: experience refinement + representation update (quan hệ/annotation) — không chỉ append experience.
 - **Tags:** `process` `harness` `architecture` `self-evolving` `playbook`
+- **Người ghi:** YUNIE / auto-learn
+
+---
+
+### KN-037 — Evals Gap — "single biggest predictor" là evals discipline (Andrew Ng, Agentic AI Playbook 2026)
+
+- **Ngày:** 2026-09-11
+- **Bug report:** N/A — bài học từ Andrew Ng "Agentic AI" (DeepLearning.AI — bản free ~1h48m "complete playbook to become an AI agentic engineer", viral 2026): `books/Andrew-Ng-Agentic-AI-Playbook-2026-Distilled.md` (đã nạp `www/library/export.json`)
+- **Severity:** major
+- **Triệu chứng:** Verify xanh toàn bộ (build/test/lint pass + visual check) nhưng output agent vẫn kém — plan decompose sai, tool gọi sai chỗ, report vô dụng; không ai phát hiện vì không có thước đo chất lượng open-ended. Cùng loại lỗi tái diễn qua nhiều task vì fix từng instance không error analysis (lặp KN-034).
+- **Nguyên nhân gốc (5 Whys):**
+  - Why1: Verify hiện tại đo WHETHER (chạy được: pass/fail binary) — không đo HOW WELL (chất lượng kết quả).
+  - Why2: Agent output là open-ended qua multi-step process → không đo được bằng build/lint/test như classification accuracy.
+  - Why3: Thiếu framework evals 2 tầng: component-level (từng bước đúng chưa?) + end-to-end (goal đạt chưa?).
+  - Why4: Thiếu error analysis — failures không được aggregate thành pattern → sửa triệu chứng từng instance (KN-034).
+  - Why5 (Root): Pipeline không có Evals Gate — verification dừng ở "technical pass", không tiến tới "quality pass". Ng: *"The single biggest predictor of whether someone executes well with AI agents is their ability to drive a disciplined process for evals and error analysis."*
+- **Cách sửa:** Thêm **Evals Gate** (skill `evals-gate`) vào Verify: (1) rubric tiêu chí cụ thể viết TRƯỚC khi đo; (2) component evals — mỗi bước pipeline tự verify phần mình; (3) E2E evals — chạy scenario thật, đo goal achieved; (4) error analysis — ≥2 failures cùng loại → aggregate → fix pattern (KN-034); (5) đo latency/cost khi task nặng (KN-019). Kèm decision tree chọn pattern có chủ đích: Reflection (rubric + nguồn ngoài model — KN-023) · Tool Use · Planning · Multi-Agent — vẽ được flowchart → pipeline, đừng thêm agent loop (KN-022).
+- **Cách phòng tránh:**
+  - Trước Verify: viết rubric tiêu chí cụ thể — không đánh giá "trông ổn", không để model tự khen mình (KN-023).
+  - Component evals: plan đúng chưa → implement đúng chưa → output đúng chưa — verify từng bước, không chỉ nhìn kết quả cuối.
+  - E2E evals: chạy scenario thật từ đầu đến cuối, đo goal achieved — build xanh ≠ chất lượng.
+  - Error analysis: failures cùng loại ≥2 → aggregate TRƯỚC khi fix (KN-034); fix pattern không fix instance.
+  - Chọn pattern có chủ đích theo task, không mặc định thêm agentic loop (KN-022).
+  - Claim "nhanh hơn/tốt hơn" phải kèm số đo — không vibes (KN-019).
+- **Tags:** `process` `verification` `evals` `agentic-patterns`
 - **Người ghi:** YUNIE / auto-learn
 
 <!-- Thêm bài học mới theo template dưới — copy block này -->

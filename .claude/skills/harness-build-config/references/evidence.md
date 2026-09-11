@@ -1,8 +1,8 @@
 # Evidence — harness-build-config (DisCo arXiv:2609.02749v1 §3.2 (task-agnostic))
 
-> Substrate layer của skill — full text từ docs/knowleged.md. Sinh tự động 2026-09-10T14:54:40.984Z.
+> Substrate layer của skill — full text từ docs/knowleged.md. Sinh tự động 2026-09-11T15:42:43.678Z.
 
-## Bug reports liên quan (2/13 bugs)
+## Bug reports liên quan (2/19 bugs)
 
 - `.agent/bugs/2026-08-30-dotnet-build-fail-do-file-lock-n5blazor-exe-ang-ch/bug.md` — Bug: dotnet build fail do file lock N5Blazor.exe đang chạy
 - `.agent/bugs/2026-09-04-pages-deploy-conflict-2-workflows/bug.md` — Bug: pages deploy conflict 2 workflows

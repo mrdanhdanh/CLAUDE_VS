@@ -58,6 +58,7 @@
 | KN-034 | 2026-09-11 | Ecdysis — fix từng failure lẻ → model-specific accommodation mù + overfit (2609.11677v1) | Sửa theo instance không phân biệt model-specific vs harness-level deficiency; thiếu principled failure diagnosis → repeated execution đắt + degrade generalization | Aggregate cross-instance failures → recurring cross-task pattern = harness deficiency; multi-role diagnosis; verify trên unseen tasks (1.84x speedup, +18.56% accuracy) | `process` `harness` `failure-diagnosis` `self-evolving` |
 | KN-035 | 2026-09-11 | Negative Self-Distillation — imitate trace "confident" làm hỏng complex reasoning (2609.11699v1) | OPSD ép student imitate trace tự tin giả (privileged info) → suppress uncertainty + phạt exploratory/self-corrective; unlearning naive phạt cả linguistic tokens → hỏng nền ngôn ngữ | Học bằng diverge khỏi flawed reasoning tự sinh (negative teacher) + dynamic gating chỉ đánh reasoning-critical tokens; giữ uncertainty + exploration | `process` `self-distillation` `reasoning` `uncertainty` |
 | KN-036 | 2026-09-11 | Auto-RecSys + Cognitive Digital Twin — cognitive-procedural separation + dual-loop (2609.10922v1, 2609.09625v1) | Long feedback loop → serial bất khả thi; LLM sinh cả reasoning lẫn operation → fail operational correctness; experience không tích lũy nếu playbook chỉ giữ success | Tách cognitive (skill file NL) ↔ procedural (script deterministic enforce); dual-loop: Execution Evolution (ghi failed + crystallize success) + Idea Evolution; feedback đóng vòng lên cả representation | `process` `harness` `architecture` `self-evolving` `playbook` |
+| KN-037 | 2026-09-11 | Evals Gap — build/test/lint xanh nhưng chất lượng output open-ended không ai đo (Andrew Ng, Agentic AI Playbook 2026) | Verify chỉ đo WHETHER (chạy được) không đo HOW WELL; thiếu component evals + E2E evals + error analysis + đo latency/cost | Thêm Evals Gate vào Verify: rubric trước → component evals (từng bước) → E2E evals (goal achieved) → error analysis (aggregate cross-task) — "single biggest predictor" theo Ng | `process` `verification` `evals` `agentic-patterns` |
 
 > Dòng ví dụ trên sẽ bị thay khi có bug thật đầu tiên — giữ format.
 
@@ -821,6 +822,29 @@
 - **Tags:** `process` `harness` `architecture` `self-evolving` `playbook`
 - **Người ghi:** YUNIE / auto-learn
 
+### KN-037 — Evals Gap — "single biggest predictor" là evals discipline (Andrew Ng, Agentic AI Playbook 2026)
+
+- **Ngày:** 2026-09-11
+- **Bug report:** N/A — bài học từ Andrew Ng "Agentic AI" (DeepLearning.AI — bản free ~1h48m "complete playbook to become an AI agentic engineer", viral 2026): `books/Andrew-Ng-Agentic-AI-Playbook-2026-Distilled.md` (đã nạp `www/library/export.json`)
+- **Severity:** major
+- **Triệu chứng:** Verify xanh toàn bộ (build/test/lint pass + visual check) nhưng output agent vẫn kém — plan decompose sai, tool gọi sai chỗ, report vô dụng; không ai phát hiện vì không có thước đo chất lượng open-ended. Cùng loại lỗi tái diễn qua nhiều task vì fix từng instance không error analysis (lặp KN-034).
+- **Nguyên nhân gốc (5 Whys):**
+  - Why1: Verify hiện tại đo WHETHER (chạy được: pass/fail binary) — không đo HOW WELL (chất lượng kết quả).
+  - Why2: Agent output là open-ended qua multi-step process → không đo được bằng build/lint/test như classification accuracy.
+  - Why3: Thiếu framework evals 2 tầng: component-level (từng bước đúng chưa?) + end-to-end (goal đạt chưa?).
+  - Why4: Thiếu error analysis — failures không được aggregate thành pattern → sửa triệu chứng từng instance (KN-034).
+  - Why5 (Root): Pipeline không có Evals Gate — verification dừng ở "technical pass", không tiến tới "quality pass". Ng: *"The single biggest predictor of whether someone executes well with AI agents is their ability to drive a disciplined process for evals and error analysis."*
+- **Cách sửa:** Thêm **Evals Gate** (skill `evals-gate`) vào Verify: (1) rubric tiêu chí cụ thể viết TRƯỚC khi đo; (2) component evals — mỗi bước pipeline tự verify phần mình; (3) E2E evals — chạy scenario thật, đo goal achieved; (4) error analysis — ≥2 failures cùng loại → aggregate → fix pattern (KN-034); (5) đo latency/cost khi task nặng (KN-019). Kèm decision tree chọn pattern có chủ đích: Reflection (rubric + nguồn ngoài model — KN-023) · Tool Use · Planning · Multi-Agent — vẽ được flowchart → pipeline, đừng thêm agent loop (KN-022).
+- **Cách phòng tránh:**
+  - Trước Verify: viết rubric tiêu chí cụ thể — không đánh giá "trông ổn", không để model tự khen mình (KN-023).
+  - Component evals: plan đúng chưa → implement đúng chưa → output đúng chưa — verify từng bước, không chỉ nhìn kết quả cuối.
+  - E2E evals: chạy scenario thật từ đầu đến cuối, đo goal achieved — build xanh ≠ chất lượng.
+  - Error analysis: failures cùng loại ≥2 → aggregate TRƯỚC khi fix (KN-034); fix pattern không fix instance.
+  - Chọn pattern có chủ đích theo task, không mặc định thêm agentic loop (KN-022).
+  - Claim "nhanh hơn/tốt hơn" phải kèm số đo — không vibes (KN-019).
+- **Tags:** `process` `verification` `evals` `agentic-patterns`
+- **Người ghi:** YUNIE / auto-learn
+
 <!-- Thêm bài học mới theo template dưới — copy block này -->
 
 <!--
@@ -940,6 +964,9 @@
 - ❌ Chỉ đo per-run pass rate, không đo consistency gap all-5 vs per-run → tưởng reliable nhưng production flip (KN-027).
 - ❌ Self-improvement phụ thuộc verified answers/external evaluator — không dùng SOLID majority pseudo-reference (KN-027).
 - ❌ Bỏ qua intra-group feedback consistency — feedback trong group không consistent mà vẫn optimize → unstable (KN-027).
+- ❌ Verify xong build/test/lint là claim Done cho output open-ended — "chạy được" ≠ "tốt đến đâu"; phải có evals: rubric + component/E2E + bằng chứng đo (KN-037).
+- ❌ Đánh giá output agent bằng "trông ổn" không rubric — critique thiếu tiêu chí = model tự khen mình (KN-037 + KN-023).
+- ❌ Chạy cả agentic loop / multi-agent cho task pipeline vẽ được flowchart — agency là cost phải justify (KN-037 + KN-022).
 
 ## Checklist phòng tránh chung
 
@@ -1017,6 +1044,10 @@
 - [ ] Reasoning (skill file NL) đã tách khỏi execution (deterministic script) chưa? (KN-036)
 - [ ] Claim "học được" đã test riêng cả 3: learning / generalization / retention? (KN-033)
 - [ ] Playbook ghi cả FAILED attempts (không chỉ success pipelines)? (KN-036)
+- [ ] Output open-ended đã có rubric viết TRƯỚC khi đo + bằng chứng đo, trước khi claim Done? (KN-037)
+- [ ] Đã chạy E2E eval (scenario thật, goal achieved) — không chỉ build/test xanh? (KN-037)
+- [ ] Failures cùng loại ≥2 → đã aggregate error analysis TRƯỚC khi fix (fix pattern, không fix instance)? (KN-037 + KN-034)
+- [ ] Pattern chọn có chủ đích (pipeline đủ thì không thêm agent loop)? (KN-037 + KN-022)
 
 *File này do `/fixbug` tự động cập nhật. Mọi luồng khác phải đọc để không lặp lại lỗi cũ.*
-*UpdatedAt: 2026-09-11T15:30:00Z — Maintained by YUNIE / Harness v2 — KN-033/034/035/036 added (6 papers self-improving round 2, 2026-09-09/10: RSI roadmap + Research RSI, Ecdysis failure diagnosis, Negative Self-Distillation, Auto-RecSys + Cognitive Digital Twins — chi tiết books/papers/ + www/library/export.json 6 arXiv books mới) — KN-030 added (user console 404: fetch ngoài deploy root + relative URL không slash cuối — mirror www/cosmos/audit.json + dirBase helper; spec assert network no-404) — KN-029 added (Google Fonts script-blocking chặn toàn bộ inline script — async fonts + fail-safe + grace period) — KN-028 added (intro COSMOS cinematic: canvas quên invoke resize() → burst từ góc + 8/8 behavior test xanh giả — visual evidence bắt; verify screenshot từng stage + stub fonts cho test deterministic) — KN-025/026/027 added (10 papers self-improving 2026-09-08/09: Procedural Graphs + A-JIT, Experience Funnel + ADMET-EvO, FEEs + Consistency Gap + SOLID — chi tiết www/library/export.json 10 arXiv books) — KN-024 added (prolific AI psychosis — output rẻ làm mù khả năng đánh giá; taste/craft là human judgment — Jeff Clark MD + Emily Oberg, chi tiết docs/llm-weakness-research.md §2b) — KN-023 added (model "giỏi ngọn yếu gốc" — 6 papers arXiv: self-correction fail, self-knowledge gap, calibration không generalize, self-preference, sycophancy, pattern-matching reasoning — chi tiết docs/llm-weakness-research.md) — KN-022 added (pipeline in a trench coat — agency cost-based test, DEV.to James Anderson) + KN-021 bổ sung lộ trình Grith risk-score (allow/queue/deny + supervision-escape) — KN-019/020/021 added (bài học từ "My Little AI Factory" dominis.blog + METR study: measured > perceived, trust hard, governance evolve) — KN-015 added (Pages 2 workflows + eval-gate Node 18 CJS) — KN-014 added (MCP stdio smoke hang + verify order + regex m flag — DisCo Phase 3) — KN-013 added (Ponytail ladder integration: minimal-ladder + lean-product) — Fix: Bảng tóm tắt reorder KN-005↔KN-006 + thêm KN-009 (đã có detail nhưng thiếu ở bảng) — Presets bổ sung auto-researcher (đồng bộ registry) — KN-011 added (Random disable Step button) — KN-010 added (AAR pattern) — KN-009 bổ sung detail section (slot máy chủ AI — hardcode config) — KN-008 added (dotnet build file lock MSB3027) — KN-007 added (Auto-Learn) — KN-006 added (N5 UI polish) — KN-005 added (Bug Blindness)*
+*UpdatedAt: 2026-09-11T15:50:00Z — Maintained by YUNIE / Harness v2 — KN-037 added (Andrew Ng "Agentic AI Playbook 2026" — evals discipline "single biggest predictor"; Evals Gate vào Verify + skill `evals-gate`; source `books/Andrew-Ng-Agentic-AI-Playbook-2026-Distilled.md`) — KN-033/034/035/036 added (6 papers self-improving round 2, 2026-09-09/10: RSI roadmap + Research RSI, Ecdysis failure diagnosis, Negative Self-Distillation, Auto-RecSys + Cognitive Digital Twins — chi tiết books/papers/ + www/library/export.json 6 arXiv books mới) — KN-030 added (user console 404: fetch ngoài deploy root + relative URL không slash cuối — mirror www/cosmos/audit.json + dirBase helper; spec assert network no-404) — KN-029 added (Google Fonts script-blocking chặn toàn bộ inline script — async fonts + fail-safe + grace period) — KN-028 added (intro COSMOS cinematic: canvas quên invoke resize() → burst từ góc + 8/8 behavior test xanh giả — visual evidence bắt; verify screenshot từng stage + stub fonts cho test deterministic) — KN-025/026/027 added (10 papers self-improving 2026-09-08/09: Procedural Graphs + A-JIT, Experience Funnel + ADMET-EvO, FEEs + Consistency Gap + SOLID — chi tiết www/library/export.json 10 arXiv books) — KN-024 added (prolific AI psychosis — output rẻ làm mù khả năng đánh giá; taste/craft là human judgment — Jeff Clark MD + Emily Oberg, chi tiết docs/llm-weakness-research.md §2b) — KN-023 added (model "giỏi ngọn yếu gốc" — 6 papers arXiv: self-correction fail, self-knowledge gap, calibration không generalize, self-preference, sycophancy, pattern-matching reasoning — chi tiết docs/llm-weakness-research.md) — KN-022 added (pipeline in a trench coat — agency cost-based test, DEV.to James Anderson) + KN-021 bổ sung lộ trình Grith risk-score (allow/queue/deny + supervision-escape) — KN-019/020/021 added (bài học từ "My Little AI Factory" dominis.blog + METR study: measured > perceived, trust hard, governance evolve) — KN-015 added (Pages 2 workflows + eval-gate Node 18 CJS) — KN-014 added (MCP stdio smoke hang + verify order + regex m flag — DisCo Phase 3) — KN-013 added (Ponytail ladder integration: minimal-ladder + lean-product) — Fix: Bảng tóm tắt reorder KN-005↔KN-006 + thêm KN-009 (đã có detail nhưng thiếu ở bảng) — Presets bổ sung auto-researcher (đồng bộ registry) — KN-011 added (Random disable Step button) — KN-010 added (AAR pattern) — KN-009 bổ sung detail section (slot máy chủ AI — hardcode config) — KN-008 added (dotnet build file lock MSB3027) — KN-007 added (Auto-Learn) — KN-006 added (N5 UI polish) — KN-005 added (Bug Blindness)*

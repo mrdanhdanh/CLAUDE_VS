@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>YUNIE STATUS — Harness 2.2</title>
-  <meta name="description" content="YUNIE — Trợ lý hệ thống cho Harness 2.2. Theo dõi trạng thái, registry, presets, kế hoạch và tình trạng triển khai." />
+  <title>YUNIE STATUS — Harness 2.3</title>
+  <meta name="description" content="YUNIE — Trợ lý hệ thống cho Harness 2.3. Theo dõi trạng thái, registry, presets, kế hoạch và tình trạng triển khai." />
   <meta name="color-scheme" content="light" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -21,7 +21,7 @@
         <div class="brand-mark" aria-hidden="true" title="YUNIE = Your Unified Navigator for Intelligent Execution">Y</div>
         <div class="brand-text">
           <strong>YUNIE STATUS <span class="badge badge-live" title="Dữ liệu trực tiếp từ status.json"><i aria-hidden="true"></i> Trực tiếp</span></strong>
-          <span title="Your Unified Navigator for Intelligent Execution · Yu-ni = You & I">Harness 2.2 · Yu-ni = You & I · Process &gt; Model</span>
+          <span title="Your Unified Navigator for Intelligent Execution · Yu-ni = You & I">Harness 2.3 · Yu-ni = You & I · Process &gt; Model</span>
         </div>
       </a>
       <nav class="header-actions" aria-label="Thao tác nhanh">
@@ -55,9 +55,9 @@
       <div class="hero-card">
         <div class="eyebrow">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2l3 7h7l-5.5 4 2 7L12 16l-6.5 4 2-7L2 9h7z"/></svg>
-          YUNIE · Harness 2.2
+          YUNIE · Harness 2.3
         </div>
-        <h1 id="hero-title">Hệ thống Harness 2.2 <span style="color:var(--color-primary)">đang hoạt động</span></h1>
+        <h1 id="hero-title">Hệ thống Harness 2.3 <span style="color:var(--color-primary)">đang hoạt động</span></h1>
         <p>YUNIE hiểu toàn bộ hệ thống Harness, hỗ trợ thực thi tác vụ, kiểm tra trạng thái và cập nhật trang này. Mọi tệp trong thư mục <span class="kbd">www/</span> sẽ tự động triển khai lên GitHub Pages.</p>
         <div class="hero-meta" id="heroMeta" aria-label="Thông tin hệ thống">
           <span class="meta-pill">
@@ -504,7 +504,7 @@ node .github/harness/scripts/harness-manager.mjs create agent my-agent
     </section>
 
     <footer class="footer" role="contentinfo">
-      <div>Phát triển bởi <strong>YUNIE</strong> · Harness 2.2 · <a href="./status.json">status.json</a> · <a href="../README.md">README</a></div>
+      <div>Phát triển bởi <strong>YUNIE</strong> · Harness 2.3 · <a href="./status.json">status.json</a> · <a href="../README.md">README</a></div>
       <div style="margin-top:6px">Chạy <span class="kbd">npx serve www</span> để xem trên máy — đẩy lên GitHub để tự động triển khai. <span class="muted">Lưu ý: mở bằng file:// có thể bị lỗi CORS.</span></div>
     </footer>
   </main>
@@ -516,8 +516,8 @@ node .github/harness/scripts/harness-manager.mjs create agent my-agent
       <div class="modal-handle" aria-hidden="true"></div>
       <div class="modal-header">
         <div>
-          <h2 id="pipelineTitle">Quy trình Harness 2.2</h2>
-          <p id="pipelineDesc">2 pipeline + gates + skills + 2.1/2.2 agentic — Process &gt; Model · Bắt đầu từ Knowledge First</p>
+          <h2 id="pipelineTitle">Quy trình Harness 2.3</h2>
+          <p id="pipelineDesc">2 pipeline + gates + skills + 2.1/2.2/2.3 agentic — Process &gt; Model · Bắt đầu từ Knowledge First</p>
         </div>
         <button class="btn btn-ghost btn-icon" id="btnClosePipeline" type="button" aria-label="Đóng">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6L6 18"/><path d="M6 6l12 12"/></svg>
@@ -695,14 +695,15 @@ node .github/harness/scripts/harness-manager.mjs create agent my-agent
             </div>
             <div class="step-content">
               <h3>Verify — Kiểm định</h3>
-              <p>build/test/lint + visual + <strong>bằng chứng Pages runtime</strong> (<span class="kbd">curl</span> CORS + <span class="kbd">addEventListener</span> + test F5). Fresh evidence, loop max 3 lần/check. FAIL → Implement, Blocked → báo human.</p>
+              <p>build/test/lint + visual + <strong>Evals Gate</strong> (rubric + component/E2E evals cho output open-ended) + <strong>bằng chứng Pages runtime</strong> (<span class="kbd">curl</span> CORS + <span class="kbd">addEventListener</span> + test F5). Fresh evidence, loop max 3 lần/check. FAIL → Implement, Blocked → báo human.</p>
               <ul class="step-detail">
-                <li><strong>Gate:</strong> PASS mới Done · Không dùng kết quả cũ</li>
+                <li><strong>Gate:</strong> PASS mới Done · Không dùng kết quả cũ · Open-ended chưa đo = chưa Done (KN-037)</li>
+                <li><strong>Evals:</strong> rubric trước → component evals → E2E evals → error analysis (aggregate ≥2 failures cùng loại, KN-034)</li>
                 <li><strong>Fresh-eyes:</strong> REQUIRED (UX) · RECOMMENDED (regression) · OPTIONAL (deterministic)</li>
               </ul>
               <div class="step-meta">
                 <span class="tag tag-on">PASS → Done</span>
-                <span class="mono">Verify agent · loop fix</span>
+                <span class="mono">Verify agent · evals-gate · loop fix</span>
               </div>
             </div>
           </li>
@@ -807,9 +808,9 @@ node .github/harness/scripts/harness-manager.mjs create agent my-agent
                 <div class="step-icon" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg></div>
                 <div class="step-content">
                   <h3>Verify — Không regression</h3>
-                  <p>Re-test + edge + regression + build/lint full scope. Fresh evidence, không dùng kết quả cũ.</p>
-                  <ul class="step-detail"><li><strong>Gate:</strong> Verification Gate · Fresh-eyes tiered</li><li><strong>Output:</strong> PASS full scope</li></ul>
-                  <div class="step-meta"><span class="tag tag-on">PASS → Learn</span><span class="mono">Verify agent</span></div>
+                  <p>Re-test + edge + regression + build/lint full scope + <strong>evals mini</strong> nếu output open-ended (rubric 2–3 tiêu chí + E2E scenario thật — KN-037). Fresh evidence, không dùng kết quả cũ.</p>
+                  <ul class="step-detail"><li><strong>Gate:</strong> Verification Gate · Fresh-eyes tiered · lỗi ≥2 cùng loại → aggregate trước khi fix (KN-034)</li><li><strong>Output:</strong> PASS full scope</li></ul>
+                  <div class="step-meta"><span class="tag tag-on">PASS → Learn</span><span class="mono">Verify agent · evals-gate mini</span></div>
                 </div>
               </li>
               <li class="pipeline-step">
@@ -849,6 +850,7 @@ node .github/harness/scripts/harness-manager.mjs create agent my-agent
               <div class="extra-card"><h4>🪜 Minimal Ladder (7 nấc)</h4><p>YAGNI → reuse → stdlib → native → dep đã cài → 1 dòng → tối thiểu. PRD có YAGNI gate, Verify grep dead-code + scoreboard. Không cắt validation/security/a11y.</p></div>
               <div class="extra-card"><h4>📚 Library RAG v1.2.0 (MCP)</h4><p><span class="kbd">search_library</span> + <span class="kbd">search_library_iterative</span> (maker-checker 3 vòng, P0-1) · schema validation (P0-2) · router fast/deep + cache (P1-6) · redacted output. Citation <span class="kbd">book · chunk # · score</span>.</p></div>
               <div class="extra-card"><h4>🔴 TDD Gate + Debugging</h4><p><span class="kbd">tdd-gate</span>: RED-GREEN-REFACTOR, không production code nếu chưa có test fail. <span class="kbd">systematic-debugging</span>: evidence → single hypothesis → fix → 3-fix limit.</p></div>
+              <div class="extra-card"><h4>🧪 Evals Gate (2.3 · KN-037)</h4><p>Build/test = <em>chạy được</em>, evals = <em>tốt đến đâu</em>. <span class="kbd">evals-gate</span>: rubric TRƯỚC → component evals → E2E evals → error analysis (aggregate ≥2 failures). "Single biggest predictor" — Andrew Ng Playbook 2026.</p></div>
               <div class="extra-card"><h4>🧰 Tool Priority</h4><p>Task &gt;2 bước → <span class="kbd">manage_todo_list</span> · Mơ hồ → hỏi max 3 câu · Multi-file → <span class="kbd">multi_replace</span> · Sau edit → <span class="kbd">get_errors</span> · Verify → terminal sync.</p></div>
               <div class="extra-card"><h4>🎨 Product Quality</h4><p>Palette 3–5 màu, spacing 4/8, responsive 375/768/1280, states đầy đủ, animation 150–300ms (transform/opacity), contrast ≥4.5:1, keyboard + aria, locale-owned copy.</p></div>
               <div class="extra-card"><h4>📦 Presets (4)</h4><p><span class="kbd">full</span> (tất cả) · <span class="kbd">web-product</span> (đẹp) · <span class="kbd">api-minimal</span> (gọn) · <span class="kbd">lean-product</span> (ladder + tắt UI nặng).</p></div>
@@ -871,7 +873,7 @@ node .github/harness/scripts/harness-manager.mjs create agent my-agent
         </div>
       </div>
       <div class="modal-footer">
-        <span class="muted small">Triết lý: <strong>Process &gt; Model, Agent tự làm việc</strong> — Harness 2.2-done: P0+P1+P2 (14 commits). Chi tiết: <strong>docs/harness-2.1-upgrade.md</strong>.</span>
+        <span class="muted small">Triết lý: <strong>Process &gt; Model, Agent tự làm việc</strong> — Harness 2.3-done: P0+P1+P2 + Evals Gate (KN-037). Chi tiết: <strong>docs/knowleged.md</strong> · <strong>docs/harness-2.1-upgrade.md</strong>.</span>
         <button class="btn btn-primary" id="btnClosePipeline2" type="button">Đã hiểu</button>
       </div>
     </div>

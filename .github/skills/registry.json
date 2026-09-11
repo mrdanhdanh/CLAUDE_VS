@@ -44,7 +44,7 @@
       "enabled": true,
       "description": "UI design system toolkit for Senior UI Designer including design token generation, component documentation, responsive design calculations, and developer handoff tools. Use for creating design systems, maintaining visual consistency, and facilitating design-dev collaboration.",
       "file": "ui-design-system/SKILL.md",
-      "installedAt": "2026-09-07T16:26:57.263Z"
+      "installedAt": "2026-09-11T15:42:51.730Z"
     },
     "ui-ux-pro-max": {
       "source": "nextlevelbuilder/ui-ux-pro-max-skill",
@@ -53,7 +53,7 @@
       "enabled": true,
       "description": "UI/UX design intelligence for web, mobile, and desktop. This skill should be used when designing, building, reviewing, or fixing interfaces, including pages, components, design systems, accessibility, interaction, responsive layout, typography, color, charts, and stack-specific UI implementation. Se",
       "file": "ui-ux-pro-max/SKILL.md",
-      "installedAt": "2026-09-07T16:27:27.099Z"
+      "installedAt": "2026-09-11T15:43:30.060Z"
     },
     "tdd-gate": {
       "source": "local",
@@ -88,7 +88,7 @@
       "enabled": true,
       "description": "Research what people actually say about any topic in the last 30 days. Pulls posts and engagement from Reddit, X, YouTube, TikTok, Hacker News, Polymarket, GitHub, and the web. Includes a doctor health check to diagnose broken or missing sources.",
       "file": "last30days/SKILL.md",
-      "installedAt": "2026-09-07T16:28:24.288Z"
+      "installedAt": "2026-09-11T15:44:34.975Z"
     },
     "harness-build-config": {
       "source": "local",
@@ -161,6 +161,15 @@
       "installedAt": "2026-09-06T15:30:08.193Z",
       "path": "skills/archify",
       "ref": "local"
+    },
+    "evals-gate": {
+      "source": "local",
+      "path": "skills/evals-gate",
+      "ref": "local",
+      "enabled": true,
+      "description": "Evals Gate — 'NO DONE WITHOUT EVALS': đo chất lượng output open-ended bằng rubric + component evals + E2E evals + error analysis, không chỉ build/test/lint. Use when verifying agent/product output, before claiming done, when quality can't be measured by pass/fail tests, need quality gate or rubric, ",
+      "file": "evals-gate/SKILL.md",
+      "installedAt": "2026-09-11T15:42:48.805Z"
     }
   }
 }

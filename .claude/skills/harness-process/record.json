@@ -14,7 +14,12 @@
       "KN-024",
       "KN-025",
       "KN-026",
-      "KN-027"
+      "KN-027",
+      "KN-033",
+      "KN-034",
+      "KN-035",
+      "KN-036",
+      "KN-037"
     ],
     "bugs": [
       ".agent/bugs/2026-08-30-bug-blindness/bug.md",
@@ -25,7 +30,12 @@
       "docs/llm-weakness-research.md",
       "www/library/export.json",
       "www/library/export.json",
-      "www/library/export.json"
+      "www/library/export.json",
+      "www/library/export.json",
+      "www/library/export.json",
+      "www/library/export.json",
+      "www/library/export.json",
+      "books/Andrew-Ng-Agentic-AI-Playbook-2026-Distilled.md"
     ]
   },
   "capabilities": [
@@ -65,7 +75,16 @@
     "rl",
     "consistency",
     "self-distillation",
-    "scaffold"
+    "scaffold",
+    "rsi",
+    "harness",
+    "failure-diagnosis",
+    "reasoning",
+    "uncertainty",
+    "architecture",
+    "playbook",
+    "evals",
+    "agentic-patterns"
   ],
   "evidence": [
     ".agent/bugs/2026-08-30-bug-blindness/bug.md",
@@ -76,7 +95,12 @@
     "docs/llm-weakness-research.md",
     "www/library/export.json",
     "www/library/export.json",
-    "www/library/export.json"
+    "www/library/export.json",
+    "www/library/export.json",
+    "www/library/export.json",
+    "www/library/export.json",
+    "www/library/export.json",
+    "books/Andrew-Ng-Agentic-AI-Playbook-2026-Distilled.md"
   ],
   "checks": [
     {
@@ -98,6 +122,6 @@
   ],
   "gaps": [],
   "verdict": "G-accepted",
-  "generatedAt": "2026-09-10T14:54:41.003Z",
+  "generatedAt": "2026-09-11T15:42:43.693Z",
   "paper": "DisCo arXiv:2609.02749v1 §3.2 (task-agnostic)"
 }

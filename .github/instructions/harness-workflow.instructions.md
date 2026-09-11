@@ -39,7 +39,7 @@ read_file docs/knowleged.md  # <— bước 0, không bỏ
 | **Plan** | `.agent/plans/<task>/plan.md` + `manage_todo_list` | ❌ |
 | **Implement** | Code todo-driven, `get_errors` sau mỗi edit | ❌ |
 | **Polish** | Responsive 375/768/1280, states, animation, a11y | ❌ — giao diện xấu = chưa xong |
-| **Verify** | build/test/lint pass + visual check + **Dissent Review** (1 critique độc lập: rival work / assumption sai / giải pháp khác, KN-018) | ❌ |
+| **Verify** | build/test/lint pass + visual check + **Evals Gate** (rubric + component/E2E evals cho output open-ended, KN-037) + **Dissent Review** (1 critique độc lập: rival work / assumption sai / giải pháp khác, KN-018) | ❌ |
 
 Với task nhỏ (1-2 file): rút gọn Explore(quick) → Clarify(1 câu) → PRD mini → Design mini → Plan(3 todos) → Implement → Polish → Verify. **Không bỏ Polish.**
 
@@ -51,6 +51,15 @@ Với task nhỏ (1-2 file): rút gọn Explore(quick) → Clarify(1 câu) → P
 - Outsource writing ≠ skip thinking: PRD/Design là forcing function, không delegate toàn bộ.
 - Collaboration là infrastructure: không cắt workshop/review/pari khi gấp — friction quý phải giữ (fund the friction).
 
+### Evals Gate (KN-037 — Andrew Ng "Agentic AI Playbook 2026")
+
+- **Build/test/lint = WHETHER (chạy được). Evals = HOW WELL (tốt đến đâu).** Output open-ended (UI, plan, report, agent action) không đo bằng pass/fail binary.
+- **Trước khi claim Done:** rubric tiêu chí cụ thể viết TRƯỚC → component evals (từng bước đúng chưa) → E2E evals (scenario thật, goal achieved) → error analysis (≥2 failures cùng loại → aggregate, fix pattern không fix instance — KN-034).
+- **Reflection/critique phải có rubric + nguồn ngoài model** — model tự review mình là thiên vị (KN-023). "Trông ổn" không phải eval.
+- **Chọn pattern có chủ đích:** vẽ được flowchart trước khi chạy → pipeline, đừng thêm agent loop (KN-022). 4 patterns: Reflection · Tool Use · Planning · Multi-Agent — chỉ dùng cái task cần.
+- **Ng:** *"The single biggest predictor of whether someone executes well with AI agents is their ability to drive a disciplined process for evals and error analysis."*
+- Chi tiết: skill `evals-gate` + `books/Andrew-Ng-Agentic-AI-Playbook-2026-Distilled.md`
+
 ## Pipeline /fixbug (Bug — gọn nhẹ, bounded repair loop)
 
 | Phase | Mục tiêu | Output | Bỏ được? |
@@ -59,7 +68,7 @@ Với task nhỏ (1-2 file): rút gọn Explore(quick) → Clarify(1 câu) → P
 | **1. Reproduce** | Tái hiện bug có bằng chứng | Steps + Expected/Actual + evidence | ❌ |
 | **2. Locate & Root Cause** | file:line + 5 Whys | Root cause + file:line + giả thuyết | ❌ |
 | **3. Fix** | Sửa ở gốc, todo-driven (bounded) | Code + `get_errors` affected files | ❌ |
-| **4. Verify** | Không regression | Re-test + edge + regression + build/lint (full scope) | ❌ |
+| **4. Verify** | Không regression + evals mini nếu output open-ended | Re-test + edge + regression + build/lint (full scope) + rubric/E2E (KN-037) | ❌ |
 | **5. Learn** | Biến bug thành knowledge | `.agent/bugs/<slug>/bug.md` + `docs/knowleged.md` KN-XXX | ❌ |
 | **6. Done** | Đóng vòng, báo cáo | Tóm tắt + KN + files changed | ❌ |
 
@@ -77,6 +86,7 @@ Với task nhỏ (1-2 file): rút gọn Explore(quick) → Clarify(1 câu) → P
 - PRD/Design/Plan → `.agent/plans/` + templates `../skills/claude-harness/templates/`
 - Bug → `.agent/bugs/` + template `_template/bug.md` — bounded repair loop, scope control, confidence gate — dùng `systematic-debugging` skill (4 phase) cho mọi bug
 - Implement / Fix có code → `tdd-gate` skill (RED-GREEN-REFACTOR bắt buộc, không production code nếu chưa có test fail)
+- Verify output open-ended (UI/plan/report/agent) → `evals-gate` skill (rubric + component/E2E evals + error analysis — KN-037)
 - Multi-file edit → `multi_replace_string_in_file`
 - Sau edit → `get_errors` **affected files** (Phase 3 Fix); toàn scope ở Verify (Phase 4)
 - Polish → audit theo `product-quality.instructions.md` — với `/fixbug` chỉ audit nhanh nếu bug là UI

@@ -7,19 +7,19 @@
     ".claude/agents/implement.md": "dc92a0bdee9944c835fac861a7b8d97a6214eca1b9bc86fb95e91f5a5779816c",
     ".claude/agents/plan.md": "c4d86c1d4980daf599edafe28691dbe7eb5ca97be2d1876564f0007acf8c8c33",
     ".claude/agents/polish.md": "006dfd1a6572a3031b817db36f8ee4a3514d8a1651fdfe2256c98fed4e432d94",
-    ".claude/agents/verify.md": "bf43cf30a16d31536c8a9e15ae1168d4b3d1193a9a49177f32955b76e1eb9071",
+    ".claude/agents/verify.md": "b9864caa6bf97b398b8cbca3625ed20367b37007070957eaf771b1b1d39af770",
     ".claude/agents/yunie.md": "3959c4f8c7f5455db82c8b5a2298d9de97ca9d7b9751d2fc215d061db35c8ef3",
     ".claude/agents/learn.md": "9b5143ec798f41e9792873cd5b28c9b1a0ab3781e2925034007f1dc0dc1a6e0c",
     ".claude/agents/critic.md": "f5ccbffd49ae00d132206b406b91871546bcc3425e85305976a65d985a641ae5",
-    ".claude/commands/fixbug.md": "33dc290d6a850cdeeaf6917e639a43db5bfacc42fec09432feb74d1260555f88",
+    ".claude/commands/fixbug.md": "821a25f6b3ffb4b77fad25f9d291aa1f725f13b1d1fdf77e507a61932d84ec57",
     ".claude/commands/harness.md": "2e2ea61594510b5cad8c4c9234a501b6322658e0a42d58133cff7ba19d905f7d",
     ".claude/commands/implement.md": "981c68ecda5144355a5b2a4a3632cbc5ce976c50540a02c162cc1cf15107648d",
     ".claude/commands/plan.md": "4bcdb0220f844d0ff30c12c33bfd428d099a7e7926d69a0114a02fe3d374f486",
     ".claude/commands/polish.md": "ed2f5572308f9f527f8dc143e040a233d64a78b2cac1d032fd138534b12ebe32",
     ".claude/commands/product.md": "bc64d8fa9191ba93f0f5f85716eec88610ceb62be3f0375a906e66d6dd61384f",
-    ".claude/commands/verify.md": "fd06a0339bbc767368f0a884f183abc3eb92ab4051d49fd66d7ee904f7a268bc",
+    ".claude/commands/verify.md": "2ee7b302103fdcb4f10a8c019c54c72079fb847d0f189e4fbeec2c2bbe7c4c53",
     ".claude/rules/custom-registry.md": "6652f22ff82189763219965a740c27637ec83f1ab37a16500ddee649203c7a85",
-    ".claude/rules/harness-workflow.md": "aa209ebf9c2bdd1ec88e1cfdddc6b440464606b832ae0d62f39beb37580cbf3b",
+    ".claude/rules/harness-workflow.md": "00ee1b7ba37019f24ec51ad8d4fd2d8464b526259f8f5dc915d6beee8b3402ed",
     ".claude/rules/knowleged.md": "e7fd66efcec313a9105e624d8c2461d80644a5a3e776ee9d65f65442f9be58d8",
     ".claude/rules/locale-i18n.md": "c3273bd0725ae2066269708d4817534f89657639ee48a6bfaf6ac47313afba29",
     ".claude/rules/plugin-seam.md": "9c7a0bf7bfb57b90c9be2eee2f9f83127a6acbd70d817dab34e701a95d1c3857",
@@ -36,7 +36,7 @@
     ".claude/rules/awesome-design.md": "fae43f3fe500c648d21696b1f635b1e7153b3dfbebaa4e5fb0e776e27c4dc544",
     ".claude/rules/cosmic-quantum.md": "9d489f51994989f41aa54806cd28bce5f3ec30fb0500f46361053921a94dd8e4",
     ".claude/rules/fund-the-friction.md": "f76b9666077ed1ae952bbe1fd9c900564813256e4993a96f783b7de1455f7184",
-    "CLAUDE.md": "6cfdfd671a6b06c05a3e265f10e36e84974cb1dbad3c456cc7ce820de4928fde",
+    "CLAUDE.md": "8663349c04160179dc2937f04e76edbb5e0f1ceae62e3eedcfdc808bcfb4c816",
     ".claude/skills/claude-harness": {
       "dir": true,
       "digest": "e10794556347d5df3e5e7444c8a02f6dfaa6f75429925653d0b81a6979cadb2b"
@@ -59,7 +59,7 @@
     },
     ".claude/skills/ui-ux-pro-max": {
       "dir": true,
-      "digest": "ae49644e2ba51fd8b63a577d176c210328f0e67317f386b7cbe72b307e270cef"
+      "digest": "7c4591734a6aae6aed589c4f32f4c153134a8a1a9a7bf11fa022d4b5d1c14f2e"
     },
     ".claude/skills/tdd-gate": {
       "dir": true,
@@ -75,27 +75,27 @@
     },
     ".claude/skills/last30days": {
       "dir": true,
-      "digest": "df574e2a1473fe98e9e304e04c52bb091e09ed22c37915edbf819ef65ff7727f"
+      "digest": "e4e364a0453046ad7e26d015e1d324b6bf38e7ff7f8f95f0786187ca39727817"
     },
     ".claude/skills/harness-build-config": {
       "dir": true,
-      "digest": "cd51e52845fadbb41aa6f9e300625b19b0f3f3c0f9202c79c46feefcebdb9b0f"
+      "digest": "0da4b6e3f2585617bc0e7dc9910034e4a399f5de20ec7c84e1f1e02d578f0084"
     },
     ".claude/skills/harness-governance": {
       "dir": true,
-      "digest": "75439f4d96fe798bfeb54d3de3183151563747472dbc7efe16e7bb3d8448dedf"
+      "digest": "ec1b184a4a1a06b20a5d9c69ddbcd599162c5a6fa39b00e5b8cb33deb6332ca9"
     },
     ".claude/skills/harness-minimal": {
       "dir": true,
-      "digest": "e16476854d90f372dd23c0a6e77d625b5c7155a0269ffa7d15155f1082d45500"
+      "digest": "c9fc0350e4b17c362663d95ddea1f78629da11e48dd0e76be6555283afc29b11"
     },
     ".claude/skills/harness-process": {
       "dir": true,
-      "digest": "510e7b6f02d99549b272377cfa90b15028da560ea0409b6bc493086222399f59"
+      "digest": "918c399a8a0838e5ed56063e80dc4908c43b2cb76c560061102ad20809aa0f07"
     },
     ".claude/skills/harness-web-ui": {
       "dir": true,
-      "digest": "883868ef7f5bef9d948c6d94d68231800542e65eeff3c142764fd7d4ae6132d4"
+      "digest": "d6906a2d10250ea0a306f291d852105d8c75d2cf40303c2a67e888abfcf33c82"
     },
     ".claude/skills/cosmic-quantum": {
       "dir": true,
@@ -108,6 +108,10 @@
     ".claude/skills/archify": {
       "dir": true,
       "digest": "4775f2a6be75dfc716d9f4bcdc03668d5bcd98753054064b34039bfab76b9e29"
+    },
+    ".claude/skills/evals-gate": {
+      "dir": true,
+      "digest": "00f696a577a71c3a1b82e871144357c71350e8f57d1dc29f84a61aff06d29e4a"
     }
   },
   "hookCommands": [

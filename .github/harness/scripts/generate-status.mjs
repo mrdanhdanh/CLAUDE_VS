@@ -269,7 +269,7 @@ async function main() {
   } catch {}
   collaboration.status = Object.values(collaboration).every(v => typeof v !== 'boolean' || v) ? 'ok' : 'partial';
 
-  // health checks — Harness 2.2: eval-gate + setup-doctor + 2.1/2.2 scripts
+  // health checks — Harness 2.3: eval-gate + evals-gate + setup-doctor + 2.1/2.2/2.3 scripts
   let evalStatus = 'unknown';
   try {
     const { execSync } = await import('node:child_process');
@@ -284,9 +284,10 @@ async function main() {
   const healthChecks = [
     `get_errors: pass (0 errors)`,
     `registry: ${counts.instructions.enabled} instructions (${counts.instructions.total} total) - ${counts.skills.enabled} skills - ${counts.agents.enabled} agents - ${counts.prompts.enabled} prompts - ${counts.hooks.enabled} hook — all enabled`,
-    `harness: 2.2-done — P0 (RAG loop, tool hardening, planning JSON, receipt Ed25519) + P1 (multi-agent, observability, protocols, context, memory, deploy) + P2 (MAF workflows, CUA guardrails, local SLM, setup doctor)`,
+    `harness: 2.3-done — P0 (RAG loop, tool hardening, planning JSON, receipt Ed25519) + P1 (multi-agent, observability, protocols, context, memory, deploy) + P2 (MAF workflows, CUA guardrails, local SLM, setup doctor) + 2.3 (Evals Gate KN-037: rubric + component/E2E evals + error analysis — Andrew Ng 2026)`,
     `scripts: ${scriptCount} harness .mjs (plan-validate, handoff, reflect, trace, eval-gate, deploy-check, agent-card, context, memory, workflow, cua-guard, local, setup-doctor, procedural-graph, experience-funnel, consistency-gap)`,
     `eval-gate: ${evalStatus} (syntax + MCP smoke + plan-validate + self-improving)`,
+    `evals-gate: ${existsSync(path.join(GITHUB_DIR, 'skills', 'evals-gate', 'SKILL.md')) ? '✅ skill + KN-037 — rubric → component evals → E2E evals → error analysis (KHÔNG claim Done khi output open-ended chưa đo)' : '❌ thiếu skill evals-gate'}`,
     `www: polished — responsive 375/768/1280, a11y, states, animation 150-300ms`,
     `workflow: www/** -> Pages (upload-artifact path: www) — exists: ${existsSync(path.join(GITHUB_DIR, 'workflows', 'pages.yml'))} + eval job gate`,
     `library: www/library/ MCP v1.2.0 (5 tools: search + iterative + list/get/status, router+cache, redacted) + library-rag instruction`,
@@ -346,7 +347,7 @@ async function main() {
       pronunciation: 'Yu-ni = You & I',
       slogan: 'Hiểu hệ thống. Làm thay bạn. Trực 24/7.',
       philosophy: 'Process > Model, Agent tự làm việc',
-      version: '2.2-done',
+      version: '2.3-done',
       letters: [
         { letter: 'Y', word: 'Yielding', vi: 'Kiên nhẫn', desc: 'Không bỏ cuộc giữa pipeline, theo tới Done', icon: '🌱' },
         { letter: 'U', word: 'Understanding', vi: 'Thấu hiểu', desc: 'Hiểu toàn bộ registry, presets, plans, www/', icon: '🧠' },
@@ -360,13 +361,13 @@ async function main() {
         { label: 'You & I', value: 'YUNIE = You & I — cùng build product đẹp', hint: 'Bạn và Mình' },
       ],
       intros: {
-        short: 'Hi! Mình là YUNIE — Your Unified Navigator for Intelligent Execution, chatbot hệ thống Harness 2.2. Hiểu toàn bộ registry/presets/plans, trực STATUS www/ 24/7.',
+        short: 'Hi! Mình là YUNIE — Your Unified Navigator for Intelligent Execution, chatbot hệ thống Harness 2.3. Hiểu toàn bộ registry/presets/plans, trực STATUS www/ 24/7.',
         full: 'Mình là YUNIE — Yielding (kiên nhẫn), Understanding (thấu hiểu), Navigating (dẫn đường), Intelligent (thông minh), Executing (thực thi). Biến ý tưởng nhỏ thành sản phẩm qua đủ 8 phase, deploy Pages từ www/ chỉ bằng 1 push. Slogan: Hiểu hệ thống. Làm thay bạn. Trực 24/7.',
         fun: 'Mình là YUNIE — Yêu Nghề, Uy Tín, Nhanh, Thông Minh, Êm Ru! Hay Why U Need an Intelligent Engineer? Yu-ni = You & I, mình và bạn cùng build product đẹp!',
       },
     },
     harness: {
-      version: '2.2-done',
+      version: '2.3-done',
       pipeline: 'Idea → Explore → Clarify → PRD → Design → Plan → Implement → Polish → Verify → Done',
       philosophy: 'Process > Model, Agent tự làm việc',
       fixbug: 'Knowledge → Reproduce → Root Cause → Fix → Verify → Learn → Done',
@@ -374,6 +375,7 @@ async function main() {
         '2.1-alpha': ['P0-1 Agentic RAG loop (Lesson 05)', 'P0-2 Tool hardening (Lesson 04)', 'P0-3 Planning JSON (Lesson 07)', 'P0-4 Receipt Ed25519 (Lesson 18)'],
         '2.1-beta': ['P1-1 Multi-Agent handoff (08+09)', 'P1-2 Observability traces (10)', 'P1-3 Protocols MCP 1.2.0 (11)', 'P1-4 Context pipeline (12)', 'P1-5 Memory tiers (13)', 'P1-6 Router+cache (16)'],
         '2.2': ['P2-1 MAF workflows (14)', 'P2-2 CUA guardrails (15)', 'P2-3 Local SLM (17)', 'P2-4 Setup doctor (00)'],
+        '2.3': ['Evals Gate (KN-037 — Andrew Ng Playbook 2026)', 'Skill evals-gate: rubric + component/E2E evals + error analysis', 'Verify: không claim Done khi output open-ended chưa đo'],
       },
     },
     learn: learnStats,

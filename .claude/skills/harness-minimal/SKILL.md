@@ -57,6 +57,7 @@ user-invocable: "false"
 - - ❌ Trao model quyền chọn control flow cho path vốn đã biết — trả token để model deliberates về route mình đã biết (KN-022).
 - - ❌ Agency không có cheap check per-step — freedom không kiểm tra = nondeterminism không debug được (KN-022).
 - - ❌ Multi-agent reconciliation kiểu "whoever spoke last wins" — phải deterministic rule + conflict để lại thành record (KN-022).
+- - ❌ Chạy cả agentic loop / multi-agent cho task pipeline vẽ được flowchart — agency là cost phải justify (KN-037 + KN-022).
 
 ## Nguồn
 

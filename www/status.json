@@ -1,12 +1,12 @@
 {
-  "generatedAt": "2026-09-11T15:17:56.408Z",
+  "generatedAt": "2026-09-11T15:56:17.031Z",
   "generatedBy": "YUNIE",
   "version": 1,
   "counts": {
     "skills": {
-      "enabled": 18,
+      "enabled": 19,
       "disabled": 0,
-      "total": 18
+      "total": 19
     },
     "instructions": {
       "enabled": 18,
@@ -102,6 +102,10 @@
       "archify": {
         "enabled": true,
         "description": "Create polished, verifiable architecture, workflow, sequence, data-flow, lifecycle diagrams as self-contained HTML — typed JSON IR, deterministic validation, atomic delivery. Use when visualizing system architecture, infrastructure, cloud/security topology, workflow, API sequence, data pipeline, state machine, or converting Mermaid to beautiful diagrams. Port of tt-a1i/archify (50k⭐) for Harness v2, tháo lắp via harness-manager."
+      },
+      "evals-gate": {
+        "enabled": true,
+        "description": "Evals Gate — 'NO DONE WITHOUT EVALS': đo chất lượng output open-ended bằng rubric + component evals + E2E evals + error analysis, không chỉ build/test/lint. Use when verifying agent/product output, before claiming done, when quality can't be measured by pass/fail tests, need quality gate or rubric, "
       }
     },
     "instructions": {
@@ -403,17 +407,18 @@
   "health": {
     "errors": 0,
     "status": "ok",
-    "lastCheck": "2026-09-11T15:17:56.408Z",
+    "lastCheck": "2026-09-11T15:56:17.031Z",
     "checks": [
       "get_errors: pass (0 errors)",
-      "registry: 18 instructions (18 total) - 18 skills - 9 agents - 7 prompts - 1 hook — all enabled",
-      "harness: 2.2-done — P0 (RAG loop, tool hardening, planning JSON, receipt Ed25519) + P1 (multi-agent, observability, protocols, context, memory, deploy) + P2 (MAF workflows, CUA guardrails, local SLM, setup doctor)",
+      "registry: 18 instructions (18 total) - 19 skills - 9 agents - 7 prompts - 1 hook — all enabled",
+      "harness: 2.3-done — P0 (RAG loop, tool hardening, planning JSON, receipt Ed25519) + P1 (multi-agent, observability, protocols, context, memory, deploy) + P2 (MAF workflows, CUA guardrails, local SLM, setup doctor) + 2.3 (Evals Gate KN-037: rubric + component/E2E evals + error analysis — Andrew Ng 2026)",
       "scripts: 23 harness .mjs (plan-validate, handoff, reflect, trace, eval-gate, deploy-check, agent-card, context, memory, workflow, cua-guard, local, setup-doctor, procedural-graph, experience-funnel, consistency-gap)",
       "eval-gate: PASS (syntax + MCP smoke + plan-validate + self-improving)",
+      "evals-gate: ✅ skill + KN-037 — rubric → component evals → E2E evals → error analysis (KHÔNG claim Done khi output open-ended chưa đo)",
       "www: polished — responsive 375/768/1280, a11y, states, animation 150-300ms",
       "workflow: www/** -> Pages (upload-artifact path: www) — exists: true + eval job gate",
       "library: www/library/ MCP v1.2.0 (5 tools: search + iterative + list/get/status, router+cache, redacted) + library-rag instruction",
-      "auto-learn: 36 KN, 19 bugs, 0 drafts — suggest/log/propose/status (<50ms, IDF, tiếng Việt)",
+      "auto-learn: 37 KN, 19 bugs, 0 drafts — suggest/log/propose/status (<50ms, IDF, tiếng Việt)",
       "governance: audit 21 (Ed25519 receipt P0-4) · policy 9 deny/2 allow (ok) · credentials 0 keys plain",
       "platform: agents 3 (3 built-in, 0 remote) · mcp 3 vendors/3 grants (library 1.2.0 read-only) · components 3/3 pub · routines 2/2 enabled",
       "collaboration: KN-018 — dissentGate ✅ · whoDidYouThinkWith ✅ · critic ✅ · fund-the-friction ✅ (ok)",
@@ -529,7 +534,7 @@
     "pronunciation": "Yu-ni = You & I",
     "slogan": "Hiểu hệ thống. Làm thay bạn. Trực 24/7.",
     "philosophy": "Process > Model, Agent tự làm việc",
-    "version": "2.2-done",
+    "version": "2.3-done",
     "letters": [
       {
         "letter": "Y",
@@ -585,13 +590,13 @@
       }
     ],
     "intros": {
-      "short": "Hi! Mình là YUNIE — Your Unified Navigator for Intelligent Execution, chatbot hệ thống Harness 2.2. Hiểu toàn bộ registry/presets/plans, trực STATUS www/ 24/7.",
+      "short": "Hi! Mình là YUNIE — Your Unified Navigator for Intelligent Execution, chatbot hệ thống Harness 2.3. Hiểu toàn bộ registry/presets/plans, trực STATUS www/ 24/7.",
       "full": "Mình là YUNIE — Yielding (kiên nhẫn), Understanding (thấu hiểu), Navigating (dẫn đường), Intelligent (thông minh), Executing (thực thi). Biến ý tưởng nhỏ thành sản phẩm qua đủ 8 phase, deploy Pages từ www/ chỉ bằng 1 push. Slogan: Hiểu hệ thống. Làm thay bạn. Trực 24/7.",
       "fun": "Mình là YUNIE — Yêu Nghề, Uy Tín, Nhanh, Thông Minh, Êm Ru! Hay Why U Need an Intelligent Engineer? Yu-ni = You & I, mình và bạn cùng build product đẹp!"
     }
   },
   "harness": {
-    "version": "2.2-done",
+    "version": "2.3-done",
     "pipeline": "Idea → Explore → Clarify → PRD → Design → Plan → Implement → Polish → Verify → Done",
     "philosophy": "Process > Model, Agent tự làm việc",
     "fixbug": "Knowledge → Reproduce → Root Cause → Fix → Verify → Learn → Done",
@@ -615,11 +620,16 @@
         "P2-2 CUA guardrails (15)",
         "P2-3 Local SLM (17)",
         "P2-4 Setup doctor (00)"
+      ],
+      "2.3": [
+        "Evals Gate (KN-037 — Andrew Ng Playbook 2026)",
+        "Skill evals-gate: rubric + component/E2E evals + error analysis",
+        "Verify: không claim Done khi output open-ended chưa đo"
       ]
     }
   },
   "learn": {
-    "knTotal": 36,
+    "knTotal": 37,
     "bugsTotal": 19,
     "drafts": 0
   },
@@ -723,7 +733,7 @@
       "deny": 9,
       "allow": 2,
       "status": "ok",
-      "lastCheck": "2026-09-11T15:17:56.164Z"
+      "lastCheck": "2026-09-11T15:56:16.907Z"
     },
     "credentials": {
       "count": 0,

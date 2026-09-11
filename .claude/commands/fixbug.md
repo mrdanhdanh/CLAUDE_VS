@@ -25,7 +25,7 @@ Read Knowledge → Reproduce → Root Cause → Fix → Verify → Learn → Don
 | **1. Reproduce** | Tái hiện bug có bằng chứng | Steps + Expected/Actual + log/screenshot | ❌ |
 | **2. Locate & Root Cause** | Tìm file + 5 Whys | Root cause + file:line + giả thuyết | ❌ |
 | **3. Fix** | Sửa ở gốc, todo-driven (bounded) | Code + `IDE diagnostics` affected files | ❌ |
-| **4. Verify** | Không regression | Re-test + edge + regression + build/lint | ❌ |
+| **4. Verify** | Không regression + evals mini nếu output open-ended | Re-test + edge + regression + build/lint (full scope) + rubric/E2E (KN-037) | ❌ |
 | **5. Learn** | Biến bug thành knowledge | `.agent/bugs/<slug>/bug.md` + `docs/knowleged.md` KN-XXX | ❌ |
 | **6. Done** | Đóng vòng, báo cáo | Tóm tắt + KN + files changed | ❌ |
 
@@ -98,6 +98,7 @@ Read Knowledge → Reproduce → Root Cause → Fix → Verify → Learn → Don
 - Test **edge cases** + **regression** (các case liên quan).
 - Chạy `IDE diagnostics` **toàn scope** + `PowerShell` lint/build/test nếu có (loop fix max 3 lần/check). *(Khác Phase 3: Phase 3 chỉ `IDE diagnostics` affected files sau mỗi edit; Phase 4 mới scan toàn scope.)*
 - Nếu bug là UI → audit nhanh theo `product-quality.instructions.md` (responsive, states, a11y) — không cần full Polish.
+- **Evals mini (KN-037):** output open-ended (UI/workflow/chất lượng mờ) → viết 2-3 tiêu chí cụ thể + chạy scenario thật (E2E), không chỉ build/test. Failures cùng loại ≥2 → aggregate TRƯỚC khi fix (KN-034). Chi tiết: skill `evals-gate`.
 - **Fresh eyes verify (KN-005) — tiered, không hard requirement cho mọi bug:**
   ```
   - REQUIRED: UX/UI, workflow, usability, ambiguous behavior

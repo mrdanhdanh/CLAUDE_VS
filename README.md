@@ -1,12 +1,12 @@
-﻿# CLAUDE HARNESS 2.2 — VS Code Copilot
+﻿# CLAUDE HARNESS 2.3 — VS Code Copilot
 
 > **Process > Model, Agent tự làm việc.** Dù GPT / Claude / Gemini đều chạy cùng pipeline. Một ý tưởng nhỏ → **sản phẩm hoàn chỉnh, giao diện đẹp** — không phụ thuộc model.
 >
-> **Mới 2.1/2.2 (2026-09-04, DONE):** Agentic RAG loop · Tool hardening · Planning JSON · Receipt Ed25519 · Multi-Agent handoff · Observability traces + eval gate · MCP 1.2.0 · Context pipeline · Memory tiers · Router+cache · MAF workflows · CUA guardrails · Local SLM hybrid · Setup doctor. Chi tiết: `docs/harness-2.1-upgrade.md`.
+> **Mới 2.1/2.2/2.3 (2026-09-11, DONE):** Agentic RAG loop · Tool hardening · Planning JSON · Receipt Ed25519 · Multi-Agent handoff · Observability traces + eval gate · MCP 1.2.0 · Context pipeline · Memory tiers · Router+cache · MAF workflows · CUA guardrails · Local SLM hybrid · Setup doctor · **Evals Gate (KN-037 — Andrew Ng Playbook 2026)**. Chi tiết: `docs/harness-2.1-upgrade.md` + `docs/knowleged.md`.
 
 Harness biến VS Code Copilot Chat thành **Claude Code Extension**: tự động, todo-driven, explore trước khi code, plan trước khi implement, polish trước khi done. Mọi customization (skill / rule / agent / prompt / hook) đều **tháo lắp như plugin** — bật/tắt không xóa, preset theo dự án, scaffold 1 lệnh.
 
-> **Trạng thái hiện tại (2026-09-11, 2.2-done):** 18 skills (+cosmic-quantum, cosmic-scale, archify, 5 harness-* lesson skills) · 18 instructions (+awesome-design, cosmic-quantum, fund-the-friction) · 9 agents (+critic) · 7 prompts · 1 hook — tất cả enabled · 4 presets · 36 KN · 19 bugs · 60 plans · 13 demos `www/` · 23 scripts harness · MCP library 1.2.0 · governance policy v3 (9 deny + 2 allow, Ed25519) · `www/status.json` do YUNIE generate.
+> **Trạng thái hiện tại (2026-09-11, 2.3-done):** 19 skills (+evals-gate, cosmic-quantum, cosmic-scale, archify, 5 harness-* lesson skills) · 18 instructions (+awesome-design, cosmic-quantum, fund-the-friction) · 9 agents (+critic) · 7 prompts · 1 hook — tất cả enabled · 4 presets · 37 KN · 19 bugs · 60 plans · 13 demos `www/` · 23 scripts harness · MCP library 1.2.0 · governance policy v3 (9 deny + 2 allow, Ed25519) · `www/status.json` do YUNIE generate.
 
 ---
 
@@ -244,7 +244,7 @@ node .github/harness/scripts/auto-learn.mjs status
 
 ## Governance
 
-Audit + policy + credentials — học OpenBot, fail-closed. **Mới 2.1/2.2:** Receipt Ed25519 + traces + eval gate + CUA guardrails.
+Audit + policy + credentials — học OpenBot, fail-closed. **Mới 2.1/2.2/2.3:** Receipt Ed25519 + traces + eval gate + CUA guardrails + Evals Gate (KN-037).
 
 - **Policy gate:** `node .agent/scripts/policy-check.mjs --tool <tool> --target "<target>" --actor <actor>` — deny trước allow, malformed `policy.json` → deny all. Hiện tại v3: **9 deny** (rm-rf-root, env-read, credentials-direct, private-hosts, test-mutate, destructive-sql, rm-rf-variants, law-fork, law-copy-in-skill) + **2 allow** (read-www, all).
 - **Verifier integrity (KN-012):** test là immutable (`*.Tests.*`, `*.test.*`, `*.spec.*`, `ai-news.json`) — chỉ `verify` actor hoặc human takeover (`intent=takeover`) mới được sửa test. Sửa test để pass = reward hacking.
@@ -379,9 +379,9 @@ Mở local: `www/index.html` (file://) hoặc `npx serve www` → `http://localh
 
 | Doc | Mô tả |
 |-----|-------|
-| [`docs/knowleged.md`](docs/knowleged.md) | ⚠️ BẮT BUỘC đọc trước mọi task — 36 KN (KN-001→KN-036) + anti-patterns + checklist phòng tránh |
+| [`docs/knowleged.md`](docs/knowleged.md) | ⚠️ BẮT BUỘC đọc trước mọi task — 37 KN (KN-001→KN-037) + anti-patterns + checklist phòng tránh |
 | [`docs/harness-flow.md`](docs/harness-flow.md) | Sơ đồ khi dùng `/harness` — flowchart, sequence, architecture, decision, chi tiết 8 phase |
-| [`docs/capabilities.md`](docs/capabilities.md) | Toàn bộ khả năng — Harness 2.2 + Skills(18) + Instructions(18) + Agents(9) + 23 scripts + Governance + Library RAG 1.2.0 |
+| [`docs/capabilities.md`](docs/capabilities.md) | Toàn bộ khả năng — Harness 2.3 + Skills(19) + Instructions(18) + Agents(9) + 23 scripts + Governance + Library RAG 1.2.0 |
 | [`docs/harness-2.1-upgrade.md`](docs/harness-2.1-upgrade.md) | ✅ DONE — Roadmap P0/P1/P2 (14 commits) + verification checklist + citations |
 | [`docs/yunie-brain-upgrade.md`](docs/yunie-brain-upgrade.md) | YUNIE Personality v2 — GenZ + ấm áp + hài duyên, RAG citations, SSA |
 | [`.github/harness/README.md`](.github/harness/README.md) | Harness Registry — tháo lắp, preset, scaffold |
@@ -401,4 +401,4 @@ Mở local: `www/index.html` (file://) hoặc `npx serve www` → `http://localh
 
 ---
 
-*Harness 2.2 (2026-09-11 sync STATUS → AI News self-improving): Process > Model, Agent tự làm việc. Idea nhỏ → Product đẹp. Mọi model đều chạy cùng pipeline. Mọi thứ đều là plugin — YUNIE trực hệ thống, www/ lên Pages. Knowledge first (`docs/knowleged.md`), TDD gate, governance fail-closed + Ed25519 (policy v3), minimal ladder, cosmic-quantum thinking, fund the friction (KN-018). Số liệu chính xác nhất: `www/status.json`.*
+*Harness 2.3 (2026-09-11 — Evals Gate KN-037 từ Andrew Ng Playbook 2026): Process > Model, Agent tự làm việc. Idea nhỏ → Product đẹp. Mọi model đều chạy cùng pipeline. Mọi thứ đều là plugin — YUNIE trực hệ thống, www/ lên Pages. Knowledge first (`docs/knowleged.md`), TDD gate, governance fail-closed + Ed25519 (policy v3), minimal ladder, cosmic-quantum thinking, fund the friction (KN-018), evals gate — "chạy được" ≠ "tốt đến đâu" (KN-037). Số liệu chính xác nhất: `www/status.json`.*

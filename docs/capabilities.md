@@ -1,8 +1,8 @@
 ﻿# Capabilities — Toàn bộ khả năng của hệ thống
 
-> Harness 2.2-done (P0+P1+P2, 14 commits) + Registry tháo lắp wise — VS Code Copilot Chat. Mọi customization đều là plugin.
+> Harness 2.3-done (P0+P1+P2 + Evals Gate KN-037) + Registry tháo lắp wise — VS Code Copilot Chat. Mọi customization đều là plugin.
 >
-> **Mới 2.1/2.2 (2026-09-04):** Agentic RAG loop · Tool hardening · Planning JSON · Receipt Ed25519 · Multi-Agent handoff · Observability traces · MCP 1.2.0 · Context pipeline · Memory tiers · Router+cache · MAF workflows · CUA guardrails · Local SLM · Setup doctor. Chi tiết: `docs/harness-2.1-upgrade.md` (DONE).
+> **Mới 2.1/2.2/2.3 (2026-09-11):** Agentic RAG loop · Tool hardening · Planning JSON · Receipt Ed25519 · Multi-Agent handoff · Observability traces · MCP 1.2.0 · Context pipeline · Memory tiers · Router+cache · MAF workflows · CUA guardrails · Local SLM · Setup doctor · **Evals Gate (KN-037 — Andrew Ng Playbook 2026)**. Chi tiết: `docs/harness-2.1-upgrade.md` (DONE) + `docs/knowleged.md`.
 
 ---
 
@@ -89,6 +89,7 @@ Skills là workflow on-demand, agent chỉ load khi `description` match task (pr
 | `claude-harness` | Harness v2 Idea→Product pipeline | Mọi task code, ý tưởng nhỏ → product, cần UI đẹp | `/claude-harness` |
 | `tdd-gate` | **TDD gate** — RED-GREEN-REFACTOR bắt buộc, không production code nếu chưa có test fail trước (inspired by `obra/superpowers` TDD) | Implementing feature, fixing bug, refactoring — enforces failing test first | `/tdd-gate` |
 | `systematic-debugging` | **Systematic debugging 4-phase** — root cause first, evidence gathering, single hypothesis, TDD fix, 3-fix limit (inspired by `obra/superpowers`) | Bug, test failure, build failure, unexpected behavior — before proposing fixes | `/systematic-debugging` |
+| `evals-gate` | **Evals gate** — rubric + component/E2E evals + error analysis cho output open-ended, không chỉ "chạy được" (inspired by Andrew Ng — Agentic AI Playbook 2026, KN-037) | Output open-ended (UI/plan/report/agent), trước claim Done | `/evals-gate` |
 | `skill-registry` | Tháo lắp skill như plugin | Cài/gỡ/bật/tắt skill từ GitHub | `/skill-registry` |
 | `custom-registry` | Tháo lắp toàn bộ (skill/instruction/agent/prompt/hook) + preset + scaffold | Quản lý rule, preset, tạo mới customization | `/custom-registry` |
 | `glass-rainbow-effects` | Liquid glass + rainbow border effects | Cần glassmorphism, rainbow border, animated gradient | — |

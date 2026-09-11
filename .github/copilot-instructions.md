@@ -27,7 +27,7 @@ Idea → Explore → Clarify → PRD → Design → Plan → Implement → Polis
 
 > **Lưu plan:** Luôn `.agent/plans/<task>/prd.md|design.md|plan.md` (thư mục/task). **CẤM flat** `.agent/plans/<task>-prd.md`. Xem `docs/harness-flow.md`.
 | **Polish** | Làm đẹp + UX | Responsive, animation, empty/error/loading states | `Polish` agent |
-| **Verify** | Đảm bảo chất lượng | build/test/lint pass, visual check + **bằng chứng Pages runtime** (§7) | `Verify` agent |
+| **Verify** | Đảm bảo chất lượng | build/test/lint pass, visual check + **Evals Gate** (rubric + component/E2E evals cho output open-ended — KN-037) + **bằng chứng Pages runtime** (§7) | `Verify` agent |
 
 > **Quy tắc:** Không được nhảy từ Idea → Code. Phải qua PRD + Design + Plan. Không có Agent sẵn thì harness tự tạo process.
 > **Verify animation:** CSS `conic-gradient`/`--angle` phải đo bằng Playwright `getComputedStyle(...).getPropertyValue('--angle')` trước/sau 500ms, không chỉ nhìn (KN-003/KN-004).
@@ -145,6 +145,7 @@ Mọi sản phẩm web PHẢI đạt:
 - ❌ Khi user nói "thử lại / vẫn lỗi / lặp lại" mà lặp nguyên output cũ — phải đổi strategy, diff file trước/sau, đo lại bằng tool
 - ❌ Ở mode YUNIE mà trả lời như Copilot thường (sai persona/ngôn ngữ) — xem `yunie.agent.md` §Identity-Mode (chronicle 2026-09-03)
 - ❌ Fix bug không reproduce/root cause — sửa triệu chứng thay vì gốc (chronicle 2026-08-31 `cd881000` random disable)
+- ❌ Claim Done khi build/test/lint pass nhưng output open-ended chưa có evals (rubric + component/E2E) — "chạy được" ≠ "tốt đến đâu" (KN-037)
 
 ---
 *Harness v2: Process > Model. Idea nhỏ → Product đẹp. Mọi model đều chạy cùng pipeline.*

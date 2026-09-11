@@ -1,6 +1,6 @@
 # Evidence — harness-web-ui (DisCo arXiv:2609.02749v1 §3.2 (task-agnostic))
 
-> Substrate layer của skill — full text từ docs/knowleged.md. Sinh tự động 2026-09-11T15:17:55.867Z.
+> Substrate layer của skill — full text từ docs/knowleged.md. Sinh tự động 2026-09-11T15:42:43.694Z.
 
 ## Bug reports liên quan (10/19 bugs)
 

@@ -9,7 +9,12 @@
       "KN-004",
       "KN-006",
       "KN-011",
-      "KN-017"
+      "KN-017",
+      "KN-028",
+      "KN-029",
+      "KN-030",
+      "KN-031",
+      "KN-032"
     ],
     "bugs": [
       ".agent/bugs/2026-08-29-modal-esc/bug.md",
@@ -18,7 +23,12 @@
       ".agent/bugs/2026-08-30-grid2-rainbow-hover/bug.md",
       ".agent/bugs/2026-08-30-n5-ui-polish/bug.md",
       ".agent/bugs/2026-08-31-random-step-btn-disabled/bug.md",
-      ".agent/bugs/2026-09-06-archify-skill-port/bug.md"
+      ".agent/bugs/2026-09-06-archify-skill-port/bug.md",
+      ".agent/bugs/2026-09-10-intro-burst-tu-goc-do-quen-goi-resize/bug.md",
+      ".agent/bugs/2026-09-10-google-fonts-chan-script-intro-khong-hien/bug.md",
+      ".agent/bugs/2026-09-10-observatory-fetch-404-ngoai-www-va-relative-url/bug.md",
+      ".agent/bugs/2026-09-10-edge-pc-khong-thay-hieu-ung-intro-reduced-motion/bug.md",
+      ".agent/bugs/2026-09-10-raf-callback-error-khong-bi-try-catch-bat/bug.md"
     ]
   },
   "capabilities": [
@@ -37,7 +47,18 @@
     "button",
     "diagram",
     "archify",
-    "verify"
+    "verify",
+    "canvas",
+    "bug-blindness",
+    "perf",
+    "font",
+    "script-blocking",
+    "pages",
+    "fetch",
+    "url",
+    "reduced-motion",
+    "edge",
+    "error-handling"
   ],
   "evidence": [
     ".agent/bugs/2026-08-29-modal-esc/bug.md",
@@ -46,7 +67,12 @@
     ".agent/bugs/2026-08-30-grid2-rainbow-hover/bug.md",
     ".agent/bugs/2026-08-30-n5-ui-polish/bug.md",
     ".agent/bugs/2026-08-31-random-step-btn-disabled/bug.md",
-    ".agent/bugs/2026-09-06-archify-skill-port/bug.md"
+    ".agent/bugs/2026-09-06-archify-skill-port/bug.md",
+    ".agent/bugs/2026-09-10-intro-burst-tu-goc-do-quen-goi-resize/bug.md",
+    ".agent/bugs/2026-09-10-google-fonts-chan-script-intro-khong-hien/bug.md",
+    ".agent/bugs/2026-09-10-observatory-fetch-404-ngoai-www-va-relative-url/bug.md",
+    ".agent/bugs/2026-09-10-edge-pc-khong-thay-hieu-ung-intro-reduced-motion/bug.md",
+    ".agent/bugs/2026-09-10-raf-callback-error-khong-bi-try-catch-bat/bug.md"
   ],
   "checks": [
     {
@@ -68,6 +94,6 @@
   ],
   "gaps": [],
   "verdict": "G-accepted",
-  "generatedAt": "2026-09-10T14:54:41.010Z",
+  "generatedAt": "2026-09-11T15:42:43.701Z",
   "paper": "DisCo arXiv:2609.02749v1 §3.2 (task-agnostic)"
 }

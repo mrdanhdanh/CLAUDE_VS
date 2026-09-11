@@ -1,8 +1,8 @@
 # Evidence — harness-minimal (DisCo arXiv:2609.02749v1 §3.2 (task-agnostic))
 
-> Substrate layer của skill — full text từ docs/knowleged.md. Sinh tự động 2026-09-10T14:54:40.976Z.
+> Substrate layer của skill — full text từ docs/knowleged.md. Sinh tự động 2026-09-11T15:42:43.670Z.
 
-## Bug reports liên quan (1/13 bugs)
+## Bug reports liên quan (1/19 bugs)
 
 - `.agent/bugs/2026-09-03-n5blazor-ladder-trial-dead-code/bug.md` — Bug: N5Blazor ladder trial dead code
 
