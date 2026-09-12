@@ -1,8 +1,8 @@
 {
-  "generatedAt": "2026-09-12T06:52:47.892Z",
+  "generatedAt": "2026-09-12T11:01:33.163Z",
   "generatedBy": "YUNIE × Last30Days",
   "version": 2,
-  "description": "Tin AI mới nhất — tổng hợp từ Last30Days (HN, GitHub, DEV.to, Reddit, Hugging Face, arXiv, HackerNoon) trong 30 ngày qua. Chủ đề: AI. Tự động cập nhật bởi YUNIE.",
+  "description": "Tin AI mới nhất — tổng hợp từ Last30Days (HN, GitHub, DEV.to, Reddit, arXiv, HackerNoon) trong 30 ngày qua. Chủ đề: AI. Tự động cập nhật bởi YUNIE.",
   "last30days": {
     "enabled": true,
     "topic": "AI",
@@ -13,14 +13,13 @@
       "GitHub Search (free)",
       "DEV.to (free)",
       "Reddit r/MachineLearning (free)",
-      "Hugging Face trending (free)",
       "arXiv (free)",
       "HackerNoon RSS (free)",
       "Web (Brave/Perplexity when key)"
     ],
-    "engine": "Node.js bridge (no Python 3.12 needed) — HN Algolia + GitHub API + DEV.to + Reddit + Hugging Face + arXiv + HackerNoon RSS, scored by upvotes/stars/reactions/likes",
+    "engine": "Node.js bridge (no Python 3.12 needed) — HN Algolia + GitHub API + DEV.to + Reddit + arXiv + HackerNoon RSS, scored by upvotes/stars/reactions/likes",
     "skill": "mvanhorn/last30days-skill v3.23.0 (61k ⭐)",
-    "note": "Full Last30Days engine (X/YouTube/TikTok/Polymarket) cần Python 3.12 + API keys. Bridge này dùng 7 nguồn free (HN, GitHub, DEV.to, Reddit, Hugging Face, arXiv, HackerNoon), đủ cho ai-news. Cài Python 3.12 để chạy full: python3.12 .github/skills/last30days/scripts/last30days.py \"AI\" --emit=json"
+    "note": "Full Last30Days engine (X/YouTube/TikTok/Polymarket) cần Python 3.12 + API keys. Bridge này dùng 6 nguồn free (HN, GitHub, DEV.to, Reddit, arXiv, HackerNoon), đủ cho ai-news. Cài Python 3.12 để chạy full: python3.12 .github/skills/last30days/scripts/last30days.py \"AI\" --emit=json"
   },
   "categories": [
     {
@@ -56,153 +55,63 @@
   ],
   "articles": [
     {
-      "id": "hf-Qwen_Qwen3_8-27B",
-      "title": "🤗 Qwen/Qwen3.8-27B — trending on Hugging Face",
-      "summary": "Model trending: image-text-to-text, 14784 likes, 7563763 downloads. transformers",
-      "source": "Hugging Face",
-      "sourceUrl": "https://huggingface.co/Qwen/Qwen3.8-27B",
+      "id": "hnoon-a-framework-for-conversational-system-modeling",
+      "title": "A Framework for Conversational System Modeling",
+      "summary": "Continuation, turn change, backchannel, interruption, silence: five events a model predicts from 30 seconds of dual-channel audio. — by Picture in the Noise on HackerNoon.",
+      "source": "HackerNoon",
+      "sourceUrl": "https://hackernoon.com/a-framework-for-conversational-system-modeling",
       "category": "products",
       "date": "2026-09-12",
       "hot": true,
       "tags": [
-        "Hugging Face",
-        "image-text-to-text",
-        "transformers"
+        "HackerNoon",
+        "ai-dialogue-systems",
+        "AI"
       ]
     },
     {
-      "id": "hf-unsloth_Qwen3_8-27B-GGUF",
-      "title": "🤗 unsloth/Qwen3.8-27B-GGUF — trending on Hugging Face",
-      "summary": "Model trending: model, 3914 likes, 11339637 downloads. ",
-      "source": "Hugging Face",
-      "sourceUrl": "https://huggingface.co/unsloth/Qwen3.8-27B-GGUF",
+      "id": "hnoon-the-slop-should-not-be-tolerated",
+      "title": "The Slop Should Not Be Tolerated",
+      "summary": "AI coding loops can churn out slop as fast as features. Here's how meaningful tests and protected quality checks keep bad code from piling up. — by Rox dT on HackerNoon.",
+      "source": "HackerNoon",
+      "sourceUrl": "https://hackernoon.com/the-slop-should-not-be-tolerated",
       "category": "products",
       "date": "2026-09-12",
       "hot": true,
       "tags": [
-        "Hugging Face",
-        "model"
+        "HackerNoon",
+        "ai-agents",
+        "AI"
       ]
     },
     {
-      "id": "hf-Lightricks_LTX-2_5",
-      "title": "🤗 Lightricks/LTX-2.5 — trending on Hugging Face",
-      "summary": "Model trending: image-to-video, 3526 likes, 1669564 downloads. diffusion-single-file",
-      "source": "Hugging Face",
-      "sourceUrl": "https://huggingface.co/Lightricks/LTX-2.5",
-      "category": "products",
-      "date": "2026-09-12",
-      "hot": true,
-      "tags": [
-        "Hugging Face",
-        "image-to-video",
-        "diffusion-single-file"
-      ]
-    },
-    {
-      "id": "hf-deepseek-ai_DeepSeek-V4_1-Flash",
-      "title": "🤗 deepseek-ai/DeepSeek-V4.1-Flash — trending on Hugging Face",
-      "summary": "Model trending: image-text-to-text, 1842 likes, 75774 downloads. transformers",
-      "source": "Hugging Face",
-      "sourceUrl": "https://huggingface.co/deepseek-ai/DeepSeek-V4.1-Flash",
-      "category": "products",
-      "date": "2026-09-12",
-      "hot": true,
-      "tags": [
-        "Hugging Face",
-        "image-text-to-text",
-        "transformers"
-      ]
-    },
-    {
-      "id": "hf-openbmb_MiniCPM5-2B",
-      "title": "🤗 openbmb/MiniCPM5-2B — trending on Hugging Face",
-      "summary": "Model trending: text-generation, 1209 likes, 67550 downloads. transformers",
-      "source": "Hugging Face",
-      "sourceUrl": "https://huggingface.co/openbmb/MiniCPM5-2B",
-      "category": "products",
-      "date": "2026-09-12",
-      "hot": true,
-      "tags": [
-        "Hugging Face",
-        "text-generation",
-        "transformers"
-      ]
-    },
-    {
-      "id": "hf-XHToken_Spark-X2_5-4B",
-      "title": "🤗 XHToken/Spark-X2.5-4B — trending on Hugging Face",
-      "summary": "Model trending: text-generation, 1119 likes, 17712 downloads. transformers",
-      "source": "Hugging Face",
-      "sourceUrl": "https://huggingface.co/XHToken/Spark-X2.5-4B",
-      "category": "products",
-      "date": "2026-09-12",
-      "hot": true,
-      "tags": [
-        "Hugging Face",
-        "text-generation",
-        "transformers"
-      ]
-    },
-    {
-      "id": "hf-ISTA-DASLab_Qwen3_8-27B-GSQ-RCO-GGUF",
-      "title": "🤗 ISTA-DASLab/Qwen3.8-27B-GSQ-RCO-GGUF — trending on Hugging Face",
-      "summary": "Model trending: image-text-to-text, 850 likes, 682187 downloads. gguf",
-      "source": "Hugging Face",
-      "sourceUrl": "https://huggingface.co/ISTA-DASLab/Qwen3.8-27B-GSQ-RCO-GGUF",
-      "category": "products",
-      "date": "2026-09-12",
-      "hot": true,
-      "tags": [
-        "Hugging Face",
-        "image-text-to-text",
-        "gguf"
-      ]
-    },
-    {
-      "id": "hf-nex-agi_Nex-N2_5-mini",
-      "title": "🤗 nex-agi/Nex-N2.5-mini — trending on Hugging Face",
-      "summary": "Model trending: text-generation, 700 likes, 3121 downloads. transformers",
-      "source": "Hugging Face",
-      "sourceUrl": "https://huggingface.co/nex-agi/Nex-N2.5-mini",
-      "category": "products",
-      "date": "2026-09-12",
-      "hot": true,
-      "tags": [
-        "Hugging Face",
-        "text-generation",
-        "transformers"
-      ]
-    },
-    {
-      "id": "hf-nex-agi_Nex-N2_5-Pro",
-      "title": "🤗 nex-agi/Nex-N2.5-Pro — trending on Hugging Face",
-      "summary": "Model trending: text-generation, 605 likes, 12260 downloads. transformers",
-      "source": "Hugging Face",
-      "sourceUrl": "https://huggingface.co/nex-agi/Nex-N2.5-Pro",
-      "category": "products",
-      "date": "2026-09-12",
-      "hot": true,
-      "tags": [
-        "Hugging Face",
-        "text-generation",
-        "transformers"
-      ]
-    },
-    {
-      "id": "hn-49668181",
-      "title": "Google stole open source code without crediting the authors (Artemis/Minitap)",
-      "summary": "Google stole open source code without crediting the authors (Artemis/Minitap) — 108 points, 22 comments on HN.",
-      "source": "Hacker News",
-      "sourceUrl": "https://www.minitap.ai/blog/i-expected-better-from-google",
+      "id": "hnoon-recursive-self-improvement-and-agentic-ai-fear-of-the-ai-sin",
+      "title": "Recursive Self-Improvement and Agentic AI: Fear of the AI Singularity",
+      "summary": "Explore recursive self-improvement, agentic AI risks and the AI singularity debate, including OpenAI security incidents and Anthropic’s safety concerns. — by Giovanni Coletta on HackerNoon.",
+      "source": "HackerNoon",
+      "sourceUrl": "https://hackernoon.com/recursive-self-improvement-and-agentic-ai-fear-of-the-ai-singularity",
       "category": "big-tech",
       "date": "2026-09-12",
       "hot": true,
       "tags": [
-        "HN",
-        "AI",
-        "story",
-        "author_MysteryPancake"
+        "HackerNoon",
+        "recursive-ai-systems",
+        "AI"
+      ]
+    },
+    {
+      "id": "hnoon-looking-at-the-future-of-tech-in-healthcare",
+      "title": "Looking at the Future of Tech in Healthcare",
+      "summary": "67% of healthcare facilities hit by ransomware in 2024, nurses stretched to 11 patients a day: automated tube delivery cuts hand-to-hand contact. — by Brian Wallace on HackerNoon.",
+      "source": "HackerNoon",
+      "sourceUrl": "https://hackernoon.com/looking-at-the-future-of-tech-in-healthcare",
+      "category": "products",
+      "date": "2026-09-12",
+      "hot": true,
+      "tags": [
+        "HackerNoon",
+        "healthcare",
+        "AI"
       ]
     },
     {
@@ -217,6 +126,21 @@
       "tags": [
         "HackerNoon",
         "vibe-lawyering",
+        "AI"
+      ]
+    },
+    {
+      "id": "hnoon-where-ai-generated-design-breaks-ux-laws",
+      "title": "Where AI-Generated Design Breaks UX Laws",
+      "summary": "AI design generators rarely produce that code, and the people using them rarely know that this code is missing. — by Viacheslav Derzhaiev on HackerNoon.",
+      "source": "HackerNoon",
+      "sourceUrl": "https://hackernoon.com/where-ai-generated-design-breaks-ux-laws",
+      "category": "products",
+      "date": "2026-09-12",
+      "hot": true,
+      "tags": [
+        "HackerNoon",
+        "product-design",
         "AI"
       ]
     },
@@ -236,26 +160,26 @@
       ]
     },
     {
-      "id": "hf-WarmBloodAban_Minimax-h3_Singularity",
-      "title": "🤗 WarmBloodAban/Minimax-h3_Singularity — trending on Hugging Face",
-      "summary": "Model trending: image-to-video, 316 likes, 103178 downloads. minimax-h3",
-      "source": "Hugging Face",
-      "sourceUrl": "https://huggingface.co/WarmBloodAban/Minimax-h3_Singularity",
+      "id": "hnoon-why-default-kubernetes-hpa-fail-for-modern-workloads-and-why",
+      "title": "Why Default Kubernetes HPA Fail for Modern Workloads And Why We Switched to KEDA",
+      "summary": "KEDA gives the best of both worlds: proactive autoscaling to protect performance, and scale-to-zero efficiency to cut cloud costs. — by Himashi Meththasena on HackerNoon.",
+      "source": "HackerNoon",
+      "sourceUrl": "https://hackernoon.com/why-default-kubernetes-hpa-fail-for-modern-workloads-and-why-we-switched-to-keda",
       "category": "products",
       "date": "2026-09-12",
-      "hot": false,
+      "hot": true,
       "tags": [
-        "Hugging Face",
-        "image-to-video",
-        "minimax-h3"
+        "HackerNoon",
+        "keda",
+        "AI"
       ]
     },
     {
-      "id": "hn-49669350",
-      "title": "Russian developers used Claude to build 'kamikaze' attack drone software",
-      "summary": "Russian developers used Claude to build 'kamikaze' attack drone software — 5 points, 1 comments on HN.",
+      "id": "hn-49670907",
+      "title": "At this point I feel like AI companies selling Fear",
+      "summary": "AI can do reasoning better But It can&#x27;t outsmart humans , AI gets trained on data but human have their learning with them ,only about 5% of data a human share as learning, knowledge - rest it just inside us ,So tech — 9 points, 2 comments on HN.",
       "source": "Hacker News",
-      "sourceUrl": "https://www.theguardian.com/world/2026/sep/12/ukraine-war-briefing-russian-developers-used-ai-to-build-kamikaze-attack-drone-software-anthropic-says",
+      "sourceUrl": "https://news.ycombinator.com/item?id=49670907",
       "category": "products",
       "date": "2026-09-12",
       "hot": false,
@@ -263,15 +187,31 @@
         "HN",
         "AI",
         "story",
-        "author_warrenmiller"
+        "author_Vineetyadav2"
       ]
     },
     {
-      "id": "hn-49669161",
-      "title": "Anthropic Says Iran Used Its American AI Model to Target U.S. Navy Warships",
-      "summary": "Anthropic Says Iran Used Its American AI Model to Target U.S. Navy Warships — 5 points, 4 comments on HN.",
+      "id": "hn-49670299",
+      "title": "UAE revises 5GW AI data center plan after Iranian attacks, sources say",
+      "summary": "UAE revises 5GW AI data center plan after Iranian attacks, sources say — 5 points, 0 comments on HN.",
       "source": "Hacker News",
-      "sourceUrl": "https://www.wsj.com/politics/national-security/anthropic-says-iran-used-its-american-ai-model-to-target-u-s-navy-warships-67583e05",
+      "sourceUrl": "https://www.reuters.com/world/middle-east/uae-revises-ai-data-center-plan-after-iranian-attacks-sources-say-2026-09-11/",
+      "category": "products",
+      "date": "2026-09-12",
+      "hot": false,
+      "tags": [
+        "HN",
+        "AI",
+        "story",
+        "author_giuliomagnifico"
+      ]
+    },
+    {
+      "id": "hn-49670715",
+      "title": "Google Has Achieved RSI",
+      "summary": "My Twitter feed is flooded with claims that Google has achieved recursive self-improvement (RSI).<p>I am curious how people here interpret this. Does what Google has demonstrated actually qualify as RSI in the stronger s — 3 points, 0 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://news.ycombinator.com/item?id=49670715",
       "category": "big-tech",
       "date": "2026-09-12",
       "hot": false,
@@ -279,19 +219,82 @@
         "HN",
         "AI",
         "story",
-        "author_kaycebasques"
+        "author_AlexWApp"
+      ]
+    },
+    {
+      "id": "hn-49670455",
+      "title": "GoatCode – open-source terminal AI agent with provider failover",
+      "summary": "GoatCode is a single 85 MB binary that runs in your terminal. It brings 180+ LLM providers (or your existing Claude&#x2F;ChatGPT&#x2F;Gemini&#x2F;Copilot subscriptions via OAuth), and when your quota dies mid-session it  — 3 points, 1 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://news.ycombinator.com/item?id=49670455",
+      "category": "products",
+      "date": "2026-09-12",
+      "hot": false,
+      "tags": [
+        "HN",
+        "AI",
+        "story",
+        "author_Arhan-w"
+      ]
+    },
+    {
+      "id": "hn-49669953",
+      "title": "Can A.I. \"Go Rogue\"?",
+      "summary": "Can A.I. \"Go Rogue\"? — 3 points, 0 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://www.newyorker.com/culture/open-questions/can-ai-go-rogue",
+      "category": "safety",
+      "date": "2026-09-12",
+      "hot": false,
+      "tags": [
+        "HN",
+        "AI",
+        "story",
+        "author_Anon84"
+      ]
+    },
+    {
+      "id": "hn-49671043",
+      "title": "AI Is Powerful Enough to Crack Our Hardest Math Problems–and Kill Us All",
+      "summary": "AI Is Powerful Enough to Crack Our Hardest Math Problems–and Kill Us All — 2 points, 0 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://www.wsj.com/tech/ai/ai-math-millennium-prize-safety-openai-anthropic-05179825",
+      "category": "products",
+      "date": "2026-09-12",
+      "hot": false,
+      "tags": [
+        "HN",
+        "AI",
+        "story",
+        "author_diogenes_atx"
+      ]
+    },
+    {
+      "id": "hn-49670967",
+      "title": "Top AI spenders cut per-employee costs by nearly 10 percent in August",
+      "summary": "Top AI spenders cut per-employee costs by nearly 10 percent in August — 2 points, 0 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://the-decoder.com/top-ai-spenders-cut-per-employee-costs-by-nearly-10-percent-in-august/",
+      "category": "products",
+      "date": "2026-09-12",
+      "hot": false,
+      "tags": [
+        "HN",
+        "AI",
+        "story",
+        "author_geox"
       ]
     }
   ],
   "meta": {
-    "fetchedAt": "2026-09-12T06:52:47.892Z",
+    "fetchedAt": "2026-09-12T11:01:33.163Z",
     "topic": "AI",
     "total": 15,
-    "hot": 12,
+    "hot": 8,
     "sources": [
-      "Hugging Face",
-      "Hacker News",
-      "HackerNoon"
+      "HackerNoon",
+      "Hacker News"
     ]
   }
 }

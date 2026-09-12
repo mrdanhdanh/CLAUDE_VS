@@ -4,7 +4,7 @@
  * Fetches AI news via free APIs (no keys) and updates ai-news.json
  * Works with Node 18+ (fetch built-in), no Python 3.12 needed.
  * Sources: HN Algolia (free), GitHub Trending (free), DEV.to (free),
- *   Reddit (free), Hugging Face (free), arXiv (free), HackerNoon RSS (free)
+ *   Reddit (free), arXiv (free), HackerNoon RSS (free)
  * Usage: node www/ai-news/fetch.mjs [--dry] [--topic "AI agents"] [--days 7|30|90|180|0]
  *   --days 0 = không giới hạn (bỏ filter thời gian)
  */
@@ -182,32 +182,6 @@ async function fetchReddit(topic = TOPIC, days = DAYS) {
   }
 }
 
-async function fetchHuggingFace() {
-  const url = 'https://huggingface.co/api/models?sort=trendingScore&direction=-1&limit=10';
-  console.log(`[HF] fetching ${url}`);
-  try {
-    const res = await fetch(url, { headers: { 'User-Agent': 'YUNIE-last30days/1.0' } });
-    if (!res.ok) throw new Error(`HF ${res.status}`);
-    const items = await res.json();
-    console.log(`[HF] got ${items.length} models`);
-    return items.map(m => ({
-      id: `hf-${(m.id || '').replace(/[^a-zA-Z0-9-]/g, '_')}`,
-      title: `🤗 ${m.id} — trending on Hugging Face`,
-      summary: `Model trending: ${m.pipeline_tag || 'model'}, ${m.likes || 0} likes, ${m.downloads || 0} downloads. ${m.library_name || ''}`.slice(0, 220),
-      source: 'Hugging Face',
-      sourceUrl: `https://huggingface.co/${m.id}`,
-      category: 'products',
-      date: fmtDate(m.lastModified || Date.now()),
-      hot: (m.likes || 0) > 500,
-      tags: ['Hugging Face', m.pipeline_tag || 'model', m.library_name || ''].filter(Boolean).slice(0, 3),
-      score: m.likes || 0,
-    }));
-  } catch (e) {
-    console.warn('[HF] failed:', e.message);
-    return [];
-  }
-}
-
 async function fetchHackerNoon(topic = TOPIC, days = DAYS) {
   // HackerNoon RSS (free, no key): general feed (20 items) + AI tag feed (50 items)
   // Probe 2026-09-10: /feed → 20 items RSS 2.0, /tagged/ai/feed → 50 items, no CORS header (Node OK, browser via rss2json)
@@ -317,7 +291,7 @@ async function fetchArxiv(topic = TOPIC, days = DAYS) {
       const link = (block.match(/<id>(https?:\/\/arxiv\.org\/abs\/[^<]+)<\/id>/) || [])[1] || 'https://arxiv.org';
       if (days > 0 && published && new Date(published).getTime() < Date.now() - days*24*60*60*1000) return null;
       const cat = categorize(title, summary);
-      // Boost self-improving papers so they rank above generic HF trending
+      // Boost self-improving papers so they rank above generic trending items
       const isSelfImproving = cat === 'self-improving' || /self-(improving|evolving|training)|recursive self-improvement|RSI/i.test(title + ' ' + summary);
       return {
         id: `ax-${link.split('/abs/')[1] || title.slice(0, 20)}`,
@@ -340,19 +314,18 @@ async function fetchArxiv(topic = TOPIC, days = DAYS) {
 
 async function main() {
   console.log(`🌐 YUNIE × Last30Days — fetching "${TOPIC}" (${SINCE_LABEL})`);
-  const [hn, gh, dev, rd, hf, ax, hnoon] = await Promise.all([
+  const [hn, gh, dev, rd, ax, hnoon] = await Promise.all([
     fetchHN(TOPIC, DAYS),
     fetchGitHubTrendingAI(TOPIC, DAYS),
     fetchDevTo(TOPIC, DAYS),
     fetchReddit(TOPIC, DAYS),
-    fetchHuggingFace(),
     fetchArxiv(TOPIC, DAYS),
     fetchHackerNoon(TOPIC, DAYS),
   ]);
 
   // Merge and dedupe by title
   const seen = new Set();
-  const merged = [...hn, ...gh, ...dev, ...rd, ...hf, ...ax, ...hnoon].filter(a => {
+  const merged = [...hn, ...gh, ...dev, ...rd, ...ax, ...hnoon].filter(a => {
     const key = a.title.toLowerCase().slice(0,40);
     if (seen.has(key)) return false;
     seen.add(key);
@@ -360,7 +333,7 @@ async function main() {
   });
 
   // Sort: self-improving boost first, then newest, then hot, then score
-  // For self-improving topics, arXiv RSI papers should surface even if HF has higher raw likes
+  // For self-improving topics, arXiv RSI papers should surface even if other sources have higher raw scores
   const isSelfImprovingTopic = /self-improving|self improving|self-evolving|RSI/i.test(TOPIC);
   if (isSelfImprovingTopic) {
     merged.sort((a,b) => {
@@ -421,16 +394,16 @@ async function main() {
     generatedAt: new Date().toISOString(),
     generatedBy: 'YUNIE × Last30Days',
     version: 2,
-    description: `Tin AI mới nhất — tổng hợp từ Last30Days (HN, GitHub, DEV.to, Reddit, Hugging Face, arXiv, HackerNoon) trong ${DAYS===0?'không giới hạn':DAYS+' ngày'} qua. Chủ đề: ${TOPIC}. Tự động cập nhật bởi YUNIE.`,
+    description: `Tin AI mới nhất — tổng hợp từ Last30Days (HN, GitHub, DEV.to, Reddit, arXiv, HackerNoon) trong ${DAYS===0?'không giới hạn':DAYS+' ngày'} qua. Chủ đề: ${TOPIC}. Tự động cập nhật bởi YUNIE.`,
     last30days: {
       enabled: true,
       topic: TOPIC,
       since: DAYS===0 ? 'không giới hạn' : fmtDate(Date.now() - DAYS*24*60*60*1000),
       days: DAYS,
-      sources: ['Hacker News (Algolia, free)', 'GitHub Search (free)', 'DEV.to (free)', 'Reddit r/MachineLearning (free)', 'Hugging Face trending (free)', 'arXiv (free)', 'HackerNoon RSS (free)', 'Web (Brave/Perplexity when key)'],
-      engine: 'Node.js bridge (no Python 3.12 needed) — HN Algolia + GitHub API + DEV.to + Reddit + Hugging Face + arXiv + HackerNoon RSS, scored by upvotes/stars/reactions/likes',
+      sources: ['Hacker News (Algolia, free)', 'GitHub Search (free)', 'DEV.to (free)', 'Reddit r/MachineLearning (free)', 'arXiv (free)', 'HackerNoon RSS (free)', 'Web (Brave/Perplexity when key)'],
+      engine: 'Node.js bridge (no Python 3.12 needed) — HN Algolia + GitHub API + DEV.to + Reddit + arXiv + HackerNoon RSS, scored by upvotes/stars/reactions/likes',
       skill: 'mvanhorn/last30days-skill v3.23.0 (61k ⭐)',
-      note: 'Full Last30Days engine (X/YouTube/TikTok/Polymarket) cần Python 3.12 + API keys. Bridge này dùng 7 nguồn free (HN, GitHub, DEV.to, Reddit, Hugging Face, arXiv, HackerNoon), đủ cho ai-news. Cài Python 3.12 để chạy full: python3.12 .github/skills/last30days/scripts/last30days.py "AI" --emit=json',
+      note: 'Full Last30Days engine (X/YouTube/TikTok/Polymarket) cần Python 3.12 + API keys. Bridge này dùng 6 nguồn free (HN, GitHub, DEV.to, Reddit, arXiv, HackerNoon), đủ cho ai-news. Cài Python 3.12 để chạy full: python3.12 .github/skills/last30days/scripts/last30days.py "AI" --emit=json',
     },
     categories,
     articles: articles.map(a => ({
