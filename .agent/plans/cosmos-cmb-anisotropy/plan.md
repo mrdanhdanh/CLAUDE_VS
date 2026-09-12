@@ -43,3 +43,11 @@
 - `auto-learn.instructions.md` (session song song đang giữ) — khi họ commit xong: thêm 1 dòng `stats --heatmap` vào mục lệnh.
 - KN-021 (governance RBAC) đã được tham chiếu lại bởi công việc RSI/red-team của session song song → zero-ref 3→2, tự nhiên hết nợ.
 - 5 điểm lạnh hiện tại (`perf` `state` `chatbot` `demo` `reef-lite`) — ứng viên viết KN tiếp theo.
+
+## Ship log (2026-09-12)
+
+- **Commit:** `c1aaa44` (feature, 29 files) + `acdc65e` (screenshots, 38 png) — push `2a20911..acdc65e`
+- **Deploy:** run `34696611064` success (Pages, sha acdc65e)
+- **Live verify:** 18/18 PASS (`verify/live-verify.txt`) — scale.html#cmb · heatmap.json 48KN/101tag/5cold · index "9 hướng/4 đề tài" · slides shipped-line CMB
+- **Audit:** chain verified sau ship
+- **Chú ý:** không commit file session song song (RSI/red-team: policy.json, registry, cosmic-scale.mjs, status.json, audit.json, READMEs, knowleged.md, guard-redteam.spec.ts, cosmos-capability.spec.ts, test-results/cmb-out.json đã bị xoá khỏi tree)

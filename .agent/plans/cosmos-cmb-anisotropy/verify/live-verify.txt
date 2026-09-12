@@ -1,0 +1,20 @@
+Γ£à scale.html 200 ΓÇö status=200
+Γ£à scale.html c├│ section id="cmb"
+Γ£à scale.html c├│ "Bß║ún ─æß╗ô ─æiß╗âm lß║ính"
+Γ£à scale.html c├│ code-block stats --heatmap
+Γ£à heatmap.json 200 ΓÇö status=200
+Γ£à heatmap.json parse OK
+Γ£à generatedBy = stats --heatmap
+Γ£à knTotal >= 47 ΓÇö knTotal=48
+Γ£à grid >= 50 tag ΓÇö tags=101
+Γ£à coldSpots >= 1 ΓÇö cold=5
+Γ£à index.html 200 ΓÇö status=200
+Γ£à index.html "9 h╞░ß╗¢ng c┼⌐ ─æ├ú ship"
+Γ£à index.html "c├▓n 4 ─æß╗ü t├ái"
+Γ£à index.html card CMB ─æ├ú gß╗í
+Γ£à slides.html 200 ΓÇö status=200
+Γ£à slides shipped-line c├│ CMB Anisotropy
+Γ£à slides "4 ─æß╗ü t├ái mß╗¢i"
+Γ£à slides li c┼⌐ (heatmap KN tag├ùtime) ─æ├ú gß╗í
+
+Γ£à LIVE VERIFY PASS ΓÇö 18/18 checks
