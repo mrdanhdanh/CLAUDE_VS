@@ -1,8 +1,8 @@
 # Evidence — harness-web-ui (DisCo arXiv:2609.02749v1 §3.2 (task-agnostic))
 
-> Substrate layer của skill — full text từ docs/knowleged.md. Sinh tự động 2026-09-12T06:45:49.741Z.
+> Substrate layer của skill — full text từ docs/knowleged.md. Sinh tự động 2026-09-12T07:15:53.997Z.
 
-## Bug reports liên quan (14/27 bugs)
+## Bug reports liên quan (15/28 bugs)
 
 - `.agent/bugs/2026-08-29-rainbow-animated/bug.md` — Bug: Rainbow border không xoay (animated)
 - `.agent/bugs/2026-08-29-status-ui/bug.md` — Bug: Trang STATUS www/ giao diện chưa hợp lý — layout, responsive, registry render sai
@@ -17,6 +17,7 @@
 - `.agent/bugs/2026-09-10-raf-callback-error-khong-bi-try-catch-bat/bug.md` — Bug: raf-callback-error-khong-bi-try-catch-bat
 - `.agent/bugs/2026-09-11-cosmos-page-lech-tai-lieu-no-signaling-born-rule-d/bug.md` — Bug: cosmos page lech tai lieu (no-signaling + born rule + dark energy v2)
 - `.agent/bugs/2026-09-12-cosmos-reveal-hover-relative-url/bug.md` — Bug — Cosmos rework: reveal chết ở element > viewport + hover bị reveal đè + `./x` 404 khi URL không slash
+- `.agent/bugs/2026-09-12-status-page-audit/bug.md` — Bug: STATUS page audit — footer link 404 + registry placeholder descriptions + aria-labelledby sai ID
 - `.agent/bugs/2026-09-12-yt-summary-css-global-collision/bug.md` — Bug: YT Summary — CSS toàn cục đè trang mới (bảng bị ẩn/cắt, [hidden] vô hiệu, card nấp dưới header)
 
 ## Full KN details
@@ -338,3 +339,25 @@
   - Test mobile phải assert **trong-container** (`table.scrollWidth ≤ clientWidth`) — `documentElement` overflow không bắt được tràn bên trong scroll container.
 - **Tags:** `ui` `css` `responsive` `a11y`
 - **Người ghi:** YUNIE / /harness
+
+---
+
+### KN-045 — STATUS audit: link footer 404 trên Pages + registry placeholder descriptions + aria-labelledby tab sai ID
+
+- **Ngày:** 2026-09-12
+- **Bug report:** `.agent/bugs/2026-09-12-status-page-audit/bug.md`
+- **Severity:** major
+- **Triệu chứng:** Footer `README` → 404 (cả Pages lẫn `serve www`); bảng Registry hiển thị `hook hooks`, `agent designer`, `prompt harness`… cho 9 entry; DOM scan thấy `aria-labelledby="governance"/"platform"` trên 2 tab panel trỏ vào ID không tồn tại (screen reader đọc sai ngữ cảnh).
+- **Nguyên nhân gốc:** (1) Link viết lúc dev serve từ repo root — `../README.md` thoát khỏi deploy root `www/` nên chỉ "chạy" ở môi trường dev (bug blindness KN-005 môi trường khác user); (2) `registry.json` giữ description placeholder sinh lúc cài (`${type} ${name}`) và không bao giờ refresh từ frontmatter khi frontmatter đổi; (3) tab panel copy value `data-tab` vào `aria-labelledby` trong khi button không có `id` tương ứng — thiếu invariant test scan ARIA refs toàn DOM.
+- **Cách sửa:** Footer trỏ `https://github.com/mrdanhdanh/CLAUDE_VS#readme` (`target=_blank rel=noopener`); tab buttons thêm `id="tabbtn-*"` + `aria-controls`, panel trỏ `aria-labelledby="tabbtn-*"`; refresh 9 description trong `registry.json` từ frontmatter (agents designer/plan/polish · prompts harness/implement/plan/polish/product · hook hooks) + `generate-status.mjs`; hardening `renderPages()` — href chỉ prefix `./` khi không phải URL http(s); khóa bằng `tests/e2e/status-audit.spec.ts` (L1 fetch mọi link same-origin <400 · L2 no placeholder desc · L3 ARIA refs hợp lệ · L4 tab aria state) — RED 4 fail → GREEN 4 pass, full suite 74/74.
+- **Cách phòng tránh:**
+  - Link trong `www/` **không được trỏ ra ngoài deploy root** (`../`) — chỉ link nội bộ hoặc URL tuyệt đối (GitHub/Pages); verify bằng browser fetch all-links, không nhìn mắt (KN-005/KN-030).
+  - Nguồn hiển thị (registry/status) là **hợp đồng với user** — placeholder `${type} ${name}` không bao giờ được render ra UI; frontmatter đổi → refresh registry description + regenerate (test L2 chặn pattern).
+  - Mọi ARIA ref (`aria-labelledby/controls/describedby`) phải trỏ ID tồn tại — test scan toàn DOM (L3); tab dùng pattern button `id` + `aria-controls` ↔ panel `aria-labelledby`.
+  - Audit page định kỳ gồm 4 invariant: link resolve · data quality · ARIA refs · console errors.
+- **Tags:** `ui` `a11y` `data` `pages` `verify`
+- **Người ghi:** YUNIE / fixbug
+
+<!-- Thêm bài học mới theo template dưới — copy block này -->
+
+<!--

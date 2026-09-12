@@ -17,7 +17,8 @@
       "KN-032",
       "KN-038",
       "KN-040",
-      "KN-042"
+      "KN-042",
+      "KN-045"
     ],
     "bugs": [
       ".agent/bugs/2026-08-29-modal-esc/bug.md",
@@ -34,7 +35,8 @@
       ".agent/bugs/2026-09-10-raf-callback-error-khong-bi-try-catch-bat/bug.md",
       ".agent/bugs/2026-09-11-cosmos-page-lech-tai-lieu-no-signaling-born-rule-d/bug.md",
       ".agent/bugs/2026-09-12-cosmos-reveal-hover-relative-url/bug.md",
-      ".agent/bugs/2026-09-12-yt-summary-css-global-collision/bug.md"
+      ".agent/bugs/2026-09-12-yt-summary-css-global-collision/bug.md",
+      ".agent/bugs/2026-09-12-status-page-audit/bug.md"
     ]
   },
   "capabilities": [
@@ -84,7 +86,8 @@
     ".agent/bugs/2026-09-10-raf-callback-error-khong-bi-try-catch-bat/bug.md",
     ".agent/bugs/2026-09-11-cosmos-page-lech-tai-lieu-no-signaling-born-rule-d/bug.md",
     ".agent/bugs/2026-09-12-cosmos-reveal-hover-relative-url/bug.md",
-    ".agent/bugs/2026-09-12-yt-summary-css-global-collision/bug.md"
+    ".agent/bugs/2026-09-12-yt-summary-css-global-collision/bug.md",
+    ".agent/bugs/2026-09-12-status-page-audit/bug.md"
   ],
   "checks": [
     {
@@ -106,6 +109,6 @@
   ],
   "gaps": [],
   "verdict": "G-accepted",
-  "generatedAt": "2026-09-12T06:45:49.750Z",
+  "generatedAt": "2026-09-12T07:15:54.011Z",
   "paper": "DisCo arXiv:2609.02749v1 §3.2 (task-agnostic)"
 }

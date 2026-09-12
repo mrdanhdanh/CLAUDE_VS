@@ -1,8 +1,8 @@
 # Evidence — harness-governance (DisCo arXiv:2609.02749v1 §3.2 (task-agnostic))
 
-> Substrate layer của skill — full text từ docs/knowleged.md. Sinh tự động 2026-09-12T06:45:49.706Z.
+> Substrate layer của skill — full text từ docs/knowleged.md. Sinh tự động 2026-09-12T07:15:53.951Z.
 
-## Bug reports liên quan (1/27 bugs)
+## Bug reports liên quan (1/28 bugs)
 
 - `.agent/bugs/2026-09-03-agent-test-mutate-reward-hacking/bug.md` — Bug: Agent tự sửa test để pass (reward hacking)
 

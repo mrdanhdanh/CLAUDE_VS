@@ -369,7 +369,7 @@ function renderPages(data){
     </div>
     <div style="display:grid;gap:8px">
       ${entries.length ? entries.map(e=>`
-        <a class="page-link" href="./${escapeHtml(e.path)}" ${e.path.startsWith('http')?'target="_blank" rel="noopener"':''}>
+        <a class="page-link" href="${/^https?:\/\//.test(e.path) ? escapeHtml(e.path) : './' + escapeHtml(e.path)}" ${e.path.startsWith('http')?'target="_blank" rel="noopener"':''}>
           <div style="min-width:0">
             <div style="font-weight:700;font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;display:flex;align-items:center;gap:6px">
               ${typeIcon[e.type]||typeIcon['trang']} ${escapeHtml(e.title||e.path)}

@@ -131,7 +131,7 @@
       "path": "skills/harness-web-ui",
       "ref": "local",
       "enabled": true,
-      "description": "Task-agnostic lessons 'Web UI & UX' chưng cất từ docs/knowleged.md (15 KN: KN-001, KN-002, KN-003, KN-004, KN-006, KN-011, KN-017, KN-028, KN-029, KN-030, KN-031, KN-032, KN-038, KN-040, KN-042) + .agent/bugs/. Use when task chạm ui, a11y, css, responsive, data, animation, spacing, i18n, theme, cont",
+      "description": "Task-agnostic lessons 'Web UI & UX' chưng cất từ docs/knowleged.md (16 KN: KN-001, KN-002, KN-003, KN-004, KN-006, KN-011, KN-017, KN-028, KN-029, KN-030, KN-031, KN-032, KN-038, KN-040, KN-042, KN-045) + .agent/bugs/. Use when task chạm ui, a11y, css, responsive, data, animation, spacing, i18n, the",
       "file": "harness-web-ui/SKILL.md",
       "installedAt": "2026-09-04T09:07:42.922Z"
     },
@@ -323,7 +323,7 @@
       "source": "local",
       "file": "designer.agent.md",
       "enabled": true,
-      "description": "agent designer",
+      "description": "Design product UI/UX: design system, wireframe, component states. Use when need beautiful interface, responsive layout, before coding.",
       "installedAt": "2026-08-29T15:13:36.603Z"
     },
     "explore": {
@@ -344,14 +344,14 @@
       "source": "local",
       "file": "plan.agent.md",
       "enabled": true,
-      "description": "agent plan",
+      "description": "Plan architecture and task breakdown. Use when need to design implementation plan, break down requirements, create todos before coding.",
       "installedAt": "2026-08-29T15:13:36.604Z"
     },
     "polish": {
       "source": "local",
       "file": "polish.agent.md",
       "enabled": true,
-      "description": "agent polish",
+      "description": "Polish UI/UX to product quality: responsive, states, animation, a11y. Use after implement, before verify, when UI needs beautifying.",
       "installedAt": "2026-08-29T15:13:36.605Z"
     },
     "verify": {
@@ -395,35 +395,35 @@
       "source": "local",
       "file": "harness.prompt.md",
       "enabled": true,
-      "description": "prompt harness",
+      "description": "Chạy full Claude Harness v2 pipeline Idea -> Explore -> Clarify -> PRD -> Design -> Plan -> Implement -> Polish -> Verify. Model-agnostic, product-driven.",
       "installedAt": "2026-08-29T15:13:36.607Z"
     },
     "implement": {
       "source": "local",
       "file": "implement.prompt.md",
       "enabled": true,
-      "description": "prompt implement",
+      "description": "Implement plan đã duyệt theo todo-driven workflow. Đọc plan, chạy từng todo, verify sau mỗi edit.",
       "installedAt": "2026-08-29T15:13:36.607Z"
     },
     "plan": {
       "source": "local",
       "file": "plan.prompt.md",
       "enabled": true,
-      "description": "prompt plan",
+      "description": "Tạo plan chi tiết Explore -> Plan cho task, xuất file .agent/plans/ và todos. Dùng trước khi implement.",
       "installedAt": "2026-08-29T15:13:36.608Z"
     },
     "polish": {
       "source": "local",
       "file": "polish.prompt.md",
       "enabled": true,
-      "description": "prompt polish",
+      "description": "Polish giao diện đến chuẩn product: responsive, states, animation, a11y. Chạy sau implement, trước verify.",
       "installedAt": "2026-08-29T15:13:36.608Z"
     },
     "product": {
       "source": "local",
       "file": "product.prompt.md",
       "enabled": true,
-      "description": "prompt product",
+      "description": "Biến 1 ý tưởng nhỏ thành sản phẩm hoàn chỉnh: PRD mini -> Design -> Plan -> Implement -> Polish. Dùng khi có ý tưởng mơ hồ cần thành product đẹp.",
       "installedAt": "2026-08-29T15:13:36.608Z"
     },
     "verify": {
@@ -439,7 +439,7 @@
       "source": "local",
       "file": "hooks.json",
       "enabled": true,
-      "description": "hook hooks",
+      "description": "Hooks PostToolUse/Stop — nhắc check get_errors sau edit + auto-learn suggest/status (KN-007).",
       "installedAt": "2026-08-29T15:13:36.610Z"
     }
   }

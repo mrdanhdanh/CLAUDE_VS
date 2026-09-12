@@ -342,11 +342,11 @@
         <span class="tag" id="platformTag" aria-live="polite" style="margin-left:6px">—</span>
       </div>
       <div class="tabs" role="tablist" aria-label="Governance và Platform">
-        <button class="tab is-active" role="tab" aria-selected="true" data-tab="governance" type="button">🛡️ Governance</button>
-        <button class="tab" role="tab" aria-selected="false" data-tab="platform" type="button">🧩 Platform</button>
+        <button class="tab is-active" role="tab" aria-selected="true" data-tab="governance" id="tabbtn-governance" aria-controls="tab-governance" type="button">🛡️ Governance</button>
+        <button class="tab" role="tab" aria-selected="false" data-tab="platform" id="tabbtn-platform" aria-controls="tab-platform" type="button">🧩 Platform</button>
       </div>
       <div class="tab-panels">
-        <div class="tab-panel is-active" id="tab-governance" role="tabpanel" aria-labelledby="governance">
+        <div class="tab-panel is-active" id="tab-governance" role="tabpanel" aria-labelledby="tabbtn-governance">
           <div class="grid-3" id="governanceCards" style="margin:0">
             <div class="card card-pad" id="govAuditCard" aria-label="Audit trail">
               <div class="skeleton" style="height:16px;margin-bottom:8px"></div>
@@ -379,7 +379,7 @@
             </div>
           </div>
         </div>
-        <div class="tab-panel" id="tab-platform" role="tabpanel" aria-labelledby="platform" hidden>
+        <div class="tab-panel" id="tab-platform" role="tabpanel" aria-labelledby="tabbtn-platform" hidden>
           <div class="grid-3" id="platformCards" style="margin:0">
             <div class="card card-pad" id="platAgentCard" aria-label="AG-UI agents">
               <div class="skeleton" style="height:16px;margin-bottom:8px"></div>
@@ -506,7 +506,7 @@ node .github/harness/scripts/harness-manager.mjs create agent my-agent
     </section>
 
     <footer class="footer" role="contentinfo">
-      <div>Phát triển bởi <strong>YUNIE</strong> · Harness 2.3 · <a href="./status.json">status.json</a> · <a href="../README.md">README</a></div>
+      <div>Phát triển bởi <strong>YUNIE</strong> · Harness 2.3 · <a href="./status.json">status.json</a> · <a href="https://github.com/mrdanhdanh/CLAUDE_VS#readme" target="_blank" rel="noopener">README</a></div>
       <div style="margin-top:6px">Chạy <span class="kbd">npx serve www</span> để xem trên máy — đẩy lên GitHub để tự động triển khai. <span class="muted">Lưu ý: mở bằng file:// có thể bị lỗi CORS.</span></div>
     </footer>
   </main>

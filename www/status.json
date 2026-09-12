@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-12T06:46:35.733Z",
+  "generatedAt": "2026-09-12T07:16:42.636Z",
   "generatedBy": "YUNIE",
   "version": 1,
   "counts": {
@@ -89,7 +89,7 @@
       },
       "harness-web-ui": {
         "enabled": true,
-        "description": "Task-agnostic lessons 'Web UI & UX' chưng cất từ docs/knowleged.md (15 KN: KN-001, KN-002, KN-003, KN-004, KN-006, KN-011, KN-017, KN-028, KN-029, KN-030, KN-031, KN-032, KN-038, KN-040, KN-042) + .agent/bugs/. Use when task chạm ui, a11y, css, responsive, data, animation, spacing, i18n, theme, cont"
+        "description": "Task-agnostic lessons 'Web UI & UX' chưng cất từ docs/knowleged.md (16 KN: KN-001, KN-002, KN-003, KN-004, KN-006, KN-011, KN-017, KN-028, KN-029, KN-030, KN-031, KN-032, KN-038, KN-040, KN-042, KN-045) + .agent/bugs/. Use when task chạm ui, a11y, css, responsive, data, animation, spacing, i18n, the"
       },
       "cosmic-quantum": {
         "enabled": true,
@@ -185,7 +185,7 @@
     "agents": {
       "designer": {
         "enabled": true,
-        "description": "agent designer"
+        "description": "Design product UI/UX: design system, wireframe, component states. Use when need beautiful interface, responsive layout, before coding."
       },
       "explore": {
         "enabled": true,
@@ -197,11 +197,11 @@
       },
       "plan": {
         "enabled": true,
-        "description": "agent plan"
+        "description": "Plan architecture and task breakdown. Use when need to design implementation plan, break down requirements, create todos before coding."
       },
       "polish": {
         "enabled": true,
-        "description": "agent polish"
+        "description": "Polish UI/UX to product quality: responsive, states, animation, a11y. Use after implement, before verify, when UI needs beautifying."
       },
       "verify": {
         "enabled": true,
@@ -227,23 +227,23 @@
       },
       "harness": {
         "enabled": true,
-        "description": "prompt harness"
+        "description": "Chạy full Claude Harness v2 pipeline Idea -> Explore -> Clarify -> PRD -> Design -> Plan -> Implement -> Polish -> Verify. Model-agnostic, product-driven."
       },
       "implement": {
         "enabled": true,
-        "description": "prompt implement"
+        "description": "Implement plan đã duyệt theo todo-driven workflow. Đọc plan, chạy từng todo, verify sau mỗi edit."
       },
       "plan": {
         "enabled": true,
-        "description": "prompt plan"
+        "description": "Tạo plan chi tiết Explore -> Plan cho task, xuất file .agent/plans/ và todos. Dùng trước khi implement."
       },
       "polish": {
         "enabled": true,
-        "description": "prompt polish"
+        "description": "Polish giao diện đến chuẩn product: responsive, states, animation, a11y. Chạy sau implement, trước verify."
       },
       "product": {
         "enabled": true,
-        "description": "prompt product"
+        "description": "Biến 1 ý tưởng nhỏ thành sản phẩm hoàn chỉnh: PRD mini -> Design -> Plan -> Implement -> Polish. Dùng khi có ý tưởng mơ hồ cần thành product đẹp."
       },
       "verify": {
         "enabled": true,
@@ -253,7 +253,7 @@
     "hooks": {
       "hooks": {
         "enabled": true,
-        "description": "hook hooks"
+        "description": "Hooks PostToolUse/Stop — nhắc check get_errors sau edit + auto-learn suggest/status (KN-007)."
       }
     }
   },
@@ -422,7 +422,7 @@
   "health": {
     "errors": 0,
     "status": "ok",
-    "lastCheck": "2026-09-12T06:46:35.733Z",
+    "lastCheck": "2026-09-12T07:16:42.636Z",
     "checks": [
       "get_errors: pass (0 errors)",
       "registry: 18 instructions (18 total) - 19 skills - 9 agents - 7 prompts - 1 hook — all enabled",
@@ -433,7 +433,7 @@
       "www: polished — responsive 375/768/1280, a11y, states, animation 150-300ms",
       "workflow: www/** -> Pages (upload-artifact path: www) — exists: true + eval job gate",
       "library: www/library/ MCP v1.2.0 (5 tools: search + iterative + list/get/status, router+cache, redacted) + library-rag instruction",
-      "auto-learn: 44 KN, 27 bugs, 0 drafts — suggest/log/propose/status (<50ms, IDF, tiếng Việt)",
+      "auto-learn: 45 KN, 28 bugs, 0 drafts — suggest/log/propose/status (<50ms, IDF, tiếng Việt)",
       "governance: audit 47 (Ed25519 receipt P0-4) · policy 9 deny/2 allow (ok) · credentials 0 keys plain",
       "platform: agents 3 (3 built-in, 0 remote) · mcp 3 vendors/3 grants (library 1.2.0 read-only) · components 3/3 pub · routines 2/2 enabled",
       "collaboration: KN-018 — dissentGate ✅ · whoDidYouThinkWith ✅ · critic ✅ · fund-the-friction ✅ (ok)",
@@ -654,8 +654,8 @@
     }
   },
   "learn": {
-    "knTotal": 44,
-    "bugsTotal": 27,
+    "knTotal": 45,
+    "bugsTotal": 28,
     "drafts": 0
   },
   "governance": {
@@ -758,7 +758,7 @@
       "deny": 9,
       "allow": 2,
       "status": "ok",
-      "lastCheck": "2026-09-12T06:46:35.591Z"
+      "lastCheck": "2026-09-12T07:16:42.477Z"
     },
     "credentials": {
       "count": 0,
