@@ -1,0 +1,59 @@
+{
+  "generatedBy": "auto-learn.mjs stats --heatmap",
+  "counts": {
+    "knTotal": 48,
+    "bugTotal": 29,
+    "tags": 101,
+    "months": [
+      "2026-08",
+      "2026-09"
+    ],
+    "coldSpots": 5,
+    "zeroRef": 2,
+    "refFiles": 255
+  },
+  "topRow": {
+    "tag": "process",
+    "total": 27,
+    "cells": [
+      4,
+      23
+    ]
+  },
+  "coldTop": [
+    {
+      "tag": "perf",
+      "kn": 2,
+      "bug": 3,
+      "coldness": 1
+    },
+    {
+      "tag": "state",
+      "kn": 1,
+      "bug": 2,
+      "coldness": 1
+    },
+    {
+      "tag": "chatbot",
+      "kn": 0,
+      "bug": 1,
+      "coldness": 1
+    }
+  ],
+  "zeroRef": [
+    {
+      "id": "KN-044",
+      "title": "RAG grounding chß║┐t khi `export.json` thiß║┐u ΓÇö n├║t Xuß║Ñt sai t├¬n + kh├┤ng seed fallback",
+      "date": "2026-09-03",
+      "ageDays": 9,
+      "action": "fresh"
+    },
+    {
+      "id": "KN-035",
+      "title": "Negative Self-Distillation ΓÇö hß╗ìc bß║▒ng tr├ính flaws, giß╗» uncertainty (2609.11699v1)",
+      "date": "2026-09-11",
+      "ageDays": 1,
+      "action": "fresh"
+    }
+  ]
+}

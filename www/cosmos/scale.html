@@ -110,6 +110,18 @@
     .web-chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
     .web-chip{font:600 10px var(--font-mono);color:#c4b5fd;background:rgba(124,58,237,.1);border:1px solid rgba(124,58,237,.18);padding:4px 7px;border-radius:8px;word-break:break-all;max-width:100%}
     .web-empty{font:400 12px var(--font-sans);color:var(--cosmos-text-muted);padding:10px 0}
+    /* CMB Anisotropy — heatmap grid (namespace .cmb-*, tránh trùng class toàn cục KN-042) */
+    .cmb-grid{display:flex;flex-direction:column;gap:4px;margin-top:10px;min-width:0}
+    .cmb-row{display:flex;gap:4px;min-width:0}
+    .cmb-tag{flex:0 0 clamp(72px,26%,140px);font:600 10px var(--font-mono);color:var(--cosmos-text-muted);display:flex;align-items:center;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0}
+    .cmb-cell{flex:1 1 0;min-width:0;height:24px;border-radius:6px;display:grid;place-items:center;font:600 10px var(--font-mono);border:1px solid rgba(255,255,255,.05);color:rgba(255,255,255,.92)}
+    .cmb-cell.cmb-head{background:transparent;border-color:transparent;color:var(--cosmos-text-dim);height:auto;font-size:9px}
+    .cmb-cell.h0{background:rgba(255,255,255,.03);border-color:rgba(255,255,255,.04);color:transparent}
+    .cmb-cell.h1{background:rgba(124,58,237,.18)}
+    .cmb-cell.h2{background:rgba(124,58,237,.36)}
+    .cmb-cell.h3{background:rgba(124,58,237,.58)}
+    .cmb-cell.h4{background:rgba(124,58,237,.82)}
+    @media(max-width:480px){.cmb-cell{height:20px;font-size:8px}.cmb-tag{flex-basis:64px}}
     .meta-card{background:rgba(255,255,255,.04);border:1px solid var(--cosmos-border);border-radius:12px;padding:16px;text-align:center}
     .meta-card b{display:block;font:800 22px var(--font-display);color:#fff}
     .meta-card span{font:500 11px var(--font-mono);letter-spacing:.06em;text-transform:uppercase;color:var(--cosmos-text-muted)}
@@ -333,6 +345,34 @@
           </div>
         </div>
         <div class="code-block" id="hawkingCode">Đo: <code>node .github/harness/scripts/auto-learn.mjs watchdog --json</code> · Áp dụng: <code>watchdog --apply --sign "&lt;tên người&gt;"</code> — <strong>human sign-off</strong>, agent tự ký = REFUSED (exit 2) · Journal <code>.agent/hawking.jsonl</code> append-only (ghi cả người ký)</div>
+      </div>
+    </section>
+
+    <section class="section" id="cmb" aria-labelledby="cmb-title">
+      <div class="container">
+        <div class="section-head">
+          <h2 id="cmb-title"><small>CMB Anisotropy</small>🌡️ Bản đồ điểm lạnh — phân bố KN</h2>
+          <p id="cmbAdvice" aria-live="polite">Đang tải heatmap.json…</p>
+          <span class="fresh" id="cmbFresh">⏳ đang đo tuổi…</span>
+        </div>
+        <div class="grid-3">
+          <div class="card">
+            <h3>🗺️ Heatmap — tag × tháng</h3>
+            <p>Đậm = nhiều KN trong tháng. Hàng trên là tag "nóng" nhất; hàng mờ lâu = tag nguội.</p>
+            <div class="cmb-grid" id="cmbGrid" role="list" aria-label="Heatmap KN theo tag và tháng"></div>
+          </div>
+          <div class="card">
+            <h3>❄️ Điểm lạnh — bug &gt; KN</h3>
+            <p>Bug nổ nhiều hơn bài học (coldness = bug − KN) → vùng trời sắp có biến, ưu tiên viết KN.</p>
+            <div id="cmbCold" role="list" style="margin-top:10px"></div>
+          </div>
+          <div class="card">
+            <h3>👻 KN 0 tham chiếu</h3>
+            <p>Không xuất hiện trong <code>.agent/bugs</code> + <code>.agent/plans</code> → gộp hoặc xoá cho CMB sạch.</p>
+            <div id="cmbZero" role="list" style="margin-top:10px"></div>
+          </div>
+        </div>
+        <div class="code-block" id="cmbCode">Đo: <code>node .github/harness/scripts/auto-learn.mjs stats --heatmap --json</code> · mirror <code>www/cosmos/heatmap.json</code> (npm run cosmos:refresh) · coldness = bug − KN ≥ 1 · 0 ref = không có trong bugs + plans</div>
       </div>
     </section>
 
@@ -708,7 +748,79 @@
       fill('#hawkingEscalate','escalate','journal + nhắc · sửa hoặc propose KN');
       fill('#hawkingEvaporate','evaporate','note + Status → evaporated (giữ lịch sử)');
     }
-    $('#btnRefresh')?.addEventListener('click', ()=>{ load(); loadWeb(); loadHawking(); toast('↻ Đã refresh'); });
+    // ===== CMB Anisotropy — auto-learn stats --heatmap → heatmap.json (helpers nhỏ giữ CC thấp KN-047) =====
+    async function loadCmb(){
+      try{
+        const res=await fetch('./heatmap.json',{cache:'no-store'});
+        if(!res.ok) throw new Error('HTTP '+res.status);
+        renderCmb(await res.json());
+      }catch(e){
+        $('#cmbAdvice').textContent='Không tải được heatmap.json — chạy: npm run cosmos:refresh ('+e.message+')';
+        $('#cmbFresh').textContent='⛔ không có data'; $('#cmbFresh').className='fresh bad';
+        for(const id of ['#cmbGrid','#cmbCold','#cmbZero']) $(id).innerHTML='<div class="web-empty">— chưa có heatmap.json —</div>';
+      }
+    }
+    function heatLevel(v){ return v>=8?'h4':v>=4?'h3':v>=2?'h2':v>=1?'h1':'h0'; }
+    function cmbCountsText(h){
+      const c=h.counts||{}, p=h.policy||{};
+      const emoji=(c.coldSpots>0||c.zeroRef>0)?'❄️':'✅';
+      return c.knTotal+' KN · '+c.bugTotal+' bug · '+c.tags+' tag · '+(c.months||[]).length+' tháng — ❄️ '+c.coldSpots+' điểm lạnh (cold ≥1 · fresh ≤'+(p.freshDays??14)+'d) · 👻 '+c.zeroRef+' KN 0 ref — '+emoji;
+    }
+    function renderCmbGrid(el, grid){
+      const months=grid.months||[], rows=grid.rows||[];
+      el.innerHTML='';
+      if(!rows.length){ el.innerHTML='<div class="web-empty">— chưa có KN nào có tag —</div>'; return; }
+      const mkRow=()=>{ const r=document.createElement('div'); r.className='cmb-row'; el.appendChild(r); return r; };
+      const head=mkRow(); head.setAttribute('aria-hidden','true');
+      const corner=document.createElement('span'); corner.className='cmb-tag'; corner.textContent='tag \\ tháng'; head.appendChild(corner);
+      for(const m of months){ const h=document.createElement('span'); h.className='cmb-cell cmb-head'; h.textContent=m.slice(2); head.appendChild(h); }
+      const SHOWN=12;
+      for(const r of rows.slice(0,SHOWN)){
+        const row=mkRow(); row.setAttribute('role','listitem');
+        const tag=document.createElement('span'); tag.className='cmb-tag'; tag.textContent=r.tag; tag.title=r.tag+' — '+r.total+' KN'; row.appendChild(tag);
+        r.cells.forEach((v,i)=>{
+          const c=document.createElement('span'); c.className='cmb-cell '+heatLevel(v); c.textContent=v||'';
+          c.title=r.tag+' · '+months[i]+': '+v+' KN'; row.appendChild(c);
+        });
+      }
+      if(rows.length>SHOWN){
+        const note=document.createElement('div'); note.className='web-empty';
+        note.textContent='+ '+(rows.length-SHOWN)+' tag nữa — xem đầy đủ: stats --heatmap --json';
+        el.appendChild(note);
+      }
+    }
+    function renderCmbCold(el, spots){
+      el.innerHTML='';
+      if(!spots.length){ el.innerHTML='<div class="web-empty">✅ không có điểm lạnh — không tag nào bug vượt KN</div>'; return; }
+      spots.slice(0,6).forEach(s=>{
+        const div=document.createElement('div'); div.className='bh-item dynamic'; div.setAttribute('role','listitem');
+        div.innerHTML='<div class="bh-icon" aria-hidden="true">❄️</div><div class="bh-info"><strong>'+s.tag+'</strong><span>bug '+s.bug+' / KN '+s.kn+' — coldness '+s.coldness+' · ưu tiên viết KN cho tag này</span></div>';
+        el.appendChild(div);
+      });
+      if(spots.length>6){
+        const n=document.createElement('div'); n.className='web-empty';
+        n.textContent='+ '+(spots.length-6)+' điểm lạnh nữa — stats --heatmap';
+        el.appendChild(n);
+      }
+    }
+    function renderCmbZero(el, list, freshDays){
+      el.innerHTML='';
+      if(!list.length){ el.innerHTML='<div class="web-empty">✅ mọi KN đều được tham chiếu trong bugs/plans</div>'; return; }
+      list.forEach(z=>{
+        const hint=z.action==='fresh'? 'còn mới (≤'+(freshDays??14)+' ngày) — chờ tham chiếu' : 'gộp hoặc xoá — KN cũ không ai dùng';
+        const div=document.createElement('div'); div.className='bh-item '+(z.action==='fresh'?'known':'dynamic'); div.setAttribute('role','listitem');
+        div.innerHTML='<div class="bh-icon" aria-hidden="true">👻</div><div class="bh-info"><strong>'+z.id+' — '+z.title+'</strong><span>'+(z.ageDays??'?')+' ngày ['+z.action+'] — '+hint+'</span></div>';
+        el.appendChild(div);
+      });
+    }
+    function renderCmb(h){
+      $('#cmbAdvice').textContent=cmbCountsText(h);
+      freshBadge($('#cmbFresh'), h.generatedAt? new Date(h.generatedAt).getTime() : NaN);
+      renderCmbGrid($('#cmbGrid'), h.grid||{});
+      renderCmbCold($('#cmbCold'), h.coldSpots||[]);
+      renderCmbZero($('#cmbZero'), h.zeroRef||[], h.policy?.freshDays);
+    }
+    $('#btnRefresh')?.addEventListener('click', ()=>{ load(); loadWeb(); loadHawking(); loadCmb(); toast('↻ Đã refresh'); });
     $('#btnCopyCmd')?.addEventListener('click', async()=>{
       const t='node .github/harness/scripts/cosmic-scale.mjs --json --out www/cosmos/scale.json';
       try{ await navigator.clipboard.writeText(t); toast('📋 Đã copy lệnh'); }catch{ toast('Copy hụt — sếp copy tay nhé'); }
@@ -716,6 +828,7 @@
     load();
     loadWeb();
     loadHawking();
+    loadCmb();
   </script>
 </body>
 </html>

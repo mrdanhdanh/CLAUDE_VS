@@ -48,6 +48,7 @@
 - **Black Hole ↔ bottleneck:** KN-008 (file lock), KN-015 (Pages env) + dynamic (audit failed, mismatch). Qua event horizon → human takeover, không cố fix loop.
 - **Schrödinger ↔ Heisenbug:** KN-014 — quan sát (import/test) làm đổi kết quả. Lab `cosmos.html` #6 demo.
 - **Entanglement ↔ `entangle.mjs`:** sửa 1 file → liệt kê forward/reverse refs (ai trỏ tới nó) — Verify cả cụm, không chỉ file vừa sửa. Toàn repo: `--graph` → Cosmic Web (hub ≥10 refs ⇒ test rộng · cluster co-change ⇒ gộp 1 plan · dead filament ⇒ grep rồi xoá) → `www/cosmos/graph.json` + dashboard `scale.html#web`.
+- **CMB ↔ knowledge anisotropy:** `auto-learn.mjs stats --heatmap` — phân bố KN theo tag × tháng · điểm lạnh (`bugCount − knCount ≥ 1` → ưu tiên viết KN) · KN 0 tham chiếu trong bugs/plans (fresh <14d chờ · cũ → gộp/xoá) → mirror `www/cosmos/heatmap.json`, dashboard `scale.html#cmb`.
 - Xem dashboard: `www/cosmos/scale.html` (đọc `scale.json`, không sửa tay). Refresh 1 lệnh: `npm run cosmos:refresh`.
 ## Ví dụ
 

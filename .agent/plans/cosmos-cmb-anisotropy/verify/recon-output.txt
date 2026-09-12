@@ -1,0 +1,129 @@
+=== KN: 48 ┬╖ Bugs: 29 ===
+
+--- Bß║úng tag: knCount / bugCount / coldness(=bug-kn) / coldness2(=bug-2*kn) ---
+  a-jit              kn= 1 bug= 0 cold= -1 cold2= -2
+  a11y               kn= 8 bug= 8 cold=  0 cold2= -8
+  aar                kn= 1 bug= 0 cold= -1 cold2= -2
+  agent              kn= 2 bug= 1 cold= -1 cold2= -3
+  agentic-patterns   kn= 1 bug= 0 cold= -1 cold2= -2
+  animation          kn= 5 bug= 4 cold= -1 cold2= -6
+  api                kn= 2 bug= 2 cold=  0 cold2= -2
+  archify            kn= 1 bug= 1 cold=  0 cold2= -1
+  architecture       kn= 2 bug= 0 cold= -2 cold2= -4
+  automation         kn= 2 bug= 0 cold= -2 cold2= -4
+  benchmark          kn= 2 bug= 0 cold= -2 cold2= -4
+  bug-blindness      kn= 1 bug= 1 cold=  0 cold2= -1
+  build              kn= 3 bug= 3 cold=  0 cold2= -3
+  button             kn= 1 bug= 0 cold= -1 cold2= -2
+  calibration        kn= 1 bug= 0 cold= -1 cold2= -2
+  canvas             kn= 2 bug= 2 cold=  0 cold2= -2
+  chatbot            kn= 0 bug= 1 cold=  1 cold2=  1
+  ci                 kn= 2 bug= 2 cold=  0 cold2= -2
+  collaboration      kn= 1 bug= 0 cold= -1 cold2= -2
+  complexity         kn= 1 bug= 0 cold= -1 cold2= -2
+  config             kn= 1 bug= 1 cold=  0 cold2= -1
+  consistency        kn= 1 bug= 0 cold= -1 cold2= -2
+  content            kn= 1 bug= 1 cold=  0 cold2= -1
+  content-drift      kn= 1 bug= 1 cold=  0 cold2= -1
+  contrast           kn= 1 bug= 1 cold=  0 cold2= -1
+  css                kn= 6 bug= 5 cold= -1 cold2= -7
+  data               kn= 5 bug= 5 cold=  0 cold2= -5
+  demo               kn= 0 bug= 1 cold=  1 cold2=  1
+  deploy             kn= 1 bug= 1 cold=  0 cold2= -1
+  diagram            kn= 1 bug= 1 cold=  0 cold2= -1
+  diversity          kn= 1 bug= 0 cold= -1 cold2= -2
+  docs               kn= 2 bug= 2 cold=  0 cold2= -2
+  dotnet             kn= 1 bug= 1 cold=  0 cold2= -1
+  dx                 kn= 8 bug= 7 cold= -1 cold2= -9
+  edge               kn= 1 bug= 1 cold=  0 cold2= -1
+  error-handling     kn= 1 bug= 1 cold=  0 cold2= -1
+  evals              kn= 2 bug= 0 cold= -2 cold2= -4
+  evidence           kn= 2 bug= 0 cold= -2 cold2= -4
+  fail-silent        kn= 1 bug= 1 cold=  0 cold2= -1
+  failure-diagnosis  kn= 1 bug= 0 cold= -1 cold2= -2
+  fetch              kn= 1 bug= 1 cold=  0 cold2= -1
+  font               kn= 1 bug= 1 cold=  0 cold2= -1
+  fresh-eyes         kn= 1 bug= 1 cold=  0 cold2= -1
+  fs                 kn= 1 bug= 1 cold=  0 cold2= -1
+  funnel             kn= 1 bug= 0 cold= -1 cold2= -2
+  governance         kn= 3 bug= 1 cold= -2 cold2= -5
+  grounding          kn= 1 bug= 1 cold=  0 cold2= -1
+  harness            kn= 2 bug= 0 cold= -2 cold2= -4
+  human-judgment     kn= 1 bug= 0 cold= -1 cold2= -2
+  i18n               kn= 2 bug= 2 cold=  0 cold2= -2
+  knowledge          kn= 2 bug= 2 cold=  0 cold2= -2
+  mcp                kn= 1 bug= 1 cold=  0 cold2= -1
+  memory             kn= 1 bug= 1 cold=  0 cold2= -1
+  metrics            kn= 2 bug= 0 cold= -2 cold2= -4
+  minimal            kn= 3 bug= 0 cold= -3 cold2= -6
+  nav                kn= 1 bug= 1 cold=  0 cold2= -1
+  network            kn= 1 bug= 1 cold=  0 cold2= -1
+  pages              kn= 4 bug= 3 cold= -1 cold2= -5
+  perf               kn= 2 bug= 3 cold=  1 cold2= -1
+  physics            kn= 1 bug= 1 cold=  0 cold2= -1
+  pilot-in-command   kn= 1 bug= 0 cold= -1 cold2= -2
+  playbook           kn= 1 bug= 0 cold= -1 cold2= -2
+  ponytail           kn= 1 bug= 0 cold= -1 cold2= -2
+  powershell         kn= 1 bug= 1 cold=  0 cold2= -1
+  procedural-graph   kn= 1 bug= 0 cold= -1 cold2= -2
+  process            kn=27 bug=10 cold=-17 cold2=-44
+  psychology         kn= 1 bug= 0 cold= -1 cold2= -2
+  quality            kn= 1 bug= 1 cold=  0 cold2= -1
+  rag                kn= 1 bug= 1 cold=  0 cold2= -1
+  rbac               kn= 1 bug= 0 cold= -1 cold2= -2
+  reasoning          kn= 1 bug= 0 cold= -1 cold2= -2
+  reduced-motion     kn= 1 bug= 1 cold=  0 cold2= -1
+  reef-lite          kn= 0 bug= 1 cold=  1 cold2=  1
+  regex              kn= 1 bug= 1 cold=  0 cold2= -1
+  research           kn= 3 bug= 0 cold= -3 cold2= -6
+  responsive         kn= 4 bug= 4 cold=  0 cold2= -4
+  review             kn= 1 bug= 0 cold= -1 cold2= -2
+  reward-hacking     kn= 1 bug= 1 cold=  0 cold2= -1
+  rl                 kn= 1 bug= 0 cold= -1 cold2= -2
+  rsi                kn= 2 bug= 0 cold= -2 cold2= -4
+  safety             kn= 2 bug= 1 cold= -1 cold2= -3
+  scaffold           kn= 1 bug= 0 cold= -1 cold2= -2
+  script-blocking    kn= 1 bug= 1 cold=  0 cold2= -1
+  scripts            kn= 1 bug= 1 cold=  0 cold2= -1
+  security           kn= 1 bug= 0 cold= -1 cold2= -2
+  self-distillation  kn= 2 bug= 0 cold= -2 cold2= -4
+  self-evolving      kn= 4 bug= 1 cold= -3 cold2= -7
+  self-improving     kn= 2 bug= 0 cold= -2 cold2= -4
+  slop               kn= 1 bug= 0 cold= -1 cold2= -2
+  spacing            kn= 1 bug= 1 cold=  0 cold2= -1
+  state              kn= 1 bug= 2 cold=  1 cold2=  0
+  taste              kn= 1 bug= 0 cold= -1 cold2= -2
+  tdd                kn= 1 bug= 1 cold=  0 cold2= -1
+  testing            kn= 1 bug= 1 cold=  0 cold2= -1
+  theme              kn= 1 bug= 1 cold=  0 cold2= -1
+  ui                 kn=16 bug=15 cold= -1 cold2=-17
+  uncertainty        kn= 1 bug= 0 cold= -1 cold2= -2
+  url                kn= 2 bug= 1 cold= -1 cold2= -3
+  ux                 kn= 2 bug= 2 cold=  0 cold2= -2
+  verification       kn= 5 bug= 1 cold= -4 cold2= -9
+  verify             kn=11 bug=10 cold= -1 cold2=-12
+  windows            kn= 2 bug= 2 cold=  0 cold2= -2
+  workflow           kn= 1 bug= 1 cold=  0 cold2= -1
+  yagni              kn= 1 bug= 0 cold= -1 cold2= -2
+
+--- KN theo th├íng (tß╗½ Ng├áy:) ---
+  {"2026-08":11,"2026-09":37}
+
+--- KN theo tuß║ºn (7 ng├áy tß╗½ 2026-08-24) ---
+  {"W0":9,"W1":9,"W2":30}
+
+--- KN 0 tham chiß║┐u (trong .agent/bugs + .agent/plans; 252 files) ---
+  KN-021 (2026-09-08) Governance rule-based cß╗⌐ng kh├┤ng scale ΓÇö cß║ºn ─æo + RBAC linh 
+  KN-035 (2026-09-11) Negative Self-Distillation ΓÇö hß╗ìc bß║▒ng tr├ính flaws, giß╗» uncer
+  KN-044 (2026-09-03) RAG grounding chß║┐t khi `export.json` thiß║┐u ΓÇö n├║t Xuß║Ñt sai t├¬
+  ΓåÆ tß╗òng: 3/48
+
+--- KN c├│ nhiß╗üu tham chiß║┐u nhß║Ñt (top 8) ---
+  KN-005: 36
+  KN-018: 31
+  KN-037: 25
+  KN-002: 22
+  KN-003: 20
+  KN-012: 20
+  KN-007: 17
+  KN-030: 17

@@ -1,0 +1,21 @@
+≡ƒº╣ Slop Check ΓÇö 5 file ┬╖ dup ΓëÑ8 d├▓ng ┬╖ fn Γëñ80 d├▓ng ┬╖ CC Γëñ12
+
+ΓÜá∩╕Å  Duplication (1 block):
+   ΓÇó 10 d├▓ng ├ù2 ΓÇö .github/harness/scripts/auto-learn.mjs:361 Γåö .github/harness/scripts/auto-learn.mjs:639
+     Γöö - **Ng├áy:** ${today}
+
+ΓÜá∩╕Å  Function metrics:
+   ΓÇó [complexity] .github/harness/scripts/auto-learn.mjs:68 parseKNs() ΓÇö CC 23 (max 12)
+   ΓÇó [complexity] .github/harness/scripts/auto-learn.mjs:135 scoreKN() ΓÇö CC 14 (max 12)
+   ΓÇó [complexity] .github/harness/scripts/auto-learn.mjs:170 loadAttestations() ΓÇö CC 14 (max 12)
+   ΓÇó [complexity] .github/harness/scripts/auto-learn.mjs:193 attest() ΓÇö CC 19 (max 12)
+   ΓÇó [complexity] .github/harness/scripts/auto-learn.mjs:228 suggest() ΓÇö CC 14 (max 12)
+   ΓÇó [size] .github/harness/scripts/auto-learn.mjs:274 logBug() ΓÇö 944 d├▓ng (max 80)
+   ΓÇó [complexity] .github/harness/scripts/auto-learn.mjs:274 logBug() ΓÇö CC 360 (max 12)
+   ΓÇó [size] www/cosmos/scale.html:434 render() ΓÇö 101 d├▓ng (max 80)
+   ΓÇó [complexity] www/cosmos/scale.html:434 render() ΓÇö CC 83 (max 12)
+   ΓÇó [complexity] www/cosmos/scale.html:535 drawTimeline() ΓÇö CC 28 (max 12)
+   ΓÇó [complexity] www/cosmos/scale.html:646 renderWeb() ΓÇö CC 27 (max 12)
+   ΓÇó [complexity] www/cosmos/scale.html:707 renderHawking() ΓÇö CC 24 (max 12)
+
+Γ¥î 13 findings ΓÇö fix hoß║╖c justify tr╞░ß╗¢c khi Done (Slop Gate ┬╖ KN-047)

@@ -1,0 +1,889 @@
+{
+  "generatedAt": "2026-09-12T13:20:39.804Z",
+  "generatedBy": "auto-learn.mjs stats --heatmap",
+  "policy": {
+    "cold": "bugCount − knCount ≥ 1",
+    "freshDays": 14,
+    "refScope": [
+      ".agent/bugs",
+      ".agent/plans"
+    ],
+    "bucket": "YYYY-MM"
+  },
+  "counts": {
+    "knTotal": 48,
+    "bugTotal": 29,
+    "tags": 101,
+    "months": [
+      "2026-08",
+      "2026-09"
+    ],
+    "coldSpots": 5,
+    "zeroRef": 2,
+    "refFiles": 255
+  },
+  "grid": {
+    "months": [
+      "2026-08",
+      "2026-09"
+    ],
+    "rows": [
+      {
+        "tag": "process",
+        "total": 27,
+        "cells": [
+          4,
+          23
+        ]
+      },
+      {
+        "tag": "ui",
+        "total": 16,
+        "cells": [
+          6,
+          10
+        ]
+      },
+      {
+        "tag": "verify",
+        "total": 11,
+        "cells": [
+          0,
+          11
+        ]
+      },
+      {
+        "tag": "a11y",
+        "total": 8,
+        "cells": [
+          4,
+          4
+        ]
+      },
+      {
+        "tag": "dx",
+        "total": 8,
+        "cells": [
+          3,
+          5
+        ]
+      },
+      {
+        "tag": "css",
+        "total": 6,
+        "cells": [
+          4,
+          2
+        ]
+      },
+      {
+        "tag": "animation",
+        "total": 5,
+        "cells": [
+          2,
+          3
+        ]
+      },
+      {
+        "tag": "data",
+        "total": 5,
+        "cells": [
+          1,
+          4
+        ]
+      },
+      {
+        "tag": "verification",
+        "total": 5,
+        "cells": [
+          0,
+          5
+        ]
+      },
+      {
+        "tag": "pages",
+        "total": 4,
+        "cells": [
+          0,
+          4
+        ]
+      },
+      {
+        "tag": "responsive",
+        "total": 4,
+        "cells": [
+          1,
+          3
+        ]
+      },
+      {
+        "tag": "self-evolving",
+        "total": 4,
+        "cells": [
+          0,
+          4
+        ]
+      },
+      {
+        "tag": "build",
+        "total": 3,
+        "cells": [
+          2,
+          1
+        ]
+      },
+      {
+        "tag": "governance",
+        "total": 3,
+        "cells": [
+          0,
+          3
+        ]
+      },
+      {
+        "tag": "minimal",
+        "total": 3,
+        "cells": [
+          0,
+          3
+        ]
+      },
+      {
+        "tag": "research",
+        "total": 3,
+        "cells": [
+          0,
+          3
+        ]
+      },
+      {
+        "tag": "agent",
+        "total": 2,
+        "cells": [
+          0,
+          2
+        ]
+      },
+      {
+        "tag": "api",
+        "total": 2,
+        "cells": [
+          1,
+          1
+        ]
+      },
+      {
+        "tag": "architecture",
+        "total": 2,
+        "cells": [
+          0,
+          2
+        ]
+      },
+      {
+        "tag": "automation",
+        "total": 2,
+        "cells": [
+          2,
+          0
+        ]
+      },
+      {
+        "tag": "benchmark",
+        "total": 2,
+        "cells": [
+          1,
+          1
+        ]
+      },
+      {
+        "tag": "canvas",
+        "total": 2,
+        "cells": [
+          0,
+          2
+        ]
+      },
+      {
+        "tag": "ci",
+        "total": 2,
+        "cells": [
+          0,
+          2
+        ]
+      },
+      {
+        "tag": "docs",
+        "total": 2,
+        "cells": [
+          0,
+          2
+        ]
+      },
+      {
+        "tag": "evals",
+        "total": 2,
+        "cells": [
+          0,
+          2
+        ]
+      },
+      {
+        "tag": "evidence",
+        "total": 2,
+        "cells": [
+          0,
+          2
+        ]
+      },
+      {
+        "tag": "harness",
+        "total": 2,
+        "cells": [
+          0,
+          2
+        ]
+      },
+      {
+        "tag": "i18n",
+        "total": 2,
+        "cells": [
+          1,
+          1
+        ]
+      },
+      {
+        "tag": "knowledge",
+        "total": 2,
+        "cells": [
+          1,
+          1
+        ]
+      },
+      {
+        "tag": "metrics",
+        "total": 2,
+        "cells": [
+          0,
+          2
+        ]
+      },
+      {
+        "tag": "perf",
+        "total": 2,
+        "cells": [
+          1,
+          1
+        ]
+      },
+      {
+        "tag": "rsi",
+        "total": 2,
+        "cells": [
+          0,
+          2
+        ]
+      },
+      {
+        "tag": "safety",
+        "total": 2,
+        "cells": [
+          0,
+          2
+        ]
+      },
+      {
+        "tag": "self-distillation",
+        "total": 2,
+        "cells": [
+          0,
+          2
+        ]
+      },
+      {
+        "tag": "self-improving",
+        "total": 2,
+        "cells": [
+          1,
+          1
+        ]
+      },
+      {
+        "tag": "url",
+        "total": 2,
+        "cells": [
+          0,
+          2
+        ]
+      },
+      {
+        "tag": "ux",
+        "total": 2,
+        "cells": [
+          2,
+          0
+        ]
+      },
+      {
+        "tag": "windows",
+        "total": 2,
+        "cells": [
+          0,
+          2
+        ]
+      },
+      {
+        "tag": "a-jit",
+        "total": 1,
+        "cells": [
+          0,
+          1
+        ]
+      },
+      {
+        "tag": "aar",
+        "total": 1,
+        "cells": [
+          1,
+          0
+        ]
+      },
+      {
+        "tag": "agentic-patterns",
+        "total": 1,
+        "cells": [
+          0,
+          1
+        ]
+      },
+      {
+        "tag": "archify",
+        "total": 1,
+        "cells": [
+          0,
+          1
+        ]
+      },
+      {
+        "tag": "bug-blindness",
+        "total": 1,
+        "cells": [
+          0,
+          1
+        ]
+      },
+      {
+        "tag": "button",
+        "total": 1,
+        "cells": [
+          1,
+          0
+        ]
+      },
+      {
+        "tag": "calibration",
+        "total": 1,
+        "cells": [
+          0,
+          1
+        ]
+      },
+      {
+        "tag": "collaboration",
+        "total": 1,
+        "cells": [
+          0,
+          1
+        ]
+      },
+      {
+        "tag": "complexity",
+        "total": 1,
+        "cells": [
+          0,
+          1
+        ]
+      },
+      {
+        "tag": "config",
+        "total": 1,
+        "cells": [
+          1,
+          0
+        ]
+      },
+      {
+        "tag": "consistency",
+        "total": 1,
+        "cells": [
+          0,
+          1
+        ]
+      },
+      {
+        "tag": "content",
+        "total": 1,
+        "cells": [
+          0,
+          1
+        ]
+      },
+      {
+        "tag": "content-drift",
+        "total": 1,
+        "cells": [
+          0,
+          1
+        ]
+      },
+      {
+        "tag": "contrast",
+        "total": 1,
+        "cells": [
+          1,
+          0
+        ]
+      },
+      {
+        "tag": "deploy",
+        "total": 1,
+        "cells": [
+          0,
+          1
+        ]
+      },
+      {
+        "tag": "diagram",
+        "total": 1,
+        "cells": [
+          0,
+          1
+        ]
+      },
+      {
+        "tag": "diversity",
+        "total": 1,
+        "cells": [
+          0,
+          1
+        ]
+      },
+      {
+        "tag": "dotnet",
+        "total": 1,
+        "cells": [
+          1,
+          0
+        ]
+      },
+      {
+        "tag": "edge",
+        "total": 1,
+        "cells": [
+          0,
+          1
+        ]
+      },
+      {
+        "tag": "error-handling",
+        "total": 1,
+        "cells": [
+          0,
+          1
+        ]
+      },
+      {
+        "tag": "fail-silent",
+        "total": 1,
+        "cells": [
+          0,
+          1
+        ]
+      },
+      {
+        "tag": "failure-diagnosis",
+        "total": 1,
+        "cells": [
+          0,
+          1
+        ]
+      },
+      {
+        "tag": "fetch",
+        "total": 1,
+        "cells": [
+          0,
+          1
+        ]
+      },
+      {
+        "tag": "font",
+        "total": 1,
+        "cells": [
+          0,
+          1
+        ]
+      },
+      {
+        "tag": "fresh-eyes",
+        "total": 1,
+        "cells": [
+          0,
+          1
+        ]
+      },
+      {
+        "tag": "fs",
+        "total": 1,
+        "cells": [
+          0,
+          1
+        ]
+      },
+      {
+        "tag": "funnel",
+        "total": 1,
+        "cells": [
+          0,
+          1
+        ]
+      },
+      {
+        "tag": "grounding",
+        "total": 1,
+        "cells": [
+          0,
+          1
+        ]
+      },
+      {
+        "tag": "human-judgment",
+        "total": 1,
+        "cells": [
+          0,
+          1
+        ]
+      },
+      {
+        "tag": "mcp",
+        "total": 1,
+        "cells": [
+          0,
+          1
+        ]
+      },
+      {
+        "tag": "memory",
+        "total": 1,
+        "cells": [
+          0,
+          1
+        ]
+      },
+      {
+        "tag": "nav",
+        "total": 1,
+        "cells": [
+          0,
+          1
+        ]
+      },
+      {
+        "tag": "network",
+        "total": 1,
+        "cells": [
+          0,
+          1
+        ]
+      },
+      {
+        "tag": "physics",
+        "total": 1,
+        "cells": [
+          0,
+          1
+        ]
+      },
+      {
+        "tag": "pilot-in-command",
+        "total": 1,
+        "cells": [
+          0,
+          1
+        ]
+      },
+      {
+        "tag": "playbook",
+        "total": 1,
+        "cells": [
+          0,
+          1
+        ]
+      },
+      {
+        "tag": "ponytail",
+        "total": 1,
+        "cells": [
+          0,
+          1
+        ]
+      },
+      {
+        "tag": "powershell",
+        "total": 1,
+        "cells": [
+          0,
+          1
+        ]
+      },
+      {
+        "tag": "procedural-graph",
+        "total": 1,
+        "cells": [
+          0,
+          1
+        ]
+      },
+      {
+        "tag": "psychology",
+        "total": 1,
+        "cells": [
+          0,
+          1
+        ]
+      },
+      {
+        "tag": "quality",
+        "total": 1,
+        "cells": [
+          1,
+          0
+        ]
+      },
+      {
+        "tag": "rag",
+        "total": 1,
+        "cells": [
+          0,
+          1
+        ]
+      },
+      {
+        "tag": "rbac",
+        "total": 1,
+        "cells": [
+          0,
+          1
+        ]
+      },
+      {
+        "tag": "reasoning",
+        "total": 1,
+        "cells": [
+          0,
+          1
+        ]
+      },
+      {
+        "tag": "reduced-motion",
+        "total": 1,
+        "cells": [
+          0,
+          1
+        ]
+      },
+      {
+        "tag": "regex",
+        "total": 1,
+        "cells": [
+          0,
+          1
+        ]
+      },
+      {
+        "tag": "review",
+        "total": 1,
+        "cells": [
+          0,
+          1
+        ]
+      },
+      {
+        "tag": "reward-hacking",
+        "total": 1,
+        "cells": [
+          0,
+          1
+        ]
+      },
+      {
+        "tag": "rl",
+        "total": 1,
+        "cells": [
+          0,
+          1
+        ]
+      },
+      {
+        "tag": "scaffold",
+        "total": 1,
+        "cells": [
+          0,
+          1
+        ]
+      },
+      {
+        "tag": "script-blocking",
+        "total": 1,
+        "cells": [
+          0,
+          1
+        ]
+      },
+      {
+        "tag": "scripts",
+        "total": 1,
+        "cells": [
+          0,
+          1
+        ]
+      },
+      {
+        "tag": "security",
+        "total": 1,
+        "cells": [
+          0,
+          1
+        ]
+      },
+      {
+        "tag": "slop",
+        "total": 1,
+        "cells": [
+          0,
+          1
+        ]
+      },
+      {
+        "tag": "spacing",
+        "total": 1,
+        "cells": [
+          1,
+          0
+        ]
+      },
+      {
+        "tag": "state",
+        "total": 1,
+        "cells": [
+          1,
+          0
+        ]
+      },
+      {
+        "tag": "taste",
+        "total": 1,
+        "cells": [
+          0,
+          1
+        ]
+      },
+      {
+        "tag": "tdd",
+        "total": 1,
+        "cells": [
+          0,
+          1
+        ]
+      },
+      {
+        "tag": "testing",
+        "total": 1,
+        "cells": [
+          0,
+          1
+        ]
+      },
+      {
+        "tag": "theme",
+        "total": 1,
+        "cells": [
+          1,
+          0
+        ]
+      },
+      {
+        "tag": "uncertainty",
+        "total": 1,
+        "cells": [
+          0,
+          1
+        ]
+      },
+      {
+        "tag": "workflow",
+        "total": 1,
+        "cells": [
+          0,
+          1
+        ]
+      },
+      {
+        "tag": "yagni",
+        "total": 1,
+        "cells": [
+          0,
+          1
+        ]
+      }
+    ]
+  },
+  "coldSpots": [
+    {
+      "tag": "perf",
+      "kn": 2,
+      "bug": 3,
+      "coldness": 1
+    },
+    {
+      "tag": "state",
+      "kn": 1,
+      "bug": 2,
+      "coldness": 1
+    },
+    {
+      "tag": "chatbot",
+      "kn": 0,
+      "bug": 1,
+      "coldness": 1
+    },
+    {
+      "tag": "demo",
+      "kn": 0,
+      "bug": 1,
+      "coldness": 1
+    },
+    {
+      "tag": "reef-lite",
+      "kn": 0,
+      "bug": 1,
+      "coldness": 1
+    }
+  ],
+  "zeroRef": [
+    {
+      "id": "KN-044",
+      "title": "RAG grounding chết khi `export.json` thiếu — nút Xuất sai tên + không seed fallback",
+      "date": "2026-09-03",
+      "ageDays": 9,
+      "action": "fresh"
+    },
+    {
+      "id": "KN-035",
+      "title": "Negative Self-Distillation — học bằng tránh flaws, giữ uncertainty (2609.11699v1)",
+      "date": "2026-09-11",
+      "ageDays": 1,
+      "action": "fresh"
+    }
+  ]
+}

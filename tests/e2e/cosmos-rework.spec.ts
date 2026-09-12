@@ -40,8 +40,10 @@ test('#1 reveal — mọi .reveal hiện ở 375px (bug: #lab tàng hình)', asy
   await scrollAll(page);
 
   // Poll — dưới tải song song, rAF/IO có thể trễ vài trăm ms; yêu cầu: không bao giờ kẹt ẩn
+  // Timeout 8s (không phải nới invariant — cùng chuẩn với #1b): full suite 6 worker, IO/transitionDelay
+  // xếp hàng lâu hơn; đo 2026-09-12 full-suite fail 5s với đúng 1 element, isolated xanh 3/3.
   await expect
-    .poll(() => page.evaluate(() => document.querySelectorAll('.reveal:not(.in)').length), { timeout: 5000 })
+    .poll(() => page.evaluate(() => document.querySelectorAll('.reveal:not(.in)').length), { timeout: 8000 })
     .toBe(0);
 
   const state = await page.evaluate(() => {

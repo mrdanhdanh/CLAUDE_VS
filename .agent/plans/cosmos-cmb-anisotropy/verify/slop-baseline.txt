@@ -1,0 +1,21 @@
+≡ƒº╣ Slop Check ΓÇö 4 file ┬╖ dup ΓëÑ8 d├▓ng ┬╖ fn Γëñ80 d├▓ng ┬╖ CC Γëñ12
+
+ΓÜá∩╕Å  Duplication (1 block):
+   ΓÇó 10 d├▓ng ├ù2 ΓÇö test-results/slop-base/auto-learn.mjs:360 Γåö test-results/slop-base/auto-learn.mjs:638
+     Γöö - **NgΓö£├íy:** ${today}
+
+ΓÜá∩╕Å  Function metrics:
+   ΓÇó [complexity] test-results/slop-base/auto-learn.mjs:67 parseKNs() ΓÇö CC 23 (max 12)
+   ΓÇó [complexity] test-results/slop-base/auto-learn.mjs:134 scoreKN() ΓÇö CC 14 (max 12)
+   ΓÇó [complexity] test-results/slop-base/auto-learn.mjs:169 loadAttestations() ΓÇö CC 14 (max 12)
+   ΓÇó [complexity] test-results/slop-base/auto-learn.mjs:192 attest() ΓÇö CC 19 (max 12)
+   ΓÇó [complexity] test-results/slop-base/auto-learn.mjs:227 suggest() ΓÇö CC 14 (max 12)
+   ΓÇó [size] test-results/slop-base/auto-learn.mjs:273 logBug() ΓÇö 803 d├▓ng (max 80)
+   ΓÇó [complexity] test-results/slop-base/auto-learn.mjs:273 logBug() ΓÇö CC 301 (max 12)
+   ΓÇó [size] test-results/slop-base/scale.html:394 render() ΓÇö 101 d├▓ng (max 80)
+   ΓÇó [complexity] test-results/slop-base/scale.html:394 render() ΓÇö CC 83 (max 12)
+   ΓÇó [complexity] test-results/slop-base/scale.html:495 drawTimeline() ΓÇö CC 28 (max 12)
+   ΓÇó [complexity] test-results/slop-base/scale.html:606 renderWeb() ΓÇö CC 27 (max 12)
+   ΓÇó [complexity] test-results/slop-base/scale.html:667 renderHawking() ΓÇö CC 24 (max 12)
+
+Γ¥î 13 findings ΓÇö fix hoß║╖c justify tr╞░ß╗¢c khi Done (Slop Gate ┬╖ KN-047)

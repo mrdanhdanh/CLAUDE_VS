@@ -20,6 +20,7 @@ const GITHUB_DIR = path.resolve(__dirname, '..', '..');
 const ROOT = path.resolve(GITHUB_DIR, '..');
 const KNOWLEGED = path.join(ROOT, 'docs', 'knowleged.md');
 const BUGS_DIR = path.join(ROOT, '.agent', 'bugs');
+const PLANS_DIR = path.join(ROOT, '.agent', 'plans');
 const TEMPLATE = path.join(BUGS_DIR, '_template', 'bug.md');
 const VERSIONS_DIR = path.join(ROOT, '.agent', 'versions');
 const RECORDS_DIR = path.join(ROOT, '.agent', 'records');
@@ -901,6 +902,143 @@ async function watchdog(opts = {}) {
   console.log('   Đo: watchdog [--json] [--out <f>] · Áp dụng (cần human sign-off): watchdog --apply --sign "<tên người>"' + (entries.length ? ' (' + entries.length + ' entry mới)' : ''));
 }
 
+// ---------- CMB Anisotropy — heatmap KN × tag × tháng (roadmap card #3, 2026-09-12) ----------
+// Điểm lạnh: coldness = bugCount − knCount (bug nổ nhiều hơn bài học). KN 0 tham chiếu trong bugs/plans
+// → fresh (<14 ngày, chờ tham chiếu) | merge-or-delete. Helpers tách nhỏ giữ CC thấp (Slop Gate KN-047).
+const HEATMAP_FRESH_DAYS = 14;
+
+async function collectBugTagData() {
+  const bugs = [];
+  let dirs = [];
+  try {
+    dirs = (await fs.readdir(BUGS_DIR, { withFileTypes: true })).filter((e) => e.isDirectory() && e.name !== '_template').map((e) => e.name);
+  } catch { return bugs; }
+  for (const slug of dirs) {
+    let text = '';
+    try { text = await fs.readFile(path.join(BUGS_DIR, slug, 'bug.md'), 'utf8'); } catch { continue; }
+    const tagsLineM = text.match(/-\s*\*\*Tags:\*\*\s*([^\n]+)/);
+    const tags = tagsLineM ? [...tagsLineM[1].matchAll(/`([^`]+)`/g)].map((x) => x[1].trim()) : [];
+    bugs.push({ slug, date: /^\d{4}-\d{2}-\d{2}/.test(slug) ? slug.slice(0, 10) : null, tags });
+  }
+  return bugs;
+}
+
+async function walkRefFiles(dir, out = []) {
+  let entries = [];
+  try { entries = await fs.readdir(dir, { withFileTypes: true }); } catch { return out; }
+  for (const e of entries) {
+    const p = path.join(dir, e.name);
+    if (e.isDirectory()) await walkRefFiles(p, out);
+    else if (e.isFile() && (e.name.endsWith('.md') || e.name.endsWith('.json'))) out.push(p);
+  }
+  return out;
+}
+
+// Ngày của KN: field Ngày: trong block → fallback quét dòng bảng tóm tắt | KN-xxx | YYYY-MM-DD |
+function knDate(kn, raw) {
+  if (kn.date) return kn.date;
+  const m = raw.match(new RegExp('\\|\\s*' + kn.id + '\\s*\\|\\s*([0-9]{4}-[0-9]{2}-[0-9]{2})'));
+  return m ? m[1] : '';
+}
+
+function buildHeatmapGrid(kns, raw) {
+  const knByTag = new Map();
+  const monthsSet = new Set();
+  for (const k of kns) {
+    const date = knDate(k, raw);
+    const bucket = date ? date.slice(0, 7) : 'unknown';
+    monthsSet.add(bucket);
+    for (const t of new Set(k.tags)) {
+      if (!knByTag.has(t)) knByTag.set(t, new Map());
+      const m = knByTag.get(t);
+      m.set(bucket, (m.get(bucket) || 0) + 1);
+    }
+  }
+  const months = [...monthsSet].sort((a, b) => (a === 'unknown' ? 1 : b === 'unknown' ? -1 : a.localeCompare(b)));
+  const tagTotals = new Map();
+  const rows = [...knByTag.keys()].map((tag) => {
+    const cells = months.map((m) => knByTag.get(tag).get(m) || 0);
+    const total = cells.reduce((a, b) => a + b, 0);
+    tagTotals.set(tag, total);
+    return { tag, total, cells };
+  }).sort((a, b) => b.total - a.total || a.tag.localeCompare(b.tag));
+  return { months, rows, tagTotals };
+}
+
+function buildColdSpots(tagTotals, bugs) {
+  const bugByTag = new Map();
+  for (const b of bugs) for (const t of new Set(b.tags)) bugByTag.set(t, (bugByTag.get(t) || 0) + 1);
+  const allTags = new Set([...tagTotals.keys(), ...bugByTag.keys()]);
+  return [...allTags].map((tag) => {
+    const kn = tagTotals.get(tag) || 0;
+    const bug = bugByTag.get(tag) || 0;
+    return { tag, kn, bug, coldness: bug - kn };
+  }).filter((s) => s.coldness >= 1)
+    .sort((a, b) => b.coldness - a.coldness || b.bug - a.bug || a.tag.localeCompare(b.tag));
+}
+
+function buildZeroRef(kns, raw, allRefs, nowMs) {
+  const zeroRef = [];
+  for (const k of kns) {
+    if ((allRefs.match(new RegExp(k.id + '(?!\\d)', 'g')) || []).length) continue;
+    const date = knDate(k, raw);
+    const ageDays = date ? Math.floor((nowMs - Date.parse(date + 'T00:00:00Z')) / 864e5) : null;
+    zeroRef.push({
+      id: k.id, title: k.title, date: date || null, ageDays,
+      action: ageDays != null && ageDays < HEATMAP_FRESH_DAYS ? 'fresh' : 'merge-or-delete',
+    });
+  }
+  return zeroRef.sort((a, b) => (b.ageDays ?? 1e9) - (a.ageDays ?? 1e9) || a.id.localeCompare(b.id));
+}
+
+async function statsHeatmap(opts = {}) {
+  const asJson = !!opts.json;
+  const nowMs = opts.now ? new Date(opts.now).getTime() : Date.now();
+  if (Number.isNaN(nowMs)) throw new Error('--now không hợp lệ: ' + opts.now);
+  const outPath = opts.out ? path.resolve(ROOT, opts.out) : null;
+
+  const { kns, raw } = await parseKNs();
+  const bugs = await collectBugTagData();
+  const refFiles = [...await walkRefFiles(BUGS_DIR), ...await walkRefFiles(PLANS_DIR)];
+  const refTexts = [];
+  for (const f of refFiles) { try { refTexts.push(await fs.readFile(f, 'utf8')); } catch {} }
+
+  const { months, rows, tagTotals } = buildHeatmapGrid(kns, raw);
+  const coldSpots = buildColdSpots(tagTotals, bugs);
+  const zeroRef = buildZeroRef(kns, raw, refTexts.join('\n'), nowMs);
+
+  const result = {
+    generatedAt: new Date(nowMs).toISOString(),
+    generatedBy: 'auto-learn.mjs stats --heatmap',
+    policy: { cold: 'bugCount − knCount ≥ 1', freshDays: HEATMAP_FRESH_DAYS, refScope: ['.agent/bugs', '.agent/plans'], bucket: 'YYYY-MM' },
+    counts: { knTotal: kns.length, bugTotal: bugs.length, tags: rows.length, months, coldSpots: coldSpots.length, zeroRef: zeroRef.length, refFiles: refFiles.length },
+    grid: { months, rows },
+    coldSpots,
+    zeroRef,
+  };
+
+  if (outPath) {
+    await fs.mkdir(path.dirname(outPath), { recursive: true });
+    await fs.writeFile(outPath, JSON.stringify(result, null, 2) + '\n', 'utf8');
+  }
+  if (asJson || outPath) { console.log(JSON.stringify(result, null, 2)); return; }
+
+  console.log('🌡️ CMB ANISOTROPY — ' + kns.length + ' KN · ' + bugs.length + ' bug · ' + rows.length + ' tag · ' + months.length + ' tháng (' + months.join(', ') + ')');
+  console.log('   Grid: ' + rows.length + ' tag × ' + months.length + ' tháng · ref files: ' + refFiles.length);
+  if (!coldSpots.length) console.log('   ✅ không có điểm lạnh — không tag nào bug vượt KN');
+  else {
+    console.log('   ❄️ Điểm lạnh (bug > KN): ' + coldSpots.length);
+    for (const s of coldSpots.slice(0, 5)) console.log('      ' + s.tag + ' — bug ' + s.bug + ' / KN ' + s.kn + ' (cold ' + s.coldness + ')');
+  }
+  if (!zeroRef.length) console.log('   ✅ mọi KN đều được tham chiếu trong bugs/plans');
+  else {
+    console.log('   👻 KN 0 tham chiếu: ' + zeroRef.length);
+    for (const z of zeroRef) console.log('      ' + z.id + ' — ' + (z.ageDays ?? '?') + ' ngày [' + z.action + '] ' + z.title.slice(0, 60));
+  }
+  console.log('   → Ưu tiên viết KN cho điểm lạnh · KN cũ 0 ref → gộp hoặc xoá (knowleged.md)');
+  console.log('   Mirror: --out www/cosmos/heatmap.json · refresh: npm run cosmos:refresh');
+}
+
 async function status(json=false) {
   const { kns } = await parseKNs();
   let bugs = [];
@@ -998,6 +1136,7 @@ Usage:
   node .github/harness/scripts/auto-learn.mjs propose --bug <slug> [--json]  (alias: get --bug <slug>)
   node .github/harness/scripts/auto-learn.mjs attest --kn KN-003 --result pass|fail [--score 0..1] [--note "..."]  (Engram-lite Wilson)
   node .github/harness/scripts/auto-learn.mjs status [--json]
+  node .github/harness/scripts/auto-learn.mjs stats --heatmap [--json] [--out <file>] [--now ISO]  (CMB anisotropy — grid tag×tháng · điểm lạnh · KN 0 tham chiếu)
   node .github/harness/scripts/auto-learn.mjs watchdog [--json] [--out <file>] [--dir <bugsDir>] [--now ISO] [--apply --sign "<tên người>"]  (Hawking — nợ bay hơi)
   # Reef-lite (Serve → Observe → Grow → Commit):
   node .github/harness/scripts/auto-learn.mjs record --prompt "mô tả" [--scenario name] [--response "..."] [--json]
@@ -1048,6 +1187,9 @@ Flow tự động:
       await status(!!opts.json);
     } else if (cmd==='watchdog') {
       await watchdog(opts);
+    } else if (cmd==='stats') {
+      if (!opts.heatmap) { console.error('❌ stats cần --heatmap (view duy nhất hiện có). Ví dụ: stats --heatmap --json --out www/cosmos/heatmap.json'); process.exit(1); }
+      await statsHeatmap(opts);
     } else if (cmd==='record') {
       await recordInteraction(opts, !!opts.json);
     } else if (cmd==='report') {

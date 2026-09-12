@@ -1,0 +1,13 @@
+
+    Error: expect(locator).toContainText(expected) failed
+    test-results\cosmos-cmb-CMB-UI-ΓÇö-scale--6352d--path-vß╗¢i-h╞░ß╗¢ng-dß║½n-refresh-chromium\test-failed-1.png
+    Error: expect(locator).toBeVisible() failed
+    test-results\cosmos-cmb-CMB-UI-ΓÇö-scale--241b7--lß║ính-0-ref-kh├┤ng-pageerror-chromium\test-failed-1.png
+    Error: expect(locator).toHaveCount(expected) failed
+    test-results\cosmos-future-future-secti-4e186-t├ái-mß╗¢i-kh├┤ng-c├▓n-card-Done-chromium\test-failed-1.png
+    Error: expect(locator).toContainText(expected) failed
+    test-results\cosmos-slides-slide-15-ΓÇö-─É-e4256-i-mß╗¢i-hß║┐t-Multiverse-picker-chromium\test-failed-1.png
+    test-results\cosmos-cmb-CMB-UI-ΓÇö-scale--2dee7-75px-ΓÇö-cmb-kh├┤ng-tr├án-ngang-chromium\test-failed-1.png
+  9 failed
+  2 passed (38.1s)
+

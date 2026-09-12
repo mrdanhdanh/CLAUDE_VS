@@ -86,7 +86,7 @@ user-invocable: true
 | `presets/` (full/web-product/api-minimal) | **Đa vũ trụ** | `preset apply` là nhảy vũ trụ song song |
 | `**/.disabled/` | **Thiên hà ngủ đông** | Không xóa, chỉ ngủ — cần là đánh thức |
 | `.agent/bugs/` + `.agent/plans/` (55+ plans) | **Tàn tích supernova + hệ hành tinh** | Mỗi bug nổ gieo nguyên tố mới (KN); mỗi plan là hệ sao |
-| `auto-learn.mjs` suggest/log/propose | **Khảo sát bầu trời (SDSS)** | Quét CMB → phát hiện → ghi catalog tự động |
+| `auto-learn.mjs` (suggest/log/propose/stats --heatmap) | **Khảo sát bầu trời (SDSS)** | Quét CMB → phát hiện → ghi catalog tự động; heatmap đo anisotropy — điểm lạnh + KN 0 ref |
 | `context.mjs` quarantine/compress/isolate | **Bộ lọc vũ trụ khả kiến** | Window có hạn như chân trời — phải lọc mới nhìn xa |
 | `awesome-design-md/` (74 designs) | **Hubble Deep Field** | 74 thiên hà để soi vibe cosmic dark / quantum light |
 | Wise loading (skill chỉ load khi match) | **Kích thích trường lượng tử** | Instruction là trường phủ khắp, skill là hạt khi đủ năng lượng |
@@ -99,6 +99,7 @@ user-invocable: true
 - **Entropy / Heat death ↔ Tech debt:** không bơm năng lượng (audit + `generate-status` + polish) thì hệ drift tới hỗn loạn. Meter: `S = mismatch×10 + drafts×5 + refused×2 + disabled×1 + failed×5`; gate `--budget <n>` exit 1 khi vượt ngân sách.
 - **Black Hole ↔ Bottleneck:** `MSB3027 file lock` (KN-008), `2 workflow giành Pages env` (KN-015) — kỳ dị mà velocity không thoát. Qua event horizon là phải human takeover.
 - **Cosmic web ↔ Entanglement graph:** audit hash + `Entangled with:` vẽ thành filament — `entangle.mjs --file <path>` liệt kê forward/reverse refs; sửa 1 file là biết kéo theo chòm nào.
+- **CMB Anisotropy ↔ knowledge anisotropy:** phân bố KN theo tag × tháng — điểm lạnh (`coldness = bugCount − knCount ≥ 1` → ưu tiên viết KN) + KN 0 tham chiếu trong bugs/plans (fresh <14d chờ · cũ → gộp/xoá). Đo: `auto-learn.mjs stats --heatmap` → mirror `www/cosmos/heatmap.json` + dashboard `scale.html#cmb`.
 - **Double-slit + Schrödinger's bug ↔ Heisenbug:** KN-014 smoke treo vì import side-effect — quan sát làm đổi kết quả.
 - **Quantum error correction ↔ 3-fix limit + TDD gate:** RED-GREEN-REFACTOR là mã sửa lỗi, `verify` là syndrome measurement.
 - **Chân không lượng tử ↔ Flaky:** BOM, path `\` vs `/`, `node --check` CJS — dao động nền, cần quarantine trước.
@@ -111,6 +112,7 @@ Công thức Lab: bất định $\Delta x \cdot \Delta p \ge \hbar/2$ ↔ `get_e
 - `www/cosmos/index.html` (canonical) — demo visual vũ trụ + lượng tử
 - `www/cosmos/scale.html` — dashboard entropy + black-hole (skill cosmic-scale)
 - `.github/harness/scripts/cosmic-scale.mjs` — đo S/D/G/M · `--budget` gate · `npm run cosmos:refresh`
+- `.github/harness/scripts/auto-learn.mjs` — suggest/log/propose + Hawking watchdog + CMB `stats --heatmap`
 - `.github/harness/scripts/entangle.mjs` — entanglement graph (forward/reverse refs, 0 deps)
 - `.github/skills/cosmic-scale/SKILL.md` — đo entropy, bottleneck, dark-matter map
 - `awesome-design-md/` — 74 DESIGN.md cho vibe cosmic/quantum
