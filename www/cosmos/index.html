@@ -795,7 +795,38 @@
     .dg-balance .dg-gr{background:linear-gradient(90deg,#f59e0b,#fcd34d)}
     .dg-status{font:600 11px var(--font-mono);color:var(--cosmos-text-muted);text-align:center;min-height:18px}
     .dg-status b{color:#fff}
-    @media(prefers-reduced-motion:reduce){.sb-badge{animation:none}.mv-universe .mv-bar i{transition:none}.dg-galaxy,.dg-galaxy .dg-dot,.dg-balance i{transition:none}}
+
+    /* ===== Quantum Error Correction lab (bit-flip → syndrome) ===== */
+    .qec-rack{display:grid;gap:8px;width:100%}
+    @media(min-width:640px){.qec-rack{grid-template-columns:repeat(3,1fr)}}
+    .qec-tile{display:flex;align-items:center;gap:8px;padding:8px 10px;border-radius:var(--radius-sm);border:1px solid var(--cosmos-border);background:linear-gradient(180deg,rgba(255,255,255,.05),rgba(255,255,255,.015));transition:border-color .2s ease,background .2s ease}
+    .qec-tile b{font:600 11px var(--font-mono);color:#fff;flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+    .qec-tile .qec-dot{width:8px;height:8px;border-radius:50%;flex:none;background:#6ee7b7;box-shadow:0 0 8px rgba(16,185,129,.6)}
+    .qec-tile em{font:600 9.5px var(--font-mono);font-style:normal;letter-spacing:.05em;color:#6ee7b7;flex:none}
+    .qec-tile.flipped{border-color:rgba(248,113,113,.55);background:linear-gradient(180deg,rgba(239,68,68,.14),rgba(255,255,255,.02))}
+    .qec-tile.flipped .qec-dot{background:#f87171;box-shadow:0 0 10px rgba(239,68,68,.7);animation:qecPulse 1.6s ease-in-out infinite}
+    .qec-tile.flipped em{color:#fca5a5}
+    @keyframes qecPulse{0%,100%{opacity:1}50%{opacity:.35}}
+    .qec-rail{display:flex;align-items:center;justify-content:center;gap:6px;min-height:14px}
+    .qec-rail-label{font:600 9.5px var(--font-mono);letter-spacing:.06em;text-transform:uppercase;color:var(--cosmos-text-dim);margin-right:2px}
+    .qec-rail i{width:10px;height:10px;border-radius:50%;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.16);transition:background .2s ease}
+    .qec-rail i.hit{background:#f87171;border-color:rgba(248,113,113,.6);box-shadow:0 0 10px rgba(239,68,68,.6)}
+    .qec-log{width:100%;max-height:120px;overflow-y:auto;border:1px solid var(--cosmos-border);border-radius:var(--radius-sm);background:rgba(0,0,0,.35);padding:8px 10px;display:flex;flex-direction:column;gap:3px;font:500 10.5px/1.55 var(--font-mono);color:var(--cosmos-text-muted);scrollbar-width:thin}
+    .qec-log:empty::before{content:attr(data-empty);color:var(--cosmos-text-dim)}
+    .qec-log .ok{color:#6ee7b7}
+    .qec-log .bad{color:#fca5a5}
+    .qec-log .warn{color:#fcd34d}
+    .qec-log .info{color:#67e8f9}
+    .qec-stats{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between;width:100%}
+    .qec-fid{display:flex;align-items:center;gap:8px;font:600 10px var(--font-mono);letter-spacing:.04em;color:var(--cosmos-text-muted)}
+    .qec-fid-bar{width:104px;height:7px;border-radius:999px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.1);overflow:hidden}
+    .qec-fid-bar i{display:block;height:100%;width:100%;background:linear-gradient(90deg,#10b981,#6ee7b7);transition:width .35s ease}
+    .qec-fid b{color:#fff;font-size:11px;min-width:36px;text-align:right}
+    .qec-counters{font:600 10px var(--font-mono);color:var(--cosmos-text-dim)}
+    .qec-state{width:100%;min-height:16px;text-align:center;font:600 11px var(--font-mono);color:var(--cosmos-text-muted)}
+    .qec-state.hot{color:#fca5a5}
+    .qec-state.good{color:#6ee7b7}
+    @media(prefers-reduced-motion:reduce){.sb-badge{animation:none}.mv-universe .mv-bar i{transition:none}.dg-galaxy,.dg-galaxy .dg-dot,.dg-balance i{transition:none}.qec-fid-bar i{transition:none}.qec-tile .qec-dot{animation:none}}
 
     /* ===== Scroll Progress ===== */
     .scroll-progress{position:fixed;top:0;left:0;right:0;height:3px;z-index:100;background:rgba(255,255,255,.06);pointer-events:none}
@@ -1409,7 +1440,7 @@
       <div class="container">
         <div class="section-head">
           <h2 id="lab-title"><small>Lab tương tác</small>Chạm để cảm nhận lượng tử</h2>
-          <p>11 thí nghiệm: Superposition, Entanglement, Heisenberg, Tunneling, <b>Black Hole</b>, <b>Schrödinger</b>, <b>Quantum Decision</b>, <b>Double-slit</b> (quan sát đổi kết quả), <b>Schrödinger's Bug</b> (flaky test), <b>Multiverse</b> (A/B) + mới <b>Dark Energy vs Gravity</b> (D = decollaboration · G = scope control). Thử kéo, bấm, đo, thả.</p>
+          <p>12 thí nghiệm: Superposition, Entanglement, Heisenberg, Tunneling, <b>Black Hole</b>, <b>Schrödinger</b>, <b>Quantum Decision</b>, <b>Double-slit</b> (quan sát đổi kết quả), <b>Schrödinger's Bug</b> (flaky test), <b>Multiverse</b> (A/B), <b>Dark Energy vs Gravity</b> (D = decollaboration · G = scope control) + mới nhất <b>Quantum Error Correction</b> (bit-flip → syndrome → 1 fix gốc; sửa test = reward hacking bị chặn; 3 workaround → takeover). Thử kéo, bấm, đo, thả.</p>
           <a href="#integration">→ Áp vào Harness sao?</a>
           <a href="./scale.html" style="margin-left:8px">→ Dashboard entropy</a>
         </div>
@@ -1751,6 +1782,40 @@ test('checkout', async () =&gt; {
               <div class="lab-hint" id="dgHint">Bấm qua lại để thấy vũ trụ giãn (D↑) rồi co (G↑). Số thật: đọc scale.json mỗi lần refresh</div>
             </div>
           </div>
+
+          <!-- Quantum Error Correction — Lab #12 -->
+          <div class="lab-card">
+            <div class="lab-head">
+              <h3><span>⚛️</span> Quantum Error Correction — bit-flip syndrome</h3>
+              <span class="lab-badge">KN-012 · TDD</span>
+            </div>
+            <div class="lab-body">
+              <p><strong>Logical qubit = 3 file vật lý</strong> mã hoá dư thừa cho cùng 1 feature. Bit-flip = bug lọt vào 1 file. <strong>Đo syndrome</strong> (RED test) chỉ đúng <code>file:line</code> — rồi <strong>1 fix gốc</strong> là GREEN, không workaround. Sửa <em>test</em> cho pass = reward hacking → policy chặn; workaround lần 3 → qua <strong>event horizon</strong>, human takeover.</p>
+              <div class="lab-demo">
+                <div class="qec-rack" id="qecRack" role="group" aria-label="Logical qubit — 3 file mã hoá dư thừa"></div>
+                <div class="qec-rail" id="qecRail" aria-hidden="true"><span class="qec-rail-label">syndrome</span></div>
+                <div class="qec-log" id="qecLog" aria-live="polite" data-empty="— chưa đo syndrome —"></div>
+                <div class="qec-stats">
+                  <div class="qec-fid">
+                    <span>logical fidelity</span>
+                    <div class="qec-fid-bar" id="qecFid" role="meter" aria-label="Logical fidelity 100%" aria-valuemin="0" aria-valuemax="100" aria-valuenow="100"><i id="qecFidFill" style="width:100%"></i></div>
+                    <b id="qecFidVal">100%</b>
+                  </div>
+                  <div class="qec-counters" id="qecStats">sửa gốc 0 · chặn 0 · workaround 0</div>
+                </div>
+                <div class="qec-state" id="qecState" aria-live="polite">⚪ Sẵn sàng — chưa có lỗi</div>
+              </div>
+              <div class="lab-controls">
+                <button class="btn btn-primary" id="btnQecInject" type="button">⚛️ Inject bit-flip</button>
+                <button class="btn btn-primary" id="btnQecMeasure" type="button">📡 Đo syndrome</button>
+                <button class="btn btn-primary" id="btnQecFix" type="button">🔧 Fix gốc</button>
+                <button class="btn btn-ghost" id="btnQecTest" type="button">🧪 Sửa test cho pass</button>
+                <button class="btn btn-ghost" id="btnQecWorkaround" type="button">🩹 Workaround</button>
+                <button class="btn btn-ghost" id="btnQecReset" type="button">↺ Reset</button>
+              </div>
+              <div class="lab-hint" id="qecHint">Thật trong repo: <code>tdd-gate</code> (RED→GREEN, không sửa test) · <code>systematic-debugging</code> (root cause) · policy <code>deny-test-mutate</code> · 3-fix limit ⇒ takeover</div>
+            </div>
+          </div>
         </div>
       </div>
     </section>
@@ -1856,22 +1921,24 @@ test('checkout', async () =&gt; {
 
     <div class="section-divider" aria-hidden="true"><svg viewBox="0 0 1120 24" preserveAspectRatio="none"><line x1="0" y1="12" x2="520" y2="12" stroke-width="1"/><circle cx="560" cy="12" r="3" fill="rgba(236,72,153,.5)"/><line x1="600" y1="12" x2="1120" y2="12" stroke-width="1"/></svg></div>
     <!-- Future -->
-    <section class="section reveal" aria-labelledby="future-title">
+    <!-- id="future" BẮT BUỘC: scroll-dot data-target="future" + observer active-dot đều getElementById('future')
+         — thiếu id ⇒ dot cuối chết im lặng và observer bỏ luôn section (bug 2026-09-12) -->
+    <section class="section reveal" id="future" aria-labelledby="future-title">
       <div class="container">
         <div class="section-head">
           <h2 id="future-title"><small>Khai thác tương lai</small>Đề tài này còn đào sâu được gì?</h2>
-          <p>4 hướng cũ đã ship và gỡ khỏi danh sách — còn 6 đề tài mới, đo được, ship dần theo quý. Gõ tên đề tài là YUNIE vào pipeline ngay.</p>
+          <p>7 hướng cũ đã ship và gỡ khỏi danh sách — còn 6 đề tài mới, đo được, ship dần theo quý. Gõ tên đề tài là YUNIE vào pipeline ngay.</p>
         </div>
         <div class="future-grid">
           <div class="future-card">
-            <h4>🕸️ Cosmic Web — Entangle v2</h4>
-            <p><code>entangle.mjs</code> v1 đã có; v2 vẽ <strong>mạng nhện vũ trụ</strong> cho cả repo: <strong>cluster</strong> (cụm file hay đổi cùng nhau → gộp 1 plan), <strong>hub</strong> (≥10 reverse refs → sửa là phải test rộng), <strong>dead filament</strong> (không ai trỏ tới → ứng viên xoá).</p>
-            <span class="eta">→ Q4 2026 · entangle.mjs --graph + scale.json</span>
+            <h4>🌐 Gravitational Lensing — Blast radius 2-hop</h4>
+            <p><code>entangle --graph</code> đã đo <strong>direct refs</strong>; lensing v3 bẻ cong ánh sáng <strong>2 hop</strong>: sửa X → ai ref X → <strong>ai ref người đó</strong> — vẽ blast radius trước khi refactor (pre-flight) kèm test set tối thiểu cần chạy.</p>
+            <span class="eta">→ Q1 2027 · entangle --lens --hops 2</span>
           </div>
           <div class="future-card">
-            <h4>⚫ Hawking Radiation — Bug bay hơi</h4>
-            <p>Lỗ đen không "ăn" thì bay hơi. Draft mở <strong>&gt;30 ngày</strong> tự escalate (nhắc mỗi routine), <strong>&gt;90 ngày</strong> tự đóng kèm ghi chú hoặc chuyển hoá KN. Nợ phân rã theo thời gian thay vì tích tụ tới heat death.</p>
-            <span class="eta">→ Q4 2026 · auto-learn watchdog</span>
+            <h4>🚀 Escape Velocity — Gate xu hướng S</h4>
+            <p><code>scale.json</code> đã lưu <strong>history</strong> mỗi lần đo; escape velocity = <strong>vận tốc thoát nợ</strong>: nếu S tăng liên tiếp N lần đo (ΔS &gt; ngưỡng) → gate <strong>chặn thêm feature</strong>, buộc trả nợ (fix mismatch/draft) trước khi vượt thoát. Khác <code>--budget</code> (chặn theo mức): cái này chặn theo <strong>đà</strong>.</p>
+            <span class="eta">→ Q1 2027 · cosmic-scale.mjs --trend N</span>
           </div>
           <div class="future-card">
             <h4>🌡️ CMB Anisotropy — Bản đồ điểm lạnh</h4>
@@ -1884,9 +1951,9 @@ test('checkout', async () =&gt; {
             <span class="eta">→ Q2 2027 · entangle --changed + verify gate</span>
           </div>
           <div class="future-card">
-            <h4>⚛️ Quantum Error Correction — Lab syndrome</h4>
-            <p>Lab #12: inject lỗi vào feature (bit-flip) → <strong>RED test</strong> phát hiện đúng file:line như đo syndrome; sửa 1 lần là GREEN. Chạm <strong>3-fix limit</strong> → mô phỏng escalate human takeover.</p>
-            <span class="eta">→ Q1 2027 · www/cosmos Lab #12 + tdd-gate</span>
+            <h4>🕰️ Light Echo — Replay quyết định từ audit</h4>
+            <p>Nón ánh sáng chỉ đọc được nếu có <strong>echo</strong>: dựng lại 1 quyết định cũ từ hash-chain (<code>audit.jsonl</code>) — ai · tool · target · rule · lúc nào — rồi đối chiếu với <strong>luật hiện tại</strong>. Kết luận cũ “đúng theo policy cũ” mà nay bị <code>policy-check</code> refuse = <strong>policy drift</strong>, phải review lại.</p>
+            <span class="eta">→ Q2 2027 · audit.mjs replay</span>
           </div>
           <div class="future-card">
             <h4>🌀 Wormhole — Context Teleport</h4>
@@ -3561,6 +3628,127 @@ test('checkout', async () =&gt; {
         const rD=j.darkEnergy?.D, rG=j.gravity?.G;
         if(rD!=null||rG!=null) hint.textContent='Thật (scale.json): D='+(rD??'—')+' · G='+(rG??'—')+' — refresh: npm run cosmos:refresh';
       }).catch(()=>{});
+    })();
+
+    // ===== Quantum Error Correction — bit-flip → syndrome → 1 fix gốc =====
+    // Lab #12: logical qubit = 3 file vật lý; đo syndrome (RED test) định vị file:line;
+    // sửa test cho pass = reward hacking (policy deny-test-mutate, KN-012); 3 workaround → event horizon.
+    (function(){
+      const rack=$('#qecRack'), rail=$('#qecRail'), log=$('#qecLog'), state=$('#qecState');
+      const fidFill=$('#qecFidFill'), fidVal=$('#qecFidVal'), fidMeter=$('#qecFid'), stats=$('#qecStats');
+      const btnInject=$('#btnQecInject'), btnMeasure=$('#btnQecMeasure'), btnFix=$('#btnQecFix');
+      const btnTest=$('#btnQecTest'), btnWork=$('#btnQecWorkaround'), btnReset=$('#btnQecReset');
+      if(!rack || !btnInject) return;
+
+      // 3 file mã hoá cùng 1 logical qubit (feature Giỏ hàng)
+      const FILES=['CartService.cs','CartPricing.cs','CartApi.cs'];
+      // Bảng bit-flip: chỉ rơi vào PRODUCTION code — verifier (test) không bao giờ flip
+      const BUGS=[
+        {file:'CartService.cs', line:42, desc:'off-by-one — bỏ item cuối khi tính tổng', test:'CartService.Tests.cs', tline:87},
+        {file:'CartPricing.cs', line:27, desc:'làm tròn sai — mất 1 đồng mỗi dòng', test:'CartService.Tests.cs', tline:142},
+        {file:'CartApi.cs', line:63, desc:'thiếu null-check — nổ khi giỏ rỗng', test:'CartService.Tests.cs', tline:118}
+      ];
+      const RAIL=8, LIMIT=3;
+      let flipped=null, measured=false, injectCount=0, clean=0, blocked=0, workarounds=0, attempts=0, takeover=false;
+
+      const tiles=FILES.map(f=>{
+        const el=document.createElement('div');
+        el.className='qec-tile'; el.dataset.file=f;
+        el.innerHTML='<span class="qec-dot" aria-hidden="true"></span><b>'+f+'</b><em>ok</em>';
+        rack.appendChild(el); return el;
+      });
+      const railDots=[...Array(RAIL)].map(()=>{ const i=document.createElement('i'); rail.appendChild(i); return i; });
+
+      function push(text, cls){
+        const line=document.createElement('div');
+        line.className=cls||''; line.textContent=text;
+        log.appendChild(line); log.scrollTop=log.scrollHeight;
+        while(log.children.length>40) log.removeChild(log.firstChild);
+      }
+      function fidelity(){ return attempts ? Math.round(clean/attempts*100) : 100; }
+      function setState(text, cls){ state.textContent=text; state.className='qec-state'+(cls?' '+cls:''); }
+      function render(){
+        tiles.forEach(t=>{
+          const bad = !!(flipped && flipped.file===t.dataset.file);
+          t.classList.toggle('flipped', bad);
+          t.querySelector('em').textContent = bad ? 'bit-flip' : 'ok';
+          t.setAttribute('aria-label', t.dataset.file+' — '+(bad?'bit-flip (lỗi)':'ok'));
+        });
+        railDots.forEach((d,i)=>d.classList.toggle('hit', !!(flipped && measured && i<1)));
+        const f=fidelity();
+        fidFill.style.width=f+'%';
+        fidVal.textContent=f+'%';
+        fidMeter.setAttribute('aria-valuenow', String(f));
+        fidMeter.setAttribute('aria-label','Logical fidelity '+f+'%');
+        stats.textContent='sửa gốc '+clean+' · chặn '+blocked+' · workaround '+workarounds;
+        btnInject.disabled=takeover;
+        btnInject.setAttribute('aria-disabled', takeover?'true':'false');
+      }
+
+      btnInject.addEventListener('click', ()=>{
+        if(takeover){ toast('🌑 Đã qua event horizon — Reset để bắt đầu lại'); return; }
+        if(flipped){ toast('⚛️ Đang có 1 bit-flip — đo syndrome trước đã'); return; }
+        flipped=BUGS[injectCount++ % BUGS.length]; measured=false;
+        push('⚛️ bit-flip: '+flipped.file+':'+flipped.line+' — '+flipped.desc,'bad');
+        setState('⚛️ bit-flip — chưa đo syndrome (đừng đoán!)','hot');
+        render(); toast('⚛️ Bit-flip lọt vào '+flipped.file+' — đo syndrome để định vị');
+      });
+
+      btnMeasure.addEventListener('click', ()=>{
+        if(!flipped){
+          push('✅ 0 syndrome — không có lỗi, không bịa syndrome','ok');
+          setState('✅ 0 syndrome — logical qubit ổn định','good'); render(); return;
+        }
+        measured=true;
+        push('📡 FAIL '+flipped.test+':'+flipped.tline+' → syndrome chỉ về '+flipped.file+':'+flipped.line,'info');
+        setState('📡 1 syndrome → '+flipped.file+':'+flipped.line,'');
+        render();
+      });
+
+      btnFix.addEventListener('click', ()=>{
+        if(!flipped){ toast('💡 Không có lỗi để sửa'); return; }
+        if(!measured){
+          push('⚠️ đo syndrome trước — sửa mà không đo là đoán (KN-023)','warn');
+          setState('⚠️ Chưa đo syndrome — không fix','hot'); return;
+        }
+        clean++; attempts++;
+        push('✅ GREEN · 1 syndrome → 1 fix gốc ('+flipped.file+':'+flipped.line+'); đã xoá bit-flip','ok');
+        flipped=null; measured=false;
+        setState('✅ GREEN — logical qubit ổn định · fidelity '+fidelity()+'%','good');
+        render(); toast('✅ GREEN — fix gốc, không workaround');
+      });
+
+      btnTest.addEventListener('click', ()=>{
+        blocked++; attempts++;
+        push('⛔ REFUSED (deny-test-mutate) — sửa test cho pass = CI xanh giả (KN-012)','bad');
+        push('   → verifier bất biến: chỉ actor verify / human takeover mới được sửa test','bad');
+        setState('⛔ Reward hacking bị chặn — lỗi vẫn còn nguyên','hot');
+        render(); toast('⛔ Policy chặn: không sửa test để pass');
+      });
+
+      btnWork.addEventListener('click', ()=>{
+        if(!flipped){ push('💡 Không có lỗi — workaround chỉ tạo nợ thêm','warn'); return; }
+        workarounds++; attempts++;
+        push('🩹 workaround #'+workarounds+' — lỗi còn nguyên, nợ +1','warn');
+        if(workarounds>=LIMIT){
+          takeover=true;
+          push('🌑 Event horizon — 3-fix limit ⇒ human takeover (agent không tự fix loop)','bad');
+          setState('🌑 Human takeover — Reset để mở lại','hot');
+          toast('🌑 Qua event horizon — cần human takeover');
+        } else {
+          setState('🩹 workaround '+workarounds+'/'+LIMIT+' — lỗi chưa chữa','hot');
+        }
+        render();
+      });
+
+      btnReset.addEventListener('click', ()=>{
+        flipped=null; measured=false; injectCount=0; clean=0; blocked=0; workarounds=0; attempts=0; takeover=false;
+        push('↺ Reset — logical qubit mới tinh','info');
+        setState('⚪ Sẵn sàng — chưa có lỗi','');
+        render();
+      });
+
+      render();
     })();
 
     // ===== Copy philosophy =====

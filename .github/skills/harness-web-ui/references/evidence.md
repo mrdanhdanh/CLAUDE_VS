@@ -1,8 +1,8 @@
 # Evidence — harness-web-ui (DisCo arXiv:2609.02749v1 §3.2 (task-agnostic))
 
-> Substrate layer của skill — full text từ docs/knowleged.md. Sinh tự động 2026-09-12T07:15:53.997Z.
+> Substrate layer của skill — full text từ docs/knowleged.md. Sinh tự động 2026-09-12T11:58:31.522Z.
 
-## Bug reports liên quan (15/28 bugs)
+## Bug reports liên quan (16/29 bugs)
 
 - `.agent/bugs/2026-08-29-rainbow-animated/bug.md` — Bug: Rainbow border không xoay (animated)
 - `.agent/bugs/2026-08-29-status-ui/bug.md` — Bug: Trang STATUS www/ giao diện chưa hợp lý — layout, responsive, registry render sai
@@ -16,6 +16,7 @@
 - `.agent/bugs/2026-09-10-observatory-fetch-404-ngoai-www-va-relative-url/bug.md` — Bug: observatory-fetch-404-ngoai-www-va-relative-url
 - `.agent/bugs/2026-09-10-raf-callback-error-khong-bi-try-catch-bat/bug.md` — Bug: raf-callback-error-khong-bi-try-catch-bat
 - `.agent/bugs/2026-09-11-cosmos-page-lech-tai-lieu-no-signaling-born-rule-d/bug.md` — Bug: cosmos page lech tai lieu (no-signaling + born rule + dark energy v2)
+- `.agent/bugs/2026-09-12-cosmos-future-scroll-dot/bug.md` — Bug: Cosmos — scroll-dot "Tương lai" chết (section thiếu `id="future"`)
 - `.agent/bugs/2026-09-12-cosmos-reveal-hover-relative-url/bug.md` — Bug — Cosmos rework: reveal chết ở element > viewport + hover bị reveal đè + `./x` 404 khi URL không slash
 - `.agent/bugs/2026-09-12-status-page-audit/bug.md` — Bug: STATUS page audit — footer link 404 + registry placeholder descriptions + aria-labelledby sai ID
 - `.agent/bugs/2026-09-12-yt-summary-css-global-collision/bug.md` — Bug: YT Summary — CSS toàn cục đè trang mới (bảng bị ẩn/cắt, [hidden] vô hiệu, card nấp dưới header)
@@ -357,6 +358,24 @@
   - Audit page định kỳ gồm 4 invariant: link resolve · data quality · ARIA refs · console errors.
 - **Tags:** `ui` `a11y` `data` `pages` `verify`
 - **Người ghi:** YUNIE / fixbug
+
+---
+
+### KN-046 — Cosmos: scroll-dot "Tương lai" chết (section thiếu `id`) — điều hướng fail-silent
+
+- **Ngày:** 2026-09-12
+- **Bug report:** `.agent/bugs/2026-09-12-cosmos-future-scroll-dot/bug.md`
+- **Severity:** major
+- **Triệu chứng:** Bấm dot cuối cột phải (`aria-label="Tương lai"`) → không nhảy; cuộn hết trang → section cuối không bao giờ được highlight `.active` (9 dot, 8 section). Không pageerror, không console error — control chết hoàn toàn im lặng.
+- **Nguyên nhân gốc:** Section `Khai thác tương lai` được thêm ở commit sau (125ffc5) mà **không kèm `id="future"`**, trong khi nav đã có `<button class="scroll-dot" data-target="future">`. JS xử lý cả 2 chiều đều fail-silent: `const el=getElementById(target); if(el)…` (không el = không làm gì) và `[…ids].map(getElementById).filter(Boolean)` (section thiếu id bị bỏ khỏi observer). Gốc sâu hơn: điều hướng dùng **2 nguồn song song** (`data-target` ở nav ↔ `id` ở DOM) + mảng id hardcode trong JS, và không test nào assert "mọi target resolve" — test cũ chỉ kiểm **nội dung đích** (`.future-card` count, text, ETA) nên 36 test xanh vẫn lọt (KN-037: đo WHETHER, không đo HOW WELL).
+- **Cách sửa:** Thêm `id="future"` + comment nêu lý do (nav + observer đều `getElementById`); invariant mới trong `tests/e2e/cosmos-lab12-qec.spec.ts`: `.scroll-dot` = 9 và `data-target` → element **phải resolve hết** (`missing=[]`), click dot "Tương lai" → `#future` top < 300px (poll). Kèm sync copy nhân dịp ship Lab #12 (11→12 thí nghiệm, STATUS "4 lab" → 12, roadmap QEC → đã ship + Light Echo, slide 15).
+- **Cách phòng tránh:**
+  - Điều hướng `data-target`/`href="#id"` + JS `if (el)` = **fail-silent**: luôn có test invariant "mọi target phải resolve" — test nội dung đích không thay thế được (KN-037).
+  - Nav/observer **derive từ DOM** (`document.querySelectorAll('.scroll-dot')`) thay vì mảng id hardcode — 2 nguồn song song là nguồn drift (KN-038 class).
+  - Checklist khi thêm section mới: `id` + entry nav + observer + anchor test (giống checklist thêm link trong `www/`, KN-045).
+  - Control không làm gì và không báo gì = bug **major**, không phải "nhỏ" — cùng class KN-011 (nút chết sau Random).
+- **Tags:** `ui` `a11y` `nav` `verify` `fail-silent`
+- **Người ghi:** YUNIE / upgrade Lab #12
 
 <!-- Thêm bài học mới theo template dưới — copy block này -->
 

@@ -18,7 +18,8 @@
       "KN-038",
       "KN-040",
       "KN-042",
-      "KN-045"
+      "KN-045",
+      "KN-046"
     ],
     "bugs": [
       ".agent/bugs/2026-08-29-modal-esc/bug.md",
@@ -36,7 +37,8 @@
       ".agent/bugs/2026-09-11-cosmos-page-lech-tai-lieu-no-signaling-born-rule-d/bug.md",
       ".agent/bugs/2026-09-12-cosmos-reveal-hover-relative-url/bug.md",
       ".agent/bugs/2026-09-12-yt-summary-css-global-collision/bug.md",
-      ".agent/bugs/2026-09-12-status-page-audit/bug.md"
+      ".agent/bugs/2026-09-12-status-page-audit/bug.md",
+      ".agent/bugs/2026-09-12-cosmos-future-scroll-dot/bug.md"
     ]
   },
   "capabilities": [
@@ -69,7 +71,9 @@
     "error-handling",
     "docs",
     "physics",
-    "content-drift"
+    "content-drift",
+    "nav",
+    "fail-silent"
   ],
   "evidence": [
     ".agent/bugs/2026-08-29-modal-esc/bug.md",
@@ -87,7 +91,8 @@
     ".agent/bugs/2026-09-11-cosmos-page-lech-tai-lieu-no-signaling-born-rule-d/bug.md",
     ".agent/bugs/2026-09-12-cosmos-reveal-hover-relative-url/bug.md",
     ".agent/bugs/2026-09-12-yt-summary-css-global-collision/bug.md",
-    ".agent/bugs/2026-09-12-status-page-audit/bug.md"
+    ".agent/bugs/2026-09-12-status-page-audit/bug.md",
+    ".agent/bugs/2026-09-12-cosmos-future-scroll-dot/bug.md"
   ],
   "checks": [
     {
@@ -109,6 +114,6 @@
   ],
   "gaps": [],
   "verdict": "G-accepted",
-  "generatedAt": "2026-09-12T07:15:54.011Z",
+  "generatedAt": "2026-09-12T11:58:31.530Z",
   "paper": "DisCo arXiv:2609.02749v1 §3.2 (task-agnostic)"
 }

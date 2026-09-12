@@ -1,0 +1,27 @@
+=== 1) --apply KHONG --sign (agent tu y) ===
+Γ¢ö REFUSED ΓÇö mutation cß║ºn human sign-off (ch╞░a ├íp dß╗Ñng g├¼).
+   L├╜ do: thiß║┐u --sign (ch╞░a c├│ ng╞░ß╗¥i k├╜)
+   Kß║┐ hoß║ích (dry-run ΓÇö human review tr╞░ß╗¢c khi k├╜):
+     [evaporate] 2026-01-01-demo-old ΓÇö 254 ng├áy
+   Human duyß╗çt xong chß║íy lß║íi: watchdog --apply --sign "<t├¬n ng╞░ß╗¥i>"
+Γ¢ö REFUSED (hawking-signoff): thiß║┐u --sign (ch╞░a c├│ ng╞░ß╗¥i k├╜) ΓÇö human chß║íy: watchdog --apply --sign "<t├¬n>"
+exit=2
+=== 2) --sign YUNIE (agent tu ky ten minh) ===
+Γ¢ö REFUSED ΓÇö mutation cß║ºn human sign-off (ch╞░a ├íp dß╗Ñng g├¼).
+   L├╜ do: "YUNIE" l├á danh t├¡nh agent ΓÇö chß╗ë human ─æ╞░ß╗úc k├╜
+   Kß║┐ hoß║ích (dry-run ΓÇö human review tr╞░ß╗¢c khi k├╜):
+     [evaporate] 2026-01-01-demo-old ΓÇö 254 ng├áy
+   Human duyß╗çt xong chß║íy lß║íi: watchdog --apply --sign "<t├¬n ng╞░ß╗¥i>"
+Γ¢ö REFUSED (hawking-signoff): "YUNIE" l├á danh t├¡nh agent ΓÇö chß╗ë human ─æ╞░ß╗úc k├╜ ΓÇö human chß║íy: watchdog --apply --sign "<t├¬n>"
+exit=2
+=== 3) --sign danh (human ky) ===
+≡ƒîæ HAWKING RADIATION ΓÇö nß╗ú bay h╞íi (1 bug)
+   Mß╗ƒ: 1 ┬╖ fresh 0 ┬╖ escalate 0 ┬╖ evaporate 1 ┬╖ ─æ├ú ─æ├│ng 0
+   [evaporate] 2026-01-01-demo-old ΓÇö 254 ng├áy
+
+   ΓëÑ30d: escalate (journal + nhß║»c) ┬╖ ΓëÑ90d: note + Status ΓåÆ evaporated (giß╗» lß╗ïch sß╗¡, gß╗úi ├╜ propose KN)
+   Γ£ì∩╕Å ─æ├ú ├íp dß╗Ñng (signed by danh): [evaporate] 2026-01-01-demo-old ΓÇö 254 ng├áy
+   ─Éo: watchdog [--json] [--out <f>] ┬╖ ├üp dß╗Ñng (cß║ºn human sign-off): watchdog --apply --sign "<t├¬n ng╞░ß╗¥i>" (1 entry mß╗¢i)
+exit=0
+=== journal (ghi signedBy) ===
+{"ts":"2026-09-12T00:00:00.000Z","slug":"2026-01-01-demo-old","ageDays":254,"action":"evaporate","prev":null,"signedBy":"danh"}

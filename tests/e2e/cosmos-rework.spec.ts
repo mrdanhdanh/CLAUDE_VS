@@ -61,9 +61,11 @@ test('#1b reveal — desktop 1280 cũng đủ .reveal + không tràn ngang', asy
   await page.setViewportSize({ width: 1280, height: 900 });
   await prep(page);
   await scrollAll(page);
-  // Poll — dưới tải song song, rAF/IO có thể trễ vài trăm ms; yêu cầu là "không bao giờ kẹt ẩn"
+  // Poll — dưới tải song song, rAF/IO có thể trễ vài trăm ms; yêu cầu là "không bao giờ kẹt ẩn".
+  // Timeout 8s (không phải nới invariant): trang dài thêm ~450px sau khi ship Lab #12 (2026-09-12)
+  // → scrollAll nhiều bước hơn và IO/transitionDelay xếp hàng lâu hơn dưới 6 worker song song.
   await expect
-    .poll(() => page.evaluate(() => document.querySelectorAll('.reveal:not(.in)').length), { timeout: 5000 })
+    .poll(() => page.evaluate(() => document.querySelectorAll('.reveal:not(.in)').length), { timeout: 8000 })
     .toBe(0);
   const overflow = await page.evaluate(() => document.documentElement.scrollWidth - window.innerWidth);
   expect(overflow, 'no horizontal overflow').toBeLessThanOrEqual(1);
@@ -130,7 +132,7 @@ test('#4 lab card — không còn void đáy (lab-body fill card)', async ({ pag
       return Math.round(c.getBoundingClientRect().bottom - body.getBoundingClientRect().bottom);
     })
   );
-  expect(gaps.length).toBe(11);
+  expect(gaps.length).toBe(12); // 11 lab → 12 lab (Lab #12 QEC, 2026-09-12) — count lớn lên theo thiết kế, không nới ngưỡng
   for (const g of gaps) expect(g, 'khoảng trống đáy lab card ≤ 24px').toBeLessThanOrEqual(24);
 });
 

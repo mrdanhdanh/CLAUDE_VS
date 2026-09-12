@@ -214,6 +214,7 @@ user-invocable: "false"
 
 ## Anti-patterns (đừng lặp lại)
 
+- - ❌ Test chỉ assert **nội dung đích** (card/text/count) mà không assert **điều hướng tới đích** — 36 test xanh vẫn lọt dot chết (KN-046 + KN-037).
 - - ❌ Sửa từng failure riêng lẻ mà không aggregate cross-task → model-specific accommodation mù, overfit, degrade generalization (KN-034).
 - - ❌ Bắt chước trace "confidently wrong" khi self-improve/dạy → suppress uncertainty + exploratory behavior; phải học từ flaws có gate (KN-035).
 - - ❌ Trộn reasoning (LLM tự do) với operational correctness trong cùng 1 path → fail lặng; tách skill file NL + deterministic script (KN-036).

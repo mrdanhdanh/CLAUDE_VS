@@ -50,7 +50,7 @@ applyTo: "**"
 - **Entropy ↔ tech debt:** `S = mismatch×10 + drafts×5 + refused×2 + disabled×1 + failed×5`. Đo bằng `node .github/harness/scripts/cosmic-scale.mjs`. S <10 low, <25 medium, ≥25 high → phải bơm năng lượng (audit + polish + generate-status). Gate: `--budget <n>` exit 1 khi vượt ngân sách (Heat Death gate — dùng ở PRD constraint + Verify).
 - **Black Hole ↔ bottleneck:** KN-008 (file lock), KN-015 (Pages env) + dynamic (audit failed, mismatch). Qua event horizon → human takeover, không cố fix loop.
 - **Schrödinger ↔ Heisenbug:** KN-014 — quan sát (import/test) làm đổi kết quả. Lab `cosmos.html` #6 demo.
-- **Entanglement ↔ `entangle.mjs`:** sửa 1 file → liệt kê forward/reverse refs (ai trỏ tới nó) — Verify cả cụm, không chỉ file vừa sửa.
+- **Entanglement ↔ `entangle.mjs`:** sửa 1 file → liệt kê forward/reverse refs (ai trỏ tới nó) — Verify cả cụm, không chỉ file vừa sửa. Toàn repo: `--graph` → Cosmic Web (hub ≥10 refs ⇒ test rộng · cluster co-change ⇒ gộp 1 plan · dead filament ⇒ grep rồi xoá) → `www/cosmos/graph.json` + dashboard `scale.html#web`.
 - Xem dashboard: `www/cosmos/scale.html` (đọc `scale.json`, không sửa tay). Refresh 1 lệnh: `npm run cosmos:refresh`.
 ## Ví dụ
 

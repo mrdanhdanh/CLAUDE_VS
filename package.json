@@ -5,7 +5,8 @@
     "mutation": "node scripts/mutation.mjs",
     "audit:verify": "node .agent/scripts/audit.mjs verify",
     "policy:check": "node .agent/scripts/policy-check.mjs --check",
-    "cosmos:refresh": "node .github/harness/scripts/cosmic-scale.mjs --json --out www/cosmos/scale.json && node .github/harness/scripts/generate-status.mjs",
+    "cosmos:refresh": "node .github/harness/scripts/entangle.mjs --graph --out www/cosmos/graph.json && node .github/harness/scripts/cosmic-scale.mjs --json --out www/cosmos/scale.json && node .github/harness/scripts/auto-learn.mjs watchdog --json --out www/cosmos/hawking.json && node .github/harness/scripts/generate-status.mjs",
+    "hawking": "node .github/harness/scripts/auto-learn.mjs watchdog",
     "cosmos:check": "node .github/harness/scripts/cosmic-scale.mjs --budget 10",
     "entangle": "node .github/harness/scripts/entangle.mjs"
   },

@@ -22,7 +22,7 @@ user-invocable: true
 node .github/harness/scripts/cosmic-scale.mjs
 node .github/harness/scripts/cosmic-scale.mjs --json --out www/cosmos/scale.json
 node .github/harness/scripts/cosmic-scale.mjs --budget 10   # Heat Death gate — exit 1 khi S vượt ngân sách
-npm run cosmos:refresh                                       # refresh scale.json + status.json + mirror audit
+npm run cosmos:refresh                                       # refresh graph.json + scale.json + hawking.json + status.json + mirror audit
 ```
 - Đọc `registry.json` vs filesystem → `mismatch` (drift)
 - Đếm `drafts` (bug mở), `refused`/`failed` (audit 200 events gần nhất), `disabled`
@@ -30,6 +30,7 @@ npm run cosmos:refresh                                       # refresh scale.jso
 - Thang: `low <10` · `medium <25` · `high >=25`
 - Đo kèm: `D = (1 − dissentRatio) × 10` (decollaboration, KN-018) · `G = cutRatio × 10` (scope control — % plans có dòng CẮT/YAGNI) · `M = orphan×2 + disabled×1` (hidden complexity)
 - Trước khi sửa file lớn: `node .github/harness/scripts/entangle.mjs --file <path>` — forward/reverse refs để biết entanglement
+- Cosmic Web (toàn repo): `node .github/harness/scripts/entangle.mjs --graph [--out www/cosmos/graph.json]` — hub (≥10 refs ⇒ sửa là test rộng) · cluster (git co-change ≥3 ⇒ gộp 1 plan) · dead filament (0 ref ⇒ grep rồi xoá)
 
 ### 2. Chẩn đoán (Diagnose)
 - `S low` → vũ trụ ổn định, giữ nhịp audit + generate-status
@@ -41,8 +42,14 @@ npm run cosmos:refresh                                       # refresh scale.jso
 - **Dynamic:** `missing` (registry không có file), `audit failed` (200 events gần nhất)
 - Qua event horizon → không cố fix loop, báo human
 
+### 3b. Hawking Radiation — Nợ bay hơi (`scale.html#hawking`)
+- `node .github/harness/scripts/auto-learn.mjs watchdog` — draft open ≥30d → **escalate** (journal + nhắc) · ≥90d → **evaporate** (note `hawking.md` + `Status → evaporated`, gợi ý propose KN)
+- **Human sign-off:** áp dụng phải chạy `watchdog --apply --sign "<tên người>"` — thiếu sign / sign bằng danh tính agent (YUNIE/agent/bot/copilot/verify/ci…) → **REFUSED exit 2** + dry-run, không ghi gì. Journal ghi `signedBy`.
+- Journal `.agent/hawking.jsonl` append-only, idempotent (chỉ ghi khi action đổi) · mirror `www/cosmos/hawking.json`
+- Entropy S tự giảm vì chỉ đếm `Status: open` — nợ phân rã thay vì tích tụ tới heat death
+
 ### 4. Dashboard
-- `www/cosmos/scale.html` đọc `scale.json` (không sửa tay) — gauge entropy, list black holes, dark-matter map
+- `www/cosmos/scale.html` đọc `scale.json` + `graph.json` (không sửa tay) — gauge entropy, list black holes, dark-matter map, **Cosmic Web** (hub/cluster/dead filament)
 - `www/cosmos/index.html` Lab #5 (Black Hole) + #6 (Schrödinger) demo trực quan
 
 ## Integration với Harness v2
@@ -52,8 +59,8 @@ npm run cosmos:refresh                                       # refresh scale.jso
 
 ## References
 - `.github/harness/scripts/cosmic-scale.mjs` — đo S/D/G/M + `--budget` gate (Node 18+, 0 deps)
-- `.github/harness/scripts/entangle.mjs` — entanglement graph (forward/reverse refs)
-- `www/cosmos/scale.html` — dashboard (đọc `scale.json`)
+- `.github/harness/scripts/entangle.mjs` — entanglement graph: `--file` (forward/reverse refs) · `--graph` (Cosmic Web: hub/cluster/dead filament → graph.json)
+- `www/cosmos/scale.html` — dashboard (đọc `scale.json` + `graph.json` + `hawking.json`)
 - `www/cosmos/index.html` — Lab Black Hole + Schrödinger + Dark Energy vs Gravity
 - `.github/skills/cosmic-quantum/SKILL.md` — triết lý 2 tầng + System Map 15
 - `.github/instructions/cosmic-quantum.instructions.md` — rule 7 System Map + 8 New Theory

@@ -769,6 +769,138 @@ async function showHistory(json=false) {
   console.log(`\n💡 Loop: record → report → propose → evaluate → commit → versions`);
 }
 
+// ---------- Hawking Radiation — nợ bay hơi (roadmap card, 2026-09-12) ----------
+// Lỗ đen không "ăn" thì bay hơi: draft mở già đi theo thời gian thay vì tích tụ tới heat death.
+// ≥30d → escalate (journal + nhắc) · ≥90d → evaporate (note + Status, gợi ý chuyển hoá KN).
+// Journal append-only, idempotent: chỉ ghi khi action ĐỔI.
+const HAWKING_DEFAULT = { escalateDays: 30, evaporateDays: 90 };
+// Human sign-off gate (siết 2026-09-12, user duyệt): tách intent/execution —
+// agent chỉ ĐỀ XUẤT, mutation bug.md phải có người ký; danh tính agent không tự ký được.
+const AGENT_SIGNER_EXACT = /^(agent|bot|auto|automation|ai|system|ci|cd|yunie|verify|implement|critic|planner|designer|polish|explore|learn|copilot|github[-_ ]?copilot)$/i;
+const AGENT_SIGNER_CONTAINS = /(^|[-_\s])(agent|bot|auto|copilot|yunie|verify|ci)([-_\s]|$)/i;
+function validateSigner(raw) {
+  const signer = typeof raw === 'string' ? raw.trim() : '';
+  if (!signer || signer === 'true') return { ok: false, reason: 'thiếu --sign (chưa có người ký)' };
+  if (AGENT_SIGNER_EXACT.test(signer) || AGENT_SIGNER_CONTAINS.test(signer)) {
+    return { ok: false, reason: `"${signer}" là danh tính agent — chỉ human được ký` };
+  }
+  return { ok: true, signer };
+}
+
+function ageDaysFromSlug(slug, fallbackMs, nowMs) {
+  const m = /^(\d{4})-(\d{2})-(\d{2})-/.exec(slug);
+  const base = m ? Date.UTC(Number(m[1]), Number(m[2]) - 1, Number(m[3])) : fallbackMs;
+  return Math.max(0, Math.floor((nowMs - base) / 86400000));
+}
+
+async function watchdog(opts = {}) {
+  const asJson = !!opts.json;
+  const apply = !!opts.apply;
+  const dir = opts.dir ? path.resolve(ROOT, opts.dir) : BUGS_DIR;
+  const journal = opts.journal ? path.resolve(ROOT, opts.journal) : path.join(dir, 'hawking.jsonl');
+  const nowMs = opts.now ? new Date(opts.now).getTime() : Date.now();
+  if (Number.isNaN(nowMs)) throw new Error('--now không hợp lệ: ' + opts.now);
+  const escalateDays = Number(opts['escalate-days'] ?? HAWKING_DEFAULT.escalateDays);
+  const evaporateDays = Number(opts['evaporate-days'] ?? HAWKING_DEFAULT.evaporateDays);
+  const outPath = opts.out ? path.resolve(ROOT, opts.out) : null;
+
+  const bugs = [];
+  let closed = 0;
+  let entries = [];
+  try {
+    const dirs = (await fs.readdir(dir, { withFileTypes: true })).filter((e) => e.isDirectory() && e.name !== '_template').map((e) => e.name);
+    for (const slug of dirs) {
+      const bugFile = path.join(dir, slug, 'bug.md');
+      let text = '';
+      let mtime = nowMs;
+      try {
+        text = await fs.readFile(bugFile, 'utf8');
+        mtime = (await fs.stat(bugFile)).mtimeMs;
+      } catch { continue; }
+      const isOpen = /-\s*\*\*Status:\*\*\s*`?open`?/i.test(text);
+      if (!isOpen) { closed++; continue; }
+      const ageDays = ageDaysFromSlug(slug, mtime, nowMs);
+      const action = ageDays >= evaporateDays ? 'evaporate' : ageDays >= escalateDays ? 'escalate' : 'fresh';
+      bugs.push({ slug, date: /^\d{4}-\d{2}-\d{2}/.test(slug) ? slug.slice(0, 10) : null, ageDays, status: 'open', action });
+    }
+  } catch {}
+  bugs.sort((a, b) => b.ageDays - a.ageDays || a.slug.localeCompare(b.slug));
+
+  const counts = {
+    bugsTotal: bugs.length + closed,
+    open: bugs.length,
+    fresh: bugs.filter((b) => b.action === 'fresh').length,
+    escalate: bugs.filter((b) => b.action === 'escalate').length,
+    evaporate: bugs.filter((b) => b.action === 'evaporate').length,
+    closed,
+  };
+  const result = {
+    generatedAt: new Date(nowMs).toISOString(),
+    generatedBy: 'auto-learn.mjs watchdog',
+    policy: { escalateDays, evaporateDays },
+    counts,
+    bugs,
+  };
+
+  if (apply) {
+    // GATE: mutation bắt buộc human sign-off — thiếu/agent ký → REFUSED + dry-run, không ghi gì (fail-closed)
+    const sig = validateSigner(opts.sign);
+    if (!sig.ok) {
+      const planned = bugs.filter((b) => b.action !== 'fresh');
+      console.log('⛔ REFUSED — mutation cần human sign-off (chưa áp dụng gì).');
+      console.log('   Lý do: ' + sig.reason);
+      console.log('   Kế hoạch (dry-run — human review trước khi ký):');
+      if (!planned.length) console.log('     (không có action nào cần áp dụng)');
+      for (const b of planned) console.log('     [' + b.action + '] ' + b.slug + ' — ' + b.ageDays + ' ngày');
+      console.log('   Human duyệt xong chạy lại: watchdog --apply --sign "<tên người>"');
+      console.error('⛔ REFUSED (hawking-signoff): ' + sig.reason + ' — human chạy: watchdog --apply --sign "<tên>"');
+      process.exit(2);
+    }
+    // journal cũ → entry cuối cùng per slug (idempotent: chỉ ghi khi action đổi)
+    const lastBySlug = new Map();
+    try {
+      const raw = await fs.readFile(journal, 'utf8');
+      for (const line of raw.trim().split('\n').filter(Boolean)) {
+        try { const e = JSON.parse(line); lastBySlug.set(e.slug, e); } catch {}
+      }
+    } catch {}
+    for (const b of bugs) {
+      if (b.action === 'fresh') continue;
+      const prev = lastBySlug.get(b.slug);
+      if (prev && prev.action === b.action) continue; // không lặp
+      const entry = { ts: result.generatedAt, slug: b.slug, ageDays: b.ageDays, action: b.action, prev: prev ? prev.action : null, signedBy: sig.signer };
+      await fs.mkdir(path.dirname(journal), { recursive: true });
+      await fs.appendFile(journal, JSON.stringify(entry) + '\n', 'utf8');
+      entries.push(entry);
+      if (b.action === 'evaporate') {
+        const bugDir = path.join(dir, b.slug);
+        const bugFile2 = path.join(bugDir, 'bug.md');
+        const dateStr = result.generatedAt.slice(0, 10);
+        await fs.appendFile(path.join(bugDir, 'hawking.md'),
+          `\n## 🌑 Hawking Radiation — ${dateStr}\n\nDraft mở **${b.ageDays} ngày** (ngưỡng ${evaporateDays}d) → bay hơi. Status: open → evaporated.\n\n> Lịch sử giữ nguyên. Chuyển hoá kiến thức: \`node .github/harness/scripts/auto-learn.mjs propose --bug ${b.slug}\`\n`, 'utf8');
+        const text = await fs.readFile(bugFile2, 'utf8');
+        const updated = text.replace(/-\s*\*\*Status:\*\*\s*`?open`?/i, '- **Status:** `evaporated`');
+        if (updated !== text) await fs.writeFile(bugFile2, updated, 'utf8');
+      }
+    }
+  }
+
+  if (outPath) {
+    await fs.mkdir(path.dirname(outPath), { recursive: true });
+    await fs.writeFile(outPath, JSON.stringify(result, null, 2) + '\n', 'utf8');
+  }
+  if (asJson || outPath) { console.log(JSON.stringify(result, null, 2)); if (!asJson) return; return; }
+
+  console.log('🌑 HAWKING RADIATION — nợ bay hơi (' + counts.bugsTotal + ' bug)');
+  console.log('   Mở: ' + counts.open + ' · fresh ' + counts.fresh + ' · escalate ' + counts.escalate + ' · evaporate ' + counts.evaporate + ' · đã đóng ' + counts.closed);
+  if (!counts.open) console.log('   ✅ không có draft quá hạn — lỗ đen sạch');
+  else for (const b of bugs) console.log('   [' + b.action + '] ' + b.slug + ' — ' + b.ageDays + ' ngày');
+  console.log('');
+  console.log('   ≥' + escalateDays + 'd: escalate (journal + nhắc) · ≥' + evaporateDays + 'd: note + Status → evaporated (giữ lịch sử, gợi ý propose KN)');
+  for (const e of entries) console.log('   ✍️ đã áp dụng (signed by ' + e.signedBy + '): [' + e.action + '] ' + e.slug + ' — ' + e.ageDays + ' ngày');
+  console.log('   Đo: watchdog [--json] [--out <f>] · Áp dụng (cần human sign-off): watchdog --apply --sign "<tên người>"' + (entries.length ? ' (' + entries.length + ' entry mới)' : ''));
+}
+
 async function status(json=false) {
   const { kns } = await parseKNs();
   let bugs = [];
@@ -817,6 +949,8 @@ async function status(json=false) {
   console.log(`   evaluate --bug <slug> → kiểm tra trước khi commit (Grow gate)`);
   console.log(`   commit --bug <slug> → evaluate PASS mới ghi knowleged.md + snapshot (Commit)`);
   console.log(`   history / versions → xem loop Serve→Commit`);
+  console.log(`   watchdog [--apply] → Hawking: draft ≥30d escalate · ≥90d evaporate (note + Status, giữ lịch sử)`);
+  console.log(`   watchdog --apply --sign "<tên người>" → mutation BẮT BUỘC human sign-off (agent tự ký = refused, exit 2)`);
 }
 
 // ---------- CLI ----------
@@ -864,6 +998,7 @@ Usage:
   node .github/harness/scripts/auto-learn.mjs propose --bug <slug> [--json]  (alias: get --bug <slug>)
   node .github/harness/scripts/auto-learn.mjs attest --kn KN-003 --result pass|fail [--score 0..1] [--note "..."]  (Engram-lite Wilson)
   node .github/harness/scripts/auto-learn.mjs status [--json]
+  node .github/harness/scripts/auto-learn.mjs watchdog [--json] [--out <file>] [--dir <bugsDir>] [--now ISO] [--apply --sign "<tên người>"]  (Hawking — nợ bay hơi)
   # Reef-lite (Serve → Observe → Grow → Commit):
   node .github/harness/scripts/auto-learn.mjs record --prompt "mô tả" [--scenario name] [--response "..."] [--json]
   node .github/harness/scripts/auto-learn.mjs report --score 0..1 --feedback "ok" --references <id> [--bug <slug>] [--scenario name] [--json]
@@ -911,6 +1046,8 @@ Flow tự động:
       await attest(opts, !!opts.json);
     } else if (cmd==='status') {
       await status(!!opts.json);
+    } else if (cmd==='watchdog') {
+      await watchdog(opts);
     } else if (cmd==='record') {
       await recordInteraction(opts, !!opts.json);
     } else if (cmd==='report') {

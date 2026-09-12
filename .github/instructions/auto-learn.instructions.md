@@ -48,12 +48,23 @@ node .github/harness/scripts/auto-learn.mjs status
 # → KN: 6, Bugs: 5, Drafts: 0, top tags: ui(5), a11y(4)...
 ```
 
+### 5. Hawking — nợ bay hơi (draft tự phân rã + human sign-off)
+```bash
+node .github/harness/scripts/auto-learn.mjs watchdog            # báo cáo: fresh / escalate (≥30d) / evaporate (≥90d)
+node .github/harness/scripts/auto-learn.mjs watchdog --json --out www/cosmos/hawking.json
+node .github/harness/scripts/auto-learn.mjs watchdog --apply --sign "<tên người>"   # CHỈ human ký mới áp dụng
+```
+- **≥30d escalate:** journal append-only (idempotent — chỉ ghi khi action ĐỔI) + nhắc mỗi routine (routine tuần 914206).
+- **≥90d evaporate:** note `hawking.md` (giữ lịch sử, gợi ý `propose --bug` để chuyển hoá KN) + đổi đúng 1 dòng `Status: open` → `evaporated`; entropy S tự rớt (chỉ đếm `open`).
+- **Human sign-off gate (siết 2026-09-12):** mutation bắt buộc `--apply --sign "<tên người>"` — thiếu sign hoặc sign bằng danh tính agent (YUNIE/agent/bot/copilot/verify/ci…) → **REFUSED exit 2** + in dry-run plan, **không ghi gì** (fail-closed). Agent chỉ ĐỀ XUẤT; người ký được ghi vào journal (`signedBy`). Tách intent/execution — trust ở policy layer observable, không ở stochastic process.
+
 ## Checklist cho agent (tự kiểm trước khi code)
 - [ ] Đã `suggest "<từ khóa task>"` và scan KN liên quan?
 - [ ] Nếu có KN liên quan → đã áp dụng **Cách phòng tránh**?
 - [ ] Nếu gặp lỗi → đã `log --error` tạo bug draft?
 - [ ] Sau khi fix → đã `propose --bug` và đề xuất cập nhật `knowleged.md`?
 - [ ] Đã `status` để kiểm tra health?
+- [ ] Draft cũ ≥30d → đã `watchdog` escalate chưa? ≥90d → human chạy `watchdog --apply --sign "<tên>"` (note + Status, không xoá lịch sử)? (Hawking)
 
 ## Ví dụ
 ```bash
@@ -71,9 +82,9 @@ node .github/harness/scripts/auto-learn.mjs propose --bug 2026-08-30-mat-dau-tie
 ## Liên kết
 - Script: `.github/harness/scripts/auto-learn.mjs` (Node 18+, no deps, <50ms)
 - Knowledge: `docs/knowleged.md` (6 KN hiện tại)
-- Bugs: `.agent/bugs/<slug>/bug.md` + `_template/bug.md`
+- Bugs: `.agent/bugs/<slug>/bug.md` + `_template/bug.md` · Hawking journal: `.agent/hawking.jsonl` + `hawking.md`
 - Agent: `learn` (delegate khi cần suggest/log/propose)
-- Status: `node auto-learn.mjs status --json` cho YUNIE/www
+- Status: `node auto-learn.mjs status --json` cho YUNIE/www · Hawking mirror: `www/cosmos/hawking.json` (dashboard `scale.html#hawking`)
 
 ---
 *Instruction: auto-learn — enforce bởi Harness v2. Không disable nếu chưa có thay thế. Wise loading: applyTo ** nên luôn load khi code/fix.*

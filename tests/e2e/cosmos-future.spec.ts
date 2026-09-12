@@ -4,6 +4,7 @@ import { test, expect } from '@playwright/test';
  * Future Roads — section "Khai thác tương lai" chỉ chứa đề tài CHƯA làm:
  * - gỡ toàn bộ card ✅ Done (đã ship) để danh sách giữ tính "tương lai"
  * - còn ≥6 đề tài mới, mỗi đề tài có ETA
+ * - 2026-09-12: QEC shipped (Lab #12) → Light Echo; Cosmic Web shipped → Gravitational Lensing; Hawking shipped (watchdog) → Escape Velocity; section có id="future" (fix scroll-dot chết)
  * Evidence → .agent/plans/cosmos-future-roads/verify/
  */
 
@@ -25,12 +26,18 @@ test('future section — 6 đề tài mới, không còn card Done', async ({ pa
   await expect(section).not.toContainText('✅ Done');
 
   // đề tài mới phải xuất hiện
-  await expect(section).toContainText('Cosmic Web');
-  await expect(section).toContainText('Hawking');
+  await expect(section).toContainText('Escape Velocity');
   await expect(section).toContainText('CMB');
   await expect(section).toContainText('LIGO');
-  await expect(section).toContainText('Quantum Error Correction');
+  await expect(section).toContainText('Light Echo');
   await expect(section).toContainText('Wormhole');
+  await expect(section).toContainText('Gravitational Lensing');
+  // Hawking đã ship (watchdog nợ bay hơi, 2026-09-12) → rời danh sách "chưa làm"
+  await expect(section).not.toContainText('Hawking');
+  // Cosmic Web đã ship (entangle --graph, 2026-09-12) → rời danh sách "chưa làm"
+  await expect(section).not.toContainText('Cosmic Web');
+  // QEC đã ship thành Lab #12 (2026-09-12) → rời danh sách "chưa làm"
+  await expect(section).not.toContainText('Quantum Error Correction');
   // mỗi card có ETA
   await expect(section.locator('.future-card .eta')).toHaveCount(6);
 

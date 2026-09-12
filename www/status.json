@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-12T07:16:42.636Z",
+  "generatedAt": "2026-09-12T12:17:05.530Z",
   "generatedBy": "YUNIE",
   "version": 1,
   "counts": {
@@ -284,9 +284,12 @@
     "archify-demo",
     "auto-learn",
     "cosmic-scale-dark-matter",
+    "cosmos-cosmic-web",
     "cosmos-freshness-upgrade",
     "cosmos-future-roads",
+    "cosmos-hawking",
     "cosmos-intro",
+    "cosmos-lab12-qec",
     "cosmos-macro-expansion",
     "cosmos-observatory",
     "cosmos-p0-upgrade",
@@ -340,7 +343,8 @@
     "web-thuat-toan",
     "web-thuat-toan-v2",
     "yt-summary",
-    "yunie-chat"
+    "yunie-chat",
+    "yunie-turn-taking"
   ],
   "demos": [
     {
@@ -422,7 +426,7 @@
   "health": {
     "errors": 0,
     "status": "ok",
-    "lastCheck": "2026-09-12T07:16:42.636Z",
+    "lastCheck": "2026-09-12T12:17:05.530Z",
     "checks": [
       "get_errors: pass (0 errors)",
       "registry: 18 instructions (18 total) - 19 skills - 9 agents - 7 prompts - 1 hook — all enabled",
@@ -433,9 +437,9 @@
       "www: polished — responsive 375/768/1280, a11y, states, animation 150-300ms",
       "workflow: www/** -> Pages (upload-artifact path: www) — exists: true + eval job gate",
       "library: www/library/ MCP v1.2.0 (5 tools: search + iterative + list/get/status, router+cache, redacted) + library-rag instruction",
-      "auto-learn: 45 KN, 28 bugs, 0 drafts — suggest/log/propose/status (<50ms, IDF, tiếng Việt)",
-      "governance: audit 47 (Ed25519 receipt P0-4) · policy 9 deny/2 allow (ok) · credentials 0 keys plain",
-      "platform: agents 3 (3 built-in, 0 remote) · mcp 3 vendors/3 grants (library 1.2.0 read-only) · components 3/3 pub · routines 2/2 enabled",
+      "auto-learn: 46 KN, 29 bugs, 0 drafts — suggest/log/propose/status (<50ms, IDF, tiếng Việt)",
+      "governance: audit 64 (Ed25519 receipt P0-4) · policy 9 deny/2 allow (ok) · credentials 0 keys plain",
+      "platform: agents 3 (3 built-in, 0 remote) · mcp 3 vendors/3 grants (library 1.2.0 read-only) · components 3/3 pub · routines 3/3 enabled",
       "collaboration: KN-018 — dissentGate ✅ · whoDidYouThinkWith ✅ · critic ✅ · fund-the-friction ✅ (ok)",
       "n5-blazor: www/n5-blazor/ 7 trang static + app.css + data.js + site.js — 100% Pages"
     ]
@@ -654,101 +658,101 @@
     }
   },
   "learn": {
-    "knTotal": 45,
-    "bugsTotal": 28,
+    "knTotal": 46,
+    "bugsTotal": 29,
     "drafts": 0
   },
   "governance": {
     "audit": {
-      "total": 47,
-      "permitted": 46,
-      "refused": 0,
+      "total": 64,
+      "permitted": 62,
+      "refused": 1,
       "failed": 1,
-      "lastTs": "2026-09-12T06:01:46.498Z",
+      "lastTs": "2026-09-12T12:11:01.084Z",
       "tail": [
         {
-          "ts": "2026-09-12T04:49:06.525Z",
-          "actor": "YUNIE",
+          "ts": "2026-09-12T12:00:06.232Z",
+          "actor": "verify",
           "tool": "shell",
-          "target": "npx playwright test (light theme, 70/70)",
+          "target": "npm run cosmos:refresh + npx playwright test (full suite 86/86)",
           "decision": "permitted",
           "rule": "allow-all",
           "durationMs": null,
           "error": null,
           "intent": null,
-          "requestId": "3c1433",
-          "prevHash": "4d6d93a9fe3e3afa",
+          "requestId": "6137f8",
+          "prevHash": "26bf67c4a0e6d2d0",
           "policyDigest": "162346288ec03771",
-          "hash": "0988f04ceb60d4e8",
-          "sig": "MM6I9A6hiy195PgQunADbxuYc_DluzWXZ1qUi0zqNl-CYEVKKkp3GlgWuDL-FSJ7ATd6oEUgUuFaC2iKN9dEDA",
+          "hash": "925c92ab528759bb",
+          "sig": "m-V-cEqxg8kD18DafOPmQ2H_sHrgaVnGQl-p2VhIJqW0A4RMfQjOESThPNaxqUcdGKcGfaPBcO31Zykxsuo3AQ",
           "pub": "MCowBQYDK2VwAyEAY8PlU0KjXp4HJUUlNlVZdaXHUmDagUMm8rUrEShTPXo"
         },
         {
-          "ts": "2026-09-12T05:50:05.873Z",
+          "ts": "2026-09-12T12:11:00.580Z",
           "actor": "YUNIE",
-          "tool": "file",
-          "target": "content review 7 bai (lessons.js v1.1.0 + slides.js + index.html)",
+          "tool": "edit",
+          "target": "auto-learn.mjs watchdog (Hawking: 30d escalate / 90d evaporate, journal append-only idempotent, mutation opt-in --apply) + package.json hawking alias",
           "decision": "permitted",
           "rule": "allow-all",
           "durationMs": null,
           "error": null,
           "intent": null,
-          "requestId": "eec56e",
-          "prevHash": "0988f04ceb60d4e8",
+          "requestId": "683fe3",
+          "prevHash": "925c92ab528759bb",
           "policyDigest": "162346288ec03771",
-          "hash": "e3559b7e06f713f7",
-          "sig": "ptopDbs6EFTaPZm_ZY-tCXZylTB3hUp3g-21bUzzSimwYMarKtC7bl7LreKX_qaF7sJVpqmvn8uVB3AztkSZDQ",
+          "hash": "7ddd31b0d09708e2",
+          "sig": "hWqCUMHGbxnkyH5hNabC4rmXjEFcTDxK3wCMBGfz3O5g_X44NZeBvuYRRIj-HRUxddwrbSqUJc41vQHQFcoACw",
           "pub": "MCowBQYDK2VwAyEAY8PlU0KjXp4HJUUlNlVZdaXHUmDagUMm8rUrEShTPXo"
         },
         {
-          "ts": "2026-09-12T05:50:05.986Z",
-          "actor": "YUNIE",
-          "tool": "shell",
-          "target": "npx playwright test (content fix, 70/70)",
+          "ts": "2026-09-12T12:11:00.716Z",
+          "actor": "verify",
+          "tool": "write",
+          "target": "tests/e2e/cosmos-hawking.spec.ts (5 lock tests: fixture age sort, apply idempotent, boundary 30/90, UI render, 375)",
           "decision": "permitted",
           "rule": "allow-all",
           "durationMs": null,
           "error": null,
           "intent": null,
-          "requestId": "017673",
-          "prevHash": "e3559b7e06f713f7",
+          "requestId": "ce8380",
+          "prevHash": "7ddd31b0d09708e2",
           "policyDigest": "162346288ec03771",
-          "hash": "50a17d8a6a932059",
-          "sig": "GZq_eNriI-MagUWOppyp8SXMIY8XMd0y2t3uvUCN5VXnbuGKYkSWnDfWIGL2SS3oBp-0zTiuU0tdCZw777T2Dw",
+          "hash": "e94cf87f01dab06d",
+          "sig": "ofGaKdgsyvRQubnmXUfR10QH9BSMYE_VPxmTwY9gRhvYyojD4Os0WQ_YTsjsWImpo49i7VABox7CKnPBaMtoAw",
           "pub": "MCowBQYDK2VwAyEAY8PlU0KjXp4HJUUlNlVZdaXHUmDagUMm8rUrEShTPXo"
         },
         {
-          "ts": "2026-09-12T05:53:06.938Z",
-          "actor": "YUNIE",
-          "tool": "shell",
-          "target": "git push origin main (9049534 agentic-academy)",
+          "ts": "2026-09-12T12:11:00.899Z",
+          "actor": "verify",
+          "tool": "edit",
+          "target": "tests/e2e/cosmos-future.spec.ts + cosmos-slides.spec.ts (Hawking shipped -> Escape Velocity)",
           "decision": "permitted",
           "rule": "allow-all",
           "durationMs": null,
           "error": null,
           "intent": null,
-          "requestId": "d4f4ac",
-          "prevHash": "50a17d8a6a932059",
+          "requestId": "4df28a",
+          "prevHash": "e94cf87f01dab06d",
           "policyDigest": "162346288ec03771",
-          "hash": "b0d3e217cf917462",
-          "sig": "Wgvj8QFwP5LuW-TtW2_dhdklu1gtde4uv2b96UxA9ct-d-HiSx45rGXrjT2D7gl0231zfnJppeRu8Vi4mlU2BA",
+          "hash": "4081ce7061458409",
+          "sig": "UL87-OP3w6pDuDdc5G9TOcTuOIpacVaGrRBfxFoySJ9L_BOounZUfsejp5fYtu3K_C6Kailkprdz7IpKLyMZDA",
           "pub": "MCowBQYDK2VwAyEAY8PlU0KjXp4HJUUlNlVZdaXHUmDagUMm8rUrEShTPXo"
         },
         {
-          "ts": "2026-09-12T06:01:46.498Z",
-          "actor": "YUNIE",
+          "ts": "2026-09-12T12:11:01.084Z",
+          "actor": "verify",
           "tool": "shell",
-          "target": "git push KN-043",
+          "target": "routine.mjs add 914206 (Hawking weekly) + npm run cosmos:refresh + npx playwright test (91/91)",
           "decision": "permitted",
           "rule": "allow-all",
           "durationMs": null,
           "error": null,
           "intent": null,
-          "requestId": "e1b180",
-          "prevHash": "b0d3e217cf917462",
+          "requestId": "0c841f",
+          "prevHash": "4081ce7061458409",
           "policyDigest": "162346288ec03771",
-          "hash": "fdd8d9776284a102",
-          "sig": "vFzzP-pqpEUIVhfyHHtDmbxxjkuY1zDunKbT4Y9YZCZlveQzB_WbiLISuIvNoR6ml2tN110lGRNTW6jedxqTDA",
+          "hash": "0fc7417eb865619c",
+          "sig": "ksOBOU0mzPlV9UwQ883oWpcNRjG4Yb3gGkusR2B3yjw2PFOlclX4O0NnGcXEYgrukMpzanVastLz4gjPCpq6Bw",
           "pub": "MCowBQYDK2VwAyEAY8PlU0KjXp4HJUUlNlVZdaXHUmDagUMm8rUrEShTPXo"
         }
       ]
@@ -758,7 +762,7 @@
       "deny": 9,
       "allow": 2,
       "status": "ok",
-      "lastCheck": "2026-09-12T07:16:42.477Z"
+      "lastCheck": "2026-09-12T12:17:05.367Z"
     },
     "credentials": {
       "count": 0,
@@ -815,18 +819,18 @@
       "published": 3
     },
     "routines": {
-      "total": 2,
-      "enabled": 2
+      "total": 3,
+      "enabled": 3
     }
   },
   "cosmos": {
     "available": true,
-    "S": 0,
+    "S": 7,
     "level": "low",
-    "D": 8,
-    "G": 3,
+    "D": 7,
+    "G": 4,
     "M": 0,
-    "generatedAt": "2026-09-11T23:04:30.132Z",
-    "points": 10
+    "generatedAt": "2026-09-12T12:17:05.091Z",
+    "points": 15
   }
 }

@@ -55,6 +55,8 @@
     .hero p strong{color:var(--cosmos-text);font-weight:600}
     .hero-actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:18px} .hero-actions .btn{padding:10px 18px;font-size:13px}
     .section{padding:28px 0}
+    /* Anchor không bị sticky header che khi bấm section-nav/footer link (KN-040 #5 class) */
+    section[id]{scroll-margin-top:80px}
     .section-head{display:flex;flex-wrap:wrap;align-items:end;justify-content:space-between;gap:12px;margin-bottom:18px}
     .section-head h2{margin:0;font:800 20px/1.2 var(--font-display);letter-spacing:-.02em;color:#fff}
     .section-head h2 small{display:block;font:500 11px var(--font-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--cosmos-text-dim);margin-bottom:6px}
@@ -104,6 +106,10 @@
     .bh-info span{font:400 12px var(--font-sans);color:var(--cosmos-text-muted)}
     .bh-info code{display:block;margin-top:6px;font:500 11px var(--font-mono);color:#c4b5fd;background:rgba(124,58,237,.1);border:1px solid rgba(124,58,237,.15);padding:6px 8px;border-radius:8px;word-break:break-all}
     .meta-grid{display:grid;gap:12px} @media(min-width:768px){.meta-grid{grid-template-columns:repeat(3,1fr)}}
+    /* Cosmic Web — chips file cho cluster/dead (namespace .web-*, tránh trùng class toàn cục KN-042) */
+    .web-chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+    .web-chip{font:600 10px var(--font-mono);color:#c4b5fd;background:rgba(124,58,237,.1);border:1px solid rgba(124,58,237,.18);padding:4px 7px;border-radius:8px;word-break:break-all;max-width:100%}
+    .web-empty{font:400 12px var(--font-sans);color:var(--cosmos-text-muted);padding:10px 0}
     .meta-card{background:rgba(255,255,255,.04);border:1px solid var(--cosmos-border);border-radius:12px;padding:16px;text-align:center}
     .meta-card b{display:block;font:800 22px var(--font-display);color:#fff}
     .meta-card span{font:500 11px var(--font-mono);letter-spacing:.06em;text-transform:uppercase;color:var(--cosmos-text-muted)}
@@ -243,6 +249,62 @@
           <canvas id="timelineChart" width="1040" height="240" style="width:100%;height:auto" role="img" aria-label="Biểu đồ entropy S, dark matter M và gravity G theo thời gian"></canvas>
           <p style="margin-top:12px;font:400 11px var(--font-mono);color:var(--cosmos-text-dim)">Mỗi lần chạy <code>cosmic-scale.mjs --out</code> ghi 1 điểm. Tối đa 30 điểm gần nhất. Vạch ngang: ngưỡng medium (10) / high (25).</p>
         </div>
+      </div>
+    </section>
+
+    <section class="section" id="web" aria-labelledby="web-title">
+      <div class="container">
+        <div class="section-head">
+          <h2 id="web-title"><small>Cosmic Web</small>🕸️ Mạng nhện vũ trụ — hub · cluster · dead filament</h2>
+          <p id="webAdvice" aria-live="polite">Đang tải graph.json…</p>
+          <span class="fresh" id="webFresh">⏳ đang đo tuổi…</span>
+        </div>
+        <div class="grid-3">
+          <div class="card">
+            <h3>🌌 Hub — sửa là test rộng</h3>
+            <p>≥10 refs trỏ tới: verify cả cụm, không chỉ file vừa sửa.</p>
+            <div class="parts" id="webHubs" role="list" style="margin-top:10px;max-width:none"></div>
+          </div>
+          <div class="card">
+            <h3>🧩 Cluster — gộp 1 plan</h3>
+            <p>Files đổi cùng nhau ≥3 lần trong git: khi plan, gộp thành 1 đơn vị.</p>
+            <div id="webClusters" role="list" style="margin-top:10px"></div>
+          </div>
+          <div class="card">
+            <h3>🪶 Dead filament — nghi xoá</h3>
+            <p>File www/ không ai trỏ tới (kể cả load động): grep usage rồi xoá — minimal-ladder.</p>
+            <div id="webDead" role="list" style="margin-top:10px"></div>
+          </div>
+        </div>
+        <div class="code-block" id="webCode">Hub ⇒ <code>entangle --file</code> + test rộng · Cluster ⇒ gộp 1 plan · Dead ⇒ grep usage rồi xoá · Đo bằng: <code>node .github/harness/scripts/entangle.mjs --graph</code> (hoặc <code>npm run cosmos:refresh</code>)</div>
+      </div>
+    </section>
+
+    <section class="section" id="hawking" aria-labelledby="hawking-title">
+      <div class="container">
+        <div class="section-head">
+          <h2 id="hawking-title"><small>Hawking Radiation</small>🌑 Nợ bay hơi — draft tự phân rã</h2>
+          <p id="hawkingAdvice" aria-live="polite">Đang tải hawking.json…</p>
+          <span class="fresh" id="hawkingFresh">⏳ đang đo tuổi…</span>
+        </div>
+        <div class="grid-3">
+          <div class="card">
+            <h3>⚪ Đang mở — tổng nợ</h3>
+            <p>Draft <code>Status: open</code>. Tuổi tính từ ngày bug nổ (slug), không phải ngày sửa cuối.</p>
+            <div class="parts" id="hawkingOpen" role="list" style="margin-top:10px;max-width:none"></div>
+          </div>
+          <div class="card">
+            <h3>🔆 ≥30 ngày — escalate</h3>
+            <p>Journal + nhắc mỗi routine. Sửa, hoặc propose KN rồi đóng.</p>
+            <div id="hawkingEscalate" role="list" style="margin-top:10px"></div>
+          </div>
+          <div class="card">
+            <h3>🌑 ≥90 ngày — evaporate</h3>
+            <p>Tự đóng kèm note <code>hawking.md</code>; lịch sử giữ nguyên, gợi ý chuyển hoá thành KN.</p>
+            <div id="hawkingEvaporate" role="list" style="margin-top:10px"></div>
+          </div>
+        </div>
+        <div class="code-block" id="hawkingCode">Đo: <code>node .github/harness/scripts/auto-learn.mjs watchdog --json</code> · Áp dụng: <code>watchdog --apply --sign "&lt;tên người&gt;"</code> — <strong>human sign-off</strong>, agent tự ký = REFUSED (exit 2) · Journal <code>.agent/hawking.jsonl</code> append-only (ghi cả người ký)</div>
       </div>
     </section>
 
@@ -442,12 +504,131 @@
       $('#tlSummary').textContent=Ss.length+' điểm đo · từ '+fmtT(h[0].t)+' đến '+fmtT(h[h.length-1].t)+(delta>0?' — entropy đang tăng, bơm năng lượng!':delta<0?' — entropy đang giảm, vũ trụ đang nguội ❄️':' — entropy ổn định');
     }
     function fmtT(t){ try{ const d=new Date(t); return d.toLocaleDateString('vi-VN',{day:'2-digit',month:'2-digit'})+' '+d.toLocaleTimeString('vi-VN',{hour:'2-digit',minute:'2-digit'}); }catch{ return String(t); } }
-    $('#btnRefresh')?.addEventListener('click', ()=>{ load(); toast('↻ Đã refresh'); });
+    // ===== Cosmic Web — entangle --graph → graph.json =====
+    async function loadWeb(){
+      try{
+        const res=await fetch('./graph.json',{cache:'no-store'});
+        if(!res.ok) throw new Error('HTTP '+res.status);
+        renderWeb(await res.json());
+      }catch(e){
+        $('#webAdvice').textContent='Không tải được graph.json — chạy: npm run cosmos:refresh ('+e.message+')';
+        $('#webFresh').textContent='⛔ không có data'; $('#webFresh').className='fresh bad';
+        for(const id of ['#webHubs','#webClusters','#webDead']) $(id).innerHTML='<div class="web-empty">— chưa có graph.json —</div>';
+      }
+    }
+    function renderWeb(g){
+      const s=g.scanned||{}, c=g.counts||{};
+      $('#webAdvice').textContent=(s.files??'—')+' files · '+(s.edges??'—')+' edges · '+(s.commits??'—')+' commits — '+c.hubs+' hub (≥'+(g.thresholds?.hubMinRefs??10)+' refs) · '+c.clusters+' cluster · '+c.deadFilaments+' dead filament.';
+      const wf=$('#webFresh');
+      const ts=g.generatedAt? new Date(g.generatedAt).getTime():NaN;
+      if(isNaN(ts)){ wf.textContent='⏳ không rõ tuổi'; wf.className='fresh'; }
+      else{
+        const ageH=(Date.now()-ts)/36e5;
+        const ageTxt=ageH<1?'<1h':ageH<48?Math.round(ageH)+'h':Math.round(ageH/24)+' ngày';
+        if(ageH<24){ wf.textContent='🟢 tươi · '+ageTxt; wf.className='fresh ok'; }
+        else if(ageH<72){ wf.textContent='🟡 hơi cũ · '+ageTxt; wf.className='fresh warn'; }
+        else{ wf.textContent='🔴 cũ · '+ageTxt+' — npm run cosmos:refresh'; wf.className='fresh bad'; }
+      }
+      // hubs — row khớp .part (span/b/i); hiển thị top 6, còn lại ghi chú (card không dài vượt section khác)
+      const hubEl=$('#webHubs'); hubEl.innerHTML='';
+      const hubs=g.hubs||[];
+      const HUBS_SHOWN=6;
+      if(!hubs.length) hubEl.innerHTML='<div class="web-empty">— không có hub ≥10 refs —</div>';
+      else{
+        hubs.slice(0,HUBS_SHOWN).forEach(h=>{
+          const row=document.createElement('div'); row.className='part'; row.setAttribute('role','listitem');
+          row.innerHTML='<span style="word-break:break-all">'+h.file+'</span><b>'+h.refs+'</b><i>refs</i>';
+          hubEl.appendChild(row);
+        });
+        if(hubs.length>HUBS_SHOWN){
+          const note=document.createElement('div'); note.className='web-empty';
+          note.textContent='+ '+(hubs.length-HUBS_SHOWN)+' hub nữa — xem đầy đủ: node .github/harness/scripts/entangle.mjs --graph';
+          hubEl.appendChild(note);
+        }
+      }
+      // clusters — bh-item + chips file
+      const clEl=$('#webClusters'); clEl.innerHTML='';
+      const clusters=g.clusters||[];
+      if(!clusters.length) clEl.innerHTML='<div class="web-empty">— không có cluster — files đổi tương đối độc lập —</div>';
+      else clusters.forEach(cl=>{
+        const div=document.createElement('div'); div.className='bh-item'; div.setAttribute('role','listitem');
+        div.innerHTML='<div class="bh-icon" aria-hidden="true">🧩</div><div class="bh-info"><strong>×'+cl.weight+' lần đổi cùng nhau</strong><div class="web-chips">'+cl.files.map(f=>'<span class="web-chip">'+f+'</span>').join('')+'</div></div>';
+        clEl.appendChild(div);
+      });
+      // dead filaments
+      const dEl=$('#webDead'); dEl.innerHTML='';
+      const dead=g.deadFilaments||[];
+      if(!dead.length) dEl.innerHTML='<div class="web-empty">✅ 0 dead filament — mọi file www/ đều được trỏ tới</div>';
+      else dead.forEach(f=>{
+        const div=document.createElement('div'); div.className='bh-item dynamic'; div.setAttribute('role','listitem');
+        div.innerHTML='<div class="bh-icon" aria-hidden="true">🪶</div><div class="bh-info"><strong style="word-break:break-all">'+f+'</strong><span>0 ref — grep usage rồi xoá (minimal-ladder)</span></div>';
+        dEl.appendChild(div);
+      });
+    }
+    // ===== Hawking Radiation — auto-learn watchdog → hawking.json =====
+    async function loadHawking(){
+      try{
+        const res=await fetch('./hawking.json',{cache:'no-store'});
+        if(!res.ok) throw new Error('HTTP '+res.status);
+        renderHawking(await res.json());
+      }catch(e){
+        $('#hawkingAdvice').textContent='Không tải được hawking.json — chạy: npm run cosmos:refresh ('+e.message+')';
+        $('#hawkingFresh').textContent='⛔ không có data'; $('#hawkingFresh').className='fresh bad';
+        for(const id of ['#hawkingOpen','#hawkingEscalate','#hawkingEvaporate']) $(id).innerHTML='<div class="web-empty">— chưa có hawking.json —</div>';
+      }
+    }
+    function renderHawking(h){
+      const c=h.counts||{}, p=h.policy||{};
+      const emoji=(c.escalate>0||c.evaporate>0)?'⚠️':'✅';
+      $('#hawkingAdvice').textContent=c.bugsTotal+' bug · '+c.open+' open · '+c.escalate+' escalate (≥'+(p.escalateDays??30)+'d) · '+c.evaporate+' evaporate (≥'+(p.evaporateDays??90)+'d) — '+emoji+(c.open?' còn nợ':' không có nợ quá hạn');
+      const hf=$('#hawkingFresh');
+      const ts=h.generatedAt? new Date(h.generatedAt).getTime():NaN;
+      if(isNaN(ts)){ hf.textContent='⏳ không rõ tuổi'; hf.className='fresh'; }
+      else{
+        const ageH=(Date.now()-ts)/36e5;
+        const ageTxt=ageH<1?'<1h':ageH<48?Math.round(ageH)+'h':Math.round(ageH/24)+' ngày';
+        if(ageH<24){ hf.textContent='🟢 tươi · '+ageTxt; hf.className='fresh ok'; }
+        else if(ageH<72){ hf.textContent='🟡 hơi cũ · '+ageTxt; hf.className='fresh warn'; }
+        else{ hf.textContent='🔴 cũ · '+ageTxt+' — npm run cosmos:refresh'; hf.className='fresh bad'; }
+      }
+      const bugs=h.bugs||[];
+      // card 1: tổng nợ đang mở (top 6)
+      const openEl=$('#hawkingOpen'); openEl.innerHTML='';
+      if(!bugs.length) openEl.innerHTML='<div class="web-empty">✅ 0 draft đang mở</div>';
+      else{
+        bugs.slice(0,6).forEach(b=>{
+          const row=document.createElement('div'); row.className='part'; row.setAttribute('role','listitem');
+          row.innerHTML='<span style="word-break:break-all">'+b.slug+'</span><b>'+b.ageDays+'</b><i>ngày</i>';
+          openEl.appendChild(row);
+        });
+        if(bugs.length>6){
+          const note=document.createElement('div'); note.className='web-empty';
+          note.textContent='+ '+(bugs.length-6)+' draft nữa — xem: auto-learn.mjs watchdog --json';
+          openEl.appendChild(note);
+        }
+      }
+      // card 2+3: rows theo action (icon + slug + tuổi + gợi ý)
+      const fill=(sel,action,hint)=>{
+        const el=$(sel); el.innerHTML='';
+        const list=bugs.filter(b=>b.action===action);
+        if(!list.length){ el.innerHTML='<div class="web-empty">✅ không có draft '+action+'</div>'; return; }
+        list.forEach(b=>{
+          const div=document.createElement('div'); div.className='bh-item '+(action==='evaporate'?'dynamic':'known'); div.setAttribute('role','listitem');
+          div.innerHTML='<div class="bh-icon" aria-hidden="true">'+(action==='evaporate'?'🌑':'🔆')+'</div><div class="bh-info"><strong style="word-break:break-all">'+b.slug+'</strong><span>'+b.ageDays+' ngày — '+hint+'</span></div>';
+          el.appendChild(div);
+        });
+      };
+      fill('#hawkingEscalate','escalate','journal + nhắc · sửa hoặc propose KN');
+      fill('#hawkingEvaporate','evaporate','note + Status → evaporated (giữ lịch sử)');
+    }
+    $('#btnRefresh')?.addEventListener('click', ()=>{ load(); loadWeb(); loadHawking(); loadHawking(); toast('↻ Đã refresh'); });
     $('#btnCopyCmd')?.addEventListener('click', async()=>{
       const t='node .github/harness/scripts/cosmic-scale.mjs --json --out www/cosmos/scale.json';
       try{ await navigator.clipboard.writeText(t); toast('📋 Đã copy lệnh'); }catch{ toast('Copy hụt — sếp copy tay nhé'); }
     });
     load();
+    loadWeb();
+    loadHawking();
   </script>
 </body>
 </html>

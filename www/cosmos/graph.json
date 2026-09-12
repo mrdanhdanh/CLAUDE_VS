@@ -1,0 +1,92 @@
+{
+  "generatedAt": "2026-09-12T12:17:04.893Z",
+  "generatedBy": "entangle.mjs --graph",
+  "scanned": {
+    "files": 1447,
+    "edges": 1333,
+    "commits": 130
+  },
+  "thresholds": {
+    "hubMinRefs": 10,
+    "coChangeMin": 3
+  },
+  "hubs": [
+    {
+      "file": "docs/knowleged.md",
+      "refs": 70
+    },
+    {
+      "file": "www/status.json",
+      "refs": 54
+    },
+    {
+      "file": "www/index.html",
+      "refs": 51
+    },
+    {
+      "file": "README.md",
+      "refs": 27
+    },
+    {
+      "file": "www/cosmos/index.html",
+      "refs": 27
+    },
+    {
+      "file": "www/styles.css",
+      "refs": 27
+    },
+    {
+      "file": "package.json",
+      "refs": 24
+    },
+    {
+      "file": "www/library/mcp-server.mjs",
+      "refs": 24
+    },
+    {
+      "file": "www/app.js",
+      "refs": 16
+    },
+    {
+      "file": "docs/harness-2.1-upgrade.md",
+      "refs": 15
+    },
+    {
+      "file": "www/library/app.js",
+      "refs": 15
+    },
+    {
+      "file": "www/library/export.json",
+      "refs": 13
+    },
+    {
+      "file": "docs/harness-flow.md",
+      "refs": 12
+    }
+  ],
+  "clusters": [
+    {
+      "files": [
+        "www/ai-news/ai-news.css",
+        "www/ai-news/ai-news.js",
+        "www/ai-news/fetch.mjs",
+        "www/ai-news/index.html"
+      ],
+      "weight": 4
+    },
+    {
+      "files": [
+        "www/todo-manager/app.js",
+        "www/todo-manager/index.html",
+        "www/todo-manager/styles.css"
+      ],
+      "weight": 4
+    }
+  ],
+  "deadFilaments": [],
+  "counts": {
+    "hubs": 13,
+    "clusters": 2,
+    "deadFilaments": 0
+  }
+}
