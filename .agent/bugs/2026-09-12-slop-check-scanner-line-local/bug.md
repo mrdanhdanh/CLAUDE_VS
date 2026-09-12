@@ -120,5 +120,5 @@ repo --scan: 276 → 313 findings (số cũ 276 phần lớn span ảo; 313 = b�
 ## References
 
 - `docs/knowleged.md#KN-049`
-- Commit fix: `<điền sau commit>`
+- Commit fix: `0b34d71` (lexer + spec + KN-049 addendum + README)
 - Liên quan: KN-047 (Slop Gate) · KN-049 (metric vs hiện thực — root class) · KN-039 (Windows/PowerShell pitfalls)
