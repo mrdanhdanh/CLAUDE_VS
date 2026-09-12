@@ -123,5 +123,5 @@ npm run cosmos:refresh → scale.json + audit.json + status.json + mirrors regen
 ## References
 
 - `docs/knowleged.md#KN-049`
-- Commit fix: `<điền sau commit>`
+- Commit fix: `691e20c` (fix + KN-049 + spec) · `0c8abf0` (screenshots)
 - Liên quan: KN-047 (Slop Gate — spec là command, không vibe), KN-048 (enforce > declare — guards phải test được), KN-012 (audit immutable), KN-024 (vanity metrics)
