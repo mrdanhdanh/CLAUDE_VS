@@ -9,7 +9,7 @@
 - [x] **5. Data + npm** — `package.json` thêm `cosmos:gate` = `--trend 3 --budget 10`; chạy `cosmos:refresh` → `scale.json` có `trend` (commit — KN-030). `npm run cosmos:gate` exit 0 (S=7 ≤ 10, đà 0/3).
 - [x] **6. Docs** — `cosmic-quantum.instructions.md` §8 (+`--trend`) · `.github/skills/cosmic-scale/SKILL.md` (§1 --trend · §3c · §4) · `README.md` (counts 47 KN/29 bugs/69 plans/15 demos/3 routines + feature + fix drift cũ) · `export-claude` → `.claude/` (2 updated, --check khớp).
 - [x] **7. Verify** — full suite **101/101** · regression scale.html specs 16/16 · slop-check: **net-new 0** (baseline HEAD = 28 findings, current = 28 — xem `verify/slop-baseline.txt` vs `verify/slop-check.txt`) · evidence screenshots + `trend-demo.txt` (4 scenario CLI) · `cosmos:gate` pass.
-- [ ] **8. Ship** — commit + push + Pages deploy + live verify (`scale.html#escape` 200 + content).
+- [x] **8. Ship** — commit `b3de150` + `dd5bb54` (sếp commit) · push origin/main · Pages deploy `34694723643` success · live verify: scale.html 200 + section + cosmos:gate hint · scale.json trend block · index.html "8 hướng cũ" + card gỡ · slides shipped-line + 5 đề tài.
 
 ## Evidence & Verify notes
 
@@ -24,6 +24,12 @@
 **Slop justification (KN-047):** `main()` 189→220 dòng (CC 92→109) — đã >80 từ trước (single-file 0-dep script, cấu trúc cố định); `render()`/index.html/slides.html scripts là pre-existing (baseline chứng minh). `renderEscape()` ban đầu CC 30 → refactor tách `freshBadge`/`arrowOf`/`gateCardHtml`/`escapeFail`/`renderEvStreak`/`renderEvWindow` → **hết finding**. Follow-up (ngoài diff): tách `main()` — đăng ký như hạng mục CMB/refactor sau.
 
 **Evals rubric (KN-037):** 8/8 tiêu chí acceptance trong PRD pass (5 CLI + 3 UI) — bao gồm edge: thiếu history, exit code đúng, mock gate state, 375px.
+
+**Live verify (2026-09-12, sau push `dd5bb54`):**
+- `https://mrdanhdanh.github.io/CLAUDE_VS/cosmos/scale.html` → 200 · ✓ "Vận tốc thoát nợ" · ✓ hint `cosmos:gate`
+- `.../cosmos/scale.json` → ✓ `"trend"` block (increases 0/3 · window 4 điểm S=7)
+- `.../cosmos/index.html` → ✓ "8 hướng cũ" · ✓ card Escape Velocity đã gỡ
+- `.../cosmos/slides.html` → ✓ shipped-line có Escape Velocity (gate theo đà) + 5 đề tài
 
 ## Ladder per todo (minimal-ladder)
 
