@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-12T14:13:05.739Z",
+  "generatedAt": "2026-09-12T14:29:16.792Z",
   "generatedBy": "auto-learn.mjs stats --heatmap",
   "policy": {
     "cold": "bugCount − knCount ≥ 1",
@@ -12,15 +12,15 @@
   },
   "counts": {
     "knTotal": 49,
-    "bugTotal": 31,
+    "bugTotal": 32,
     "tags": 101,
     "months": [
       "2026-08",
       "2026-09"
     ],
-    "coldSpots": 6,
+    "coldSpots": 7,
     "zeroRef": 0,
-    "refFiles": 257
+    "refFiles": 258
   },
   "grid": {
     "months": [
@@ -871,6 +871,12 @@
     },
     {
       "tag": "reef-lite",
+      "kn": 0,
+      "bug": 1,
+      "coldness": 1
+    },
+    {
+      "tag": "tooling",
       "kn": 0,
       "bug": 1,
       "coldness": 1

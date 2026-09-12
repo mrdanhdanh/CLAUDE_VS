@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-12T14:13:05.428Z",
+  "generatedAt": "2026-09-12T14:29:16.472Z",
   "generatedBy": "cosmic-scale.mjs",
   "entropy": {
     "S": 9,
@@ -11,7 +11,7 @@
       "refused": 2,
       "disabled": 0,
       "failed": 1,
-      "refusedProbes": 11
+      "refusedProbes": 12
     }
   },
   "darkEnergy": {
@@ -39,14 +39,14 @@
   },
   "counts": {
     "knTotal": 49,
-    "bugsTotal": 31,
-    "auditTotal": 99
+    "bugsTotal": 32,
+    "auditTotal": 104
   },
   "capability": {
     "kn": 49,
     "skills": 19,
-    "e2eSpecs": 23,
-    "e2eTests": 118,
+    "e2eSpecs": 24,
+    "e2eTests": 123,
     "guards": 11
   },
   "mismatches": [],
@@ -272,18 +272,32 @@
         "e2eTests": 118,
         "guards": 11
       }
+    },
+    {
+      "t": "2026-09-12T14:29:16.472Z",
+      "S": 9,
+      "level": "low",
+      "M": 0,
+      "D": 7,
+      "G": 4,
+      "C": {
+        "kn": 49,
+        "skills": 19,
+        "e2eSpecs": 24,
+        "e2eTests": 123,
+        "guards": 11
+      }
     }
   ],
-  "capabilityDelta": null,
+  "capabilityDelta": {
+    "e2eSpecs": 1,
+    "e2eTests": 5
+  },
   "trend": {
     "increases": 0,
     "needed": 3,
     "gate": false,
     "window": [
-      {
-        "t": "2026-09-12T13:46:59.665Z",
-        "S": 9
-      },
       {
         "t": "2026-09-12T13:51:27.932Z",
         "S": 9
@@ -294,6 +308,10 @@
       },
       {
         "t": "2026-09-12T14:13:05.428Z",
+        "S": 9
+      },
+      {
+        "t": "2026-09-12T14:29:16.472Z",
         "S": 9
       }
     ]

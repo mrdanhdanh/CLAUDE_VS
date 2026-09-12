@@ -1,10 +1,10 @@
 {
-  "generatedAt": "2026-09-12T14:13:05.207Z",
+  "generatedAt": "2026-09-12T14:29:16.250Z",
   "generatedBy": "entangle.mjs --graph",
   "scanned": {
-    "files": 1499,
-    "edges": 1412,
-    "commits": 147
+    "files": 1501,
+    "edges": 1416,
+    "commits": 150
   },
   "thresholds": {
     "hubMinRefs": 10,
@@ -13,7 +13,7 @@
   "hubs": [
     {
       "file": "docs/knowleged.md",
-      "refs": 77
+      "refs": 78
     },
     {
       "file": "www/status.json",
@@ -70,6 +70,10 @@
     {
       "file": "www/cosmos/scale.json",
       "refs": 11
+    },
+    {
+      "file": "scripts/slop-check.mjs",
+      "refs": 10
     }
   ],
   "clusters": [
@@ -102,7 +106,7 @@
   ],
   "deadFilaments": [],
   "counts": {
-    "hubs": 15,
+    "hubs": 16,
     "clusters": 3,
     "deadFilaments": 0
   }

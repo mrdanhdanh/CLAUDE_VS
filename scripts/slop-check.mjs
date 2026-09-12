@@ -18,6 +18,8 @@
  *
  * Limits (đã biết): scanner chỉ đo block depth-0 — class/nested closure KHÔNG được đo;
  * string/regex strip là heuristic; minified/generated tự skip theo marker 3 dòng đầu.
+ * Fix 2026-09-12 (KN-049 residual): thay strip từng dòng bằng lexer MỘT LƯỢT (template đa dòng,
+ * comment, regex, string) + normalize \r\n khi đọc — LF/CRLF cho cùng kết quả, hết "nuốt" hàm sau.
  */
 import fs from 'node:fs';
 import path from 'node:path';
@@ -63,7 +65,9 @@ function walkDir(dir, acc) {
 }
 
 function readScannable(file) {
-  const text = fs.readFileSync(file, 'utf8');
+  // normalize \r\n → \n (KN-049): `.` trong regex không match line terminator (\r LÀ line terminator)
+  // → file CRLF từng làm `//.*$` strip fail → keyword trong comment bị tính CC
+  const text = fs.readFileSync(file, 'utf8').replace(/\r\n?/g, '\n');
   const head = text.split('\n', 3).join('\n');
   if (GEN_MARKERS.some((m) => head.includes(m))) return null;
   return text;
@@ -157,54 +161,154 @@ const FN_HEADER = /(?:function\s+[\w$]+|=>|[\w$.]+\s*\([^)]*\)\s*\{?\s*$)/;
 const FN_KEYWORDS = /^(if|for|while|switch|catch|else|do|return|throw)\b/;
 const COMPLEXITY = /\bif\b|\belse\b|\bfor\b|\bwhile\b|\bcase\b|\bcatch\b|\?\?|&&|\|\||\?/g;
 
-function strippedLine(raw) {
-  return raw
-    .replace(/'[^']*'/g, '""').replace(/"[^"]*"/g, '""')
-    .replace(/`[^`]*`/g, '``')
-    .replace(/(^|[=(:,!&|{;]\s*)\/(?![/*])(?:[^\/\\\n[]|\\.|\[(?:[^\]\\]|\\.)*\])+\/[gimsuy]*/g, '$1RE')
-    .replace(/\/\/.*$/, '');
+// ---------- Lexer: strip string/comment/regex/template trong MỘT lượt, line-aware (KN-049) ----------
+// Vì sao không strip từng dòng: (1) template literal đa dòng không đóng trong 1 dòng → brace trong
+// template bị đếm → depth không về 0 → hàm sau bị "nuốt" tới EOF; (2) `/\/\/.*$/` strip fail khi dòng
+// kết thúc \r → keyword trong comment bị tính CC. Lexer + normalize ở readScannable → LF/CRLF cùng kết quả.
+const REGEX_PREV = new Set(['(', ',', '=', ':', '[', '!', '&', '|', '?', '{', '}', ';', '+', '-', '*', '%', '~', '^', '<', '>']);
+const REGEX_WORDS = new Set(['return', 'typeof', 'instanceof', 'in', 'of', 'new', 'delete', 'void', 'do', 'else', 'yield', 'await', 'case']);
+const REGEX_FLAGS = new Set(['g', 'i', 'm', 's', 'u', 'y', 'd', 'v']);
+const ID_CHAR = /[A-Za-z0-9_$]/;
+
+function regexAllowed(prev, word) {
+  if (!prev) return true;
+  if (/[A-Za-z0-9_$)\]]/.test(prev)) return REGEX_WORDS.has(word);
+  return true;
 }
-function bracesOf(stripped) {
-  let open = 0, close = 0;
-  for (const ch of stripped) { if (ch === '{') open++; else if (ch === '}') close++; }
-  return [open, close];
+
+// đọc literal bắt đầu sau `/` hoặc quote — dừng ở closer (đã escape-protected) hoặc newline
+function consumeLiteral(text, i, closer) {
+  let j = i + 1, cls = false;
+  for (; j < text.length; j++) {
+    const c = text[j];
+    if (c === '\\') { j++; continue; }
+    if (c === '\n') return j;
+    if (closer === '/') {
+      if (cls) { if (c === ']') cls = false; continue; }
+      if (c === '[') { cls = true; continue; }
+    }
+    if (c === closer) return j + 1;
+  }
+  return j;
 }
+
+function mkSt() {
+  return { stripped: [], deltas: [], buf: '', delta: 0, prev: '', word: '', tpl: [], mode: 'code' };
+}
+function pushLine(st) {
+  st.stripped.push(st.buf);
+  st.deltas.push(st.delta);
+  st.buf = ''; st.delta = 0; st.prev = ''; st.word = '';
+}
+
+function strStep(text, i, st) {
+  st.buf += '""'; st.prev = '"'; st.word = '';
+  return consumeLiteral(text, i, text[i]);
+}
+function regexStep(text, i, st) {
+  st.buf += 'RE'; st.prev = 'R'; st.word = '';
+  let j = consumeLiteral(text, i, '/');
+  while (j < text.length && REGEX_FLAGS.has(text[j])) j++;
+  return j;
+}
+function slashStep(text, i, st) {
+  const nx = text[i + 1];
+  if (nx === '/') { const nl = text.indexOf('\n', i); return nl === -1 ? text.length : nl; }
+  if (nx === '*') { st.mode = 'blk'; return i + 2; }
+  if (regexAllowed(st.prev, st.word)) return regexStep(text, i, st);
+  st.buf += '/'; st.prev = '/'; st.word = '';
+  return i + 1;
+}
+function braceStep(text, i, st) {
+  if (text[i] === '{') {
+    if (st.tpl.length) st.tpl[st.tpl.length - 1]++;
+    st.delta++; st.buf += '{'; st.prev = '{'; st.word = '';
+    return i + 1;
+  }
+  if (st.tpl.length) {
+    if (st.tpl[st.tpl.length - 1] > 0) { st.tpl[st.tpl.length - 1]--; st.delta--; st.buf += '}'; st.prev = '}'; st.word = ''; return i + 1; }
+    st.tpl.pop(); st.mode = 'tpl'; st.prev = '}'; st.word = '';
+    return i + 1;
+  }
+  st.delta--; st.buf += '}'; st.prev = '}'; st.word = '';
+  return i + 1;
+}
+function charStep(text, i, st) {
+  const c = text[i];
+  st.buf += c;
+  if (/\s/.test(c)) return i + 1;
+  if (ID_CHAR.test(c)) st.word += c; else st.word = '';
+  st.prev = c;
+  return i + 1;
+}
+function codeStep(text, i, st) {
+  const c = text[i];
+  if (c === '/') return slashStep(text, i, st);
+  if (c === '{' || c === '}') return braceStep(text, i, st);
+  if (c === "'" || c === '"') return strStep(text, i, st);
+  if (c === '`') { st.mode = 'tpl'; st.prev = '`'; st.word = ''; return i + 1; }
+  return charStep(text, i, st);
+}
+function tplStep(text, i, st) {
+  const c = text[i];
+  if (c === '\\') return i + 2;
+  if (c === '`') { st.mode = 'code'; st.buf += '``'; st.prev = '`'; return i + 1; }
+  if (c === '$' && text[i + 1] === '{') { st.tpl.push(0); st.mode = 'code'; return i + 2; }
+  return i + 1;
+}
+
+function analyzeSource(text) {
+  const st = mkSt();
+  let i = 0;
+  while (i < text.length) {
+    const c = text[i];
+    if (c === '\n') { pushLine(st); i++; continue; }
+    if (st.mode === 'blk') { if (c === '*' && text[i + 1] === '/') { st.mode = 'code'; i += 2; } else i++; continue; }
+    if (st.mode === 'tpl') { i = tplStep(text, i, st); continue; }
+    i = codeStep(text, i, st);
+  }
+  pushLine(st);
+  return { stripped: st.stripped, deltas: st.deltas };
+}
+
 function fnNameOf(raw) {
   const m = raw.match(/function\s+([\w$]+)/) || raw.match(/(?:const|let|var)\s+([\w$]+)\s*=/) ||
     raw.match(/^\s*(?:async\s+)?([\w$]+)\s*\(/);
   return m ? m[1] : '(anonymous)';
 }
 
-function scanFunctions(lines, rel, maxFunc, maxCC) {
+function isFnHeader(before, depth, header) {
+  return before === 0 && depth > 0 && FN_HEADER.test(header) && !FN_KEYWORDS.test(header);
+}
+
+function scanFunctions(lines, analyzed, rel, maxFunc, maxCC) {
+  const { stripped, deltas } = analyzed;
   const findings = [];
   let depth = 0, start = -1, name = '';
-  lines.forEach((raw, i) => {
-    const stripped = strippedLine(raw);
-    const [open, close] = bracesOf(stripped);
+  for (let i = 0; i < lines.length; i++) {
     const before = depth;
-    depth += open - close;
-    const header = stripped.trim();
-    if (before === 0 && depth > 0 && FN_HEADER.test(header) && !FN_KEYWORDS.test(header)) {
-      start = i; name = fnNameOf(raw);
+    depth += deltas[i];
+    if (isFnHeader(before, depth, stripped[i].trim())) {
+      start = i; name = fnNameOf(lines[i]);
     } else if (before > 0 && depth === 0 && start !== -1) {
       const len = i - start + 1;
-      if (len >= 10) pushFnFinding(findings, { lines, rel, start, len, name, maxFunc, maxCC });
+      if (len >= 10) pushFnFinding(findings, { stripped, rel, start, len, name, maxFunc, maxCC });
       start = -1;
     }
-  });
+  }
   if (start !== -1) {
     const len = lines.length - start;
-    if (len >= 10) pushFnFinding(findings, { lines, rel, start, len, name, maxFunc, maxCC });
+    if (len >= 10) pushFnFinding(findings, { stripped, rel, start, len, name, maxFunc, maxCC });
   }
   return findings;
 }
 
 function pushFnFinding(findings, c) {
-  const { lines, rel, start, len, name, maxFunc, maxCC } = c;
+  const { stripped, rel, start, len, name, maxFunc, maxCC } = c;
   if (len > maxFunc) {
     findings.push({ type: 'size', file: rel, line: start + 1, fn: name, lines: len, max: maxFunc });
   }
-  const body = lines.slice(start, start + len).map(strippedLine).join('\n');
+  const body = stripped.slice(start, start + len).join('\n');
   const cc = 1 + (body.match(COMPLEXITY) || []).length;
   if (cc > maxCC) {
     findings.push({ type: 'complexity', file: rel, line: start + 1, fn: name, cc, max: maxCC });
@@ -279,7 +383,8 @@ function main() {
     process.exit(2);
   }
   const dup = findDuplication(filesData, opts.minLines, opts.top);
-  const fnFindings = filesData.flatMap((fd) => scanFunctions(fd.lines, fd.rel, opts.maxFunc, opts.maxCC));
+  const fnFindings = filesData.flatMap((fd) =>
+    scanFunctions(fd.lines, analyzeSource(fd.lines.join('\n')), fd.rel, opts.maxFunc, opts.maxCC));
   printReport({ files: filesData.length, ...opts, dup, fnFindings }, flags);
   const failed = dup.length + fnFindings.length > 0;
   const auditPass = isScan && !flags.strict;

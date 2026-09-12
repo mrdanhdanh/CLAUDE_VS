@@ -6,7 +6,7 @@
 
 Harness biến VS Code Copilot Chat thành **Claude Code Extension**: tự động, todo-driven, explore trước khi code, plan trước khi implement, polish trước khi done. Mọi customization (skill / rule / agent / prompt / hook) đều **tháo lắp như plugin** — bật/tắt không xóa, preset theo dự án, scaffold 1 lệnh.
 
-> **Trạng thái hiện tại (2026-09-12, 2.3-done):** 19 skills (+evals-gate, cosmic-quantum, cosmic-scale, archify, 5 harness-* lesson skills) · 18 instructions (+awesome-design, cosmic-quantum, fund-the-friction) · 9 agents (+critic) · 7 prompts · 1 hook — tất cả enabled · 4 presets · 49 KN · 31 bugs · 72 plans · 12 lab COSMOS + Cosmic Web graph + Hawking watchdog + Escape Velocity gate (`www/cosmos/`) · 15 demos `www/` · 23 scripts harness · 3 routines · MCP library 1.2.0 · governance policy v4 (9 deny + 2 allow, Ed25519) · `www/status.json` do YUNIE generate.
+> **Trạng thái hiện tại (2026-09-12, 2.3-done):** 19 skills (+evals-gate, cosmic-quantum, cosmic-scale, archify, 5 harness-* lesson skills) · 18 instructions (+awesome-design, cosmic-quantum, fund-the-friction) · 9 agents (+critic) · 7 prompts · 1 hook — tất cả enabled · 4 presets · 49 KN · 32 bugs · 72 plans · 12 lab COSMOS + Cosmic Web graph + Hawking watchdog + Escape Velocity gate (`www/cosmos/`) · 15 demos `www/` · 23 scripts harness · 3 routines · MCP library 1.2.0 · governance policy v4 (9 deny + 2 allow, Ed25519) · `www/status.json` do YUNIE generate.
 
 ---
 
