@@ -977,6 +977,22 @@ function buildColdSpots(tagTotals, bugs) {
     .sort((a, b) => b.coldness - a.coldness || b.bug - a.bug || a.tag.localeCompare(b.tag));
 }
 
+// KN-049 class (2026-09-12): plan/bug thật viết shorthand — "KN-033/034/035/036" (slash-list)
+// hoặc "KN-033→036"/"KN-001..004" (range) — regex full-token bỏ sót các id giữa → false "0 tham chiếu"
+// cho KN có thật (KN-035). Expand shorthand trước khi match; guard: range ngược hoặc span >30 →
+// giữ nguyên (chống expand bừa từ typo). Detector metric phải khớp data thật — cùng bài học KN-049.
+function expandKnRefs(text) {
+  const lists = text.replace(/KN-(\d{3})((?:\/\d{3})+)/g, (_m, first, rest) =>
+    ['KN-' + first, ...rest.split('/').filter(Boolean).map((n) => 'KN-' + n)].join(' '));
+  return lists.replace(/KN-(\d{3})\s*(?:→|->|\.\.)\s*(?:KN-)?(\d{3})(?!\d)/g, (m, a, b) => {
+    const start = Number(a), end = Number(b);
+    if (end <= start || end - start > 30) return m;
+    const ids = [];
+    for (let i = start; i <= end; i++) ids.push('KN-' + String(i).padStart(3, '0'));
+    return ids.join(' ');
+  });
+}
+
 function buildZeroRef(kns, raw, allRefs, nowMs) {
   const zeroRef = [];
   for (const k of kns) {
@@ -1005,7 +1021,7 @@ async function statsHeatmap(opts = {}) {
 
   const { months, rows, tagTotals } = buildHeatmapGrid(kns, raw);
   const coldSpots = buildColdSpots(tagTotals, bugs);
-  const zeroRef = buildZeroRef(kns, raw, refTexts.join('\n'), nowMs);
+  const zeroRef = buildZeroRef(kns, raw, expandKnRefs(refTexts.join('\n')), nowMs);
 
   const result = {
     generatedAt: new Date(nowMs).toISOString(),

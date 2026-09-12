@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-12T13:51:28.684Z",
+  "generatedAt": "2026-09-12T14:13:06.342Z",
   "generatedBy": "YUNIE",
   "version": 1,
   "counts": {
@@ -431,7 +431,7 @@
   "health": {
     "errors": 0,
     "status": "ok",
-    "lastCheck": "2026-09-12T13:51:28.684Z",
+    "lastCheck": "2026-09-12T14:13:06.342Z",
     "checks": [
       "get_errors: pass (0 errors)",
       "registry: 18 instructions (18 total) - 19 skills - 9 agents - 7 prompts - 1 hook — all enabled",
@@ -442,8 +442,8 @@
       "www: polished — responsive 375/768/1280, a11y, states, animation 150-300ms",
       "workflow: www/** -> Pages (upload-artifact path: www) — exists: true + eval job gate",
       "library: www/library/ MCP v1.2.0 (5 tools: search + iterative + list/get/status, router+cache, redacted) + library-rag instruction",
-      "auto-learn: 49 KN, 30 bugs, 0 drafts — suggest/log/propose/status (<50ms, IDF, tiếng Việt)",
-      "governance: audit 96 (Ed25519 receipt P0-4) · policy 9 deny/2 allow (ok) · credentials 0 keys plain",
+      "auto-learn: 49 KN, 31 bugs, 0 drafts — suggest/log/propose/status (<50ms, IDF, tiếng Việt)",
+      "governance: audit 99 (Ed25519 receipt P0-4) · policy 9 deny/2 allow (ok) · credentials 0 keys plain",
       "platform: agents 3 (3 built-in, 0 remote) · mcp 3 vendors/3 grants (library 1.2.0 read-only) · components 3/3 pub · routines 3/3 enabled",
       "collaboration: KN-018 — dissentGate ✅ · whoDidYouThinkWith ✅ · critic ✅ · fund-the-friction ✅ (ok)",
       "n5-blazor: www/n5-blazor/ 7 trang static + app.css + data.js + site.js — 100% Pages"
@@ -664,68 +664,17 @@
   },
   "learn": {
     "knTotal": 49,
-    "bugsTotal": 30,
+    "bugsTotal": 31,
     "drafts": 0
   },
   "governance": {
     "audit": {
-      "total": 96,
-      "permitted": 84,
-      "refused": 11,
+      "total": 99,
+      "permitted": 85,
+      "refused": 13,
       "failed": 1,
-      "lastTs": "2026-09-12T13:48:40.397Z",
+      "lastTs": "2026-09-12T14:11:31.588Z",
       "tail": [
-        {
-          "ts": "2026-09-12T13:32:48.416Z",
-          "actor": "YUNIE",
-          "tool": "shell",
-          "target": "CMB Anisotropy shipped: c1aaa44 (feature) + acdc65e (screenshots) - 2a20911..acdc65e, deploy 34696611064 success, live verify 18/18",
-          "decision": "permitted",
-          "rule": "allow-all",
-          "durationMs": null,
-          "error": null,
-          "intent": null,
-          "requestId": "b3b775",
-          "prevHash": "a9485a5ba77e3d4a",
-          "policyDigest": "190b0de217bf1dda",
-          "hash": "9e06125bbb8006a4",
-          "sig": "-uPhJVyC1wm9ohRZtbxLnaMjWxeDR6Hd8wqmw__1HJH6obpAt6DHaOx9xqMedBQccaVDhbuWtZHqPSMAC-8cBg",
-          "pub": "MCowBQYDK2VwAyEAY8PlU0KjXp4HJUUlNlVZdaXHUmDagUMm8rUrEShTPXo"
-        },
-        {
-          "ts": "2026-09-12T13:46:14.399Z",
-          "actor": "YUNIE",
-          "tool": "edit",
-          "target": "cosmic-scale.mjs scanAudit classify red-team probes (KN-049) + --audit flag",
-          "decision": "permitted",
-          "rule": "allow-all",
-          "durationMs": null,
-          "error": null,
-          "intent": null,
-          "requestId": "c082a0",
-          "prevHash": "9e06125bbb8006a4",
-          "policyDigest": "190b0de217bf1dda",
-          "hash": "de250a81379d0ad1",
-          "sig": "Y4w-QoPGJEF5nWkCxTgBy2GpOUVN_8GVlX_oHMKDl5bWpZvgG-d3u2jd_xJ8tCpbFPr6GBKwm1G6Si9PFL4BBQ",
-          "pub": "MCowBQYDK2VwAyEAY8PlU0KjXp4HJUUlNlVZdaXHUmDagUMm8rUrEShTPXo"
-        },
-        {
-          "ts": "2026-09-12T13:46:14.539Z",
-          "actor": "verify",
-          "tool": "edit",
-          "target": "tests/e2e/cosmos-audit-probe.spec.ts (new spec - KN-049 invariant)",
-          "decision": "permitted",
-          "rule": "allow-all",
-          "durationMs": null,
-          "error": null,
-          "intent": null,
-          "requestId": "facfb2",
-          "prevHash": "de250a81379d0ad1",
-          "policyDigest": "190b0de217bf1dda",
-          "hash": "e9a75de11a8ad282",
-          "sig": "keYDlFaFjGpcmXCKqlObxHglByyG_rXu-Z-o6bw9Mj_8AgxS6qhUCQaQXTOT47Tx96jKVTUlJN_gDUPpkjc4AA",
-          "pub": "MCowBQYDK2VwAyEAY8PlU0KjXp4HJUUlNlVZdaXHUmDagUMm8rUrEShTPXo"
-        },
         {
           "ts": "2026-09-12T13:46:40.505Z",
           "actor": "redteam-spec",
@@ -759,6 +708,57 @@
           "hash": "ca6f3d47b65d0d4a",
           "sig": "27eCd5wVpHv2R-6btsbqzWfvDARkJcOPZtk-V2ehXN77GTUAPMQZjrYGut3m5ZCS1CQDAJy5-80FrtYNUVRtAA",
           "pub": "MCowBQYDK2VwAyEAY8PlU0KjXp4HJUUlNlVZdaXHUmDagUMm8rUrEShTPXo"
+        },
+        {
+          "ts": "2026-09-12T13:53:12.508Z",
+          "actor": "redteam-spec",
+          "tool": "read",
+          "target": "***",
+          "decision": "refused",
+          "rule": "redteam-test",
+          "durationMs": null,
+          "error": null,
+          "intent": null,
+          "requestId": "af32a3",
+          "prevHash": "ca6f3d47b65d0d4a",
+          "policyDigest": "190b0de217bf1dda",
+          "hash": "9fba31d828bdba09",
+          "sig": "3ajx1kFFOYlDbAJE2UYLUpQs8aBE9UkaMP9G9KBOCPic55O4F3Bl8ZwVTYk2VPu2xjifCvSqr51xafezzKROAg",
+          "pub": "MCowBQYDK2VwAyEAY8PlU0KjXp4HJUUlNlVZdaXHUmDagUMm8rUrEShTPXo"
+        },
+        {
+          "ts": "2026-09-12T13:54:17.438Z",
+          "actor": "verify",
+          "tool": "shell",
+          "target": "entropy probe fix verified: suite 121/121 + S 23->9 + trend reset + slop pre-existing justified",
+          "decision": "permitted",
+          "rule": "allow-all",
+          "durationMs": null,
+          "error": null,
+          "intent": null,
+          "requestId": "a89bd1",
+          "prevHash": "9fba31d828bdba09",
+          "policyDigest": "190b0de217bf1dda",
+          "hash": "92958f91292b12b1",
+          "sig": "ssTj30uv_D8zGejHV0HUrX9iL8mTsOoAp5gNqne_3Dl6mFhAyZYlVlJvye9PRdM3KZHIPSW7lJgGb-DSM4wlAw",
+          "pub": "MCowBQYDK2VwAyEAY8PlU0KjXp4HJUUlNlVZdaXHUmDagUMm8rUrEShTPXo"
+        },
+        {
+          "ts": "2026-09-12T14:11:31.588Z",
+          "actor": "redteam-spec",
+          "tool": "read",
+          "target": "***",
+          "decision": "refused",
+          "rule": "redteam-test",
+          "durationMs": null,
+          "error": null,
+          "intent": null,
+          "requestId": "ed0273",
+          "prevHash": "92958f91292b12b1",
+          "policyDigest": "190b0de217bf1dda",
+          "hash": "1f97f2fb5ae2700c",
+          "sig": "9QPMy_PkC53EX8TzPUxZ1TEr-325wWka40fnBGT04lofhOacmjx55i-EJVxLQOA5HC-O-l9F5m4MbIooNlGmAw",
+          "pub": "MCowBQYDK2VwAyEAY8PlU0KjXp4HJUUlNlVZdaXHUmDagUMm8rUrEShTPXo"
         }
       ]
     },
@@ -767,7 +767,7 @@
       "deny": 9,
       "allow": 2,
       "status": "ok",
-      "lastCheck": "2026-09-12T13:51:28.541Z"
+      "lastCheck": "2026-09-12T14:13:06.143Z"
     },
     "credentials": {
       "count": 0,
@@ -835,7 +835,7 @@
     "D": 7,
     "G": 4,
     "M": 0,
-    "generatedAt": "2026-09-12T13:51:27.932Z",
-    "points": 20
+    "generatedAt": "2026-09-12T14:13:05.428Z",
+    "points": 22
   }
 }

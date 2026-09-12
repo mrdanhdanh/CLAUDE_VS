@@ -13,7 +13,7 @@
 - **Ngày:** 2026-09-03
 - **Severity:** `major`
 - **Reporter:** YUNIE
-- **Related KN:** `KN-013` (đề xuất — RAG export missing grounding chết)
+- **Related KN:** `KN-044` (retrofit 2026-09-12 — RAG grounding chết khi export.json thiếu)
 - **Tags:** `process` `knowledge` `rag` `chatbot` `grounding`
 - **Status:** `fixed`
 
@@ -117,9 +117,9 @@ get_errors: 0 · audit chain OK: 12 chained
   - [x] Nút Xuất tải đúng `export.json` (khớp path MCP/search đọc)
   - [x] Mọi RAG local phải có `seed.json` fallback commit được (grounding tối thiểu)
   - [x] `findExportFile` luôn thử export → seed, `loadData` gắn flag `_seed` để trace
-  - [ ] Thêm checklist vào `docs/knowleged.md` Anti-patterns / Checklist phòng tránh chung
+  - [x] Thêm checklist vào `docs/knowleged.md` Anti-patterns / Checklist phòng tránh chung (KN-044 — 2 anti-patterns RAG + 2 checklist)
 - **Cần cập nhật:**
-  - [ ] `docs/knowleged.md` → `KN-013` (Bảng tóm tắt + Chi tiết)
+  - [x] `docs/knowleged.md` → `KN-044` (Bảng tóm tắt + Chi tiết — retrofit 2026-09-12)
   - [ ] Không cần đụng `product-quality` (không phải chuẩn UI mới)
   - [ ] Test mới: e2e `search.mjs --status` + MCP `get_status` phải >0 chunks (đã chạy tay, chưa thành script)
 
@@ -127,7 +127,8 @@ get_errors: 0 · audit chain OK: 12 chained
 
 ## References
 
-- `docs/knowleged.md#KN-013` (đề xuất)
+- `docs/knowleged.md#KN-044`
+- Retrofit note: KN-044 — lesson bị rơi khi fix 2026-09-03 (bug.md ghi sai KN-013), bổ sung 2026-09-12
 - Fix files: `www/library/app.js`, `search.mjs`, `mcp-server.mjs`, `seed.json`, `yunie-personality.instructions.md`, `yunie.agent.md`
 - Verify: search 18 chunks + MCP hit 5.703 + `get_errors` 0 + audit chain OK
 

@@ -1,10 +1,10 @@
 {
-  "generatedAt": "2026-09-12T13:51:27.731Z",
+  "generatedAt": "2026-09-12T14:13:05.207Z",
   "generatedBy": "entangle.mjs --graph",
   "scanned": {
-    "files": 1498,
-    "edges": 1408,
-    "commits": 144
+    "files": 1499,
+    "edges": 1412,
+    "commits": 147
   },
   "thresholds": {
     "hubMinRefs": 10,
@@ -13,7 +13,7 @@
   "hubs": [
     {
       "file": "docs/knowleged.md",
-      "refs": 76
+      "refs": 77
     },
     {
       "file": "www/status.json",
@@ -64,12 +64,12 @@
       "refs": 12
     },
     {
-      "file": "www/cosmos/scale.json",
+      "file": "www/cosmos/scale.html",
       "refs": 11
     },
     {
-      "file": "www/cosmos/scale.html",
-      "refs": 10
+      "file": "www/cosmos/scale.json",
+      "refs": 11
     }
   ],
   "clusters": [

@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-12T13:51:28.188Z",
+  "generatedAt": "2026-09-12T14:13:05.739Z",
   "generatedBy": "auto-learn.mjs stats --heatmap",
   "policy": {
     "cold": "bugCount − knCount ≥ 1",
@@ -12,15 +12,15 @@
   },
   "counts": {
     "knTotal": 49,
-    "bugTotal": 30,
+    "bugTotal": 31,
     "tags": 101,
     "months": [
       "2026-08",
       "2026-09"
     ],
-    "coldSpots": 5,
-    "zeroRef": 2,
-    "refFiles": 256
+    "coldSpots": 6,
+    "zeroRef": 0,
+    "refFiles": 257
   },
   "grid": {
     "months": [
@@ -840,6 +840,12 @@
   },
   "coldSpots": [
     {
+      "tag": "knowledge",
+      "kn": 2,
+      "bug": 3,
+      "coldness": 1
+    },
+    {
       "tag": "perf",
       "kn": 2,
       "bug": 3,
@@ -870,20 +876,5 @@
       "coldness": 1
     }
   ],
-  "zeroRef": [
-    {
-      "id": "KN-044",
-      "title": "RAG grounding chết khi `export.json` thiếu — nút Xuất sai tên + không seed fallback",
-      "date": "2026-09-03",
-      "ageDays": 9,
-      "action": "fresh"
-    },
-    {
-      "id": "KN-035",
-      "title": "Negative Self-Distillation — học bằng tránh flaws, giữ uncertainty (2609.11699v1)",
-      "date": "2026-09-11",
-      "ageDays": 1,
-      "action": "fresh"
-    }
-  ]
+  "zeroRef": []
 }

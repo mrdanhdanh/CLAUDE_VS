@@ -8,6 +8,9 @@ import path from 'node:path';
  * CMB Anisotropy — bản đồ điểm lạnh (2026-09-12, roadmap card #3):
  * - CLI: `auto-learn.mjs stats --heatmap [--json] [--out f] [--now ISO]`
  *   Grid KN theo tag × tháng · coldSpots (bug − kn ≥ 1) · zeroRef (0 tham chiếu trong bugs/plans)
+ * - zeroRef invariants (KN-049 class): shorthand `KN-033/034/035/036` + range `KN-033→036`/`KN-001..004`
+ *   phải được expand trước khi đếm (nếu không: plan thật đã tham chiếu vẫn bị tố 0 ref — false positive);
+ *   bug rag-export phải link KN-044 (không còn KN-013 sai chủ đề)
  * - UI: section `#cmb` trên scale.html đọc mirror `heatmap.json` (sinh bởi --out, như graph/hawking)
  * - Deterministic: `--now` khóa tuổi zeroRef để test được (pattern watchdog)
  * Evidence → .agent/plans/cosmos-cmb-anisotropy/verify/
@@ -99,6 +102,31 @@ test.describe('CMB CLI — stats --heatmap', () => {
     const j = JSON.parse(fs.readFileSync(outFile, 'utf8'));
     expect(j.grid.rows.length).toBeGreaterThan(0);
     expect(j.counts.knTotal).toBeGreaterThanOrEqual(4);
+  });
+});
+
+test.describe('CMB zeroRef integrity — KN-049 class', () => {
+  test('expand shorthand: KN-035 chỉ được tham chiếu dạng KN-033/034/035/036 + range KN-033→036 → không phải 0 ref', () => {
+    const { status, out } = runStats(['--json', '--now', '2026-09-12T00:00:00Z']);
+    expect(status, out).toBe(0);
+    const ids = JSON.parse(out).zeroRef.map((z: any) => z.id);
+    expect(
+      ids,
+      'plan self-improving-round2 tham chiếu KN-033/034/035/036 + range KN-033→036 — detector phải expand shorthand trước khi đếm'
+    ).not.toContain('KN-035');
+  });
+
+  test('link repair: bug rag-export Related KN → KN-044 (không còn KN-013 sai chủ đề)', () => {
+    const bugPath = path.join(ROOT, '.agent', 'bugs', '2026-09-03-rag-export-missing-grounding-chet', 'bug.md');
+    const bug = fs.readFileSync(bugPath, 'utf8');
+    const relatedLine = bug.match(/\*\*Related KN:\*\*.*/)?.[0] ?? '';
+    expect(relatedLine, 'Related KN phải là KN-044 — KN-013 là chủ đề khác (Ponytail ladder)').toContain('KN-044');
+    expect(relatedLine, 'Related KN không được trỏ KN-013 sai chủ đề').not.toContain('KN-013');
+
+    const { status, out } = runStats(['--json', '--now', '2026-09-12T00:00:00Z']);
+    expect(status, out).toBe(0);
+    const ids = JSON.parse(out).zeroRef.map((z: any) => z.id);
+    expect(ids, 'KN-044 có bug thật tham chiếu → không được nằm trong zeroRef').not.toContain('KN-044');
   });
 });
 
