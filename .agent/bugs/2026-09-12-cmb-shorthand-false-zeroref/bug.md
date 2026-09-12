@@ -105,5 +105,5 @@ spec cosmos-cmb: 9/9 · full suite: 123/123 · heatmap.json mirror regen
 ## References
 
 - `docs/knowleged.md#KN-049`
-- Commit fix: `<điền sau commit>`
+- Commit fix: `1c51bef` (detector + link + spec + KN-049 addendum + README)
 - Fixed pattern: KN-049 (metric vs hiện thực) · KN-012 (link trace chính xác)
