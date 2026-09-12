@@ -64,6 +64,7 @@
 | KN-040 | 2026-09-12 | Cosmos rework: (1) `#lab` 6696px @375 tàng hình vĩnh viễn — IO `threshold:0.12` cần 803px > viewport 780px; (2) hover lift `.card`/`.phase` chết lặng; (3) `./slides.html`, `./audit.json` → 404 khi URL `/cosmos` không slash (serve redirect); (4) lab card thừa ~200px void đáy | (1) threshold tỉ lệ thuận element height — element cao hơn viewport không bao giờ đạt 12%; (2) `.reveal.in{transform:none}` cùng specificity (0-2-0) đứng SAU `.card:hover{transform:…}` → đè; (3) attribute `href="./x"` resolve theo document base — `/cosmos` (no slash) → `/x`; chỉ fetch đã được dirBase cứu, link chưa; (4) grid stretch + nội dung không fill | Reveal: IO `threshold:0` + `revealSweep()` fail-safe (rAF scroll + load + visibilitychange; tab throttle vẫn reveal); tách kênh property — reveal dùng `translate`, hover dùng `transform`; `fixRelLinks()` rewrite `a[href^="./"]` qua `dirBase(location.pathname)` (cả link tĩnh + link render động); lab card flex column + `lab-body`/`lab-demo` flex:1. 36 test cũ xanh vẫn lọt cả 4 → thêm `cosmos-rework.spec.ts` (7 test) | `ui` `css` `animation` `responsive` `pages` `url` `verify` |
 | KN-041 | 2026-09-12 | YT Summary: mọi lane trích transcript no-key bị YouTube chặn (429/bot-check/IpBlocked) + dịch vi fail 20/35 chunks + gtx retry 14.5s/chunk | YouTube chặn IP server-side (2026: kể cả CI datacenter); Invidious 6 instance + Piped công khai đã chết (0/6); gtx throttle theo IP + không CORS; MyMemory quota ẩn danh ~5k ký tự/ngày/IP; clients5 sống nhưng response shape khác (`[["text","en"]]`) → parser trả rỗng bị coi "empty" + trip circuit breaker **chung** cho cả 2 host | 3 lane: browser paste .vtt (guaranteed) + CLI yt-dlp cookies.txt + CI best-effort (secret `YT_COOKIES`); translator chain gtx→clients5→mymemory với breaker **theo host** + parser đa hình (walk đệ quy) + fail-fast quota; sponsor-region detection (marker→return, cap 90s); UI ghi rõ provider + partial | `api` `data` `ci` `network` `i18n` |
 | KN-042 | 2026-09-12 | YT Summary mobile: bảng bị ẩn/cắt text (560px trong khung 303px), `[hidden]` vô hiệu (detail luôn hiện), card nấp dưới header cố định | Tái dùng tên class toàn cục `.table-wrap` (bị `www/styles.css` `display:none` ở ≤767px) + element rule `table{min-width:560px}` (cho bảng STATUS) áp mọi table; mobile rule `tr{display:block}` đè UA `[hidden]{display:none}`; `scrollIntoView` không trừ header 56px (thiếu scroll-margin) | Namespace class trang (`.yts-table-wrap`) + `.yt-table{min-width:0}`; mobile thêm `tr[hidden]{display:none}`; `scroll-margin-top:72px` cho section; test invariant: `table.scrollWidth≤clientWidth`, `.seg-row` visible+height>20, `.seg-detail:not([hidden])`=0, card `y≥48` | `ui` `css` `responsive` `a11y` |
+| KN-043 | 2026-09-12 | Content 7 bài Agentic Academy "đúng chữ nhưng không chạy": path `skills/…` thiếu prefix IDE (không IDE nào đọc), không neo folder làm việc, khái niệm bị chấm nhưng chưa dạy (component/E2E evals, "PRD mini"), mâu thuẫn 1 vs ≥2 IDE giữa các bài | Tác giả viết từ góc nhìn đã-biết (curse of knowledge) — path "hiển nhiên" với người viết nhưng sai với người copy; tự review là thiên vị (KN-023); thiếu rubric "4 câu hỏi người mới"; path/khái niệm không verify chéo như code | Content review fresh-eyes + Critic agent độc lập: rubric 6 tiêu chí viết trước → sửa 6 blocker + 10 major (slide "Trước khi bắt đầu" + chip "Cần trước" mọi bài, path prefix đúng IDE, link tải 4 IDE + Node.js, gloss thuật ngữ, tiêu chí đo được) → khóa bằng test (10/10 + full suite 70/70) | `content` `docs` `verify` `fresh-eyes` `dx` |
 
 > Dòng ví dụ trên sẽ bị thay khi có bug thật đầu tiên — giữ format.
 
@@ -957,6 +958,35 @@
 - **Tags:** `ui` `css` `responsive` `a11y`
 - **Người ghi:** YUNIE / /harness
 
+### KN-043 — Content "đúng chữ nhưng không chạy": path thiếu prefix IDE + thiếu neo ngữ cảnh + khái niệm bị chấm nhưng chưa dạy
+
+- **Ngày:** 2026-09-12
+- **Bug report:** `.agent/bugs/2026-09-12-academy-content-not-actionable/bug.md` · Review đầy đủ: `.agent/plans/agentic-academy/verify/content-review.md`
+- **Severity:** major
+- **Triệu chứng:** Content review 7 bài Agentic Academy (rubric fresh-eyes + Critic agent độc lập) phát hiện 6 blocker + 10 major — người mới đọc hiểu ~60% "cần làm gì":
+  1. "Tạo `docs/agent-notes.md`" — không nói tạo trong **project nào** (bài đầu tiên, điểm neo quan trọng nhất lại mơ hồ nhất).
+  2. `skills/code-review/SKILL.md` — **thiếu prefix**; làm đúng chữ → folder `skills/` ở root → **không IDE nào đọc** → chính tiêu chí "auto-trigger" fail ngay.
+  3. Bước "review the demo file" — **file không tồn tại** ở đâu trong khóa → bước thực hành bất khả thi.
+  4. "Cài IDE bạn chọn" — không có link tải, không nói cần tài khoản/chi phí, không nói cần Node.js.
+  5. "component/E2E evals", "PRD mini" — **bị chấm trong tiêu chí nhưng chưa từng được dạy**.
+  6. Mâu thuẫn: K2 đòi 1 IDE, K3 criteria + K7 checklist đòi ≥ 2 IDE; homepage "vào bài nào cũng được" mâu thuẫn phụ thuộc thật.
+  7. Tiêu chí "rỗng nghĩa": "không có secret trong config" — đương nhiên đạt vì bài vừa viết config không secret.
+- **Nguyên nhân gốc (5 Whys):**
+  - Why 1: Tác giả tự đọc lại không thấy bug → vì **curse of knowledge**: path `skills/` "hiển nhiên" nằm trong `.github/` với người viết, nhưng người copy chữ nguyên văn thì sai.
+  - Why 2: Tự review không bắt được → vì self-review là thiên vị có hệ thống (KN-023) — cần fresh eyes / Critic **độc lập**.
+  - Why 3: Không có công cụ kiểm cho người mới → vì tiêu chí viết là "đủ nội dung" chứ không phải "làm được" — thiếu checklist 4 câu (Cần trước gì · Làm ở đâu · Bằng gì · Kiểm thế nào).
+  - Why 4 (Root): **Hướng dẫn viết từ góc nhìn người-đã-biết, không từ góc nhìn người-sẽ-làm**; path/khái niệm/yêu cầu xuyên bài không được verify chéo như code được verify.
+- **Cách sửa:** Rubric 6 tiêu chí viết TRƯỚC → Critic agent đọc độc lập (context riêng) → hội tụ findings → sửa: slide "Trước khi bắt đầu — chuẩn bị 3 thứ" + Bước 0 chốt folder "xưởng" (Bài 1); chip **"🧩 Cần trước"** trên cover mọi bài (data `need`) + chip "Cần: 1 project" homepage; path prefix đúng IDE (`.github/skills/…` + biến thể `.agents/`/`.claude/`); link tải 4 IDE official + note tài khoản/free + Node.js 18+; gloss mọi thuật ngữ (state/hybrid/least-privilege/RAG/KN-XXX); chốt "1 IDE bắt buộc, IDE 2 = điểm cộng"; tiêu chí rỗng nghĩa → hành động đo được. Khóa bằng test (chip Cần trước + chip prep homepage): spec 10/10, full suite 70/70.
+- **Cách phòng tránh:**
+  - Mọi hướng dẫn (docs/tutorial/slide) phải trả lời đủ **4 câu**: **Cần trước gì · Làm ở ĐÂU · Làm bằng GÌ · KIỂM bằng gì** — thiếu 1 câu = blocker.
+  - Path trong hướng dẫn phải **copy-chạy được**: prefix đầy đủ theo IDE — viết xong **grep lại từng path** trong bài trước khi ship.
+  - Khái niệm xuất hiện trong tiêu chí/outcome phải được **dạy trước đó hoặc gloss tại chỗ**.
+  - Yêu cầu xuyên bài (số IDE, prereq, path) phải **nhất quán** — grep chéo trước khi ship.
+  - Tiêu chí hoàn thành phải **đo được** (hành động + đối tượng + kết quả quan sát), không "đương nhiên đạt".
+  - Nội dung dạy người mới phải qua **fresh-eyes reader / Critic agent độc lập** TRƯỚC khi ship — như code review (KN-005 áp cho docs).
+- **Tags:** `content` `docs` `verify` `fresh-eyes` `dx`
+- **Người ghi:** YUNIE / /harness + Critic agent
+
 <!-- Thêm bài học mới theo template dưới — copy block này -->
 
 <!--
@@ -1083,6 +1113,10 @@
 - ❌ Science shorthand không tách bạch vật lý thật vs ẩn dụ — "đổi một → đổi cả hai tức thì" ngụ ý truyền tin FTL, sai no-signaling (KN-038).
 - ❌ Sinh lệnh PowerShell bằng cú pháp PS 7+ (`??`, `?.`, `??=`, ternary `? :`) — Windows PowerShell 5.1 fail parse `Unexpected token '??'`, lệnh không chạy (KN-039).
 - ❌ Gặp lỗi parse PS mà re-run y nguyên hoặc vá nửa vời — viết lại TOÀN lệnh theo cú pháp 5.1 rồi mới chạy (KN-039 + KN-023).
+- ❌ Hướng dẫn path/nơi lưu thiếu prefix theo IDE (`skills/…` thay vì `.github/skills/…`) — copy đúng chữ vẫn không chạy; path trong docs phải copy-chạy được + grep lại sau khi viết (KN-043).
+- ❌ Dạy quy trình dùng thuật ngữ chỉ xuất hiện ở tiêu chí/outcome (component/E2E evals, "PRD mini") mà chưa từng định nghĩa — người đọc không tự chấm được (KN-043).
+- ❌ Yêu cầu xuyên bài không nhất quán (bài 2 đòi 1 IDE, bài 3 đòi 2 IDE) hoặc marketing copy mâu thuẫn thực tế ("vào bài nào cũng được" khi các bài có phụ thuộc) (KN-043).
+- ❌ Tiêu chí hoàn thành "rỗng nghĩa" — đương nhiên đạt nếu làm đúng bước trước, không phân biệt được người đã làm với người chưa (KN-043).
 
 ## Checklist phòng tránh chung
 
@@ -1167,6 +1201,10 @@
 - [ ] Trang dùng science metaphor: claim vật lý đã verify với tài liệu (library MCP) + label "ẩn dụ vs vật lý thật"? (KN-038)
 - [ ] Re-define metric xong: đã grep sweep `www/`+`docs/`+`.github/` tìm tham chiếu cũ? (KN-038)
 - [ ] Lệnh PS: session pwsh 7 (`$PSVersionTable` ≥ 7) → `??`/`&&` OK · `?.` chỉ dùng `${var}?.`; session 5.1 / file commit repo → giữ cú pháp 5.1? (KN-039)
+- [ ] Hướng dẫn (docs/tutorial/slide) đã trả lời đủ 4 câu: Cần trước gì · Làm ở đâu · Bằng gì · Kiểm bằng gì? (KN-043)
+- [ ] Path trong hướng dẫn là path đầy đủ IDE đọc được (copy-chạy) + đã grep lại từng path? (KN-043)
+- [ ] Thuật ngữ trong tiêu chí/outcome đã được dạy trước hoặc gloss tại chỗ; tiêu chí đo được (không "rỗng nghĩa")? (KN-043)
+- [ ] Yêu cầu xuyên bài (số IDE, prereq) nhất quán; nội dung dạy người mới đã qua fresh-eyes/Critic độc lập TRƯỚC khi ship? (KN-043 + KN-005)
 
 *File này do `/fixbug` tự động cập nhật. Mọi luồng khác phải đọc để không lặp lại lỗi cũ.*
-*UpdatedAt: 2026-09-12T12:30:00Z — Maintained by YUNIE / Harness v2 — KN-042 added (YT Summary mobile CSS toàn cục đè trang mới: `.table-wrap` bị `www/styles.css` ẩn ≤767px + `table{min-width:560px}` + mobile `tr{display:block}` đè `[hidden]` + thiếu scroll-margin dưới header cố định — namespace `.yts-*` + invariant test; bug `.agent/bugs/2026-09-12-yt-summary-css-global-collision/`) — KN-041 added (YT Summary: YouTube chặn mọi lane no-key 2026 — 429/bot-check/IpBlocked + Invidious 0/6 + gtx no-CORS/throttle + MyMemory 5k chars/day + clients5 shape `[[text,lang]]` làm parser rỗng & breaker chung che mất — 3 lane + breaker theo host + parser đa hình + sponsor-region; bug `.agent/bugs/2026-09-12-yt-summary-youtube-block-va-dich-no-key/`; feature `www/yt-summary/` + 14 test + workflow `.github/workflows/yt-summary.yml`)*
+*UpdatedAt: 2026-09-12T15:30:00Z — Maintained by YUNIE / Harness v2 — KN-043 added (Content "đúng chữ nhưng không chạy": path `skills/…` thiếu prefix IDE + không neo folder làm việc + khái niệm bị chấm nhưng chưa dạy — content review fresh-eyes + Critic agent 7 bài Agentic Academy, sửa 6 blocker + 10 major, rubric "4 câu hỏi người mới" + chip "Cần trước"; review `.agent/plans/agentic-academy/verify/content-review.md`) — KN-042 added (YT Summary mobile CSS toàn cục đè trang mới: `.table-wrap` bị `www/styles.css` ẩn ≤767px + `table{min-width:560px}` + mobile `tr{display:block}` đè `[hidden]` + thiếu scroll-margin dưới header cố định — namespace `.yts-*` + invariant test; bug `.agent/bugs/2026-09-12-yt-summary-css-global-collision/`) — KN-041 added (YT Summary: YouTube chặn mọi lane no-key 2026 — 429/bot-check/IpBlocked + Invidious 0/6 + gtx no-CORS/throttle + MyMemory 5k chars/day + clients5 shape `[[text,lang]]` làm parser rỗng & breaker chung che mất — 3 lane + breaker theo host + parser đa hình + sponsor-region; bug `.agent/bugs/2026-09-12-yt-summary-youtube-block-va-dich-no-key/`; feature `www/yt-summary/` + 14 test + workflow `.github/workflows/yt-summary.yml`)*
