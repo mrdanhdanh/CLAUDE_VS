@@ -1,0 +1,84 @@
+
+Running 70 tests using 6 workers
+
+[1/70] [chromium] ΓÇ║ tests\e2e\agentic-academy.spec.ts:131:5 ΓÇ║ 5. reset ΓÇö confirm ΓåÆ 0/7 + localStorage sß║ích
+[2/70] [chromium] ΓÇ║ tests\e2e\agentic-academy.spec.ts:145:5 ΓÇ║ 6. deep-link k3 + URL kh├┤ng slash kh├┤ng 404 (KN-040)
+[3/70] [chromium] ΓÇ║ tests\e2e\agentic-academy.spec.ts:114:5 ΓÇ║ 4. mark ─æ├ú hß╗ìc ΓÇö persist qua F5, sync trang chß╗º
+[4/70] [chromium] ΓÇ║ tests\e2e\agentic-academy.spec.ts:81:5 ΓÇ║ 3. deck ΓÇö counter, ArrowRight, End ΓåÆ outcome
+[5/70] [chromium] ΓÇ║ tests\e2e\agentic-academy.spec.ts:50:5 ΓÇ║ 1. home ΓÇö hero, 7 cards, 0/7, no errors
+[6/70] [chromium] ΓÇ║ tests\e2e\agentic-academy.spec.ts:71:5 ΓÇ║ 2. home ΓåÆ card k1 ΓåÆ deck ─æ├║ng b├ái
+[7/70] [chromium] ΓÇ║ tests\e2e\agentic-academy.spec.ts:158:5 ΓÇ║ 7. 375px ΓÇö no overflow + fullscreen fallback kh├┤ng lß╗ùi
+[8/70] [chromium] ΓÇ║ tests\e2e\agentic-academy.spec.ts:180:5 ΓÇ║ 8. reduced-motion ΓÇö nß╗Öi dung ─æß╗º, no pageerror
+[9/70] [chromium] ΓÇ║ tests\e2e\agentic-academy.spec.ts:197:5 ΓÇ║ 9. theme ΓÇö toggle s├íng/tß╗æi + persist F5 + ─æß╗ông bß╗Ö 2 trang
+[10/70] [chromium] ΓÇ║ tests\e2e\agentic-academy.spec.ts:231:5 ΓÇ║ 10. light theme ΓÇö mß║╖c ─æß╗ïnh theo hß╗ç thß╗æng + contrast ΓëÑ4.5
+[11/70] [chromium] ΓÇ║ tests\e2e\ai-news.spec.ts:8:7 ΓÇ║ AI News ΓÇö ai-news.html ΓÇ║ loads ai-news.json and renders hero + grids
+[12/70] [chromium] ΓÇ║ tests\e2e\ai-news.spec.ts:16:7 ΓÇ║ AI News ΓÇö ai-news.html ΓÇ║ filter chips filter by category
+[13/70] [chromium] ΓÇ║ tests\e2e\ai-news.spec.ts:35:7 ΓÇ║ AI News ΓÇö ai-news.html ΓÇ║ search filters results
+[14/70] [chromium] ΓÇ║ tests\e2e\ai-news.spec.ts:49:7 ΓÇ║ AI News ΓÇö ai-news.html ΓÇ║ no horizontal overflow at 375
+[15/70] [chromium] ΓÇ║ tests\e2e\angle.spec.ts:9:7 ΓÇ║ Rainbow --angle animation ΓÇ║ glassui --angle changes after 500ms (native or fallback)
+[16/70] [chromium] ΓÇ║ tests\e2e\angle.spec.ts:84:7 ΓÇ║ Rainbow --angle animation ΓÇ║ www STATUS has no --angle regression (smoke)
+[17/70] [chromium] ΓÇ║ tests\e2e\cosmos-freshness.spec.ts:13:5 ΓÇ║ scale.html ΓÇö badge t╞░╞íi + Gravity G render
+[18/70] [chromium] ΓÇ║ tests\e2e\cosmos-freshness.spec.ts:25:5 ΓÇ║ observatory ΓÇö D & G stats + ─Éo l├║c, kh├┤ng pageerror
+[19/70] [chromium] ΓÇ║ tests\e2e\cosmos-freshness.spec.ts:38:5 ΓÇ║ Lab #11 ΓÇö Dark Energy vs Gravity t╞░╞íng t├íc + kh├┤ng pageerror
+[20/70] [chromium] ΓÇ║ tests\e2e\cosmos-freshness.spec.ts:66:5 ΓÇ║ scale.json ΓÇö c├│ gravity + history D/G
+[21/70] [chromium] ΓÇ║ tests\e2e\cosmos-future.spec.ts:12:5 ΓÇ║ future section ΓÇö 6 ─æß╗ü t├ái mß╗¢i, kh├┤ng c├▓n card Done
+[22/70] [chromium] ΓÇ║ tests\e2e\cosmos-intro.spec.ts:24:7 ΓÇ║ COSMOS intro ΓÇ║ che k├¡n viewport + c├│ n├║t skip + kho├í scroll + nß╗ün inert
+[23/70] [chromium] ΓÇ║ tests\e2e\cosmos-intro.spec.ts:66:7 ΓÇ║ COSMOS intro ΓÇ║ auto-reveal sau khi chß║íy xong timeline
+[24/70] [chromium] ΓÇ║ tests\e2e\cosmos-intro.spec.ts:84:7 ΓÇ║ COSMOS intro ΓÇ║ skip bß║▒ng n├║t ΓåÆ reveal ngay
+[25/70] [chromium] ΓÇ║ tests\e2e\cosmos-intro.spec.ts:95:7 ΓÇ║ COSMOS intro ΓÇ║ skip bß║▒ng Esc
+[26/70] [chromium] ΓÇ║ tests\e2e\cosmos-intro.spec.ts:102:7 ΓÇ║ COSMOS intro ΓÇ║ skip bß║▒ng click bß║Ñt kß╗│ ─æ├óu (sau grace period 1000ms)
+[27/70] [chromium] ΓÇ║ tests\e2e\cosmos-intro.spec.ts:110:7 ΓÇ║ COSMOS intro ΓÇ║ fonts CDN treo v─⌐nh viß╗àn ΓåÆ engine vß║½n chß║íy ngay (regression KN-029: stylesheet kh├┤ng ─æ╞░ß╗úc block script)
+[28/70] [chromium] ΓÇ║ tests\e2e\cosmos-intro.spec.ts:129:7 ΓÇ║ COSMOS intro ΓÇ║ reduced-motion ΓåÆ bß║ún nhß║╣ (chß╗ë opacity), c├│ hint giß║úi th├¡ch, reveal ~3.5s
+[29/70] [chromium] ΓÇ║ tests\e2e\cosmos-intro.spec.ts:159:9 ΓÇ║ COSMOS intro responsive ΓÇ║ @375 ΓÇö kh├┤ng tr├án ngang, skip trong viewport
+[30/70] [chromium] ΓÇ║ tests\e2e\cosmos-intro.spec.ts:159:9 ΓÇ║ COSMOS intro responsive ΓÇ║ @768 ΓÇö kh├┤ng tr├án ngang, skip trong viewport
+[31/70] [chromium] ΓÇ║ tests\e2e\cosmos-observatory.spec.ts:14:5 ΓÇ║ observatory ─æß╗ìc audit.json thß║¡t ΓÇö kh├┤ng 404 ra ngo├ái www/
+[32/70] [chromium] ΓÇ║ tests\e2e\cosmos-rework.spec.ts:35:5 ΓÇ║ #1 reveal ΓÇö mß╗ìi .reveal hiß╗çn ß╗ƒ 375px (bug: #lab t├áng h├¼nh)
+[33/70] [chromium] ΓÇ║ tests\e2e\cosmos-rework.spec.ts:60:5 ΓÇ║ #1b reveal ΓÇö desktop 1280 c┼⌐ng ─æß╗º .reveal + kh├┤ng tr├án ngang
+[34/70] [chromium] ΓÇ║ tests\e2e\cosmos-rework.spec.ts:72:5 ΓÇ║ #2 links ΓÇö map node kh├┤ng escape deploy root; internal 200
+[35/70] [chromium] ΓÇ║ tests\e2e\cosmos-rework.spec.ts:102:5 ΓÇ║ #3 hover lift ΓÇö .card & .phase kh├┤ng bß╗ï reveal ─æ├¿
+[36/70] [chromium] ΓÇ║ tests\e2e\cosmos-rework.spec.ts:123:5 ΓÇ║ #4 lab card ΓÇö kh├┤ng c├▓n void ─æ├íy (lab-body fill card)
+[37/70] [chromium] ΓÇ║ tests\e2e\cosmos-rework.spec.ts:137:5 ΓÇ║ #5 anchor ΓÇö heading #lab kh├┤ng bß╗ï sticky header che
+[38/70] [chromium] ΓÇ║ tests\e2e\cosmos-rework.spec.ts:152:5 ΓÇ║ #6 hiß╗çu ß╗⌐ng ΓÇö brand --angle xoay + click mß╗ìi n├║t kh├┤ng lß╗ùi console
+[39/70] [chromium] ΓÇ║ tests\e2e\cosmos-slides.spec.ts:15:5 ΓÇ║ slides ΓÇö 15 slide, numbering + thß╗¥i l╞░ß╗úng 01:30
+[40/70] [chromium] ΓÇ║ tests\e2e\cosmos-slides.spec.ts:34:5 ΓÇ║ slide 11 ΓÇö eyebrow "11 ┬╖", hß║┐t sß╗æ c┼⌐ "08 ┬╖"
+[41/70] [chromium] ΓÇ║ tests\e2e\responsive.spec.ts:11:9 ΓÇ║ Responsive ΓÇö mobile 375 ΓÇ║ no horizontal overflow at 375
+[42/70] [chromium] ΓÇ║ tests\e2e\cosmos-slides.spec.ts:42:5 ΓÇ║ slide 15 ΓÇö "─É├ú ship" + 6 ─æß╗ü t├ái mß╗¢i, hß║┐t Multiverse picker
+[43/70] [chromium] ΓÇ║ tests\e2e\responsive.spec.ts:19:9 ΓÇ║ Responsive ΓÇö mobile 375 ΓÇ║ header not broken at 375
+[44/70] [chromium] ΓÇ║ tests\e2e\responsive.spec.ts:11:9 ΓÇ║ Responsive ΓÇö tablet 768 ΓÇ║ no horizontal overflow at 768
+[45/70] [chromium] ΓÇ║ tests\e2e\responsive.spec.ts:19:9 ΓÇ║ Responsive ΓÇö tablet 768 ΓÇ║ header not broken at 768
+[46/70] [chromium] ΓÇ║ tests\e2e\responsive.spec.ts:11:9 ΓÇ║ Responsive ΓÇö desktop 1280 ΓÇ║ no horizontal overflow at 1280
+[47/70] [chromium] ΓÇ║ tests\e2e\responsive.spec.ts:19:9 ΓÇ║ Responsive ΓÇö desktop 1280 ΓÇ║ header not broken at 1280
+[48/70] [chromium] ΓÇ║ tests\e2e\responsive.spec.ts:31:7 ΓÇ║ Responsive ΓÇö ai-news at 375/1280 ΓÇ║ ai-news no overflow at 375
+[49/70] [chromium] ΓÇ║ tests\e2e\responsive.spec.ts:39:7 ΓÇ║ Responsive ΓÇö ai-news at 375/1280 ΓÇ║ ai-news no overflow at 1280
+[50/70] [chromium] ΓÇ║ tests\e2e\status.spec.ts:8:7 ΓÇ║ STATUS ΓÇö YUNIE dashboard ΓÇ║ loads status.json and renders hero + stats
+[51/70] [chromium] ΓÇ║ tests\e2e\status.spec.ts:18:7 ΓÇ║ STATUS ΓÇö YUNIE dashboard ΓÇ║ registry renders and search filters
+[52/70] [chromium] ΓÇ║ tests\e2e\status.spec.ts:41:7 ΓÇ║ STATUS ΓÇö YUNIE dashboard ΓÇ║ filter pills work
+[53/70] [chromium] ΓÇ║ tests\e2e\status.spec.ts:60:7 ΓÇ║ STATUS ΓÇö YUNIE dashboard ΓÇ║ quick pages grid has 9+ cards
+[54/70] [chromium] ΓÇ║ tests\e2e\status.spec.ts:65:7 ΓÇ║ STATUS ΓÇö YUNIE dashboard ΓÇ║ no horizontal overflow at 375
+[55/70] [chromium] ΓÇ║ tests\e2e\yt-summary-build.spec.ts:17:7 ΓÇ║ yt-summary pipeline (fixture) ΓÇ║ parse VTT: nhß║¡n diß╗çn auto-caption + bß╗Å thß║╗ thß╗¥i gian inline
+[56/70] [chromium] ΓÇ║ tests\e2e\yt-summary-build.spec.ts:30:7 ΓÇ║ yt-summary pipeline (fixture) ΓÇ║ clean: l╞░ß╗úc music/sponsor/outro/dup ΓÇö giß╗» >95% nß╗Öi dung ch├¡nh
+[57/70] [chromium] ΓÇ║ tests\e2e\yt-summary-build.spec.ts:54:7 ΓÇ║ yt-summary pipeline (fixture) ΓÇ║ segment + summarize: 3ΓÇô9 phß║ºn, mß╗ùi phß║ºn c├│ title/summary/keywords
+[58/70] [chromium] ΓÇ║ tests\e2e\yt-summary-build.spec.ts:75:7 ΓÇ║ yt-summary pipeline (fixture) ΓÇ║ buildDoc: schema ─æß║ºy ─æß╗º + stats + droppedSegments (kh├┤ng dß╗ïch ΓåÆ giß╗» bß║ún gß╗æc)
+[59/70] [chromium] ΓÇ║ tests\e2e\yt-summary-build.spec.ts:104:7 ΓÇ║ yt-summary pipeline (fixture) ΓÇ║ chunkForTranslation: chunk Γëñ max, kh├┤ng cß║»t giß╗»a tß╗½; detectLang ─æ├║ng
+[60/70] [chromium] ΓÇ║ tests\e2e\yt-summary-build.spec.ts:116:7 ΓÇ║ yt-summary pipeline (fixture) ΓÇ║ extractVideoId + formatTime
+[61/70] [chromium] ΓÇ║ tests\e2e\yt-summary.spec.ts:18:7 ΓÇ║ yt-summary page ΓÇ║ load: library + demo card render, kh├┤ng lß╗ùi console
+[62/70] [chromium] ΓÇ║ tests\e2e\yt-summary.spec.ts:29:7 ΓÇ║ yt-summary page ΓÇ║ mß╗ƒ demo: bß║úng t├│m tß║»t render ─æß╗º cß╗Öt + chips + transcript
+[63/70] [chromium] ΓÇ║ tests\e2e\yt-summary.spec.ts:63:7 ΓÇ║ yt-summary page ΓÇ║ toggle vi Γåö bß║ún gß╗æc + accordion + copy button tß╗ôn tß║íi
+[64/70] [chromium] ΓÇ║ tests\e2e\yt-summary.spec.ts:90:7 ΓÇ║ yt-summary page ΓÇ║ state: link kh├┤ng hß╗úp lß╗ç ΓåÆ lß╗ùi inline/toast, kh├┤ng nhß║úy trang
+[65/70] [chromium] ΓÇ║ tests\e2e\yt-summary.spec.ts:98:7 ΓÇ║ yt-summary page ΓÇ║ URL resolution (KN-030/KN-040): dirBase ─æ├║ng cß║ú 3 dß║íng URL + fetch 200
+[66/70] [chromium] ΓÇ║ tests\e2e\yt-summary.spec.ts:119:7 ΓÇ║ yt-summary page ΓÇ║ responsive 375: kh├┤ng tr├án ngang, bß║úng hiß╗ân thß╗ï (kh├┤ng bß╗ï ß║⌐n), tap target ─æß╗º
+[67/70] [chromium] ΓÇ║ tests\e2e\yt-summary.spec.ts:144:7 ΓÇ║ yt-summary page ΓÇ║ responsive 768 + 1280: bß║úng giß╗» cß║Ñu tr├║c
+[68/70] [chromium] ΓÇ║ tests\e2e\yt-summary.spec.ts:156:7 ΓÇ║ yt-summary page ΓÇ║ a11y c╞í bß║ún: skip-link, aria-live status, toggle c├│ aria-pressed
+[69/70] [chromium] ΓÇ║ tests\e2e\cosmos-intro-edge.spec.ts:26:7 ΓÇ║ COSMOS intro @ real Edge ΓÇ║ Edge default: intro chß║íy ─æß║ºy ─æß╗º + canvas vß║╜ hß║ít + kh├┤ng lß╗ùi console
+[70/70] [chromium] ΓÇ║ tests\e2e\cosmos-intro-edge.spec.ts:79:7 ΓÇ║ COSMOS intro @ real Edge ΓÇ║ Edge + reduced-motion (Windows tß║»t animation): ─ÉO bß║ún r├║t gß╗ìn ΓÇö user thß║Ñy g├¼?
+[chromium] ΓÇ║ tests\e2e\cosmos-intro-edge.spec.ts:26:7 ΓÇ║ COSMOS intro @ real Edge ΓÇ║ Edge default: intro chß║íy ─æß║ºy ─æß╗º + canvas vß║╜ hß║ít + kh├┤ng lß╗ùi console
+[EDGE] prefers-reduced-motion = false
+
+[EDGE] canvas buffer = 1280 x 720
+
+[EDGE] painted pixels (center sample) = 160000
+
+[chromium] ΓÇ║ tests\e2e\cosmos-intro-edge.spec.ts:79:7 ΓÇ║ COSMOS intro @ real Edge ΓÇ║ Edge + reduced-motion (Windows tß║»t animation): ─ÉO bß║ún r├║t gß╗ìn ΓÇö user thß║Ñy g├¼?
+[EDGE-reduced] intro tß╗▒ mß╗ƒ sau ~ 3248 ms tß╗½ l├║c load
+
+  70 passed (1.2m)

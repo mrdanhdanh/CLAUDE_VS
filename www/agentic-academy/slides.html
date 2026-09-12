@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bài học — Agentic Academy</title>
+  <meta name="description" content="Slide bài học AI Agentic — fullscreen, điều hướng bằng phím, có kết quả cụ thể từng bài.">
+  <link rel="icon" href="data:,">
+  <script>
+    /* Early theme init — chống flash (KN-006): localStorage trước, fallback theo hệ thống. Đặt TRƯỚC stylesheet. */
+    (function () {
+      try {
+        var t = localStorage.getItem('agentic-academy:theme:v1');
+        if (t !== 'light' && t !== 'dark') {
+          t = window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+        }
+        document.documentElement.setAttribute('data-theme', t);
+      } catch (e) { document.documentElement.setAttribute('data-theme', 'dark'); }
+    })();
+  </script>
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body class="deck">
+  <a class="skip-link" href="#stage">Bỏ qua điều hướng</a>
+
+  <header class="deck-top">
+    <a class="deck-back" id="homeLink" href="./index.html" aria-label="Về trang chủ Agentic Academy">
+      <span aria-hidden="true">←</span> <span class="btn-txt">Trang chủ</span>
+    </a>
+    <div class="deck-title-wrap">
+      <span class="deck-kicker" id="deckKicker">—</span>
+      <span id="deckTitle">Đang tải…</span>
+    </div>
+    <div class="deck-top-right">
+      <span id="slideCounter" aria-label="Số slide" aria-live="polite">1 / 1</span>
+      <button class="icon-btn" id="themeBtn" type="button" data-theme-toggle aria-label="Chuyển sang giao diện sáng" aria-pressed="false" title="Giao diện sáng/tối"><span class="theme-ico" aria-hidden="true">☀</span></button>
+      <button class="icon-btn" id="markBtn" type="button" aria-pressed="false" aria-label="Đánh dấu đã học bài này">
+        <span aria-hidden="true">✓</span> <span class="btn-txt" id="markTxt">Đánh dấu đã học</span>
+      </button>
+      <button class="icon-btn primary" id="fsBtn" type="button" aria-label="Fullscreen (phím F)">
+        <span aria-hidden="true">⛶</span> <span class="btn-txt">Fullscreen</span>
+      </button>
+    </div>
+  </header>
+
+  <main class="stage" id="stage" aria-label="Khu vực slide">
+    <!-- slides render bởi slides.js -->
+  </main>
+
+  <footer class="deck-bar">
+    <button class="nav-btn" id="prevBtn" type="button" aria-label="Slide trước (←)">◀</button>
+    <div class="bar-progress" role="progressbar" id="deckProgress" aria-valuemin="1" aria-valuemax="1" aria-valuenow="1" aria-label="Tiến độ slide" tabindex="0"><i id="deckFill"></i></div>
+    <button class="nav-btn" id="nextBtn" type="button" aria-label="Slide kế tiếp (→)">▶</button>
+    <div class="dots" id="dots" role="tablist" aria-label="Danh sách slide"></div>
+    <span class="keys-hint"><kbd>←</kbd><kbd>→</kbd> di chuyển · <kbd>F</kbd> fullscreen · <kbd>M</kbd> đánh dấu</span>
+  </footer>
+
+  <script src="./store.js"></script>
+  <script src="./diagrams.js"></script>
+  <script src="./lessons.js"></script>
+  <script src="./slides.js"></script>
+</body>
+</html>

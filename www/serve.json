@@ -1,0 +1,11 @@
+{
+  "cleanUrls": false,
+  "directoryListing": false,
+  "trailingSlash": true,
+  "rewrites": [
+    { "source": "/", "destination": "/index.html" },
+    { "source": "/agentic-academy", "destination": "/agentic-academy/index.html" },
+    { "source": "/ai-news", "destination": "/ai-news/index.html" },
+    { "source": "/glassui", "destination": "/glassui/index.html" }
+  ]
+}

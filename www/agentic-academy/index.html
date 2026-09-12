@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Agentic Academy — Học AI Agentic, xây hệ thống chạy mọi IDE</title>
+  <meta name="description" content="7 bài học AI Agentic dạng slide: từ tư duy agent đến hệ thống hoàn chỉnh chạy trên Claude Code, VS Code Copilot, Codex, Antigravity. Có kết quả cụ thể từng bài.">
+  <link rel="icon" href="data:,">
+  <script>
+    /* Early theme init — chống flash (KN-006): localStorage trước, fallback theo hệ thống. Đặt TRƯỚC stylesheet. */
+    (function () {
+      try {
+        var t = localStorage.getItem('agentic-academy:theme:v1');
+        if (t !== 'light' && t !== 'dark') {
+          t = window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+        }
+        document.documentElement.setAttribute('data-theme', t);
+      } catch (e) { document.documentElement.setAttribute('data-theme', 'dark'); }
+    })();
+  </script>
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Bỏ qua điều hướng</a>
+
+  <header class="site-header">
+    <div class="container">
+      <a class="brand" id="homeLink" href="./index.html" aria-label="Agentic Academy — về trang chủ">
+        <span class="brand-mark" aria-hidden="true">A</span>
+        <span>Agentic Academy<small>Học · Thực thi · Verify</small></span>
+      </a>
+      <div class="header-right">
+        <button class="icon-btn" id="themeBtn" type="button" data-theme-toggle aria-label="Chuyển sang giao diện sáng" aria-pressed="false" title="Giao diện sáng/tối"><span class="theme-ico" aria-hidden="true">☀</span></button>
+        <div class="mini-progress" title="Tiến độ lưu trên trình duyệt này (localStorage)">
+          <div class="mini-bar" aria-hidden="true"><i id="miniBar"></i></div>
+          <b id="miniText">0/7</b>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main id="main">
+    <!-- HERO -->
+    <section class="hero" aria-labelledby="heroTitle">
+      <span class="orb o1" aria-hidden="true"></span>
+      <span class="orb o2" aria-hidden="true"></span>
+      <span class="orb o3" aria-hidden="true"></span>
+      <span class="hero-grid-bg" aria-hidden="true"></span>
+      <div class="container">
+        <span class="hero-eyebrow">Agentic AI · Học + Thực thi</span>
+        <h1 id="heroTitle">Học <span class="grad">AI Agentic</span>.<br>Xây hệ thống thật. Chạy trên mọi IDE.</h1>
+        <p class="hero-sub">7 bài học dạng slide — từ tư duy agent đến một hệ thống hoàn chỉnh chạy được trên <strong>Claude Code</strong>, <strong>VS Code Copilot</strong>, <strong>Codex</strong> và <strong>Antigravity</strong>. Mỗi bài có <strong>kết quả cụ thể</strong>: file nào được tạo, nội dung gì, tiêu chí nào để xem là hoàn thành.</p>
+        <div class="hero-cta">
+          <a class="btn btn-primary" id="continueBtn" href="./slides.html?lesson=k1">Bắt đầu học →</a>
+          <a class="btn btn-ghost" href="#lessons">Xem 7 bài ↓</a>
+        </div>
+        <div class="hero-stats">
+          <span class="stat-chip">📚 <b>7</b> bài học</span>
+          <span class="stat-chip">🖥 <b>~80</b> slides fullscreen</span>
+          <span class="stat-chip">🧰 <b>4</b> IDE chính + chuẩn mở</span>
+          <span class="stat-chip">� Cần: <b>1 project bất kỳ</b> — Bài 1 sẽ chốt folder</span>
+          <span class="stat-chip">💰 <b>Site</b> miễn phí · IDE có thể cần tài khoản riêng</span>
+          <span class="stat-chip">💾 Tiến độ lưu local — F5 không mất</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- HỆ THỐNG ĐÍCH -->
+    <section class="section" id="system" aria-labelledby="sys-title">
+      <div class="container">
+        <div class="section-head">
+          <h2 id="sys-title">Hệ thống bạn sẽ xây</h2>
+          <span class="hint">4 tầng: luật · năng lực · tool · ký ức — hoàn thiện sau Bài 7</span>
+        </div>
+        <div class="sys-wrap">
+          <div class="sys-card" id="sysTree" role="img" aria-label="Cây file hệ thống sẽ xây: AGENTS.md, adapter IDE, skills, MCP, knowleged, evals"></div>
+          <div>
+            <ul class="sys-list">
+              <li><span class="sys-ico" aria-hidden="true">📜</span><div><b>Tầng 1 — Luật (AGENTS.md)</b><span>1 lõi chung + adapter mỏng cho từng IDE. Viết 1 lần, mọi agent đọc cùng luật.</span></div></li>
+              <li><span class="sys-ico" aria-hidden="true">⚡</span><div><b>Tầng 2 — Năng lực (Skills)</b><span>SKILL.md nằm ngủ, load khi cần — mở rộng agent mà không phình context.</span></div></li>
+              <li><span class="sys-ico" aria-hidden="true">🔌</span><div><b>Tầng 3 — Tool (MCP)</b><span>Agent chạm thế giới thật qua MCP server least-privilege (chỉ mở đúng thứ cần): files, web, RAG, DB.</span></div></li>
+              <li><span class="sys-ico" aria-hidden="true">🧪</span><div><b>Tầng 4 — Ký ức & Evals</b><span>knowleged.md (bug → bài học → luật sắc hơn) + evals.md (rubric, tiêu chí done).</span></div></li>
+            </ul>
+            <div class="sys-cap">
+              <span class="cap-chip">✅ Chạy được trên 4 IDE</span>
+              <span class="cap-chip">✅ Có tiêu chí hoàn thành rõ</span>
+              <span class="cap-chip">✅ Copy sang project mới là dùng ngay</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- BÀI HỌC -->
+    <section class="section" id="lessons" aria-labelledby="lessons-title">
+      <div class="container">
+        <div class="section-head">
+          <h2 id="lessons-title">7 bài học</h2>
+          <span class="hint">Vào bài nào cũng được — mỗi bài ghi rõ <strong>Cần trước</strong> nếu có</span>
+        </div>
+        <div class="lesson-grid" id="lessonGrid"></div>
+      </div>
+    </section>
+
+    <!-- TIẾN ĐỘ -->
+    <section class="section" id="progress" aria-labelledby="progress-title">
+      <div class="container">
+        <div class="progress-panel">
+          <div class="ring-wrap">
+            <div class="p-ring-holder">
+              <div class="p-ring" id="ring" aria-hidden="true"></div>
+              <div class="p-ring-num"><b id="ringNum">0/7</b></div>
+            </div>
+            <p class="muted" style="margin:0">Tiến độ lưu trên <b>trình duyệt này</b><br>(localStorage · per-browser)</p>
+          </div>
+          <div>
+            <h2 id="progress-title" style="font-size:19px;margin-bottom:6px">Tiến độ của bạn</h2>
+            <p id="progressText">Đã học <b>0/7</b> bài</p>
+            <div class="bar-outer" role="progressbar" id="progressBar" aria-valuemin="0" aria-valuemax="7" aria-valuenow="0" aria-label="Tiến độ học 7 bài"><i id="barFill"></i></div>
+            <ul class="prog-list" id="progList"></ul>
+            <div class="prog-actions">
+              <a class="btn btn-primary btn-sm" id="continueBtn2" href="./slides.html?lesson=k1">Học tiếp →</a>
+              <button class="btn btn-ghost btn-sm" id="resetBtn" type="button">Đặt lại tiến độ</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container cols">
+      <div style="max-width:340px">
+        <b>Agentic Academy</b> — bởi YUNIE · Harness v2 · 2026-09-12<br><br>
+        Nội dung biên soạn từ corpus 200 files tại <code>docs/ai-agentic-courses/full/</code> + docs chính chủ từng IDE
+        (VS Code, agents.md, Antigravity, Codex) — facts verify ngày 2026-09-12.
+      </div>
+      <div>
+        <b>Nguồn học sâu (free)</b>
+        <ul>
+          <li><a href="https://huggingface.co/learn/agents-course" target="_blank" rel="noopener">Hugging Face — Agents Course</a></li>
+          <li><a href="https://github.com/microsoft/ai-agents-for-beginners" target="_blank" rel="noopener">Microsoft — AI Agents for Beginners</a></li>
+          <li><a href="https://github.com/anthropics/courses" target="_blank" rel="noopener">Anthropic — courses (MCP, tool use)</a></li>
+          <li><a href="https://academy.langchain.com/" target="_blank" rel="noopener">LangChain Academy</a></li>
+        </ul>
+      </div>
+      <div>
+        <b>Ghi chú</b>
+        <ul>
+          <li>Tiến độ: localStorage — per-browser, không sync thiết bị</li>
+          <li>Giao diện <b>sáng/tối</b>: nút ☀/☾ trên header — lưu localStorage</li>
+          <li>0 dependency · không webfont · hoạt động offline</li>
+          <li>Điều hướng: gõ <code>/</code>? Không cần — chỉ cần chuột + ← → khi xem slide</li>
+        </ul>
+      </div>
+    </div>
+  </footer>
+
+  <script src="./store.js"></script>
+  <script src="./diagrams.js"></script>
+  <script src="./lessons.js"></script>
+  <script src="./app.js"></script>
+</body>
+</html>

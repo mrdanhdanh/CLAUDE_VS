@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-12T04:37:13.387Z",
+  "generatedAt": "2026-09-12T04:37:42.716Z",
   "generatedBy": "YUNIE",
   "version": 1,
   "counts": {
@@ -421,7 +421,7 @@
   "health": {
     "errors": 0,
     "status": "ok",
-    "lastCheck": "2026-09-12T04:37:13.387Z",
+    "lastCheck": "2026-09-12T04:37:42.716Z",
     "checks": [
       "get_errors: pass (0 errors)",
       "registry: 18 instructions (18 total) - 19 skills - 9 agents - 7 prompts - 1 hook — all enabled",
@@ -757,7 +757,7 @@
       "deny": 9,
       "allow": 2,
       "status": "ok",
-      "lastCheck": "2026-09-12T04:37:13.242Z"
+      "lastCheck": "2026-09-12T04:37:42.598Z"
     },
     "credentials": {
       "count": 0,
