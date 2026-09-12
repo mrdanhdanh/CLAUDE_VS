@@ -5,9 +5,12 @@
  *   node .github/harness/scripts/cosmic-scale.mjs [--json] [--out www/cosmos/scale.json]
  *   node .github/harness/scripts/cosmic-scale.mjs --budget 10   # Heat Death gate: exit 1 nếu S vượt ngân sách
  *   node .github/harness/scripts/cosmic-scale.mjs --trend 3    # Escape Velocity gate: exit 1 nếu S tăng liên tiếp ≥3 lần đo (chặn theo ĐÀ, khác --budget chặn theo MỨC)
+ *   node .github/harness/scripts/cosmic-scale.mjs --audit <f>  # đo audit từ file khác (test deterministic — không đọc .agent/audit.jsonl)
  * No deps, Node 18+. Idempotent — chỉ đọc, không sửa (trừ file --out).
  * Thang S: low <10 · medium <25 · high >=25
  *   S = mismatch*10 + drafts*5 + refused*2 + disabled*1 + failed*5
+ *   refused = friction THẬT (gate chặn hành vi ngoài ý muốn). Red-team probes (rule=redteam-test,
+ *   actor=redteam-spec do spec tự bắn) đếm riêng — bằng chứng enforcement, KHÔNG tính S (KN-049).
  * Gravity G = cutRatio*10 (scope control — % plans có dòng CẮT/YAGNI) — đối trọng định lượng của scope creep.
  * Capability C = {kn, skills, e2eSpecs, e2eTests, guards} — đối trọng entropy (assets đếm được, không weight — tránh vanity KN-024) + capabilityDelta vs mốc history trước.
  */
@@ -46,6 +49,7 @@ function parseArgs(args) {
   const outIdx = args.indexOf('--out');
   const budgetIdx = args.indexOf('--budget');
   const trendIdx = args.indexOf('--trend');
+  const auditIdx = args.indexOf('--audit');
   let trendN = 3;
   if (trendIdx !== -1 && args[trendIdx + 1] && !args[trendIdx + 1].startsWith('--')) {
     const v = Number(args[trendIdx + 1]);
@@ -57,6 +61,7 @@ function parseArgs(args) {
     budget: budgetIdx !== -1 && args[budgetIdx + 1] ? Number(args[budgetIdx + 1]) : null,
     trendRequested: trendIdx !== -1,
     trendN,
+    auditPath: auditIdx !== -1 && args[auditIdx + 1] ? path.resolve(ROOT, args[auditIdx + 1]) : null,
   };
 }
 
@@ -153,22 +158,27 @@ async function scanKnowledge() {
 }
 
 // 3. audit refused/failed — va chạm chân trời sự kiện
-async function scanAudit() {
-  let refused = 0, failed = 0, auditTotal = 0;
+// Đếm TÁCH LỚP (KN-049): refused thật (friction → S) vs red-team probes (spec tự bắn — bằng chứng
+// enforcement, KHÔNG tính S: mỗi suite run +1 probe sẽ bơm S vô hạn → false escape-velocity gate).
+// source: --audit <file> cho test deterministic; mặc định .agent/audit.jsonl (explicit — không fallback ngầm).
+async function scanAudit(source) {
+  const file = source || AUDIT_PATH;
+  let refused = 0, refusedProbes = 0, failed = 0, auditTotal = 0;
   try {
-    if (existsSync(AUDIT_PATH)) {
-      const lines = (await fs.readFile(AUDIT_PATH, 'utf8')).trim().split('\n').filter(Boolean);
+    if (existsSync(file)) {
+      const lines = (await fs.readFile(file, 'utf8')).trim().split('\n').filter(Boolean);
       auditTotal = lines.length;
       for (const line of lines.slice(-200)) {
         try {
           const e = JSON.parse(line);
-          if (e.decision === 'refused') refused++;
+          const isProbe = e.rule === 'redteam-test' || e.actor === 'redteam-spec';
+          if (e.decision === 'refused') { if (isProbe) refusedProbes++; else refused++; }
           else if (e.decision === 'failed') failed++;
         } catch {}
       }
     }
   } catch {}
-  return { refused, failed, auditTotal };
+  return { refused, refusedProbes, failed, auditTotal };
 }
 
 // 4. black holes — bottleneck đã biết (KN) + dynamic
@@ -307,6 +317,7 @@ function printHuman(result, outPath, trendN) {
   const { G, level: gLevel, plansWithCut, advice: gAdvice } = result.gravity;
   const { M, level: dmLevel, advice: dmAdvice, orphans, disabledGalaxies } = result.darkMatter;
   console.log('🌌 Entropy S=' + S + ' (' + level + ') — mismatch ' + parts.mismatch + ' · drafts ' + parts.drafts + ' · refused ' + parts.refused + ' · disabled ' + parts.disabled + ' · failed ' + parts.failed);
+  if (parts.refusedProbes > 0) console.log('   🧪 red-team probes: ' + parts.refusedProbes + ' refused — bằng chứng enforcement (không tính S — KN-049)');
   console.log('   ' + advice);
   console.log('   💜 dark energy D=' + D + ' (dissent ' + plansWithDissent + '/' + plansTotal + ' plans) — ' + deAdvice);
   console.log('   🧲 gravity G=' + G + ' (' + gLevel + ') — CẮT/YAGNI ' + plansWithCut + '/' + plansTotal + ' plans — ' + gAdvice);
@@ -339,7 +350,7 @@ function runGates({ budget, S, trendRequested, trendN, trend, trendWindow }) {
 
 async function main() {
   const args = process.argv.slice(2);
-  const { asJson, outPath, budget, trendRequested, trendN } = parseArgs(args);
+  const { asJson, outPath, budget, trendRequested, trendN, auditPath } = parseArgs(args);
 
   let registry = {};
   try { registry = JSON.parse(await fs.readFile(REGISTRY_PATH, 'utf8')); }
@@ -357,7 +368,7 @@ async function main() {
   const capability = await measureCapability(knTotal);
 
   // 3. audit refused/failed — va chạm chân trời sự kiện
-  const { refused, failed, auditTotal } = await scanAudit();
+  const { refused, refusedProbes, failed, auditTotal } = await scanAudit(auditPath);
 
   // 4. black holes — bottleneck đã biết (KN) + dynamic
   const blackHoles = buildBlackHoles(missing, failed);
@@ -372,7 +383,7 @@ async function main() {
   const result = {
     generatedAt: new Date().toISOString(),
     generatedBy: 'cosmic-scale.mjs',
-    entropy: { S, level, advice, parts: { mismatch: mismatches.length, drafts, refused, disabled, failed } },
+    entropy: { S, level, advice, parts: { mismatch: mismatches.length, drafts, refused, disabled, failed, refusedProbes } },
     darkEnergy: { D: darkEnergy, dissentRatio: Math.round(dissentRatio * 100) / 100, plansTotal, plansWithDissent, advice: deAdvice },
     gravity: { G: gravity, level: gLevel, cutRatio: Math.round(cutRatio * 100) / 100, plansTotal, plansWithCut, advice: gAdvice },
     darkMatter: { M: darkMatter, level: dmLevel, advice: dmAdvice, orphans, orphanCount: orphans.length, disabledGalaxies: disabled },

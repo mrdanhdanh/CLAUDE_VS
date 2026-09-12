@@ -97,7 +97,7 @@ user-invocable: "true"
 
 - **Dark Energy ↔ Decollaboration:** `D = (1 − dissentRatio) × 10` — plans thiếu Dissent Review (KN-018). Đối trọng: Dissent gate + `fund-the-friction`.
 - **Gravity ↔ Scope control:** `G = cutRatio × 10` — % plans có dòng CẮT/YAGNI. Đối trọng thi hành: `minimal-ladder` (scope creep gộp về đây, không còn gọi là dark energy).
-- **Entropy / Heat death ↔ Tech debt:** không bơm năng lượng (audit + `generate-status` + polish) thì hệ drift tới hỗn loạn. Meter: `S = mismatch×10 + drafts×5 + refused×2 + disabled×1 + failed×5`; gate `--budget <n>` exit 1 khi vượt ngân sách.
+- **Entropy / Heat death ↔ Tech debt:** không bơm năng lượng (audit + `generate-status` + polish) thì hệ drift tới hỗn loạn. Meter: `S = mismatch×10 + drafts×5 + refused×2 + disabled×1 + failed×5` (refused = friction thật; 🧪 red-team probes do spec tự bắn đếm riêng — bằng chứng enforcement, không tính S — KN-049); gate `--budget <n>` exit 1 khi vượt ngân sách.
 - **Black Hole ↔ Bottleneck:** `MSB3027 file lock` (KN-008), `2 workflow giành Pages env` (KN-015) — kỳ dị mà velocity không thoát. Qua event horizon là phải human takeover.
 - **Cosmic web ↔ Entanglement graph:** audit hash + `Entangled with:` vẽ thành filament — `entangle.mjs --file <path>` liệt kê forward/reverse refs; sửa 1 file là biết kéo theo chòm nào.
 - **CMB Anisotropy ↔ knowledge anisotropy:** phân bố KN theo tag × tháng — điểm lạnh (`coldness = bugCount − knCount ≥ 1` → ưu tiên viết KN) + KN 0 tham chiếu trong bugs/plans (fresh <14d chờ · cũ → gộp/xoá). Đo: `auto-learn.mjs stats --heatmap` → mirror `www/cosmos/heatmap.json` + dashboard `scale.html#cmb`.

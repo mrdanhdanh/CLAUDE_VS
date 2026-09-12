@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-12T13:30:13.057Z",
+  "generatedAt": "2026-09-12T13:51:28.188Z",
   "generatedBy": "auto-learn.mjs stats --heatmap",
   "policy": {
     "cold": "bugCount − knCount ≥ 1",
@@ -11,8 +11,8 @@
     "bucket": "YYYY-MM"
   },
   "counts": {
-    "knTotal": 48,
-    "bugTotal": 29,
+    "knTotal": 49,
+    "bugTotal": 30,
     "tags": 101,
     "months": [
       "2026-08",
@@ -20,7 +20,7 @@
     ],
     "coldSpots": 5,
     "zeroRef": 2,
-    "refFiles": 255
+    "refFiles": 256
   },
   "grid": {
     "months": [
@@ -30,10 +30,10 @@
     "rows": [
       {
         "tag": "process",
-        "total": 27,
+        "total": 28,
         "cells": [
           4,
-          23
+          24
         ]
       },
       {
@@ -77,6 +77,14 @@
         ]
       },
       {
+        "tag": "verification",
+        "total": 6,
+        "cells": [
+          0,
+          6
+        ]
+      },
+      {
         "tag": "animation",
         "total": 5,
         "cells": [
@@ -93,11 +101,11 @@
         ]
       },
       {
-        "tag": "verification",
-        "total": 5,
+        "tag": "governance",
+        "total": 4,
         "cells": [
           0,
-          5
+          4
         ]
       },
       {
@@ -133,7 +141,7 @@
         ]
       },
       {
-        "tag": "governance",
+        "tag": "metrics",
         "total": 3,
         "cells": [
           0,
@@ -258,14 +266,6 @@
         "cells": [
           1,
           1
-        ]
-      },
-      {
-        "tag": "metrics",
-        "total": 2,
-        "cells": [
-          0,
-          2
         ]
       },
       {

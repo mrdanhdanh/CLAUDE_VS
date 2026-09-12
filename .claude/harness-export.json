@@ -34,7 +34,7 @@
     ".claude/rules/context-engineering.md": "0d6380fc8c852f43d59fc850d23badfc34763ca127c776055411a07aeb851bff",
     ".claude/rules/cua-safety.md": "1ee4e5ff83de3be6235b36d504a3da7400d4ab5b0ca1308f406369d45b4837d2",
     ".claude/rules/awesome-design.md": "fae43f3fe500c648d21696b1f635b1e7153b3dfbebaa4e5fb0e776e27c4dc544",
-    ".claude/rules/cosmic-quantum.md": "e4d0ab6308a40f33bbae475ecaf6af3f7a907c28d7592242544927888f84af2f",
+    ".claude/rules/cosmic-quantum.md": "6f375fcbc609358877081261e914566570a4079de4725d02d83ffea417cfe2c2",
     ".claude/rules/fund-the-friction.md": "f76b9666077ed1ae952bbe1fd9c900564813256e4993a96f783b7de1455f7184",
     "CLAUDE.md": "258aab78838539adb27afccde311b71fae77ccc0626b248ffa035ccb2fa63b4e",
     ".claude/skills/claude-harness": {
@@ -99,11 +99,11 @@
     },
     ".claude/skills/cosmic-quantum": {
       "dir": true,
-      "digest": "5e6233adfcfd63e8c4bc325c466be893de5bb84f03f5fc0453398f16fcaf6337"
+      "digest": "46a0210de8f9fb84d848ebc118f18ca59c17ef5879e4f23768aef804b1e05155"
     },
     ".claude/skills/cosmic-scale": {
       "dir": true,
-      "digest": "0ab51c3cdc82292e778971c83717e5562933a1cf327bc20c3e07453308735caa"
+      "digest": "16f6037da27b93b640a22935c3ada4e37487320bc5d42882d5e41e49054718b7"
     },
     ".claude/skills/archify": {
       "dir": true,

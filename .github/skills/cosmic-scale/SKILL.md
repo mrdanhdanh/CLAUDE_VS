@@ -27,7 +27,7 @@ npm run cosmos:gate                                          # cả hai gate (--
 npm run cosmos:refresh                                       # refresh graph.json + scale.json + hawking.json + status.json + mirror audit
 ```
 - Đọc `registry.json` vs filesystem → `mismatch` (drift)
-- Đếm `drafts` (bug mở), `refused`/`failed` (audit 200 events gần nhất), `disabled`
+- Đếm `drafts` (bug mở), `refused`/`failed` (audit 200 events gần nhất), `disabled` — **refused = friction thật**; 🧪 red-team probes (`rule=redteam-test`) đếm riêng, không tính S (KN-049)
 - Tính `S = mismatch*10 + drafts*5 + refused*2 + disabled*1 + failed*5`
 - Thang: `low <10` · `medium <25` · `high >=25`
 - Đo theo đà: `scale.json.trend = {increases, needed, gate, window}` — ghi MỌI lần đo (kể cả không `--trend`); `increases` = chuỗi tăng nghiêm ngặt liền kề kết thúc ở điểm hiện tại (1 điểm ngang/giảm = reset) · `history` tối đa 30 điểm

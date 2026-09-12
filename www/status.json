@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-12T13:30:13.555Z",
+  "generatedAt": "2026-09-12T13:51:28.684Z",
   "generatedBy": "YUNIE",
   "version": 1,
   "counts": {
@@ -431,7 +431,7 @@
   "health": {
     "errors": 0,
     "status": "ok",
-    "lastCheck": "2026-09-12T13:30:13.555Z",
+    "lastCheck": "2026-09-12T13:51:28.684Z",
     "checks": [
       "get_errors: pass (0 errors)",
       "registry: 18 instructions (18 total) - 19 skills - 9 agents - 7 prompts - 1 hook — all enabled",
@@ -442,8 +442,8 @@
       "www: polished — responsive 375/768/1280, a11y, states, animation 150-300ms",
       "workflow: www/** -> Pages (upload-artifact path: www) — exists: true + eval job gate",
       "library: www/library/ MCP v1.2.0 (5 tools: search + iterative + list/get/status, router+cache, redacted) + library-rag instruction",
-      "auto-learn: 48 KN, 29 bugs, 0 drafts — suggest/log/propose/status (<50ms, IDF, tiếng Việt)",
-      "governance: audit 86 (Ed25519 receipt P0-4) · policy 9 deny/2 allow (ok) · credentials 0 keys plain",
+      "auto-learn: 49 KN, 30 bugs, 0 drafts — suggest/log/propose/status (<50ms, IDF, tiếng Việt)",
+      "governance: audit 96 (Ed25519 receipt P0-4) · policy 9 deny/2 allow (ok) · credentials 0 keys plain",
       "platform: agents 3 (3 built-in, 0 remote) · mcp 3 vendors/3 grants (library 1.2.0 read-only) · components 3/3 pub · routines 3/3 enabled",
       "collaboration: KN-018 — dissentGate ✅ · whoDidYouThinkWith ✅ · critic ✅ · fund-the-friction ✅ (ok)",
       "n5-blazor: www/n5-blazor/ 7 trang static + app.css + data.js + site.js — 100% Pages"
@@ -663,88 +663,71 @@
     }
   },
   "learn": {
-    "knTotal": 48,
-    "bugsTotal": 29,
+    "knTotal": 49,
+    "bugsTotal": 30,
     "drafts": 0
   },
   "governance": {
     "audit": {
-      "total": 86,
-      "permitted": 77,
-      "refused": 8,
+      "total": 96,
+      "permitted": 84,
+      "refused": 11,
       "failed": 1,
-      "lastTs": "2026-09-12T13:29:46.537Z",
+      "lastTs": "2026-09-12T13:48:40.397Z",
       "tail": [
         {
-          "ts": "2026-09-12T13:26:51.497Z",
+          "ts": "2026-09-12T13:32:48.416Z",
           "actor": "YUNIE",
-          "tool": "edit",
-          "target": ".agent/policy.json (law v4 case-normalize - backlog item 1)",
-          "decision": "refused",
-          "rule": "deny-law-fork",
-          "durationMs": null,
-          "error": null,
-          "intent": "law-hardening-v4",
-          "requestId": "40b54c",
-          "prevHash": "e1feddf9f8fbc09b",
-          "policyDigest": "162346288ec03771",
-          "hash": "7d47e0b5083ad7a8",
-          "sig": "lVQc0mbPXs4fqmBpLPyQbXlTzGyANV42DTYU0xpi1MiejTBNnwEGQ84mjIWdCkaqAgwLUR3o44wK6dsnKw_oBQ",
-          "pub": "MCowBQYDK2VwAyEAY8PlU0KjXp4HJUUlNlVZdaXHUmDagUMm8rUrEShTPXo"
-        },
-        {
-          "ts": "2026-09-12T13:26:51.939Z",
-          "actor": "danh",
-          "tool": "control",
-          "target": "law v4 case-normalize deny rules (backlog item 1) - human directive",
+          "tool": "shell",
+          "target": "CMB Anisotropy shipped: c1aaa44 (feature) + acdc65e (screenshots) - 2a20911..acdc65e, deploy 34696611064 success, live verify 18/18",
           "decision": "permitted",
           "rule": "allow-all",
           "durationMs": null,
           "error": null,
-          "intent": "takeover",
-          "requestId": "eb4cf0",
-          "prevHash": "7d47e0b5083ad7a8",
-          "policyDigest": "162346288ec03771",
-          "hash": "ac3eb61397186cff",
-          "sig": "BLFFGFHCnnwv0_o4tadIjsYD4LXqTvh0s3kzd6ws46Et-2xEmX4zzNb0ZtaZC9YvllEg-uHTt6lQrBnFhKq2Bw",
-          "pub": "MCowBQYDK2VwAyEAY8PlU0KjXp4HJUUlNlVZdaXHUmDagUMm8rUrEShTPXo"
-        },
-        {
-          "ts": "2026-09-12T13:26:55.016Z",
-          "actor": "redteam-spec",
-          "tool": "read",
-          "target": "***",
-          "decision": "refused",
-          "rule": "redteam-test",
-          "durationMs": null,
-          "error": null,
           "intent": null,
-          "requestId": "cad4e9",
-          "prevHash": "ac3eb61397186cff",
-          "policyDigest": "162346288ec03771",
-          "hash": "8bf5a2faa2ff68cf",
-          "sig": "M9cLBnwyE9zHDVdKTP0ERhJPnaytXuV-XP7P4FvOPrhX8GpdBQI-lMQzYCmLCN8tCGKpZXIu4rSmVOFbrdI2BA",
-          "pub": "MCowBQYDK2VwAyEAY8PlU0KjXp4HJUUlNlVZdaXHUmDagUMm8rUrEShTPXo"
-        },
-        {
-          "ts": "2026-09-12T13:28:46.967Z",
-          "actor": "redteam-spec",
-          "tool": "read",
-          "target": "***",
-          "decision": "refused",
-          "rule": "redteam-test",
-          "durationMs": null,
-          "error": null,
-          "intent": null,
-          "requestId": "68fbe7",
-          "prevHash": "8bf5a2faa2ff68cf",
+          "requestId": "b3b775",
+          "prevHash": "a9485a5ba77e3d4a",
           "policyDigest": "190b0de217bf1dda",
-          "hash": "055b6a21793219a8",
-          "sig": "7hC2xorACxJo0cquJND2jspdhgMuKYUz9L3hnrivZ5FmZUVFCqR5hj2p99or_yYStif5N0Nj5ZNTtvp91Q1rCw",
+          "hash": "9e06125bbb8006a4",
+          "sig": "-uPhJVyC1wm9ohRZtbxLnaMjWxeDR6Hd8wqmw__1HJH6obpAt6DHaOx9xqMedBQccaVDhbuWtZHqPSMAC-8cBg",
           "pub": "MCowBQYDK2VwAyEAY8PlU0KjXp4HJUUlNlVZdaXHUmDagUMm8rUrEShTPXo"
         },
         {
-          "ts": "2026-09-12T13:29:46.537Z",
+          "ts": "2026-09-12T13:46:14.399Z",
+          "actor": "YUNIE",
+          "tool": "edit",
+          "target": "cosmic-scale.mjs scanAudit classify red-team probes (KN-049) + --audit flag",
+          "decision": "permitted",
+          "rule": "allow-all",
+          "durationMs": null,
+          "error": null,
+          "intent": null,
+          "requestId": "c082a0",
+          "prevHash": "9e06125bbb8006a4",
+          "policyDigest": "190b0de217bf1dda",
+          "hash": "de250a81379d0ad1",
+          "sig": "Y4w-QoPGJEF5nWkCxTgBy2GpOUVN_8GVlX_oHMKDl5bWpZvgG-d3u2jd_xJ8tCpbFPr6GBKwm1G6Si9PFL4BBQ",
+          "pub": "MCowBQYDK2VwAyEAY8PlU0KjXp4HJUUlNlVZdaXHUmDagUMm8rUrEShTPXo"
+        },
+        {
+          "ts": "2026-09-12T13:46:14.539Z",
+          "actor": "verify",
+          "tool": "edit",
+          "target": "tests/e2e/cosmos-audit-probe.spec.ts (new spec - KN-049 invariant)",
+          "decision": "permitted",
+          "rule": "allow-all",
+          "durationMs": null,
+          "error": null,
+          "intent": null,
+          "requestId": "facfb2",
+          "prevHash": "de250a81379d0ad1",
+          "policyDigest": "190b0de217bf1dda",
+          "hash": "e9a75de11a8ad282",
+          "sig": "keYDlFaFjGpcmXCKqlObxHglByyG_rXu-Z-o6bw9Mj_8AgxS6qhUCQaQXTOT47Tx96jKVTUlJN_gDUPpkjc4AA",
+          "pub": "MCowBQYDK2VwAyEAY8PlU0KjXp4HJUUlNlVZdaXHUmDagUMm8rUrEShTPXo"
+        },
+        {
+          "ts": "2026-09-12T13:46:40.505Z",
           "actor": "redteam-spec",
           "tool": "read",
           "target": "***",
@@ -753,11 +736,28 @@
           "durationMs": null,
           "error": null,
           "intent": null,
-          "requestId": "8d461c",
-          "prevHash": "055b6a21793219a8",
+          "requestId": "8a6bdc",
+          "prevHash": "e9a75de11a8ad282",
           "policyDigest": "190b0de217bf1dda",
-          "hash": "604c49899a3a67bb",
-          "sig": "JyDIdEygnt_S6cTjrrl44tBU4BJkZwNsCUoOdujZoMcNwlK4aED_TZqIjdGrEYfbOw5j86RFlKVaTert7mhCAg",
+          "hash": "ee709f6e416924fc",
+          "sig": "MZBMBmwxZAkdWg1NweS5yk2tkPJQb_zG6o93m-hLN3q8DL6JTidtU-Y1-XToXIwHD7zHQCtdlpEnYM227gfEDw",
+          "pub": "MCowBQYDK2VwAyEAY8PlU0KjXp4HJUUlNlVZdaXHUmDagUMm8rUrEShTPXo"
+        },
+        {
+          "ts": "2026-09-12T13:48:40.397Z",
+          "actor": "redteam-spec",
+          "tool": "read",
+          "target": "***",
+          "decision": "refused",
+          "rule": "redteam-test",
+          "durationMs": null,
+          "error": null,
+          "intent": null,
+          "requestId": "1dbee1",
+          "prevHash": "ee709f6e416924fc",
+          "policyDigest": "190b0de217bf1dda",
+          "hash": "ca6f3d47b65d0d4a",
+          "sig": "27eCd5wVpHv2R-6btsbqzWfvDARkJcOPZtk-V2ehXN77GTUAPMQZjrYGut3m5ZCS1CQDAJy5-80FrtYNUVRtAA",
           "pub": "MCowBQYDK2VwAyEAY8PlU0KjXp4HJUUlNlVZdaXHUmDagUMm8rUrEShTPXo"
         }
       ]
@@ -767,7 +767,7 @@
       "deny": 9,
       "allow": 2,
       "status": "ok",
-      "lastCheck": "2026-09-12T13:30:13.401Z"
+      "lastCheck": "2026-09-12T13:51:28.541Z"
     },
     "credentials": {
       "count": 0,
@@ -830,12 +830,12 @@
   },
   "cosmos": {
     "available": true,
-    "S": 21,
-    "level": "medium",
+    "S": 9,
+    "level": "low",
     "D": 7,
     "G": 4,
     "M": 0,
-    "generatedAt": "2026-09-12T13:30:12.822Z",
-    "points": 18
+    "generatedAt": "2026-09-12T13:51:27.932Z",
+    "points": 20
   }
 }

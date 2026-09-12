@@ -402,7 +402,7 @@
           <div class="card"><h3>🕳️ Black Hole ↔ Bottleneck</h3><p>KN-008 file lock, KN-015 Pages env. Qua event horizon → human takeover, không loop.</p><span class="tag">horizon = takeover</span></div>
           <div class="card"><h3>🐱 Schrödinger ↔ Heisenbug</h3><p>KN-014 import làm treo — quan sát làm đổi kết quả. Lab cosmos #6 demo.</p><span class="tag">đo là đổi</span></div>
         </div>
-        <div class="code-block" style="margin-top:16px">S = mismatch×10 + drafts×5 + refused×2 + disabled×1 + failed×5 · low &lt;10 · medium &lt;25 · high ≥25 · gate: --budget N (mức) / --trend N (đà) — exit 1 · D = (1−dissentRatio)×10 · G = cutRatio×10 · Δx·Δp ≥ ħ/2 ↔ get_errors chính xác thì build mờ</div>
+        <div class="code-block" style="margin-top:16px">S = mismatch×10 + drafts×5 + refused×2 + disabled×1 + failed×5 — <strong>refused = friction thật</strong> (🧪 red-team probes do spec tự bắn đếm riêng, không tính S — KN-049) · low &lt;10 · medium &lt;25 · high ≥25 · gate: --budget N (mức) / --trend N (đà) — exit 1 · D = (1−dissentRatio)×10 · G = cutRatio×10 · Δx·Δp ≥ ħ/2 ↔ get_errors chính xác thì build mờ</div>
       </div>
     </section>
 
@@ -431,6 +431,14 @@
         toast('⚠️ Không tải được scale.json');
       }
     }
+    // red-team probes: bằng chứng enforcement — không tính S (KN-049)
+    function appendProbeRow(partsEl, parts){
+      const probes=parts.refusedProbes ?? 0;
+      if(probes<=0) return;
+      const row=document.createElement('div'); row.className='part';
+      row.innerHTML=`<span>🧪 red-team probes (không tính)</span><b>${probes}</b><i>—</i>`;
+      partsEl.appendChild(row);
+    }
     function render(j){
       const S=j.entropy?.S ?? 0;
       const level=j.entropy?.level || (S<10?'low':S<25?'medium':'high');
@@ -448,6 +456,7 @@
         row.innerHTML=`<span>${labels[k]}</span><b>${v}</b><i>${k==='mismatch'?v*10:k==='drafts'?v*5:k==='refused'?v*2:k==='failed'?v*5:v}</i>`;
         partsEl.appendChild(row);
       }
+      appendProbeRow(partsEl, parts);
       $('#generatedAt').textContent='Đo lúc: '+(j.generatedAt||'—')+' · by '+(j.generatedBy||'—');
       const fb=$('#freshBadge');
       if(fb){
