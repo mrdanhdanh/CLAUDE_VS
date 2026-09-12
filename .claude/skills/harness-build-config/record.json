@@ -5,12 +5,14 @@
     "knowleged": [
       "KN-008",
       "KN-009",
-      "KN-015"
+      "KN-015",
+      "KN-041"
     ],
     "bugs": [
       ".agent/bugs/2026-08-30-dotnet-build-fail-do-file-lock-n5blazor-exe-ang-ch/bug.md",
-      ".agent/bugs/<slug>/bug.md",
-      ".agent/bugs/2026-09-04-pages-deploy-conflict-2-workflows/bug.md"
+      ".agent/bugs/2026-08-30-ai-server-slot-hardcode-tunnel/bug.md",
+      ".agent/bugs/2026-09-04-pages-deploy-conflict-2-workflows/bug.md",
+      ".agent/bugs/2026-09-12-yt-summary-youtube-block-va-dich-no-key/bug.md"
     ]
   },
   "capabilities": [
@@ -23,12 +25,16 @@
     "deploy",
     "ci",
     "workflow",
-    "pages"
+    "pages",
+    "data",
+    "network",
+    "i18n"
   ],
   "evidence": [
     ".agent/bugs/2026-08-30-dotnet-build-fail-do-file-lock-n5blazor-exe-ang-ch/bug.md",
-    ".agent/bugs/<slug>/bug.md",
-    ".agent/bugs/2026-09-04-pages-deploy-conflict-2-workflows/bug.md"
+    ".agent/bugs/2026-08-30-ai-server-slot-hardcode-tunnel/bug.md",
+    ".agent/bugs/2026-09-04-pages-deploy-conflict-2-workflows/bug.md",
+    ".agent/bugs/2026-09-12-yt-summary-youtube-block-va-dich-no-key/bug.md"
   ],
   "checks": [
     {
@@ -50,6 +56,6 @@
   ],
   "gaps": [],
   "verdict": "G-accepted",
-  "generatedAt": "2026-09-11T15:42:43.684Z",
+  "generatedAt": "2026-09-12T06:45:49.731Z",
   "paper": "DisCo arXiv:2609.02749v1 §3.2 (task-agnostic)"
 }

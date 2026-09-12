@@ -1,6 +1,6 @@
 ---
 name: harness-build-config
-description: "Task-agnostic lessons 'Build & Config' chưng cất từ docs/knowleged.md (3 KN: KN-008, KN-009, KN-015) + .agent/bugs/. Use when task chạm build, process, dx, dotnet, config, api, deploy, ci, workflow, pages — áp Cách phòng tránh trước khi code, tránh lặp bug cũ. DisCo-lite, regenerate bằng distill-agnostic.mjs."
+description: "Task-agnostic lessons 'Build & Config' chưng cất từ docs/knowleged.md (4 KN: KN-008, KN-009, KN-015, KN-041) + .agent/bugs/. Use when task chạm build, process, dx, dotnet, config, api, deploy, ci, workflow, pages — áp Cách phòng tránh trước khi code, tránh lặp bug cũ. DisCo-lite, regenerate bằng distill-agnostic.mjs."
 user-invocable: false
 ---
 
@@ -10,11 +10,11 @@ user-invocable: false
 
 ## When to Use
 
-- Task chạm theme **Build & Config** (tags: build, process, dx, dotnet, config, api, deploy, ci, workflow, pages)
+- Task chạm theme **Build & Config** (tags: build, process, dx, dotnet, config, api, deploy, ci, workflow, pages, data, network, i18n)
 - Trước khi code/fix — áp **Cách phòng tránh** ngay để không lặp bug cũ
 - Review/plan — check anti-patterns bên dưới
 
-## Bài học (3 KN)
+## Bài học (4 KN)
 
 ### KN-008 — dotnet build fail MSB3027/MSB3021 do file lock — N5Blazor.exe đang chạy (major)
 - **Bài học:** Trước khi build/test luôn tắt dotnet run đang giữ file — nếu gặp MSB3027 thì Stop-Process PID trên 5251 rồi build lại
@@ -27,7 +27,7 @@ user-invocable: false
 
 ### KN-009 — Slot máy chủ AI không hoạt động (hardcode localhost dev tunnel trong app released) (critical)
 - **Bài học:** Bỏ tunnel URL khỏi repo, server URL là runtime config: env `AI_SERVER_URL` / user-secrets
-- **Bug report:** .agent/bugs/<slug>/bug.md
+- **Bug report:** .agent/bugs/2026-08-30-ai-server-slot-hardcode-tunnel/bug.md
 - **Cách phòng tránh:**
   - 3 tầng config: `appsettings.json` (default code, không secret) / `user-secrets` + env (máy dev) / Docker secret + CI (prod).
   - CI check cấm `localhost|http://` trong `appsettings*`.
@@ -41,6 +41,16 @@ user-invocable: false
   - `eval-gate` ESM `.js` → temp `.mjs` trước `node --check` để robust Node 18/22.
   - Khi thêm workflow mới đụng `www/`, check `grep -r "github-pages" .github/workflows/` trước khi merge.
 
+### KN-041 — YT Summary: mọi lane trích transcript no-key bị chặn + dịch vi fail hàng loạt (major)
+- **Bài học:** 3 lane: browser paste .vtt (guaranteed) + CLI yt-dlp cookies.txt + CI best-effort (secret `YT_COOKIES`); translator chain gtx→clients5→mymemory với breaker **theo host** + parser đa hình (walk đệ quy) + fail-fast quota; sponsor-region detection (marker→return, cap 90s); UI ghi rõ provider + partial
+- **Bug report:** .agent/bugs/2026-09-12-yt-summary-youtube-block-va-dich-no-key/bug.md
+- **Cách phòng tránh:**
+  - **Probe trước khi thiết kế** — mọi giả định network phải có log đo trong `.agent/plans/<task>/verify/` (không đoán — KN-023).
+  - Circuit breaker **luôn key theo host**; parser API ngoài phải đa hình (nhiều shape) và phân biệt "empty response" vs "parse mismatch".
+  - API free: ghi rõ quota/ngày + cách detect hết quota (fail-fast, ghi thời gian reset) — đừng retry mù.
+  - Luôn có 1 lane **không phụ thuộc bên thứ ba** (file input) cho mọi pipeline cần network.
+  - Ghi danh sách lane **đã đo chết** (Invidious/Piped/youtube-transcript-api/cookies-DPAPI) để không thử lại tốn thời gian.
+
 ## Anti-patterns (đừng lặp lại)
 
 - - ❌ Để `dotnet run` chạy rồi `dotnet build` ngay — file lock MSB3027/MSB3021, tốn 17s retry vô ích (KN-008).
@@ -51,6 +61,6 @@ user-invocable: false
 
 ## Nguồn
 
-- `docs/knowleged.md` — KN-008, KN-009, KN-015
+- `docs/knowleged.md` — KN-008, KN-009, KN-015, KN-041
 - Chi tiết đầy đủ: `references/evidence.md` (progressive disclosure)
 - Regenerate: `node .github/harness/scripts/distill-agnostic.mjs`

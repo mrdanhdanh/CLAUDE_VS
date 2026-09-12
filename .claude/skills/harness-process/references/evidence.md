@@ -1,11 +1,15 @@
 # Evidence — harness-process (DisCo arXiv:2609.02749v1 §3.2 (task-agnostic))
 
-> Substrate layer của skill — full text từ docs/knowleged.md. Sinh tự động 2026-09-11T15:42:43.685Z.
+> Substrate layer của skill — full text từ docs/knowleged.md. Sinh tự động 2026-09-12T06:45:49.732Z.
 
-## Bug reports liên quan (2/19 bugs)
+## Bug reports liên quan (6/27 bugs)
 
 - `.agent/bugs/2026-08-30-bug-blindness/bug.md` — Bug: Bug Blindness — mù bug do workaround vô thức + fan bias
+- `.agent/bugs/2026-09-03-rag-export-missing-grounding-chet/bug.md` — Bug: RAG export missing grounding chet
 - `.agent/bugs/2026-09-04-import-mcp-stdio-server-trong-smoke-test-gay-treo-/bug.md` — Bug: Import MCP stdio server trong smoke test gay treo + verify order + regex m flag
+- `.agent/bugs/2026-09-06-archify-skill-port/bug.md` — Bug: Archify skill port — (A) EPERM rename trên Windows + (B) diagram tràn first-screen
+- `.agent/bugs/2026-09-11-ps-5-1-khong-ho-tro-trong-lenh-powershell/bug.md` — Bug: PS 5.1 khong ho tro ?? trong lenh PowerShell
+- `.agent/bugs/2026-09-12-academy-content-not-actionable/bug.md` — Bug — Content 7 bài Agentic Academy "đúng chữ nhưng không chạy được"
 
 ## Full KN details
 
@@ -41,7 +45,7 @@
 ### KN-007 — Thiếu hệ thống tự học hỏi tự động — phải làm tay, dễ quên
 
 - **Ngày:** 2026-08-30
-- **Bug report:** `.agent/bugs/auto-learn/bug.md` (feature, không phải bug — hệ thống tự học)
+- **Bug report:** N/A — feature (không phải bug): hệ thống auto-learn — `.github/harness/scripts/auto-learn.mjs` + instruction + agent (không có bug dir)
 - **Severity:** major
 - **Triệu chứng:** Trước đây mỗi lần code phải nhớ tay `read_file docs/knowleged.md`, mỗi lần lỗi phải nhớ tạo `.agent/bugs/<slug>/bug.md`, mỗi lần fix xong phải nhớ cập nhật `knowleged.md` — dễ quên, dễ lặp bug cũ (KN-002..006 lặp lại vì không check).
 - **Nguyên nhân gốc:**
@@ -85,13 +89,13 @@
 - **Cách sửa:** Áp dụng AAR pattern (Anthropic paper 28/08/2026):
   - Nâng cấp `auto-researcher` skill: thêm benchmark loop (propose 3 → implement → benchmark → keep best).
   - Nâng cấp `systematic-debugging` skill: thêm AAR-style fix benchmark (3 cách fix → benchmark → keep best).
-  - Tạo demo page `www/aar.html` so sánh AAR vs Harness v2.
+  - Tạo demo page `www/aar/index.html` so sánh AAR vs Harness v2.
   - Chi phí: $0 (local scripts) thay vì $4/hour (AAR API inference).
 - **Cách phòng tránh:**
   - Khi có nhiều cách fix/solve (≥2): luôn áp dụng AAR pattern — propose 3 → benchmark → keep best.
   - 3-fix limit vẫn áp dụng (học từ systematic-debugging): nếu cả 3 cách fail → STOP, question architecture.
   - Check **HOW** (cách làm) không chỉ **WHETHER** (pass/fail) — tránh reward hacking.
-  - Log benchmark results vào `.agent/benchmarks/<slug>-benchmark.md`.
+  - Log benchmark results vào `.agent/plans/aar-harness/report-<slug>.md` (qua `auto-researcher.mjs --report`).
   - `auto-researcher.mjs --task "xxx" --report` để chạy full AAR loop.
 - **Tags:** `process` `self-improving` `benchmark` `aar` `automation`
 - **Người ghi:** YUNIE / auto-researcher
@@ -427,6 +431,79 @@
   - Claim "nhanh hơn/tốt hơn" phải kèm số đo — không vibes (KN-019).
 - **Tags:** `process` `verification` `evals` `agentic-patterns`
 - **Người ghi:** YUNIE / auto-learn
+
+---
+
+### KN-039 — PS 5.1 không hỗ trợ `??` — lệnh PowerShell fail parse "Unexpected token"
+
+- **Ngày:** 2026-09-11
+- **Bug report:** `.agent/bugs/2026-09-11-ps-5-1-khong-ho-tro-trong-lenh-powershell/bug.md`
+- **Severity:** major
+- **Triệu chứng:** Lệnh PowerShell fail ngay khi parse: `Unexpected token '??' in expression or statement` (kèm `Missing closing '}'`). Dính 2 lần trong 1 session: (1) verify URL `($code ?? 'NO-RESP')`; (2) kill port 3187 `($p.ProcessName ?? 'unknown')` — lệnh không chạy, phải viết lại + re-run.
+- **Nguyên nhân gốc (5 Whys):**
+  - Why1: Lệnh chứa `??` — null-coalescing, cú pháp PowerShell 7+.
+  - Why2: Máy chạy Windows PowerShell 5.1 (`powershell`) — không hỗ trợ `??`, `?.`, `??=`, ternary `? :`.
+  - Why3: Agent sinh lệnh theo thói quen JS/TS (`??` quen tay) — training data nghiêng cú pháp hiện đại.
+  - Why4: Rule §5d chỉ cấm `&&`, chưa nêu `??`/`?.`/ternary → không có guardrail khi sinh lệnh.
+  - Why5 (Root): Thiếu "PS 5.1 syntax contract" đầy đủ trong rule + chưa có KN → lặp lại cùng lỗi.
+- **Cách sửa:** Rewrite ngay: `($x ?? 'default')` → `if (-not $x) { $x = 'default' }` (hoặc `$y = if ($x) { $x } else { 'default' }`); grep sweep `??` trong ngữ cảnh PowerShell → 0 sót; bổ sung rule §5d + KN-039.
+- **Cách phòng tránh:**
+  - Sinh lệnh PowerShell: chỉ cú pháp 5.1 — `??` → `if (-not ...)`, `?.` → `if ($a -and $a.b)`, ternary → if/else, `&&` → `;`.
+  - `??` trong `.mjs`/Node vẫn hợp lệ — chỉ cấm trong LỆNH PowerShell / `.ps1`.
+  - Gặp `Unexpected token '??'` → viết lại TOÀN lệnh rồi mới re-run, không lặp y nguyên (KN-023).
+  - Trước Done: grep sweep lệnh mới sinh (plan/docs/session) xem còn cú pháp PS 7.
+- **Cập nhật 2026-09-12 (root fix môi trường):** Cài pwsh **7.6.6** user-space — tải zip win-x64 từ GitHub release → extract `%LOCALAPPDATA%\Programs\PowerShell\7.6.6` (ZipFile + Unblock-File, không cần admin) + user PATH; VS Code user settings: `terminal.integrated.defaultProfile.windows` + `automationProfile.windows` = "PowerShell 7". **Đo trên 7.6.6:** `??` ✅ · `&&` ✅ · `?.` ⚠️ — `$var?.prop` (không brace) bị tokenizer nuốt `?` vào tên biến → kết quả sai lặng (`$s='abc'; $s?.Length` → 0, không phải 3); phải viết `${var}?.prop`. `.Length`/`.Count` trên `$null` → 0 (intrinsic) — dễ nhầm với giá trị thật. **Từ PS 5.1 gọi pwsh `-Command` chứa `"` → quote bị nuốt** (native arg mangling — đo được 2 lần) → dùng `-File` hoặc mở terminal pwsh trực tiếp. Contract 5.1 vẫn giữ cho artifact commit repo (portability floor).
+- **Tags:** `process` `dx` `windows` `powershell` `scripts`
+- **Người ghi:** YUNIE / /fixbug
+
+---
+
+### KN-043 — Content "đúng chữ nhưng không chạy": path thiếu prefix IDE + thiếu neo ngữ cảnh + khái niệm bị chấm nhưng chưa dạy
+
+- **Ngày:** 2026-09-12
+- **Bug report:** `.agent/bugs/2026-09-12-academy-content-not-actionable/bug.md` · Review đầy đủ: `.agent/plans/agentic-academy/verify/content-review.md`
+- **Severity:** major
+- **Triệu chứng:** Content review 7 bài Agentic Academy (rubric fresh-eyes + Critic agent độc lập) phát hiện 6 blocker + 10 major — người mới đọc hiểu ~60% "cần làm gì":
+  1. "Tạo `docs/agent-notes.md`" — không nói tạo trong **project nào** (bài đầu tiên, điểm neo quan trọng nhất lại mơ hồ nhất).
+  2. `skills/code-review/SKILL.md` — **thiếu prefix**; làm đúng chữ → folder `skills/` ở root → **không IDE nào đọc** → chính tiêu chí "auto-trigger" fail ngay.
+  3. Bước "review the demo file" — **file không tồn tại** ở đâu trong khóa → bước thực hành bất khả thi.
+  4. "Cài IDE bạn chọn" — không có link tải, không nói cần tài khoản/chi phí, không nói cần Node.js.
+  5. "component/E2E evals", "PRD mini" — **bị chấm trong tiêu chí nhưng chưa từng được dạy**.
+  6. Mâu thuẫn: K2 đòi 1 IDE, K3 criteria + K7 checklist đòi ≥ 2 IDE; homepage "vào bài nào cũng được" mâu thuẫn phụ thuộc thật.
+  7. Tiêu chí "rỗng nghĩa": "không có secret trong config" — đương nhiên đạt vì bài vừa viết config không secret.
+- **Nguyên nhân gốc (5 Whys):**
+  - Why 1: Tác giả tự đọc lại không thấy bug → vì **curse of knowledge**: path `skills/` "hiển nhiên" nằm trong `.github/` với người viết, nhưng người copy chữ nguyên văn thì sai.
+  - Why 2: Tự review không bắt được → vì self-review là thiên vị có hệ thống (KN-023) — cần fresh eyes / Critic **độc lập**.
+  - Why 3: Không có công cụ kiểm cho người mới → vì tiêu chí viết là "đủ nội dung" chứ không phải "làm được" — thiếu checklist 4 câu (Cần trước gì · Làm ở đâu · Bằng gì · Kiểm thế nào).
+  - Why 4 (Root): **Hướng dẫn viết từ góc nhìn người-đã-biết, không từ góc nhìn người-sẽ-làm**; path/khái niệm/yêu cầu xuyên bài không được verify chéo như code được verify.
+- **Cách sửa:** Rubric 6 tiêu chí viết TRƯỚC → Critic agent đọc độc lập (context riêng) → hội tụ findings → sửa: slide "Trước khi bắt đầu — chuẩn bị 3 thứ" + Bước 0 chốt folder "xưởng" (Bài 1); chip **"🧩 Cần trước"** trên cover mọi bài (data `need`) + chip "Cần: 1 project" homepage; path prefix đúng IDE (`.github/skills/…` + biến thể `.agents/`/`.claude/`); link tải 4 IDE official + note tài khoản/free + Node.js 18+; gloss mọi thuật ngữ (state/hybrid/least-privilege/RAG/KN-XXX); chốt "1 IDE bắt buộc, IDE 2 = điểm cộng"; tiêu chí rỗng nghĩa → hành động đo được. Khóa bằng test (chip Cần trước + chip prep homepage): spec 10/10, full suite 70/70.
+- **Cách phòng tránh:**
+  - Mọi hướng dẫn (docs/tutorial/slide) phải trả lời đủ **4 câu**: **Cần trước gì · Làm ở ĐÂU · Làm bằng GÌ · KIỂM bằng gì** — thiếu 1 câu = blocker.
+  - Path trong hướng dẫn phải **copy-chạy được**: prefix đầy đủ theo IDE — viết xong **grep lại từng path** trong bài trước khi ship.
+  - Khái niệm xuất hiện trong tiêu chí/outcome phải được **dạy trước đó hoặc gloss tại chỗ**.
+  - Yêu cầu xuyên bài (số IDE, prereq, path) phải **nhất quán** — grep chéo trước khi ship.
+  - Tiêu chí hoàn thành phải **đo được** (hành động + đối tượng + kết quả quan sát), không "đương nhiên đạt".
+  - Nội dung dạy người mới phải qua **fresh-eyes reader / Critic agent độc lập** TRƯỚC khi ship — như code review (KN-005 áp cho docs).
+- **Tags:** `content` `docs` `verify` `fresh-eyes` `dx`
+- **Người ghi:** YUNIE / /harness + Critic agent
+
+---
+
+### KN-044 — RAG grounding chết khi `export.json` thiếu — nút Xuất sai tên + không seed fallback
+
+- **Ngày:** 2026-09-03
+- **Bug report:** `.agent/bugs/2026-09-03-rag-export-missing-grounding-chet/bug.md`
+- **Severity:** major
+- **Triệu chứng:** `node www/library/search.mjs --status` → "Chưa có export.json"; MCP `search_library` → `isError:true`, thư viện 0 sách, 0 kết quả; chatbot hỏi kiến thức từ sách → không citation, phải bịa hoặc "Không tìm thấy".
+- **Nguyên nhân gốc:** (1) `export.json` gitignore + chỉ sinh khi user bấm Xuất → fresh clone luôn thiếu; (2) nút Xuất tải `library-export-YYYY-MM-DD.json` ≠ tên MCP đọc (`export.json`) → xuất xong vẫn không khớp; (3) không có seed/fallback → RAG fail-closed thành rỗng thay vì degraded-grounding.
+- **Cách sửa:** `doExport` trong `www/library/app.js` tải đúng tên `export.json` (MCP-ready) + lưu full vào localStorage; `search.mjs` + `mcp-server.mjs` thêm fallback `seed.json` (7 sách chatbot-quality, 18 chunks — Meena SSA / Conversation Design / Bot Framework / RAG / AAR / YUNIE playbook) + flag `_seed`; đồng bộ `yunie-personality` v2.1 (§12 RAG Grounding, §13–15).
+- **Cách phòng tránh:**
+  - Grounding phải có **seed tối thiểu trong repo** — RAG không bao giờ "chết trắng" khi thiếu export (degraded, không fail-closed im lặng).
+  - Tên file export = tên consumer đọc (single contract) — đổi một đầu phải grep đầu kia; verify bằng `search --status` + MCP sau khi đổi.
+  - File gitignore (`export.json`) → mọi consumer phải có fallback chain + báo rõ trạng thái seed/thiếu.
+  - **Retrofit note:** bug fixed 2026-09-03 (HIGH confidence) nhưng lesson bị rơi — bug.md ghi "Related KN: KN-013" trong khi KN-013 là chủ đề khác (Ponytail ladder). Audit 2026-09-12 phát hiện thiếu → bổ sung KN-044.
+- **Tags:** `process` `knowledge` `rag` `grounding`
+- **Người ghi:** YUNIE / fixbug (retrofit qua audit 2026-09-12)
 
 <!-- Thêm bài học mới theo template dưới — copy block này -->
 

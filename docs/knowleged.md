@@ -65,14 +65,17 @@
 | KN-041 | 2026-09-12 | YT Summary: mọi lane trích transcript no-key bị YouTube chặn (429/bot-check/IpBlocked) + dịch vi fail 20/35 chunks + gtx retry 14.5s/chunk | YouTube chặn IP server-side (2026: kể cả CI datacenter); Invidious 6 instance + Piped công khai đã chết (0/6); gtx throttle theo IP + không CORS; MyMemory quota ẩn danh ~5k ký tự/ngày/IP; clients5 sống nhưng response shape khác (`[["text","en"]]`) → parser trả rỗng bị coi "empty" + trip circuit breaker **chung** cho cả 2 host | 3 lane: browser paste .vtt (guaranteed) + CLI yt-dlp cookies.txt + CI best-effort (secret `YT_COOKIES`); translator chain gtx→clients5→mymemory với breaker **theo host** + parser đa hình (walk đệ quy) + fail-fast quota; sponsor-region detection (marker→return, cap 90s); UI ghi rõ provider + partial | `api` `data` `ci` `network` `i18n` |
 | KN-042 | 2026-09-12 | YT Summary mobile: bảng bị ẩn/cắt text (560px trong khung 303px), `[hidden]` vô hiệu (detail luôn hiện), card nấp dưới header cố định | Tái dùng tên class toàn cục `.table-wrap` (bị `www/styles.css` `display:none` ở ≤767px) + element rule `table{min-width:560px}` (cho bảng STATUS) áp mọi table; mobile rule `tr{display:block}` đè UA `[hidden]{display:none}`; `scrollIntoView` không trừ header 56px (thiếu scroll-margin) | Namespace class trang (`.yts-table-wrap`) + `.yt-table{min-width:0}`; mobile thêm `tr[hidden]{display:none}`; `scroll-margin-top:72px` cho section; test invariant: `table.scrollWidth≤clientWidth`, `.seg-row` visible+height>20, `.seg-detail:not([hidden])`=0, card `y≥48` | `ui` `css` `responsive` `a11y` |
 | KN-043 | 2026-09-12 | Content 7 bài Agentic Academy "đúng chữ nhưng không chạy": path `skills/…` thiếu prefix IDE (không IDE nào đọc), không neo folder làm việc, khái niệm bị chấm nhưng chưa dạy (component/E2E evals, "PRD mini"), mâu thuẫn 1 vs ≥2 IDE giữa các bài | Tác giả viết từ góc nhìn đã-biết (curse of knowledge) — path "hiển nhiên" với người viết nhưng sai với người copy; tự review là thiên vị (KN-023); thiếu rubric "4 câu hỏi người mới"; path/khái niệm không verify chéo như code | Content review fresh-eyes + Critic agent độc lập: rubric 6 tiêu chí viết trước → sửa 6 blocker + 10 major (slide "Trước khi bắt đầu" + chip "Cần trước" mọi bài, path prefix đúng IDE, link tải 4 IDE + Node.js, gloss thuật ngữ, tiêu chí đo được) → khóa bằng test (10/10 + full suite 70/70) | `content` `docs` `verify` `fresh-eyes` `dx` |
+| KN-044 | 2026-09-03 | RAG grounding "chết" khi `export.json` thiếu — nút Xuất tải sai tên + không có seed fallback (retrofit 2026-09-12) | `export.json` gitignore + chỉ tạo khi bấm Xuất; nút Xuất ra `library-export-YYYY-MM-DD.json` ≠ tên MCP đọc; không fallback → fresh clone search/MCP rỗng, chatbot phải bịa | Export đúng tên `export.json` (MCP-ready) + `seed.json` fallback chain trong `search.mjs`/`mcp-server.mjs` — RAG luôn có grounding tối thiểu | `process` `knowledge` `rag` `grounding` |
 
-> Dòng ví dụ trên sẽ bị thay khi có bug thật đầu tiên — giữ format.
+> KN-001 là **dòng định dạng mẫu** — giữ làm tham chiếu format (auto-learn/status/registry trỏ tới); bài học thật bắt đầu từ KN-002.
 
 ---
 
 ## Chi tiết bài học
 
-### KN-001 — Ví dụ: Modal không đóng khi bấm ESC
+### KN-001 — Định dạng mẫu: Modal không đóng khi bấm ESC
+
+> ⚠️ **Mục mẫu định dạng** — không phải bug thật (không có `.agent/bugs/2026-08-29-modal-esc/`). Giữ để tham chiếu format + tương thích references. Bài học thật: KN-002+.
 
 - **Ngày:** 2026-08-29
 - **Bug report:** `.agent/bugs/2026-08-29-modal-esc/bug.md`
@@ -179,7 +182,7 @@
 ### KN-007 — Thiếu hệ thống tự học hỏi tự động — phải làm tay, dễ quên
 
 - **Ngày:** 2026-08-30
-- **Bug report:** `.agent/bugs/auto-learn/bug.md` (feature, không phải bug — hệ thống tự học)
+- **Bug report:** N/A — feature (không phải bug): hệ thống auto-learn — `.github/harness/scripts/auto-learn.mjs` + instruction + agent (không có bug dir)
 - **Severity:** major
 - **Triệu chứng:** Trước đây mỗi lần code phải nhớ tay `read_file docs/knowleged.md`, mỗi lần lỗi phải nhớ tạo `.agent/bugs/<slug>/bug.md`, mỗi lần fix xong phải nhớ cập nhật `knowleged.md` — dễ quên, dễ lặp bug cũ (KN-002..006 lặp lại vì không check).
 - **Nguyên nhân gốc:**
@@ -242,7 +245,7 @@
 ### KN-009 — Slot máy chủ AI không hoạt động (hardcode localhost dev tunnel trong app released)
 
 - **Ngày:** 2026-08-30
-- **Bug report:** _(chưa có `.agent/bugs/<slug>/bug.md` — ghi trực tiếp vào Bảng tóm tắt, cần bổ sung qua `auto-learn log`)_
+- **Bug report:** `.agent/bugs/2026-08-30-ai-server-slot-hardcode-tunnel/bug.md` (retrofit 2026-09-12 — bổ sung record còn thiếu)
 - **Severity:** critical
 - **Triệu chứng:** App deploy ra môi trường thật vẫn gọi `localhost:5050` — slot máy chủ AI không hoạt động. Dev chạy server local thì "chạy tốt" → bug chỉ lộ khi rời máy dev.
 - **Nguyên nhân gốc:** Hardcode URL tunnel dev (`http://localhost:5050` / tunnel) vào `appsettings.json` + `Program.cs`. Build-time config gắn vào binary → publish sang máy khác là sai value vĩnh viễn.
@@ -269,13 +272,13 @@
 - **Cách sửa:** Áp dụng AAR pattern (Anthropic paper 28/08/2026):
   - Nâng cấp `auto-researcher` skill: thêm benchmark loop (propose 3 → implement → benchmark → keep best).
   - Nâng cấp `systematic-debugging` skill: thêm AAR-style fix benchmark (3 cách fix → benchmark → keep best).
-  - Tạo demo page `www/aar.html` so sánh AAR vs Harness v2.
+  - Tạo demo page `www/aar/index.html` so sánh AAR vs Harness v2.
   - Chi phí: $0 (local scripts) thay vì $4/hour (AAR API inference).
 - **Cách phòng tránh:**
   - Khi có nhiều cách fix/solve (≥2): luôn áp dụng AAR pattern — propose 3 → benchmark → keep best.
   - 3-fix limit vẫn áp dụng (học từ systematic-debugging): nếu cả 3 cách fail → STOP, question architecture.
   - Check **HOW** (cách làm) không chỉ **WHETHER** (pass/fail) — tránh reward hacking.
-  - Log benchmark results vào `.agent/benchmarks/<slug>-benchmark.md`.
+  - Log benchmark results vào `.agent/plans/aar-harness/report-<slug>.md` (qua `auto-researcher.mjs --report`).
   - `auto-researcher.mjs --task "xxx" --report` để chạy full AAR loop.
 - **Tags:** `process` `self-improving` `benchmark` `aar` `automation`
 - **Người ghi:** YUNIE / auto-researcher
@@ -987,6 +990,22 @@
 - **Tags:** `content` `docs` `verify` `fresh-eyes` `dx`
 - **Người ghi:** YUNIE / /harness + Critic agent
 
+### KN-044 — RAG grounding chết khi `export.json` thiếu — nút Xuất sai tên + không seed fallback
+
+- **Ngày:** 2026-09-03
+- **Bug report:** `.agent/bugs/2026-09-03-rag-export-missing-grounding-chet/bug.md`
+- **Severity:** major
+- **Triệu chứng:** `node www/library/search.mjs --status` → "Chưa có export.json"; MCP `search_library` → `isError:true`, thư viện 0 sách, 0 kết quả; chatbot hỏi kiến thức từ sách → không citation, phải bịa hoặc "Không tìm thấy".
+- **Nguyên nhân gốc:** (1) `export.json` gitignore + chỉ sinh khi user bấm Xuất → fresh clone luôn thiếu; (2) nút Xuất tải `library-export-YYYY-MM-DD.json` ≠ tên MCP đọc (`export.json`) → xuất xong vẫn không khớp; (3) không có seed/fallback → RAG fail-closed thành rỗng thay vì degraded-grounding.
+- **Cách sửa:** `doExport` trong `www/library/app.js` tải đúng tên `export.json` (MCP-ready) + lưu full vào localStorage; `search.mjs` + `mcp-server.mjs` thêm fallback `seed.json` (7 sách chatbot-quality, 18 chunks — Meena SSA / Conversation Design / Bot Framework / RAG / AAR / YUNIE playbook) + flag `_seed`; đồng bộ `yunie-personality` v2.1 (§12 RAG Grounding, §13–15).
+- **Cách phòng tránh:**
+  - Grounding phải có **seed tối thiểu trong repo** — RAG không bao giờ "chết trắng" khi thiếu export (degraded, không fail-closed im lặng).
+  - Tên file export = tên consumer đọc (single contract) — đổi một đầu phải grep đầu kia; verify bằng `search --status` + MCP sau khi đổi.
+  - File gitignore (`export.json`) → mọi consumer phải có fallback chain + báo rõ trạng thái seed/thiếu.
+  - **Retrofit note:** bug fixed 2026-09-03 (HIGH confidence) nhưng lesson bị rơi — bug.md ghi "Related KN: KN-013" trong khi KN-013 là chủ đề khác (Ponytail ladder). Audit 2026-09-12 phát hiện thiếu → bổ sung KN-044.
+- **Tags:** `process` `knowledge` `rag` `grounding`
+- **Người ghi:** YUNIE / fixbug (retrofit qua audit 2026-09-12)
+
 <!-- Thêm bài học mới theo template dưới — copy block này -->
 
 <!--
@@ -1117,6 +1136,8 @@
 - ❌ Dạy quy trình dùng thuật ngữ chỉ xuất hiện ở tiêu chí/outcome (component/E2E evals, "PRD mini") mà chưa từng định nghĩa — người đọc không tự chấm được (KN-043).
 - ❌ Yêu cầu xuyên bài không nhất quán (bài 2 đòi 1 IDE, bài 3 đòi 2 IDE) hoặc marketing copy mâu thuẫn thực tế ("vào bài nào cũng được" khi các bài có phụ thuộc) (KN-043).
 - ❌ Tiêu chí hoàn thành "rỗng nghĩa" — đương nhiên đạt nếu làm đúng bước trước, không phân biệt được người đã làm với người chưa (KN-043).
+- ❌ RAG/grounding phụ thuộc file gitignore (`export.json`) mà không có seed/fallback — fresh clone là grounding chết, chatbot bịa (KN-044).
+- ❌ Tên file export lệch tên consumer đọc (`library-export-*.json` vs `export.json`) — xuất xong vẫn không ai đọc được (KN-044).
 
 ## Checklist phòng tránh chung
 
@@ -1205,6 +1226,7 @@
 - [ ] Path trong hướng dẫn là path đầy đủ IDE đọc được (copy-chạy) + đã grep lại từng path? (KN-043)
 - [ ] Thuật ngữ trong tiêu chí/outcome đã được dạy trước hoặc gloss tại chỗ; tiêu chí đo được (không "rỗng nghĩa")? (KN-043)
 - [ ] Yêu cầu xuyên bài (số IDE, prereq) nhất quán; nội dung dạy người mới đã qua fresh-eyes/Critic độc lập TRƯỚC khi ship? (KN-043 + KN-005)
+- [ ] RAG có seed/fallback khi thiếu `export.json` chưa? Tên export khớp consumer đọc chưa? (KN-044)
 
 *File này do `/fixbug` tự động cập nhật. Mọi luồng khác phải đọc để không lặp lại lỗi cũ.*
-*UpdatedAt: 2026-09-12T15:30:00Z — Maintained by YUNIE / Harness v2 — KN-043 added (Content "đúng chữ nhưng không chạy": path `skills/…` thiếu prefix IDE + không neo folder làm việc + khái niệm bị chấm nhưng chưa dạy — content review fresh-eyes + Critic agent 7 bài Agentic Academy, sửa 6 blocker + 10 major, rubric "4 câu hỏi người mới" + chip "Cần trước"; review `.agent/plans/agentic-academy/verify/content-review.md`) — KN-042 added (YT Summary mobile CSS toàn cục đè trang mới: `.table-wrap` bị `www/styles.css` ẩn ≤767px + `table{min-width:560px}` + mobile `tr{display:block}` đè `[hidden]` + thiếu scroll-margin dưới header cố định — namespace `.yts-*` + invariant test; bug `.agent/bugs/2026-09-12-yt-summary-css-global-collision/`) — KN-041 added (YT Summary: YouTube chặn mọi lane no-key 2026 — 429/bot-check/IpBlocked + Invidious 0/6 + gtx no-CORS/throttle + MyMemory 5k chars/day + clients5 shape `[[text,lang]]` làm parser rỗng & breaker chung che mất — 3 lane + breaker theo host + parser đa hình + sponsor-region; bug `.agent/bugs/2026-09-12-yt-summary-youtube-block-va-dich-no-key/`; feature `www/yt-summary/` + 14 test + workflow `.github/workflows/yt-summary.yml`)*
+*UpdatedAt: 2026-09-12T06:50:00Z — Maintained by YUNIE / Harness v2 — KN-044 added (retrofit qua audit: RAG grounding chết khi `export.json` thiếu — nút Xuất sai tên + không seed fallback; bug 2026-09-03 trước đó chưa từng được ghi KN; kèm fix dead refs KN-007/009/016/017 + path KN-010 + note KN-001; UpdatedAt cũ 15:30Z là timestamp tương lai → sửa về giờ thực) — KN-043 added (Content "đúng chữ nhưng không chạy": path `skills/…` thiếu prefix IDE + không neo folder làm việc + khái niệm bị chấm nhưng chưa dạy — content review fresh-eyes + Critic agent 7 bài Agentic Academy, sửa 6 blocker + 10 major, rubric "4 câu hỏi người mới" + chip "Cần trước"; review `.agent/plans/agentic-academy/verify/content-review.md`) — KN-042 added (YT Summary mobile CSS toàn cục đè trang mới: `.table-wrap` bị `www/styles.css` ẩn ≤767px + `table{min-width:560px}` + mobile `tr{display:block}` đè `[hidden]` + thiếu scroll-margin dưới header cố định — namespace `.yts-*` + invariant test; bug `.agent/bugs/2026-09-12-yt-summary-css-global-collision/`) — KN-041 added (YT Summary: YouTube chặn mọi lane no-key 2026 — 429/bot-check/IpBlocked + Invidious 0/6 + gtx no-CORS/throttle + MyMemory 5k chars/day + clients5 shape `[[text,lang]]` làm parser rỗng & breaker chung che mất — 3 lane + breaker theo host + parser đa hình + sponsor-region; bug `.agent/bugs/2026-09-12-yt-summary-youtube-block-va-dich-no-key/`; feature `www/yt-summary/` + 14 test + workflow `.github/workflows/yt-summary.yml`)*

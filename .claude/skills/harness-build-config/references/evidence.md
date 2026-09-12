@@ -1,11 +1,13 @@
 # Evidence — harness-build-config (DisCo arXiv:2609.02749v1 §3.2 (task-agnostic))
 
-> Substrate layer của skill — full text từ docs/knowleged.md. Sinh tự động 2026-09-11T15:42:43.678Z.
+> Substrate layer của skill — full text từ docs/knowleged.md. Sinh tự động 2026-09-12T06:45:49.724Z.
 
-## Bug reports liên quan (2/19 bugs)
+## Bug reports liên quan (4/27 bugs)
 
+- `.agent/bugs/2026-08-30-ai-server-slot-hardcode-tunnel/bug.md` — Bug: Slot máy chủ AI không hoạt động — hardcode localhost dev tunnel trong app released
 - `.agent/bugs/2026-08-30-dotnet-build-fail-do-file-lock-n5blazor-exe-ang-ch/bug.md` — Bug: dotnet build fail do file lock N5Blazor.exe đang chạy
 - `.agent/bugs/2026-09-04-pages-deploy-conflict-2-workflows/bug.md` — Bug: pages deploy conflict 2 workflows
+- `.agent/bugs/2026-09-12-yt-summary-youtube-block-va-dich-no-key/bug.md` — Bug: YT Summary — mọi lane trích transcript no-key bị chặn + dịch vi fail hàng loạt
 
 ## Full KN details
 
@@ -47,7 +49,7 @@
 ### KN-009 — Slot máy chủ AI không hoạt động (hardcode localhost dev tunnel trong app released)
 
 - **Ngày:** 2026-08-30
-- **Bug report:** _(chưa có `.agent/bugs/<slug>/bug.md` — ghi trực tiếp vào Bảng tóm tắt, cần bổ sung qua `auto-learn log`)_
+- **Bug report:** `.agent/bugs/2026-08-30-ai-server-slot-hardcode-tunnel/bug.md` (retrofit 2026-09-12 — bổ sung record còn thiếu)
 - **Severity:** critical
 - **Triệu chứng:** App deploy ra môi trường thật vẫn gọi `localhost:5050` — slot máy chủ AI không hoạt động. Dev chạy server local thì "chạy tốt" → bug chỉ lộ khi rời máy dev.
 - **Nguyên nhân gốc:** Hardcode URL tunnel dev (`http://localhost:5050` / tunnel) vào `appsettings.json` + `Program.cs`. Build-time config gắn vào binary → publish sang máy khác là sai value vĩnh viễn.
@@ -80,3 +82,27 @@
   - Khi thêm workflow mới đụng `www/`, check `grep -r "github-pages" .github/workflows/` trước khi merge.
 - **Tags:** `build` `deploy` `ci` `workflow` `pages`
 - **Người ghi:** YUNIE / fixbug
+
+---
+
+### KN-041 — YT Summary: mọi lane trích transcript no-key bị chặn + dịch vi fail hàng loạt
+
+- **Ngày:** 2026-09-12
+- **Bug report:** `.agent/bugs/2026-09-12-yt-summary-youtube-block-va-dich-no-key/bug.md`
+- **Severity:** major
+- **Triệu chứng:** Build không lấy được phụ đề qua bất kỳ lane server-side nào; khi build bằng file .vtt thì dịch fail 20/35 chunks và chạy chậm bất thường (gtx retry 14.5s/chunk).
+- **Nguyên nhân gốc (5 Whys):**
+  - Why1: YouTube chặn mọi request server-side không cookie từ IP này: watch-page **429**, yt-dlp **"Sign in to confirm you're not a bot"**, youtube-transcript-api **IpBlocked** (chính lib cảnh báo IP cloud).
+  - Why2: Relay công khai đã chết: Invidious **0/6 sống**, Piped **403** — hướng "public instance miễn phí" không còn đáng tin (2026).
+  - Why3: Translator no-key có giới hạn thật: gtx **throttle theo IP** + **không CORS**; MyMemory **quota ~5.000 ký tự/ngày/IP** (hết sau ~2 video, reset ~5h); cookies browser: Edge **DB locked** (browser đang mở), Chrome **DPAPI/ABE** (cần cookies.txt export).
+  - Why4: clients5 (`clients5.google.com`) **vẫn sống** nhưng response shape khác gtx — `[["text","en"]]` (cặp string, không phải nested pairs) → parser cũ trả `''` → bị coi "empty response" → **trip circuit breaker dùng chung** cho cả 2 host → các chunk sau bỏ luôn clients5 dù nó sống.
+  - Why5 (Root): Thiết kế dựa trên giả định "scrape/dịch free dễ" — **không đo trước**, không tách breaker theo host, không có lane guaranteed độc lập network.
+- **Cách sửa:** Kiến trúc 3 lane — (1) **browser paste .vtt** xử lý tại chỗ + dịch MyMemory (CORS ✓) = guaranteed; (2) **CLI yt-dlp** + cookies.txt/cookies browser; (3) **CI best-effort** + secret `YT_COOKIES`. Translator chain `gtx → clients5 → mymemory`, breaker **theo host** (2→15 phút), parser đa hình (walk đệ quy), chunk 900 ký tự, fail-fast khi MyMemory hết quota (parse `responseDetails`). Cleaning thêm **sponsor-region detection** (marker → return marker, cap 90s). UI/help nói thật bằng chứng + chip provider + cảnh báo partial.
+- **Cách phòng tránh:**
+  - **Probe trước khi thiết kế** — mọi giả định network phải có log đo trong `.agent/plans/<task>/verify/` (không đoán — KN-023).
+  - Circuit breaker **luôn key theo host**; parser API ngoài phải đa hình (nhiều shape) và phân biệt "empty response" vs "parse mismatch".
+  - API free: ghi rõ quota/ngày + cách detect hết quota (fail-fast, ghi thời gian reset) — đừng retry mù.
+  - Luôn có 1 lane **không phụ thuộc bên thứ ba** (file input) cho mọi pipeline cần network.
+  - Ghi danh sách lane **đã đo chết** (Invidious/Piped/youtube-transcript-api/cookies-DPAPI) để không thử lại tốn thời gian.
+- **Tags:** `api` `data` `ci` `network` `i18n`
+- **Người ghi:** YUNIE / /harness

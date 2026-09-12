@@ -14,7 +14,10 @@
       "KN-029",
       "KN-030",
       "KN-031",
-      "KN-032"
+      "KN-032",
+      "KN-038",
+      "KN-040",
+      "KN-042"
     ],
     "bugs": [
       ".agent/bugs/2026-08-29-modal-esc/bug.md",
@@ -28,7 +31,10 @@
       ".agent/bugs/2026-09-10-google-fonts-chan-script-intro-khong-hien/bug.md",
       ".agent/bugs/2026-09-10-observatory-fetch-404-ngoai-www-va-relative-url/bug.md",
       ".agent/bugs/2026-09-10-edge-pc-khong-thay-hieu-ung-intro-reduced-motion/bug.md",
-      ".agent/bugs/2026-09-10-raf-callback-error-khong-bi-try-catch-bat/bug.md"
+      ".agent/bugs/2026-09-10-raf-callback-error-khong-bi-try-catch-bat/bug.md",
+      ".agent/bugs/2026-09-11-cosmos-page-lech-tai-lieu-no-signaling-born-rule-d/bug.md",
+      ".agent/bugs/2026-09-12-cosmos-reveal-hover-relative-url/bug.md",
+      ".agent/bugs/2026-09-12-yt-summary-css-global-collision/bug.md"
     ]
   },
   "capabilities": [
@@ -58,7 +64,10 @@
     "url",
     "reduced-motion",
     "edge",
-    "error-handling"
+    "error-handling",
+    "docs",
+    "physics",
+    "content-drift"
   ],
   "evidence": [
     ".agent/bugs/2026-08-29-modal-esc/bug.md",
@@ -72,7 +81,10 @@
     ".agent/bugs/2026-09-10-google-fonts-chan-script-intro-khong-hien/bug.md",
     ".agent/bugs/2026-09-10-observatory-fetch-404-ngoai-www-va-relative-url/bug.md",
     ".agent/bugs/2026-09-10-edge-pc-khong-thay-hieu-ung-intro-reduced-motion/bug.md",
-    ".agent/bugs/2026-09-10-raf-callback-error-khong-bi-try-catch-bat/bug.md"
+    ".agent/bugs/2026-09-10-raf-callback-error-khong-bi-try-catch-bat/bug.md",
+    ".agent/bugs/2026-09-11-cosmos-page-lech-tai-lieu-no-signaling-born-rule-d/bug.md",
+    ".agent/bugs/2026-09-12-cosmos-reveal-hover-relative-url/bug.md",
+    ".agent/bugs/2026-09-12-yt-summary-css-global-collision/bug.md"
   ],
   "checks": [
     {
@@ -94,6 +106,6 @@
   ],
   "gaps": [],
   "verdict": "G-accepted",
-  "generatedAt": "2026-09-11T15:42:43.701Z",
+  "generatedAt": "2026-09-12T06:45:49.750Z",
   "paper": "DisCo arXiv:2609.02749v1 §3.2 (task-agnostic)"
 }

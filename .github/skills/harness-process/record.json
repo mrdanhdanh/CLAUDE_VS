@@ -19,11 +19,14 @@
       "KN-034",
       "KN-035",
       "KN-036",
-      "KN-037"
+      "KN-037",
+      "KN-039",
+      "KN-043",
+      "KN-044"
     ],
     "bugs": [
       ".agent/bugs/2026-08-30-bug-blindness/bug.md",
-      ".agent/bugs/auto-learn/bug.md",
+      ".github/harness/scripts/auto-learn.mjs",
       ".agent/bugs/2026-09-04-import-mcp-stdio-server-trong-smoke-test-gay-treo-/bug.md",
       ".agent/bugs/2026-09-06-archify-skill-port/bug.md",
       "docs/llm-weakness-research.md",
@@ -35,7 +38,10 @@
       "www/library/export.json",
       "www/library/export.json",
       "www/library/export.json",
-      "books/Andrew-Ng-Agentic-AI-Playbook-2026-Distilled.md"
+      "books/Andrew-Ng-Agentic-AI-Playbook-2026-Distilled.md",
+      ".agent/bugs/2026-09-11-ps-5-1-khong-ho-tro-trong-lenh-powershell/bug.md",
+      ".agent/bugs/2026-09-12-academy-content-not-actionable/bug.md",
+      ".agent/bugs/2026-09-03-rag-export-missing-grounding-chet/bug.md"
     ]
   },
   "capabilities": [
@@ -84,11 +90,19 @@
     "architecture",
     "playbook",
     "evals",
-    "agentic-patterns"
+    "agentic-patterns",
+    "powershell",
+    "scripts",
+    "content",
+    "docs",
+    "verify",
+    "fresh-eyes",
+    "rag",
+    "grounding"
   ],
   "evidence": [
     ".agent/bugs/2026-08-30-bug-blindness/bug.md",
-    ".agent/bugs/auto-learn/bug.md",
+    ".github/harness/scripts/auto-learn.mjs",
     ".agent/bugs/2026-09-04-import-mcp-stdio-server-trong-smoke-test-gay-treo-/bug.md",
     ".agent/bugs/2026-09-06-archify-skill-port/bug.md",
     "docs/llm-weakness-research.md",
@@ -100,7 +114,10 @@
     "www/library/export.json",
     "www/library/export.json",
     "www/library/export.json",
-    "books/Andrew-Ng-Agentic-AI-Playbook-2026-Distilled.md"
+    "books/Andrew-Ng-Agentic-AI-Playbook-2026-Distilled.md",
+    ".agent/bugs/2026-09-11-ps-5-1-khong-ho-tro-trong-lenh-powershell/bug.md",
+    ".agent/bugs/2026-09-12-academy-content-not-actionable/bug.md",
+    ".agent/bugs/2026-09-03-rag-export-missing-grounding-chet/bug.md"
   ],
   "checks": [
     {
@@ -122,6 +139,6 @@
   ],
   "gaps": [],
   "verdict": "G-accepted",
-  "generatedAt": "2026-09-11T15:42:43.693Z",
+  "generatedAt": "2026-09-12T06:45:49.740Z",
   "paper": "DisCo arXiv:2609.02749v1 §3.2 (task-agnostic)"
 }

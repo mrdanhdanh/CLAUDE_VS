@@ -1,23 +1,29 @@
 # Evidence — harness-web-ui (DisCo arXiv:2609.02749v1 §3.2 (task-agnostic))
 
-> Substrate layer của skill — full text từ docs/knowleged.md. Sinh tự động 2026-09-11T15:42:43.694Z.
+> Substrate layer của skill — full text từ docs/knowleged.md. Sinh tự động 2026-09-12T06:45:49.741Z.
 
-## Bug reports liên quan (10/19 bugs)
+## Bug reports liên quan (14/27 bugs)
 
 - `.agent/bugs/2026-08-29-rainbow-animated/bug.md` — Bug: Rainbow border không xoay (animated)
 - `.agent/bugs/2026-08-29-status-ui/bug.md` — Bug: Trang STATUS www/ giao diện chưa hợp lý — layout, responsive, registry render sai
 - `.agent/bugs/2026-08-30-grid2-rainbow-hover/bug.md` — Bug — grid-2 spacing + rainbow border không xoay khi hover
 - `.agent/bugs/2026-08-30-n5-ui-polish/bug.md` — 2026-08-30-n5-ui-polish
 - `.agent/bugs/2026-08-31-random-step-btn-disabled/bug.md` — Bug: Random làm disable nút ▶ Bước tiếp theo (Bài 004 & 005)
+- `.agent/bugs/2026-09-06-archify-skill-port/bug.md` — Bug: Archify skill port — (A) EPERM rename trên Windows + (B) diagram tràn first-screen
 - `.agent/bugs/2026-09-10-edge-pc-khong-thay-hieu-ung-intro-reduced-motion/bug.md` — Bug: edge-pc-khong-thay-hieu-ung-intro-reduced-motion
 - `.agent/bugs/2026-09-10-google-fonts-chan-script-intro-khong-hien/bug.md` — Bug: google-fonts-chan-script-intro-khong-hien
 - `.agent/bugs/2026-09-10-intro-burst-tu-goc-do-quen-goi-resize/bug.md` — Bug: intro-burst-tu-goc-do-quen-goi-resize
 - `.agent/bugs/2026-09-10-observatory-fetch-404-ngoai-www-va-relative-url/bug.md` — Bug: observatory-fetch-404-ngoai-www-va-relative-url
 - `.agent/bugs/2026-09-10-raf-callback-error-khong-bi-try-catch-bat/bug.md` — Bug: raf-callback-error-khong-bi-try-catch-bat
+- `.agent/bugs/2026-09-11-cosmos-page-lech-tai-lieu-no-signaling-born-rule-d/bug.md` — Bug: cosmos page lech tai lieu (no-signaling + born rule + dark energy v2)
+- `.agent/bugs/2026-09-12-cosmos-reveal-hover-relative-url/bug.md` — Bug — Cosmos rework: reveal chết ở element > viewport + hover bị reveal đè + `./x` 404 khi URL không slash
+- `.agent/bugs/2026-09-12-yt-summary-css-global-collision/bug.md` — Bug: YT Summary — CSS toàn cục đè trang mới (bảng bị ẩn/cắt, [hidden] vô hiệu, card nấp dưới header)
 
 ## Full KN details
 
-### KN-001 — Ví dụ: Modal không đóng khi bấm ESC
+### KN-001 — Định dạng mẫu: Modal không đóng khi bấm ESC
+
+> ⚠️ **Mục mẫu định dạng** — không phải bug thật (không có `.agent/bugs/2026-08-29-modal-esc/`). Giữ để tham chiếu format + tương thích references. Bài học thật: KN-002+.
 
 - **Ngày:** 2026-08-29
 - **Bug report:** `.agent/bugs/2026-08-29-modal-esc/bug.md`
@@ -263,3 +269,72 @@
   - Rewrite lớn: rà các biến dùng-xong-chưa-khai-báo (đặc biệt sau khi tách/ghép hàm) — syntax check của IDE không bắt được ReferenceError.
 - **Tags:** `ui` `canvas` `animation` `verify` `error-handling`
 - **Người ghi:** YUNIE / fixbug (Edge spec tự bắt trong session)
+
+---
+
+### KN-038 — Trang cosmos lệch tài liệu: physics shorthand + metric drift
+
+- **Ngày:** 2026-09-11
+- **Bug report:** `.agent/bugs/2026-09-11-cosmos-page-lech-tai-lieu-no-signaling-born-rule-d/bug.md`
+- **Severity:** major
+- **Triệu chứng:** 3 nhóm nội dung lệch trên `www/cosmos/index.html` + `slides.html`: (1) entanglement "đổi một → đổi cả hai **tức thì**" — sai vật lý (no-signaling); (2) Born rule "collapse theo **biên độ**" — thiếu bình phương (xác suất = |biên độ|²); (3) dark energy = "scope creep" (stale v1) trong khi v2 = **decollaboration** (KN-018, D = (1−dissentRatio)×10). Trong khi `scale.html` đã đúng v2 → drift giữa các bề mặt cùng chủ đề.
+- **Nguyên nhân gốc (5 Whys):**
+  - Why1: Nội dung viết trước khi có tài liệu gốc để đối chiếu (library 12 tài liệu vũ trụ/lượng tử mới ingest 2026-09-11).
+  - Why2: Pop-sci shorthand không tách bạch "ẩn dụ vs vật lý thật" (entanglement ≠ truyền tin tức thời — no-signaling).
+  - Why3: Metric dark energy re-define v1→v2 (scope creep → decollaboration) nhưng chỉ cập nhật `scale.html` + instruction — không sweep `index.html`/`slides.html`.
+  - Why4: Không có quy trình grep khi đổi định nghĩa metric — single source of truth bị phân tán đa bề mặt.
+  - Why5 (Root): Thiếu gate "verify content vs source of truth" cho trang docs — Done tuyên bố mà không đối chiếu library/instruction/scale.json.
+- **Cách sửa:** Sửa tại nguồn theo tài liệu gốc (Horodecki chunk #57-58 "non-message-bearing correlations"; Tong QM chunk #112 Born rule xác suất = |an|²); label rõ "ẩn dụ vs vật lý thật"; align metric v2 (D = decollaboration · G = scope control); 15 edits / 2 files + grep sweep xác nhận 0 cụm cũ còn sót (index) + sweep tiếp slides đợt 2 (4 chỗ: "tức thì" ×2, tag stale lab 2027, audit mirror).
+- **Cách phòng tránh:**
+  - Trang dùng science metaphor: verify 2 lớp — **vật lý thật** (library MCP citations) + **metric semantics** (instruction + `scale.json`).
+  - Re-define metric → grep sweep `www/` + `docs/` + `.github/` tìm mọi tham chiếu cũ TRƯỚC khi Done.
+  - Claim dễ gây hiểu nhầm ("tức thì", "truyền tin", "nhân quả") → ghi rõ "ẩn dụ vs vật lý thật" (no-signaling).
+  - Đối chiếu chéo các bề mặt cùng chủ đề (`scale.html` đúng v2 vs `index.html`/`slides.html` lệch) → phát hiện drift sớm.
+- **Tags:** `ui` `data` `verify` `docs` `physics` `content-drift`
+- **Người ghi:** YUNIE / /fixbug
+
+---
+
+### KN-040 — Cosmos rework: reveal chết ở element cao hơn viewport + hover bị reveal đè + `./x` 404 khi URL không slash
+
+- **Ngày:** 2026-09-12
+- **Bug report:** `.agent/bugs/2026-09-12-cosmos-reveal-hover-relative-url/bug.md`
+- **Severity:** critical
+- **Triệu chứng:** (1) Trên mobile 375px, **cả khu Lab (11 thí nghiệm, ~6.7k px) tàng hình vĩnh viễn** — chỉ hiện khi zoom/desktop; (2) hover lift `.card`/`.phase` không nhấc lên (computed `transform` = none/0); (3) click `./slides.html`, `./audit.json` khi URL là `/cosmos` (serve redirect bỏ `index.html`) → 404; (4) lab card ngắn thừa ~200px void đáy do grid stretch.
+- **Nguyên nhân gốc (5 Whys):**
+  - Why1: `IntersectionObserver{threshold:0.12}` — element 6696px cần 803px hiển thị, viewport 780px → ratio tối đa 0.116 < 0.12 → **không bao giờ intersect đủ**.
+  - Why2: `.reveal.in{transform:none}` đứng SAU `.card:hover{transform:translateY(-3px)}` trong stylesheet, cùng specificity (0-2-0) → thắng; parallax inline `style.transform` cũng đè hover.
+  - Why3: `href="./x"` resolve theo document base — `/cosmos` (no trailing slash) → `/x` 404. Trước đó **chỉ fetch đã được cứu** bằng `dirBase()` (KN-030) — link attribute chưa được xử lý.
+  - Why4: Threshold tỉ lệ thuận chiều cao element — bug class chung cho mọi trang reveal-on-scroll có element > viewport; 36/36 test cũ đều desktop-ish hoặc không scroll hết trang → không cover.
+  - Why5 (Root): Verify chỉ đo "trang render được" (screenshot 1 màn, test happy-path) — **thiếu assertion trạng thái cuối sau scroll toàn trang ở mobile** + thiếu test tương tác hover/link trên URL dạng redirect.
+- **Cách sửa:** Reveal: `threshold:0` + `revealSweep()` fail-safe (gọi trong rAF scroll + `load` + `visibilitychange` — chống cả tab ẩn/throttle); tách kênh CSS property — `.reveal` dùng `translate`, hover giữ `transform` (hết tranh chấp); bỏ parallax 8px vô hình trên `.card`; `fixRelLinks()` rewrite mọi `a[href^"./"]` qua `dirBase(location.pathname)` (link tĩnh lúc load + link render động trong map detail); lab card `display:flex;flex-direction:column` + `lab-body`/`lab-demo` `flex:1`; `section[id]{scroll-margin-top}` bù header + 18px dịch reveal; "Điểm đo" thêm đơn vị; stack polish (fan ±44px, blur/fade back cards).
+- **Cách phòng tránh:**
+  - Reveal-on-scroll: **không dùng threshold > 0**; luôn có sweep fail-safe ngoài scroll (load + visibilitychange) — nội dung không bao giờ kẹt ẩn.
+  - Một element một kênh: reveal/animation dùng `translate`/`opacity`, hover dùng `transform` — tránh cùng property thì specificity quyết định ngầm.
+  - Static site: mọi tài nguyên tương đối (link + fetch) phải resolve qua `dirBase()` — test bằng URL **không slash cuối** (vì `serve`/proxy có thể redirect bỏ `index.html`).
+  - Element bị grid stretch → container `flex:1` để nội dung fill, không để void đáy.
+  - Test tương tác phải assert **trạng thái cuối sau scroll toàn trang ở 375** + hover computed transform + link resolve — không chỉ screenshot màn đầu.
+- **Tags:** `ui` `css` `animation` `responsive` `pages` `url` `verify`
+- **Người ghi:** YUNIE / /harness (rework)
+
+---
+
+### KN-042 — YT Summary mobile: CSS toàn cục đè trang mới (bảng ẩn/cắt, `[hidden]` vô hiệu, card dưới header)
+
+- **Ngày:** 2026-09-12
+- **Bug report:** `.agent/bugs/2026-09-12-yt-summary-css-global-collision/bug.md`
+- **Severity:** major
+- **Triệu chứng:** 375px: text tóm tắt bị cắt ngang (bảng 560px trong khung 303px, không wrap theo khung); detail transcript luôn hiện dù chưa bấm; desktop: card nấp dưới header cố định sau `scrollIntoView`.
+- **Nguyên nhân gốc:**
+  - Tái dùng class toàn cục **`.table-wrap`** — `www/styles.css` có `@media (max-width:767px){ .table-wrap{display:none} }` (cho bảng registry STATUS) → bảng mới **ẩn hoàn toàn** ở mobile.
+  - Element rule toàn cục `table{min-width:560px}` (để bảng STATUS scroll ngang) áp lên mọi `<table>` → card-layout mobile không co được; wrap tại 560 → bị container `overflow-x:auto` cắt.
+  - Mobile rule `.yt-table tr{display:block}` **đè UA style `[hidden]{display:none}`** (specificity class > attribute selector của UA) → các row `[hidden]` vẫn hiển thị.
+  - `scrollIntoView` + anchor không trừ **header cố định 56px** (thiếu `scroll-margin-top`).
+- **Cách sửa:** Namespace class trang (`.yts-table-wrap`); `.yt-table{min-width:0}`; mobile thêm `tr[hidden]{display:none}`; `scroll-margin-top:72px` cho `.yts .section/.hero`; test invariant mới (bảng fit container, row visible + height>20, detail `[hidden]`=0 khi chưa bấm, card y≥48 sau scroll).
+- **Cách phòng tránh:**
+  - Trang mới dùng chung `www/styles.css`: **namespace mọi class** (`.<page>-*`); trước khi đặt tên, grep stylesheet toàn cục xem tên đó có rule `display:none` / `min-width` / ẩn mobile không.
+  - Rule `display:block` cho `tr/td` (table→card) **bắt buộc** kèm `[hidden]{display:none}`.
+  - Site có fixed header → mọi anchor/scrollIntoView cần `scroll-margin-top` ≥ header height.
+  - Test mobile phải assert **trong-container** (`table.scrollWidth ≤ clientWidth`) — `documentElement` overflow không bắt được tràn bên trong scroll container.
+- **Tags:** `ui` `css` `responsive` `a11y`
+- **Người ghi:** YUNIE / /harness

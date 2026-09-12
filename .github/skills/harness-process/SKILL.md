@@ -1,6 +1,6 @@
 ---
 name: harness-process
-description: "Task-agnostic lessons 'Process & Self-Improvement' chưng cất từ docs/knowleged.md (17 KN: KN-005, KN-007, KN-010, KN-014, KN-016, KN-018, KN-019, KN-023, KN-024, KN-025, KN-026, KN-027, KN-033, KN-034, KN-035, KN-036, KN-037) + .agent/bugs/. Use when task chạm process, quality, ux, perf, a11y, knowledge, automation, dx, self-improving, benchmark — áp Cách phòng tránh trước khi code, tránh lặp bug cũ. DisCo-lite, regenerate bằng distill-agnostic.mjs."
+description: "Task-agnostic lessons 'Process & Self-Improvement' chưng cất từ docs/knowleged.md (20 KN: KN-005, KN-007, KN-010, KN-014, KN-016, KN-018, KN-019, KN-023, KN-024, KN-025, KN-026, KN-027, KN-033, KN-034, KN-035, KN-036, KN-037, KN-039, KN-043, KN-044) + .agent/bugs/. Use when task chạm process, quality, ux, perf, a11y, knowledge, automation, dx, self-improving, benchmark — áp Cách phòng tránh trước khi code, tránh lặp bug cũ. DisCo-lite, regenerate bằng distill-agnostic.mjs."
 user-invocable: false
 ---
 
@@ -10,11 +10,11 @@ user-invocable: false
 
 ## When to Use
 
-- Task chạm theme **Process & Self-Improvement** (tags: process, quality, ux, perf, a11y, knowledge, automation, dx, self-improving, benchmark, aar, mcp, testing, regex, windows, fs, collaboration, diversity, pilot-in-command, metrics, evidence, research, verification, calibration, psychology, taste, human-judgment, agent, self-evolving, procedural-graph, a-jit, memory, funnel, rl, consistency, self-distillation, scaffold, rsi, harness, failure-diagnosis, reasoning, uncertainty, architecture, playbook, evals, agentic-patterns)
+- Task chạm theme **Process & Self-Improvement** (tags: process, quality, ux, perf, a11y, knowledge, automation, dx, self-improving, benchmark, aar, mcp, testing, regex, windows, fs, collaboration, diversity, pilot-in-command, metrics, evidence, research, verification, calibration, psychology, taste, human-judgment, agent, self-evolving, procedural-graph, a-jit, memory, funnel, rl, consistency, self-distillation, scaffold, rsi, harness, failure-diagnosis, reasoning, uncertainty, architecture, playbook, evals, agentic-patterns, powershell, scripts, content, docs, verify, fresh-eyes, rag, grounding)
 - Trước khi code/fix — áp **Cách phòng tránh** ngay để không lặp bug cũ
 - Review/plan — check anti-patterns bên dưới
 
-## Bài học (17 KN)
+## Bài học (20 KN)
 
 ### KN-005 — Bug Blindness — mù bug do workaround vô thức + fan bias (major)
 - **Bài học:** Chữa mù bug: fresh eyes, test như user mới, chỉ ra bug liên tục, không workaround vô thức, dogfooding có ý thức
@@ -28,7 +28,7 @@ user-invocable: false
 
 ### KN-007 — Thiếu hệ thống tự học hỏi tự động — phải làm tay, dễ quên (major)
 - **Bài học:** Mỗi task phải auto suggest KN (BM25-lite + IDF), mỗi lỗi auto log draft, mỗi fix auto propose KN — không để trôi
-- **Bug report:** .agent/bugs/auto-learn/bug.md
+- **Bug report:** .github/harness/scripts/auto-learn.mjs
 - **Cách phòng tránh:**
   - Trước khi code: luôn `suggest "<mô tả task>"` — nếu có KN liên quan → áp dụng Cách phòng tránh ngay.
   - Khi lỗi: luôn `log --error` ngay khi còn nóng — không để trôi.
@@ -43,7 +43,7 @@ user-invocable: false
   - Khi có nhiều cách fix/solve (≥2): luôn áp dụng AAR pattern — propose 3 → benchmark → keep best.
   - 3-fix limit vẫn áp dụng (học từ systematic-debugging): nếu cả 3 cách fail → STOP, question architecture.
   - Check **HOW** (cách làm) không chỉ **WHETHER** (pass/fail) — tránh reward hacking.
-  - Log benchmark results vào `.agent/benchmarks/<slug>-benchmark.md`.
+  - Log benchmark results vào `.agent/plans/aar-harness/report-<slug>.md` (qua `auto-researcher.mjs --report`).
   - `auto-researcher.mjs --task "xxx" --report` để chạy full AAR loop.
 
 ### KN-014 — Smoke test treo khi import MCP stdio server + verify order + regex m flag (minor)
@@ -182,6 +182,35 @@ user-invocable: false
   - Chọn pattern có chủ đích theo task, không mặc định thêm agentic loop (KN-022).
   - Claim "nhanh hơn/tốt hơn" phải kèm số đo — không vibes (KN-019).
 
+### KN-039 — PS 5.1 không hỗ trợ `??` — lệnh PowerShell fail parse "Unexpected token" (major)
+- **Bài học:** Cấm cú pháp PS 7+ trong lệnh/script PS: `??` → `if (-not $x) { $x = 'default' }`, ternary → if/else; gặp `Unexpected token` → viết lại toàn lệnh rồi mới re-run · **2026-09-12:** local nâng pwsh **7.6.6** (user-space, no admin) + VS Code default terminal "PowerShell 7"; đo trên 7.6.6: `??`/`&&` OK, `$var?.prop` không brace **sai lặng** (dùng `${var}?.prop`)
+- **Bug report:** .agent/bugs/2026-09-11-ps-5-1-khong-ho-tro-trong-lenh-powershell/bug.md
+- **Cách phòng tránh:**
+  - Sinh lệnh PowerShell: chỉ cú pháp 5.1 — `??` → `if (-not ...)`, `?.` → `if ($a -and $a.b)`, ternary → if/else, `&&` → `;`.
+  - `??` trong `.mjs`/Node vẫn hợp lệ — chỉ cấm trong LỆNH PowerShell / `.ps1`.
+  - Gặp `Unexpected token '??'` → viết lại TOÀN lệnh rồi mới re-run, không lặp y nguyên (KN-023).
+  - Trước Done: grep sweep lệnh mới sinh (plan/docs/session) xem còn cú pháp PS 7.
+
+### KN-043 — Content "đúng chữ nhưng không chạy": path thiếu prefix IDE + thiếu neo ngữ cảnh + khái niệm bị chấm nhưng chưa dạy (major)
+- **Bài học:** Content review fresh-eyes + Critic agent độc lập: rubric 6 tiêu chí viết trước → sửa 6 blocker + 10 major (slide "Trước khi bắt đầu" + chip "Cần trước" mọi bài, path prefix đúng IDE, link tải 4 IDE + Node.js, gloss thuật ngữ, tiêu chí đo được) → khóa bằng test (10/10 + full suite 70/70)
+- **Bug report:** .agent/bugs/2026-09-12-academy-content-not-actionable/bug.md
+- **Cách phòng tránh:**
+  - Mọi hướng dẫn (docs/tutorial/slide) phải trả lời đủ **4 câu**: **Cần trước gì · Làm ở ĐÂU · Làm bằng GÌ · KIỂM bằng gì** — thiếu 1 câu = blocker.
+  - Path trong hướng dẫn phải **copy-chạy được**: prefix đầy đủ theo IDE — viết xong **grep lại từng path** trong bài trước khi ship.
+  - Khái niệm xuất hiện trong tiêu chí/outcome phải được **dạy trước đó hoặc gloss tại chỗ**.
+  - Yêu cầu xuyên bài (số IDE, prereq, path) phải **nhất quán** — grep chéo trước khi ship.
+  - Tiêu chí hoàn thành phải **đo được** (hành động + đối tượng + kết quả quan sát), không "đương nhiên đạt".
+  - Nội dung dạy người mới phải qua **fresh-eyes reader / Critic agent độc lập** TRƯỚC khi ship — như code review (KN-005 áp cho docs).
+
+### KN-044 — RAG grounding chết khi `export.json` thiếu — nút Xuất sai tên + không seed fallback (major)
+- **Bài học:** Export đúng tên `export.json` (MCP-ready) + `seed.json` fallback chain trong `search.mjs`/`mcp-server.mjs` — RAG luôn có grounding tối thiểu
+- **Bug report:** .agent/bugs/2026-09-03-rag-export-missing-grounding-chet/bug.md
+- **Cách phòng tránh:**
+  - Grounding phải có **seed tối thiểu trong repo** — RAG không bao giờ "chết trắng" khi thiếu export (degraded, không fail-closed im lặng).
+  - Tên file export = tên consumer đọc (single contract) — đổi một đầu phải grep đầu kia; verify bằng `search --status` + MCP sau khi đổi.
+  - File gitignore (`export.json`) → mọi consumer phải có fallback chain + báo rõ trạng thái seed/thiếu.
+  - **Retrofit note:** bug fixed 2026-09-03 (HIGH confidence) nhưng lesson bị rơi — bug.md ghi "Related KN: KN-013" trong khi KN-013 là chủ đề khác (Ponytail ladder). Audit 2026-09-12 phát hiện thiếu → bổ sung KN-044.
+
 ## Anti-patterns (đừng lặp lại)
 
 - - ❌ Sửa từng failure riêng lẻ mà không aggregate cross-task → model-specific accommodation mù, overfit, degrade generalization (KN-034).
@@ -232,9 +261,17 @@ user-invocable: false
 - - ❌ Verify xong build/test/lint là claim Done cho output open-ended — "chạy được" ≠ "tốt đến đâu"; phải có evals: rubric + component/E2E + bằng chứng đo (KN-037).
 - - ❌ Đánh giá output agent bằng "trông ổn" không rubric — critique thiếu tiêu chí = model tự khen mình (KN-037 + KN-023).
 - - ❌ Chạy cả agentic loop / multi-agent cho task pipeline vẽ được flowchart — agency là cost phải justify (KN-037 + KN-022).
+- - ❌ Sinh lệnh PowerShell bằng cú pháp PS 7+ (`??`, `?.`, `??=`, ternary `? :`) — Windows PowerShell 5.1 fail parse `Unexpected token '??'`, lệnh không chạy (KN-039).
+- - ❌ Gặp lỗi parse PS mà re-run y nguyên hoặc vá nửa vời — viết lại TOÀN lệnh theo cú pháp 5.1 rồi mới chạy (KN-039 + KN-023).
+- - ❌ Hướng dẫn path/nơi lưu thiếu prefix theo IDE (`skills/…` thay vì `.github/skills/…`) — copy đúng chữ vẫn không chạy; path trong docs phải copy-chạy được + grep lại sau khi viết (KN-043).
+- - ❌ Dạy quy trình dùng thuật ngữ chỉ xuất hiện ở tiêu chí/outcome (component/E2E evals, "PRD mini") mà chưa từng định nghĩa — người đọc không tự chấm được (KN-043).
+- - ❌ Yêu cầu xuyên bài không nhất quán (bài 2 đòi 1 IDE, bài 3 đòi 2 IDE) hoặc marketing copy mâu thuẫn thực tế ("vào bài nào cũng được" khi các bài có phụ thuộc) (KN-043).
+- - ❌ Tiêu chí hoàn thành "rỗng nghĩa" — đương nhiên đạt nếu làm đúng bước trước, không phân biệt được người đã làm với người chưa (KN-043).
+- - ❌ RAG/grounding phụ thuộc file gitignore (`export.json`) mà không có seed/fallback — fresh clone là grounding chết, chatbot bịa (KN-044).
+- - ❌ Tên file export lệch tên consumer đọc (`library-export-*.json` vs `export.json`) — xuất xong vẫn không ai đọc được (KN-044).
 
 ## Nguồn
 
-- `docs/knowleged.md` — KN-005, KN-007, KN-010, KN-014, KN-016, KN-018, KN-019, KN-023, KN-024, KN-025, KN-026, KN-027, KN-033, KN-034, KN-035, KN-036, KN-037
+- `docs/knowleged.md` — KN-005, KN-007, KN-010, KN-014, KN-016, KN-018, KN-019, KN-023, KN-024, KN-025, KN-026, KN-027, KN-033, KN-034, KN-035, KN-036, KN-037, KN-039, KN-043, KN-044
 - Chi tiết đầy đủ: `references/evidence.md` (progressive disclosure)
 - Regenerate: `node .github/harness/scripts/distill-agnostic.mjs`

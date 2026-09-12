@@ -79,23 +79,23 @@
     },
     ".claude/skills/harness-build-config": {
       "dir": true,
-      "digest": "0da4b6e3f2585617bc0e7dc9910034e4a399f5de20ec7c84e1f1e02d578f0084"
+      "digest": "a027a530fa60213c3368b9a05c301a9ffb8e7909b3676cc014d17af3fe6b4ab0"
     },
     ".claude/skills/harness-governance": {
       "dir": true,
-      "digest": "ec1b184a4a1a06b20a5d9c69ddbcd599162c5a6fa39b00e5b8cb33deb6332ca9"
+      "digest": "998dbfbcb4d911e8b55525005929cc6c409a86daa86cef0fdfe85aa5beda19f2"
     },
     ".claude/skills/harness-minimal": {
       "dir": true,
-      "digest": "c9fc0350e4b17c362663d95ddea1f78629da11e48dd0e76be6555283afc29b11"
+      "digest": "54fdc57e4c570826e04bede7a536182f1aec72f20ae7d48c5ba50f6333fd6b5a"
     },
     ".claude/skills/harness-process": {
       "dir": true,
-      "digest": "918c399a8a0838e5ed56063e80dc4908c43b2cb76c560061102ad20809aa0f07"
+      "digest": "4e8a444aebe21650d12c4f6c592e751fdc0bf2b1d6802b27760afdbb635939fb"
     },
     ".claude/skills/harness-web-ui": {
       "dir": true,
-      "digest": "d6906a2d10250ea0a306f291d852105d8c75d2cf40303c2a67e888abfcf33c82"
+      "digest": "81f91bad84d766bc70c3a37bbcd2b1d54efb4ab3a3b2c295f1006f017884d30e"
     },
     ".claude/skills/cosmic-quantum": {
       "dir": true,

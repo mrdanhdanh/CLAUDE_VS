@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-12T04:37:42.716Z",
+  "generatedAt": "2026-09-12T06:46:35.733Z",
   "generatedBy": "YUNIE",
   "version": 1,
   "counts": {
@@ -41,7 +41,7 @@
       },
       "glass-rainbow-effects": {
         "enabled": true,
-        "description": "Liquid glass + rainbow border effects for web — Apple Liquid Glass backdrop-filter glassmorphism, frosted glass nav/cards/buttons/sheets, conic-gradient rainbow borders, animated rotating gradients, glass+rainbow combos. Use when user wants liquid glass, glassmorphism, frosted glass, backdrop-filter, rainbow border, gradient border, animated border, neon border, glass card, glass navbar, premium UI effects, or says liquid glass / rainbow border / glass effect."
+        "description": "Liquid glass + rainbow border effects for web — Apple Liquid Glass backdrop-filter glassmorphism, frosted glass nav/cards/buttons/sheets, conic-gradient rainbow borders, animated rotating gradients, glass+rainbow combos. Use when user wants liquid glass, glassmorphism, frosted glass, backdrop-filter"
       },
       "skill-registry": {
         "enabled": true,
@@ -73,23 +73,23 @@
       },
       "harness-build-config": {
         "enabled": true,
-        "description": "Task-agnostic lessons 'Build & Config' chưng cất từ docs/knowleged.md (2 KN: KN-008, KN-009) + .agent/bugs/. Use when task chạm build, process, dx, dotnet, config, api — áp Cách phòng tránh trước khi code, tránh lặp bug cũ. DisCo-lite, regenerate bằng distill-agnostic.mjs."
+        "description": "Task-agnostic lessons 'Build & Config' chưng cất từ docs/knowleged.md (4 KN: KN-008, KN-009, KN-015, KN-041) + .agent/bugs/. Use when task chạm build, process, dx, dotnet, config, api, deploy, ci, workflow, pages — áp Cách phòng tránh trước khi code, tránh lặp bug cũ. DisCo-lite, regenerate bằng dis"
       },
       "harness-governance": {
         "enabled": true,
-        "description": "Task-agnostic lessons 'Governance & Verifier Integrity' chưng cất từ docs/knowleged.md (1 KN: KN-012) + .agent/bugs/. Use when task chạm process, governance, tdd, safety, reward-hacking — áp Cách phòng tránh trước khi code, tránh lặp bug cũ. DisCo-lite, regenerate bằng distill-agnostic.mjs."
+        "description": "Task-agnostic lessons 'Governance & Verifier Integrity' chưng cất từ docs/knowleged.md (2 KN: KN-012, KN-021) + .agent/bugs/. Use when task chạm process, governance, tdd, safety, reward-hacking, security, rbac — áp Cách phòng tránh trước khi code, tránh lặp bug cũ. DisCo-lite, regenerate bằng distil"
       },
       "harness-minimal": {
         "enabled": true,
-        "description": "Task-agnostic lessons 'Minimal Code & YAGNI' chưng cất từ docs/knowleged.md (1 KN: KN-013) + .agent/bugs/. Use when task chạm process, minimal, ponytail, yagni, dx — áp Cách phòng tránh trước khi code, tránh lặp bug cũ. DisCo-lite, regenerate bằng distill-agnostic.mjs."
+        "description": "Task-agnostic lessons 'Minimal Code & YAGNI' chưng cất từ docs/knowleged.md (3 KN: KN-013, KN-020, KN-022) + .agent/bugs/. Use when task chạm process, minimal, ponytail, yagni, dx, verification, review, architecture, agent — áp Cách phòng tránh trước khi code, tránh lặp bug cũ. DisCo-lite, regenerat"
       },
       "harness-process": {
         "enabled": true,
-        "description": "Task-agnostic lessons 'Process & Self-Improvement' chưng cất từ docs/knowleged.md (3 KN: KN-005, KN-007, KN-010) + .agent/bugs/. Use when task chạm process, quality, ux, perf, a11y, knowledge, automation, dx, self-improving, benchmark — áp Cách phòng tránh trước khi code, tránh lặp bug cũ. DisCo-lit"
+        "description": "Task-agnostic lessons 'Process & Self-Improvement' chưng cất từ docs/knowleged.md (20 KN: KN-005, KN-007, KN-010, KN-014, KN-016, KN-018, KN-019, KN-023, KN-024, KN-025, KN-026, KN-027, KN-033, KN-034, KN-035, KN-036, KN-037, KN-039, KN-043, KN-044) + .agent/bugs/. Use when task chạm process, qualit"
       },
       "harness-web-ui": {
         "enabled": true,
-        "description": "Task-agnostic lessons 'Web UI & UX' chưng cất từ docs/knowleged.md (6 KN: KN-001, KN-002, KN-003, KN-004, KN-006, KN-011) + .agent/bugs/. Use when task chạm ui, a11y, css, responsive, data, animation, spacing, i18n, theme, contrast — áp Cách phòng tránh trước khi code, tránh lặp bug cũ. DisCo-lite, "
+        "description": "Task-agnostic lessons 'Web UI & UX' chưng cất từ docs/knowleged.md (15 KN: KN-001, KN-002, KN-003, KN-004, KN-006, KN-011, KN-017, KN-028, KN-029, KN-030, KN-031, KN-032, KN-038, KN-040, KN-042) + .agent/bugs/. Use when task chạm ui, a11y, css, responsive, data, animation, spacing, i18n, theme, cont"
       },
       "cosmic-quantum": {
         "enabled": true,
@@ -101,7 +101,7 @@
       },
       "archify": {
         "enabled": true,
-        "description": "Create polished, verifiable architecture, workflow, sequence, data-flow, lifecycle diagrams as self-contained HTML — typed JSON IR, deterministic validation, atomic delivery. Use when visualizing system architecture, infrastructure, cloud/security topology, workflow, API sequence, data pipeline, state machine, or converting Mermaid to beautiful diagrams. Port of tt-a1i/archify (50k⭐) for Harness v2, tháo lắp via harness-manager."
+        "description": "Create polished, verifiable architecture, workflow, sequence, data-flow, lifecycle diagrams as self-contained HTML — typed JSON IR, deterministic validation, atomic delivery. Use when visualizing system architecture, infrastructure, cloud/security topology, workflow, API sequence, data pipeline, sta"
       },
       "evals-gate": {
         "enabled": true,
@@ -278,6 +278,7 @@
   "plans": [
     "aar-harness",
     "agentic-academy",
+    "agentic-academy-light",
     "ai-news-search",
     "ai-news-upgrades-4",
     "archify-demo",
@@ -421,7 +422,7 @@
   "health": {
     "errors": 0,
     "status": "ok",
-    "lastCheck": "2026-09-12T04:37:42.716Z",
+    "lastCheck": "2026-09-12T06:46:35.733Z",
     "checks": [
       "get_errors: pass (0 errors)",
       "registry: 18 instructions (18 total) - 19 skills - 9 agents - 7 prompts - 1 hook — all enabled",
@@ -432,8 +433,8 @@
       "www: polished — responsive 375/768/1280, a11y, states, animation 150-300ms",
       "workflow: www/** -> Pages (upload-artifact path: www) — exists: true + eval job gate",
       "library: www/library/ MCP v1.2.0 (5 tools: search + iterative + list/get/status, router+cache, redacted) + library-rag instruction",
-      "auto-learn: 42 KN, 24 bugs, 0 drafts — suggest/log/propose/status (<50ms, IDF, tiếng Việt)",
-      "governance: audit 39 (Ed25519 receipt P0-4) · policy 9 deny/2 allow (ok) · credentials 0 keys plain",
+      "auto-learn: 44 KN, 27 bugs, 0 drafts — suggest/log/propose/status (<50ms, IDF, tiếng Việt)",
+      "governance: audit 47 (Ed25519 receipt P0-4) · policy 9 deny/2 allow (ok) · credentials 0 keys plain",
       "platform: agents 3 (3 built-in, 0 remote) · mcp 3 vendors/3 grants (library 1.2.0 read-only) · components 3/3 pub · routines 2/2 enabled",
       "collaboration: KN-018 — dissentGate ✅ · whoDidYouThinkWith ✅ · critic ✅ · fund-the-friction ✅ (ok)",
       "n5-blazor: www/n5-blazor/ 7 trang static + app.css + data.js + site.js — 100% Pages"
@@ -653,101 +654,101 @@
     }
   },
   "learn": {
-    "knTotal": 42,
-    "bugsTotal": 24,
+    "knTotal": 44,
+    "bugsTotal": 27,
     "drafts": 0
   },
   "governance": {
     "audit": {
-      "total": 39,
-      "permitted": 38,
+      "total": 47,
+      "permitted": 46,
       "refused": 0,
       "failed": 1,
-      "lastTs": "2026-09-12T04:37:01.858Z",
+      "lastTs": "2026-09-12T06:01:46.498Z",
       "tail": [
         {
-          "ts": "2026-09-12T03:49:12.553Z",
+          "ts": "2026-09-12T04:49:06.525Z",
           "actor": "YUNIE",
           "tool": "shell",
-          "target": "node scripts/library-ingest-batch.mjs",
+          "target": "npx playwright test (light theme, 70/70)",
           "decision": "permitted",
           "rule": "allow-all",
           "durationMs": null,
           "error": null,
           "intent": null,
-          "requestId": "ed26f7",
-          "prevHash": "a064f1fc7a701ebd",
+          "requestId": "3c1433",
+          "prevHash": "4d6d93a9fe3e3afa",
           "policyDigest": "162346288ec03771",
-          "hash": "e180b79c92a4b0a5",
-          "sig": "F2Kg03FHLOhe34kzPlP66vfaOfR-0bZGltkG62OXdfuHQi9VgjMeLttLNNEJHGyz9v58k2e4RiZPI6vR93WoBQ",
+          "hash": "0988f04ceb60d4e8",
+          "sig": "MM6I9A6hiy195PgQunADbxuYc_DluzWXZ1qUi0zqNl-CYEVKKkp3GlgWuDL-FSJ7ATd6oEUgUuFaC2iKN9dEDA",
           "pub": "MCowBQYDK2VwAyEAY8PlU0KjXp4HJUUlNlVZdaXHUmDagUMm8rUrEShTPXo"
         },
         {
-          "ts": "2026-09-12T03:53:38.128Z",
+          "ts": "2026-09-12T05:50:05.873Z",
           "actor": "YUNIE",
-          "tool": "shell",
-          "target": "git push origin main (17e7749)",
+          "tool": "file",
+          "target": "content review 7 bai (lessons.js v1.1.0 + slides.js + index.html)",
           "decision": "permitted",
           "rule": "allow-all",
           "durationMs": null,
           "error": null,
           "intent": null,
-          "requestId": "60bdc1",
-          "prevHash": "e180b79c92a4b0a5",
+          "requestId": "eec56e",
+          "prevHash": "0988f04ceb60d4e8",
           "policyDigest": "162346288ec03771",
-          "hash": "90e33792ddd0bee7",
-          "sig": "t3rNeMJHJ91eV-30kwe2OjfgTi2By82ufrHuSA_w3uxXVunVlcZrMRE9aLEn4cFAc8fnyE-uEkyeGEJBEW5QCw",
+          "hash": "e3559b7e06f713f7",
+          "sig": "ptopDbs6EFTaPZm_ZY-tCXZylTB3hUp3g-21bUzzSimwYMarKtC7bl7LreKX_qaF7sJVpqmvn8uVB3AztkSZDQ",
           "pub": "MCowBQYDK2VwAyEAY8PlU0KjXp4HJUUlNlVZdaXHUmDagUMm8rUrEShTPXo"
         },
         {
-          "ts": "2026-09-12T04:37:01.647Z",
+          "ts": "2026-09-12T05:50:05.986Z",
           "actor": "YUNIE",
           "tool": "shell",
-          "target": "node scripts/yt-summary/build.mjs --vtt fixtures/demo.vtt",
+          "target": "npx playwright test (content fix, 70/70)",
           "decision": "permitted",
           "rule": "allow-all",
           "durationMs": null,
           "error": null,
           "intent": null,
-          "requestId": "2772f3",
-          "prevHash": "90e33792ddd0bee7",
+          "requestId": "017673",
+          "prevHash": "e3559b7e06f713f7",
           "policyDigest": "162346288ec03771",
-          "hash": "0cd8dd193ec62972",
-          "sig": "1g91RusjXzmur2oY9en0oeyMJ7S15RNDhzSwBUnYLFvhl6bk6xipuj4ppn2f90qXdzVIX3GcrF4FulXlWj8SAg",
+          "hash": "50a17d8a6a932059",
+          "sig": "GZq_eNriI-MagUWOppyp8SXMIY8XMd0y2t3uvUCN5VXnbuGKYkSWnDfWIGL2SS3oBp-0zTiuU0tdCZw777T2Dw",
           "pub": "MCowBQYDK2VwAyEAY8PlU0KjXp4HJUUlNlVZdaXHUmDagUMm8rUrEShTPXo"
         },
         {
-          "ts": "2026-09-12T04:37:01.757Z",
-          "actor": "verify",
+          "ts": "2026-09-12T05:53:06.938Z",
+          "actor": "YUNIE",
           "tool": "shell",
-          "target": "npx playwright test (yt-summary 14 + full 68)",
+          "target": "git push origin main (9049534 agentic-academy)",
           "decision": "permitted",
           "rule": "allow-all",
           "durationMs": null,
           "error": null,
           "intent": null,
-          "requestId": "2d6d43",
-          "prevHash": "0cd8dd193ec62972",
+          "requestId": "d4f4ac",
+          "prevHash": "50a17d8a6a932059",
           "policyDigest": "162346288ec03771",
-          "hash": "111053c30c080b8f",
-          "sig": "TCAw3k2VcTQ3MraJEhmBSVlWDo1QvQqnz6Q4vRa5Yzg3e6W9yBW41GShPEROiSMlSlvXklhWTOTXWLhEDiTNAA",
+          "hash": "b0d3e217cf917462",
+          "sig": "Wgvj8QFwP5LuW-TtW2_dhdklu1gtde4uv2b96UxA9ct-d-HiSx45rGXrjT2D7gl0231zfnJppeRu8Vi4mlU2BA",
           "pub": "MCowBQYDK2VwAyEAY8PlU0KjXp4HJUUlNlVZdaXHUmDagUMm8rUrEShTPXo"
         },
         {
-          "ts": "2026-09-12T04:37:01.858Z",
+          "ts": "2026-09-12T06:01:46.498Z",
           "actor": "YUNIE",
           "tool": "shell",
-          "target": "node .github/workflows probe: yt-dlp/relays/translators (all blocked, see verify logs)",
-          "decision": "failed",
+          "target": "git push KN-043",
+          "decision": "permitted",
           "rule": "allow-all",
           "durationMs": null,
           "error": null,
           "intent": null,
-          "requestId": "d8d803",
-          "prevHash": "111053c30c080b8f",
+          "requestId": "e1b180",
+          "prevHash": "b0d3e217cf917462",
           "policyDigest": "162346288ec03771",
-          "hash": "a9bdc90d95bf465a",
-          "sig": "fX5O5OOUxPoYenYBFkhxCBC4J-3YkSErm-Q_4JC4Bp9c1T4roWcT-vIELl6AVRJYXyAUEv89jAScUG12f64VCQ",
+          "hash": "fdd8d9776284a102",
+          "sig": "vFzzP-pqpEUIVhfyHHtDmbxxjkuY1zDunKbT4Y9YZCZlveQzB_WbiLISuIvNoR6ml2tN110lGRNTW6jedxqTDA",
           "pub": "MCowBQYDK2VwAyEAY8PlU0KjXp4HJUUlNlVZdaXHUmDagUMm8rUrEShTPXo"
         }
       ]
@@ -757,7 +758,7 @@
       "deny": 9,
       "allow": 2,
       "status": "ok",
-      "lastCheck": "2026-09-12T04:37:42.598Z"
+      "lastCheck": "2026-09-12T06:46:35.591Z"
     },
     "credentials": {
       "count": 0,
