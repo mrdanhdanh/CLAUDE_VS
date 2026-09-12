@@ -1,0 +1,217 @@
+{
+ "schema": 1,
+ "pipeline": "1.0.0",
+ "id": "demo-vector-db",
+ "url": null,
+ "title": "Vector Databases Explained - From Zero to Production",
+ "titleVi": null,
+ "channel": "Demo Channel",
+ "durationSec": 239,
+ "lang": "en",
+ "source": "vtt-file",
+ "sourceKind": "auto",
+ "demo": true,
+ "generatedAt": "2026-09-12T04:16:02.604Z",
+ "generator": "yt-summary/build.mjs v1.0.0",
+ "stats": {
+  "cuesRaw": 70,
+  "cuesClean": 19,
+  "droppedCues": 15,
+  "cleanedPct": 21,
+  "words": 581,
+  "segments": 5,
+  "readingMin": 3
+ },
+ "translation": {
+  "applied": true,
+  "provider": "gtx+gtx2",
+  "chunks": 15,
+  "failed": 0,
+  "partial": false,
+  "chars": 5405
+ },
+ "segments": [
+  {
+   "i": 1,
+   "start": 10.5,
+   "end": 33.8,
+   "dropped": false,
+   "dropReason": null,
+   "title": "Vector Databases",
+   "summary": "Hôm nay chúng ta sẽ nói về cơ sở dữ liệu vectơ và lý do tại sao chúng quan trọng. Nhiều người nhầm lẫn về bản chất thực sự của chúng, vì vậy hãy bắt đầu lại từ đầu và xây dựng hệ thống sản xuất trước, nhúng là gì? sự nhúng…",
+   "bullets": [],
+   "keywords": [
+    "list",
+    "numbers",
+    "represents",
+    "image",
+    "embedding"
+   ],
+   "titleSrc": "Vector Databases",
+   "summarySrc": "today we're going to talk about vector databases and why they matter a lot of people are confused about what they actually are so let's start from the beginning and build up to production systems first, what is an embedding? an embedding…",
+   "bulletsSrc": [],
+   "keywordsSrc": [
+    "list",
+    "numbers",
+    "represents",
+    "image",
+    "embedding"
+   ],
+   "transcript": "Hôm nay chúng ta sẽ nói về cơ sở dữ liệu vectơ và lý do tại sao chúng quan trọng. Nhiều người nhầm lẫn về bản chất thực sự của chúng, vì vậy hãy bắt đầu lại từ đầu và xây dựng hệ thống sản xuất trước, nhúng là gì? phần nhúng là danh sách các số thể hiện ý nghĩa của một số nội dung, như văn bản hoặc hình ảnh, danh sách các số thể hiện ý nghĩa của một số nội dung như văn bản hoặc hình ảnh",
+   "transcriptSrc": "today we're going to talk about vector databases and why they matter a lot of people are confused about what they actually are so let's start from the beginning and build up to production systems first, what is an embedding? an embedding is a list of numbers that represents the meaning of some content, like text or an image a list of numbers that represents the meaning of some content like text or an image"
+  },
+  {
+   "i": 2,
+   "start": 33.8,
+   "end": 120.8,
+   "dropped": false,
+   "dropReason": null,
+   "title": "Indexing",
+   "summary": "Hãy nói về việc lập chỉ mục, bởi vì đây là nơi mà kỹ thuật thực sự là chỉ mục phổ biến nhất hiện nay là HNSW, thế giới nhỏ có thể điều hướng theo cấp bậc. Nó xây dựng một biểu đồ nhiều lớp trong đó mỗi lớp là một tìm kiếm mức thu phóng bắt đầu từ trên cùng với một…",
+   "bullets": [
+    "Khi bạn chạy văn bản thông qua mô hình học máy, bạn sẽ nhận được một vectơ thường dài từ vài trăm đến vài nghìn chiều, thuộc tính quan trọng là ý nghĩa tương tự sẽ kết thúc gần…",
+    "thao tác đó được gọi là tìm kiếm lân cận gần nhất và việc thực hiện chính xác trên hàng triệu vectơ là quá chậm nên các hệ thống thực sử dụng lân cận gần nhất gần đúng hoặc tìm kiếm ANN, bạn…"
+   ],
+   "keywords": [
+    "word",
+    "cat",
+    "layer",
+    "graph",
+    "nearest"
+   ],
+   "titleSrc": "Indexing",
+   "summarySrc": "let's talk about indexing, because this is where the real engineering is the most common index today is HNSW, hierarchical navigable small world it builds a multi layer graph where each layer is a zoom level search starts at the top with a…",
+   "bulletsSrc": [
+    "when you run text through a machine learning model, you get a vector usually a few hundred to a few thousand dimensions long the key property is that similar meaning ends up close…",
+    "that operation is called nearest neighbor search and doing it exactly over millions of vectors is too slow so real systems use approximate nearest neighbor, or ANN search you…"
+   ],
+   "keywordsSrc": [
+    "word",
+    "cat",
+    "layer",
+    "graph",
+    "nearest"
+   ],
+   "transcript": "Khi bạn chạy văn bản thông qua mô hình học máy, bạn sẽ nhận được một vectơ thường dài từ vài trăm đến vài nghìn chiều. Thuộc tính chính là ý nghĩa tương tự kết thúc gần nhau trong không gian đó nên từ mèo và từ mèo con ở gần nhau trong khi mèo và bộ chế hòa khí ở xa nhau. Cơ sở dữ liệu vectơ lưu trữ các vectơ đó và trả lời nhanh một câu hỏi vectơ nào gần nhất với vectơ truy vấn này. Hoạt động này được gọi là tìm kiếm lân cận gần nhất và thực hiện chính xác trên hàng triệu vectơ là quá chậm nên các hệ thống thực sử dụng hàng xóm gần nhất gần đúng hoặc tìm kiếm ANN, bạn đánh đổi một chút độ chính xác để lấy một lượng lớn tăng tốc hãy nói về việc lập chỉ mục, bởi vì đây là nơi mà kỹ thuật thực sự là chỉ mục phổ biến nhất hiện nay là HNSW, thế giới nhỏ có thể điều hướng theo cấp bậc, nó xây dựng một biểu đồ nhiều lớp trong đó mỗi lớp là một mức thu phóng, tìm kiếm bắt đầu ở trên cùng với một vài nút cách xa nhau và Tham lam bước xuống để tìm các chỉ mục dựa trên biểu đồ lân cận gần nhất mang lại khả năng thu hồi tuyệt vời nhưng chúng sử dụng rất nhiều bộ nhớ",
+   "transcriptSrc": "when you run text through a machine learning model, you get a vector usually a few hundred to a few thousand dimensions long the key property is that similar meaning ends up close in that space so the word cat and the word kitten are near each other while cat and carburetor are far apart a vector database stores those vectors and answers one question fast which vectors are closest to this query vector that operation is called nearest neighbor search and doing it exactly over millions of vectors is too slow so real systems use approximate nearest neighbor, or ANN search you trade a tiny bit of accuracy for a massive speedup let's talk about indexing, because this is where the real engineering is the most common index today is HNSW, hierarchical navigable small world it builds a multi layer graph where each layer is a zoom level search starts at the top with a few far apart nodes and greedily walks down to find the approximate nearest neighbors graph based indexes give great recall but they use a lot of memory"
+  },
+  {
+   "i": 3,
+   "start": 120.8,
+   "end": 154.1,
+   "dropped": false,
+   "dropReason": null,
+   "title": "File Ivf",
+   "summary": "Họ lớn còn lại là inverted file, hoặc IVF IVF phân cụm các vectơ với k nghĩa và chỉ tìm kiếm một vài cụm, nó nhỏ hơn và nhanh hơn để xây dựng, nhưng khả năng thu hồi có thể thấp hơn, bạn cũng có thể kết hợp chúng: IVF trước để chọn cụm, sau đó là HNSW…",
+   "bullets": [
+    "Với một mức độ chính xác nhỏ mà bạn có thể thường xuyên điều chỉnh lại để lựa chọn chỉ mục thực sự là sự đánh đổi giữa bộ nhớ, tốc độ và khả năng thu hồi và bạn nên đo cả ba yếu tố này trên dữ liệu của riêng mình…"
+   ],
+   "keywords": [
+    "ivf",
+    "clusters",
+    "quantization",
+    "big",
+    "family"
+   ],
+   "titleSrc": "File Ivf",
+   "summarySrc": "the other big family is inverted file, or IVF IVF clusters the vectors with k means and only searches a few clusters it's smaller and faster to build, but recall can be lower you can also combine them: IVF first to pick clusters, then HNSW…",
+   "bulletsSrc": [
+    "with a small hit to accuracy that you can often tune back so the index choice is really a trade between memory, speed and recall and you should measure all three on your own data…"
+   ],
+   "keywordsSrc": [
+    "ivf",
+    "clusters",
+    "quantization",
+    "big",
+    "family"
+   ],
+   "transcript": "Họ lớn khác là tệp đảo ngược hoặc IVF IVF phân cụm các vectơ với phương tiện k và chỉ tìm kiếm một vài cụm, nó nhỏ hơn và nhanh hơn để xây dựng, nhưng khả năng thu hồi có thể thấp hơn, bạn cũng có thể kết hợp chúng: IVF trước tiên để chọn các cụm, sau đó HNSW bên trong lượng tử hóa là thủ thuật thứ ba, thu nhỏ mỗi vectơ thành ít bit hơn lượng tử hóa sản phẩm có thể cắt giảm bộ nhớ từ tám lần trở lên với một cú chạm nhỏ đến độ chính xác mà bạn có thể thường xuyên điều chỉnh lại để lựa chọn chỉ mục thực sự là một sự đánh đổi giữa bộ nhớ, tốc độ và thu hồi và bạn nên đo cả ba trên dữ liệu của riêng bạn trước khi vận chuyển",
+   "transcriptSrc": "the other big family is inverted file, or IVF IVF clusters the vectors with k means and only searches a few clusters it's smaller and faster to build, but recall can be lower you can also combine them: IVF first to pick clusters, then HNSW inside quantization is the third trick, shrinking each vector to fewer bits product quantization can cut memory by eight times or more with a small hit to accuracy that you can often tune back so the index choice is really a trade between memory, speed and recall and you should measure all three on your own data before shipping"
+  },
+  {
+   "i": 4,
+   "start": 157.8,
+   "end": 202.2,
+   "dropped": false,
+   "dropReason": null,
+   "title": "Production Concerns",
+   "summary": "Bây giờ chúng ta hãy chuyển sang các mối quan tâm về sản xuất, bắt đầu với ngân sách độ trễ mà người dùng mong đợi câu trả lời trong hàng chục mili giây chứ không phải vài giây, vì vậy bạn cần lập hồ sơ mọi giai đoạn: mã hóa, tìm kiếm và sắp xếp lại bộ mã hóa truy vấn thường là ẩn…",
+   "bullets": [
+    "Nếu mức thu hồi giảm, các câu trả lời trong thế hệ tăng cường truy xuất của bạn sẽ trở nên tệ hơn, vì vậy hãy đặt mục tiêu thu hồi, chẳng hạn như 95% ở k bằng 10 và cảnh báo khi quá trình triển khai đẩy nó xuống dưới…"
+   ],
+   "keywords": [
+    "query",
+    "latency",
+    "answers",
+    "now",
+    "move"
+   ],
+   "titleSrc": "Production Concerns",
+   "summarySrc": "now let's move to production concerns, starting with latency budgets users expect answers in tens of milliseconds, not seconds so you need to profile every stage: encoding, search and reranking the query encoder is often the hidden…",
+   "bulletsSrc": [
+    "if recall drops, your retrieval augmented generation answers get worse so set a recall target, like ninety five percent at k equals ten and alert when a deploy pushes it below…"
+   ],
+   "keywordsSrc": [
+    "query",
+    "latency",
+    "answers",
+    "now",
+    "move"
+   ],
+   "transcript": "Bây giờ chúng ta hãy chuyển sang mối quan tâm về sản xuất, bắt đầu với ngân sách độ trễ, người dùng mong đợi câu trả lời trong hàng chục mili giây chứ không phải giây vì vậy bạn cần lập hồ sơ cho mọi giai đoạn: mã hóa, tìm kiếm và sắp xếp lại bộ mã hóa truy vấn thường là nút thắt cổ chai ẩn, nhiều nhóm lưu trữ các phần nhúng truy vấn phổ biến để cắt giảm chi phí tiếp theo, việc thu hồi là một quyết định về sản phẩm chứ không chỉ là số liệu nếu việc thu hồi giảm xuống, các câu trả lời thế hệ tăng cường truy xuất của bạn trở nên tệ hơn vì vậy hãy đặt mục tiêu thu hồi, chẳng hạn như 95% ở k bằng 10 và cảnh báo khi triển khai đẩy nó xuống dưới dòng đó việc phân chia sẽ trở nên quan trọng khi bạn vượt qua vài triệu vectơ, bạn chia chỉ mục trên các máy và loại bỏ truy vấn, sau đó hợp nhất các kết quả theo khoảng cách, điều này làm tăng thêm rủi ro về độ trễ đuôi",
+   "transcriptSrc": "now let's move to production concerns, starting with latency budgets users expect answers in tens of milliseconds, not seconds so you need to profile every stage: encoding, search and reranking the query encoder is often the hidden bottleneck many teams cache popular query embeddings to cut that cost next, recall is a product decision, not just a metric if recall drops, your retrieval augmented generation answers get worse so set a recall target, like ninety five percent at k equals ten and alert when a deploy pushes it below that line sharding matters once you pass a few million vectors you split the index across machines and fan out the query then merge results by distance, which adds a tail latency risk"
+  },
+  {
+   "i": 5,
+   "start": 202.2,
+   "end": 239.2,
+   "dropped": false,
+   "dropReason": null,
+   "title": "Reindexing",
+   "summary": "Sao chép bảo vệ bạn khỏi một lỗi nút duy nhất, giữ ít nhất một bản sao cho mỗi phân đoạn và kiểm tra chuyển đổi dự phòng thường xuyên, cuối cùng hãy nghĩ đến việc lập chỉ mục lại, vì các mô hình được nâng cấp, một mô hình nhúng mới có nghĩa là mọi vectơ phải được tính toán lại…",
+   "bullets": [
+    "Cơ sở dữ liệu vectơ làm cho ý nghĩa có thể tìm kiếm được bằng cách chuyển nội dung thành vectơ và trả lời các truy vấn lân cận gần nhất nhưng nhanh chóng chọn chỉ mục của bạn bằng cách đo bộ nhớ…"
+   ],
+   "keywords": [
+    "replication",
+    "protects",
+    "single",
+    "node",
+    "failure"
+   ],
+   "titleSrc": "Reindexing",
+   "summarySrc": "replication protects you from a single node failure keep at least one replica per shard and test failover regularly finally, think about reindexing, because models get upgraded a new embedding model means every vector must be recomputed…",
+   "bulletsSrc": [
+    "vector databases make meaning searchable by turning content into vectors and answering nearest neighbor queries approximately but quickly pick your index by measuring memory…"
+   ],
+   "keywordsSrc": [
+    "replication",
+    "protects",
+    "single",
+    "node",
+    "failure"
+   ],
+   "transcript": "Sao chép bảo vệ bạn khỏi một lỗi nút duy nhất, giữ ít nhất một bản sao cho mỗi phân đoạn và kiểm tra chuyển đổi dự phòng thường xuyên, cuối cùng hãy nghĩ đến việc lập chỉ mục lại, vì các mô hình được nâng cấp một mô hình nhúng mới có nghĩa là mọi vectơ phải được tính toán lại kế hoạch cho một hoán đổi màu xanh lam để người dùng không bao giờ thấy quá trình di chuyển để tóm tắt toàn bộ video trong một cơ sở dữ liệu vectơ câu có nghĩa là có thể tìm kiếm được bằng cách chuyển nội dung thành vectơ và trả lời các truy vấn lân cận gần nhất nhưng nhanh chóng chọn chỉ mục của bạn bằng cách đo bộ nhớ, tốc độ và thu hồi dữ liệu của bạn và coi việc sản xuất là một kỷ luật: ngân sách, mục tiêu và diễn tập",
+   "transcriptSrc": "replication protects you from a single node failure keep at least one replica per shard and test failover regularly finally, think about reindexing, because models get upgraded a new embedding model means every vector must be recomputed plan for a blue green swap so users never see the migration to summarize the whole video in one sentence vector databases make meaning searchable by turning content into vectors and answering nearest neighbor queries approximately but quickly pick your index by measuring memory, speed and recall on your data and treat production as a discipline: budgets, targets and rehearsals"
+  }
+ ],
+ "droppedSegments": [
+  {
+   "start": 0,
+   "end": 11,
+   "reason": "boilerplate"
+  },
+  {
+   "start": 76,
+   "end": 99,
+   "reason": "sponsor"
+  },
+  {
+   "start": 239,
+   "end": 251,
+   "reason": "boilerplate"
+  }
+ ],
+ "transcript": "Hôm nay chúng ta sẽ nói về cơ sở dữ liệu vectơ và lý do tại sao chúng quan trọng. Nhiều người nhầm lẫn về bản chất thực sự của chúng, vì vậy hãy bắt đầu lại từ đầu và xây dựng hệ thống sản xuất trước, nhúng là gì? phần nhúng là danh sách các số thể hiện ý nghĩa của một số nội dung, như văn bản hoặc hình ảnh, danh sách các số thể hiện ý nghĩa của một số nội dung như văn bản hoặc hình ảnh Khi bạn chạy văn bản thông qua mô hình học máy, bạn sẽ nhận được một vectơ thường dài từ vài trăm đến vài nghìn chiều. Thuộc tính chính là ý nghĩa tương tự kết thúc gần nhau trong không gian đó nên từ mèo và từ mèo con ở gần nhau trong khi mèo và bộ chế hòa khí ở xa nhau. Cơ sở dữ liệu vectơ lưu trữ các vectơ đó và trả lời nhanh một câu hỏi vectơ nào gần nhất với vectơ truy vấn này. Hoạt động này được gọi là tìm kiếm lân cận gần nhất và thực hiện chính xác trên hàng triệu vectơ là quá chậm nên các hệ thống thực sử dụng hàng xóm gần nhất gần đúng hoặc tìm kiếm ANN, bạn đánh đổi một chút độ chính xác để lấy một lượng lớn tăng tốc hãy nói về việc lập chỉ mục, bởi vì đây là nơi mà kỹ thuật thực sự là chỉ mục phổ biến nhất hiện nay là HNSW, thế giới nhỏ có thể điều hướng theo cấp bậc, nó xây dựng một biểu đồ nhiều lớp trong đó mỗi lớp là một mức thu phóng, tìm kiếm bắt đầu ở trên cùng với một vài nút cách xa nhau và Tham lam bước xuống để tìm các chỉ mục dựa trên biểu đồ lân cận gần nhất mang lại khả năng thu hồi tuyệt vời nhưng chúng sử dụng rất nhiều bộ nhớ Họ lớn khác là tệp đảo ngược hoặc IVF IVF phân cụm các vectơ với phương tiện k và chỉ tìm kiếm một vài cụm, nó nhỏ hơn và nhanh hơn để xây dựng, nhưng khả năng thu hồi có thể thấp hơn, bạn cũng có thể kết hợp chúng: IVF trước tiên để chọn các cụm, sau đó HNSW bên trong lượng tử hóa là thủ thuật thứ ba, thu nhỏ mỗi vectơ thành ít bit hơn lượng tử hóa sản phẩm có thể cắt giảm bộ nhớ từ tám lần trở lên với một cú chạm nhỏ đến độ chính xác mà bạn có thể thường xuyên điều chỉnh lại để lựa chọn chỉ mục thực sự là một sự đánh đổi giữa bộ nhớ, tốc độ và thu hồi và bạn nên đo cả ba trên dữ liệu của riêng bạn trước khi vận chuyển Bây giờ chúng ta hãy chuyển sang mối quan tâm về sản xuất, bắt đầu với ngân sách độ trễ, người dùng mong đợi câu trả lời trong hàng chục mili giây chứ không phải giây vì vậy bạn cần lập hồ sơ cho mọi giai đoạn: mã hóa, tìm kiếm và sắp xếp lại bộ mã hóa truy vấn thường là nút thắt cổ chai ẩn, nhiều nhóm lưu trữ các phần nhúng truy vấn phổ biến để cắt giảm chi phí tiếp theo, việc thu hồi là một quyết định về sản phẩm chứ không chỉ là số liệu nếu việc thu hồi giảm xuống, các câu trả lời thế hệ tăng cường truy xuất của bạn trở nên tệ hơn vì vậy hãy đặt mục tiêu thu hồi, chẳng hạn như 95% ở k bằng 10 và cảnh báo khi triển khai đẩy nó xuống dưới dòng đó việc phân chia sẽ trở nên quan trọng khi bạn vượt qua vài triệu vectơ, bạn chia chỉ mục trên các máy và loại bỏ truy vấn, sau đó hợp nhất các kết quả theo khoảng cách, điều này làm tăng thêm rủi ro về độ trễ đuôi Sao chép bảo vệ bạn khỏi một lỗi nút duy nhất, giữ ít nhất một bản sao cho mỗi phân đoạn và kiểm tra chuyển đổi dự phòng thường xuyên, cuối cùng hãy nghĩ đến việc lập chỉ mục lại, vì các mô hình được nâng cấp một mô hình nhúng mới có nghĩa là mọi vectơ phải được tính toán lại kế hoạch cho một hoán đổi màu xanh lam để người dùng không bao giờ thấy quá trình di chuyển để tóm tắt toàn bộ video trong một cơ sở dữ liệu vectơ câu có nghĩa là có thể tìm kiếm được bằng cách chuyển nội dung thành vectơ và trả lời các truy vấn lân cận gần nhất nhưng nhanh chóng chọn chỉ mục của bạn bằng cách đo bộ nhớ, tốc độ và thu hồi dữ liệu của bạn và coi việc sản xuất là một kỷ luật: ngân sách, mục tiêu và diễn tập",
+ "transcriptOriginal": "today we're going to talk about vector databases and why they matter a lot of people are confused about what they actually are so let's start from the beginning and build up to production systems first, what is an embedding? an embedding is a list of numbers that represents the meaning of some content, like text or an image a list of numbers that represents the meaning of some content like text or an image when you run text through a machine learning model, you get a vector usually a few hundred to a few thousand dimensions long the key property is that similar meaning ends up close in that space so the word cat and the word kitten are near each other while cat and carburetor are far apart a vector database stores those vectors and answers one question fast which vectors are closest to this query vector that operation is called nearest neighbor search and doing it exactly over millions of vectors is too slow so real systems use approximate nearest neighbor, or ANN search you trade a tiny bit of accuracy for a massive speedup let's talk about indexing, because this is where the real engineering is the most common index today is HNSW, hierarchical navigable small world it builds a multi layer graph where each layer is a zoom level search starts at the top with a few far apart nodes and greedily walks down to find the approximate nearest neighbors graph based indexes give great recall but they use a lot of memory the other big family is inverted file, or IVF IVF clusters the vectors with k means and only searches a few clusters it's smaller and faster to build, but recall can be lower you can also combine them: IVF first to pick clusters, then HNSW inside quantization is the third trick, shrinking each vector to fewer bits product quantization can cut memory by eight times or more with a small hit to accuracy that you can often tune back so the index choice is really a trade between memory, speed and recall and you should measure all three on your own data before shipping now let's move to production concerns, starting with latency budgets users expect answers in tens of milliseconds, not seconds so you need to profile every stage: encoding, search and reranking the query encoder is often the hidden bottleneck many teams cache popular query embeddings to cut that cost next, recall is a product decision, not just a metric if recall drops, your retrieval augmented generation answers get worse so set a recall target, like ninety five percent at k equals ten and alert when a deploy pushes it below that line sharding matters once you pass a few million vectors you split the index across machines and fan out the query then merge results by distance, which adds a tail latency risk replication protects you from a single node failure keep at least one replica per shard and test failover regularly finally, think about reindexing, because models get upgraded a new embedding model means every vector must be recomputed plan for a blue green swap so users never see the migration to summarize the whole video in one sentence vector databases make meaning searchable by turning content into vectors and answering nearest neighbor queries approximately but quickly pick your index by measuring memory, speed and recall on your data and treat production as a discipline: budgets, targets and rehearsals"
+}

@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-11T23:04:30.436Z",
+  "generatedAt": "2026-09-12T04:37:13.387Z",
   "generatedBy": "YUNIE",
   "version": 1,
   "counts": {
@@ -277,6 +277,7 @@
   ],
   "plans": [
     "aar-harness",
+    "agentic-academy",
     "ai-news-search",
     "ai-news-upgrades-4",
     "archify-demo",
@@ -289,6 +290,7 @@
     "cosmos-observatory",
     "cosmos-p0-upgrade",
     "cosmos-rework",
+    "cosmos-slides-refresh",
     "custom-registry",
     "design-showcase-72",
     "design-showcase-cut-critic",
@@ -336,12 +338,18 @@
     "web-011-part8",
     "web-thuat-toan",
     "web-thuat-toan-v2",
+    "yt-summary",
     "yunie-chat"
   ],
   "demos": [
     {
       "name": "aar",
       "path": "aar/index.html",
+      "status": "ok"
+    },
+    {
+      "name": "agentic-academy",
+      "path": "agentic-academy/index.html",
       "status": "ok"
     },
     {
@@ -400,6 +408,11 @@
       "status": "ok"
     },
     {
+      "name": "yt-summary",
+      "path": "yt-summary/index.html",
+      "status": "ok"
+    },
+    {
       "name": "yunie-chat",
       "path": "yunie-chat/index.html",
       "status": "ok"
@@ -408,7 +421,7 @@
   "health": {
     "errors": 0,
     "status": "ok",
-    "lastCheck": "2026-09-11T23:04:30.436Z",
+    "lastCheck": "2026-09-12T04:37:13.387Z",
     "checks": [
       "get_errors: pass (0 errors)",
       "registry: 18 instructions (18 total) - 19 skills - 9 agents - 7 prompts - 1 hook — all enabled",
@@ -419,8 +432,8 @@
       "www: polished — responsive 375/768/1280, a11y, states, animation 150-300ms",
       "workflow: www/** -> Pages (upload-artifact path: www) — exists: true + eval job gate",
       "library: www/library/ MCP v1.2.0 (5 tools: search + iterative + list/get/status, router+cache, redacted) + library-rag instruction",
-      "auto-learn: 40 KN, 22 bugs, 0 drafts — suggest/log/propose/status (<50ms, IDF, tiếng Việt)",
-      "governance: audit 29 (Ed25519 receipt P0-4) · policy 9 deny/2 allow (ok) · credentials 0 keys plain",
+      "auto-learn: 42 KN, 24 bugs, 0 drafts — suggest/log/propose/status (<50ms, IDF, tiếng Việt)",
+      "governance: audit 39 (Ed25519 receipt P0-4) · policy 9 deny/2 allow (ok) · credentials 0 keys plain",
       "platform: agents 3 (3 built-in, 0 remote) · mcp 3 vendors/3 grants (library 1.2.0 read-only) · components 3/3 pub · routines 2/2 enabled",
       "collaboration: KN-018 — dissentGate ✅ · whoDidYouThinkWith ✅ · critic ✅ · fund-the-friction ✅ (ok)",
       "n5-blazor: www/n5-blazor/ 7 trang static + app.css + data.js + site.js — 100% Pages"
@@ -434,6 +447,11 @@
         "path": "aar/index.html",
         "title": "AAR vs Harness v2",
         "type": "so sánh"
+      },
+      {
+        "path": "agentic-academy/index.html",
+        "title": "agentic-academy",
+        "type": "demo"
       },
       {
         "path": "ai-news/index.html",
@@ -489,6 +507,11 @@
         "path": "web-universe/index.html",
         "title": "web-universe",
         "type": "demo"
+      },
+      {
+        "path": "yt-summary/index.html",
+        "title": "YT Summary",
+        "type": "tiện ích"
       },
       {
         "path": "yunie-chat/index.html",
@@ -630,101 +653,101 @@
     }
   },
   "learn": {
-    "knTotal": 40,
-    "bugsTotal": 22,
+    "knTotal": 42,
+    "bugsTotal": 24,
     "drafts": 0
   },
   "governance": {
     "audit": {
-      "total": 29,
-      "permitted": 29,
+      "total": 39,
+      "permitted": 38,
       "refused": 0,
-      "failed": 0,
-      "lastTs": "2026-09-11T23:04:29.287Z",
+      "failed": 1,
+      "lastTs": "2026-09-12T04:37:01.858Z",
       "tail": [
         {
-          "ts": "2026-09-11T16:46:24.602Z",
+          "ts": "2026-09-12T03:49:12.553Z",
           "actor": "YUNIE",
-          "tool": "edit",
-          "target": "docs/knowleged.md + www/cosmos/slides.html + bug.md",
-          "decision": "permitted",
-          "rule": "allow-all",
-          "durationMs": null,
-          "error": null,
-          "intent": "paste KN-038 + slides sweep 2 + refresh scale.json",
-          "requestId": "66fea7",
-          "prevHash": "7315fed096b905cf",
-          "policyDigest": "162346288ec03771",
-          "hash": "f033e90b42559845",
-          "sig": "sGm0LL-5AHIxCen7WxxVL7ayd2_mmTa25eRmxRs0gkKr2L63xiIXeieusalFayeHUFaY1RCOgBSLhX5y6-mHCw",
-          "pub": "MCowBQYDK2VwAyEAY8PlU0KjXp4HJUUlNlVZdaXHUmDagUMm8rUrEShTPXo"
-        },
-        {
-          "ts": "2026-09-11T17:03:37.396Z",
-          "actor": "YUNIE",
-          "tool": "edit",
-          "target": "www/cosmos/index.html",
+          "tool": "shell",
+          "target": "node scripts/library-ingest-batch.mjs",
           "decision": "permitted",
           "rule": "allow-all",
           "durationMs": null,
           "error": null,
           "intent": null,
-          "requestId": "d88c5a",
-          "prevHash": "f033e90b42559845",
+          "requestId": "ed26f7",
+          "prevHash": "a064f1fc7a701ebd",
           "policyDigest": "162346288ec03771",
-          "hash": "283974d4e0f3bfea",
-          "sig": "0K8ojIWMyg2XVo4NLYFLjEhAYoEiAOqR1QfXyGp8FDtHahU1YPw1cTtVGVOZRtF_Xb_FV7-ai7EJk4fR_PmEBQ",
+          "hash": "e180b79c92a4b0a5",
+          "sig": "F2Kg03FHLOhe34kzPlP66vfaOfR-0bZGltkG62OXdfuHQi9VgjMeLttLNNEJHGyz9v58k2e4RiZPI6vR93WoBQ",
           "pub": "MCowBQYDK2VwAyEAY8PlU0KjXp4HJUUlNlVZdaXHUmDagUMm8rUrEShTPXo"
         },
         {
-          "ts": "2026-09-11T17:05:30.452Z",
-          "actor": "YUNIE",
-          "tool": "edit",
-          "target": "docs/knowleged.md + .github/copilot-instructions.md (KN-039 PS 5.1 ?? fix)",
-          "decision": "permitted",
-          "rule": "allow-all",
-          "durationMs": null,
-          "error": null,
-          "intent": "fixbug ps51 nullish operator",
-          "requestId": "596a26",
-          "prevHash": "283974d4e0f3bfea",
-          "policyDigest": "162346288ec03771",
-          "hash": "fdafff2156993d0b",
-          "sig": "S795_ON53YwFITZsVW2gdMx_USzhzaU632i4Fb58V7rCKK8bkQDjp1xhQb2tQ1tLhkIdF11zdz9uHjkEUzXdAA",
-          "pub": "MCowBQYDK2VwAyEAY8PlU0KjXp4HJUUlNlVZdaXHUmDagUMm8rUrEShTPXo"
-        },
-        {
-          "ts": "2026-09-11T17:13:46.064Z",
+          "ts": "2026-09-12T03:53:38.128Z",
           "actor": "YUNIE",
           "tool": "shell",
-          "target": "install PowerShell 7.6.6 user-space + VS Code terminal profile + rule/KN update",
-          "decision": "permitted",
-          "rule": "allow-all",
-          "durationMs": null,
-          "error": null,
-          "intent": "ps51 nullish root fix - upgrade shell",
-          "requestId": "72dde9",
-          "prevHash": "fdafff2156993d0b",
-          "policyDigest": "162346288ec03771",
-          "hash": "a31d2daac3548944",
-          "sig": "dxeN_mlrZeBjCEnNHS-co9nIrRoi9fqUDwaClK5TLbTim62GlKQyyDGEfruv-47Iu3-ioL5OikIKp_j166cXCQ",
-          "pub": "MCowBQYDK2VwAyEAY8PlU0KjXp4HJUUlNlVZdaXHUmDagUMm8rUrEShTPXo"
-        },
-        {
-          "ts": "2026-09-11T23:04:29.287Z",
-          "actor": "YUNIE",
-          "tool": "shell",
-          "target": "npm run cosmos:refresh",
+          "target": "git push origin main (17e7749)",
           "decision": "permitted",
           "rule": "allow-all",
           "durationMs": null,
           "error": null,
           "intent": null,
-          "requestId": "269eb4",
-          "prevHash": "a31d2daac3548944",
+          "requestId": "60bdc1",
+          "prevHash": "e180b79c92a4b0a5",
           "policyDigest": "162346288ec03771",
-          "hash": "b4fa22d14b9a16f7",
-          "sig": "kWOywfSHRYGlLx23Xpb9JzeH3Njq64MlVZAot2Vpm0w4KZvVpN0-t7WKNjx_0lUCXmUooHExXZi4BYUB7uBlBA",
+          "hash": "90e33792ddd0bee7",
+          "sig": "t3rNeMJHJ91eV-30kwe2OjfgTi2By82ufrHuSA_w3uxXVunVlcZrMRE9aLEn4cFAc8fnyE-uEkyeGEJBEW5QCw",
+          "pub": "MCowBQYDK2VwAyEAY8PlU0KjXp4HJUUlNlVZdaXHUmDagUMm8rUrEShTPXo"
+        },
+        {
+          "ts": "2026-09-12T04:37:01.647Z",
+          "actor": "YUNIE",
+          "tool": "shell",
+          "target": "node scripts/yt-summary/build.mjs --vtt fixtures/demo.vtt",
+          "decision": "permitted",
+          "rule": "allow-all",
+          "durationMs": null,
+          "error": null,
+          "intent": null,
+          "requestId": "2772f3",
+          "prevHash": "90e33792ddd0bee7",
+          "policyDigest": "162346288ec03771",
+          "hash": "0cd8dd193ec62972",
+          "sig": "1g91RusjXzmur2oY9en0oeyMJ7S15RNDhzSwBUnYLFvhl6bk6xipuj4ppn2f90qXdzVIX3GcrF4FulXlWj8SAg",
+          "pub": "MCowBQYDK2VwAyEAY8PlU0KjXp4HJUUlNlVZdaXHUmDagUMm8rUrEShTPXo"
+        },
+        {
+          "ts": "2026-09-12T04:37:01.757Z",
+          "actor": "verify",
+          "tool": "shell",
+          "target": "npx playwright test (yt-summary 14 + full 68)",
+          "decision": "permitted",
+          "rule": "allow-all",
+          "durationMs": null,
+          "error": null,
+          "intent": null,
+          "requestId": "2d6d43",
+          "prevHash": "0cd8dd193ec62972",
+          "policyDigest": "162346288ec03771",
+          "hash": "111053c30c080b8f",
+          "sig": "TCAw3k2VcTQ3MraJEhmBSVlWDo1QvQqnz6Q4vRa5Yzg3e6W9yBW41GShPEROiSMlSlvXklhWTOTXWLhEDiTNAA",
+          "pub": "MCowBQYDK2VwAyEAY8PlU0KjXp4HJUUlNlVZdaXHUmDagUMm8rUrEShTPXo"
+        },
+        {
+          "ts": "2026-09-12T04:37:01.858Z",
+          "actor": "YUNIE",
+          "tool": "shell",
+          "target": "node .github/workflows probe: yt-dlp/relays/translators (all blocked, see verify logs)",
+          "decision": "failed",
+          "rule": "allow-all",
+          "durationMs": null,
+          "error": null,
+          "intent": null,
+          "requestId": "d8d803",
+          "prevHash": "111053c30c080b8f",
+          "policyDigest": "162346288ec03771",
+          "hash": "a9bdc90d95bf465a",
+          "sig": "fX5O5OOUxPoYenYBFkhxCBC4J-3YkSErm-Q_4JC4Bp9c1T4roWcT-vIELl6AVRJYXyAUEv89jAScUG12f64VCQ",
           "pub": "MCowBQYDK2VwAyEAY8PlU0KjXp4HJUUlNlVZdaXHUmDagUMm8rUrEShTPXo"
         }
       ]
@@ -734,7 +757,7 @@
       "deny": 9,
       "allow": 2,
       "status": "ok",
-      "lastCheck": "2026-09-11T23:04:30.285Z"
+      "lastCheck": "2026-09-12T04:37:13.242Z"
     },
     "credentials": {
       "count": 0,

@@ -1,0 +1,28 @@
+
+### 1. Google gtx (enΓåÆvi, no key)
+{
+  "ok": true,
+  "status": 200,
+  "ms": 718,
+  "detected": "en",
+  "vi": "Xin ch├áo mß╗ìi ng╞░ß╗¥i, trong video n├áy ch├║ng ta sß║╜ t├¼m hiß╗âu vß╗ü c╞í sß╗ƒ dß╗» liß╗çu vect╞í v├á thß║┐ hß╗ç t─âng c╞░ß╗¥ng truy xuß║Ñt."
+}
+
+### 2. MyMemory (enΓåÆvi, no key)
+{
+  "ok": true,
+  "status": 200,
+  "ms": 1158,
+  "quota": "",
+  "vi": "Xin ch├áo mß╗ìi ng╞░ß╗¥i, trong video n├áy ch├║ng ta sß║╜ t├¼m hiß╗âu vß╗ü c╞í sß╗ƒ dß╗» liß╗çu vect╞í."
+}
+
+### 3. Transcript extraction (dQw4w9WgXcQ)
+{
+  "ok": false,
+  "step": "captionTracks",
+  "pageStatus": 429
+}
+
+### SUMMARY
+{"gtx":true,"mymemory":true,"transcript":false}

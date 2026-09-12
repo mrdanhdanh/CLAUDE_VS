@@ -312,6 +312,7 @@ async function main() {
     'todo-manager': { title: 'Todo Manager', type: 'demo' },
     'web-thuat-toan': { title: '10 Bài Thuật Toán', type: 'demo' },
     'waymo-effect': { title: 'The Waymo Effect (KN-018)', type: 'slide' },
+    'yt-summary': { title: 'YT Summary', type: 'tiện ích' },
   };
   const pagesEntries = demos.map(d => {
     const meta = pageMeta[d.name] || { title: d.name, type: 'demo' };

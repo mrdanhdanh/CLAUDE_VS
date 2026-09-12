@@ -1,0 +1,20 @@
+
+### INVIDIOUS
+{"label":"https://inv.nadeko.net/api/v1/captions/dQw4w9WgXcQ","ok":false,"status":200,"ms":1469,"note":"not array"}
+{"label":"https://yewtu.be/api/v1/captions/dQw4w9WgXcQ","ok":false,"error":"Unexpected token '<', \"<!doctype \"... is not valid JSON"}
+{"label":"https://invidious.nerdvpn.de/api/v1/captions/dQw4w9WgXcQ","ok":false,"error":"Unexpected token '<', \"<!DOCTYPE \"... is not valid JSON"}
+{"label":"https://iv.melmac.space/api/v1/captions/dQw4w9WgXcQ","ok":false,"error":"fetch failed"}
+{"label":"https://invidious.f5.si/api/v1/captions/dQw4w9WgXcQ","ok":false,"error":"Unexpected token '<', \"<!doctype \"... is not valid JSON"}
+{"label":"https://invidious.privacyredirect.com/api/v1/captions/dQw4w9WgXcQ","ok":false,"status":404,"ms":1570,"head":"<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n    <meta charset=\"UTF-8\">\n    <meta name=\"viewport\" content=\"width=device-width"}
+
+### CAPTION BODY
+null
+
+### PIPED
+{"label":"piped:kavin.rocks","ok":false,"status":403,"ms":268,"head":"<!DOCTYPE html>\n<!--[if lt IE 7]> <html class=\"no-js ie6 oldie\" lang=\"en-US\"> <![endif]-->\n<!--[if IE 7]>    <html class"}
+
+### DIRECT RETRY
+{"label":"direct:watch-page","ok":false,"status":429,"ms":1052,"head":"<!DOCTYPE html PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">\n<html>\n<head><meta http-equiv=\"content-type\" content=\"te"}
+
+### SUMMARY
+{"invidiousAlive":"0/6","piped":false,"direct":false}

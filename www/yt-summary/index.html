@@ -1,0 +1,235 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>YT Summary — Video dài → Bảng tóm tắt + Transcript sạch · YUNIE</title>
+  <meta name="description" content="Dán link YouTube → transcript đã lược bỏ phần thừa + bảng tóm tắt theo phần + bản dịch tiếng Việt. Chạy trên GitHub Pages, không cần AI API key." />
+  <meta name="color-scheme" content="light" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+  <noscript><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet"></noscript>
+  <link rel="stylesheet" href="../styles.css" />
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body>
+  <a class="skip-link" href="#main">Bỏ qua đến nội dung chính</a>
+
+  <header class="header" role="banner">
+    <div class="container header-inner">
+      <a class="brand" href="../index.html" aria-label="Quay về YUNIE STATUS">
+        <div class="brand-mark" aria-hidden="true" title="YUNIE = Your Unified Navigator for Intelligent Execution">Y</div>
+        <div class="brand-text">
+          <strong>YT SUMMARY <span class="badge badge-live" title="Extractive pipeline — không dùng AI API key"><i aria-hidden="true"></i> No AI key</span></strong>
+          <span>Video dài → bảng tóm tắt + transcript sạch + tiếng Việt</span>
+        </div>
+      </a>
+      <nav class="header-actions" aria-label="Thao tác nhanh">
+        <a class="btn btn-ghost btn-icon" href="../index.html" aria-label="Về YUNIE STATUS">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/></svg>
+          <span class="btn-text-full">STATUS</span>
+        </a>
+        <a class="btn btn-ghost btn-icon" href="#help" aria-label="Xem hướng dẫn 3 cách chạy">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M9.1 9a3 3 0 0 1 5.8 1c0 2-3 2.5-3 4"/><path d="M12 17.5h.01"/></svg>
+          <span class="btn-text-full">Hướng dẫn</span>
+        </a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main" class="container yts" role="main">
+    <!-- HERO -->
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="hero-card">
+        <div class="eyebrow">🎬 YT SUMMARY · EXTRACTIVE · PROCESS &gt; MODEL</div>
+        <h1 id="hero-title">Video dài → <span style="color:var(--color-primary)">bảng tóm tắt</span> + transcript sạch</h1>
+        <p>Dán link YouTube, hệ thống <strong>lược bỏ phần thừa</strong> (lời lặp auto-caption, <span class="kbd">[Music]</span>, quảng cáo, <span class="kbd">like &amp; subscribe</span>, filler) → chia <strong>phần theo chủ đề</strong> → trả về <strong>bảng tóm tắt</strong>, transcript sạch và <strong>bản dịch tiếng Việt</strong>. Không server riêng, không AI API key — dữ liệu nằm trong repo, GitHub Pages tự deploy.</p>
+        <div class="hero-meta">
+          <span class="meta-pill">🧩 Tóm tắt <strong>extractive</strong> (trích câu đúng chỗ — không phải LLM viết lại)</span>
+          <span class="meta-pill">🇻🇳 Dịch vi: gtx / MyMemory — <strong>không API key</strong></span>
+          <span class="meta-pill">🗂 Lưu theo video trong <span class="kbd">www/yt-summary/data/</span></span>
+        </div>
+      </div>
+    </section>
+
+    <!-- TRIGGER -->
+    <section class="section" aria-labelledby="trigger-title">
+      <h2 id="trigger-title" class="section-title">Bắt đầu</h2>
+
+      <div class="mode-grid">
+        <!-- MODE 1: link → CI -->
+        <article class="card mode-card" aria-labelledby="mode1-title">
+          <header class="mode-head">
+            <span class="mode-num" aria-hidden="true">1</span>
+            <div>
+              <h3 id="mode1-title">Dán link — chạy qua GitHub Actions</h3>
+              <p class="mode-sub">Tự động hoàn toàn. CI tải phụ đề → làm sạch → tóm tắt → dịch → commit → Pages deploy.</p>
+            </div>
+          </header>
+          <div class="field">
+            <label for="urlInput">Link YouTube</label>
+            <input id="urlInput" type="url" inputmode="url" autocomplete="off" placeholder="https://www.youtube.com/watch?v=…" aria-describedby="urlHint" />
+            <p class="hint" id="urlHint">Hỗ trợ <span class="kbd">watch</span>, <span class="kbd">youtu.be</span>, <span class="kbd">shorts</span>. Video cần có phụ đề (kể cả auto).</p>
+          </div>
+          <div class="mode-actions">
+            <button class="btn btn-primary" id="btnIssue" type="button">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14"/><path d="M5 12h14"/></svg>
+              Gửi qua GitHub Issue <span class="btn-tag">0 token</span>
+            </button>
+            <button class="btn btn-ghost" id="btnToggleToken" type="button" aria-expanded="false" aria-controls="tokenPanel">
+              ⚡ Phân tích ngay (cần token)
+            </button>
+          </div>
+
+          <div class="token-panel" id="tokenPanel" hidden>
+            <div class="field">
+              <label for="patInput">GitHub token (fine-grained: <span class="kbd">Actions: read &amp; write</span> + <span class="kbd">Contents: read</span>)</label>
+              <input id="patInput" type="password" autocomplete="off" placeholder="github_pat_…" aria-describedby="patHint" />
+              <p class="hint" id="patHint">Chỉ lưu trong <span class="kbd">localStorage</span> máy bạn, chỉ gửi tới <span class="kbd">api.github.com</span>, không bao giờ bị log/commit. <button class="linklike" id="btnClearPat" type="button">Xoá token</button></p>
+            </div>
+            <div class="field">
+              <label for="repoInput">Repo (owner/name)</label>
+              <input id="repoInput" type="text" autocomplete="off" spellcheck="false" placeholder="owner/repo" />
+            </div>
+            <button class="btn btn-primary" id="btnDispatch" type="button">🚀 Kích hoạt build ngay</button>
+          </div>
+
+          <ol class="timeline" id="timeline" aria-label="Tiến trình phân tích" hidden>
+            <li data-step="1"><span class="tl-dot" aria-hidden="true"></span><span class="tl-label">Gửi yêu cầu</span></li>
+            <li data-step="2"><span class="tl-dot" aria-hidden="true"></span><span class="tl-label">CI tải phụ đề</span></li>
+            <li data-step="3"><span class="tl-dot" aria-hidden="true"></span><span class="tl-label">Làm sạch + tóm tắt + dịch</span></li>
+            <li data-step="4"><span class="tl-dot" aria-hidden="true"></span><span class="tl-label">Commit + deploy</span></li>
+          </ol>
+          <p class="status-line" id="dispatchStatus" role="status" aria-live="polite"></p>
+        </article>
+
+        <!-- MODE 2: paste vtt (browser lane) -->
+        <article class="card mode-card" aria-labelledby="mode2-title">
+          <header class="mode-head">
+            <span class="mode-num" aria-hidden="true">2</span>
+            <div>
+              <h3 id="mode2-title">Dán phụ đề <span class="kbd">.vtt</span> — chạy ngay trong trang</h3>
+              <p class="mode-sub"><strong>Luôn chạy được</strong> (không phụ thuộc mạng YouTube). Tải phụ đề bằng extension rồi dán vào — mọi bước chạy tại chỗ, kể cả dịch vi.</p>
+            </div>
+          </header>
+          <div class="dropzone" id="dropzone" tabindex="0" role="button" aria-label="Chọn hoặc kéo thả file .vtt/.srt/.json3">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 16V4"/><path d="m7 9 5-5 5 5"/><path d="M20 16v3a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-3"/></svg>
+            <strong>Kéo thả file phụ đề</strong> hoặc <span class="linklike">chọn file</span>
+            <span class="hint">.vtt · .srt · .json3 — hoặc dán trực tiếp vào ô dưới</span>
+            <input type="file" id="fileInput" accept=".vtt,.srt,.json3,.txt" hidden />
+          </div>
+          <div class="field">
+            <label for="vttText" class="sr-only">Nội dung phụ đề</label>
+            <textarea id="vttText" rows="5" placeholder="WEBVTT&#10;00:00:01.000 --> 00:00:04.000&#10;hello everyone welcome back…" spellcheck="false"></textarea>
+            <div class="row-2">
+              <div class="field">
+                <label for="localTitle">Tiêu đề (tùy chọn)</label>
+                <input id="localTitle" type="text" placeholder="Ví dụ: Vector Databases Explained" />
+              </div>
+              <label class="check"><input type="checkbox" id="optTranslate" checked /> Dịch sang tiếng Việt (MyMemory — có quota/ngày)</label>
+            </div>
+          </div>
+          <div class="mode-actions">
+            <button class="btn btn-primary" id="btnLocalRun" type="button">🧹 Xử lý ngay trong trang</button>
+            <button class="btn btn-ghost" id="btnLocalCancel" type="button" hidden>Huỷ</button>
+          </div>
+          <div class="progress-wrap" id="localProgress" hidden>
+            <div class="progress"><i id="localProgressBar" style="width:0%"></i></div>
+            <p class="status-line" id="localStatus" role="status" aria-live="polite"></p>
+          </div>
+          <p class="hint">Phụ đề lấy ở đâu? Extension như <em>“Get cookies.txt”</em>/<em>“YouTube Summary”</em>, hoặc <span class="kbd">yt-dlp --write-auto-subs</span>. Sau khi xử lý có thể <strong>tải JSON</strong> về và commit vào <span class="kbd">www/yt-summary/data/</span> — hoặc dùng mục 1 để CI làm thay.</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- RESULT -->
+    <section class="section" id="result" aria-labelledby="result-title" hidden>
+      <h2 id="result-title" class="section-title">Kết quả</h2>
+      <div class="card result-card">
+        <div class="result-head">
+          <img id="resThumb" class="res-thumb" alt="" width="160" height="90" loading="lazy" hidden />
+          <div class="result-head-main">
+            <h3 id="resTitle">—</h3>
+            <p class="res-sub"><span id="resChannel">—</span> · <a id="resLink" href="#" target="_blank" rel="noopener" hidden>Mở trên YouTube ↗</a></p>
+            <div class="chips" id="resChips"></div>
+          </div>
+          <div class="lang-toggle" role="group" aria-label="Chọn ngôn ngữ hiển thị">
+            <button type="button" id="langVi" class="seg-btn" aria-pressed="true">🇻🇳 Tiếng Việt</button>
+            <button type="button" id="langSrc" class="seg-btn" aria-pressed="false">🌐 Bản gốc</button>
+          </div>
+        </div>
+        <p class="notice" id="transNotice" hidden></p>
+
+        <div class="yts-table-wrap">
+          <table class="yt-table" id="summaryTable">
+            <caption class="sr-only">Bảng tóm tắt theo phần của video</caption>
+            <thead>
+              <tr><th scope="col">#</th><th scope="col">Thời lượng</th><th scope="col">Phần</th><th scope="col">Tóm tắt</th><th scope="col">Từ khóa</th></tr>
+            </thead>
+            <tbody id="segBody"></tbody>
+          </table>
+        </div>
+        <p class="dropped" id="droppedNote"></p>
+
+        <div class="transcript-block">
+          <div class="transcript-head">
+            <h4>Transcript đã làm sạch <span class="hint" id="transLangHint"></span></h4>
+            <div class="transcript-actions">
+              <label class="sr-only" for="segSelect">Lọc theo phần</label>
+              <select id="segSelect"></select>
+              <button class="btn btn-ghost btn-sm" id="btnCopySeg" type="button">📋 Copy phần đang xem</button>
+              <button class="btn btn-ghost btn-sm" id="btnCopyAll" type="button">📋 Copy tất cả</button>
+            </div>
+          </div>
+          <pre class="transcript-body" id="transcriptBody" tabindex="0"></pre>
+          <div class="mode-actions" id="transExtra" hidden>
+            <button class="btn btn-ghost btn-sm" id="btnTranslateFull" type="button">🇻🇳 Dịch toàn bộ transcript (chậm, tốn quota hơn)</button>
+            <button class="btn btn-primary btn-sm" id="btnDownload" type="button">⬇️ Tải JSON kết quả</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- LIBRARY -->
+    <section class="section" aria-labelledby="lib-title">
+      <h2 id="lib-title" class="section-title">Video đã phân tích</h2>
+      <div id="libraryList" class="lib-grid" aria-live="polite">
+        <p class="empty">Đang tải…</p>
+      </div>
+    </section>
+
+    <!-- HELP -->
+    <section class="section" id="help" aria-labelledby="help-title">
+      <h2 id="help-title" class="section-title">Vì sao có 2 cách? (nói thật, kèm bằng chứng)</h2>
+      <div class="help-grid">
+        <div class="help-card">
+          <h3>🚧 YouTube chặn scrape từ 2026</h3>
+          <p>Đo thật 2026-09-12 (bằng chứng trong <span class="kbd">.agent/plans/yt-summary/verify/</span>): watch-page scrape → <strong>429</strong>; yt-dlp không cookie → <em>“Sign in to confirm you're not a bot”</em>; 6 instance Invidious + Piped → <strong>0/6 sống</strong>; cả API công khai 8.3k⭐ → <strong>IpBlocked</strong>. GitHub Actions chạy trên IP datacenter nên thường dính chặn này.</p>
+        </div>
+        <div class="help-card">
+          <h3>✅ Vì thế mục 2 là “bảo hiểm”</h3>
+          <p>Dán <span class="kbd">.vtt</span> chạy <strong>100%</strong> vì không cần mạng YouTube — toàn bộ làm sạch/chia phần/tóm tắt chạy trong trình duyệt của bạn, dịch vi qua MyMemory (CORS cho phép). Đây là cách chắc chắn nhất khi CI bị chặn.</p>
+        </div>
+        <div class="help-card">
+          <h3>🔓 Muốn CI chạy chắc?</h3>
+          <p>Xuất <span class="kbd">cookies.txt</span> (extension “Get cookies.txt LOCALLY”) → chạy local <span class="kbd">node scripts/yt-summary/build.mjs --url … --cookies cookies.txt</span> rồi push; hoặc lưu nội dung đó vào secret <span class="kbd">YT_COOKIES</span> để workflow dùng. Chi tiết trong <span class="kbd">.github/workflows/yt-summary.yml</span>.</p>
+        </div>
+        <div class="help-card">
+          <h3>🧠 “Tóm tắt” ở đây nghĩa là gì?</h3>
+          <p>Extractive: chọn & xếp câu <strong>quan trọng nhất</strong> của từng phần (TF-IDF + tín hiệu cấu trúc) — không phải LLM viết lại. Giá trị thật nằm ở <strong>lược bỏ</strong>: lời lặp, nhạc, quảng cáo, boilerplate. Bản gốc luôn được giữ để bạn đối chiếu.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <p>YT Summary v1 · extractive pipeline · nguồn phụ đề: yt-dlp / file .vtt · dịch: gtx + MyMemory (no key) · <a href="../index.html">YUNIE STATUS</a> · <a href="https://github.com/search?q=yt-dlp" target="_blank" rel="noopener">yt-dlp ↗</a></p>
+    </div>
+  </footer>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <script type="module" src="./app.js"></script>
+</body>
+</html>

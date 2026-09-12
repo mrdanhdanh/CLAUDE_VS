@@ -1,0 +1,213 @@
+WEBVTT
+Kind: captions
+Language: en
+
+00:00:00.080 --> 00:00:03.049
+[Music]
+
+00:00:03.049 --> 00:00:06.200
+hello everyone<00:00:03.560><c> welcome</c><00:00:04.100><c> back</c>
+
+00:00:06.200 --> 00:00:08.100
+hello everyone welcome back
+
+00:00:08.100 --> 00:00:10.500
+hello everyone welcome back to the channel
+
+00:00:10.500 --> 00:00:13.900
+uh today we're going to talk about vector databases and why they matter
+
+00:00:13.900 --> 00:00:17.400
+a lot of people um are confused about what they actually are
+
+00:00:17.400 --> 00:00:21.200
+so let's start from the beginning and build up to production systems
+
+00:00:21.200 --> 00:00:24.700
+first, what is an embedding? an embedding is a list of numbers
+
+00:00:24.700 --> 00:00:28.300
+that represents the meaning of some content, like text or an image
+
+00:00:28.300 --> 00:00:30.400
+a list of numbers that represents
+
+00:00:30.400 --> 00:00:33.800
+the meaning of some content like text or an image
+
+00:00:33.800 --> 00:00:37.500
+when you run text through a machine learning model, you get a vector
+
+00:00:37.500 --> 00:00:41.200
+usually a few hundred to a few thousand dimensions long
+
+00:00:41.200 --> 00:00:45.600
+the key property is that similar meaning ends up close in that space
+
+00:00:45.600 --> 00:00:49.400
+so the word cat and the word kitten are near each other
+
+00:00:49.400 --> 00:00:53.100
+while cat and carburetor are far apart
+
+00:00:53.100 --> 00:00:57.800
+a vector database stores those vectors and answers one question fast
+
+00:00:57.800 --> 00:01:01.500
+which vectors are closest to this query vector
+
+00:01:01.500 --> 00:01:05.200
+that operation is called nearest neighbor search
+
+00:01:05.200 --> 00:01:08.900
+and doing it exactly over millions of vectors is too slow
+
+00:01:08.900 --> 00:01:12.600
+so real systems use approximate nearest neighbor, or ANN search
+
+00:01:12.600 --> 00:01:16.300
+you trade a tiny bit of accuracy for a massive speedup
+
+00:01:16.300 --> 00:01:20.100
+now here is the sponsor of today's video, this video is sponsored by
+
+00:01:20.100 --> 00:01:23.800
+a company that makes developer tools, they have a great deal
+
+00:01:23.800 --> 00:01:27.500
+use code SPONSOR20 for a discount, link in the description
+
+00:01:27.500 --> 00:01:31.200
+it really helps the channel and it's a product I actually use daily
+
+00:01:31.200 --> 00:01:34.900
+so go check it out, and now back to the video
+
+00:01:34.900 --> 00:01:38.600
+[Music]
+
+00:01:38.600 --> 00:01:42.300
+let's talk about indexing, because this is where the real engineering is
+
+00:01:42.300 --> 00:01:46.000
+the most common index today is HNSW, hierarchical navigable small world
+
+00:01:46.000 --> 00:01:49.700
+it builds a multi layer graph where each layer is a zoom level
+
+00:01:49.700 --> 00:01:53.400
+search starts at the top with a few far apart nodes
+
+00:01:53.400 --> 00:01:57.100
+and greedily walks down to find the approximate nearest neighbors
+
+00:01:57.100 --> 00:02:00.800
+graph based indexes give great recall but they use a lot of memory
+
+00:02:00.800 --> 00:02:04.500
+the other big family is inverted file, or IVF
+
+00:02:04.500 --> 00:02:08.200
+IVF clusters the vectors with k means and only searches a few clusters
+
+00:02:08.200 --> 00:02:11.900
+it's smaller and faster to build, but recall can be lower
+
+00:02:11.900 --> 00:02:15.600
+you can also combine them: IVF first to pick clusters, then HNSW inside
+
+00:02:15.600 --> 00:02:19.300
+quantization is the third trick, shrinking each vector to fewer bits
+
+00:02:19.300 --> 00:02:23.000
+product quantization can cut memory by eight times or more
+
+00:02:23.000 --> 00:02:26.700
+with a small hit to accuracy that you can often tune back
+
+00:02:26.700 --> 00:02:30.400
+so the index choice is really a trade between memory, speed and recall
+
+00:02:30.400 --> 00:02:34.100
+and you should measure all three on your own data before shipping
+
+00:02:34.100 --> 00:02:37.800
+thanks for watching so far, if you're finding this useful
+
+00:02:37.800 --> 00:02:41.500
+now let's move to production concerns, starting with latency budgets
+
+00:02:41.500 --> 00:02:45.200
+users expect answers in tens of milliseconds, not seconds
+
+00:02:45.200 --> 00:02:48.900
+so you need to profile every stage: encoding, search and reranking
+
+00:02:48.900 --> 00:02:52.600
+the query encoder is often the hidden bottleneck
+
+00:02:52.600 --> 00:02:56.300
+many teams cache popular query embeddings to cut that cost
+
+00:02:56.300 --> 00:03:00.000
+next, recall is a product decision, not just a metric
+
+00:03:00.000 --> 00:03:03.700
+if recall drops, your retrieval augmented generation answers get worse
+
+00:03:03.700 --> 00:03:07.400
+so set a recall target, like ninety five percent at k equals ten
+
+00:03:07.400 --> 00:03:11.100
+and alert when a deploy pushes it below that line
+
+00:03:11.100 --> 00:03:14.800
+sharding matters once you pass a few million vectors
+
+00:03:14.800 --> 00:03:18.500
+you split the index across machines and fan out the query
+
+00:03:18.500 --> 00:03:22.200
+then merge results by distance, which adds a tail latency risk
+
+00:03:22.200 --> 00:03:25.900
+replication protects you from a single node failure
+
+00:03:25.900 --> 00:03:29.600
+keep at least one replica per shard and test failover regularly
+
+00:03:29.600 --> 00:03:33.300
+finally, think about reindexing, because models get upgraded
+
+00:03:33.300 --> 00:03:37.000
+a new embedding model means every vector must be recomputed
+
+00:03:37.000 --> 00:03:40.700
+plan for a blue green swap so users never see the migration
+
+00:03:40.700 --> 00:03:44.400
+to summarize the whole video in one sentence
+
+00:03:44.400 --> 00:03:48.100
+vector databases make meaning searchable by turning content into vectors
+
+00:03:48.100 --> 00:03:51.800
+and answering nearest neighbor queries approximately but quickly
+
+00:03:51.800 --> 00:03:55.500
+pick your index by measuring memory, speed and recall on your data
+
+00:03:55.500 --> 00:03:59.200
+and treat production as a discipline: budgets, targets and rehearsals
+
+00:03:59.200 --> 00:04:02.900
+that's all for today, thanks for watching, like and subscribe
+
+00:04:02.900 --> 00:04:06.600
+hit the bell so you don't miss the next one, link in the description
+
+00:04:06.600 --> 00:04:09.000
+see you in the next video
+
+00:04:09.000 --> 00:04:11.000
+[Music]

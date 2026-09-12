@@ -1,0 +1,5 @@
+{"name":"lingva.ml","status":403,"ms":328,"out":"<!DOCTYPE html><html lang=\"en-US\"><head><title>Just a moment...</title><meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\"><m"}
+{"name":"lingva.delta","status":503,"ms":523,"out":"The deployment is currently unavailable\n\nDEPLOYMENT_PAUSED\n\nhkg1::24lx6-1789186344104-3c2e96a1808e\n"}
+{"name":"lingva.garudalinux","status":403,"ms":264,"out":"<!DOCTYPE html><html lang=\"en-US\"><head><title>Just a moment...</title><meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\"><m"}
+{"name":"simplytranslate","status":200,"ms":1367,"out":"{\"source_language\":\"\",\"definitions\":null,\"translations\":null,\"translated_text\":\"\",\"pronunciation\":\"\""}
+{"name":"libre.terraprint","status":502,"ms":1380,"out":"<html>\r\n<head><title>502 Bad Gateway</title></head>\r\n<body>\r\n<center><h1>502 Bad Gateway</h1></center>\r\n<hr><center>nginx/1.18.0 (Ubuntu)</c"}
