@@ -1,0 +1,7 @@
+≡ƒº╣ Slop Check ΓÇö 1 file ┬╖ dup ΓëÑ8 d├▓ng ┬╖ fn Γëñ80 d├▓ng ┬╖ CC Γëñ12
+
+ΓÜá∩╕Å  Function metrics:
+   ΓÇó [size] .github/harness/scripts/cosmic-scale.mjs:42 main() ΓÇö 220 d├▓ng (max 80)
+   ΓÇó [complexity] .github/harness/scripts/cosmic-scale.mjs:42 main() ΓÇö CC 109 (max 12)
+
+Γ¥î 2 findings ΓÇö fix hoß║╖c justify tr╞░ß╗¢c khi Done (Slop Gate ┬╖ KN-047)

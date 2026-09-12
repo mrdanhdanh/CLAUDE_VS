@@ -21,7 +21,7 @@
 | `verify/trend-demo.txt` | 4 scenario CLI: gate nổ (exit 1) · đà 3<4 (exit 0) · đà gãy (exit 0) · không flag (exit 0) |
 | `verify/slop-check.txt` + `slop-baseline.txt` | 28 findings hiện tại = 28 baseline HEAD → không có finding mới từ diff này |
 
-**Slop justification (KN-047):** `main()` 189→220 dòng (CC 92→109) — đã >80 từ trước (single-file 0-dep script, cấu trúc cố định); `render()`/index.html/slides.html scripts là pre-existing (baseline chứng minh). `renderEscape()` ban đầu CC 30 → refactor tách `freshBadge`/`arrowOf`/`gateCardHtml`/`escapeFail`/`renderEvStreak`/`renderEvWindow` → **hết finding**. Follow-up (ngoài diff): tách `main()` — đăng ký như hạng mục CMB/refactor sau.
+**Slop justification (KN-047):** `main()` 189→220 dòng (CC 92→109) — đã >80 từ trước (single-file 0-dep script, cấu trúc cố định); `render()`/index.html/slides.html scripts là pre-existing (baseline chứng minh). `renderEscape()` ban đầu CC 30 → refactor tách `freshBadge`/`arrowOf`/`gateCardHtml`/`escapeFail`/`renderEvStreak`/`renderEvWindow` → **hết finding**. Follow-up ✅ **done** (2026-09-12): tách `main()` cosmic-scale → plan `cosmos-scale-split` — file **0 findings** slop-check, output **hash-identical 3 lớp**, full suite 101/101.
 
 **Evals rubric (KN-037):** 8/8 tiêu chí acceptance trong PRD pass (5 CLI + 3 UI) — bao gồm edge: thiếu history, exit code đúng, mock gate state, 375px.
 

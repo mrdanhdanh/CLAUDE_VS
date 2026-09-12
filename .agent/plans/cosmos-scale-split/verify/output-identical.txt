@@ -1,0 +1,21 @@
+# Refactor equivalence — cosmic-scale.mjs (2026-09-12T13:02:29.823Z)
+
+## JSON stdout (--json) · normalize: generatedAt, counts.auditTotal, history[].t, trend.window[].t
+before = 47e8c0e0b20990eb
+after  = 47e8c0e0b20990eb
+verdict: ✅ IDENTICAL
+
+## File ghi (--out → written-*.json)
+before = e6ab2c4dc943fdcf
+after  = e6ab2c4dc943fdcf
+verdict: ✅ IDENTICAL
+
+## Human stdout (không timestamp) — raw compare
+before = d27c2bf78f4f5576
+after  = d27c2bf78f4f5576
+verdict: ✅ IDENTICAL
+
+## Exit codes
+--json: before 0 · after 0
+human : before 0 · after 0
+--out : before 0 · after 0
