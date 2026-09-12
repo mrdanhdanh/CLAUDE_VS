@@ -1,0 +1,160 @@
+{
+  "files": 1,
+  "minLines": 8,
+  "maxFunc": 80,
+  "maxCC": 12,
+  "top": 10,
+  "dup": [
+    {
+      "type": "duplication",
+      "lines": 10,
+      "a": {
+        "file": ".github/harness/scripts/auto-learn.mjs",
+        "line": 361
+      },
+      "b": {
+        "file": ".github/harness/scripts/auto-learn.mjs",
+        "line": 639
+      },
+      "preview": "- **Ngày:** ${today}"
+    }
+  ],
+  "fnFindings": [
+    {
+      "type": "complexity",
+      "file": ".github/harness/scripts/auto-learn.mjs",
+      "line": 68,
+      "fn": "parseKNs",
+      "cc": 20,
+      "max": 12
+    },
+    {
+      "type": "complexity",
+      "file": ".github/harness/scripts/auto-learn.mjs",
+      "line": 135,
+      "fn": "scoreKN",
+      "cc": 13,
+      "max": 12
+    },
+    {
+      "type": "complexity",
+      "file": ".github/harness/scripts/auto-learn.mjs",
+      "line": 170,
+      "fn": "loadAttestations",
+      "cc": 14,
+      "max": 12
+    },
+    {
+      "type": "complexity",
+      "file": ".github/harness/scripts/auto-learn.mjs",
+      "line": 193,
+      "fn": "attest",
+      "cc": 19,
+      "max": 12
+    },
+    {
+      "type": "complexity",
+      "file": ".github/harness/scripts/auto-learn.mjs",
+      "line": 228,
+      "fn": "suggest",
+      "cc": 14,
+      "max": 12
+    },
+    {
+      "type": "complexity",
+      "file": ".github/harness/scripts/auto-learn.mjs",
+      "line": 274,
+      "fn": "logBug",
+      "cc": 14,
+      "max": 12
+    },
+    {
+      "type": "complexity",
+      "file": ".github/harness/scripts/auto-learn.mjs",
+      "line": 320,
+      "fn": "propose",
+      "cc": 17,
+      "max": 12
+    },
+    {
+      "type": "complexity",
+      "file": ".github/harness/scripts/auto-learn.mjs",
+      "line": 402,
+      "fn": "recordInteraction",
+      "cc": 13,
+      "max": 12
+    },
+    {
+      "type": "complexity",
+      "file": ".github/harness/scripts/auto-learn.mjs",
+      "line": 432,
+      "fn": "reportFeedback",
+      "cc": 33,
+      "max": 12
+    },
+    {
+      "type": "size",
+      "file": ".github/harness/scripts/auto-learn.mjs",
+      "line": 501,
+      "fn": "evaluateCandidate",
+      "lines": 95,
+      "max": 80
+    },
+    {
+      "type": "complexity",
+      "file": ".github/harness/scripts/auto-learn.mjs",
+      "line": 501,
+      "fn": "evaluateCandidate",
+      "cc": 41,
+      "max": 12
+    },
+    {
+      "type": "size",
+      "file": ".github/harness/scripts/auto-learn.mjs",
+      "line": 597,
+      "fn": "commitCandidate",
+      "lines": 113,
+      "max": 80
+    },
+    {
+      "type": "complexity",
+      "file": ".github/harness/scripts/auto-learn.mjs",
+      "line": 597,
+      "fn": "commitCandidate",
+      "cc": 29,
+      "max": 12
+    },
+    {
+      "type": "complexity",
+      "file": ".github/harness/scripts/auto-learn.mjs",
+      "line": 733,
+      "fn": "showHistory",
+      "cc": 17,
+      "max": 12
+    },
+    {
+      "type": "complexity",
+      "file": ".github/harness/scripts/auto-learn.mjs",
+      "line": 1063,
+      "fn": "statsHeatmap",
+      "cc": 16,
+      "max": 12
+    },
+    {
+      "type": "complexity",
+      "file": ".github/harness/scripts/auto-learn.mjs",
+      "line": 1111,
+      "fn": "status",
+      "cc": 30,
+      "max": 12
+    },
+    {
+      "type": "complexity",
+      "file": ".github/harness/scripts/auto-learn.mjs",
+      "line": 1164,
+      "fn": "parseArgs",
+      "cc": 16,
+      "max": 12
+    }
+  ]
+}

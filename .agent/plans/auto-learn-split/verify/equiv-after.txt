@@ -1,0 +1,10 @@
+watchdog-json: exit=0 out=dda8dc872b0676dd err=e3b0c44298fc1c14 stable=true
+watchdog-human: exit=0 out=bc28bdb269c7a41d err=e3b0c44298fc1c14 stable=true
+watchdog-apply-dryrun: exit=2 out=63eac2b1f6bf7fde err=f7e9f6c825178b75 stable=true
+status-json: exit=0 out=7fd035739ed6640c err=e3b0c44298fc1c14 stable=true
+stats-json: exit=0 out=13b86b2c4acc0887 err=e3b0c44298fc1c14 stable=true
+suggest-json: exit=0 out=443230506df7a82e err=e3b0c44298fc1c14 stable=true
+stats-missing-flag: exit=1 out=e3b0c44298fc1c14 err=3fa7284ad9cbc78f stable=true
+unknown-cmd: exit=1 out=e3b0c44298fc1c14 err=2d70331c26c01c16 stable=true
+watchdog-written: exit=0 written=dda8dc872b0676dd
+stats-written: exit=0 written=13b86b2c4acc0887

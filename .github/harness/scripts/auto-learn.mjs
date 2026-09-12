@@ -794,104 +794,132 @@ function ageDaysFromSlug(slug, fallbackMs, nowMs) {
   return Math.max(0, Math.floor((nowMs - base) / 86400000));
 }
 
-async function watchdog(opts = {}) {
-  const asJson = !!opts.json;
-  const apply = !!opts.apply;
-  const dir = opts.dir ? path.resolve(ROOT, opts.dir) : BUGS_DIR;
-  const journal = opts.journal ? path.resolve(ROOT, opts.journal) : path.join(dir, 'hawking.jsonl');
+function parseWatchdogOpts(opts) {
   const nowMs = opts.now ? new Date(opts.now).getTime() : Date.now();
   if (Number.isNaN(nowMs)) throw new Error('--now không hợp lệ: ' + opts.now);
-  const escalateDays = Number(opts['escalate-days'] ?? HAWKING_DEFAULT.escalateDays);
-  const evaporateDays = Number(opts['evaporate-days'] ?? HAWKING_DEFAULT.evaporateDays);
-  const outPath = opts.out ? path.resolve(ROOT, opts.out) : null;
+  const dir = opts.dir ? path.resolve(ROOT, opts.dir) : BUGS_DIR;
+  return {
+    asJson: !!opts.json,
+    apply: !!opts.apply,
+    dir,
+    journal: opts.journal ? path.resolve(ROOT, opts.journal) : path.join(dir, 'hawking.jsonl'),
+    nowMs,
+    escalateDays: Number(opts['escalate-days'] ?? HAWKING_DEFAULT.escalateDays),
+    evaporateDays: Number(opts['evaporate-days'] ?? HAWKING_DEFAULT.evaporateDays),
+    outPath: opts.out ? path.resolve(ROOT, opts.out) : null,
+  };
+}
 
+async function readBugFile(bugFile) {
+  try {
+    const text = await fs.readFile(bugFile, 'utf8');
+    const mtime = (await fs.stat(bugFile)).mtimeMs;
+    return { text, mtime };
+  } catch { return null; }
+}
+
+function judgeHawkingBug(slug, text, mtime, nowMs, escalateDays, evaporateDays) {
+  if (!/-\s*\*\*Status:\*\*\s*`?open`?/i.test(text)) return null;
+  const ageDays = ageDaysFromSlug(slug, mtime, nowMs);
+  const action = ageDays >= evaporateDays ? 'evaporate' : ageDays >= escalateDays ? 'escalate' : 'fresh';
+  return { slug, date: /^\d{4}-\d{2}-\d{2}/.test(slug) ? slug.slice(0, 10) : null, ageDays, status: 'open', action };
+}
+
+async function scanHawkingBugs(dir, nowMs, escalateDays, evaporateDays) {
   const bugs = [];
   let closed = 0;
-  let entries = [];
+  let dirs = [];
   try {
-    const dirs = (await fs.readdir(dir, { withFileTypes: true })).filter((e) => e.isDirectory() && e.name !== '_template').map((e) => e.name);
-    for (const slug of dirs) {
-      const bugFile = path.join(dir, slug, 'bug.md');
-      let text = '';
-      let mtime = nowMs;
-      try {
-        text = await fs.readFile(bugFile, 'utf8');
-        mtime = (await fs.stat(bugFile)).mtimeMs;
-      } catch { continue; }
-      const isOpen = /-\s*\*\*Status:\*\*\s*`?open`?/i.test(text);
-      if (!isOpen) { closed++; continue; }
-      const ageDays = ageDaysFromSlug(slug, mtime, nowMs);
-      const action = ageDays >= evaporateDays ? 'evaporate' : ageDays >= escalateDays ? 'escalate' : 'fresh';
-      bugs.push({ slug, date: /^\d{4}-\d{2}-\d{2}/.test(slug) ? slug.slice(0, 10) : null, ageDays, status: 'open', action });
-    }
-  } catch {}
+    dirs = (await fs.readdir(dir, { withFileTypes: true }))
+      .filter((e) => e.isDirectory() && e.name !== '_template')
+      .map((e) => e.name);
+  } catch { return { bugs, closed }; }
+  for (const slug of dirs) {
+    const got = await readBugFile(path.join(dir, slug, 'bug.md'));
+    if (!got) continue;
+    const bug = judgeHawkingBug(slug, got.text, got.mtime, nowMs, escalateDays, evaporateDays);
+    if (bug) bugs.push(bug); else closed++;
+  }
   bugs.sort((a, b) => b.ageDays - a.ageDays || a.slug.localeCompare(b.slug));
+  return { bugs, closed };
+}
 
-  const counts = {
+function hawkingCounts(bugs, closed) {
+  const by = (action) => bugs.filter((b) => b.action === action).length;
+  return {
     bugsTotal: bugs.length + closed,
     open: bugs.length,
-    fresh: bugs.filter((b) => b.action === 'fresh').length,
-    escalate: bugs.filter((b) => b.action === 'escalate').length,
-    evaporate: bugs.filter((b) => b.action === 'evaporate').length,
+    fresh: by('fresh'),
+    escalate: by('escalate'),
+    evaporate: by('evaporate'),
     closed,
   };
-  const result = {
-    generatedAt: new Date(nowMs).toISOString(),
-    generatedBy: 'auto-learn.mjs watchdog',
-    policy: { escalateDays, evaporateDays },
-    counts,
-    bugs,
-  };
+}
 
-  if (apply) {
-    // GATE: mutation bắt buộc human sign-off — thiếu/agent ký → REFUSED + dry-run, không ghi gì (fail-closed)
-    const sig = validateSigner(opts.sign);
-    if (!sig.ok) {
-      const planned = bugs.filter((b) => b.action !== 'fresh');
-      console.log('⛔ REFUSED — mutation cần human sign-off (chưa áp dụng gì).');
-      console.log('   Lý do: ' + sig.reason);
-      console.log('   Kế hoạch (dry-run — human review trước khi ký):');
-      if (!planned.length) console.log('     (không có action nào cần áp dụng)');
-      for (const b of planned) console.log('     [' + b.action + '] ' + b.slug + ' — ' + b.ageDays + ' ngày');
-      console.log('   Human duyệt xong chạy lại: watchdog --apply --sign "<tên người>"');
-      console.error('⛔ REFUSED (hawking-signoff): ' + sig.reason + ' — human chạy: watchdog --apply --sign "<tên>"');
-      process.exit(2);
+// GATE: mutation bắt buộc human sign-off — thiếu/agent ký → REFUSED + dry-run, không ghi gì (fail-closed)
+function refuseHawkingSignoff(sig, bugs) {
+  const planned = bugs.filter((b) => b.action !== 'fresh');
+  console.log('⛔ REFUSED — mutation cần human sign-off (chưa áp dụng gì).');
+  console.log('   Lý do: ' + sig.reason);
+  console.log('   Kế hoạch (dry-run — human review trước khi ký):');
+  if (!planned.length) console.log('     (không có action nào cần áp dụng)');
+  for (const b of planned) console.log('     [' + b.action + '] ' + b.slug + ' — ' + b.ageDays + ' ngày');
+  console.log('   Human duyệt xong chạy lại: watchdog --apply --sign "<tên người>"');
+  console.error('⛔ REFUSED (hawking-signoff): ' + sig.reason + ' — human chạy: watchdog --apply --sign "<tên>"');
+  process.exit(2);
+}
+
+// journal cũ → entry cuối cùng per slug (idempotent: chỉ ghi khi action đổi)
+async function readHawkingJournal(journal) {
+  const lastBySlug = new Map();
+  try {
+    const raw = await fs.readFile(journal, 'utf8');
+    for (const line of raw.trim().split('\n').filter(Boolean)) {
+      try { const e = JSON.parse(line); lastBySlug.set(e.slug, e); } catch {}
     }
-    // journal cũ → entry cuối cùng per slug (idempotent: chỉ ghi khi action đổi)
-    const lastBySlug = new Map();
-    try {
-      const raw = await fs.readFile(journal, 'utf8');
-      for (const line of raw.trim().split('\n').filter(Boolean)) {
-        try { const e = JSON.parse(line); lastBySlug.set(e.slug, e); } catch {}
-      }
-    } catch {}
-    for (const b of bugs) {
-      if (b.action === 'fresh') continue;
-      const prev = lastBySlug.get(b.slug);
-      if (prev && prev.action === b.action) continue; // không lặp
-      const entry = { ts: result.generatedAt, slug: b.slug, ageDays: b.ageDays, action: b.action, prev: prev ? prev.action : null, signedBy: sig.signer };
-      await fs.mkdir(path.dirname(journal), { recursive: true });
-      await fs.appendFile(journal, JSON.stringify(entry) + '\n', 'utf8');
-      entries.push(entry);
-      if (b.action === 'evaporate') {
-        const bugDir = path.join(dir, b.slug);
-        const bugFile2 = path.join(bugDir, 'bug.md');
-        const dateStr = result.generatedAt.slice(0, 10);
-        await fs.appendFile(path.join(bugDir, 'hawking.md'),
-          `\n## 🌑 Hawking Radiation — ${dateStr}\n\nDraft mở **${b.ageDays} ngày** (ngưỡng ${evaporateDays}d) → bay hơi. Status: open → evaporated.\n\n> Lịch sử giữ nguyên. Chuyển hoá kiến thức: \`node .github/harness/scripts/auto-learn.mjs propose --bug ${b.slug}\`\n`, 'utf8');
-        const text = await fs.readFile(bugFile2, 'utf8');
-        const updated = text.replace(/-\s*\*\*Status:\*\*\s*`?open`?/i, '- **Status:** `evaporated`');
-        if (updated !== text) await fs.writeFile(bugFile2, updated, 'utf8');
-      }
-    }
-  }
+  } catch {}
+  return lastBySlug;
+}
 
-  if (outPath) {
-    await fs.mkdir(path.dirname(outPath), { recursive: true });
-    await fs.writeFile(outPath, JSON.stringify(result, null, 2) + '\n', 'utf8');
-  }
-  if (asJson || outPath) { console.log(JSON.stringify(result, null, 2)); if (!asJson) return; return; }
+async function evaporateBug(dir, b, result, evaporateDays) {
+  const bugDir = path.join(dir, b.slug);
+  const dateStr = result.generatedAt.slice(0, 10);
+  await fs.appendFile(path.join(bugDir, 'hawking.md'),
+    `\n## 🌑 Hawking Radiation — ${dateStr}\n\nDraft mở **${b.ageDays} ngày** (ngưỡng ${evaporateDays}d) → bay hơi. Status: open → evaporated.\n\n> Lịch sử giữ nguyên. Chuyển hoá kiến thức: \`node .github/harness/scripts/auto-learn.mjs propose --bug ${b.slug}\`\n`, 'utf8');
+  const bugFile = path.join(bugDir, 'bug.md');
+  const text = await fs.readFile(bugFile, 'utf8');
+  const updated = text.replace(/-\s*\*\*Status:\*\*\s*`?open`?/i, '- **Status:** `evaporated`');
+  if (updated !== text) await fs.writeFile(bugFile, updated, 'utf8');
+}
 
+async function applyHawkingEntry(b, ctx) {
+  if (b.action === 'fresh') return null;
+  const prev = ctx.lastBySlug.get(b.slug);
+  if (prev && prev.action === b.action) return null; // không lặp
+  const entry = { ts: ctx.result.generatedAt, slug: b.slug, ageDays: b.ageDays, action: b.action, prev: prev ? prev.action : null, signedBy: ctx.sig.signer };
+  await fs.mkdir(path.dirname(ctx.journal), { recursive: true });
+  await fs.appendFile(ctx.journal, JSON.stringify(entry) + '\n', 'utf8');
+  if (b.action === 'evaporate') await evaporateBug(ctx.dir, b, ctx.result, ctx.evaporateDays);
+  return entry;
+}
+
+async function applyHawking(bugs, ctx) {
+  const entries = [];
+  for (const b of bugs) {
+    const entry = await applyHawkingEntry(b, ctx);
+    if (entry) entries.push(entry);
+  }
+  return entries;
+}
+
+async function writeWatchdogOutput(result, outPath) {
+  if (!outPath) return;
+  await fs.mkdir(path.dirname(outPath), { recursive: true });
+  await fs.writeFile(outPath, JSON.stringify(result, null, 2) + '\n', 'utf8');
+}
+
+function printWatchdogHuman(result, entries, escalateDays, evaporateDays) {
+  const { counts, bugs } = result;
   console.log('🌑 HAWKING RADIATION — nợ bay hơi (' + counts.bugsTotal + ' bug)');
   console.log('   Mở: ' + counts.open + ' · fresh ' + counts.fresh + ' · escalate ' + counts.escalate + ' · evaporate ' + counts.evaporate + ' · đã đóng ' + counts.closed);
   if (!counts.open) console.log('   ✅ không có draft quá hạn — lỗ đen sạch');
@@ -900,6 +928,31 @@ async function watchdog(opts = {}) {
   console.log('   ≥' + escalateDays + 'd: escalate (journal + nhắc) · ≥' + evaporateDays + 'd: note + Status → evaporated (giữ lịch sử, gợi ý propose KN)');
   for (const e of entries) console.log('   ✍️ đã áp dụng (signed by ' + e.signedBy + '): [' + e.action + '] ' + e.slug + ' — ' + e.ageDays + ' ngày');
   console.log('   Đo: watchdog [--json] [--out <f>] · Áp dụng (cần human sign-off): watchdog --apply --sign "<tên người>"' + (entries.length ? ' (' + entries.length + ' entry mới)' : ''));
+}
+
+async function watchdog(opts = {}) {
+  const { asJson, apply, dir, journal, nowMs, escalateDays, evaporateDays, outPath } = parseWatchdogOpts(opts);
+  const { bugs, closed } = await scanHawkingBugs(dir, nowMs, escalateDays, evaporateDays);
+  const counts = hawkingCounts(bugs, closed);
+  const result = {
+    generatedAt: new Date(nowMs).toISOString(),
+    generatedBy: 'auto-learn.mjs watchdog',
+    policy: { escalateDays, evaporateDays },
+    counts,
+    bugs,
+  };
+
+  let entries = [];
+  if (apply) {
+    const sig = validateSigner(opts.sign);
+    if (!sig.ok) refuseHawkingSignoff(sig, bugs); // fail-closed — không ghi gì
+    const lastBySlug = await readHawkingJournal(journal);
+    entries = await applyHawking(bugs, { journal, dir, result, sig, evaporateDays, lastBySlug });
+  }
+
+  await writeWatchdogOutput(result, outPath);
+  if (asJson || outPath) { console.log(JSON.stringify(result, null, 2)); return; }
+  printWatchdogHuman(result, entries, escalateDays, evaporateDays);
 }
 
 // ---------- CMB Anisotropy — heatmap KN × tag × tháng (roadmap card #3, 2026-09-12) ----------
@@ -1141,10 +1194,8 @@ function parseArgs(argv) {
   return { cmd, query, opts };
 }
 
-async function main() {
-  const { cmd, query, opts } = parseArgs(process.argv);
-  if (!cmd || cmd==='help' || cmd==='--help' || cmd==='-h') {
-    console.log(`Auto-Learn — hệ thống tự học hỏi tự động (reef-lite + Engram-lite)
+function printHelp() {
+  console.log(`Auto-Learn — hệ thống tự học hỏi tự động (reef-lite + Engram-lite)
 
 Usage:
   node .github/harness/scripts/auto-learn.mjs suggest "từ khóa" [--top 3] [--json]  (alias: search)
@@ -1183,45 +1234,58 @@ Flow tự động:
   7. Commit: commit --bug <slug> → snapshot + append knowleged.md (chỉ khi PASS)
 `);
     return;
+}
+
+// guard clauses — message + exit codes verbatim từ bản cũ
+function requireSuggestQuery(query) {
+  if (!query) { console.error('❌ Thiếu query. Ví dụ: suggest "rainbow border"'); process.exit(1); }
+}
+
+function requireGetBug(opts, query) {
+  const bug = opts.bug || opts.slug || query;
+  if (!bug) { console.error('❌ Thiếu --bug <slug>. Ví dụ: get --bug 2026-08-30-xyz'); process.exit(1); }
+  return bug;
+}
+
+// handler map — thay chuỗi if/else 14 nhánh (Map: cmd lạ luôn miss, không dính prototype key)
+function makeHandlers(opts, json) {
+  return new Map(Object.entries({
+    log: () => logBug(opts),
+    propose: () => propose(opts.bug || opts.slug, json),
+    attest: () => attest(opts, json),
+    status: () => status(json),
+    watchdog: () => watchdog(opts),
+    stats: () => statsHeatmap(opts),
+    record: () => recordInteraction(opts, json),
+    report: () => reportFeedback(opts, json),
+    evaluate: () => evaluateCandidate(opts.bug || opts.slug, json),
+    commit: () => commitCandidate(opts.bug || opts.slug, json),
+    history: () => showHistory(json),
+    versions: () => listVersions(json),
+  }));
+}
+
+async function dispatch(cmd, query, opts) {
+  const json = !!opts.json;
+  if (cmd === 'suggest' || cmd === 'search') {
+    requireSuggestQuery(query);
+    return suggest(query, opts.top || 3, json);
   }
+  if (cmd === 'get') return propose(requireGetBug(opts, query), json);
+  if (cmd === 'stats' && !opts.heatmap) {
+    console.error('❌ stats cần --heatmap (view duy nhất hiện có). Ví dụ: stats --heatmap --json --out www/cosmos/heatmap.json');
+    process.exit(1);
+  }
+  const handler = makeHandlers(opts, json).get(cmd);
+  if (!handler) { console.error(`❌ Lệnh không biết: ${cmd}. Gõ --help để xem.`); process.exit(1); }
+  return handler();
+}
+
+async function main() {
+  const { cmd, query, opts } = parseArgs(process.argv);
+  if (!cmd || cmd === 'help' || cmd === '--help' || cmd === '-h') { printHelp(); return; }
   try {
-    if (cmd==='suggest' || cmd==='search') {
-      if (!query) { console.error('❌ Thiếu query. Ví dụ: suggest "rainbow border"'); process.exit(1); }
-      await suggest(query, opts.top||3, !!opts.json);
-    } else if (cmd==='get') {
-      // MCP-like get: alias for propose --bug
-      const bug = opts.bug || opts.slug || query;
-      if (!bug) { console.error('❌ Thiếu --bug <slug>. Ví dụ: get --bug 2026-08-30-xyz'); process.exit(1); }
-      await propose(bug, !!opts.json);
-    } else if (cmd==='log') {
-      await logBug(opts);
-    } else if (cmd==='propose') {
-      await propose(opts.bug || opts.slug, !!opts.json);
-    } else if (cmd==='attest') {
-      await attest(opts, !!opts.json);
-    } else if (cmd==='status') {
-      await status(!!opts.json);
-    } else if (cmd==='watchdog') {
-      await watchdog(opts);
-    } else if (cmd==='stats') {
-      if (!opts.heatmap) { console.error('❌ stats cần --heatmap (view duy nhất hiện có). Ví dụ: stats --heatmap --json --out www/cosmos/heatmap.json'); process.exit(1); }
-      await statsHeatmap(opts);
-    } else if (cmd==='record') {
-      await recordInteraction(opts, !!opts.json);
-    } else if (cmd==='report') {
-      await reportFeedback(opts, !!opts.json);
-    } else if (cmd==='evaluate') {
-      await evaluateCandidate(opts.bug || opts.slug, !!opts.json);
-    } else if (cmd==='commit') {
-      await commitCandidate(opts.bug || opts.slug, !!opts.json);
-    } else if (cmd==='history') {
-      await showHistory(!!opts.json);
-    } else if (cmd==='versions') {
-      await listVersions(!!opts.json);
-    } else {
-      console.error(`❌ Lệnh không biết: ${cmd}. Gõ --help để xem.`);
-      process.exit(1);
-    }
+    await dispatch(cmd, query, opts);
   } catch (e) {
     console.error(`❌ Lỗi: ${e.message}`);
     if (process.env.DEBUG) console.error(e.stack);
