@@ -1,12 +1,12 @@
 {
-  "generatedAt": "2026-09-11T15:04:50.730Z",
+  "generatedAt": "2026-09-12T06:52:47.892Z",
   "generatedBy": "YUNIE × Last30Days",
   "version": 2,
-  "description": "Tin AI mới nhất — tổng hợp từ Last30Days (HN, GitHub, DEV.to, Reddit, Hugging Face, arXiv, HackerNoon) trong 30 ngày qua. Chủ đề: self-improving AI. Tự động cập nhật bởi YUNIE.",
+  "description": "Tin AI mới nhất — tổng hợp từ Last30Days (HN, GitHub, DEV.to, Reddit, Hugging Face, arXiv, HackerNoon) trong 30 ngày qua. Chủ đề: AI. Tự động cập nhật bởi YUNIE.",
   "last30days": {
     "enabled": true,
-    "topic": "self-improving AI",
-    "since": "2026-08-12",
+    "topic": "AI",
+    "since": "2026-08-13",
     "days": 30,
     "sources": [
       "Hacker News (Algolia, free)",
@@ -56,244 +56,242 @@
   ],
   "articles": [
     {
-      "id": "ax-2609.11873v1",
-      "title": "The Last AI Built by Humans: Toward Genuine Recursive Self-Improvement",
-      "summary": "Recursive self-improvement (RSI) enables AI systems to turn experience and feedback into persistent changes that improve both their capabilities and the process of future improvement. We first use the Headroom-Closed Ind",
-      "source": "arXiv",
-      "sourceUrl": "http://arxiv.org/abs/2609.11873v1",
+      "id": "hf-Qwen_Qwen3_8-27B",
+      "title": "🤗 Qwen/Qwen3.8-27B — trending on Hugging Face",
+      "summary": "Model trending: image-text-to-text, 14784 likes, 7563763 downloads. transformers",
+      "source": "Hugging Face",
+      "sourceUrl": "https://huggingface.co/Qwen/Qwen3.8-27B",
+      "category": "products",
+      "date": "2026-09-12",
+      "hot": true,
+      "tags": [
+        "Hugging Face",
+        "image-text-to-text",
+        "transformers"
+      ]
+    },
+    {
+      "id": "hf-unsloth_Qwen3_8-27B-GGUF",
+      "title": "🤗 unsloth/Qwen3.8-27B-GGUF — trending on Hugging Face",
+      "summary": "Model trending: model, 3914 likes, 11339637 downloads. ",
+      "source": "Hugging Face",
+      "sourceUrl": "https://huggingface.co/unsloth/Qwen3.8-27B-GGUF",
+      "category": "products",
+      "date": "2026-09-12",
+      "hot": true,
+      "tags": [
+        "Hugging Face",
+        "model"
+      ]
+    },
+    {
+      "id": "hf-Lightricks_LTX-2_5",
+      "title": "🤗 Lightricks/LTX-2.5 — trending on Hugging Face",
+      "summary": "Model trending: image-to-video, 3526 likes, 1669564 downloads. diffusion-single-file",
+      "source": "Hugging Face",
+      "sourceUrl": "https://huggingface.co/Lightricks/LTX-2.5",
+      "category": "products",
+      "date": "2026-09-12",
+      "hot": true,
+      "tags": [
+        "Hugging Face",
+        "image-to-video",
+        "diffusion-single-file"
+      ]
+    },
+    {
+      "id": "hf-deepseek-ai_DeepSeek-V4_1-Flash",
+      "title": "🤗 deepseek-ai/DeepSeek-V4.1-Flash — trending on Hugging Face",
+      "summary": "Model trending: image-text-to-text, 1842 likes, 75774 downloads. transformers",
+      "source": "Hugging Face",
+      "sourceUrl": "https://huggingface.co/deepseek-ai/DeepSeek-V4.1-Flash",
+      "category": "products",
+      "date": "2026-09-12",
+      "hot": true,
+      "tags": [
+        "Hugging Face",
+        "image-text-to-text",
+        "transformers"
+      ]
+    },
+    {
+      "id": "hf-openbmb_MiniCPM5-2B",
+      "title": "🤗 openbmb/MiniCPM5-2B — trending on Hugging Face",
+      "summary": "Model trending: text-generation, 1209 likes, 67550 downloads. transformers",
+      "source": "Hugging Face",
+      "sourceUrl": "https://huggingface.co/openbmb/MiniCPM5-2B",
+      "category": "products",
+      "date": "2026-09-12",
+      "hot": true,
+      "tags": [
+        "Hugging Face",
+        "text-generation",
+        "transformers"
+      ]
+    },
+    {
+      "id": "hf-XHToken_Spark-X2_5-4B",
+      "title": "🤗 XHToken/Spark-X2.5-4B — trending on Hugging Face",
+      "summary": "Model trending: text-generation, 1119 likes, 17712 downloads. transformers",
+      "source": "Hugging Face",
+      "sourceUrl": "https://huggingface.co/XHToken/Spark-X2.5-4B",
+      "category": "products",
+      "date": "2026-09-12",
+      "hot": true,
+      "tags": [
+        "Hugging Face",
+        "text-generation",
+        "transformers"
+      ]
+    },
+    {
+      "id": "hf-ISTA-DASLab_Qwen3_8-27B-GSQ-RCO-GGUF",
+      "title": "🤗 ISTA-DASLab/Qwen3.8-27B-GSQ-RCO-GGUF — trending on Hugging Face",
+      "summary": "Model trending: image-text-to-text, 850 likes, 682187 downloads. gguf",
+      "source": "Hugging Face",
+      "sourceUrl": "https://huggingface.co/ISTA-DASLab/Qwen3.8-27B-GSQ-RCO-GGUF",
+      "category": "products",
+      "date": "2026-09-12",
+      "hot": true,
+      "tags": [
+        "Hugging Face",
+        "image-text-to-text",
+        "gguf"
+      ]
+    },
+    {
+      "id": "hf-nex-agi_Nex-N2_5-mini",
+      "title": "🤗 nex-agi/Nex-N2.5-mini — trending on Hugging Face",
+      "summary": "Model trending: text-generation, 700 likes, 3121 downloads. transformers",
+      "source": "Hugging Face",
+      "sourceUrl": "https://huggingface.co/nex-agi/Nex-N2.5-mini",
+      "category": "products",
+      "date": "2026-09-12",
+      "hot": true,
+      "tags": [
+        "Hugging Face",
+        "text-generation",
+        "transformers"
+      ]
+    },
+    {
+      "id": "hf-nex-agi_Nex-N2_5-Pro",
+      "title": "🤗 nex-agi/Nex-N2.5-Pro — trending on Hugging Face",
+      "summary": "Model trending: text-generation, 605 likes, 12260 downloads. transformers",
+      "source": "Hugging Face",
+      "sourceUrl": "https://huggingface.co/nex-agi/Nex-N2.5-Pro",
+      "category": "products",
+      "date": "2026-09-12",
+      "hot": true,
+      "tags": [
+        "Hugging Face",
+        "text-generation",
+        "transformers"
+      ]
+    },
+    {
+      "id": "hn-49668181",
+      "title": "Google stole open source code without crediting the authors (Artemis/Minitap)",
+      "summary": "Google stole open source code without crediting the authors (Artemis/Minitap) — 108 points, 22 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://www.minitap.ai/blog/i-expected-better-from-google",
       "category": "big-tech",
-      "date": "2026-09-10",
+      "date": "2026-09-12",
       "hot": true,
       "tags": [
-        "arXiv",
-        "paper",
-        "self-improving AI"
+        "HN",
+        "AI",
+        "story",
+        "author_MysteryPancake"
       ]
     },
     {
-      "id": "ax-2609.11677v1",
-      "title": "Ecdysis: Efficient and Effective Training of Runtime Harnesses for LLM Agents",
-      "summary": "Self-evolving runtime harnesses can substantially improve the capabilities of large language model (LLM) agents and provide a promising paradigm for optimizing agent execution. Existing harness evolution methods typicall",
-      "source": "arXiv",
-      "sourceUrl": "http://arxiv.org/abs/2609.11677v1",
-      "category": "self-improving",
-      "date": "2026-09-10",
-      "hot": true,
-      "tags": [
-        "arXiv",
-        "paper",
-        "self-improving AI"
-      ]
-    },
-    {
-      "id": "ax-2609.10922v1",
-      "title": "Auto-RecSys: Harnessing Autonomous Research Agents for Industry-Scale Recommender System",
-      "summary": "Auto-research agents have shown the potential to automate hypothesis generation, experiment execution, and iterative refinement. However, scaling this paradigm to industry-scale recommendation models introduces two chall",
-      "source": "arXiv",
-      "sourceUrl": "http://arxiv.org/abs/2609.10922v1",
-      "category": "self-improving",
-      "date": "2026-09-10",
-      "hot": true,
-      "tags": [
-        "arXiv",
-        "paper",
-        "self-improving AI"
-      ]
-    },
-    {
-      "id": "ax-2609.11699v1",
-      "title": "Negative Self-Distillation: Learning to Reason by Avoiding Flaws",
-      "summary": "On-Policy Self-Distillation (OPSD) has emerged as a popular paradigm for large language model (LLM) self-improvement, allowing models to act as their own teachers by leveraging privileged information such as ground-truth",
-      "source": "arXiv",
-      "sourceUrl": "http://arxiv.org/abs/2609.11699v1",
+      "id": "hnoon-the-embarrassing-rise-of-vibe-lawyering",
+      "title": "The Embarrassing Rise of Vibe Lawyering",
+      "summary": "The use of AI in law, known as \"vibe lawyering,\" has grown rapidly, with chatbots helping attorneys research case law and prepare legal documents, but this trend also poses signifi — by Zac Amos on HackerNoon.",
+      "source": "HackerNoon",
+      "sourceUrl": "https://hackernoon.com/the-embarrassing-rise-of-vibe-lawyering",
       "category": "safety",
-      "date": "2026-09-10",
-      "hot": false,
+      "date": "2026-09-12",
+      "hot": true,
       "tags": [
-        "arXiv",
-        "paper",
-        "self-improving AI"
+        "HackerNoon",
+        "vibe-lawyering",
+        "AI"
       ]
     },
     {
-      "id": "ax-2609.10702v1",
-      "title": "Data-Efficient Language Modeling: From Frontier Advancement to Principle-Guided Model Improvement",
-      "summary": "Learning from limited text requires models to use context, generalize to new inputs, and retain useful capabilities. Qiushi Engine conducted a long-horizon, end-to-end autonomous research program on BabyLM 2026 Strict-Sm",
-      "source": "arXiv",
-      "sourceUrl": "http://arxiv.org/abs/2609.10702v1",
+      "id": "hnoon-turning-non-standard-business-documents-into-structured-veri",
+      "title": "Turning Non-Standard Business Documents Into Structured, Verifiable Data",
+      "summary": "Business documents don't follow templates, so template-based parsers fail on them. OCR reads the words but can still lose the layout that gives a number its meaning. Break the pipe — by Naveen Suresh on HackerNoon.",
+      "source": "HackerNoon",
+      "sourceUrl": "https://hackernoon.com/turning-non-standard-business-documents-into-structured-verifiable-data",
       "category": "safety",
-      "date": "2026-09-09",
+      "date": "2026-09-12",
       "hot": true,
       "tags": [
-        "arXiv",
-        "paper",
-        "self-improving AI"
+        "HackerNoon",
+        "ai",
+        "AI"
       ]
     },
     {
-      "id": "ax-2609.10248v1",
-      "title": "A-JIT: Agentic Just-In-Time Software Construction",
-      "summary": "Traditional software delivery assumes a static paradigm: code is constructed prior to execution and deployed as a fixed artifact. We present Agentic Just-In-Time Software Construction (A-JIT), a paradigm that replaces st",
-      "source": "arXiv",
-      "sourceUrl": "http://arxiv.org/abs/2609.10248v1",
-      "category": "self-improving",
-      "date": "2026-09-09",
-      "hot": true,
-      "tags": [
-        "arXiv",
-        "paper",
-        "self-improving AI"
-      ]
-    },
-    {
-      "id": "ax-2609.10121v2",
-      "title": "ADMET-EvO: a self-evolving scientific agent for sustained research across heterogeneous tasks",
-      "summary": "Scientific agents can move beyond automated model building by using accumulated evidence to revise both their questions and experimental strategies. The challenge is sustaining this adaptation across heterogeneous tasks ",
-      "source": "arXiv",
-      "sourceUrl": "http://arxiv.org/abs/2609.10121v2",
+      "id": "hf-WarmBloodAban_Minimax-h3_Singularity",
+      "title": "🤗 WarmBloodAban/Minimax-h3_Singularity — trending on Hugging Face",
+      "summary": "Model trending: image-to-video, 316 likes, 103178 downloads. minimax-h3",
+      "source": "Hugging Face",
+      "sourceUrl": "https://huggingface.co/WarmBloodAban/Minimax-h3_Singularity",
       "category": "products",
-      "date": "2026-09-09",
-      "hot": true,
+      "date": "2026-09-12",
+      "hot": false,
       "tags": [
-        "arXiv",
-        "paper",
-        "self-improving AI"
+        "Hugging Face",
+        "image-to-video",
+        "minimax-h3"
       ]
     },
     {
-      "id": "ax-2609.09957v1",
-      "title": "Beyond Verified Answers: Solver-Informed Self-Distillation for Bootstrapping Operations Research Language Models",
-      "summary": "Modern large language models (LLMs) can translate natural-language descriptions into operations research (OR) formulations. Post-training techniques including reinforcement learning and on-policy self-distillation have f",
-      "source": "arXiv",
-      "sourceUrl": "http://arxiv.org/abs/2609.09957v1",
-      "category": "safety",
-      "date": "2026-09-09",
-      "hot": true,
-      "tags": [
-        "arXiv",
-        "paper",
-        "self-improving AI"
-      ]
-    },
-    {
-      "id": "ax-2609.09625v1",
-      "title": "From State Synchronization to Cognitive Self-Evolution: An Operational Architecture for Cognitive Digital Twins",
-      "summary": "As Digital Twin (DT) systems evolve beyond state synchronization toward task-oriented and knowledge-driven operation, Cognitive Digital Twins (CDTs) have emerged as an extension that incorporates cognitive capabilities i",
-      "source": "arXiv",
-      "sourceUrl": "http://arxiv.org/abs/2609.09625v1",
+      "id": "hn-49669350",
+      "title": "Russian developers used Claude to build 'kamikaze' attack drone software",
+      "summary": "Russian developers used Claude to build 'kamikaze' attack drone software — 5 points, 1 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://www.theguardian.com/world/2026/sep/12/ukraine-war-briefing-russian-developers-used-ai-to-build-kamikaze-attack-drone-software-anthropic-says",
       "category": "products",
-      "date": "2026-09-09",
-      "hot": true,
-      "tags": [
-        "arXiv",
-        "paper",
-        "self-improving AI"
-      ]
-    },
-    {
-      "id": "ax-2609.09153v1",
-      "title": "Procedural Graphs: Self-Evolving Execution Structures for LLM Agents",
-      "summary": "Large language models are increasingly deployed as agents that plan over long horizons and act through external tools. Most agents select actions through unconstrained generation over an accumulating history, leaving imp",
-      "source": "arXiv",
-      "sourceUrl": "http://arxiv.org/abs/2609.09153v1",
-      "category": "products",
-      "date": "2026-09-08",
-      "hot": true,
-      "tags": [
-        "arXiv",
-        "paper",
-        "self-improving AI"
-      ]
-    },
-    {
-      "id": "hn-49609555",
-      "title": "Novus – A self-improving AI agent that lives on an Android phone",
-      "summary": "Novus – A self-improving AI agent that lives on an Android phone — 2 points, 1 comments on HN.",
-      "source": "Hacker News",
-      "sourceUrl": "https://github.com/RexHuang/novus",
-      "category": "self-improving",
-      "date": "2026-09-08",
+      "date": "2026-09-12",
       "hot": false,
       "tags": [
         "HN",
-        "self-improving AI",
+        "AI",
         "story",
-        "author_RexHuang"
+        "author_warrenmiller"
       ]
     },
     {
-      "id": "hn-49554680",
-      "title": "Using semantic benchmarks to build a self-improving text-to-query agent",
-      "summary": "Using semantic benchmarks to build a self-improving text-to-query agent — 3 points, 0 comments on HN.",
+      "id": "hn-49669161",
+      "title": "Anthropic Says Iran Used Its American AI Model to Target U.S. Navy Warships",
+      "summary": "Anthropic Says Iran Used Its American AI Model to Target U.S. Navy Warships — 5 points, 4 comments on HN.",
       "source": "Hacker News",
-      "sourceUrl": "https://conversion.ai/blog/text-to-query-agent/",
-      "category": "self-improving",
-      "date": "2026-09-03",
+      "sourceUrl": "https://www.wsj.com/politics/national-security/anthropic-says-iran-used-its-american-ai-model-to-target-u-s-navy-warships-67583e05",
+      "category": "big-tech",
+      "date": "2026-09-12",
       "hot": false,
       "tags": [
         "HN",
-        "self-improving AI",
+        "AI",
         "story",
-        "author_jimmyl02"
-      ]
-    },
-    {
-      "id": "hn-49484813",
-      "title": "An Anthropic researcher just gave us a peek at self-improving AI",
-      "summary": "An Anthropic researcher just gave us a peek at self-improving AI — 4 points, 1 comments on HN.",
-      "source": "Hacker News",
-      "sourceUrl": "https://techcrunch.com/2026/08/28/an-anthropic-researcher-just-gave-us-a-peek-at-self-improving-ai/",
-      "category": "self-improving",
-      "date": "2026-08-28",
-      "hot": false,
-      "tags": [
-        "HN",
-        "self-improving AI",
-        "story",
-        "author_sbulaev"
-      ]
-    },
-    {
-      "id": "hn-49339427",
-      "title": "Prime Agent: A Self-Improving RLM Agent",
-      "summary": "Prime Agent: A Self-Improving RLM Agent — 4 points, 0 comments on HN.",
-      "source": "Hacker News",
-      "sourceUrl": "https://github.com/PrimeIntellect-ai/prime-agent",
-      "category": "self-improving",
-      "date": "2026-08-18",
-      "hot": false,
-      "tags": [
-        "HN",
-        "self-improving AI",
-        "story",
-        "author_rzk"
-      ]
-    },
-    {
-      "id": "hn-49323136",
-      "title": "Red queen hypothesis – A new way forward for self-improving AI",
-      "summary": "Red queen hypothesis – A new way forward for self-improving AI — 103 points, 28 comments on HN.",
-      "source": "Hacker News",
-      "sourceUrl": "https://www.cst.cam.ac.uk/news/red-queen-hypothesis-new-way-forward-self-improving-ai",
-      "category": "self-improving",
-      "date": "2026-08-16",
-      "hot": true,
-      "tags": [
-        "HN",
-        "self-improving AI",
-        "story",
-        "author_hardlianotion"
+        "author_kaycebasques"
       ]
     }
   ],
   "meta": {
-    "fetchedAt": "2026-09-11T15:04:50.731Z",
-    "topic": "self-improving AI",
+    "fetchedAt": "2026-09-12T06:52:47.892Z",
+    "topic": "AI",
     "total": 15,
-    "hot": 10,
+    "hot": 12,
     "sources": [
-      "arXiv",
-      "Hacker News"
+      "Hugging Face",
+      "Hacker News",
+      "HackerNoon"
     ]
   }
 }
