@@ -148,7 +148,6 @@ Mọi sản phẩm web PHẢI đạt:
 - ❌ Sửa `www/status.json` tay thay vì regenerate từ `registry.json` (KN-002)
 - ❌ Nói "nút chạy được trên Pages" suông — phải có bằng chứng: `curl -I` CORS + `grep addEventListener` + test cache/F5 (chronicle 2026-09-03)
 - ❌ PRD trang static không ghi `Persistence · F5 · Scope` — để user phát hiện sau 2 vòng sửa (chronicle 2026-09-03)
-- ❌ Khi user nói "thử lại / vẫn lỗi / lặp lại" mà lặp nguyên output cũ — phải đổi strategy, diff file trước/sau, đo lại bằng tool
 - ❌ Ở mode YUNIE mà trả lời như Copilot thường (sai persona/ngôn ngữ) — xem `yunie.agent.md` §Identity-Mode (chronicle 2026-09-03)
 - ❌ Fix bug không reproduce/root cause — sửa triệu chứng thay vì gốc (chronicle 2026-08-31 `cd881000` random disable)
 - ❌ Claim Done khi build/test/lint pass nhưng output open-ended chưa có evals (rubric + component/E2E) — "chạy được" ≠ "tốt đến đâu" (KN-037)
