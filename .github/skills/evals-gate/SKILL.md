@@ -64,6 +64,12 @@ Lợi ích: failures khoanh vùng được — không phải debug cả chuỗi.
 - Phân loại: instance-specific (fix local) vs pattern-level (fix gốc — gate/skill/process).
 - Fix pattern → verify trên **task chưa từng thấy**, không chỉ re-test case đã fail.
 
+## Slop dimension — đừng chỉ check bugs (KN-047)
+> "Code can pass every behavior test and still be miserable to maintain" — SlopCodeBench: 3/4 agent runs phình complexity + redundant khi extend.
+- `node scripts/slop-check.mjs <files>` — duplication ≥8 dòng · function >80 dòng · CC >12 (0-dep, local; gate exit 1, fail-closed exit 2 khi 0 file).
+- **Diff reviewable** ~≤200 LOC/task (không tính generated) — vượt → chia bounded task.
+- **Spec ≠ wish:** item "done" phải chạy/check được — "Supports CSV" là wishlist, không đếm.
+
 ## Reflection đúng cách — rubric, không vibes (KN-023)
 - Critique **phải có tiêu chí** — model tự review mình không rubric = tự khen (self-preference bias).
 - Ưu tiên **nguồn ngoài model**: tool đo được, framing đối lập không prompt trước (KN-018), fresh evidence.
@@ -95,10 +101,11 @@ Không dùng (các) pattern nào task không cần — agency là cost phải ju
 - [ ] Error analysis — failures cùng loại ≥2 đã aggregate trước khi fix?
 - [ ] Critique có nguồn ngoài model (tool đo / framing đối lập)?
 - [ ] Số đo kèm claim (nếu claim nhanh/tốt hơn)?
+- [ ] Slop check (duplication/complexity) đã chạy trên changed files? (KN-047)
 
 ## Nguồn
 - Andrew Ng — "Agentic AI" (DeepLearning.AI, Playbook 2026) — distilled: `books/Andrew-Ng-Agentic-AI-Playbook-2026-Distilled.md`
-- Harness: KN-037 · liên quan: KN-018 (dissent), KN-019 (metrics), KN-022 (pipeline vs agency), KN-023 (verify ngoài model), KN-034 (error analysis)
+- Harness: KN-037 · liên quan: KN-018 (dissent), KN-019 (metrics), KN-022 (pipeline vs agency), KN-023 (verify ngoài model), KN-034 (error analysis), KN-047 (slop gate)
 
 ---
 *Skill: evals-gate — enforce bởi Harness v2. KN-037 — "single biggest predictor" là evals discipline.*

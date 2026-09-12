@@ -30,6 +30,8 @@ applyTo: "**"
 - **Verify:** grep dead-code + scoreboard:
   - `grep` tên component/css mới thêm → phải có usage, không thì xóa
   - Diff stat: ghi số dòng/bytes thêm vs xóa vào bug/plan
+  - Diff reviewable: ~≤200 LOC/lần (không tính generated) — vượt → chia bounded task trước khi tiếp (KN-047)
+  - Slop check: `node scripts/slop-check.mjs <changed files>` — duplication ≥8 dòng · function >80 dòng · CC >12 (KN-047)
   - `get_errors` affected files, build/test full scope
 
 ## Không bao giờ cắt (Lazy, not negligent)

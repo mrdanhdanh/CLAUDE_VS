@@ -36,7 +36,7 @@ Read docs/knowleged.md  # <— bước 0, không bỏ
 | **Plan** | `.agent/plans/<task>/plan.md` + `TodoWrite` | ❌ |
 | **Implement** | Code todo-driven, `IDE diagnostics` sau mỗi edit | ❌ |
 | **Polish** | Responsive 375/768/1280, states, animation, a11y | ❌ — giao diện xấu = chưa xong |
-| **Verify** | build/test/lint pass + visual check + **Evals Gate** (rubric + component/E2E evals cho output open-ended, KN-037) + **Dissent Review** (1 critique độc lập: rival work / assumption sai / giải pháp khác, KN-018) | ❌ |
+| **Verify** | build/test/lint pass + visual check + **Evals Gate** (rubric + component/E2E evals cho output open-ended, KN-037) + **Slop Gate** (slop-check + ≤200 LOC + spec-vs-wish, KN-047) + **Dissent Review** (1 critique độc lập: rival work / assumption sai / giải pháp khác, KN-018) | ❌ |
 
 Với task nhỏ (1-2 file): rút gọn Explore(quick) → Clarify(1 câu) → PRD mini → Design mini → Plan(3 todos) → Implement → Polish → Verify. **Không bỏ Polish.**
 
@@ -57,6 +57,15 @@ Với task nhỏ (1-2 file): rút gọn Explore(quick) → Clarify(1 câu) → P
 - **Ng:** *"The single biggest predictor of whether someone executes well with AI agents is their ability to drive a disciplined process for evals and error analysis."*
 - Chi tiết: skill `evals-gate` + `books/Andrew-Ng-Agentic-AI-Playbook-2026-Distilled.md`
 
+### Slop Gate (KN-047 — "The Slop Should Not Be Tolerated")
+
+- **Exit condition là command, không phải vibe:** agent tự nói "done" ≠ pass (model-graded done = self-preference, KN-023). Checks phải fail-loudly và sống ngoài workspace agent sửa được.
+- **Spec ≠ wish:** checklist item phải chạy/check được mới đếm — "Supports CSV" là wish, không phải spec.
+- **Slop check:** `node scripts/slop-check.mjs <changed files>` — duplication ≥8 dòng · function >80 dòng · CC >12 (0-dep; gate exit 1, fail-closed exit 2 khi 0 file). Code pass mọi behavior test vẫn có thể mục dần (SlopCodeBench: 3/4 runs phình complexity khi extend).
+- **Diff reviewable:** ~≤200 LOC/lần (không tính generated) — vượt → chia bounded task trước khi tiếp.
+- **Loop it:** checks pass rồi mà còn đổi code → chạy lại toàn bộ (yesterday's green không áp dụng).
+- ⚠️ Đã biết: `scripts/mutation.mjs` là bản lite dùng `node --check` proxy — **chưa** chạy test thật per-mutant; đừng tin "survived" (xem `.agent/plans/harness-slop-gate/gap-analysis.md`).
+
 ## Pipeline /fixbug (Bug — gọn nhẹ, bounded repair loop)
 
 | Phase | Mục tiêu | Output | Bỏ được? |
@@ -65,7 +74,7 @@ Với task nhỏ (1-2 file): rút gọn Explore(quick) → Clarify(1 câu) → P
 | **1. Reproduce** | Tái hiện bug có bằng chứng | Steps + Expected/Actual + evidence | ❌ |
 | **2. Locate & Root Cause** | file:line + 5 Whys | Root cause + file:line + giả thuyết | ❌ |
 | **3. Fix** | Sửa ở gốc, todo-driven (bounded) | Code + `IDE diagnostics` affected files | ❌ |
-| **4. Verify** | Không regression + evals mini nếu output open-ended | Re-test + edge + regression + build/lint (full scope) + rubric/E2E (KN-037) | ❌ |
+| **4. Verify** | Không regression + evals mini nếu output open-ended + slop-check changed files | Re-test + edge + regression + build/lint (full scope) + rubric/E2E (KN-037) + slop-check (KN-047) | ❌ |
 | **5. Learn** | Biến bug thành knowledge | `.agent/bugs/<slug>/bug.md` + `docs/knowleged.md` KN-XXX | ❌ |
 | **6. Done** | Đóng vòng, báo cáo | Tóm tắt + KN + files changed | ❌ |
 
