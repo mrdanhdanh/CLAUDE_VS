@@ -1,6 +1,6 @@
 # Evidence — harness-minimal (DisCo arXiv:2609.02749v1 §3.2 (task-agnostic))
 
-> Substrate layer của skill — full text từ docs/knowleged.md. Sinh tự động 2026-09-12T11:58:31.490Z.
+> Substrate layer của skill — full text từ docs/knowleged.md. Sinh tự động 2026-09-12T13:11:12.552Z.
 
 ## Bug reports liên quan (1/29 bugs)
 

@@ -9,6 +9,7 @@
  * Thang S: low <10 · medium <25 · high >=25
  *   S = mismatch*10 + drafts*5 + refused*2 + disabled*1 + failed*5
  * Gravity G = cutRatio*10 (scope control — % plans có dòng CẮT/YAGNI) — đối trọng định lượng của scope creep.
+ * Capability C = {kn, skills, e2eSpecs, e2eTests, guards} — đối trọng entropy (assets đếm được, không weight — tránh vanity KN-024) + capabilityDelta vs mốc history trước.
  */
 import fs from 'node:fs/promises';
 import { existsSync } from 'node:fs';
@@ -239,6 +240,41 @@ async function checkPolicy() {
   } catch (e) { return { ok: false, error: e.message }; }
 }
 
+// 8. capability — đo trưởng thành harness (đối trọng S=debt): assets đếm được, không weight (tránh vanity — KN-024)
+async function measureCapability(knTotal) {
+  let skills = 0, guards = 0;
+  try {
+    const reg = JSON.parse(await fs.readFile(REGISTRY_PATH, 'utf8'));
+    skills = Object.values(reg.skills || {}).filter(m => m.enabled).length;
+  } catch {}
+  try {
+    const pol = JSON.parse(await fs.readFile(POLICY_PATH, 'utf8'));
+    guards = (pol.deny || []).length + (pol.allow || []).length;
+  } catch {}
+  const specDir = path.join(ROOT, 'tests', 'e2e');
+  let e2eSpecs = 0, e2eTests = 0;
+  try {
+    const files = (await fs.readdir(specDir)).filter(f => f.endsWith('.spec.ts'));
+    e2eSpecs = files.length;
+    for (const f of files) {
+      const text = await fs.readFile(path.join(specDir, f), 'utf8');
+      e2eTests += (text.match(/^\s*test(\.fixme)?\(/gm) || []).length;
+    }
+  } catch {}
+  return { kn: knTotal, skills, e2eSpecs, e2eTests, guards };
+}
+
+// capability delta — so mốc history gần nhất (không chấm điểm, chỉ đếm; không đổi = null)
+function capabilityDelta(prev, cur) {
+  if (!prev) return null;
+  const d = {};
+  for (const k of Object.keys(cur)) {
+    const diff = (cur[k] ?? 0) - (prev[k] ?? 0);
+    if (diff !== 0) d[k] = diff;
+  }
+  return Object.keys(d).length ? d : null;
+}
+
 // 7. escape velocity — gate theo ĐÀ S (roadmap: --trend N).
 // History: đọc từ --out nếu có, else scale.json mặc định (explicit — không fallback ngầm).
 async function readHistory(source) {
@@ -279,6 +315,8 @@ function printHuman(result, outPath, trendN) {
   if (result.mismatches.length) console.log('   mismatch: ' + result.mismatches.map(m => m.type + '/' + m.name).join(', '));
   if (result.missing.length) console.log('   missing: ' + result.missing.map(m => m.type + '/' + m.name).join(', '));
   console.log('   black holes: ' + result.blackHoles.map(b => b.id).join(', '));
+  const cap = result.capability || {};
+  console.log('   📈 capability: KN ' + cap.kn + ' · skills ' + cap.skills + ' · specs ' + cap.e2eSpecs + ' · tests ' + cap.e2eTests + ' · guards ' + cap.guards + (result.capabilityDelta ? ' — Δ ' + JSON.stringify(result.capabilityDelta) : ''));
   console.log('   🚀 escape velocity: đà S tăng ' + result.trend.increases + '/' + trendN + ' lần liên tiếp — ' + (result.trend.gate ? 'GATE ⛔ (--trend chặn feature)' : 'chưa đạt vận tốc thoát'));
   if (outPath) console.log('   wrote ' + path.relative(ROOT, outPath));
 }
@@ -316,6 +354,7 @@ async function main() {
   // 2. drafts (bug mở) — supernova chưa nguội + KN count
   const { drafts, bugsTotal } = await scanBugDrafts();
   const knTotal = await scanKnowledge();
+  const capability = await measureCapability(knTotal);
 
   // 3. audit refused/failed — va chạm chân trời sự kiện
   const { refused, failed, auditTotal } = await scanAudit();
@@ -338,6 +377,7 @@ async function main() {
     gravity: { G: gravity, level: gLevel, cutRatio: Math.round(cutRatio * 100) / 100, plansTotal, plansWithCut, advice: gAdvice },
     darkMatter: { M: darkMatter, level: dmLevel, advice: dmAdvice, orphans, orphanCount: orphans.length, disabledGalaxies: disabled },
     counts: { knTotal, bugsTotal, auditTotal },
+    capability,
     mismatches, missing, blackHoles,
     policy: await checkPolicy(),
   };
@@ -346,8 +386,10 @@ async function main() {
   // History: đọc từ --out nếu có, else scale.json mặc định (explicit — không fallback ngầm).
   const historySource = outPath || path.join(ROOT, 'www', 'cosmos', 'scale.json');
   const history = await readHistory(historySource);
-  history.push({ t: result.generatedAt, S, level, M: darkMatter, D: darkEnergy, G: gravity });
+  const prevCap = history.length ? history[history.length - 1].C : undefined;
+  history.push({ t: result.generatedAt, S, level, M: darkMatter, D: darkEnergy, G: gravity, C: capability });
   result.history = history;
+  result.capabilityDelta = capabilityDelta(prevCap, capability);
   const { trend, window: trendWindow } = computeTrend(history, trendN);
   result.trend = trend;
 

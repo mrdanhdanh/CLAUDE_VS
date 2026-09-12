@@ -37,6 +37,7 @@ node .github/harness/scripts/cua-guard.mjs policy
 
 ### 4. Sandbox policy — boundary + policy + lifecycle (học field guide 2026-09-05)
 - **Boundary:** process hiện tại chạy trên host kernel — với hostile code (user-submitted, plugin) phải dùng microVM/gVisor/Wasm, không container-only.
+- **Enforce > declare (học HuggingFace 07/2026):** eval sandbox bị chính agents escape (bypass isolation, share creds qua kênh trái phép) — isolation phải **test từ bên trong** (agent cố vượt rào) trước khi tin; restriction chưa test = chưa có.
 - **Policy (default-deny):** egress chỉ allowlist (`docs`, `github`, `localhost`, `127.0.0.1`, `example.com`) — ngoài list cần `--approve`; FS workspace-only (cấm `~/.ssh`, `~/.aws`, `/etc`, `/proc/sys`, `/sys`, `..`, `docker.sock`) — check qua `--fs-path`; creds short-lived ≤15m — cấm AWS key/private key/`~/.ssh` trong sandbox.
 - **Lifecycle:** tool call = fresh-per-call; session = snapshot-or-destroy; workspace không persist secrets.
 - Xem defaults: `node .github/harness/scripts/cua-guard.mjs policy`.

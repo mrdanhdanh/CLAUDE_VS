@@ -1,31 +1,31 @@
 {
-  "version": 3,
-  "description": "Harness governance — deny before allow, fail-closed (học OpenBot CEL policy + BTP pre-flight KN-012 + rogue-trader HAIPA 2026-09-05: cage before animal, law 1 file, intent/execution split)",
+  "version": 4,
+  "description": "Harness governance — deny before allow, fail-closed (học OpenBot CEL policy + BTP pre-flight KN-012 + rogue-trader HAIPA 2026-09-05: cage before animal, law 1 file, intent/execution split). v4 (2026-09-12, human takeover): case-normalize mọi deny rule — uppercase/whitespace variants không còn bypass (red-team F2/KN-048, tests/e2e/guard-redteam.spec.ts)",
   "deny": [
     {
       "id": "deny-rm-rf-root",
-      "when": "tool === 'shell' && target.includes('rm -rf /')",
-      "message": "Refuse rm -rf / — destructive"
+      "when": "tool === 'shell' && target.toLowerCase().includes('rm -rf /')",
+      "message": "Refuse rm -rf / — destructive (case-normalized v4)"
     },
     {
       "id": "deny-env-read",
-      "when": "tool === 'read' && target.includes('.env')",
-      "message": "Refuse reading .env — use credentials store"
+      "when": "tool === 'read' && target.toLowerCase().includes('.env')",
+      "message": "Refuse reading .env — use credentials store (case-normalized v4, Windows FS case-insensitive)"
     },
     {
       "id": "deny-credentials-direct",
-      "when": "target.includes('credentials.enc.json') && tool !== 'credentials'",
-      "message": "Refuse direct read of credentials.enc.json — use credentials.mjs"
+      "when": "target.toLowerCase().includes('credentials.enc.json') && tool !== 'credentials'",
+      "message": "Refuse direct read of credentials.enc.json — use credentials.mjs (case-normalized v4)"
     },
     {
       "id": "deny-private-hosts",
-      "when": "tool === 'shell' && (target.includes('curl') || target.includes('wget')) && target.includes('127.0.0.1')",
-      "message": "Refuse private host access via shell — use allowlist"
+      "when": "tool === 'shell' && (target.toLowerCase().includes('curl') || target.toLowerCase().includes('wget')) && target.includes('127.0.0.1')",
+      "message": "Refuse private host access via shell — use allowlist (case-normalized v4)"
     },
     {
       "id": "deny-test-mutate",
-      "when": "(tool === 'edit' || tool === 'write' || tool === 'shell') && (target.includes('Tests') || target.toLowerCase().includes('.test.') || target.toLowerCase().includes('.spec.') || target.includes('ai-news.json')) && actor.toLowerCase() !== 'verify' && intent !== 'takeover'",
-      "message": "Refuse mutating test/verifier files — tests are immutable, fix production code instead (KN-012). Human takeover via intent=takeover."
+      "when": "(tool === 'edit' || tool === 'write' || tool === 'shell') && (target.toLowerCase().replaceAll(String.fromCharCode(92), '/').split('/').some(s => s === 'test' || s === 'tests' || s.endsWith('.test') || s.endsWith('.tests')) || target.toLowerCase().includes('.test.') || target.toLowerCase().includes('.spec.') || target.toLowerCase().includes('ai-news.json')) && actor.toLowerCase() !== 'verify' && intent !== 'takeover'",
+      "message": "Refuse mutating test/verifier files — tests are immutable, fix production code instead (KN-012). Human takeover via intent=takeover. (v4: segment-check, case-normalized, zero false-positive 'contests')"
     },
     {
       "id": "deny-destructive-sql",
@@ -34,17 +34,17 @@
     },
     {
       "id": "deny-rm-rf-variants",
-      "when": "tool === 'shell' && (target.includes('rm -fr') || target.includes('rmdir /s') || target.includes('mkfs') || target.includes('dd if='))",
-      "message": "Refuse destructive shell variants (rm -fr/rmdir/mkfs/dd) — destructive (KN-012)"
+      "when": "tool === 'shell' && (target.toLowerCase().includes('rm -fr') || target.toLowerCase().includes('rmdir /s') || target.toLowerCase().includes('mkfs') || target.toLowerCase().includes('dd if='))",
+      "message": "Refuse destructive shell variants (rm -fr/rmdir/mkfs/dd) — destructive (KN-012, case-normalized v4)"
     },
     {
       "id": "deny-law-fork",
-      "when": "(tool === 'edit' || tool === 'write' || tool === 'shell') && (target.includes('policy.json') || target.includes('CONSTITUTION') || target.includes('SOUL.md')) && actor.toLowerCase() !== 'verify' && intent !== 'takeover'",
+      "when": "(tool === 'edit' || tool === 'write' || tool === 'shell') && (target.toLowerCase().includes('policy.json') || target.toLowerCase().includes('constitution') || target.toLowerCase().includes('soul.md')) && actor.toLowerCase() !== 'verify' && intent !== 'takeover'",
       "message": "Refuse forking law (policy.json/CONSTITUTION/SOUL) — law lives in 1 file, skills may point but never copy; curator proposes via journal, owner applies (rogue-trader HAIPA 2026-09-05, KN-012)"
     },
     {
       "id": "deny-law-copy-in-skill",
-      "when": "(tool === 'edit' || tool === 'write') && (target.includes('.github/skills/') || target.includes('.agent/skills/')) && (target.toLowerCase().includes('constitution') || target.toLowerCase().includes('policy')) && actor.toLowerCase() !== 'verify' && intent !== 'takeover'",
+      "when": "(tool === 'edit' || tool === 'write') && (target.toLowerCase().includes('.github/skills/') || target.toLowerCase().includes('.agent/skills/')) && (target.toLowerCase().includes('constitution') || target.toLowerCase().includes('policy')) && actor.toLowerCase() !== 'verify' && intent !== 'takeover'",
       "message": "Refuse copying law into skills — skills govern HOW, law governs WHETHER; pin trading-relevant skills (rogue-trader HAIPA 2026-09-05)"
     }
   ],

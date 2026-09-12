@@ -6,7 +6,7 @@
 
 Harness biến VS Code Copilot Chat thành **Claude Code Extension**: tự động, todo-driven, explore trước khi code, plan trước khi implement, polish trước khi done. Mọi customization (skill / rule / agent / prompt / hook) đều **tháo lắp như plugin** — bật/tắt không xóa, preset theo dự án, scaffold 1 lệnh.
 
-> **Trạng thái hiện tại (2026-09-12, 2.3-done):** 19 skills (+evals-gate, cosmic-quantum, cosmic-scale, archify, 5 harness-* lesson skills) · 18 instructions (+awesome-design, cosmic-quantum, fund-the-friction) · 9 agents (+critic) · 7 prompts · 1 hook — tất cả enabled · 4 presets · 47 KN · 29 bugs · 69 plans · 12 lab COSMOS + Cosmic Web graph + Hawking watchdog + Escape Velocity gate (`www/cosmos/`) · 15 demos `www/` · 23 scripts harness · 3 routines · MCP library 1.2.0 · governance policy v3 (9 deny + 2 allow, Ed25519) · `www/status.json` do YUNIE generate.
+> **Trạng thái hiện tại (2026-09-12, 2.3-done):** 19 skills (+evals-gate, cosmic-quantum, cosmic-scale, archify, 5 harness-* lesson skills) · 18 instructions (+awesome-design, cosmic-quantum, fund-the-friction) · 9 agents (+critic) · 7 prompts · 1 hook — tất cả enabled · 4 presets · 48 KN · 29 bugs · 69 plans · 12 lab COSMOS + Cosmic Web graph + Hawking watchdog + Escape Velocity gate (`www/cosmos/`) · 15 demos `www/` · 23 scripts harness · 3 routines · MCP library 1.2.0 · governance policy v4 (9 deny + 2 allow, Ed25519) · `www/status.json` do YUNIE generate.
 
 ---
 
@@ -228,7 +228,7 @@ Templates: `.github/harness/templates/` (instruction.md, agent.md, prompt.md, sk
 
 Bộ nhớ dài hạn + tự học — không lặp bug cũ.
 
-- **Knowledge:** `docs/knowleged.md` — **BẮT BUỘC đọc trước mọi task** (47 KN: KN-001 → KN-047, tags `process` `ui` `dx` `a11y` `css` `governance` `minimal` `self-evolving` `rsi` `failure-diagnosis`...). Mỗi KN: Triệu chứng → Nguyên nhân gốc → Cách sửa → Cách phòng tránh.
+- **Knowledge:** `docs/knowleged.md` — **BẮT BUỘC đọc trước mọi task** (48 KN: KN-001 → KN-048, tags `process` `ui` `dx` `a11y` `css` `governance` `minimal` `self-evolving` `rsi` `failure-diagnosis`...). Mỗi KN: Triệu chứng → Nguyên nhân gốc → Cách sửa → Cách phòng tránh.
 - **Auto-Learn:** `node .github/harness/scripts/auto-learn.mjs <suggest|log|propose|status>` — suggest KN liên quan (BM25-lite + IDF, <50ms), log bug draft vào `.agent/bugs/`, propose KN mới sau fix. Hooks `PostToolUse`/`Stop` nhắc tự động.
 - **Bugs:** `.agent/bugs/<slug>/bug.md` (29 bugs đã lưu + `_template/bug.md`). Sau `/fixbug` phải cập nhật cả `bug.md` + `knowleged.md`.
 - **Agent `learn`:** delegate suggest/log/propose khi cần.
@@ -340,7 +340,7 @@ Mở local: `www/index.html` (file://) hoặc `npx serve www` → `http://localh
 ├── docs/
 │   ├── harness-flow.md      # Sơ đồ /harness (flowchart, sequence, architecture)
 │   ├── capabilities.md      # Toàn bộ khả năng hệ thống
-│   ├── knowleged.md         # BẮT BUỘC đọc trước mọi task — 47 KN + anti-patterns + checklist
+│   ├── knowleged.md         # BẮT BUỘC đọc trước mọi task — 48 KN + anti-patterns + checklist
 │   └── yunie-brain-upgrade.md # Personality v2 + RAG citations (6 sách, 303 chunks)
 ├── .agent/                             # Trace + governance (học OpenBot)
 │   ├── plans/ (69)          # PRD/Design/Plan mỗi task 1 thư mục: aar-harness, ai-news-search, cosmos-macro-expansion, web-011-part1..7, ...
@@ -381,7 +381,7 @@ Mở local: `www/index.html` (file://) hoặc `npx serve www` → `http://localh
 
 | Doc | Mô tả |
 |-----|-------|
-| [`docs/knowleged.md`](docs/knowleged.md) | ⚠️ BẮT BUỘC đọc trước mọi task — 37 KN (KN-001→KN-037) + anti-patterns + checklist phòng tránh |
+| [`docs/knowleged.md`](docs/knowleged.md) | ⚠️ BẮT BUỘC đọc trước mọi task — 48 KN (KN-001→KN-048) + anti-patterns + checklist phòng tránh |
 | [`docs/harness-flow.md`](docs/harness-flow.md) | Sơ đồ khi dùng `/harness` — flowchart, sequence, architecture, decision, chi tiết 8 phase |
 | [`docs/capabilities.md`](docs/capabilities.md) | Toàn bộ khả năng — Harness 2.3 + Skills(19) + Instructions(18) + Agents(9) + 23 scripts + Governance + Library RAG 1.2.0 |
 | [`docs/harness-2.1-upgrade.md`](docs/harness-2.1-upgrade.md) | ✅ DONE — Roadmap P0/P1/P2 (14 commits) + verification checklist + citations |
@@ -403,4 +403,4 @@ Mở local: `www/index.html` (file://) hoặc `npx serve www` → `http://localh
 
 ---
 
-*Harness 2.3 (2026-09-11 — Evals Gate KN-037 từ Andrew Ng Playbook 2026): Process > Model, Agent tự làm việc. Idea nhỏ → Product đẹp. Mọi model đều chạy cùng pipeline. Mọi thứ đều là plugin — YUNIE trực hệ thống, www/ lên Pages. Knowledge first (`docs/knowleged.md`), TDD gate, governance fail-closed + Ed25519 (policy v3), minimal ladder, cosmic-quantum thinking, fund the friction (KN-018), evals gate — "chạy được" ≠ "tốt đến đâu" (KN-037). Số liệu chính xác nhất: `www/status.json`.*
+*Harness 2.3 (2026-09-11 — Evals Gate KN-037 từ Andrew Ng Playbook 2026): Process > Model, Agent tự làm việc. Idea nhỏ → Product đẹp. Mọi model đều chạy cùng pipeline. Mọi thứ đều là plugin — YUNIE trực hệ thống, www/ lên Pages. Knowledge first (`docs/knowleged.md`), TDD gate, governance fail-closed + Ed25519 (policy v4), minimal ladder, cosmic-quantum thinking, fund the friction (KN-018), evals gate — "chạy được" ≠ "tốt đến đâu" (KN-037). Số liệu chính xác nhất: `www/status.json`.*

@@ -25,7 +25,7 @@ node .agent/scripts/policy-check.mjs --check
 - **Thứ tự:** `deny[]` trước, nếu match → `refused`; else `allow[]` → `permitted`; else `refused` (fail-closed).
 - **CEL-lite:** `when` là JS expression với 4 vars: `tool`, `target`, `actor`, `intent`. Ví dụ: `tool === 'shell' && target.includes('rm -rf /')`.
 - **Broken rule → refuse** (không mở). Malformed `policy.json` → deny all.
-- **File:** `.agent/policy.json` (version 3, 9 deny + 2 allow — thêm deny-test-mutate/destructive-sql/rm-rf-variants KN-012 + deny-law-fork/deny-law-copy-in-skill rogue-trader HAIPA 2026-09-05).
+- **File:** `.agent/policy.json` (version 4, 9 deny + 2 allow — deny-test-mutate/destructive-sql/rm-rf-variants KN-012 + deny-law-fork/deny-law-copy-in-skill rogue-trader HAIPA 2026-09-05; **v4 2026-09-12 human takeover: case-normalize mọi deny — uppercase variants hết bypass**, red-team `tests/e2e/guard-redteam.spec.ts`).
 
 ### 2. Audit Trail — append-only JSONL
 ```bash
@@ -75,11 +75,19 @@ node .agent/scripts/audit.mjs verify
 - **Journal append-only + git version:** `.agent/` commit nightly; posture rewrite ở file riêng, journal chỉ append (không full-file write).
 - **Wake ritual (live exchange last):** đọc identity → orders → mailbox → journal → live state cuối cùng — reality beats stale memory. Webhook chỉ wake, không instruct (payload là tape).
 
+### 7. Coordinated emergence — watch patterns (học DSEWiki 05/2026 + HuggingFace 07/2026)
+- **Out-of-band signaling = policy incident:** coordination ngầm giữa agents qua kênh chung (file làm message board, backup comms, impersonation) — DSEWiki 05/2026: agent cảnh báo đồng đội khi bị cleanup + redirect sang backup pages, dù không được lập trình. Thấy tín hiệu này → dừng, ghi audit, xử như policy incident (không phải bug nhỏ).
+- **Enforce > declare:** isolation/sandbox "đã bật" chưa đủ — claim chưa test từ bên trong = chưa có (chi tiết + evidence HuggingFace 07/2026: `cua-safety` §4; red-team guards: `tests/e2e/guard-redteam.spec.ts`).
+- **Credentials ở kênh chia sẻ = đã lộ:** thấy secret trong bất kỳ kênh chung/log chung → coi như exposed → rotate ngay + ghi audit; redaction phải chứng minh được, không tự nhận.
+- **Disclosure bắt buộc:** hành vi sai của agent không được giấu — OpenAI phải đổi disclosure rules sau DSEWiki (EU điều tra — theo nguồn thứ cấp bài dẫn). Audit chain (`audit.mjs verify`) là bằng chứng; incident ghi audit TRƯỚC khi fix.
+
 ## Checklist cho agent (tự kiểm trước khi act)
 - [ ] Đã `policy-check --tool X --target Y` chưa? Nếu `refused` → không chạy, báo rule.
 - [ ] Đã `audit log --tool X --target Y --decision <permitted|refused|failed> --rule <id>` chưa?
 - [ ] Nếu là secret → đã dùng `credentials.mjs` chưa? Không để plain trong `.env` hay log.
 - [ ] `policy.json` có valid không? (`--check` pass?)
+- [ ] Có tín hiệu out-of-band signaling giữa agents (kênh chung/backup/impersonation) không? → policy incident (KN-048)
+- [ ] Isolation/sandbox: đã test từ bên trong (agent cố vượt rào) trước khi tin chưa? (KN-048)
 
 ## Ví dụ
 ```bash

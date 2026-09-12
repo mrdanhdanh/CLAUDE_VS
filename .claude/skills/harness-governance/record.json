@@ -4,10 +4,12 @@
   "anchor": {
     "knowleged": [
       "KN-012",
-      "KN-021"
+      "KN-021",
+      "KN-048"
     ],
     "bugs": [
-      ".agent/bugs/2026-09-03-agent-test-mutate-reward-hacking/bug.md"
+      ".agent/bugs/2026-09-03-agent-test-mutate-reward-hacking/bug.md",
+      ".agent/plans/rsi-singularity-lessons/gap-analysis.md"
     ]
   },
   "capabilities": [
@@ -17,10 +19,13 @@
     "safety",
     "reward-hacking",
     "security",
-    "rbac"
+    "rbac",
+    "research",
+    "rsi"
   ],
   "evidence": [
-    ".agent/bugs/2026-09-03-agent-test-mutate-reward-hacking/bug.md"
+    ".agent/bugs/2026-09-03-agent-test-mutate-reward-hacking/bug.md",
+    ".agent/plans/rsi-singularity-lessons/gap-analysis.md"
   ],
   "checks": [
     {
@@ -42,6 +47,6 @@
   ],
   "gaps": [],
   "verdict": "G-accepted",
-  "generatedAt": "2026-09-12T11:58:31.488Z",
+  "generatedAt": "2026-09-12T13:11:12.551Z",
   "paper": "DisCo arXiv:2609.02749v1 §3.2 (task-agnostic)"
 }

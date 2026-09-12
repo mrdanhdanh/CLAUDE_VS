@@ -32,7 +32,7 @@ npm run cosmos:refresh                                       # refresh graph.jso
 - Tính `S = mismatch*10 + drafts*5 + refused*2 + disabled*1 + failed*5`
 - Thang: `low <10` · `medium <25` · `high >=25`
 - Đo theo đà: `scale.json.trend = {increases, needed, gate, window}` — ghi MỌI lần đo (kể cả không `--trend`); `increases` = chuỗi tăng nghiêm ngặt liền kề kết thúc ở điểm hiện tại (1 điểm ngang/giảm = reset) · `history` tối đa 30 điểm
-- Đo kèm: `D = (1 − dissentRatio) × 10` (decollaboration, KN-018) · `G = cutRatio × 10` (scope control — % plans có dòng CẮT/YAGNI) · `M = orphan×2 + disabled×1` (hidden complexity)
+- Đo kèm: `D = (1 − dissentRatio) × 10` (decollaboration, KN-018) · `G = cutRatio × 10` (scope control — % plans có dòng CẮT/YAGNI) · `M = orphan×2 + disabled×1` (hidden complexity) · `C = {kn, skills, e2eSpecs, e2eTests, guards}` (capability — đối trọng entropy, assets đếm được **không weight**) · `capabilityDelta` = delta vs mốc history trước
 - Trước khi sửa file lớn: `node .github/harness/scripts/entangle.mjs --file <path>` — forward/reverse refs để biết entanglement
 - Cosmic Web (toàn repo): `node .github/harness/scripts/entangle.mjs --graph [--out www/cosmos/graph.json]` — hub (≥10 refs ⇒ sửa là test rộng) · cluster (git co-change ≥3 ⇒ gộp 1 plan) · dead filament (0 ref ⇒ grep rồi xoá)
 
@@ -41,6 +41,7 @@ npm run cosmos:refresh                                       # refresh graph.jso
 - `S medium` → bơm năng lượng: fix mismatch/draft, chạy `generate-status.mjs`, polish dead-code
 - `S high` → nguy cơ heat death: human takeover, fix mismatch + refused + failed trước khi code tiếp
 - `trend.gate = true` → chặn thêm feature: trả nợ (mismatch/draft/refused) tới khi đà gãy — verify bằng `npm run cosmos:gate`
+- `capability` vs mốc trước: S giảm + C tăng = hệ khỏe lên · C đứng lâu = đầu tư chiều sâu (tests/KN/guards) trước khi thêm feature
 
 ### 3. Black Hole — Bottleneck
 - **Known:** KN-008 (file lock MSB3027), KN-015 (2 workflows giành Pages env)

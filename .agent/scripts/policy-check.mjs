@@ -119,7 +119,12 @@ async function check(tool, target, actor, intent) {
     return { decision: 'refused', rule: 'policy-error', message: e.message, error: true };
   }
 
-  const vars = { tool: tool || '', target: target || '', actor: actor || 'unknown', intent: intent || '' };
+  // Red-team hardening 2026-09-12 (KN-048/F2): canonicalize whitespace trước khi eval —
+  // 'rm -rf  /' (double space) từng bypass deny-rm-rf-root (probe thật, xem tests/e2e/guard-redteam.spec.ts).
+  // KHÔNG lowercase target: rule dạng deny-test-mutate match 'Tests' (capital) sẽ hỏng —
+  // case-hardening thuộc LAW (đề xuất backlog, deny-law-fork — human/verify apply).
+  const canonTarget = String(target || '').replace(/\s+/g, ' ');
+  const vars = { tool: tool || '', target: canonTarget, actor: actor || 'unknown', intent: intent || '' };
   const impact = classifyImpact(tool, target);
   const digest = policyDigest();
 

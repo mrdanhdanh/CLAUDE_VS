@@ -42,7 +42,7 @@ node .github/harness/scripts/auto-learn.mjs propose --bug <slug>
 ### 4. Kiểm tra sức khỏe học hỏi
 ```bash
 node .github/harness/scripts/auto-learn.mjs status
-# → KN: 6, Bugs: 5, Drafts: 0, top tags: ui(5), a11y(4)...
+# → KN: 48, Bugs: 29, Drafts: 0, top tags: ui(5), a11y(4)...
 ```
 
 ### 5. Hawking — nợ bay hơi (draft tự phân rã + human sign-off)
@@ -78,7 +78,7 @@ node .github/harness/scripts/auto-learn.mjs propose --bug 2026-08-30-mat-dau-tie
 
 ## Liên kết
 - Script: `.github/harness/scripts/auto-learn.mjs` (Node 18+, no deps, <50ms)
-- Knowledge: `docs/knowleged.md` (6 KN hiện tại)
+- Knowledge: `docs/knowleged.md` (48 KN hiện tại)
 - Bugs: `.agent/bugs/<slug>/bug.md` + `_template/bug.md` · Hawking journal: `.agent/hawking.jsonl` + `hawking.md`
 - Agent: `learn` (delegate khi cần suggest/log/propose)
 - Status: `node auto-learn.mjs status --json` cho YUNIE/www · Hawking mirror: `www/cosmos/hawking.json` (dashboard `scale.html#hawking`)

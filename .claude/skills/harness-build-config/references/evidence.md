@@ -1,6 +1,6 @@
 # Evidence — harness-build-config (DisCo arXiv:2609.02749v1 §3.2 (task-agnostic))
 
-> Substrate layer của skill — full text từ docs/knowleged.md. Sinh tự động 2026-09-12T11:58:31.500Z.
+> Substrate layer của skill — full text từ docs/knowleged.md. Sinh tự động 2026-09-12T13:11:12.564Z.
 
 ## Bug reports liên quan (4/29 bugs)
 

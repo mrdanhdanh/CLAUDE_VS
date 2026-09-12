@@ -22,7 +22,8 @@
       "KN-037",
       "KN-039",
       "KN-043",
-      "KN-044"
+      "KN-044",
+      "KN-047"
     ],
     "bugs": [
       ".agent/bugs/2026-08-30-bug-blindness/bug.md",
@@ -41,7 +42,8 @@
       "books/Andrew-Ng-Agentic-AI-Playbook-2026-Distilled.md",
       ".agent/bugs/2026-09-11-ps-5-1-khong-ho-tro-trong-lenh-powershell/bug.md",
       ".agent/bugs/2026-09-12-academy-content-not-actionable/bug.md",
-      ".agent/bugs/2026-09-03-rag-export-missing-grounding-chet/bug.md"
+      ".agent/bugs/2026-09-03-rag-export-missing-grounding-chet/bug.md",
+      ".agent/plans/harness-slop-gate/gap-analysis.md"
     ]
   },
   "capabilities": [
@@ -98,7 +100,9 @@
     "verify",
     "fresh-eyes",
     "rag",
-    "grounding"
+    "grounding",
+    "slop",
+    "complexity"
   ],
   "evidence": [
     ".agent/bugs/2026-08-30-bug-blindness/bug.md",
@@ -117,7 +121,8 @@
     "books/Andrew-Ng-Agentic-AI-Playbook-2026-Distilled.md",
     ".agent/bugs/2026-09-11-ps-5-1-khong-ho-tro-trong-lenh-powershell/bug.md",
     ".agent/bugs/2026-09-12-academy-content-not-actionable/bug.md",
-    ".agent/bugs/2026-09-03-rag-export-missing-grounding-chet/bug.md"
+    ".agent/bugs/2026-09-03-rag-export-missing-grounding-chet/bug.md",
+    ".agent/plans/harness-slop-gate/gap-analysis.md"
   ],
   "checks": [
     {
@@ -139,6 +144,6 @@
   ],
   "gaps": [],
   "verdict": "G-accepted",
-  "generatedAt": "2026-09-12T11:58:31.521Z",
+  "generatedAt": "2026-09-12T13:11:12.596Z",
   "paper": "DisCo arXiv:2609.02749v1 §3.2 (task-agnostic)"
 }

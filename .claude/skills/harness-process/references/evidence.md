@@ -1,6 +1,6 @@
 # Evidence — harness-process (DisCo arXiv:2609.02749v1 §3.2 (task-agnostic))
 
-> Substrate layer của skill — full text từ docs/knowleged.md. Sinh tự động 2026-09-12T11:58:31.508Z.
+> Substrate layer của skill — full text từ docs/knowleged.md. Sinh tự động 2026-09-12T13:11:12.580Z.
 
 ## Bug reports liên quan (6/29 bugs)
 
@@ -504,3 +504,24 @@
   - **Retrofit note:** bug fixed 2026-09-03 (HIGH confidence) nhưng lesson bị rơi — bug.md ghi "Related KN: KN-013" trong khi KN-013 là chủ đề khác (Ponytail ladder). Audit 2026-09-12 phát hiện thiếu → bổ sung KN-044.
 - **Tags:** `process` `knowledge` `rag` `grounding`
 - **Người ghi:** YUNIE / fixbug (retrofit qua audit 2026-09-12)
+
+---
+
+### KN-047 — Slop accumulation: code pass hết test vẫn mục dần khi agent extend (Slop Gate)
+
+- **Ngày:** 2026-09-12
+- **Bug report:** Process gap (không phải bug đơn lẻ) — "The Slop Should Not Be Tolerated" (HackerNoon 12/09/2026, Rox dT) + SlopCodeBench (arXiv 2603.24755v2) + METR + Anthropic engineering write-up. Gap analysis: `.agent/plans/harness-slop-gate/gap-analysis.md`
+- **Severity:** major
+- **Triệu chứng (đo được, không cảm tính):** SlopCodeBench: 15 agents · 36 problems · 196 checkpoints — **3/4 runs** nhồi thêm complexity vào hàm đã phức tạp + tích redundant code khi extend; "prioritize quality" chỉ cải thiện code KHỞI ĐẦU, không ngăn thoái hóa. Anthropic: "premature victory declaration"/"fake-done features" — cùng agent review 3 lần ra 3 kết quả. METR: 16 dev/246 tasks — chậm hơn 19% nhưng tự tưởng nhanh hơn 20%.
+- **Nguyên nhân gốc:** Exit condition "done" để model tự chấm (self-preference — KN-023); không có máy đo slop sau mỗi iteration (duplication/function size/complexity); checklist item không testable biến thành wishlist; checks không bị khóa + không rerun sau thay đổi. Audit repo: 9/14 khuyến nghị đã có (3-fix limit, deny-test-mutate, Critic...) nhưng **slop check ✗** + phát hiện `scripts/mutation.mjs` là **theater** (chỉ `node --check` proxy — mutant syntax-ok = "survived" mà không chạy test nào).
+- **Cách sửa:** Build `scripts/slop-check.mjs` (0-dep: dup ≥8 dòng · function >80 dòng · CC >12; gate exit 1, 0-file exit 2 / scan audit exit 0) + wire `verify.prompt.md` (bước 3b) + `evals-gate` (Slop dimension) + `minimal-ladder` (~200 LOC) + `harness-workflow` (Slop Gate block + spec-vs-wish + loop-it). Dogfood bắt 2 bug ngay (group-by-hash đứt chuỗi extension; regex literal `\{` lệch brace counter) + dedupe same-file + boolean flags; scan audit repo bắt `library-ingest*.mjs` dup ~54 dòng (backlog). Critic review độc lập (FIX): fail-closed 0-file + tách semantics audit (`slop:scan`) + regex boundary + CC trên stripped lines + doc class/nested + relabel overclaim gap-analysis (#1/#2/#9 ⚠️ prompt-enforced).
+- **Cách phòng tránh:**
+  - Done = **command** fail-loudly từ ngoài workspace, không phải model tự chấm ("✅ All tests passing!" không đếm) — KN-047 + KN-023.
+  - Chạy `node scripts/slop-check.mjs <changed files>` trước Done; code pass mọi behavior test vẫn có thể mục dần.
+  - Checklist item phải **testable** — "Supports CSV" là wish, không phải spec (comma trong quoted field? bad row?) — sửa luật KN-020.
+  - Diff reviewable ~≤200 LOC (không tính generated) — vượt → chia bounded task.
+  - Checks pass rồi có gì đổi → **rerun** (yesterday's green không áp dụng).
+  - Mutation testing phải **chạy test thật** — proxy `node --check` = smoke detector hết pin; đừng tin "survived" của `mutation.mjs` lite (task riêng).
+  - Property tests (vary inputs) là technique đáng dùng khi có parser/validator — không cần lib trong 0-dep.
+- **Tags:** `process` `verification` `slop` `complexity` `evals`
+- **Người ghi:** YUNIE / Slop Gate upgrade

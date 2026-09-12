@@ -1,6 +1,6 @@
 # Evidence — harness-web-ui (DisCo arXiv:2609.02749v1 §3.2 (task-agnostic))
 
-> Substrate layer của skill — full text từ docs/knowleged.md. Sinh tự động 2026-09-12T11:58:31.522Z.
+> Substrate layer của skill — full text từ docs/knowleged.md. Sinh tự động 2026-09-12T13:11:12.598Z.
 
 ## Bug reports liên quan (16/29 bugs)
 
@@ -376,7 +376,3 @@
   - Control không làm gì và không báo gì = bug **major**, không phải "nhỏ" — cùng class KN-011 (nút chết sau Random).
 - **Tags:** `ui` `a11y` `nav` `verify` `fail-silent`
 - **Người ghi:** YUNIE / upgrade Lab #12
-
-<!-- Thêm bài học mới theo template dưới — copy block này -->
-
-<!--
