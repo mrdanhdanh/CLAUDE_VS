@@ -252,6 +252,34 @@
       </div>
     </section>
 
+    <section class="section" id="escape" aria-labelledby="ev-title">
+      <div class="container">
+        <div class="section-head">
+          <h2 id="ev-title"><small>Escape Velocity</small>🚀 Vận tốc thoát nợ — gate theo đà</h2>
+          <p id="evAdvice" aria-live="polite">Đang tải scale.json…</p>
+          <span class="fresh" id="evFresh">⏳ đang đo tuổi…</span>
+        </div>
+        <div class="grid-3">
+          <div class="card">
+            <h3>📈 Đà hiện tại</h3>
+            <p>S tăng liên tiếp mấy lần đo (mỗi bước Δ≥1). Đạt ngưỡng → gate chặn feature mới.</p>
+            <div class="parts" id="evStreak" role="list" style="margin-top:10px;max-width:none"></div>
+          </div>
+          <div class="card">
+            <h3>🧾 Cửa sổ đo gần nhất</h3>
+            <p>Cũ → mới: ↑ tăng · ↓ giảm · = đứng. Đà = chuỗi ↑ liền kề ở cuối (1 điểm ngang là reset).</p>
+            <div class="web-chips" id="evWindow" role="list" style="margin-top:10px"></div>
+          </div>
+          <div class="card">
+            <h3>⛔ Khi gate nổ</h3>
+            <p>exit 1 — chặn thêm feature: trả nợ mismatch/draft/refused trước khi vượt thoát.</p>
+            <div id="evGate" role="list" style="margin-top:10px"></div>
+          </div>
+        </div>
+        <div class="code-block" id="evCode">Gate theo <strong>đà</strong>: <code>cosmic-scale.mjs --trend 3</code> (exit 1 khi S tăng ≥3 lần liên tiếp) · khác <code>--budget</code> (chặn theo <strong>mức</strong>) · một lệnh: <code>npm run cosmos:gate</code></div>
+      </div>
+    </section>
+
     <section class="section" id="web" aria-labelledby="web-title">
       <div class="container">
         <div class="section-head">
@@ -334,7 +362,7 @@
           <div class="card"><h3>🕳️ Black Hole ↔ Bottleneck</h3><p>KN-008 file lock, KN-015 Pages env. Qua event horizon → human takeover, không loop.</p><span class="tag">horizon = takeover</span></div>
           <div class="card"><h3>🐱 Schrödinger ↔ Heisenbug</h3><p>KN-014 import làm treo — quan sát làm đổi kết quả. Lab cosmos #6 demo.</p><span class="tag">đo là đổi</span></div>
         </div>
-        <div class="code-block" style="margin-top:16px">S = mismatch×10 + drafts×5 + refused×2 + disabled×1 + failed×5 · low &lt;10 · medium &lt;25 · high ≥25 · gate: --budget N (exit 1) · D = (1−dissentRatio)×10 · G = cutRatio×10 · Δx·Δp ≥ ħ/2 ↔ get_errors chính xác thì build mờ</div>
+        <div class="code-block" style="margin-top:16px">S = mismatch×10 + drafts×5 + refused×2 + disabled×1 + failed×5 · low &lt;10 · medium &lt;25 · high ≥25 · gate: --budget N (mức) / --trend N (đà) — exit 1 · D = (1−dissentRatio)×10 · G = cutRatio×10 · Δx·Δp ≥ ħ/2 ↔ get_errors chính xác thì build mờ</div>
       </div>
     </section>
 
@@ -359,6 +387,7 @@
       }catch(e){
         $('#entropyAdvice').textContent='Không tải được scale.json — chạy: node .github/harness/scripts/cosmic-scale.mjs --json --out www/cosmos/scale.json ('+e.message+')';
         $('#gaugeValue').textContent='—'; $('#gaugeLevel').textContent='no data'; $('#gaugeLevel').className='gauge-level';
+        renderEscape(null);
         toast('⚠️ Không tải được scale.json');
       }
     }
@@ -461,6 +490,7 @@
       else mt.textContent=(mm.length? mm.length+' mismatch: '+mm.map(m=>m.type+'/'+m.name).join(', '):'')+(mm.length&&ms.length?' · ':'')+(ms.length? ms.length+' missing: '+ms.map(m=>m.type+'/'+m.name).join(', '):'');
       const mc=$('#mismatchCode'); if(mm.length||ms.length){ mc.style.display='block'; mc.textContent=JSON.stringify({mismatches:mm,missing:ms},null,2); } else mc.style.display='none';
       drawTimeline(j.history||[]);
+      renderEscape(j);
     }
     function drawTimeline(h){
       const c=$('#timelineChart'); if(!c) return;
@@ -504,6 +534,63 @@
       $('#tlSummary').textContent=Ss.length+' điểm đo · từ '+fmtT(h[0].t)+' đến '+fmtT(h[h.length-1].t)+(delta>0?' — entropy đang tăng, bơm năng lượng!':delta<0?' — entropy đang giảm, vũ trụ đang nguội ❄️':' — entropy ổn định');
     }
     function fmtT(t){ try{ const d=new Date(t); return d.toLocaleDateString('vi-VN',{day:'2-digit',month:'2-digit'})+' '+d.toLocaleTimeString('vi-VN',{hour:'2-digit',minute:'2-digit'}); }catch{ return String(t); } }
+    // Badge tuổi dữ liệu + mũi tên đà + nội dung card gate — tách nhỏ để giữ CC của renderEscape thấp (Slop Gate KN-047)
+    function freshBadge(el, ts){
+      if(isNaN(ts)){ el.textContent='⏳ không rõ tuổi'; el.className='fresh'; return; }
+      const ageH=(Date.now()-ts)/36e5;
+      const ageTxt=ageH<1? '<1h' : ageH<48? Math.round(ageH)+'h' : Math.round(ageH/24)+' ngày';
+      if(ageH<24){ el.textContent='🟢 tươi · '+ageTxt; el.className='fresh ok'; return; }
+      if(ageH<72){ el.textContent='🟡 hơi cũ · '+ageTxt; el.className='fresh warn'; return; }
+      el.textContent='🔴 cũ · '+ageTxt+' — npm run cosmos:refresh'; el.className='fresh bad';
+    }
+    function arrowOf(cur, prev){
+      if(prev==null) return '·';
+      if(cur>prev) return '↑';
+      if(cur<prev) return '↓';
+      return '=';
+    }
+    function gateCardHtml(gate, need){
+      if(gate) return '<div class="bh-icon" aria-hidden="true">⛔</div><div class="bh-info"><strong>Gate ĐÓNG — chặn feature mới</strong><span>exit 1 từ --trend: fix mismatch/draft/refused rồi refresh tới khi đà gãy (1 điểm đi ngang là reset)</span></div>';
+      return '<div class="bh-icon" aria-hidden="true">✅</div><div class="bh-info"><strong>Gate mở — được thêm feature</strong><span>đo lại mỗi lần refresh; đạt '+need+' lần tăng liên tiếp là chạm vận tốc thoát</span></div>';
+    }
+    // ===== Escape Velocity — gate theo đà S (scale.json.trend). helpers tách nhỏ giữ CC thấp (KN-047) =====
+    function escapeFail(j){
+      const mk=(sel,msg)=>{ $(sel).innerHTML='<div class="web-empty">'+msg+'</div>'; };
+      $('#evAdvice').textContent=(j? 'scale.json chưa có trend' : 'Không tải được scale.json')+' — chạy: npm run cosmos:refresh';
+      $('#evFresh').textContent='⛔ không có data'; $('#evFresh').className='fresh bad';
+      mk('#evStreak','— chưa có trend —'); mk('#evWindow','— chưa có trend —'); mk('#evGate','— chưa có trend —');
+    }
+    function renderEvStreak(el, inc, need, gate){
+      el.innerHTML='';
+      for(const [k,v] of [['Đà tăng liên tiếp',inc],['Ngưỡng gate (--trend)',need],['Trạng thái',gate? 'GATE ⛔' : 'chưa đạt ✅']]){
+        const row=document.createElement('div'); row.className='part'; row.setAttribute('role','listitem');
+        row.innerHTML='<span>'+k+'</span><b>'+v+'</b>'; el.appendChild(row);
+      }
+      const badge=document.createElement('div'); badge.className='gauge-level '+(gate?'high':inc>0?'medium':'low');
+      badge.style.cssText='margin-top:12px;display:inline-block;padding:4px 12px;border-radius:999px';
+      badge.textContent='đà '+inc+'/'+need; el.appendChild(badge);
+    }
+    function renderEvWindow(el, win){
+      el.innerHTML='';
+      if(win.length<2){ el.innerHTML='<div class="web-empty">— cần ≥2 điểm đo —</div>'; return; }
+      win.forEach((p,i)=>{
+        const chip=document.createElement('span'); chip.className='web-chip'; chip.setAttribute('role','listitem');
+        chip.textContent='S='+p.S+' '+arrowOf(p.S, i? win[i-1].S : null); el.appendChild(chip);
+      });
+    }
+    function renderEscape(j){
+      const t = j && j.trend;
+      if(!t){ escapeFail(j); return; }
+      const inc=t.increases??0, need=t.needed??3, gate=!!t.gate;
+      $('#evAdvice').textContent='Đà S: tăng '+inc+'/'+need+' lần đo liên tiếp — '+(gate? '⛔ GATE: trả nợ trước khi thêm feature' : '✅ chưa đạt vận tốc thoát');
+      freshBadge($('#evFresh'), j.generatedAt? new Date(j.generatedAt).getTime() : NaN);
+      renderEvStreak($('#evStreak'), inc, need, gate);
+      renderEvWindow($('#evWindow'), t.window||[]);
+      const ge=$('#evGate'); ge.innerHTML='';
+      const div=document.createElement('div'); div.className='bh-item '+(gate?'dynamic':'known'); div.setAttribute('role','listitem');
+      div.innerHTML=gateCardHtml(gate, need);
+      ge.appendChild(div);
+    }
     // ===== Cosmic Web — entangle --graph → graph.json =====
     async function loadWeb(){
       try{
@@ -621,7 +708,7 @@
       fill('#hawkingEscalate','escalate','journal + nhắc · sửa hoặc propose KN');
       fill('#hawkingEvaporate','evaporate','note + Status → evaporated (giữ lịch sử)');
     }
-    $('#btnRefresh')?.addEventListener('click', ()=>{ load(); loadWeb(); loadHawking(); loadHawking(); toast('↻ Đã refresh'); });
+    $('#btnRefresh')?.addEventListener('click', ()=>{ load(); loadWeb(); loadHawking(); toast('↻ Đã refresh'); });
     $('#btnCopyCmd')?.addEventListener('click', async()=>{
       const t='node .github/harness/scripts/cosmic-scale.mjs --json --out www/cosmos/scale.json';
       try{ await navigator.clipboard.writeText(t); toast('📋 Đã copy lệnh'); }catch{ toast('Copy hụt — sếp copy tay nhé'); }

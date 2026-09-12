@@ -1,0 +1,36 @@
+≡ƒº╣ Slop Check ΓÇö 4 file ┬╖ dup ΓëÑ8 d├▓ng ┬╖ fn Γëñ80 d├▓ng ┬╖ CC Γëñ12
+
+ΓÜá∩╕Å  Duplication (1 block):
+   ΓÇó 14 d├▓ng ├ù2 ΓÇö C:/Users/nguye/AppData/Local/Temp/slop-head-scale.html:9 Γåö C:/Users/nguye/AppData/Local/Temp/slop-head-slides.html:9
+     Γöö <link rel="preconnect" href="https://fonts.googleapis.com">
+
+ΓÜá∩╕Å  Function metrics:
+   ΓÇó [size] C:/Users/nguye/AppData/Local/Temp/slop-head-scale.mjs:41 main() ΓÇö 189 d├▓ng (max 80)
+   ΓÇó [complexity] C:/Users/nguye/AppData/Local/Temp/slop-head-scale.mjs:41 main() ΓÇö CC 92 (max 12)
+   ΓÇó [size] C:/Users/nguye/AppData/Local/Temp/slop-head-scale.html:365 render() ΓÇö 100 d├▓ng (max 80)
+   ΓÇó [complexity] C:/Users/nguye/AppData/Local/Temp/slop-head-scale.html:365 render() ΓÇö CC 83 (max 12)
+   ΓÇó [complexity] C:/Users/nguye/AppData/Local/Temp/slop-head-scale.html:465 drawTimeline() ΓÇö CC 28 (max 12)
+   ΓÇó [complexity] C:/Users/nguye/AppData/Local/Temp/slop-head-scale.html:519 renderWeb() ΓÇö CC 27 (max 12)
+   ΓÇó [complexity] C:/Users/nguye/AppData/Local/Temp/slop-head-scale.html:580 renderHawking() ΓÇö CC 24 (max 12)
+   ΓÇó [complexity] C:/Users/nguye/AppData/Local/Temp/slop-head-slides.html:1585 (anonymous)() ΓÇö CC 40 (max 12)
+   ΓÇó [complexity] C:/Users/nguye/AppData/Local/Temp/slop-head-slides.html:1620 (anonymous)() ΓÇö CC 23 (max 12)
+   ΓÇó [complexity] C:/Users/nguye/AppData/Local/Temp/slop-head-slides.html:1689 (anonymous)() ΓÇö CC 15 (max 12)
+   ΓÇó [size] C:/Users/nguye/AppData/Local/Temp/slop-head-index.html:2003 (anonymous)() ΓÇö 840 d├▓ng (max 80)
+   ΓÇó [complexity] C:/Users/nguye/AppData/Local/Temp/slop-head-index.html:2003 (anonymous)() ΓÇö CC 227 (max 12)
+   ΓÇó [complexity] C:/Users/nguye/AppData/Local/Temp/slop-head-index.html:2845 (anonymous)() ΓÇö CC 15 (max 12)
+   ΓÇó [size] C:/Users/nguye/AppData/Local/Temp/slop-head-index.html:2965 (anonymous)() ΓÇö 96 d├▓ng (max 80)
+   ΓÇó [complexity] C:/Users/nguye/AppData/Local/Temp/slop-head-index.html:2965 (anonymous)() ΓÇö CC 32 (max 12)
+   ΓÇó [size] C:/Users/nguye/AppData/Local/Temp/slop-head-index.html:3143 (anonymous)() ΓÇö 83 d├▓ng (max 80)
+   ΓÇó [complexity] C:/Users/nguye/AppData/Local/Temp/slop-head-index.html:3143 (anonymous)() ΓÇö CC 36 (max 12)
+   ΓÇó [complexity] C:/Users/nguye/AppData/Local/Temp/slop-head-index.html:3228 (anonymous)() ΓÇö CC 19 (max 12)
+   ΓÇó [size] C:/Users/nguye/AppData/Local/Temp/slop-head-index.html:3293 (anonymous)() ΓÇö 94 d├▓ng (max 80)
+   ΓÇó [complexity] C:/Users/nguye/AppData/Local/Temp/slop-head-index.html:3293 (anonymous)() ΓÇö CC 32 (max 12)
+   ΓÇó [size] C:/Users/nguye/AppData/Local/Temp/slop-head-index.html:3389 (anonymous)() ΓÇö 88 d├▓ng (max 80)
+   ΓÇó [complexity] C:/Users/nguye/AppData/Local/Temp/slop-head-index.html:3389 (anonymous)() ΓÇö CC 32 (max 12)
+   ΓÇó [complexity] C:/Users/nguye/AppData/Local/Temp/slop-head-index.html:3479 (anonymous)() ΓÇö CC 40 (max 12)
+   ΓÇó [complexity] C:/Users/nguye/AppData/Local/Temp/slop-head-index.html:3547 (anonymous)() ΓÇö CC 26 (max 12)
+   ΓÇó [complexity] C:/Users/nguye/AppData/Local/Temp/slop-head-index.html:3600 (anonymous)() ΓÇö CC 15 (max 12)
+   ΓÇó [size] C:/Users/nguye/AppData/Local/Temp/slop-head-index.html:3636 (anonymous)() ΓÇö 117 d├▓ng (max 80)
+   ΓÇó [complexity] C:/Users/nguye/AppData/Local/Temp/slop-head-index.html:3636 (anonymous)() ΓÇö CC 21 (max 12)
+
+Γ¥î 28 findings ΓÇö fix hoß║╖c justify tr╞░ß╗¢c khi Done (Slop Gate ┬╖ KN-047)

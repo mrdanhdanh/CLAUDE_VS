@@ -1,10 +1,10 @@
 {
-  "generatedAt": "2026-09-12T12:17:04.893Z",
+  "generatedAt": "2026-09-12T12:40:03.646Z",
   "generatedBy": "entangle.mjs --graph",
   "scanned": {
-    "files": 1447,
-    "edges": 1333,
-    "commits": 130
+    "files": 1456,
+    "edges": 1355,
+    "commits": 133
   },
   "thresholds": {
     "hubMinRefs": 10,
@@ -13,7 +13,7 @@
   "hubs": [
     {
       "file": "docs/knowleged.md",
-      "refs": 70
+      "refs": 72
     },
     {
       "file": "www/status.json",
@@ -24,20 +24,20 @@
       "refs": 51
     },
     {
+      "file": "package.json",
+      "refs": 28
+    },
+    {
       "file": "README.md",
-      "refs": 27
+      "refs": 28
     },
     {
       "file": "www/cosmos/index.html",
-      "refs": 27
+      "refs": 28
     },
     {
       "file": "www/styles.css",
-      "refs": 27
-    },
-    {
-      "file": "package.json",
-      "refs": 24
+      "refs": 28
     },
     {
       "file": "www/library/mcp-server.mjs",
@@ -72,7 +72,7 @@
         "www/ai-news/fetch.mjs",
         "www/ai-news/index.html"
       ],
-      "weight": 4
+      "weight": 5
     },
     {
       "files": [
@@ -81,12 +81,21 @@
         "www/todo-manager/styles.css"
       ],
       "weight": 4
+    },
+    {
+      "files": [
+        ".github/agents/yunie.agent.md",
+        ".github/copilot-instructions.md",
+        ".github/instructions/yunie-personality.instructions.md",
+        "CLAUDE.md"
+      ],
+      "weight": 3
     }
   ],
   "deadFilaments": [],
   "counts": {
     "hubs": 13,
-    "clusters": 2,
+    "clusters": 3,
     "deadFilaments": 0
   }
 }

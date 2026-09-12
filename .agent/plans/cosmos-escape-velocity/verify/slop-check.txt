@@ -1,0 +1,36 @@
+≡ƒº╣ Slop Check ΓÇö 4 file ┬╖ dup ΓëÑ8 d├▓ng ┬╖ fn Γëñ80 d├▓ng ┬╖ CC Γëñ12
+
+ΓÜá∩╕Å  Duplication (1 block):
+   ΓÇó 14 d├▓ng ├ù2 ΓÇö www/cosmos/scale.html:9 Γåö www/cosmos/slides.html:9
+     Γöö <link rel="preconnect" href="https://fonts.googleapis.com">
+
+ΓÜá∩╕Å  Function metrics:
+   ΓÇó [size] .github/harness/scripts/cosmic-scale.mjs:42 main() ΓÇö 220 d├▓ng (max 80)
+   ΓÇó [complexity] .github/harness/scripts/cosmic-scale.mjs:42 main() ΓÇö CC 109 (max 12)
+   ΓÇó [size] www/cosmos/scale.html:394 render() ΓÇö 101 d├▓ng (max 80)
+   ΓÇó [complexity] www/cosmos/scale.html:394 render() ΓÇö CC 83 (max 12)
+   ΓÇó [complexity] www/cosmos/scale.html:495 drawTimeline() ΓÇö CC 28 (max 12)
+   ΓÇó [complexity] www/cosmos/scale.html:606 renderWeb() ΓÇö CC 27 (max 12)
+   ΓÇó [complexity] www/cosmos/scale.html:667 renderHawking() ΓÇö CC 24 (max 12)
+   ΓÇó [size] www/cosmos/index.html:1998 (anonymous)() ΓÇö 840 d├▓ng (max 80)
+   ΓÇó [complexity] www/cosmos/index.html:1998 (anonymous)() ΓÇö CC 227 (max 12)
+   ΓÇó [complexity] www/cosmos/index.html:2840 (anonymous)() ΓÇö CC 16 (max 12)
+   ΓÇó [size] www/cosmos/index.html:2960 (anonymous)() ΓÇö 96 d├▓ng (max 80)
+   ΓÇó [complexity] www/cosmos/index.html:2960 (anonymous)() ΓÇö CC 32 (max 12)
+   ΓÇó [size] www/cosmos/index.html:3138 (anonymous)() ΓÇö 83 d├▓ng (max 80)
+   ΓÇó [complexity] www/cosmos/index.html:3138 (anonymous)() ΓÇö CC 36 (max 12)
+   ΓÇó [complexity] www/cosmos/index.html:3223 (anonymous)() ΓÇö CC 19 (max 12)
+   ΓÇó [size] www/cosmos/index.html:3288 (anonymous)() ΓÇö 94 d├▓ng (max 80)
+   ΓÇó [complexity] www/cosmos/index.html:3288 (anonymous)() ΓÇö CC 32 (max 12)
+   ΓÇó [size] www/cosmos/index.html:3384 (anonymous)() ΓÇö 88 d├▓ng (max 80)
+   ΓÇó [complexity] www/cosmos/index.html:3384 (anonymous)() ΓÇö CC 32 (max 12)
+   ΓÇó [complexity] www/cosmos/index.html:3474 (anonymous)() ΓÇö CC 40 (max 12)
+   ΓÇó [complexity] www/cosmos/index.html:3542 (anonymous)() ΓÇö CC 26 (max 12)
+   ΓÇó [complexity] www/cosmos/index.html:3595 (anonymous)() ΓÇö CC 15 (max 12)
+   ΓÇó [size] www/cosmos/index.html:3631 (anonymous)() ΓÇö 117 d├▓ng (max 80)
+   ΓÇó [complexity] www/cosmos/index.html:3631 (anonymous)() ΓÇö CC 21 (max 12)
+   ΓÇó [complexity] www/cosmos/slides.html:1584 (anonymous)() ΓÇö CC 40 (max 12)
+   ΓÇó [complexity] www/cosmos/slides.html:1619 (anonymous)() ΓÇö CC 23 (max 12)
+   ΓÇó [complexity] www/cosmos/slides.html:1688 (anonymous)() ΓÇö CC 15 (max 12)
+
+Γ¥î 28 findings ΓÇö fix hoß║╖c justify tr╞░ß╗¢c khi Done (Slop Gate ┬╖ KN-047)

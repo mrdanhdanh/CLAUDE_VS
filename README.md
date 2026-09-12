@@ -6,7 +6,7 @@
 
 Harness biến VS Code Copilot Chat thành **Claude Code Extension**: tự động, todo-driven, explore trước khi code, plan trước khi implement, polish trước khi done. Mọi customization (skill / rule / agent / prompt / hook) đều **tháo lắp như plugin** — bật/tắt không xóa, preset theo dự án, scaffold 1 lệnh.
 
-> **Trạng thái hiện tại (2026-09-12, 2.3-done):** 19 skills (+evals-gate, cosmic-quantum, cosmic-scale, archify, 5 harness-* lesson skills) · 18 instructions (+awesome-design, cosmic-quantum, fund-the-friction) · 9 agents (+critic) · 7 prompts · 1 hook — tất cả enabled · 4 presets · 46 KN · 29 bugs · 69 plans · 12 lab COSMOS + Cosmic Web graph + Hawking watchdog (`www/cosmos/`) · 15 demos `www/` · 23 scripts harness · 3 routines · MCP library 1.2.0 · governance policy v3 (9 deny + 2 allow, Ed25519) · `www/status.json` do YUNIE generate.
+> **Trạng thái hiện tại (2026-09-12, 2.3-done):** 19 skills (+evals-gate, cosmic-quantum, cosmic-scale, archify, 5 harness-* lesson skills) · 18 instructions (+awesome-design, cosmic-quantum, fund-the-friction) · 9 agents (+critic) · 7 prompts · 1 hook — tất cả enabled · 4 presets · 47 KN · 29 bugs · 69 plans · 12 lab COSMOS + Cosmic Web graph + Hawking watchdog + Escape Velocity gate (`www/cosmos/`) · 15 demos `www/` · 23 scripts harness · 3 routines · MCP library 1.2.0 · governance policy v3 (9 deny + 2 allow, Ed25519) · `www/status.json` do YUNIE generate.
 
 ---
 
@@ -228,9 +228,9 @@ Templates: `.github/harness/templates/` (instruction.md, agent.md, prompt.md, sk
 
 Bộ nhớ dài hạn + tự học — không lặp bug cũ.
 
-- **Knowledge:** `docs/knowleged.md` — **BẮT BUỘC đọc trước mọi task** (36 KN: KN-001 → KN-036, tags `process` `ui` `dx` `a11y` `css` `governance` `minimal` `self-evolving` `rsi` `failure-diagnosis`...). Mỗi KN: Triệu chứng → Nguyên nhân gốc → Cách sửa → Cách phòng tránh.
+- **Knowledge:** `docs/knowleged.md` — **BẮT BUỘC đọc trước mọi task** (47 KN: KN-001 → KN-047, tags `process` `ui` `dx` `a11y` `css` `governance` `minimal` `self-evolving` `rsi` `failure-diagnosis`...). Mỗi KN: Triệu chứng → Nguyên nhân gốc → Cách sửa → Cách phòng tránh.
 - **Auto-Learn:** `node .github/harness/scripts/auto-learn.mjs <suggest|log|propose|status>` — suggest KN liên quan (BM25-lite + IDF, <50ms), log bug draft vào `.agent/bugs/`, propose KN mới sau fix. Hooks `PostToolUse`/`Stop` nhắc tự động.
-- **Bugs:** `.agent/bugs/<slug>/bug.md` (19 bugs đã lưu + `_template/bug.md`). Sau `/fixbug` phải cập nhật cả `bug.md` + `knowleged.md`.
+- **Bugs:** `.agent/bugs/<slug>/bug.md` (29 bugs đã lưu + `_template/bug.md`). Sau `/fixbug` phải cập nhật cả `bug.md` + `knowleged.md`.
 - **Agent `learn`:** delegate suggest/log/propose khi cần.
 
 ```bash
@@ -263,7 +263,7 @@ AG-UI + MCP + Components + Routines — học OpenBot, file-based, 0 deps.
 - **AG-UI:** `.agent/agents.yaml` (3 built-in: general, knowledge, risk) + `agent-registry.mjs <list|validate>` — remote endpoint phải pass `AGENT_ENDPOINT_ALLOWED_HOSTS` (exact match).
 - **Governed MCP:** `.agent/mcp/catalog.json` + `grants.json` + `mcp-check.mjs` — bot chỉ gọi vendor đã grant, unknown tool = refused.
 - **Components:** `www/components/gallery/*.html` (3: audit, hello, stats) + `playground.html` + `component-check.mjs` — check `published` + `withheld` trước khi trả.
-- **Routines:** `.agent/routines.json` + `routine.mjs <add|list|run>` — cron floor 15m, cap 20 enabled, 10 fails → off. Hiện tại 1 routine enabled (`0 9 * * *` check status).
+- **Routines:** `.agent/routines.json` + `routine.mjs <add|list|run>` — cron floor 15m, cap 20 enabled, 10 fails → off. Hiện tại 3 routines (daily check status · daily 8h cosmos refresh · weekly Hawking watchdog — human sign-off).
 
 ---
 
@@ -306,7 +306,7 @@ Mở local: `www/index.html` (file://) hoặc `npx serve www` → `http://localh
 
 ## Demos www/ + N5Blazor
 
-13 demos static trong `www/` (tự deploy Pages) + 1 app Blazor:
+15 demos static trong `www/` (tự deploy Pages) + 1 app Blazor:
 
 | Demo | Path | Mô tả |
 |------|------|-------|
@@ -324,6 +324,8 @@ Mở local: `www/index.html` (file://) hoặc `npx serve www` → `http://localh
 | Thuật toán | `www/web-thuat-toan/` | 10 bài thuật toán tương tác |
 | Web Universe | `www/web-universe/` | WEB_011 — vũ trụ web tương tác |
 | YUNIE Chat | `www/yunie-chat/` | Demo chatbot YUNIE — persona v2 + RAG grounding |
+| Agentic Academy | `www/agentic-academy/` | Khoá 7 bài agentic — chạy được theo IDE, khái niệm verified (KN-043) |
+| YT Summary | `www/yt-summary/` | Tóm tắt YouTube — 3 lane transcript + chuỗi dịch provider (KN-041/042) |
 | Components | `www/components/` | Gallery (audit/hello/stats) + playground |
 
 **N5Blazor (Blazor Server):** `N5Blazor/` (.NET app: Kana/Kanji/Vocab/Grammar/Quiz/Progress services + GlassCard/RainbowCard/ThemeToggle) + `N5Blazor.Tests/` (ServiceTests, TddGateDemoTests — immutable, KN-012). Lưu ý build: tắt `dotnet run` đang giữ file trước khi build (KN-008, MSB3027), server URL là runtime config không hardcode (KN-009).
@@ -338,28 +340,28 @@ Mở local: `www/index.html` (file://) hoặc `npx serve www` → `http://localh
 ├── docs/
 │   ├── harness-flow.md      # Sơ đồ /harness (flowchart, sequence, architecture)
 │   ├── capabilities.md      # Toàn bộ khả năng hệ thống
-│   ├── knowleged.md         # BẮT BUỘC đọc trước mọi task — 36 KN + anti-patterns + checklist
+│   ├── knowleged.md         # BẮT BUỘC đọc trước mọi task — 47 KN + anti-patterns + checklist
 │   └── yunie-brain-upgrade.md # Personality v2 + RAG citations (6 sách, 303 chunks)
 ├── .agent/                             # Trace + governance (học OpenBot)
-│   ├── plans/ (61)          # PRD/Design/Plan mỗi task 1 thư mục: aar-harness, ai-news-search, cosmos-macro-expansion, web-011-part1..7, ...
-│   ├── bugs/ (19)           # bug.md mỗi bug 1 thư mục + _template/bug.md
+│   ├── plans/ (69)          # PRD/Design/Plan mỗi task 1 thư mục: aar-harness, ai-news-search, cosmos-macro-expansion, web-011-part1..7, ...
+│   ├── bugs/ (29)           # bug.md mỗi bug 1 thư mục + _template/bug.md
 │   ├── policy.json          # v3: 9 deny + 2 allow, fail-closed
 │   ├── audit.jsonl          # append-only + hash-chain (gitignore)
 │   ├── credentials.enc.json # AES-256-GCM (gitignore)
 │   ├── agents.yaml          # 3 built-in: general, knowledge, risk
 │   ├── mcp/ (catalog.json + grants.json)
-│   ├── routines.json        # 1 routine enabled
+│   ├── routines.json        # 3 routines (check status · cosmos refresh · Hawking watchdog)
 │   └── scripts/ (policy-check, audit, credentials, agent-registry, mcp-check, component-check, routine, ...)
 ├── .github/
 │   ├── copilot-instructions.md          # Harness v2 — Identity + Pipeline (source of truth)
 │   ├── workflows/ (pages.yml + ai-news.yml) # Deploy www/ → GitHub Pages
 │   ├── harness/
-│   │   ├── registry.json                # v2 unified (commit vào git) — 18 skills, 18 instructions, 9 agents, 7 prompts, 1 hook
+│   │   ├── registry.json                # v2 unified (commit vào git) — 19 skills, 18 instructions, 9 agents, 7 prompts, 1 hook
 │   │   ├── presets/                     # full, web-product, api-minimal, lean-product
 │   │   ├── templates/                   # instruction, agent, prompt, skill
 │   │   ├── scripts/ (harness-manager, generate-status, auto-learn, auto-researcher)
 │   │   └── README.md
-│   ├── skills/ (18)         # claude-harness, custom-registry, skill-registry, glass-rainbow-effects, ui-design-system, ui-ux-pro-max, tdd-gate, systematic-debugging, auto-researcher, last30days, harness-build-config, harness-governance, harness-minimal, harness-process, harness-web-ui, cosmic-quantum, cosmic-scale, archify
+│   ├── skills/ (19)         # claude-harness, custom-registry, skill-registry, evals-gate, glass-rainbow-effects, ui-design-system, ui-ux-pro-max, tdd-gate, systematic-debugging, auto-researcher, last30days, harness-build-config, harness-governance, harness-minimal, harness-process, harness-web-ui, cosmic-quantum, cosmic-scale, archify
 │   ├── instructions/ (18)   # harness-workflow, knowleged, product-quality, skill-usage, custom-registry, locale-i18n, plugin-seam, library-rag, yunie-personality, auto-learn, agent-governance, platform-seam, minimal-ladder, context-engineering, cua-safety, awesome-design, cosmic-quantum, fund-the-friction
 │   ├── agents/ (9)          # Explore, Plan, Designer, Implement, Polish, Verify, YUNIE, learn, Critic
 │   ├── prompts/ (7)         # harness, product, plan, implement, polish, verify, fixbug
@@ -367,7 +369,7 @@ Mở local: `www/index.html` (file://) hoặc `npx serve www` → `http://localh
 ├── .claude/ (export từ .github/)        # agents/, commands/, rules/, skills/, settings.json, harness-export.json — DO NOT EDIT
 ├── www/                                 # Root của GitHub Pages (copy file vào là tự deploy)
 │   ├── index.html + status.json (YUNIE generate) + styles.css + app.js
-│   ├── aar/ ai-news/ archify/ cosmos/ design-showcase/ glassui/ library/ n5-blazor/ todo-manager/ waymo-effect/ web-thuat-toan/ web-universe/ yunie-chat/ (13 demos)
+│   ├── aar/ agentic-academy/ ai-news/ archify/ cosmos/ design-showcase/ glassui/ library/ n5-blazor/ todo-manager/ waymo-effect/ web-thuat-toan/ web-universe/ yt-summary/ yunie-chat/ (15 demos)
 │   └── components/ (gallery: audit/hello/stats + playground.html)
 ├── N5Blazor/ (+ N5Blazor.Tests/)         # Blazor Server N5: Services (Kana/Kanji/Vocab/Grammar/Quiz/Progress) + Components/Shared
 └── AI-Agents-for-Beginners-Distilled.md  # Tài liệu tham khảo AI agents

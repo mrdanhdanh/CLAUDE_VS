@@ -1,0 +1,22 @@
+# Escape Velocity gate demo — 2026-09-12T12:47:53.947Z
+# S hiện tại của repo = 7
+
+## Scenario 1 — history tăng 3 lần liên tiếp + --trend 3 → GATE
+history: -2→1→4 + điểm hiện tại 7 · flags: --trend 3 · exit=1 (mong đợi 1)
+trend: {"increases":3,"needed":3,"gate":true,"window":[{"t":"2026-09-12T12:47:53.948Z","S":-2},{"t":"2026-09-12T12:47:53.948Z","S":1},{"t":"2026-09-12T12:47:53.948Z","S":4},{"t":"2026-09-12T12:47:54.124Z","S":7}]}
+  🚀 ESCAPE VELOCITY: S tăng 3 lần đo liên tiếp (cần ≥3) — -2→1→4→7 — chặn thêm feature: trả nợ entropy (mismatch/draft/refused) trước khi vượt thoát.
+
+## Scenario 2 — cùng history + --trend 4 → chưa đạt (đà 3 < 4)
+history: -2→1→4 + điểm hiện tại 7 · flags: --trend 4 · exit=0 (mong đợi 0)
+trend: {"increases":3,"needed":4,"gate":false,"window":[{"t":"2026-09-12T12:47:54.148Z","S":-2},{"t":"2026-09-12T12:47:54.148Z","S":1},{"t":"2026-09-12T12:47:54.148Z","S":4},{"t":"2026-09-12T12:47:54.303Z","S":7}]}
+  ✅ ESCAPE VELOCITY: chưa đạt vận tốc thoát (đà 3/4) — được phép thêm feature.
+
+## Scenario 3 — history đi ngang + --trend 3 → đà reset = 0
+history: 16→16→16 + điểm hiện tại 7 · flags: --trend 3 · exit=0 (mong đợi 0)
+trend: {"increases":0,"needed":3,"gate":false,"window":[{"t":"2026-09-12T12:47:54.323Z","S":16},{"t":"2026-09-12T12:47:54.323Z","S":16},{"t":"2026-09-12T12:47:54.323Z","S":16},{"t":"2026-09-12T12:47:54.480Z","S":7}]}
+  ✅ ESCAPE VELOCITY: chưa đạt vận tốc thoát (đà 0/3) — được phép thêm feature.
+
+## Scenario 4 — không --trend → chỉ ghi trend, gate KHÔNG tự nổ
+history: -2→1→4 + điểm hiện tại 7 · flags: (none) · exit=0 (mong đợi 0)
+trend: {"increases":3,"needed":3,"gate":true,"window":[{"t":"2026-09-12T12:47:54.504Z","S":-2},{"t":"2026-09-12T12:47:54.504Z","S":1},{"t":"2026-09-12T12:47:54.504Z","S":4},{"t":"2026-09-12T12:47:54.657Z","S":7}]}
+

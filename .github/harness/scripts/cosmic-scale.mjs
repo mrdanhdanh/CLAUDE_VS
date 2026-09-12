@@ -4,6 +4,7 @@
  * Usage:
  *   node .github/harness/scripts/cosmic-scale.mjs [--json] [--out www/cosmos/scale.json]
  *   node .github/harness/scripts/cosmic-scale.mjs --budget 10   # Heat Death gate: exit 1 nếu S vượt ngân sách
+ *   node .github/harness/scripts/cosmic-scale.mjs --trend 3    # Escape Velocity gate: exit 1 nếu S tăng liên tiếp ≥3 lần đo (chặn theo ĐÀ, khác --budget chặn theo MỨC)
  * No deps, Node 18+. Idempotent — chỉ đọc, không sửa (trừ file --out).
  * Thang S: low <10 · medium <25 · high >=25
  *   S = mismatch*10 + drafts*5 + refused*2 + disabled*1 + failed*5
@@ -45,6 +46,13 @@ async function main() {
   const outPath = outIdx !== -1 && args[outIdx + 1] ? path.resolve(ROOT, args[outIdx + 1]) : null;
   const budgetIdx = args.indexOf('--budget');
   const budget = budgetIdx !== -1 && args[budgetIdx + 1] ? Number(args[budgetIdx + 1]) : null;
+  const trendIdx = args.indexOf('--trend');
+  const trendRequested = trendIdx !== -1;
+  let trendN = 3;
+  if (trendRequested && args[trendIdx + 1] && !args[trendIdx + 1].startsWith('--')) {
+    const v = Number(args[trendIdx + 1]);
+    if (Number.isInteger(v) && v >= 2) trendN = v;
+  }
 
   let registry = {};
   try { registry = JSON.parse(await fs.readFile(REGISTRY_PATH, 'utf8')); }
@@ -193,15 +201,31 @@ async function main() {
     result.policy = { ok: true };
   } catch (e) { result.policy = { ok: false, error: e.message }; }
 
+  // 7. escape velocity — gate theo ĐÀ S (roadmap: --trend N).
+  // History: đọc từ --out nếu có, else scale.json mặc định (explicit — không fallback ngầm).
+  const historySource = outPath || path.join(ROOT, 'www', 'cosmos', 'scale.json');
+  let history = [];
+  try {
+    const prev = JSON.parse(await fs.readFile(historySource, 'utf8'));
+    if (Array.isArray(prev.history)) history = prev.history.slice(-29);
+  } catch {}
+  history.push({ t: result.generatedAt, S, level, M: darkMatter, D: darkEnergy, G: gravity });
+  result.history = history;
+  let increases = 0;
+  for (let i = history.length - 1; i > 0; i--) {
+    if ((history[i].S ?? 0) > (history[i - 1].S ?? 0)) increases++;
+    else break;
+  }
+  const trendWindow = history.slice(-(trendN + 1));
+  result.trend = {
+    increases,
+    needed: trendN,
+    gate: increases >= trendN,
+    window: trendWindow.map(p => ({ t: p.t, S: p.S ?? 0 })),
+  };
+
   if (outPath) {
     await fs.mkdir(path.dirname(outPath), { recursive: true });
-    let history = [];
-    try {
-      const prev = JSON.parse(await fs.readFile(outPath, 'utf8'));
-      if (Array.isArray(prev.history)) history = prev.history.slice(-29);
-    } catch {}
-    history.push({ t: result.generatedAt, S, level, M: darkMatter, D: darkEnergy, G: gravity });
-    result.history = history;
     await fs.writeFile(outPath, JSON.stringify(result, null, 2) + '\n', 'utf8');
   }
   if (asJson || outPath) console.log(JSON.stringify(result, null, 2));
@@ -215,6 +239,7 @@ async function main() {
     if (mismatches.length) console.log('   mismatch: ' + mismatches.map(m => m.type + '/' + m.name).join(', '));
     if (missing.length) console.log('   missing: ' + missing.map(m => m.type + '/' + m.name).join(', '));
     console.log('   black holes: ' + blackHoles.map(b => b.id).join(', '));
+    console.log('   🚀 escape velocity: đà S tăng ' + increases + '/' + trendN + ' lần liên tiếp — ' + (result.trend.gate ? 'GATE ⛔ (--trend chặn feature)' : 'chưa đạt vận tốc thoát'));
     if (outPath) console.log('   wrote ' + path.relative(ROOT, outPath));
   }
 
@@ -226,6 +251,13 @@ async function main() {
     }
     console.log('   ✅ Trong ngân sách entropy: S=' + S + ' ≤ ' + budget);
   }
+
+  // Escape Velocity gate (--trend N): S tăng N lần đo liên tiếp → chặn thêm feature, buộc trả nợ entropy.
+  if (trendRequested && result.trend.gate) {
+    console.error('🚀 ESCAPE VELOCITY: S tăng ' + increases + ' lần đo liên tiếp (cần ≥' + trendN + ') — ' + trendWindow.map(p => p.S).join('→') + ' — chặn thêm feature: trả nợ entropy (mismatch/draft/refused) trước khi vượt thoát.');
+    process.exit(1);
+  }
+  if (trendRequested) console.log('   ✅ ESCAPE VELOCITY: chưa đạt vận tốc thoát (đà ' + increases + '/' + trendN + ') — được phép thêm feature.');
 }
 
 main().catch(e => { console.error(e); process.exit(1); });

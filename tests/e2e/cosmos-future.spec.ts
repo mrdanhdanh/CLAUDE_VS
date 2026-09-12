@@ -4,13 +4,13 @@ import { test, expect } from '@playwright/test';
  * Future Roads — section "Khai thác tương lai" chỉ chứa đề tài CHƯA làm:
  * - gỡ toàn bộ card ✅ Done (đã ship) để danh sách giữ tính "tương lai"
  * - còn ≥6 đề tài mới, mỗi đề tài có ETA
- * - 2026-09-12: QEC shipped (Lab #12) → Light Echo; Cosmic Web shipped → Gravitational Lensing; Hawking shipped (watchdog) → Escape Velocity; section có id="future" (fix scroll-dot chết)
+ * - 2026-09-12: QEC shipped (Lab #12) → Light Echo; Cosmic Web → Gravitational Lensing; Hawking → Escape Velocity; Escape Velocity shipped (cosmic-scale --trend gate) → còn 5 đề tài; section có id="future" (fix scroll-dot chết)
  * Evidence → .agent/plans/cosmos-future-roads/verify/
  */
 
 const SHOTS = '.agent/plans/cosmos-future-roads/verify';
 
-test('future section — 6 đề tài mới, không còn card Done', async ({ page }) => {
+test('future section — 5 đề tài mới, không còn card Done', async ({ page }) => {
   const errors: string[] = [];
   page.on('pageerror', (e) => errors.push(String(e)));
   await page.goto('/cosmos/index.html');
@@ -19,19 +19,20 @@ test('future section — 6 đề tài mới, không còn card Done', async ({ pa
 
   const section = page.locator('section[aria-labelledby="future-title"]');
   const cards = section.locator('.future-card');
-  await expect(cards).toHaveCount(6);
+  await expect(cards).toHaveCount(5);
 
   // đã gỡ hết card đã-xong: không tag Done, không chữ "✅ Done"
   await expect(section.locator('.future-card .tag')).toHaveCount(0);
   await expect(section).not.toContainText('✅ Done');
 
   // đề tài mới phải xuất hiện
-  await expect(section).toContainText('Escape Velocity');
   await expect(section).toContainText('CMB');
   await expect(section).toContainText('LIGO');
   await expect(section).toContainText('Light Echo');
   await expect(section).toContainText('Wormhole');
   await expect(section).toContainText('Gravitational Lensing');
+  // Escape Velocity đã ship (cosmic-scale --trend gate, 2026-09-12) → rời danh sách "chưa làm"
+  await expect(section).not.toContainText('Escape Velocity');
   // Hawking đã ship (watchdog nợ bay hơi, 2026-09-12) → rời danh sách "chưa làm"
   await expect(section).not.toContainText('Hawking');
   // Cosmic Web đã ship (entangle --graph, 2026-09-12) → rời danh sách "chưa làm"
@@ -39,7 +40,7 @@ test('future section — 6 đề tài mới, không còn card Done', async ({ pa
   // QEC đã ship thành Lab #12 (2026-09-12) → rời danh sách "chưa làm"
   await expect(section).not.toContainText('Quantum Error Correction');
   // mỗi card có ETA
-  await expect(section.locator('.future-card .eta')).toHaveCount(6);
+  await expect(section.locator('.future-card .eta')).toHaveCount(5);
 
   expect(errors).toEqual([]);
 
