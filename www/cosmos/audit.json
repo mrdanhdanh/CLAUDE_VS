@@ -1,25 +1,8 @@
 {
-  "generatedAt": "2026-09-13T15:54:37.873Z",
+  "generatedAt": "2026-09-13T16:20:41.031Z",
   "source": ".agent/audit.jsonl",
-  "total": 149,
+  "total": 150,
   "events": [
-    {
-      "ts": "2026-09-12T14:14:02.634Z",
-      "actor": "YUNIE",
-      "tool": "edit",
-      "target": "auto-learn.mjs expandKnRefs + cosmos-cmb.spec 2 tests + scale.html hint + bug.md KN-044 link repair + KN-049 addendum + README sweep",
-      "decision": "permitted",
-      "rule": "allow-all",
-      "durationMs": null,
-      "error": null,
-      "intent": null,
-      "requestId": "0cfff1",
-      "prevHash": "1f97f2fb5ae2700c",
-      "policyDigest": "190b0de217bf1dda",
-      "hash": "ccbeb9562757965a",
-      "sig": "mXypwSc2PWj8suWW-2_iNKascwFgj7UxwjYJe2RN_ThTORLW3FXCcLdKjLjlKQeMDZW7z0lyXy_cCfyfpAgNAw",
-      "pub": "MCowBQYDK2VwAyEAY8PlU0KjXp4HJUUlNlVZdaXHUmDagUMm8rUrEShTPXo"
-    },
     {
       "ts": "2026-09-12T14:14:02.768Z",
       "actor": "verify",
@@ -851,6 +834,23 @@
       "policyDigest": "190b0de217bf1dda",
       "hash": "9cce61a86ca9ac54",
       "sig": "MJX4tl4jTrc6fTK7zKn1LRHSKjZ92oX5pLD4vWgaRMOgXZFs6NsCsmXmhtVa514rZIaci-ikPhYg-OxC7Ku-DQ",
+      "pub": "MCowBQYDK2VwAyEAY8PlU0KjXp4HJUUlNlVZdaXHUmDagUMm8rUrEShTPXo"
+    },
+    {
+      "ts": "2026-09-13T15:55:08.337Z",
+      "actor": "YUNIE",
+      "tool": "shell",
+      "target": "git commit KN-057 knowleged.md + status.json + audit.json",
+      "decision": "permitted",
+      "rule": "allow-all",
+      "durationMs": null,
+      "error": null,
+      "intent": null,
+      "requestId": "cc3b9e",
+      "prevHash": "9cce61a86ca9ac54",
+      "policyDigest": "190b0de217bf1dda",
+      "hash": "b1f4f3916f0cb267",
+      "sig": "DfmRghoTAITu7Y4Cv94HUuOdtLtYSTvg59Eny1Lz0cyI9jPdHJmiUeDBscdZ_dRL14gnmA0lEInzEcKebkwoCg",
       "pub": "MCowBQYDK2VwAyEAY8PlU0KjXp4HJUUlNlVZdaXHUmDagUMm8rUrEShTPXo"
     }
   ]

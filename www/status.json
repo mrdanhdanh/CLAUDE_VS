@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-13T15:54:38.024Z",
+  "generatedAt": "2026-09-13T16:20:41.172Z",
   "generatedBy": "YUNIE",
   "version": 1,
   "counts": {
@@ -449,7 +449,7 @@
   "health": {
     "errors": 0,
     "status": "ok",
-    "lastCheck": "2026-09-13T15:54:38.024Z",
+    "lastCheck": "2026-09-13T16:20:41.172Z",
     "checks": [
       "get_errors: pass (0 errors)",
       "registry: 19 instructions (19 total) - 19 skills - 9 agents - 7 prompts - 1 hook — all enabled",
@@ -460,8 +460,8 @@
       "www: polished — responsive 375/768/1280, a11y, states, animation 150-300ms",
       "workflow: www/** -> Pages (upload-artifact path: www) — exists: true + eval job gate",
       "library: www/library/ MCP v1.2.0 (5 tools: search + iterative + list/get/status, router+cache, redacted) + library-rag instruction",
-      "auto-learn: 57 KN, 38 bugs, 0 drafts — suggest/log/propose/status (<50ms, IDF, tiếng Việt)",
-      "governance: audit 149 (Ed25519 receipt P0-4) · policy 9 deny/2 allow (ok) · credentials 0 keys plain",
+      "auto-learn: 58 KN, 39 bugs, 0 drafts — suggest/log/propose/status (<50ms, IDF, tiếng Việt)",
+      "governance: audit 150 (Ed25519 receipt P0-4) · policy 9 deny/2 allow (ok) · credentials 0 keys plain",
       "platform: agents 3 (3 built-in, 0 remote) · mcp 3 vendors/3 grants (library 1.2.0 read-only) · components 3/3 pub · routines 3/3 enabled",
       "collaboration: KN-018 — dissentGate ✅ · whoDidYouThinkWith ✅ · critic ✅ · fund-the-friction ✅ (ok)",
       "n5-blazor: www/n5-blazor/ 7 trang static + app.css + data.js + site.js — 100% Pages"
@@ -686,35 +686,18 @@
     }
   },
   "learn": {
-    "knTotal": 57,
-    "bugsTotal": 38,
+    "knTotal": 58,
+    "bugsTotal": 39,
     "drafts": 0
   },
   "governance": {
     "audit": {
-      "total": 149,
-      "permitted": 120,
+      "total": 150,
+      "permitted": 121,
       "refused": 28,
       "failed": 1,
-      "lastTs": "2026-09-13T15:53:59.153Z",
+      "lastTs": "2026-09-13T15:55:08.337Z",
       "tail": [
-        {
-          "ts": "2026-09-13T15:43:32.997Z",
-          "actor": "YUNIE",
-          "tool": "edit",
-          "target": "www/ai-news/ai-news.js + ai-news.css + tests/e2e/ai-news-vi.spec.ts (vi-summary)",
-          "decision": "permitted",
-          "rule": "allow-read-www",
-          "durationMs": null,
-          "error": null,
-          "intent": "feature: dịch summary sang VI cho trang AI News",
-          "requestId": "11a782",
-          "prevHash": "e15eb47ad5239e03",
-          "policyDigest": "190b0de217bf1dda",
-          "hash": "81511cfade362472",
-          "sig": "9_F44mcnRLU2drSi9i9DyWRnYFBQLuPc963hKr1L049zbSsGfd5OmJxR2ujRpiQUSR6Fpir8Fh53JQ-rXemuAA",
-          "pub": "MCowBQYDK2VwAyEAY8PlU0KjXp4HJUUlNlVZdaXHUmDagUMm8rUrEShTPXo"
-        },
         {
           "ts": "2026-09-13T15:43:57.618Z",
           "actor": "verify",
@@ -782,6 +765,23 @@
           "hash": "9cce61a86ca9ac54",
           "sig": "MJX4tl4jTrc6fTK7zKn1LRHSKjZ92oX5pLD4vWgaRMOgXZFs6NsCsmXmhtVa514rZIaci-ikPhYg-OxC7Ku-DQ",
           "pub": "MCowBQYDK2VwAyEAY8PlU0KjXp4HJUUlNlVZdaXHUmDagUMm8rUrEShTPXo"
+        },
+        {
+          "ts": "2026-09-13T15:55:08.337Z",
+          "actor": "YUNIE",
+          "tool": "shell",
+          "target": "git commit KN-057 knowleged.md + status.json + audit.json",
+          "decision": "permitted",
+          "rule": "allow-all",
+          "durationMs": null,
+          "error": null,
+          "intent": null,
+          "requestId": "cc3b9e",
+          "prevHash": "9cce61a86ca9ac54",
+          "policyDigest": "190b0de217bf1dda",
+          "hash": "b1f4f3916f0cb267",
+          "sig": "DfmRghoTAITu7Y4Cv94HUuOdtLtYSTvg59Eny1Lz0cyI9jPdHJmiUeDBscdZ_dRL14gnmA0lEInzEcKebkwoCg",
+          "pub": "MCowBQYDK2VwAyEAY8PlU0KjXp4HJUUlNlVZdaXHUmDagUMm8rUrEShTPXo"
         }
       ]
     },
@@ -790,7 +790,7 @@
       "deny": 9,
       "allow": 2,
       "status": "ok",
-      "lastCheck": "2026-09-13T15:54:37.875Z"
+      "lastCheck": "2026-09-13T16:20:41.033Z"
     },
     "credentials": {
       "count": 0,
