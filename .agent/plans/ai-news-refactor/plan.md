@@ -26,3 +26,37 @@ Không đổi: localStorage `ai-news-live` (24h) · `ai-news-search-last` (30s c
 5. [ ] Refactor handleLiveRefresh + handleSearch + handleResetSearch
 6. [ ] Refactor renderLast30DaysBadge + init (wire* + showLoadError)
 7. [ ] Verify: slop-check 0 findings + playwright 7/7 + get_errors
+
+---
+
+## KẾT QUẢ (2026-09-13): 17 → 0
+- Playwright 7/7 (ai-news + curated) + full suite 141/141 (trước batch 3) · dogfood bắt chính `mergeCurated` CC13 → fix.
+- Commit `cf31556`.
+
+---
+
+# Batch 3 — `www/web-thuat-toan/app.js` (từ slop audit toàn repo)
+
+## Baseline: 12 findings (10 dup + 2 anon metrics)
+
+## Cách sửa
+- `makeAutoController(cfg)` — 1 controller dùng chung cho 10 demos: `toggle()` / `stop()` / `advance()` / `play(initial, delay)`.
+  - `stop()` trong 1 closure duy nhất → fix luôn lớp desync tiềm ẩn giữa hideAll (reset) và trạng thái auto.
+- `randomArr(n, max)` — shared helper.
+- 10 IIFE: decl → `var ctl=...`, reset → `ctl.stop()`, handleAuto → `ctl.toggle()`, handleStep tail → `ctl.advance()`, handleRun loop → `ctl.play(...)` (001 giữ for-loop vì dùng getSpeed per-step).
+
+## KẾT QUẢ: 12 → 2 findings (dup 10 → 0)
+- 2 findings còn lại = **scanner artifact (justified)**: outer wrapper IIFE `(function(){...})()` chứa 10 demo IIFE → scanner đo gộp thành 1 function 1448 dòng / CC 383.
+  - Đã thử gỡ wrapper → scanner đo RIÊNG từng IIFE → nổ 21 findings → revert. Giữ wrapper = config tốt nhất.
+  - Fix thật (tách 10 module) = out of scope bounded task này.
+
+## Safety net MỚI (trang trước đây không có e2e)
+- `tests/e2e/web-thuat-toan.spec.ts` — 5 test: step init→advance · auto toggle · **desync guard** (auto→reset→1-click restart) · 010 parity · 375 overflow.
+- Phát hiện khi viết test: (1) CSS `#001-...` invalid (id bắt đầu bằng số) → phải dùng `[id="..."]`; (2) serve local không rewrite `/web-thuat-toan/` (serve.json) → dùng explicit `index.html` như cosmos specs.
+
+## Verify
+- [x] get_errors: sạch
+- [x] slop-check: 12 → 2 (dup 0)
+- [x] spec mới 5/5 pass
+- [ ] full suite
+- [ ] commit

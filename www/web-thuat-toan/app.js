@@ -40,6 +40,34 @@ function highlightPseudo(id,line){
   if(line){ var t=el.querySelector('[data-line="'+line+'"]'); if(t) t.classList.add('pseudo-active'); }
 }
 function clearPseudo(id){ highlightPseudo(id,null); }
+// Shared step/auto controller — 1 bản cho 10 demos (KN-047 refactor)
+function makeAutoController(cfg){
+  var isAuto=false, timer=null;
+  function stop(){
+    if(timer){ clearTimeout(timer); timer=null; }
+    isAuto=false; cfg.btn.textContent='▶ Tự động';
+  }
+  function advance(){ if(cfg.doStep()) cfg.finish(); }
+  function toggle(){
+    if(isAuto){ stop(); return; }
+    if(!cfg.getState()){ cfg.handleStep(); if(!cfg.getState()) return; }
+    isAuto=true; cfg.btn.textContent='⏸ Dừng';
+    function tick(){
+      var s=cfg.getState();
+      if(!s||s.done){ var wasDone=s&&s.done; stop(); if(wasDone) cfg.finish(); return; }
+      if(cfg.doStep()){ stop(); cfg.finish(); return; }
+      timer=setTimeout(tick,cfg.delay());
+    }
+    timer=setTimeout(tick,cfg.delay());
+  }
+  async function play(initial, delay){
+    if(initial) await sleep(initial);
+    while(!cfg.getState().done){ cfg.doStep(); await sleep(typeof delay==='function'?delay():delay); }
+    cfg.finish();
+  }
+  return {toggle:toggle, stop:stop, advance:advance, play:play};
+}
+function randomArr(n,max){ var a=[]; for(var i=0;i<n;i++) a.push(Math.floor(Math.random()*max)+1); return a; }
 
 // ============================================
 // 001 Kadane
@@ -59,7 +87,8 @@ function clearPseudo(id){ highlightPseudo(id,null); }
     {v:'5, -2, 3, -1, 2, -4, 6, -1', label:'Âm dương lẫn'},
     {v:'-5, -2, -8, -1, -9', label:'Toàn âm'}
   ];
-  var state=null, autoTimer=null, isAuto=false;
+  var state=null;
+  var ctl=makeAutoController({getState:function(){return state;},doStep:doStep,finish:finish,btn:autoBtn,handleStep:handleStep,delay:getSpeed});
   function getSpeed(){ return parseInt(speed.value,10); }
   speed.addEventListener('input',function(){ speedVal.textContent=getSpeed()+'ms'; });
   document.getElementById('001-presets').addEventListener('click',function(e){
@@ -75,7 +104,7 @@ function clearPseudo(id){ highlightPseudo(id,null); }
     vizCard.hidden=true; resCard.hidden=true; stepsCard.hidden=true; cmpCard.hidden=true;
     viz.innerHTML=''; stepsList.innerHTML=''; clearPseudo('001-pseudo');
     curEl.textContent='0'; maxEl.textContent='0'; idxEl.textContent='0';
-    if(autoTimer){clearTimeout(autoTimer);autoTimer=null;} isAuto=false; autoBtn.textContent='▶ Tự động';
+    ctl.stop();
     state=null;
   }
   function render(arr,curIdx,curL,bestL,bestR){
@@ -162,21 +191,9 @@ function clearPseudo(id){ highlightPseudo(id,null); }
       highlightPseudo('001-pseudo','1');
       return;
     }
-    var done=doStep();
-    if(done) finish();
+    ctl.advance();
   }
-  function handleAuto(){
-    if(isAuto){ clearTimeout(autoTimer); isAuto=false; autoBtn.textContent='▶ Tự động'; return; }
-    if(!state){ handleStep(); if(!state) return; }
-    isAuto=true; autoBtn.textContent='⏸ Dừng';
-    function tick(){
-      if(!state||state.done){ isAuto=false; autoBtn.textContent='▶ Tự động'; if(state&&state.done) finish(); return; }
-      var done=doStep();
-      if(done){ isAuto=false; autoBtn.textContent='▶ Tự động'; finish(); return; }
-      autoTimer=setTimeout(tick,getSpeed());
-    }
-    autoTimer=setTimeout(tick,getSpeed());
-  }
+  function handleAuto(){ ctl.toggle(); }
   function handleRandom(){
     var len=Math.floor(Math.random()*6)+5;
     var a=[]; for(var i=0;i<len;i++) a.push(Math.floor(Math.random()*21)-10);
@@ -207,7 +224,8 @@ function clearPseudo(id){ highlightPseudo(id,null); }
     {v:'4, 4, 4, 4, 2, 2, 3, 3, 3, 1',k:'2'},
     {v:'5, 5, 5, 5, 5',k:'1'}
   ];
-  var state=null, autoTimer=null, isAuto=false;
+  var state=null;
+  var ctl=makeAutoController({getState:function(){return state;},doStep:doStep,finish:finish,btn:autoBtn,handleStep:handleStep,delay:function(){return 700;}});
   document.getElementById('002-presets').addEventListener('click',function(e){
     var b=e.target.closest('.preset-pill'); if(!b) return;
     var idx=parseInt(b.getAttribute('data-preset'),10);
@@ -220,7 +238,7 @@ function clearPseudo(id){ highlightPseudo(id,null); }
     vizCard.hidden=true; resCard.hidden=true; stepsCard.hidden=true;
     freqViz.innerHTML=''; heapViz.innerHTML=''; stepsList.innerHTML='';
     heapSizeEl.textContent='0'; curEl.textContent='-'; clearPseudo('002-pseudo');
-    if(autoTimer){clearTimeout(autoTimer);autoTimer=null;} isAuto=false; autoBtn.textContent='▶ Tự động'; state=null;
+    ctl.stop(); state=null;
   }
   function renderFreq(freq,heap,curKey){
     freqViz.innerHTML='';
@@ -288,9 +306,7 @@ function clearPseudo(id){ highlightPseudo(id,null); }
     state=buildState(v.arr,v.k); vizCard.hidden=false;
     highlightPseudo('002-pseudo','1');
     renderFreq(state.freq,state.heap,null);
-    await sleep(300);
-    while(!state.done){ doStep(); await sleep(700); }
-    finish();
+    await ctl.play(300,700);
   }
   function handleStep(){
     if(!state){
@@ -301,19 +317,9 @@ function clearPseudo(id){ highlightPseudo(id,null); }
       highlightPseudo('002-pseudo','1');
       return;
     }
-    var done=doStep(); if(done) finish();
+    ctl.advance();
   }
-  function handleAuto(){
-    if(isAuto){clearTimeout(autoTimer);isAuto=false;autoBtn.textContent='▶ Tự động';return;}
-    if(!state){handleStep(); if(!state) return;}
-    isAuto=true; autoBtn.textContent='⏸ Dừng';
-    function tick(){
-      if(!state||state.done){isAuto=false;autoBtn.textContent='▶ Tự động'; if(state&&state.done) finish(); return;}
-      var done=doStep(); if(done){isAuto=false;autoBtn.textContent='▶ Tự động'; finish(); return;}
-      autoTimer=setTimeout(tick,700);
-    }
-    autoTimer=setTimeout(tick,700);
-  }
+  function handleAuto(){ ctl.toggle(); }
   function handleRandom(){
     var len=Math.floor(Math.random()*6)+5;
     var a=[]; for(var i=0;i<len;i++) a.push(Math.floor(Math.random()*5)+1);
@@ -345,7 +351,8 @@ function clearPseudo(id){ highlightPseudo(id,null); }
     {v:'1, 2, 3, 4, 5, 6',t:'3'},
     {v:'2, 3, 4, 5, 6, 7, 0, 1',t:'5'}
   ];
-  var state=null, autoTimer=null, isAuto=false;
+  var state=null;
+  var ctl=makeAutoController({getState:function(){return state;},doStep:doStep,finish:finish,btn:autoBtn,handleStep:handleStep,delay:function(){return 800;}});
   document.getElementById('003-presets').addEventListener('click',function(e){
     var b=e.target.closest('.preset-pill'); if(!b) return;
     var idx=parseInt(b.getAttribute('data-preset'),10);
@@ -357,7 +364,7 @@ function clearPseudo(id){ highlightPseudo(id,null); }
   function hideAll(){
     vizCard.hidden=true; resCard.hidden=true; stepsCard.hidden=true;
     viz.innerHTML=''; stepsList.innerHTML=''; lEl.textContent='0'; midEl.textContent='0'; rEl.textContent='0'; cmpEl.textContent='0';
-    clearPseudo('003-pseudo'); if(autoTimer){clearTimeout(autoTimer);autoTimer=null;} isAuto=false; autoBtn.textContent='▶ Tự động'; state=null;
+    clearPseudo('003-pseudo'); ctl.stop(); state=null;
   }
   function render(arr,l,mid,r,elim,found){
     viz.innerHTML='';
@@ -437,9 +444,7 @@ function clearPseudo(id){ highlightPseudo(id,null); }
     var v=validate(); if(!v) return;
     state=buildState(v.arr,v.target); vizCard.hidden=false;
     render(state.arr,state.l,-1,state.r,{},-1);
-    await sleep(400);
-    while(!state.done){ doStep(); await sleep(800); }
-    finish();
+    await ctl.play(400,800);
   }
   function handleStep(){
     if(!state){
@@ -449,19 +454,9 @@ function clearPseudo(id){ highlightPseudo(id,null); }
       render(state.arr,state.l,-1,state.r,{},-1);
       return;
     }
-    var done=doStep(); if(done) finish();
+    ctl.advance();
   }
-  function handleAuto(){
-    if(isAuto){clearTimeout(autoTimer);isAuto=false;autoBtn.textContent='▶ Tự động';return;}
-    if(!state){handleStep(); if(!state) return;}
-    isAuto=true; autoBtn.textContent='⏸ Dừng';
-    function tick(){
-      if(!state||state.done){isAuto=false;autoBtn.textContent='▶ Tự động'; if(state&&state.done) finish(); return;}
-      var done=doStep(); if(done){isAuto=false;autoBtn.textContent='▶ Tự động'; finish(); return;}
-      autoTimer=setTimeout(tick,800);
-    }
-    autoTimer=setTimeout(tick,800);
-  }
+  function handleAuto(){ ctl.toggle(); }
   function handleRandom(){
     var n=Math.floor(Math.random()*4)+5;
     var sorted=[]; var cur=Math.floor(Math.random()*10);
@@ -497,7 +492,8 @@ function clearPseudo(id){ highlightPseudo(id,null); }
     {v:'1, 2, 3, 5, 4, 6'},
     {v:'9, 8, 7, 6, 5, 4'}
   ];
-  var state=null, autoTimer=null, isAuto=false;
+  var state=null;
+  var ctl=makeAutoController({getState:function(){return state;},doStep:doStep,finish:finish,btn:autoBtn,handleStep:handleStep,delay:getSpeed});
   function getSpeed(){ return parseInt(speed.value,10); }
   speed.addEventListener('input',function(){ speedVal.textContent=getSpeed()+'ms'; });
   document.getElementById('004-presets').addEventListener('click',function(e){
@@ -512,7 +508,7 @@ function clearPseudo(id){ highlightPseudo(id,null); }
     vizCard.hidden=true; resCard.hidden=true; stepsCard.hidden=true;
     viz.innerHTML=''; stepsList.innerHTML=''; recEl.textContent='';
     pivotEl.textContent='-'; iEl.textContent='0'; jEl.textContent='0'; cmpEl.textContent='0'; swapsEl.textContent='0';
-    clearPseudo('004-pseudo'); if(autoTimer){clearTimeout(autoTimer);autoTimer=null;} isAuto=false; autoBtn.textContent='▶ Tự động'; state=null;
+    clearPseudo('004-pseudo'); ctl.stop(); state=null;
   }
   function render(arr,lo,hi,pivotIdx,i,j,swapPair,sortedSet){
     viz.innerHTML='';
@@ -615,8 +611,7 @@ function clearPseudo(id){ highlightPseudo(id,null); }
     clearErr(); hideAll();
     var arr=validate(); if(!arr) return;
     state=buildState(arr); vizCard.hidden=false;
-    while(!state.done){ doStep(); await sleep(getSpeed()); }
-    finish();
+    await ctl.play(null,getSpeed);
   }
   function handleStep(){
     if(!state){
@@ -625,19 +620,9 @@ function clearPseudo(id){ highlightPseudo(id,null); }
       state=buildState(arr); vizCard.hidden=false;
       doStep(); return;
     }
-    var done=doStep(); if(done) finish();
+    ctl.advance();
   }
-  function handleAuto(){
-    if(isAuto){clearTimeout(autoTimer);isAuto=false;autoBtn.textContent='▶ Tự động';return;}
-    if(!state){handleStep(); if(!state) return;}
-    isAuto=true; autoBtn.textContent='⏸ Dừng';
-    function tick(){
-      if(!state||state.done){isAuto=false;autoBtn.textContent='▶ Tự động'; if(state&&state.done) finish(); return;}
-      var done=doStep(); if(done){isAuto=false;autoBtn.textContent='▶ Tự động'; finish(); return;}
-      autoTimer=setTimeout(tick,getSpeed());
-    }
-    autoTimer=setTimeout(tick,getSpeed());
-  }
+  function handleAuto(){ ctl.toggle(); }
   function handleRandom(){
     var len=Math.floor(Math.random()*4)+5;
     var a=[]; for(var i=0;i<len;i++) a.push(Math.floor(Math.random()*20)+1);
@@ -666,7 +651,8 @@ function clearPseudo(id){ highlightPseudo(id,null); }
     {v:'1, 2, 3, 4, 5',t:'6'},
     {v:'2, 2, 2, 2, 2',t:'2'}
   ];
-  var state=null, autoTimer=null, isAuto=false;
+  var state=null;
+  var ctl=makeAutoController({getState:function(){return state;},doStep:doStep,finish:finish,btn:autoBtn,handleStep:handleStep,delay:function(){return 700;}});
   document.getElementById('005-presets').addEventListener('click',function(e){
     var b=e.target.closest('.preset-pill'); if(!b) return;
     var idx=parseInt(b.getAttribute('data-preset'),10);
@@ -678,7 +664,7 @@ function clearPseudo(id){ highlightPseudo(id,null); }
   function hideAll(){
     vizCard.hidden=true; resCard.hidden=true; stepsCard.hidden=true;
     viz.innerHTML=''; stepsList.innerHTML=''; phaseEl.textContent='-'; lEl.textContent='0'; midEl.textContent='0'; rEl.textContent='0';
-    clearPseudo('005-pseudo'); if(autoTimer){clearTimeout(autoTimer);autoTimer=null;} isAuto=false; autoBtn.textContent='▶ Tự động'; state=null;
+    clearPseudo('005-pseudo'); ctl.stop(); state=null;
   }
   function render(arr,l,mid,r,foundRange){
     viz.innerHTML='';
@@ -755,9 +741,7 @@ function clearPseudo(id){ highlightPseudo(id,null); }
     var v=validate(); if(!v) return;
     state=buildState(v.arr,v.target); vizCard.hidden=false; phaseEl.textContent='lowerBound';
     render(state.arr,state.l,-1,state.r,null);
-    await sleep(300);
-    while(!state.done){ doStep(); await sleep(700); }
-    finish();
+    await ctl.play(300,700);
   }
   function handleStep(){
     if(!state){
@@ -767,19 +751,9 @@ function clearPseudo(id){ highlightPseudo(id,null); }
       render(state.arr,state.l,-1,state.r,null);
       return;
     }
-    var done=doStep(); if(done) finish();
+    ctl.advance();
   }
-  function handleAuto(){
-    if(isAuto){clearTimeout(autoTimer);isAuto=false;autoBtn.textContent='▶ Tự động';return;}
-    if(!state){handleStep(); if(!state) return;}
-    isAuto=true; autoBtn.textContent='⏸ Dừng';
-    function tick(){
-      if(!state||state.done){isAuto=false;autoBtn.textContent='▶ Tự động'; if(state&&state.done) finish(); return;}
-      var done=doStep(); if(done){isAuto=false;autoBtn.textContent='▶ Tự động'; finish(); return;}
-      autoTimer=setTimeout(tick,700);
-    }
-    autoTimer=setTimeout(tick,700);
-  }
+  function handleAuto(){ ctl.toggle(); }
   function handleRandom(){
     var len=Math.floor(Math.random()*4)+5;
     var base=Math.floor(Math.random()*5);
@@ -811,7 +785,8 @@ function clearPseudo(id){ highlightPseudo(id,null); }
     {v:'1, 2, 3, 4, 5, 6'},
     {v:'5, 4, 3, 2, 1, 5'}
   ];
-  var state=null, autoTimer=null, isAuto=false;
+  var state=null;
+  var ctl=makeAutoController({getState:function(){return state;},doStep:doStep,finish:finish,btn:autoBtn,handleStep:handleStep,delay:function(){return 700;}});
   document.getElementById('006-presets').addEventListener('click',function(e){
     var b=e.target.closest('.preset-pill'); if(!b) return;
     var idx=parseInt(b.getAttribute('data-preset'),10);
@@ -823,7 +798,7 @@ function clearPseudo(id){ highlightPseudo(id,null); }
   function hideAll(){
     vizCard.hidden=true; resCard.hidden=true; stepsCard.hidden=true;
     viz.innerHTML=''; stepsList.innerHTML=''; lEl.textContent='0'; rEl.textContent='0'; areaEl.textContent='0'; bestEl.textContent='0';
-    clearPseudo('006-pseudo'); if(autoTimer){clearTimeout(autoTimer);autoTimer=null;} isAuto=false; autoBtn.textContent='▶ Tự động'; state=null;
+    clearPseudo('006-pseudo'); ctl.stop(); state=null;
   }
   function render(arr,l,r,bestPair){
     viz.innerHTML='';
@@ -884,9 +859,7 @@ function clearPseudo(id){ highlightPseudo(id,null); }
     var arr=validate(); if(!arr) return;
     state=buildState(arr); vizCard.hidden=false;
     render(arr,state.l,state.r,null);
-    await sleep(300);
-    while(!state.done){ doStep(); await sleep(700); }
-    finish();
+    await ctl.play(300,700);
   }
   function handleStep(){
     if(!state){
@@ -896,23 +869,12 @@ function clearPseudo(id){ highlightPseudo(id,null); }
       render(arr,state.l,state.r,null);
       return;
     }
-    var done=doStep(); if(done) finish();
+    ctl.advance();
   }
-  function handleAuto(){
-    if(isAuto){clearTimeout(autoTimer);isAuto=false;autoBtn.textContent='▶ Tự động';return;}
-    if(!state){handleStep(); if(!state) return;}
-    isAuto=true; autoBtn.textContent='⏸ Dừng';
-    function tick(){
-      if(!state||state.done){isAuto=false;autoBtn.textContent='▶ Tự động'; if(state&&state.done) finish(); return;}
-      var done=doStep(); if(done){isAuto=false;autoBtn.textContent='▶ Tự động'; finish(); return;}
-      autoTimer=setTimeout(tick,700);
-    }
-    autoTimer=setTimeout(tick,700);
-  }
+  function handleAuto(){ ctl.toggle(); }
   function handleRandom(){
     var len=Math.floor(Math.random()*4)+6;
-    var a=[]; for(var i=0;i<len;i++) a.push(Math.floor(Math.random()*10)+1);
-    input.value=a.join(', '); clearErr(); hideAll();
+    input.value=randomArr(len,10).join(', '); clearErr(); hideAll();
   }
   runBtn.addEventListener('click',handleRun);
   stepBtn.addEventListener('click',handleStep);
@@ -933,7 +895,8 @@ function clearPseudo(id){ highlightPseudo(id,null); }
   var resCard=document.getElementById('007-result-card'), resVal=document.getElementById('007-result-value'), resDet=document.getElementById('007-result-detail');
   var stepsCard=document.getElementById('007-steps-card'), stepsList=document.getElementById('007-steps-list');
   var presets=['abcabcbb','bbbbb','pwwkew'];
-  var state=null, autoTimer=null, isAuto=false;
+  var state=null;
+  var ctl=makeAutoController({getState:function(){return state;},doStep:doStep,finish:finish,btn:autoBtn,handleStep:handleStep,delay:function(){return 600;}});
   document.getElementById('007-presets').addEventListener('click',function(e){
     var b=e.target.closest('.preset-pill'); if(!b) return;
     var idx=parseInt(b.getAttribute('data-preset'),10);
@@ -945,7 +908,7 @@ function clearPseudo(id){ highlightPseudo(id,null); }
   function hideAll(){
     vizCard.hidden=true; resCard.hidden=true; stepsCard.hidden=true;
     viz.innerHTML=''; stepsList.innerHTML=''; lEl.textContent='0'; rEl.textContent='0'; setEl.textContent='-'; bestEl.textContent='0';
-    clearPseudo('007-pseudo'); if(autoTimer){clearTimeout(autoTimer);autoTimer=null;} isAuto=false; autoBtn.textContent='▶ Tự động'; state=null;
+    clearPseudo('007-pseudo'); ctl.stop(); state=null;
   }
   function render(s,l,r,bestL,bestR,set){
     viz.innerHTML='';
@@ -1008,9 +971,7 @@ function clearPseudo(id){ highlightPseudo(id,null); }
     var s=validate(); if(!s) return;
     state=buildState(s); vizCard.hidden=false;
     render(s,0,0,0,0,new Set());
-    await sleep(300);
-    while(!state.done){ doStep(); await sleep(700); }
-    finish();
+    await ctl.play(300,700);
   }
   function handleStep(){
     if(!state){
@@ -1020,19 +981,9 @@ function clearPseudo(id){ highlightPseudo(id,null); }
       render(s,0,-1,0,0,new Set());
       return;
     }
-    var done=doStep(); if(done) finish();
+    ctl.advance();
   }
-  function handleAuto(){
-    if(isAuto){clearTimeout(autoTimer);isAuto=false;autoBtn.textContent='▶ Tự động';return;}
-    if(!state){handleStep(); if(!state) return;}
-    isAuto=true; autoBtn.textContent='⏸ Dừng';
-    function tick(){
-      if(!state||state.done){isAuto=false;autoBtn.textContent='▶ Tự động'; if(state&&state.done) finish(); return;}
-      var done=doStep(); if(done){isAuto=false;autoBtn.textContent='▶ Tự động'; finish(); return;}
-      autoTimer=setTimeout(tick,600);
-    }
-    autoTimer=setTimeout(tick,600);
-  }
+  function handleAuto(){ ctl.toggle(); }
   function handleRandom(){
     var chars='abcdefghijklmnopqrstuvwxyz';
     var len=Math.floor(Math.random()*6)+5;
@@ -1063,7 +1014,8 @@ function clearPseudo(id){ highlightPseudo(id,null); }
     {v:'5, 4, 3, 2, 1'},
     {v:'1, 2, 3, 4, 5'}
   ];
-  var state=null, autoTimer=null, isAuto=false;
+  var state=null;
+  var ctl=makeAutoController({getState:function(){return state;},doStep:doStep,finish:finish,btn:autoBtn,handleStep:handleStep,delay:function(){return 700;}});
   document.getElementById('008-presets').addEventListener('click',function(e){
     var b=e.target.closest('.preset-pill'); if(!b) return;
     var idx=parseInt(b.getAttribute('data-preset'),10);
@@ -1076,7 +1028,7 @@ function clearPseudo(id){ highlightPseudo(id,null); }
     vizCard.hidden=true; resCard.hidden=true; stepsCard.hidden=true;
     arrViz.innerHTML=''; stackViz.innerHTML='<p class="stack-empty">Stack rỗng</p>'; ansViz.innerHTML=''; stepsList.innerHTML='';
     iEl.textContent='0'; stackSizeEl.textContent='0';
-    clearPseudo('008-pseudo'); if(autoTimer){clearTimeout(autoTimer);autoTimer=null;} isAuto=false; autoBtn.textContent='▶ Tự động'; state=null;
+    clearPseudo('008-pseudo'); ctl.stop(); state=null;
   }
   function render(arr,stack,ans,curIdx){
     arrViz.innerHTML='';
@@ -1151,9 +1103,7 @@ function clearPseudo(id){ highlightPseudo(id,null); }
     var arr=validate(); if(!arr) return;
     state=buildState(arr); vizCard.hidden=false;
     render(arr,[],state.ans,-1);
-    await sleep(300);
-    while(!state.done){ doStep(); await sleep(700); }
-    finish();
+    await ctl.play(300,700);
   }
   function handleStep(){
     if(!state){
@@ -1163,23 +1113,12 @@ function clearPseudo(id){ highlightPseudo(id,null); }
       render(arr,[],state.ans,-1);
       return;
     }
-    var done=doStep(); if(done) finish();
+    ctl.advance();
   }
-  function handleAuto(){
-    if(isAuto){clearTimeout(autoTimer);isAuto=false;autoBtn.textContent='▶ Tự động';return;}
-    if(!state){handleStep(); if(!state) return;}
-    isAuto=true; autoBtn.textContent='⏸ Dừng';
-    function tick(){
-      if(!state||state.done){isAuto=false;autoBtn.textContent='▶ Tự động'; if(state&&state.done) finish(); return;}
-      var done=doStep(); if(done){isAuto=false;autoBtn.textContent='▶ Tự động'; finish(); return;}
-      autoTimer=setTimeout(tick,700);
-    }
-    autoTimer=setTimeout(tick,700);
-  }
+  function handleAuto(){ ctl.toggle(); }
   function handleRandom(){
     var len=Math.floor(Math.random()*4)+5;
-    var a=[]; for(var i=0;i<len;i++) a.push(Math.floor(Math.random()*10)+1);
-    input.value=a.join(', '); clearErr(); hideAll();
+    input.value=randomArr(len,10).join(', '); clearErr(); hideAll();
   }
   runBtn.addEventListener('click',handleRun);
   stepBtn.addEventListener('click',handleStep);
@@ -1199,7 +1138,8 @@ function clearPseudo(id){ highlightPseudo(id,null); }
   var resCard=document.getElementById('009-result-card'), resVal=document.getElementById('009-result-value');
   var stepsCard=document.getElementById('009-steps-card'), stepsList=document.getElementById('009-steps-list');
   var presets=[5,7,5];
-  var sizeIdx=0, gridSize=5, grid=[], state=null, autoTimer=null, isAuto=false;
+  var sizeIdx=0, gridSize=5, grid=[], state=null;
+  var ctl=makeAutoController({getState:function(){return state;},doStep:doStep,finish:finish,btn:autoBtn,handleStep:handleStep,delay:function(){return 500;}});
   document.getElementById('009-presets').addEventListener('click',function(e){
     var b=e.target.closest('.preset-pill'); if(!b) return;
     var idx=parseInt(b.getAttribute('data-preset'),10);
@@ -1256,7 +1196,7 @@ function clearPseudo(id){ highlightPseudo(id,null); }
     state=null; visitedEl.textContent='0'; costEl.textContent='0'; pqEl.textContent='0'; statusEl.textContent='Sẵn sàng';
     resCard.hidden=true; stepsCard.hidden=true; stepsList.innerHTML='';
     clearPseudo('009-pseudo');
-    if(autoTimer){clearTimeout(autoTimer);autoTimer=null;} isAuto=false; autoBtn.textContent='▶ Tự động';
+    ctl.stop();
   }
   gridEl.addEventListener('click',function(e){
     var cell=e.target.closest('.maze-cell'); if(!cell) return;
@@ -1339,9 +1279,7 @@ function clearPseudo(id){ highlightPseudo(id,null); }
     state=buildState(); statusEl.textContent='Đang chạy...'; stepsCard.hidden=false;
     highlightPseudo('009-pseudo','1');
     renderGrid({visited:state.visited,queued:state.queued});
-    await sleep(300);
-    while(!state.done){ doStep(); await sleep(500); }
-    finish();
+    await ctl.play(300,500);
   }
   function handleStep(){
     if(!state){
@@ -1351,19 +1289,9 @@ function clearPseudo(id){ highlightPseudo(id,null); }
       renderGrid({visited:state.visited,queued:state.queued});
       return;
     }
-    var done=doStep(); if(done) finish();
+    ctl.advance();
   }
-  function handleAuto(){
-    if(isAuto){clearTimeout(autoTimer);isAuto=false;autoBtn.textContent='▶ Tự động';return;}
-    if(!state){handleStep(); if(!state) return;}
-    isAuto=true; autoBtn.textContent='⏸ Dừng';
-    function tick(){
-      if(!state||state.done){isAuto=false;autoBtn.textContent='▶ Tự động'; if(state&&state.done) finish(); return;}
-      var done=doStep(); if(done){isAuto=false;autoBtn.textContent='▶ Tự động'; finish(); return;}
-      autoTimer=setTimeout(tick,500);
-    }
-    autoTimer=setTimeout(tick,500);
-  }
+  function handleAuto(){ ctl.toggle(); }
   genBtn.addEventListener('click',function(){ generateGrid(0.2); });
   sizeBtn.addEventListener('click',function(){
     gridSize=gridSize===5?7:gridSize===7?10:5;
@@ -1394,7 +1322,8 @@ function clearPseudo(id){ highlightPseudo(id,null); }
     {w:'1, 2, 3, 4, 5',v:'1, 4, 4, 5, 7',c:'7'},
     {w:'3, 4, 5, 6',v:'10, 12, 15, 18',c:'10'}
   ];
-  var state=null, autoTimer=null, isAuto=false;
+  var state=null;
+  var ctl=makeAutoController({getState:function(){return state;},doStep:doStep,finish:finish,btn:autoBtn,handleStep:handleStep,delay:function(){return 300;}});
   document.getElementById('010-presets').addEventListener('click',function(e){
     var b=e.target.closest('.preset-pill'); if(!b) return;
     var idx=parseInt(b.getAttribute('data-preset'),10);
@@ -1407,7 +1336,7 @@ function clearPseudo(id){ highlightPseudo(id,null); }
     vizCard.hidden=true; resCard.hidden=true; stepsCard.hidden=true; pickedEl.hidden=true;
     tableEl.innerHTML=''; stepsList.innerHTML=''; pickedList.innerHTML='';
     iEl.textContent='0'; wEl.textContent='0'; dpValEl.textContent='0';
-    clearPseudo('010-pseudo'); if(autoTimer){clearTimeout(autoTimer);autoTimer=null;} isAuto=false; autoBtn.textContent='▶ Tự động'; state=null;
+    clearPseudo('010-pseudo'); ctl.stop(); state=null;
   }
   function renderTable(dp,n,W,curI,curW){
     tableEl.innerHTML='';
@@ -1491,9 +1420,7 @@ function clearPseudo(id){ highlightPseudo(id,null); }
     state=buildState(val.w,val.v,val.W,val.n); vizCard.hidden=false;
     highlightPseudo('010-pseudo','2');
     renderTable(state.dp,val.n,val.W,0,0);
-    await sleep(300);
-    while(!state.done){ doStep(); await sleep(300); }
-    finish();
+    await ctl.play(300,300);
   }
   function handleStep(){
     if(!state){
@@ -1504,19 +1431,9 @@ function clearPseudo(id){ highlightPseudo(id,null); }
       highlightPseudo('010-pseudo','2');
       return;
     }
-    var done=doStep(); if(done) finish();
+    ctl.advance();
   }
-  function handleAuto(){
-    if(isAuto){clearTimeout(autoTimer);isAuto=false;autoBtn.textContent='▶ Tự động';return;}
-    if(!state){handleStep(); if(!state) return;}
-    isAuto=true; autoBtn.textContent='⏸ Dừng';
-    function tick(){
-      if(!state||state.done){isAuto=false;autoBtn.textContent='▶ Tự động'; if(state&&state.done) finish(); return;}
-      var done=doStep(); if(done){isAuto=false;autoBtn.textContent='▶ Tự động'; finish(); return;}
-      autoTimer=setTimeout(tick,300);
-    }
-    autoTimer=setTimeout(tick,300);
-  }
+  function handleAuto(){ ctl.toggle(); }
   function handleRandom(){
     var n=Math.floor(Math.random()*3)+3;
     var w=[], v=[];
