@@ -8,7 +8,7 @@
       },
       {
         "type": "command",
-        "command": "echo [Auto-Learn] Gợi ý: node .github/harness/scripts/auto-learn.mjs suggest \"<từ khóa task>\" --top 3 để tránh lặp bug cũ — gặp lỗi thì log (tự RADAR tái lập)",
+        "command": "echo [Auto-Learn] Gợi ý: node .github/harness/scripts/auto-learn.mjs suggest \"<từ khóa task>\" --top 3 để tránh lặp bug cũ — gặp lỗi thì log ngay — log tự chạy RADAR tái lập",
         "timeout": 5
       }
     ],
@@ -20,7 +20,7 @@
       },
       {
         "type": "command",
-        "command": "echo [Auto-Learn] Kiểm tra: node .github/harness/scripts/auto-learn.mjs status — vừa fix bug thì propose KN mới + GUARD (lưới chống tái lập: guards)",
+        "command": "echo [Auto-Learn] Kiểm tra: node .github/harness/scripts/auto-learn.mjs status — vừa fix bug thì propose KN mới và GUARD — xem lưới chống tái lập bằng lệnh guards",
         "timeout": 5
       }
     ]
