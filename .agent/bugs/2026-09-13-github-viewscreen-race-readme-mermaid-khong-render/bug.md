@@ -77,11 +77,12 @@ For more information, see https://docs.github.com/get-started/writing-on-github/
 
 ## 3. Fix
 
-- **Approach:** Không thể sửa race phía GitHub → **loại bỏ đường lỗi**: front page dùng SVG tĩnh render bằng mermaid 11.17.2 (`htmlLabels:false` — portable trong `<img>`), `<picture>` với 2 theme (light/dark). Nguồn mermaid giữ ở `docs/harness-flow.md`.
+- **Approach:** Không thể sửa race phía GitHub → **loại bỏ đường lỗi**: front page dùng SVG tĩnh render bằng mermaid 11.17.2, `<picture>` với 2 theme (light/dark). Nguồn mermaid giữ ở `docs/harness-flow.md`.
+- **Fix v2 (user báo "vẫn lỗi" sau v1):** SVG v1 ship nhưng **không decode được** — ảnh vỡ im lặng (`img.decode()` FAIL, `naturalWidth: 0`, rect 48px = alt text). Root cause: **mermaid v11 đọc `htmlLabels` ở TOP-LEVEL** — `flowchart.htmlLabels: false` một mình không đủ, output vẫn có `foreignObject` chứa HTML `<p>...<br>...</p>` với `<br>` **không đóng** → XML invalid (`Opening and ending tag mismatch: br … and p`) → browser không decode được khi dùng làm `<img>`. Regenerate với `{ htmlLabels: false, flowchart: { htmlLabels: false } }` → pure SVG text (không foreignObject), XML valid, decode OK (`DECODE OK nw=383 nh=1665`).
 - **Files Changed:**
-  - `README.md` — block ` ```mermaid ` → `<picture>` + 2 SVG; update counts (57 KN/38-39 bugs/83 plans/19-19/16 demos); section Knowledge/Governance/Cấu trúc/Docs/footer
-  - `docs/assets/harness-pipeline-light.svg` + `-dark.svg` — MỚI (dark có fill tối cho 2 node custom-style để đủ contrast)
-  - `tests/e2e/readme-guard.spec.ts` — MỚI (guard 3 invariant)
+  - `README.md` — block ` ```mermaid ` → `<picture>` + 2 SVG; update counts (58 KN/39 bugs/83 plans/19-19/16 demos); section Knowledge/Governance/Cấu trúc/Docs/footer
+  - `docs/assets/harness-pipeline-light.svg` + `-dark.svg` — MỚI, bản v2 (XML valid + decode OK; dark có fill tối cho 2 node custom-style)
+  - `tests/e2e/readme-guard.spec.ts` — MỚI, 5 test (3 test v1 + XML validity/foreignObject + img.decode — 2 test sau bắt đúng lớp 2)
   - `www/status.json` — regenerate (STATUS)
 - **Diff tóm tắt:**
 ```diff
@@ -101,19 +102,25 @@ For more information, see https://docs.github.com/get-started/writing-on-github/
 - [x] Re-run steps reproduce → **Fixed** (README không còn iframe rich-display — SVG tĩnh render ở mọi môi trường)
 - [x] Edge cases:
   - [x] Dark mode: `<picture>` + `prefers-color-scheme` + SVG dark fill đủ contrast (đo bằng screenshot 2 theme)
-  - [x] SVG portable trong `<img>`: `htmlLabels:false` (không foreignObject), font system, không external ref
-- [x] Regression: blob pages + harness-flow diagrams không đổi; guard spec pass
+  - [x] SVG portable trong `<img>`: **decode OK** (`img.decode()` + naturalWidth>0) — sau v2 với `htmlLabels:false` top-level (v1 fail: XML gãy do foreignObject + `<br>` không đóng)
+- [x] Regression: blob pages + harness-flow diagrams không đổi; guard spec 5/5 pass
 - [x] `get_errors` **toàn scope** → 0 errors
 - [x] `lint` / `build` / `test` → PASS
 - [x] UI audit: không đổi UI; asset SVG có alt text + title thay thế
 - [x] Fresh-eyes tier: `OPTIONAL` (deterministic — file-based assertion)
+- [x] Negative control (test cả phép đo — KN-049): bản SVG cũ ở HEAD fail đúng cả 3 check (`xmlOk:false + hasFO:true + decode FAIL`) — guard mới sẽ bắt được bug này nếu tái diễn
+
+**Bài học verify (v1 đã tưởng pass sai):** lần verify đầu bỏ qua tín hiệu `nw:0`/`decode FAIL` với lý do "chắc do cache/artifact" (test trước đó với ảnh Wikipedia cũng ra nw:0 nên tưởng môi trường) — sai: bước 2 có **control image trên cùng page GitHub** (avatar nw=420 OK) chứng minh asset lỗi thật. Quy tắc: tín hiệu bất thường phải được kiểm soát bằng control, không được dismiss bằng suy đoán.
 
 **Kết quả:**
 ```
 $ npx playwright test tests/e2e/readme-guard.spec.ts --reporter=list
-  3 passed (4.9s)
+  5 passed (5.6s)
 $ node .github/harness/scripts/generate-status.mjs
   ✅ Generated www\status.json — counts 19/19, 19/19, 9/9, 7/7, 1/1 — JSON valid ✅
+$ negative control (git show HEAD:…light.svg):
+  OLD: {xmlOk:false, hasFO:true} | decode FAIL
+  ✅ guard MỚI sẽ bắt được bản cũ
 ```
 
 ---
@@ -127,7 +134,10 @@ $ node .github/harness/scripts/generate-status.mjs
 ## 6. Prevention
 
 - **Cách phòng tránh lần sau:**
-  - [x] Guard: `tests/e2e/readme-guard.spec.ts` — cấm ` ```mermaid ` trong README.md; bắt buộc SVG light/dark tồn tại + được tham chiếu; mermaid source phải còn ở `docs/harness-flow.md`
+  - [x] Guard: `tests/e2e/readme-guard.spec.ts` — 5 test (cấm ` ```mermaid ` trong README · SVG light/dark tồn tại + được tham chiếu · mermaid source còn ở `docs/harness-flow.md` · XML hợp lệ + không foreignObject · decode thật dạng `<img>`)
+  - [x] Guard asset không dừng ở `existsSync` — verify decode thật (`img.decode()` + `naturalWidth>0`) + DOMParser cho SVG; negative control chạy trên bản cũ phải FAIL (test cả phép đo — KN-049)
+  - [x] `nw:0`/decode FAIL phải kiểm soát bằng control image trên cùng môi trường — không dismiss bằng suy đoán "chắc do cache"
+  - [x] mermaid static SVG: `htmlLabels:false` ở **cả top-level lẫn `flowchart`** (v11); kiểm tra output không chứa `foreignObject` + không có `<br>` không đóng trước khi ship
   - [x] Khi rich-display/lỗi render bên thứ ba: **repro bằng chính bundle của họ** (download asset → chạy in-process) trước khi sửa — tránh sửa mù theo triệu chứng (KN-023)
   - [x] Docs/trang quan trọng dùng asset tĩnh khi renderer ngoài không kiểm soát được — "renderable ở mọi môi trường" là tiêu chí, không phải "render được ở máy mình" (KN-019)
   - [x] Thêm checklist vào `docs/knowleged.md` Anti-patterns / Checklist phòng tránh chung
