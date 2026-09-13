@@ -316,6 +316,14 @@
       "description": "Fund the friction — collaboration là infrastructure, không phải nice-to-have (học KN-018 Waymo effect). Use when cân nhắc cắt workshop/review/pari khi gấp, đánh giá contribution vs velocity, cần giữ thinking together, hoặc task liên quan diversity/serendipity.",
       "applyTo": "**",
       "installedAt": "2026-09-07T16:26:55.240Z"
+    },
+    "executive-function": {
+      "source": "local",
+      "file": "executive-function.instructions.md",
+      "enabled": true,
+      "description": "Executive Function & ADHD-aware — externalize mọi thứ (bộ nhớ/thời gian/luật/động lực) thay vì trông vào não. Use when: agent loop/hyperfocus, task dài dễ đứt, quên instruction, né task khó, output wall-of-text, cần ADHD-friendly communication, focus/chunking, executive function, focus guard, KN-054.",
+      "applyTo": "**",
+      "installedAt": "2026-09-13T14:32:07.363Z"
     }
   },
   "agents": {

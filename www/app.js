@@ -320,7 +320,7 @@ function renderPlans(data){
   el.innerHTML = all.map(x=>`
     <div class="plan-item">
       <div style="min-width:0">
-        <div style="font-weight:700;font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;display:flex;align-items:center;gap:6px">${typeIcon[x.type]||''} ${escapeHtml(x.name)}</div>
+        <div style="font-weight:700;font-size:13px;display:flex;align-items:center;gap:6px;min-width:0">${typeIcon[x.type]||''} <span style="min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${escapeHtml(x.name)}</span></div>
         <div class="mono" style="color:var(--color-neutral-500);font-size:11px;word-break:break-all">${escapeHtml(x.path)}</div>
       </div>
       <span class="tag ${x.status==='ok'?'tag-on':''}" style="flex-shrink:0">${x.type==='demo'?'bản thử':'kế hoạch'}</span>
@@ -398,8 +398,8 @@ function pageEntryHtml(e){
   return `
         <a class="page-link" href="${href}" ${rel}>
           <div style="min-width:0">
-            <div style="font-weight:700;font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;display:flex;align-items:center;gap:6px">
-              ${pageIcons14[e.type]||pageIcons14['trang']} ${escapeHtml(e.title||e.path)}
+            <div style="font-weight:700;font-size:13px;display:flex;align-items:center;gap:6px;min-width:0">
+              ${pageIcons14[e.type]||pageIcons14['trang']} <span style="min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${escapeHtml(e.title||e.path)}</span>
             </div>
             <div class="mono" style="color:var(--color-neutral-500);font-size:11px;word-break:break-all">${escapeHtml(e.path)}</div>
           </div>
@@ -422,7 +422,7 @@ function renderPages(data){
     <div style="color:var(--color-neutral-500);font-size:13px;margin-bottom:12px;line-height:1.6">
       Thư mục gốc: <span class="kbd">${escapeHtml(p.root||'www')}</span> · Workflow: <span class="kbd">${escapeHtml(p.workflow||'.github/workflows/pages.yml')}</span>
     </div>
-    <div style="display:grid;gap:8px">${body}</div>
+    <div style="display:grid;gap:8px;grid-template-columns:minmax(0,1fr)">${body}</div>
     <div style="margin-top:12px;color:var(--color-neutral-500);font-size:12px;line-height:1.5">${escapeHtml(p.note||'Mọi tệp mới trong www/ sẽ tự động được triển khai lên GitHub Pages (workflow tải toàn bộ thư mục www).')}</div>
   `;
 }

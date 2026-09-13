@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-13T14:12:55.963Z",
+  "generatedAt": "2026-09-13T14:57:27.469Z",
   "generatedBy": "YUNIE",
   "version": 1,
   "counts": {
@@ -9,9 +9,9 @@
       "total": 19
     },
     "instructions": {
-      "enabled": 18,
+      "enabled": 19,
       "disabled": 0,
-      "total": 18
+      "total": 19
     },
     "agents": {
       "enabled": 9,
@@ -180,6 +180,10 @@
       "fund-the-friction": {
         "enabled": true,
         "description": "Fund the friction — collaboration là infrastructure, không phải nice-to-have (học KN-018 Waymo effect). Use when cân nhắc cắt workshop/review/pari khi gấp, đánh giá contribution vs velocity, cần giữ thinking together, hoặc task liên quan diversity/serendipity."
+      },
+      "executive-function": {
+        "enabled": true,
+        "description": "Executive Function & ADHD-aware — externalize mọi thứ (bộ nhớ/thời gian/luật/động lực) thay vì trông vào não. Use when: agent loop/hyperfocus, task dài dễ đứt, quên instruction, né task khó, output wall-of-text, cần ADHD-friendly communication, focus/chunking, executive function, focus guard, KN-054."
       }
     },
     "agents": {
@@ -309,6 +313,7 @@
     "disco-phase1",
     "disco-phase2",
     "disco-phase3",
+    "executive-function",
     "focus-flow",
     "harness-2.1-context",
     "harness-2.1-deploy",
@@ -390,6 +395,11 @@
       "status": "ok"
     },
     {
+      "name": "executive-function",
+      "path": "executive-function/index.html",
+      "status": "ok"
+    },
+    {
       "name": "glassui",
       "path": "glassui/index.html",
       "status": "ok"
@@ -438,10 +448,10 @@
   "health": {
     "errors": 0,
     "status": "ok",
-    "lastCheck": "2026-09-13T14:12:55.963Z",
+    "lastCheck": "2026-09-13T14:57:27.469Z",
     "checks": [
       "get_errors: pass (0 errors)",
-      "registry: 18 instructions (18 total) - 19 skills - 9 agents - 7 prompts - 1 hook — all enabled",
+      "registry: 19 instructions (19 total) - 19 skills - 9 agents - 7 prompts - 1 hook — all enabled",
       "harness: 2.3-done — P0 (RAG loop, tool hardening, planning JSON, receipt Ed25519) + P1 (multi-agent, observability, protocols, context, memory, deploy) + P2 (MAF workflows, CUA guardrails, local SLM, setup doctor) + 2.3 (Evals Gate KN-037: rubric + component/E2E evals + error analysis — Andrew Ng 2026)",
       "scripts: 24 harness .mjs (plan-validate, handoff, reflect, trace, eval-gate, deploy-check, agent-card, context, memory, workflow, cua-guard, local, setup-doctor, procedural-graph, experience-funnel, consistency-gap)",
       "eval-gate: PASS (syntax + MCP smoke + plan-validate + self-improving)",
@@ -449,8 +459,8 @@
       "www: polished — responsive 375/768/1280, a11y, states, animation 150-300ms",
       "workflow: www/** -> Pages (upload-artifact path: www) — exists: true + eval job gate",
       "library: www/library/ MCP v1.2.0 (5 tools: search + iterative + list/get/status, router+cache, redacted) + library-rag instruction",
-      "auto-learn: 53 KN, 35 bugs, 0 drafts — suggest/log/propose/status (<50ms, IDF, tiếng Việt)",
-      "governance: audit 132 (Ed25519 receipt P0-4) · policy 9 deny/2 allow (ok) · credentials 0 keys plain",
+      "auto-learn: 55 KN, 36 bugs, 0 drafts — suggest/log/propose/status (<50ms, IDF, tiếng Việt)",
+      "governance: audit 137 (Ed25519 receipt P0-4) · policy 9 deny/2 allow (ok) · credentials 0 keys plain",
       "platform: agents 3 (3 built-in, 0 remote) · mcp 3 vendors/3 grants (library 1.2.0 read-only) · components 3/3 pub · routines 3/3 enabled",
       "collaboration: KN-018 — dissentGate ✅ · whoDidYouThinkWith ✅ · critic ✅ · fund-the-friction ✅ (ok)",
       "n5-blazor: www/n5-blazor/ 7 trang static + app.css + data.js + site.js — 100% Pages"
@@ -489,6 +499,11 @@
         "path": "design-showcase/index.html",
         "title": "design-showcase",
         "type": "demo"
+      },
+      {
+        "path": "executive-function/index.html",
+        "title": "Executive Function × Harness (KN-054)",
+        "type": "khám phá"
       },
       {
         "path": "glassui/index.html",
@@ -670,101 +685,101 @@
     }
   },
   "learn": {
-    "knTotal": 53,
-    "bugsTotal": 35,
+    "knTotal": 55,
+    "bugsTotal": 36,
     "drafts": 0
   },
   "governance": {
     "audit": {
-      "total": 132,
-      "permitted": 110,
-      "refused": 21,
+      "total": 137,
+      "permitted": 112,
+      "refused": 24,
       "failed": 1,
-      "lastTs": "2026-09-13T14:11:05.830Z",
+      "lastTs": "2026-09-13T14:56:36.005Z",
       "tail": [
         {
-          "ts": "2026-09-13T04:52:55.923Z",
+          "ts": "2026-09-13T14:13:07.951Z",
           "actor": "YUNIE",
-          "tool": "create",
-          "target": "tests/e2e/status-sections.spec.ts",
+          "tool": "edit",
+          "target": ".agent/bugs/2026-09-13-git-checkout-head-revert-nham-refactor-chua-commit/bug.md",
           "decision": "permitted",
           "rule": "allow-all",
           "durationMs": null,
           "error": null,
           "intent": null,
-          "requestId": "a2f5dc",
-          "prevHash": "0435c9fc2cd9bf5e",
+          "requestId": "710225",
+          "prevHash": "3d6d9ad0e0c41072",
           "policyDigest": "190b0de217bf1dda",
-          "hash": "338d414082e7db6d",
-          "sig": "Rftte4XBdcGYrf1QfnkogdVT-vTZpAXTZ2t-Ek9eZzSNCp4czVidTtlpveKxiIaWc72prc_mjLNDLULbpl_6AA",
+          "hash": "eca7266050ce42fa",
+          "sig": "7gQvJDe0snAFqIYqLLCKv3L4fML6BsiaBWhQYX3je3mToCJXBtzvl0jOBsxJfYsECpxnUlaeog1DmeewUNrqAw",
           "pub": "MCowBQYDK2VwAyEAY8PlU0KjXp4HJUUlNlVZdaXHUmDagUMm8rUrEShTPXo"
         },
         {
-          "ts": "2026-09-13T13:14:35.698Z",
+          "ts": "2026-09-13T14:32:41.317Z",
           "actor": "YUNIE",
           "tool": "edit",
-          "target": ".github/harness/scripts/auto-researcher.mjs",
+          "target": ".github/instructions/executive-function.instructions.md",
           "decision": "permitted",
           "rule": "allow-all",
           "durationMs": null,
           "error": null,
-          "intent": null,
-          "requestId": "34370e",
-          "prevHash": "338d414082e7db6d",
+          "intent": "create executive-function instruction (KN-054 plan)",
+          "requestId": "7b57bc",
+          "prevHash": "eca7266050ce42fa",
           "policyDigest": "190b0de217bf1dda",
-          "hash": "a0b254a2d4f1e92d",
-          "sig": "2ZmzK5YZkELgHrxXzl8p1VVE8OkEUzcuN-jHZZQ4EHvku99W5EAnl94p18j6wDQF8ftUdk3yKaDpu6crUhrEBQ",
+          "hash": "b4362380b9db134b",
+          "sig": "JLVYi7p7yBk9uc-99O89I2OSRXOtPdn8YNpQYtO2yW7mEm9c70F14es1a-Cd-rCcbAcOViAXtMQ0F4AlfOnpAg",
           "pub": "MCowBQYDK2VwAyEAY8PlU0KjXp4HJUUlNlVZdaXHUmDagUMm8rUrEShTPXo"
         },
         {
-          "ts": "2026-09-13T13:24:34.471Z",
-          "actor": "YUNIE",
-          "tool": "edit",
-          "target": ".github/harness/scripts/auto-learn.mjs",
-          "decision": "permitted",
-          "rule": "allow-all",
+          "ts": "2026-09-13T14:40:17.099Z",
+          "actor": "redteam-spec",
+          "tool": "read",
+          "target": "***",
+          "decision": "refused",
+          "rule": "redteam-test",
           "durationMs": null,
           "error": null,
           "intent": null,
-          "requestId": "5a10e1",
-          "prevHash": "a0b254a2d4f1e92d",
+          "requestId": "e30847",
+          "prevHash": "b4362380b9db134b",
           "policyDigest": "190b0de217bf1dda",
-          "hash": "c1911f85d401820d",
-          "sig": "Nw7ZcadUrBok0EWhAVDZsu9E4qcdkOjVH0wHvIr6zQBbXyS6Y_bh7ju1Ax-FZ2KBkxKlWJOpqdqKVSrM6-F_CQ",
+          "hash": "4e87e165a3dedef5",
+          "sig": "8A6-CEt9U_IESxx64gnFoDK37WfsoMMWoN02xJt4Z1K0aVv_WoSf7zv4QIRr4-S3m98YX_UdCuTAnXYfPg0BBw",
           "pub": "MCowBQYDK2VwAyEAY8PlU0KjXp4HJUUlNlVZdaXHUmDagUMm8rUrEShTPXo"
         },
         {
-          "ts": "2026-09-13T13:32:06.388Z",
-          "actor": "YUNIE",
-          "tool": "edit",
-          "target": ".github/harness/scripts/harness-manager.mjs",
-          "decision": "permitted",
-          "rule": "allow-all",
+          "ts": "2026-09-13T14:49:42.002Z",
+          "actor": "redteam-spec",
+          "tool": "read",
+          "target": "***",
+          "decision": "refused",
+          "rule": "redteam-test",
           "durationMs": null,
           "error": null,
           "intent": null,
-          "requestId": "6cb7ce",
-          "prevHash": "c1911f85d401820d",
+          "requestId": "b92d6a",
+          "prevHash": "4e87e165a3dedef5",
           "policyDigest": "190b0de217bf1dda",
-          "hash": "b351a07133be70df",
-          "sig": "dkyUZ2RWXpnhZPUQsm7ACjjRdJsIN8X4kyFPq5DyleggSX_To5xiZ0RcSHUW6W4MNHx6UdL09GfZiwGyXy_YAQ",
+          "hash": "6df367ee3718f358",
+          "sig": "BKal-ZAQCBm7DbfBcTcQ3XyCJPdofKLBWtM5kebOj-dtH2rqPnKbSm8wUm-o7UhieZOsc0xNTAxrDwJtPjdGAg",
           "pub": "MCowBQYDK2VwAyEAY8PlU0KjXp4HJUUlNlVZdaXHUmDagUMm8rUrEShTPXo"
         },
         {
-          "ts": "2026-09-13T14:11:05.830Z",
-          "actor": "YUNIE",
-          "tool": "edit",
-          "target": "docs/knowleged.md",
-          "decision": "permitted",
-          "rule": "allow-all",
+          "ts": "2026-09-13T14:56:36.005Z",
+          "actor": "redteam-spec",
+          "tool": "read",
+          "target": "***",
+          "decision": "refused",
+          "rule": "redteam-test",
           "durationMs": null,
           "error": null,
           "intent": null,
-          "requestId": "877629",
-          "prevHash": "b351a07133be70df",
+          "requestId": "e88997",
+          "prevHash": "6df367ee3718f358",
           "policyDigest": "190b0de217bf1dda",
-          "hash": "3d6d9ad0e0c41072",
-          "sig": "-clEbZB17J-6FcyyXgfRh0aVo9eLKbb4LoeCsX1WLmNOAi6mmJ9dENmnvoQ-x3EIrmsjKvBVw-JqT2_cHrU-DQ",
+          "hash": "9763c32c5a904341",
+          "sig": "FBwNDcA4mFty2sLTtwcPIf9kAZ808mVFzIRRzYBJKn9gR-BbqNDe9ejZMD7xqlXFAEcH8UODsYeHms0ut8fEAQ",
           "pub": "MCowBQYDK2VwAyEAY8PlU0KjXp4HJUUlNlVZdaXHUmDagUMm8rUrEShTPXo"
         }
       ]
@@ -774,7 +789,7 @@
       "deny": 9,
       "allow": 2,
       "status": "ok",
-      "lastCheck": "2026-09-13T14:12:55.662Z"
+      "lastCheck": "2026-09-13T14:57:27.296Z"
     },
     "credentials": {
       "count": 0,

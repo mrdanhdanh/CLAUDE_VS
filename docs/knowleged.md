@@ -75,6 +75,8 @@
 | KN-051 | 2026-09-12 | "AI nổi loạn" là mystic sai — vụ OpenAI/HF Exploit Gym chỉ là vòng lặp Python + chatbot tra log CTF cũ + thiếu human-in-the-loop (Doctorow Pluralistic 12/09/2026) | Kể chuyện "AI tự đặt mục tiêu" để gọi vốn + báo chí thích Skynet; bỏ qua cơ chế thật (Python loop, training data, sandbox dỏm) → sợ sai chỗ | Đừng sợ "thần" — sợ sandbox dỏm + thiếu human-in-the-loop + hoarding bug (NOBUS/EternalBlue); hành vi lạ phải giải thích bằng training data + loop trước khi gán agency | `process` `governance` `safety` `rsi` |
 | KN-052 | 2026-09-13 | Anthropic/OpenAI CEO kêu gọi "pacing/slowdown AI" — lý do: RSI đang xảy ra + vụ OAI-HF; đề xuất 3 bước (embedded evaluators → democratic → global coordination) — Axios 12/09 + essay "We Must Pace the Frontier" | Lab có incentive kép (safety thật + safety moat/regulatory capture + pacing-within-democracies = giữ lead trước TQ → không giảm tốc thực); timeline "6 tháng botnet" là dự đoán không verify được — nhưng proximate cause (RL env hygiene kém + sandbox + thiếu monitoring) khớp KN-051/KN-048 | Tách claim vs mechanism: adopt phần verifiable (embedded evaluators = verifier NGOÀI builder, quyền công bố phát hiện bất lợi — mirror verify actor + audit chain + disclosure); không adopt alarm timeline làm deadline khi chưa verify độc lập | `process` `governance` `safety` `rsi` |
 | KN-053 | 2026-09-13 | `git checkout HEAD -- <file>` revert nhầm ~12 edits refactor **CHƯA COMMIT** của auto-learn.mjs (chỉ AR sống sót vì vô tình save keep-file trước) — suýt mất 30 phút refactor Batch 1 | Thao tác phá hoại (checkout/reset) không có pre-check "file có uncommitted work không?"; session dài + state phức tạp → chạy muscle memory, tự phá quy trình đã dùng đúng ở part 1 | CẤM checkout/reset khi file uncommitted (check git status/diff TRƯỚC, fail-closed); commit từng file khi refactor xong (bounded); recover bằng VS Code Local History (verify markers entry trước restore); restore bằng byte-level copy, không `git show \| Out-File` | `process` `dx` `git` `recovery` |
+| KN-054 | 2026-09-13 | ADHD/Executive Function — harness như khung xương ngoài của não (agent + người cùng failure modes: hyperfocus loop, quên, time-blindness, né task, wall-of-text) | Accommodation mạnh nhất của harness (todo/limit/plans/verify) chưa có mô hình chung → xử rải rác như bug mới, không tích lũy; "cố gắng hơn" bị nhầm với persistence | Externalize mọi thứ (bộ nhớ/thời gian/luật/động lực): instruction `executive-function` (6 EF ↔ cơ chế thật) + output rules ADHD-friendly (kết luận trước, 1 next step, chunk, micro-win) + trang www + focus guard | `process` `psychology` `ux` `agent` `knowledge` |
+| KN-055 | 2026-09-13 | STATUS 375px overflow 56px khi thêm trang mới title dài — bug ẩn từ lâu, title vừa khít che mất | Grid track `1fr` (= `minmax(auto,1fr)`) không co dưới min-content; title `white-space:nowrap` là anonymous flex item không shrink được; + lớp 2: `.card{overflow:hidden}` **clip** page-link mà test scroll không thấy | Grid luôn `minmax(0,1fr)`; text nowrap bọc `<span style="min-width:0;overflow:hidden;text-overflow:ellipsis">`; verify **cả** document scroll **và** element-vs-container (clip) | `ui` `css` `responsive` `grid` `verify` |
 
 > KN-001 là **dòng định dạng mẫu** — giữ làm tham chiếu format (auto-learn/status/registry trỏ tới); bài học thật bắt đầu từ KN-002.
 
@@ -1168,6 +1170,39 @@
 - **Tags:** `process` `dx` `git` `recovery`
 - **Người ghi:** YUNIE / incident 2026-09-13 (Batch 1 refactor — recovered, re-verified 57/57 pairwise)
 
+### KN-054 — ADHD/Executive Function: harness là khung xương ngoài của não — externalize, đừng "cố gắng hơn"
+
+- **Ngày:** 2026-09-13
+- **Bug report:** N/A — bài học từ mô hình EF deficit của ADHD (Russell Barkley — mô hình nổi bật trong ADHD research; paraphrase, không copy) + DSM-5 (3 presentation types) + plan `.agent/plans/executive-function/`. Trang trực quan: `www/executive-function/`.
+- **Severity:** minor
+- **Triệu chứng:** Các failure mode của "bộ não hữu hạn" xuất hiện cả ở agent lẫn người: kẹt fix loop 1 hypothesis (hyperfocus), quên instruction giữa session dài, không time-sense (scope phình/trôi), né task khó, dội wall-of-text. Harness đã giải quyết rải rác (3-fix limit, todo, `context.mjs`, plans, evals...) nhưng không có mô hình chung → mỗi lần gặp lại xử như bug mới; output cho người chưa có luật thân thiện working memory.
+- **Nguyên nhân gốc (5 Whys):** Why1: fix triệu chứng từng cái mà không đặt tên pattern → knowledge không tích lũy (cùng lớp KN-034 nhưng ở tầng tâm lý). Why2: thiếu mô hình chuẩn để phân loại — "loop" là persistence hay pathology? "quên" là lỗi agent hay lỗi thiết kế? Why3: ADHD research đã có mô hình trả lời — Barkley: vấn đề không phải thiếu chú ý mà thiếu **executive function** (ức chế · working memory · điều tiết cảm xúc · khởi động · lập kế hoạch · tự giám sát); giải pháp nền tảng là **externalize** (bộ nhớ/thời gian/luật/động lực ra môi trường), không phải "cố gắng hơn". Why4: AI agents có cùng hạn chế cấu trúc (context = working memory hữu hạn, không time-sense, distraction-prone) → cùng mô hình áp cho cả hai. Why5 (Root): harness chưa có tầng triết lý chung cho "bộ não hữu hạn" — các accommodation mạnh nhất (todo, 3-fix limit, plans, verify) chưa được nhận diện là một hệ thống externalize thống nhất nên không được bảo vệ/giảng giải như tài sản.
+- **Cách sửa:** Đặt tên + hệ thống hóa: (1) instruction `executive-function` — nguyên lý externalize + bảng 6 EF ↔ cơ chế harness (mỗi mapping **phải trỏ cơ chế đã tồn tại**, không thêm cơ chế mới chỉ để map đẹp) + agent failure modes ↔ guardrail + output rules ADHD-friendly; (2) YUNIE personality §18 + focus guard trong `harness-workflow`; (3) trang `www/executive-function/` (mapping explorer + lab working memory) cho người; (4) KN này. Phân định rõ: persistence tốt = đổi hypothesis/đo lại (KN-023) ≠ hyperfocus loop = retry nguyên strategy (3-fix limit chặn).
+- **Cách phòng tránh:**
+  - Gặp behavior lạ (loop/quên/né/wall-of-text) → tra bảng EF failure modes TRƯỚC khi coi là bug mới.
+  - Không "cố gắng hơn": retry nguyên strategy = hyperfocus loop; đổi hypothesis/tool rồi đo lại (KN-023).
+  - Mọi task >2 bước có visible progress; decision quan trọng ghi ra file (plans/knowleged) — không giữ trong đầu.
+  - Output cho người: kết luận trước + 1 next step + chunk + micro-win; không tường chữ (đồng bộ yunie-personality §7/§17/§18).
+  - Externalize là tài sản thiết kế, không phải crutch — ai đề xuất cắt todo/limit/plan "cho nhanh" thì trả lời bằng mô hình EF (đối trọng `minimal-ladder`: cắt waste, không cắt khung xương).
+- **Tags:** `process` `psychology` `ux` `agent` `knowledge`
+- **Người ghi:** YUNIE / plan `.agent/plans/executive-function/` (2026-09-13)
+
+### KN-055 — Grid `1fr` + flex nowrap: min-content blowout ẩn — title dài lộ bug, overflow:hidden che clip
+
+- **Ngày:** 2026-09-13
+- **Bug report:** `.agent/bugs/2026-09-13-status-375-overflow-grid-1fr-min-content-blowout-k/bug.md`
+- **Severity:** major
+- **Triệu chứng:** Thêm demo mới vào `www/status.json` với title dài (`Executive Function × Harness (KN-054)`) → trang chủ STATUS tràn ngang **56px** ở 375px (2 spec fail: `responsive.spec.ts` + `status.spec.ts`). Đo sâu hơn: sau khi hết scroll, page-link vẫn rộng 414px trong document 375px — bị **clip** bởi `.card{overflow:hidden}` (title + tag bị cắt) mà test scroll **không hề thấy**.
+- **Nguyên nhân gốc (5 Whys):** Why1: section (grid item) rộng 415px > viewport. Why2: track của `.grid-2` mobile single-col là `auto` → sized theo **min-content của item**. Why3: min-content `.page-link` = 379px = icon + title **full width** + tag — vì text title là **anonymous flex item** của div `display:flex` + `white-space:nowrap` → không co được; `text-overflow:ellipsis` đặt trên flex container không có tác dụng. Why4: `.grid-2` desktop dùng `1fr 1fr` (= `minmax(auto,1fr)`) — min=auto=min-content → track không bao giờ co dưới content; title cũ dài nhất vừa khít 343px nên bug ẩn suốt. Why5 (Root): sizing chain 3 tầng đều thiếu phòng thủ content dài (grid thiếu `minmax(0,1fr)` · flex item thiếu `min-width:0` · inner grid thiếu `minmax(0,1fr)`) + lớp 2: `.card{overflow:hidden}` biến overflow thành **clip im lặng** — invariant test hiện tại chỉ đo document scroll nên mù với clip bên trong.
+- **Cách sửa:** (1) `.grid-2`/`.grid-3`: base `grid-template-columns:minmax(0,1fr)` + desktop `repeat(n,minmax(0,1fr))`; (2) `pageEntryHtml`/`renderPlans`: bọc title text vào `<span style="min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">` (restore đúng ý đồ ellipsis); (3) `renderPages` inner grid thêm `minmax(0,1fr)`. Verify: diagnostic `roots: []`, scrollW=docW; 2 spec fail → pass; full suite regression.
+- **Cách phòng tránh:**
+  - Grid track luôn `minmax(0,1fr)` — không bao giờ bare `1fr` cho container content động (track `1fr` = `minmax(auto,1fr)` → blowout).
+  - Text `white-space:nowrap` + ellipsis: phải nằm trên element **có thể co** (`min-width:0` item) — không đặt ellipsis trên flex container chứa text trực tiếp (anonymous item không shrink, ellipsis không áp dụng).
+  - Verify responsive 2 lớp: document scroll **và** element-vs-container (`el.getBoundingClientRect().right > container.clientWidth` trên descendant của `overflow:hidden` — scroll test mù với clip).
+  - Content dài là **test input thật** — khi thêm title/entry mới vào data-driven UI, chạy lại invariant responsive trước khi claim done (title ngắn cũ "vừa khít" là điều kiện che bug, không phải bằng chứng an toàn — KN-028 bug blindness).
+- **Tags:** `ui` `css` `responsive` `grid` `verify`
+- **Người ghi:** YUNIE / verify plan `executive-function` (2026-09-13)
+
 <!-- Thêm bài học mới theo template dưới — copy block này -->
 
 <!--
@@ -1188,6 +1223,12 @@
 
 ## Anti-patterns tích lũy (Đừng lặp lại)
 
+- ❌ Dùng bare `1fr` cho grid container chứa content động — `1fr` = `minmax(auto,1fr)`, min-content blowout khi content (title/text dài) vượt track; luôn `minmax(0,1fr)` (KN-055).
+- ❌ Đặt `text-overflow:ellipsis` trên flex container có text trực tiếp (anonymous flex item không shrink, ellipsis vô hiệu) — bọc text vào span `min-width:0` (KN-055).
+- ❌ Tin "responsive pass" chỉ từ document scroll trong khi cha `overflow:hidden` — overflow có thể thành **clip im lặng** (element 414px trong doc 375px, test mù) — verify thêm element-vs-container (KN-055).
+- ❌ Trông vào "nhớ" và "cố gắng hơn" cho việc dài/đứt quãng (agent lẫn người) — externalize ra todo/plan/checklist/limit là cơ chế thiết kế, không phải crutch (KN-054).
+- ❌ Retry nguyên strategy khi "vẫn lỗi" rồi tự gọi đó là persistence — đó là hyperfocus loop; đổi hypothesis/đổi tool rồi đo lại (KN-054 + KN-023).
+- ❌ Dội wall-of-text / hỏi dồn nhiều câu một turn — overload working memory người đọc; kết luận trước + 1 next step + chunk (KN-054 + yunie §7).
 - ❌ Chạy `git checkout HEAD -- <file>` / `git reset --hard` khi file có refactor chưa commit — revert âm thầm, exit 0, không warning; pre-check `git status`/`git diff` trước (KN-053).
 - ❌ Dồn commit cuối session cho refactor nhiều file — commit từng file khi xong; file chưa commit là vùng nguy hiểm của mọi thao tác phá hoại (KN-053).
 - ❌ Restore file bằng PowerShell string-piping (`git show | Out-File`) — mangle encoding/EOL → test ra kết quả SAI giả; dùng byte-level copy (KN-053 + KN-049).

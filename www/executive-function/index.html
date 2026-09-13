@@ -1,0 +1,696 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Executive Function × Harness (KN-054) · YUNIE</title>
+  <meta name="description" content="ADHD là chuyện executive function — harness v2 là khung xương ngoài của não: 6 EF ↔ cơ chế thật + lab working memory. KN-054." />
+  <meta name="color-scheme" content="dark" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    /* Design tokens — đồng bộ www/styles.css + www/waymo-effect (cosmic dark) */
+    :root {
+      --bg: #0b0f1a;
+      --bg-card: #131a2b;
+      --bg-card-2: #1a2338;
+      --text: #e8ecf4;
+      --text-dim: #a3b0c2;
+      --accent: #6366f1;
+      --accent-2: #ec4899;
+      --accent-3: #f59e0b;
+      --brain: #22d3ee;
+      --ok: #10b981;
+      --bad: #f87171;
+      --border: rgba(148, 163, 184, .18);
+      --radius: 16px;
+      --font-body: 'Inter', system-ui, sans-serif;
+      --font-display: 'Plus Jakarta Sans', 'Inter', sans-serif;
+      --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; scroll-padding-top: 76px; }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      * { animation: none !important; transition: none !important; }
+    }
+    body {
+      margin: 0; background: var(--bg); color: var(--text);
+      font: 400 16px/1.6 var(--font-body);
+      -webkit-font-smoothing: antialiased;
+    }
+    /* Starfield nhẹ — pure CSS */
+    body::before {
+      content: ''; position: fixed; inset: 0; z-index: -1; pointer-events: none;
+      background:
+        radial-gradient(1px 1px at 18% 28%, rgba(232,236,244,.45) 50%, transparent 51%),
+        radial-gradient(1px 1px at 72% 14%, rgba(232,236,244,.3) 50%, transparent 51%),
+        radial-gradient(1.5px 1.5px at 86% 58%, rgba(232,236,244,.35) 50%, transparent 51%),
+        radial-gradient(1px 1px at 42% 82%, rgba(232,236,244,.3) 50%, transparent 51%),
+        radial-gradient(circle at 82% 8%, rgba(34,211,238,.10), transparent 45%),
+        radial-gradient(circle at 8% 92%, rgba(99,102,241,.12), transparent 45%);
+    }
+    .skip-link {
+      position: absolute; left: -9999px; top: 0; z-index: 100;
+      background: var(--accent); color: #fff; padding: 8px 16px; border-radius: 0 0 8px 0;
+    }
+    .skip-link:focus { left: 0; }
+    /* Header */
+    header {
+      position: sticky; top: 0; z-index: 10;
+      display: flex; align-items: center; justify-content: space-between; gap: 12px;
+      padding: 12px clamp(16px, 4vw, 32px);
+      background: rgba(11, 15, 26, .82); backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+    .brand { display: flex; align-items: center; gap: 12px; text-decoration: none; color: var(--text); min-width: 0; }
+    .brand-mark {
+      width: 36px; height: 36px; border-radius: 10px; flex: none;
+      display: grid; place-items: center;
+      font: 800 18px var(--font-display); color: #04121a;
+      background: linear-gradient(135deg, var(--brain), var(--accent));
+    }
+    .brand-text { min-width: 0; }
+    .brand-text strong { display: block; font: 700 15px var(--font-display); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .brand-text span { font: 400 12px var(--font-body); color: var(--text-dim); display: block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    header nav { display: flex; gap: 8px; flex: none; }
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+      min-height: 44px; padding: 10px 16px; border-radius: 10px; border: 1px solid var(--border);
+      background: var(--bg-card); color: var(--text);
+      font: 600 14px var(--font-body); text-decoration: none; cursor: pointer;
+      transition: transform 150ms ease, border-color 150ms ease, background 150ms ease;
+    }
+    .btn:hover { border-color: var(--accent); transform: translateY(-1px); }
+    .btn:focus-visible { outline: 2px solid var(--brain); outline-offset: 2px; }
+    .btn:disabled { opacity: .45; cursor: not-allowed; transform: none; }
+    .btn.primary { background: linear-gradient(135deg, var(--accent), var(--accent-2)); border: 0; color: #fff; }
+    /* Dots nav */
+    .dots {
+      position: fixed; right: clamp(10px, 2.5vw, 22px); top: 50%; transform: translateY(-50%);
+      display: flex; flex-direction: column; gap: 10px; z-index: 20;
+    }
+    @media (max-width: 900px) { .dots { display: none; } }
+    .dots a {
+      width: 12px; height: 12px; border-radius: 50%;
+      background: var(--border); display: block;
+      transition: background 150ms ease, transform 150ms ease;
+    }
+    .dots a:hover, .dots a:focus-visible, .dots a.active { background: var(--brain); transform: scale(1.3); }
+    .dots a:focus-visible { outline: 2px solid var(--brain); outline-offset: 3px; }
+    /* Layout */
+    main { display: block; }
+    section { padding: clamp(40px, 7vw, 84px) clamp(20px, 5vw, 48px); max-width: 1080px; margin: 0 auto; }
+    .kicker {
+      display: inline-flex; align-items: center; gap: 8px;
+      font: 600 12px var(--font-mono); letter-spacing: .08em; text-transform: uppercase;
+      color: var(--brain); background: rgba(34, 211, 238, .1);
+      border: 1px solid rgba(34, 211, 238, .3);
+      padding: 6px 12px; border-radius: 999px; margin-bottom: 18px;
+    }
+    h1 { font: 800 clamp(30px, 6vw, 54px)/1.12 var(--font-display); margin: 0 0 16px; }
+    h2 { font: 800 clamp(24px, 4.2vw, 38px)/1.18 var(--font-display); margin: 0 0 14px; }
+    h3 { font: 700 17px/1.35 var(--font-display); margin: 0 0 8px; }
+    h3:focus-visible { outline: 2px solid var(--brain); outline-offset: 4px; border-radius: 4px; }
+    .grad { background: linear-gradient(90deg, var(--brain), var(--accent)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+    .lead { font-size: clamp(15px, 1.8vw, 18px); color: var(--text-dim); max-width: 68ch; margin: 0 0 12px; }
+    .lead strong { color: var(--text); }
+    .chips-row { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 18px; }
+    .tag {
+      display: inline-block; font: 500 12px var(--font-mono); color: var(--brain);
+      background: rgba(34, 211, 238, .1); border: 1px solid rgba(34, 211, 238, .3);
+      padding: 4px 12px; border-radius: 999px;
+    }
+    .tag.violet { color: #c7b6ff; background: rgba(99,102,241,.14); border-color: rgba(99,102,241,.4); }
+    /* Cards */
+    .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 250px), 1fr)); gap: 16px; margin-top: 22px; }
+    .card {
+      background: var(--bg-card); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 20px;
+      transition: transform 200ms ease, border-color 200ms ease;
+    }
+    .card:hover { transform: translateY(-3px); border-color: var(--brain); }
+    .card .icon { font-size: 26px; margin-bottom: 10px; display: block; }
+    .card h3 { margin-bottom: 6px; }
+    .card p { margin: 0; font-size: 14px; color: var(--text-dim); }
+    .callout {
+      display: flex; gap: 12px; align-items: flex-start;
+      border-left: 3px solid var(--accent-3); background: var(--bg-card);
+      border-radius: 0 var(--radius) var(--radius) 0; padding: 14px 18px; margin-top: 14px;
+    }
+    .callout p { margin: 0; font-size: 14.5px; color: var(--text-dim); }
+    .callout p strong { color: var(--text); }
+    /* Explorer */
+    .ef-layout { display: grid; grid-template-columns: 240px 1fr; gap: 18px; margin-top: 22px; }
+    @media (max-width: 760px) { .ef-layout { grid-template-columns: 1fr; } }
+    .ef-tablist { display: flex; flex-direction: column; gap: 8px; }
+    @media (max-width: 760px) { .ef-tablist { flex-direction: row; flex-wrap: wrap; } }
+    .ef-tab {
+      display: flex; align-items: center; gap: 10px; text-align: left;
+      min-height: 52px; padding: 10px 14px; border-radius: 12px;
+      background: var(--bg-card); color: var(--text);
+      border: 1px solid var(--border); cursor: pointer; font-family: var(--font-body);
+      transition: border-color 150ms ease, background 150ms ease, transform 150ms ease;
+    }
+    .ef-tab:hover { border-color: var(--brain); transform: translateX(2px); }
+    .ef-tab[aria-selected="true"] {
+      border-color: var(--brain); background: linear-gradient(135deg, rgba(34,211,238,.14), rgba(99,102,241,.14));
+      box-shadow: 0 0 0 1px rgba(34,211,238,.35) inset;
+    }
+    .ef-tab:focus-visible { outline: 2px solid var(--brain); outline-offset: 2px; }
+    .ef-tab .ef-icon { font-size: 20px; flex: none; }
+    .ef-tab .ef-label { display: flex; flex-direction: column; min-width: 0; }
+    .ef-tab .ef-label strong { font-size: 14px; }
+    .ef-tab .ef-label small { font: 500 11px var(--font-mono); color: var(--text-dim); }
+    .ef-panel {
+      background: var(--bg-card); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: clamp(18px, 3vw, 28px); min-height: 320px;
+    }
+    .ef-panel:focus-visible { outline: 2px solid var(--brain); outline-offset: 2px; }
+    .ef-panel h3 { font-size: clamp(18px, 2.4vw, 22px); }
+    .ef-panel h3 .muted { color: var(--text-dim); font: 500 13px var(--font-mono); }
+    .ef-normal { font-size: 15px; color: var(--text); margin: 0 0 14px; }
+    .ef-sub { font: 600 12px var(--font-mono); letter-spacing: .06em; text-transform: uppercase; color: var(--text-dim); margin: 16px 0 8px; }
+    .ef-weak { margin: 0; padding: 0; list-style: none; display: grid; gap: 6px; }
+    .ef-weak li { font-size: 14px; color: var(--text-dim); padding-left: 22px; position: relative; }
+    .ef-weak li::before { content: '⚠️'; position: absolute; left: 0; }
+    .ef-mech { display: flex; flex-wrap: wrap; gap: 8px; }
+    .ef-mech code { font: 500 12.5px var(--font-mono); background: var(--bg-card-2); border: 1px solid var(--border); padding: 4px 10px; border-radius: 8px; color: #c7d6ea; }
+    .ef-why { margin: 18px 0 0; font-size: 14.5px; color: var(--text); background: rgba(34,211,238,.07); border: 1px dashed rgba(34,211,238,.35); border-radius: 12px; padding: 12px 16px; }
+    /* Agent grid */
+    .agent-grid { display: grid; gap: 12px; margin-top: 22px; }
+    .agent-row {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 12px;
+      background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px 18px;
+    }
+    @media (max-width: 760px) { .agent-row { grid-template-columns: 1fr; } }
+    .agent-fail strong { display: block; font-size: 14.5px; margin-bottom: 4px; }
+    .agent-fail p { margin: 0; font-size: 13.5px; color: var(--text-dim); }
+    .agent-fix { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; }
+    .agent-fix code { font: 500 12.5px var(--font-mono); background: var(--bg-card-2); border: 1px solid rgba(16,185,129,.35); padding: 5px 10px; border-radius: 8px; color: #a7f3d0; }
+    /* Lab */
+    .lab { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius); padding: clamp(18px, 3vw, 30px); margin-top: 22px; }
+    .lab-bar { height: 6px; border-radius: 999px; background: var(--bg-card-2); overflow: hidden; margin-bottom: 22px; }
+    .lab-progress { height: 100%; width: 8%; border-radius: 999px; background: linear-gradient(90deg, var(--brain), var(--accent)); transition: width 300ms ease; }
+    .lab-phase h3 { font-size: clamp(17px, 2.2vw, 20px); }
+    .lab-steps { margin: 0 0 18px; padding-left: 20px; color: var(--text-dim); font-size: 14.5px; }
+    .lab-steps li { margin-bottom: 6px; }
+    .words { display: grid; grid-template-columns: repeat(auto-fit, minmax(90px, 1fr)); gap: 12px; margin: 18px 0; }
+    .word {
+      display: grid; place-items: center; min-height: 84px;
+      font: 700 clamp(22px, 5vw, 34px)/1 var(--font-display); letter-spacing: .02em;
+      background: var(--bg-card-2); border: 1px solid rgba(34,211,238,.4); border-radius: 14px;
+      text-shadow: 0 0 22px rgba(34,211,238,.45);
+    }
+    .lab-count { font-size: 14px; color: var(--text-dim); margin: 0; }
+    .lab-count strong { color: var(--brain); font-family: var(--font-mono); }
+    .q { border: 1px solid var(--border); border-radius: 12px; padding: 14px 16px; margin: 0 0 12px; }
+    .q legend { font: 600 15px var(--font-body); padding: 0 6px; }
+    .opts { display: flex; gap: 10px; flex-wrap: wrap; }
+    .opt {
+      min-width: 64px; min-height: 44px; padding: 10px 16px; border-radius: 10px;
+      border: 1px solid var(--border); background: var(--bg-card-2); color: var(--text);
+      font: 600 15px var(--font-mono); cursor: pointer;
+      transition: border-color 150ms ease, transform 150ms ease;
+    }
+    .opt:hover:not(:disabled) { border-color: var(--brain); transform: translateY(-1px); }
+    .opt:focus-visible { outline: 2px solid var(--brain); outline-offset: 2px; }
+    .opt:disabled { cursor: default; }
+    .opt.right { border-color: var(--ok); background: rgba(16,185,129,.15); color: #a7f3d0; }
+    .opt.wrong { border-color: var(--bad); background: rgba(248,113,113,.12); color: #fecaca; }
+    .lab-input {
+      width: 100%; min-height: 48px; padding: 12px 16px; margin: 6px 0 16px;
+      border-radius: 12px; border: 1px solid var(--border);
+      background: var(--bg-card-2); color: var(--text);
+      font: 500 15px var(--font-mono);
+    }
+    .lab-input:focus-visible { outline: 2px solid var(--brain); outline-offset: 2px; border-color: var(--brain); }
+    .lab label { display: block; font-size: 14px; color: var(--text-dim); margin-bottom: 2px; }
+    .lab-score { margin: 6px 0 14px; font-size: 15px; color: var(--text-dim); }
+    .lab-score strong { font: 800 clamp(40px, 9vw, 64px)/1 var(--font-display); color: var(--brain); margin-right: 8px; display: inline-block; vertical-align: -6px; }
+    .lab-chips { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 16px; }
+    .chip { font: 500 13px var(--font-mono); padding: 6px 12px; border-radius: 999px; border: 1px solid var(--border); }
+    .chip.ok { border-color: rgba(16,185,129,.45); background: rgba(16,185,129,.12); color: #a7f3d0; }
+    .chip.miss { color: var(--text-dim); text-decoration: line-through; text-decoration-color: rgba(248,113,113,.6); }
+    .lab-actions { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 6px; }
+    /* Rules + tips */
+    ul.check { list-style: none; padding: 0; margin: 18px 0 0; display: grid; gap: 10px; }
+    ul.check li { padding: 12px 16px 12px 46px; position: relative; background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; font-size: 14.5px; color: var(--text-dim); }
+    ul.check li::before { content: '✅'; position: absolute; left: 16px; top: 11px; }
+    ul.check li strong { color: var(--text); }
+    footer { padding: 28px 20px 40px; text-align: center; color: var(--text-dim); font-size: 13px; border-top: 1px solid var(--border); }
+    footer a { color: var(--brain); }
+    footer .fine { font-size: 12px; opacity: .8; margin-top: 8px; }
+    code { font: 500 13px var(--font-mono); background: var(--bg-card-2); padding: 2px 6px; border-radius: 6px; }
+  </style>
+</head>
+<body>
+  <noscript><div style="background:#1a2338;border-bottom:1px solid #f59e0b;color:#fcd34d;padding:12px 16px;text-align:center;font:500 13px Inter,system-ui,sans-serif">⚠️ Phần tương tác (explorer + lab) cần JavaScript. Bật JS để dùng đầy đủ — nội dung tĩnh vẫn đọc được.</div></noscript>
+  <a class="skip-link" href="#main">Bỏ qua đến nội dung chính</a>
+
+  <header role="banner">
+    <a class="brand" href="../index.html" aria-label="Quay về YUNIE STATUS">
+      <div class="brand-mark" aria-hidden="true">Y</div>
+      <div class="brand-text">
+        <strong>EXECUTIVE FUNCTION</strong>
+        <span>ADHD × Harness · KN-054 · khung xương ngoài của não</span>
+      </div>
+    </a>
+    <nav aria-label="Thao tác nhanh">
+      <a class="btn" href="../index.html">← STATUS</a>
+      <a class="btn primary" href="#lab">🧪 Lab</a>
+    </nav>
+  </header>
+
+  <div class="dots" role="navigation" aria-label="Điều hướng mục">
+    <a href="#top" class="active" aria-label="Mở đầu" aria-current="true"></a>
+    <a href="#adhd" aria-label="ADHD trong 60 giây"></a>
+    <a href="#explorer" aria-label="6 executive functions"></a>
+    <a href="#agent" aria-label="Agent cũng ADHD"></a>
+    <a href="#lab" aria-label="Lab working memory"></a>
+    <a href="#rules" aria-label="Bộ luật EF"></a>
+    <a href="#tips" aria-label="Mẹo dùng harness"></a>
+  </div>
+
+  <main id="main" role="main">
+    <section id="top" aria-labelledby="t-hero">
+      <span class="kicker">🧠 ADHD · Executive Function · KN-054</span>
+      <h1 id="t-hero">ADHD không thiếu chú ý.<br>Thiếu <span class="grad">khung xương</span>.</h1>
+      <p class="lead">Mô hình nổi bật về ADHD (Russell Barkley): vấn đề không nằm ở việc <em>có</em> chú ý hay không — mà ở <strong>executive function</strong>: bộ "điều hành" của não (kìm hành vi, giữ thông tin, khởi động, lập kế hoạch, tự giám sát).</p>
+      <p class="lead">Cách xử lý không phải "cố gắng hơn" — mà là <strong>externalize mọi thứ</strong>: bộ nhớ, thời gian, luật, động lực… ra khỏi đầu và đặt vào môi trường. Harness v2 tình cờ — à không, <em>có chủ đích</em> — là một khung xương ngoài như vậy. Cho cả agent lẫn người.</p>
+      <div class="chips-row">
+        <span class="tag">6 EF ↔ 6 cơ chế thật</span>
+        <span class="tag">KN-054</span>
+        <span class="tag violet">0-dep · static</span>
+        <span class="tag violet">🇻🇳 Tiếng Việt</span>
+      </div>
+    </section>
+
+    <section id="adhd" aria-labelledby="t-adhd">
+      <span class="kicker">📖 01 · ADHD trong 60 giây</span>
+      <h2 id="t-adhd">Ba dạng, một gốc chung</h2>
+      <p class="lead">DSM-5 chia 3 dạng trình bày. Nhưng tầng dưới cùng thường là <strong>executive function</strong> — và đó là tầng harness quan tâm.</p>
+      <div class="cards">
+        <div class="card"><span class="icon" aria-hidden="true">🌫️</span><h3>Giảm chú ý</h3><p>Dễ lơ đãng, hay quên, lạc trôi — thường bị bỏ sót vì "trông bình thường".</p></div>
+        <div class="card"><span class="icon" aria-hidden="true">⚡</span><h3>Tăng động – bốc đồng</h3><p>Ngồi không yên, nói nhiều, ngắt lời, khó chờ đợi.</p></div>
+        <div class="card"><span class="icon" aria-hidden="true">🔀</span><h3>Kết hợp</h3><p>Cả hai nhóm — dạng phổ biến nhất.</p></div>
+      </div>
+      <div class="callout"><p><strong>Không phải lười.</strong> Khó <em>khởi động</em> và khó <em>điều hành</em> khác với không cố gắng. Nhiều người còn <strong>hyperfocus</strong> cực mạnh khi hứng thú — chú ý không thiếu, nó khó điều khiển.</p></div>
+      <div class="callout"><p><strong>AI agents cũng vậy.</strong> Context = working memory hữu hạn. Không cảm giác thời gian. Dễ bị context nhiễu "poison". Kẹt vòng lặp như hyperfocus. Cùng giới hạn → cùng giải pháp: khung xương ngoài.</p></div>
+      <div class="callout"><p><strong>Trang này không chẩn đoán.</strong> Đây là minh họa thiết kế hệ thống, không thay thế chuyên gia y tế/tâm lý. Nếu bạn đang thắc mắc về bản thân — đi đánh giá chuyên khoa là chuẩn nhất.</p></div>
+    </section>
+
+    <section id="explorer" aria-labelledby="t-explorer">
+      <span class="kicker">🔍 02 · Explorer</span>
+      <h2 id="t-explorer">6 executive functions ↔ harness đã có gì</h2>
+      <p class="lead">Chọn một EF để xem: nó làm gì · khi yếu thì sao · harness đã có <strong>cơ chế thật</strong> nào (không phải ẩn dụ suông — mỗi mục là file/luật/script có thật trong repo).</p>
+      <div class="ef-layout">
+        <div class="ef-tablist" role="tablist" aria-label="Sáu executive functions" aria-orientation="vertical" id="ef-tablist"></div>
+        <div class="ef-panels" id="ef-panels"></div>
+      </div>
+    </section>
+
+    <section id="agent" aria-labelledby="t-agent">
+      <span class="kicker">🤖 03 · Agent cũng "ADHD"</span>
+      <h2 id="t-agent">Failure mode ↔ guardrail — đặt tên để nhận diện</h2>
+      <p class="lead">Mỗi accommodation của harness không phải "mẹo vặt" — nó là câu trả lời cho một failure mode cụ thể của bộ não hữu hạn.</p>
+      <div class="agent-grid">
+        <div class="agent-row">
+          <div class="agent-fail"><strong>❌ Hyperfocus loop</strong><p>Kẹt fix mãi một hypothesis, retry nguyên strategy, gọi đó là "kiên trì".</p></div>
+          <div class="agent-fix"><code>3-fix limit/check</code><code>systematic-debugging — đổi hypothesis</code></div>
+        </div>
+        <div class="agent-row">
+          <div class="agent-fail"><strong>❌ Distraction / poisoning</strong><p>Context phình, lặp history, hallucination lọt vào rồi bị reference tiếp.</p></div>
+          <div class="agent-fix"><code>context.mjs</code><code>quarantine → compress → isolate</code></div>
+        </div>
+        <div class="agent-row">
+          <div class="agent-fail"><strong>❌ Time blindness</strong><p>Không biết "bao lâu rồi / còn bao nhiêu" — scope phình, session trôi.</p></div>
+          <div class="agent-fix"><code>todo visible</code><code>bounded task</code><code>≤200 LOC/diff</code></div>
+        </div>
+        <div class="agent-row">
+          <div class="agent-fail"><strong>❌ Delay aversion</strong><p>Né task khó/chán — đứng im hoặc lòng vòng quanh nó.</p></div>
+          <div class="agent-fix"><code>chia nhỏ "1 hành động"</code><code>micro-win mở đà</code></div>
+        </div>
+        <div class="agent-row">
+          <div class="agent-fail"><strong>❌ Working memory leak</strong><p>Quên instruction giữa session dài; quyết định "trong đầu" rồi mất.</p></div>
+          <div class="agent-fix"><code>knowleged.md đọc trước</code><code>decision ghi ra file</code></div>
+        </div>
+        <div class="agent-row">
+          <div class="agent-fail"><strong>❌ Wall-of-text</strong><p>Dội output — người đọc overload, không biết đâu là việc cần làm.</p></div>
+          <div class="agent-fix"><code>kết luận trước</code><code>1 next step</code><code>chunk ≤4 dòng</code></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="lab" aria-labelledby="t-lab">
+      <span class="kicker">🧪 04 · Lab</span>
+      <h2 id="t-lab">Working memory bị chiếm — tự thử</h2>
+      <p class="lead">Không nhiễu thì nhớ tốt. Thêm một chút phân tâm — mất ngay. Bài thử 30 giây này cho bạn <em>cảm giác</em> vì sao não không nên được giao việc giữ thông tin.</p>
+      <div class="lab">
+        <div class="lab-bar" aria-hidden="true"><div class="lab-progress" id="lab-progress"></div></div>
+        <p class="sr-only" aria-live="polite" id="lab-live" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)"></p>
+
+        <div class="lab-phase" id="phase-idle">
+          <h3 tabindex="-1">Sẵn sàng?</h3>
+          <ol class="lab-steps">
+            <li>Bạn sẽ thấy <strong>4 từ</strong> trong 6 giây — cố nhớ.</li>
+            <li>Rồi 3 câu toán nhanh xuất hiện — <strong>nhiễu</strong> (không tính điểm, cứ trả lời).</li>
+            <li>Cuối cùng gõ lại những từ bạn nhớ được.</li>
+          </ol>
+          <div class="lab-actions"><button class="btn primary" id="lab-start" type="button">🧪 Bắt đầu thử nghiệm</button></div>
+        </div>
+
+        <div class="lab-phase" id="phase-memorize" hidden>
+          <h3 tabindex="-1">1 · Nhớ 4 từ này</h3>
+          <div class="words" id="lab-words"></div>
+          <p class="lab-count">Còn <strong id="lab-countdown">6</strong> giây — đừng ghi ra giấy nhé 😄</p>
+        </div>
+
+        <div class="lab-phase" id="phase-quiz" hidden>
+          <h3 tabindex="-1">2 · Nhiễu — trả lời nhanh (không tính điểm)</h3>
+          <div id="lab-quiz"></div>
+          <div class="lab-actions"><button class="btn primary" id="lab-to-recall" type="button" disabled>Tới phần nhớ lại →</button></div>
+        </div>
+
+        <div class="lab-phase" id="phase-recall" hidden>
+          <h3 tabindex="-1">3 · Bạn nhớ được từ nào?</h3>
+          <label for="lab-recall-input">Gõ các từ nhớ được — cách nhau bằng dấu phẩy hoặc khoảng trắng. Thứ tự không quan trọng.</label>
+          <input class="lab-input" id="lab-recall-input" type="text" autocomplete="off" placeholder="ví dụ: hạt, đèn" />
+          <div class="lab-actions"><button class="btn primary" id="lab-check" type="button">Kiểm tra</button></div>
+        </div>
+
+        <div class="lab-phase" id="phase-result" hidden>
+          <h3 tabindex="-1">Kết quả</h3>
+          <p class="lab-score"><strong id="lab-score">0/4</strong> từ nhớ được</p>
+          <div class="lab-chips" id="lab-chips"></div>
+          <p class="lead" id="lab-msg"></p>
+          <div class="lab-actions"><button class="btn" id="lab-replay" type="button">↻ Làm lại</button></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="rules" aria-labelledby="t-rules">
+      <span class="kicker">📜 05 · Bộ luật EF</span>
+      <h2 id="t-rules">Những gì đã vào harness từ plan này</h2>
+      <ul class="check">
+        <li><strong>Instruction <code>executive-function</code></strong> — nguyên lý externalize + bảng 6 EF ↔ cơ chế + failure modes + output rules. Agent tự load khi task match.</li>
+        <li><strong>Focus Guard</strong> trong <code>harness-workflow</code> — todo visible · báo tiến độ từng bước · bounded 3-fix / ≤200 LOC · kết luận trước.</li>
+        <li><strong>YUNIE Personality v2.3 §18</strong> — output EF-aware: kết luận trước · 1 next step · chunk + micro-win · không tường chữ · không shame.</li>
+        <li><strong>KN-054</strong> trong <code>docs/knowleged.md</code> + 3 anti-patterns mới (retry nguyên strategy · trông vào "nhớ" · dội wall-of-text).</li>
+        <li><strong>Trang này</strong> — <code>www/executive-function/</code>, deploy Pages; explorer + lab là demo sống của externalize.</li>
+      </ul>
+    </section>
+
+    <section id="tips" aria-labelledby="t-tips">
+      <span class="kicker">💜 06 · Dành cho bạn</span>
+      <h2 id="t-tips">Nếu bạn có ADHD, dùng harness thế này</h2>
+      <ul class="check">
+        <li><strong>Bắt đầu bằng 1 câu, không cần đúng.</strong> Gõ đại ý — bước Clarify sẽ hỏi gọn. Không cần chuẩn bị trước.</li>
+        <li><strong>Không cần nhớ gì cả.</strong> Todo + <code>.agent/plans/</code> + <code>knowleged.md</code> giữ hết. Quay lại chỉ cần đọc file — não để nghĩ.</li>
+        <li><strong>Task dài → xin "3 todos đầu".</strong> Đừng nhận cả kế hoạch 10 bước. Từng chunk, có micro-win.</li>
+        <li><strong>Thấy 3 câu hỏi một lượt? Bảo YUNIE chọn hộ 1.</strong> One next step là luật của hệ thống, không phải mong ước.</li>
+        <li><strong>Sai không sao.</strong> Policy/verify/learn là lưới an toàn — bug thành knowledge (KN), không thành tòa án.</li>
+      </ul>
+    </section>
+  </main>
+
+  <footer>
+    Làm bởi <strong>YUNIE</strong> — Your Unified Navigator for Intelligent Execution · Knowledge: <code>docs/knowleged.md</code> KN-054 · Plan: <code>.agent/plans/executive-function/</code>
+    <p class="fine">Nguồn tham khảo: mô hình executive-function deficit của ADHD (Russell Barkley) + DSM-5 (3 dạng trình bày) — diễn giải tối giản, không sao chép. Trang không thay thế chẩn đoán y khoa. · <a href="../index.html">← Về STATUS</a></p>
+  </footer>
+
+  <script>
+    /* Data tĩnh — đặt ngoài IIFE để từng module JS riêng đo được (Slop Gate · KN-047) */
+    var EF_EXPLORER = [
+        {
+          id: 'inhibit', icon: '🛑', name: 'Ức chế', en: 'Inhibition',
+          normal: 'Kìm hành vi sai trước khi nó xảy ra — "đừng" thắng "muốn".',
+          weak: ['Làm/buột miệng trước rồi mới nghĩ', 'Phá luật khi không ai nhìn', 'Sửa test cho pass để "xong việc"'],
+          mech: ['policy.json — deny-first, fail-closed', 'deny-test-mutate + audit hash-chain', '3-fix limit / check'],
+          why: 'Luật chạy TRƯỚC hành vi và được máy cưỡng chế — không phụ thuộc lúc đó ai nhớ luật.'
+        },
+        {
+          id: 'memory', icon: '🧠', name: 'Working memory', en: 'Trí nhớ làm việc',
+          normal: 'Giữ vài mẩu thông tin trong đầu để thao tác — vài mẩu, không phải hàng chục.',
+          weak: ['Quên giữa chừng, làm lại việc đã làm', 'Mất context khi quay lại sau nhiều ngày', 'Quyết định "trong đầu" rồi biến mất'],
+          mech: ['manage_todo_list', '.agent/plans/<task>/', 'knowleged.md', 'session log'],
+          why: 'Não để nghĩ, giấy để nhớ — mọi quyết định quan trọng ghi ra file, không giữ trong đầu.'
+        },
+        {
+          id: 'emotion', icon: '🌊', name: 'Điều tiết cảm xúc', en: 'Emotion regulation',
+          normal: 'Hạ nhiệt cảm xúc để còn ra quyết định — tức thì, chán nản, hoảng đều có ngưỡng.',
+          weak: ['Hoảng khi build đỏ, xóa/undo loạn', 'Bỏ cuộc giữa pipeline khi mới fail bước 2', 'Rage-fix: sửa càng lúc càng to'],
+          mech: ['Error handling 3 cấp (YUNIE §8)', '3-fix limit → escalate', 'fresh-eyes tiered', 'micro-win'],
+          why: 'Cảm xúc hạ nhiệt bằng cấu trúc: biết bước tiếp theo là gì + biết chính xác khi nào được dừng.'
+        },
+        {
+          id: 'initiate', icon: '🚀', name: 'Khởi động', en: 'Initiation',
+          normal: 'Bắt đầu task mà không cần đợi "hứng" hay đợi deadline sát mặt.',
+          weak: ['Trì hoãn vô hạn, phân vân không dám chốt', 'Superposition mãi — 5 phương án, không chọn', 'Đợi "trạng thái đúng" mới làm'],
+          mech: ['Pipeline 8 phase', 'Clarify — chốt 1 (collapse)', '"1 next step" trong mọi output'],
+          why: 'Bắt đầu = hạ ngưỡng: bước đầu tiên nhỏ tới mức không thể từ chối, và luôn biết bước kế tiếp.'
+        },
+        {
+          id: 'plan', icon: '🗺️', name: 'Lập kế hoạch', en: 'Planning',
+          normal: 'Chia bước, ưu tiên, ước lượng thời gian — nhìn xa hơn "bây giờ".',
+          weak: ['Scope phình: "tiện làm luôn cái này"', 'Task trôi vô hạn, không ngày kết thúc', 'Ước lượng 30 phút, thực tế 3 ngày'],
+          mech: ['PRD → Design → Plan', 'YAGNI gate (minimal-ladder)', '≤200 LOC/diff (Slop Gate)', 'bounded repair loop'],
+          why: 'Kế hoạch là ràng buộc đặt NGOÀI: cắt scope trước khi code, không tin vào "trong đầu thấy ổn".'
+        },
+        {
+          id: 'monitor', icon: '🔬', name: 'Tự giám sát', en: 'Self-monitoring',
+          normal: 'Biết mình đang làm gì, tốt đến đâu — và tự phát hiện khi mình sai.',
+          weak: ['"Tưởng xong" nhưng chưa — overconfidence', 'Không thấy bug của chính mình (bug blindness)', 'Tự chấm điểm rồi tự tin'],
+          mech: ['verify + get_errors', 'Evals Gate (KN-037) + Slop Gate (KN-047)', 'fresh evidence — đo bằng tool (KN-023)'],
+          why: 'Không tự chấm điểm: nhờ máy đo (test/evals) và người ngoài framing (Dissent Review) — model tự review mình là thiên vị.'
+        }
+    ];
+    var EF_WORDS = ['hạt', 'đèn', 'sông', 'chuông'];
+    var EF_QUIZ = [
+      { q: '7 + 5 = ?', opts: [11, 12, 13], a: 12 },
+      { q: '9 − 3 = ?', opts: [5, 6, 7], a: 6 },
+      { q: '6 + 8 = ?', opts: [13, 14, 15], a: 14 }
+    ];
+    var EF_PROGRESS = { idle: 8, memorize: 30, quiz: 55, recall: 80, result: 100 };
+    var EF_MSGS = [
+      '0/4 — và không sao cả. Đây chính là điểm mấu chốt: não bạn không hỏng, nó chỉ không được thiết kế để giữ nhiều thứ một lúc. Vì thế hệ thống mới ghi ra đĩa thay vì bắt bạn nhớ.',
+      'Não bạn không hỏng — nó chỉ phải giữ quá nhiều thứ cùng lúc. Đây chính là lý do .agent/plans/ và todo list tồn tại: não để nghĩ, giấy để nhớ.',
+      'Não bạn không hỏng — nó chỉ phải giữ quá nhiều thứ cùng lúc. Đây chính là lý do .agent/plans/ và todo list tồn tại: não để nghĩ, giấy để nhớ.',
+      'Não bạn không hỏng — nó chỉ phải giữ quá nhiều thứ cùng lúc. Đây chính là lý do .agent/plans/ và todo list tồn tại: não để nghĩ, giấy để nhớ.',
+      '🎯 4/4 — trí nhớ tốt! Nhưng để ý: bạn chỉ phải giữ 4 từ, không deadline, không tab khác. Trong task thật có hàng chục thứ cùng lúc — đó là lúc todo và plans cứu bạn.'
+    ];
+  </script>
+
+  <script>
+    /* Explorer — tablist + panels (KN-050 a11y contract) */
+    (function () {
+      'use strict';
+      var $ = function (s) { return document.querySelector(s); };
+      var tablist = $('#ef-tablist');
+      var wrap = $('#ef-panels');
+      if (!tablist || !wrap) return;
+      var tabs = [];
+
+      EF_EXPLORER.forEach(function (ef) {
+        var tab = document.createElement('button');
+        tab.type = 'button'; tab.className = 'ef-tab'; tab.id = 'tab-' + ef.id; tab.tabIndex = -1;
+        tab.setAttribute('role', 'tab');
+        tab.setAttribute('aria-controls', 'panel-' + ef.id);
+        tab.innerHTML = '<span class="ef-icon" aria-hidden="true">' + ef.icon + '</span>' +
+          '<span class="ef-label"><strong>' + ef.name + '</strong><small>' + ef.en + '</small></span>';
+        tab.addEventListener('click', function () { select(tabs.indexOf(tab)); });
+        tablist.appendChild(tab); tabs.push(tab);
+
+        var panel = document.createElement('div');
+        panel.className = 'ef-panel';
+        panel.setAttribute('role', 'tabpanel');
+        panel.id = 'panel-' + ef.id;
+        panel.setAttribute('aria-labelledby', 'tab-' + ef.id);
+        panel.tabIndex = 0;
+        panel.hidden = true;
+        panel.innerHTML =
+          '<h3>' + ef.icon + ' ' + ef.name + ' <span class="muted">— ' + ef.en + '</span></h3>' +
+          '<p class="ef-normal"><strong>Bình thường:</strong> ' + ef.normal + '</p>' +
+          '<p class="ef-sub">Khi yếu (ADHD / agent quá tải)</p>' +
+          '<ul class="ef-weak">' + ef.weak.map(function (w) { return '<li>' + w + '</li>'; }).join('') + '</ul>' +
+          '<p class="ef-sub">Harness đã có — cơ chế thật</p>' +
+          '<div class="ef-mech">' + ef.mech.map(function (m) { return '<code>' + m + '</code>'; }).join('') + '</div>' +
+          '<p class="ef-why">💡 ' + ef.why + '</p>';
+        wrap.appendChild(panel);
+      });
+      var panelEls = Array.prototype.slice.call(wrap.children);
+
+      function select(idx, focusTab) {
+        tabs.forEach(function (t, i) {
+          var on = i === idx;
+          t.setAttribute('aria-selected', String(on));
+          t.tabIndex = on ? 0 : -1;
+          panelEls[i].hidden = !on;
+        });
+        if (focusTab) tabs[idx].focus();
+      }
+      select(0);
+
+      var MOVES = { ArrowRight: 1, ArrowDown: 1, ArrowLeft: -1, ArrowUp: -1, Home: 'first', End: 'last' };
+      tablist.addEventListener('keydown', function (e) {
+        var step = MOVES[e.key];
+        if (!step) return;
+        e.preventDefault();
+        var cur = tabs.indexOf(document.activeElement);
+        if (cur < 0) cur = 0;
+        var next = cur;
+        if (typeof step === 'number') next = (cur + step + tabs.length) % tabs.length;
+        if (step === 'first') next = 0;
+        if (step === 'last') next = tabs.length - 1;
+        select(next, true);
+      });
+    })();
+  </script>
+
+  <script>
+    /* Lab — quiz (nhiễu): mount + xử lý trả lời */
+    (function () {
+      'use strict';
+      var $ = function (s) { return document.querySelector(s); };
+      var quizBox = $('#lab-quiz');
+      if (!quizBox) return;
+
+      window.EF_QUIZ_MOUNT = function () {
+        quizBox.dataset.answered = '0';
+        $('#lab-to-recall').disabled = true;
+        quizBox.innerHTML = EF_QUIZ.map(function (item, qi) {
+          var opts = item.opts.map(function (o) {
+            return '<button class="opt" type="button">' + o + '</button>';
+          }).join('');
+          return '<fieldset class="q" data-a="' + item.a + '"><legend>' + (qi + 1) + '. ' + item.q + '</legend><div class="opts">' + opts + '</div></fieldset>';
+        }).join('');
+      };
+
+      quizBox.addEventListener('click', function (e) {
+        var b = e.target.closest('.opt');
+        if (!b) return;
+        var fs = b.closest('fieldset');
+        if (fs.dataset.done) return;
+        fs.dataset.done = '1';
+        var correct = Number(fs.dataset.a);
+        Array.prototype.forEach.call(fs.querySelectorAll('.opt'), function (o) {
+          o.disabled = true;
+          if (Number(o.textContent) === correct) o.classList.add('right');
+        });
+        if (Number(b.textContent) !== correct) b.classList.add('wrong');
+        quizBox.dataset.answered = String(Number(quizBox.dataset.answered) + 1);
+        if (Number(quizBox.dataset.answered) === EF_QUIZ.length) $('#lab-to-recall').disabled = false;
+      });
+    })();
+  </script>
+
+  <script>
+    /* Lab — flow: nhớ → chuyển phase → nhớ lại → kết quả */
+    (function () {
+      'use strict';
+      var $ = function (s) { return document.querySelector(s); };
+      var root = $('#phase-idle');
+      if (!root) return;
+      var live = $('#lab-live');
+      var timer = null;
+
+      function announce(msg) { live.textContent = msg; }
+
+      function showPhase(name) {
+        ['idle', 'memorize', 'quiz', 'recall', 'result'].forEach(function (p) {
+          $('#phase-' + p).hidden = p !== name;
+        });
+        $('#lab-progress').style.width = EF_PROGRESS[name] + '%';
+        var head = $('#phase-' + name + ' h3');
+        if (head) head.focus({ preventScroll: true });
+      }
+
+      function startMemorize() {
+        showPhase('memorize');
+        announce('Giai đoạn 1 — nhớ 4 từ trong 6 giây.');
+        $('#lab-words').innerHTML = EF_WORDS.map(function (w) { return '<span class="word">' + w + '</span>'; }).join('');
+        var left = 6;
+        $('#lab-countdown').textContent = String(left);
+        timer = setInterval(function () {
+          left -= 1;
+          $('#lab-countdown').textContent = String(Math.max(left, 0));
+          if (left) return;
+          clearInterval(timer); timer = null;
+          window.EF_QUIZ_MOUNT(); showPhase('quiz');
+          announce('Giai đoạn 2 — trả lời 3 câu toán nhanh.');
+        }, 1000);
+      }
+
+      function norm(s) {
+        return s.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/đ/g, 'd').trim();
+      }
+
+      function checkRecall() {
+        var given = {};
+        ($('#lab-recall-input').value || '').split(/[,\s;]+/).forEach(function (w) {
+          given[norm(w)] = w;
+        });
+        var hits = EF_WORDS.filter(function (w) { return given[norm(w)] !== undefined; });
+        $('#lab-score').textContent = hits.length + '/4';
+        $('#lab-chips').innerHTML = EF_WORDS.map(function (w) {
+          var hit = given[norm(w)] !== undefined;
+          return '<span class="' + (hit ? 'chip ok' : 'chip miss') + '">' + (hit ? '✅ ' : '⬜ ') + w + '</span>';
+        }).join('');
+        $('#lab-msg').textContent = EF_MSGS[hits.length];
+        showPhase('result');
+        announce('Kết quả: ' + hits.length + ' trên 4 từ.');
+      }
+
+      function resetLab() {
+        clearInterval(timer); timer = null;
+        $('#lab-recall-input').value = '';
+        $('#lab-chips').innerHTML = '';
+        $('#lab-score').textContent = '0/4';
+        $('#lab-msg').textContent = '';
+        window.EF_QUIZ_MOUNT();
+        showPhase('idle');
+        announce('Đã làm lại — sẵn sàng thử lần nữa.');
+      }
+
+      $('#lab-start').addEventListener('click', startMemorize);
+      $('#lab-to-recall').addEventListener('click', function () {
+        showPhase('recall');
+        announce('Giai đoạn 3 — gõ những từ bạn nhớ được.');
+      });
+      $('#lab-check').addEventListener('click', checkRecall);
+      $('#lab-replay').addEventListener('click', resetLab);
+    })();
+  </script>
+
+  <script>
+    /* Dots nav — active theo scroll (rAF-throttled, deterministic) */
+    (function () {
+      'use strict';
+      var dots = Array.prototype.slice.call(document.querySelectorAll('.dots a'));
+      if (!dots.length) return;
+      var sections = dots.map(function (d) { return document.querySelector(d.getAttribute('href')); });
+      var ticking = false;
+
+      function setActive() {
+        ticking = false;
+        var y = window.scrollY + 110;
+        var idx = 0;
+        sections.forEach(function (s, i) { if (s && s.offsetTop <= y) idx = i; });
+        dots.forEach(function (d, i) {
+          var on = i === idx;
+          d.classList.toggle('active', on);
+          if (on) d.setAttribute('aria-current', 'true'); else d.removeAttribute('aria-current');
+        });
+      }
+
+      window.addEventListener('scroll', function () {
+        if (ticking) return;
+        ticking = true;
+        requestAnimationFrame(setActive);
+      }, { passive: true });
+      setActive();
+    })();
+  </script>
+</body>
+</html>

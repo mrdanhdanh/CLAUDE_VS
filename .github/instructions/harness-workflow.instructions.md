@@ -111,6 +111,14 @@ Với task nhỏ (1-2 file): rút gọn Explore(quick) → Clarify(1 câu) → P
 
 Chi tiết: `.github/instructions/product-quality.instructions.md`
 
+## Focus Guard (KN-054 — externalize, không "cố gắng hơn")
+
+- Task >2 bước → todo visible + **báo tiến độ từng bước** (không im lặng dài) — working memory nằm ở hệ thống, không ở đầu ai.
+- Bounded mặc định: 3-fix limit/check, ≤200 LOC/diff, bounded repair loop — hết budget → escalate, không retry mù.
+- Output cho người: **kết luận trước + 1 next step + chunk** (đoạn ≤4 dòng) — wall-of-text là overload, không phải đầy đủ.
+- Retry phải kèm thay đổi (hypothesis/tool) rồi đo lại — "vẫn lỗi" mà lặp nguyên output = hyperfocus loop (KN-023).
+- Chi tiết: `executive-function.instructions.md` (bảng 6 EF ↔ cơ chế + agent failure modes).
+
 ## Memory
 
 - Đọc `docs/knowleged.md` + `/memories/` và `/memories/repo/` trước khi bắt đầu

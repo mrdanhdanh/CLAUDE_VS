@@ -306,6 +306,7 @@ async function main() {
   const pageMeta = {
     'aar': { title: 'AAR vs Harness v2', type: 'so sánh' },
     'ai-news': { title: 'AI News', type: 'tin AI' },
+    'executive-function': { title: 'Executive Function × Harness (KN-054)', type: 'khám phá' },
     'glassui': { title: 'GlassUI', type: 'demo' },
     'library': { title: 'Thư Viện', type: 'demo' },
     'n5-blazor': { title: 'N5 Blazor', type: 'demo' },

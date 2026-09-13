@@ -378,11 +378,11 @@ img{max-width:100%;height:auto}
 }
 .card-pad{padding:16px}
 @media(min-width:768px){.card-pad{padding:20px}}
-.grid-2{display:grid;gap:16px;margin:20px 0}
-@media(min-width:768px){.grid-2{grid-template-columns:1fr 1fr}}
+.grid-2{display:grid;gap:16px;margin:20px 0;grid-template-columns:minmax(0,1fr)}
+@media(min-width:768px){.grid-2{grid-template-columns:repeat(2,minmax(0,1fr))}}
 .grid-2 > .section{margin:0}
-.grid-3{display:grid;gap:16px}
-@media(min-width:900px){.grid-3{grid-template-columns:repeat(3,1fr)}}
+.grid-3{display:grid;gap:16px;grid-template-columns:minmax(0,1fr)}
+@media(min-width:900px){.grid-3{grid-template-columns:repeat(3,minmax(0,1fr))}}
 @media(max-width:375px){
   .grid-2{gap:12px;margin:16px 0}
   .grid-3{gap:12px}

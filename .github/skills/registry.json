@@ -24,7 +24,7 @@
       "path": "skills/glass-rainbow-effects",
       "ref": "local",
       "enabled": true,
-      "description": "Liquid glass + rainbow border effects for web — Apple Liquid Glass backdrop-filter glassmorphism, frosted glass nav/cards/buttons/sheets, conic-gradient rainbow borders, animated rotating gradients, glass+rainbow combos. Use when user wants liquid glass, glassmorphism, frosted glass, backdrop-filter, rainbow border, gradient border, animated border, neon border, glass card, glass navbar, premium UI effects, or says liquid glass / rainbow border / glass effect.",
+      "description": "Liquid glass + rainbow border effects for web — Apple Liquid Glass backdrop-filter glassmorphism, frosted glass nav/cards/buttons/sheets, conic-gradient rainbow borders, animated rotating gradients, glass+rainbow combos. Use when user wants liquid glass, glassmorphism, frosted glass, backdrop-filter",
       "file": "glass-rainbow-effects/SKILL.md",
       "installedAt": "2026-08-29T15:13:36.595Z"
     },
@@ -95,7 +95,7 @@
       "path": "skills/harness-build-config",
       "ref": "local",
       "enabled": true,
-      "description": "Task-agnostic lessons 'Build & Config' chưng cất từ docs/knowleged.md (2 KN: KN-008, KN-009) + .agent/bugs/. Use when task chạm build, process, dx, dotnet, config, api — áp Cách phòng tránh trước khi code, tránh lặp bug cũ. DisCo-lite, regenerate bằng distill-agnostic.mjs.",
+      "description": "Task-agnostic lessons 'Build & Config' chưng cất từ docs/knowleged.md (4 KN: KN-008, KN-009, KN-015, KN-041) + .agent/bugs/. Use when task chạm build, process, dx, dotnet, config, api, deploy, ci, workflow, pages — áp Cách phòng tránh trước khi code, tránh lặp bug cũ. DisCo-lite, regenerate bằng dis",
       "file": "harness-build-config/SKILL.md",
       "installedAt": "2026-09-04T09:07:42.922Z"
     },
@@ -113,7 +113,7 @@
       "path": "skills/harness-minimal",
       "ref": "local",
       "enabled": true,
-      "description": "Task-agnostic lessons 'Minimal Code & YAGNI' chưng cất từ docs/knowleged.md (1 KN: KN-013) + .agent/bugs/. Use when task chạm process, minimal, ponytail, yagni, dx — áp Cách phòng tránh trước khi code, tránh lặp bug cũ. DisCo-lite, regenerate bằng distill-agnostic.mjs.",
+      "description": "Task-agnostic lessons 'Minimal Code & YAGNI' chưng cất từ docs/knowleged.md (3 KN: KN-013, KN-020, KN-022) + .agent/bugs/. Use when task chạm process, minimal, ponytail, yagni, dx, verification, review, architecture, agent — áp Cách phòng tránh trước khi code, tránh lặp bug cũ. DisCo-lite, regenerat",
       "file": "harness-minimal/SKILL.md",
       "installedAt": "2026-09-04T09:07:42.922Z"
     },
@@ -157,7 +157,7 @@
       "source": "local",
       "file": "archify/SKILL.md",
       "enabled": true,
-      "description": "Create polished, verifiable architecture, workflow, sequence, data-flow, lifecycle diagrams as self-contained HTML — typed JSON IR, deterministic validation, atomic delivery. Use when visualizing system architecture, infrastructure, cloud/security topology, workflow, API sequence, data pipeline, state machine, or converting Mermaid to beautiful diagrams. Port of tt-a1i/archify (50k⭐) for Harness v2, tháo lắp via harness-manager.",
+      "description": "Create polished, verifiable architecture, workflow, sequence, data-flow, lifecycle diagrams as self-contained HTML — typed JSON IR, deterministic validation, atomic delivery. Use when visualizing system architecture, infrastructure, cloud/security topology, workflow, API sequence, data pipeline, sta",
       "installedAt": "2026-09-06T15:30:08.193Z",
       "path": "skills/archify",
       "ref": "local"
