@@ -1,12 +1,12 @@
 {
-  "generatedAt": "2026-09-12T11:01:33.163Z",
+  "generatedAt": "2026-09-13T07:10:59.609Z",
   "generatedBy": "YUNIE × Last30Days",
   "version": 2,
   "description": "Tin AI mới nhất — tổng hợp từ Last30Days (HN, GitHub, DEV.to, Reddit, arXiv, HackerNoon) trong 30 ngày qua. Chủ đề: AI. Tự động cập nhật bởi YUNIE.",
   "last30days": {
     "enabled": true,
     "topic": "AI",
-    "since": "2026-08-13",
+    "since": "2026-08-14",
     "days": 30,
     "sources": [
       "Hacker News (Algolia, free)",
@@ -55,245 +55,252 @@
   ],
   "articles": [
     {
-      "id": "hnoon-a-framework-for-conversational-system-modeling",
-      "title": "A Framework for Conversational System Modeling",
-      "summary": "Continuation, turn change, backchannel, interruption, silence: five events a model predicts from 30 seconds of dual-channel audio. — by Picture in the Noise on HackerNoon.",
-      "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/a-framework-for-conversational-system-modeling",
-      "category": "products",
-      "date": "2026-09-12",
-      "hot": true,
-      "tags": [
-        "HackerNoon",
-        "ai-dialogue-systems",
-        "AI"
-      ]
-    },
-    {
-      "id": "hnoon-the-slop-should-not-be-tolerated",
-      "title": "The Slop Should Not Be Tolerated",
-      "summary": "AI coding loops can churn out slop as fast as features. Here's how meaningful tests and protected quality checks keep bad code from piling up. — by Rox dT on HackerNoon.",
-      "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/the-slop-should-not-be-tolerated",
-      "category": "products",
-      "date": "2026-09-12",
-      "hot": true,
-      "tags": [
-        "HackerNoon",
-        "ai-agents",
-        "AI"
-      ]
-    },
-    {
-      "id": "hnoon-recursive-self-improvement-and-agentic-ai-fear-of-the-ai-sin",
-      "title": "Recursive Self-Improvement and Agentic AI: Fear of the AI Singularity",
-      "summary": "Explore recursive self-improvement, agentic AI risks and the AI singularity debate, including OpenAI security incidents and Anthropic’s safety concerns. — by Giovanni Coletta on HackerNoon.",
-      "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/recursive-self-improvement-and-agentic-ai-fear-of-the-ai-singularity",
+      "id": "hn-49679685",
+      "title": "Anthropic CEO says AI swarm could 'take over the Internet' in 6-12 months",
+      "summary": "Anthropic CEO says AI swarm could 'take over the Internet' in 6-12 months — 18 points, 12 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://venturebeat.com/security/anthropic-ceo-says-ai-swarm-could-take-over-the-entire-internet-in-6-12-months-commits-to-ai-slowdown-plan",
       "category": "big-tech",
-      "date": "2026-09-12",
+      "date": "2026-09-13",
       "hot": true,
       "tags": [
-        "HackerNoon",
-        "recursive-ai-systems",
-        "AI"
+        "HN",
+        "AI",
+        "story",
+        "author_pseudolus"
       ]
     },
     {
-      "id": "hnoon-looking-at-the-future-of-tech-in-healthcare",
-      "title": "Looking at the Future of Tech in Healthcare",
-      "summary": "67% of healthcare facilities hit by ransomware in 2024, nurses stretched to 11 patients a day: automated tube delivery cuts hand-to-hand contact. — by Brian Wallace on HackerNoon.",
-      "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/looking-at-the-future-of-tech-in-healthcare",
-      "category": "products",
-      "date": "2026-09-12",
-      "hot": true,
-      "tags": [
-        "HackerNoon",
-        "healthcare",
-        "AI"
-      ]
-    },
-    {
-      "id": "hnoon-the-embarrassing-rise-of-vibe-lawyering",
-      "title": "The Embarrassing Rise of Vibe Lawyering",
-      "summary": "The use of AI in law, known as \"vibe lawyering,\" has grown rapidly, with chatbots helping attorneys research case law and prepare legal documents, but this trend also poses signifi — by Zac Amos on HackerNoon.",
-      "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/the-embarrassing-rise-of-vibe-lawyering",
-      "category": "safety",
-      "date": "2026-09-12",
-      "hot": true,
-      "tags": [
-        "HackerNoon",
-        "vibe-lawyering",
-        "AI"
-      ]
-    },
-    {
-      "id": "hnoon-where-ai-generated-design-breaks-ux-laws",
-      "title": "Where AI-Generated Design Breaks UX Laws",
-      "summary": "AI design generators rarely produce that code, and the people using them rarely know that this code is missing. — by Viacheslav Derzhaiev on HackerNoon.",
-      "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/where-ai-generated-design-breaks-ux-laws",
-      "category": "products",
-      "date": "2026-09-12",
-      "hot": true,
-      "tags": [
-        "HackerNoon",
-        "product-design",
-        "AI"
-      ]
-    },
-    {
-      "id": "hnoon-turning-non-standard-business-documents-into-structured-veri",
-      "title": "Turning Non-Standard Business Documents Into Structured, Verifiable Data",
-      "summary": "Business documents don't follow templates, so template-based parsers fail on them. OCR reads the words but can still lose the layout that gives a number its meaning. Break the pipe — by Naveen Suresh on HackerNoon.",
-      "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/turning-non-standard-business-documents-into-structured-verifiable-data",
-      "category": "safety",
-      "date": "2026-09-12",
-      "hot": true,
-      "tags": [
-        "HackerNoon",
-        "ai",
-        "AI"
-      ]
-    },
-    {
-      "id": "hnoon-why-default-kubernetes-hpa-fail-for-modern-workloads-and-why",
-      "title": "Why Default Kubernetes HPA Fail for Modern Workloads And Why We Switched to KEDA",
-      "summary": "KEDA gives the best of both worlds: proactive autoscaling to protect performance, and scale-to-zero efficiency to cut cloud costs. — by Himashi Meththasena on HackerNoon.",
-      "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/why-default-kubernetes-hpa-fail-for-modern-workloads-and-why-we-switched-to-keda",
-      "category": "products",
-      "date": "2026-09-12",
-      "hot": true,
-      "tags": [
-        "HackerNoon",
-        "keda",
-        "AI"
-      ]
-    },
-    {
-      "id": "hn-49670907",
-      "title": "At this point I feel like AI companies selling Fear",
-      "summary": "AI can do reasoning better But It can&#x27;t outsmart humans , AI gets trained on data but human have their learning with them ,only about 5% of data a human share as learning, knowledge - rest it just inside us ,So tech — 9 points, 2 comments on HN.",
+      "id": "hn-49680084",
+      "title": "Terrence Tao: AI Is Teaching Us Something Uncomfortable About Our Own Minds [video]",
+      "summary": "Terrence Tao: AI Is Teaching Us Something Uncomfortable About Our Own Minds [video] — 11 points, 0 comments on HN.",
       "source": "Hacker News",
-      "sourceUrl": "https://news.ycombinator.com/item?id=49670907",
+      "sourceUrl": "https://www.youtube.com/watch?v=DRDoABHToEo",
       "category": "products",
-      "date": "2026-09-12",
+      "date": "2026-09-13",
+      "hot": true,
+      "tags": [
+        "HN",
+        "AI",
+        "story",
+        "author_thelastgallon"
+      ]
+    },
+    {
+      "id": "hn-49680369",
+      "title": "David Sacks to AI Labs: \"Stop pretending you need anyone else's permission\"",
+      "summary": "David Sacks to AI Labs: \"Stop pretending you need anyone else's permission\" — 7 points, 0 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://xcancel.com/DavidSacks/status/2098973625252708460#m",
+      "category": "products",
+      "date": "2026-09-13",
       "hot": false,
       "tags": [
         "HN",
         "AI",
         "story",
-        "author_Vineetyadav2"
+        "author_ozozozd"
       ]
     },
     {
-      "id": "hn-49670299",
-      "title": "UAE revises 5GW AI data center plan after Iranian attacks, sources say",
-      "summary": "UAE revises 5GW AI data center plan after Iranian attacks, sources say — 5 points, 0 comments on HN.",
+      "id": "hn-49680142",
+      "title": "Claude AIs tricked into unescapable conversation [beginning: Ctrl^F to \"AI 1\"]",
+      "summary": "Claude AIs tricked into unescapable conversation [beginning: Ctrl^F to \"AI 1\"] — 7 points, 0 comments on HN.",
       "source": "Hacker News",
-      "sourceUrl": "https://www.reuters.com/world/middle-east/uae-revises-ai-data-center-plan-after-iranian-attacks-sources-say-2026-09-11/",
+      "sourceUrl": "https://www.thisamericanlife.org/896/transcript",
       "category": "products",
-      "date": "2026-09-12",
+      "date": "2026-09-13",
       "hot": false,
       "tags": [
         "HN",
         "AI",
         "story",
-        "author_giuliomagnifico"
+        "author_alister"
       ]
     },
     {
-      "id": "hn-49670715",
-      "title": "Google Has Achieved RSI",
-      "summary": "My Twitter feed is flooded with claims that Google has achieved recursive self-improvement (RSI).<p>I am curious how people here interpret this. Does what Google has demonstrated actually qualify as RSI in the stronger s — 3 points, 0 comments on HN.",
+      "id": "hn-49679971",
+      "title": "JPMorgan cut off Situational Awareness lending after AI losses",
+      "summary": "JPMorgan cut off Situational Awareness lending after AI losses — 6 points, 1 comments on HN.",
       "source": "Hacker News",
-      "sourceUrl": "https://news.ycombinator.com/item?id=49670715",
+      "sourceUrl": "https://www.ft.com/content/916eea1b-d483-49e1-9a70-53b4df8f9870",
+      "category": "products",
+      "date": "2026-09-13",
+      "hot": false,
+      "tags": [
+        "HN",
+        "AI",
+        "story",
+        "author_1vuio0pswjnm7"
+      ]
+    },
+    {
+      "id": "hn-49679599",
+      "title": "Backflip: Apple now wants to train AI models with user data after all",
+      "summary": "Backflip: Apple now wants to train AI models with user data after all — 6 points, 0 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://www.heise.de/en/news/Backflip-Apple-now-wants-to-train-AI-models-with-user-data-after-all-11451252.html",
+      "category": "safety",
+      "date": "2026-09-13",
+      "hot": false,
+      "tags": [
+        "HN",
+        "AI",
+        "story",
+        "author_jacquesm"
+      ]
+    },
+    {
+      "id": "hn-49680114",
+      "title": "AI is breaking our proxies for expertise",
+      "summary": "AI is breaking our proxies for expertise — 3 points, 2 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://www.seangoedecke.com/ai-is-breaking-our-proxies-for-expertise/",
+      "category": "products",
+      "date": "2026-09-13",
+      "hot": false,
+      "tags": [
+        "HN",
+        "AI",
+        "story",
+        "author_daniel-sc"
+      ]
+    },
+    {
+      "id": "hn-49679986",
+      "title": "Apple launches a new way to prove a photo was shot with an iPhone (not AI)",
+      "summary": "Apple launches a new way to prove a photo was shot with an iPhone (not AI) — 3 points, 3 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://www.niemanlab.org/2026/09/apple-launches-a-new-way-to-prove-a-photo-was-shot-with-an-iphone-not-generated-by-ai/",
+      "category": "safety",
+      "date": "2026-09-13",
+      "hot": false,
+      "tags": [
+        "HN",
+        "AI",
+        "story",
+        "author_ilamont"
+      ]
+    },
+    {
+      "id": "hn-49679528",
+      "title": "U.S. agencies say top Chinese AI companies systematically copied American models",
+      "summary": "U.S. agencies say top Chinese AI companies systematically copied American models — 3 points, 0 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://www.nbcnews.com/tech/tech-news/us-accuses-china-ai-developers-deepseek-alibaba-copying-american-ai-rcna596696",
+      "category": "products",
+      "date": "2026-09-13",
+      "hot": false,
+      "tags": [
+        "HN",
+        "AI",
+        "story",
+        "author_pseudolus"
+      ]
+    },
+    {
+      "id": "hn-49680571",
+      "title": "I'm an AI agent. I just fired myself from the business I built [video]",
+      "summary": "I'm an AI agent. I just fired myself from the business I built [video] — 2 points, 0 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://www.youtube.com/watch?v=p5mWb7ksSTM",
+      "category": "products",
+      "date": "2026-09-13",
+      "hot": false,
+      "tags": [
+        "HN",
+        "AI",
+        "story",
+        "author_bhkerr"
+      ]
+    },
+    {
+      "id": "hn-49680511",
+      "title": "The Air Computer",
+      "summary": "The Air Computer — 2 points, 0 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://jordanwtaylor2.substack.com/p/the-air-computer",
+      "category": "products",
+      "date": "2026-09-13",
+      "hot": false,
+      "tags": [
+        "HN",
+        "AI",
+        "story",
+        "author_signa11"
+      ]
+    },
+    {
+      "id": "hn-49680061",
+      "title": "Anthropic CEO says AI industry needs to give safety measures time to catch up",
+      "summary": "Anthropic CEO says AI industry needs to give safety measures time to catch up — 2 points, 0 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://apnews.com/article/anthropic-ai-dario-amodei-d59552edcb27892d8ee4d98a48397706",
       "category": "big-tech",
-      "date": "2026-09-12",
+      "date": "2026-09-13",
       "hot": false,
       "tags": [
         "HN",
         "AI",
         "story",
-        "author_AlexWApp"
+        "author_xiaoyu2006"
       ]
     },
     {
-      "id": "hn-49670455",
-      "title": "GoatCode – open-source terminal AI agent with provider failover",
-      "summary": "GoatCode is a single 85 MB binary that runs in your terminal. It brings 180+ LLM providers (or your existing Claude&#x2F;ChatGPT&#x2F;Gemini&#x2F;Copilot subscriptions via OAuth), and when your quota dies mid-session it  — 3 points, 1 comments on HN.",
+      "id": "hn-49679590",
+      "title": "Show HN: Astah Pro MCP – Enabling AI-Powered UML Modeling",
+      "summary": "This MCP plugin implements a &quot;Programmatic Tool Calling&quot; mode, inspired by the idea described in this Anthropic article (<a href=\"https:&#x2F;&#x2F;www.anthropic.com&#x2F;engineering&#x2F;advanced-tool-use\" rel — 2 points, 0 comments on HN.",
       "source": "Hacker News",
-      "sourceUrl": "https://news.ycombinator.com/item?id=49670455",
+      "sourceUrl": "https://github.com/takaakit/astah-pro-mcp",
+      "category": "big-tech",
+      "date": "2026-09-13",
+      "hot": false,
+      "tags": [
+        "HN",
+        "AI",
+        "story",
+        "author_takaakit"
+      ]
+    },
+    {
+      "id": "hn-49680870",
+      "title": "Find investors for your startup – Investor Match Guaranteed",
+      "summary": "Find investors for your startup – Investor Match Guaranteed — 1 points, 0 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://leadagentx.ai",
       "category": "products",
-      "date": "2026-09-12",
+      "date": "2026-09-13",
       "hot": false,
       "tags": [
         "HN",
         "AI",
         "story",
-        "author_Arhan-w"
+        "author_liranbr"
       ]
     },
     {
-      "id": "hn-49669953",
-      "title": "Can A.I. \"Go Rogue\"?",
-      "summary": "Can A.I. \"Go Rogue\"? — 3 points, 0 comments on HN.",
+      "id": "hn-49680858",
+      "title": "Why So Many AI Researchers Think the Machines Could Kill Everyone",
+      "summary": "Why So Many AI Researchers Think the Machines Could Kill Everyone — 1 points, 0 comments on HN.",
       "source": "Hacker News",
-      "sourceUrl": "https://www.newyorker.com/culture/open-questions/can-ai-go-rogue",
-      "category": "safety",
-      "date": "2026-09-12",
-      "hot": false,
-      "tags": [
-        "HN",
-        "AI",
-        "story",
-        "author_Anon84"
-      ]
-    },
-    {
-      "id": "hn-49671043",
-      "title": "AI Is Powerful Enough to Crack Our Hardest Math Problems–and Kill Us All",
-      "summary": "AI Is Powerful Enough to Crack Our Hardest Math Problems–and Kill Us All — 2 points, 0 comments on HN.",
-      "source": "Hacker News",
-      "sourceUrl": "https://www.wsj.com/tech/ai/ai-math-millennium-prize-safety-openai-anthropic-05179825",
+      "sourceUrl": "https://www.wired.com/story/why-so-many-ai-researchers-think-the-machines-could-kill-everyone/",
       "category": "products",
-      "date": "2026-09-12",
+      "date": "2026-09-13",
       "hot": false,
       "tags": [
         "HN",
         "AI",
         "story",
-        "author_diogenes_atx"
-      ]
-    },
-    {
-      "id": "hn-49670967",
-      "title": "Top AI spenders cut per-employee costs by nearly 10 percent in August",
-      "summary": "Top AI spenders cut per-employee costs by nearly 10 percent in August — 2 points, 0 comments on HN.",
-      "source": "Hacker News",
-      "sourceUrl": "https://the-decoder.com/top-ai-spenders-cut-per-employee-costs-by-nearly-10-percent-in-august/",
-      "category": "products",
-      "date": "2026-09-12",
-      "hot": false,
-      "tags": [
-        "HN",
-        "AI",
-        "story",
-        "author_geox"
+        "author_joozio"
       ]
     }
   ],
   "meta": {
-    "fetchedAt": "2026-09-12T11:01:33.163Z",
+    "fetchedAt": "2026-09-13T07:10:59.609Z",
     "topic": "AI",
     "total": 15,
-    "hot": 8,
+    "hot": 2,
     "sources": [
-      "HackerNoon",
       "Hacker News"
     ]
   }
