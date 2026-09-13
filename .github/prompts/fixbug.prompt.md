@@ -28,7 +28,7 @@ Read Knowledge → Reproduce → Root Cause → Fix → Verify → Learn → Don
 | **2. Locate & Root Cause** | Tìm file + 5 Whys | Root cause + file:line + giả thuyết | ❌ |
 | **3. Fix** | Sửa ở gốc, todo-driven (bounded) | Code + `get_errors` affected files | ❌ |
 | **4. Verify** | Không regression + evals mini nếu output open-ended | Re-test + edge + regression + build/lint (full scope) + rubric/E2E (KN-037) | ❌ |
-| **5. Learn** | Biến bug thành knowledge | `.agent/bugs/<slug>/bug.md` + `docs/knowleged.md` KN-XXX | ❌ |
+| **5. Learn** | Biến bug thành knowledge + lưới | bug.md + `docs/knowleged.md` KN-XXX + **Guard** (test/invariant — major/critical bắt buộc, KN-056) | ❌ |
 | **6. Done** | Đóng vòng, báo cáo | Tóm tắt + KN + files changed | ❌ |
 
 > **Khác `/harness`:** Không tạo PRD/Design/Plan dài. Chỉ 3-5 todos. Chỉ Polish nếu bug là UI. Tập trung **root cause + không lặp lại**. `/fixbug` là **bounded repair loop** — không phải `/harness` thu nhỏ.
@@ -51,7 +51,8 @@ Read Knowledge → Reproduce → Root Cause → Fix → Verify → Learn → Don
 
 1. `read_file docs/knowleged.md` — đọc toàn bộ, đặc biệt **Bảng tóm tắt** + **Anti-patterns** + **Checklist phòng tránh chung**.
 2. Scan xem bug hiện tại có chạm pattern đã từng lỗi không → ghi chú áp dụng ngay. Đặc biệt check **KN-005 Bug Blindness**: bug có đang bị "mù" do habitual mitigations / fan bias không?
-3. Nếu chưa có file hoặc file rỗng → vẫn tiếp tục nhưng sẽ tạo KN đầu tiên ở Phase 5.
+3. `node .github/harness/scripts/auto-learn.mjs suggest "<từ khóa bug>" --top 3` (BẮT BUỘC) — KN nào score cao → áp **Cách phòng tránh**; khớp mạnh → nghi **tái lập** (RADAR ở Phase 1 xác nhận).
+4. Nếu chưa có file hoặc file rỗng → vẫn tiếp tục nhưng sẽ tạo KN đầu tiên ở Phase 5.
 
 ### Phase 1: REPRODUCE
 
@@ -59,7 +60,8 @@ Read Knowledge → Reproduce → Root Cause → Fix → Verify → Learn → Don
 - `grep_search` tìm code liên quan bug.
 - Ghi **Steps to Reproduce** (1-2-3), **Expected** vs **Actual**, **Evidence** (log, screenshot, test fail).
 - Nếu không reproduce được → hỏi user thêm info (`vscode_askQuestions` max 2 câu) — không đoán. Nếu vẫn FAIL → **Reproduce Gate: STOP / ask** — không đoán fix.
-- Tạo folder `.agent/bugs/<slug>/` với `slug = YYYY-MM-DD-<short-slug>` (vd: `2026-08-29-modal-esc`) và khởi tạo `bug.md` từ template `.agent/bugs/_template/bug.md`.
+- Tạo folder `.agent/bugs/<slug>/` + `bug.md`: dùng `node .github/harness/scripts/auto-learn.mjs log --error "<lỗi>" --title "<tên>" [--file <path>]` (tự RADAR tái lập + fill template) hoặc copy `.agent/bugs/_template/bug.md`.
+- **RADAR TÁI LẬP (KN-056):** log in `🔁 NGHI TÁI LẬP` hoặc bạn tự thấy khớp KN cũ → ghi `Related KN: KN-XXX` + **"tái lập của KN-XXX — vì sao lưới cũ không bắt được"** vào bug.md. Tái lập thật → **nâng lưới (Guard) TRƯỚC, fix SAU** — không fix lại y nguyên lần đầu.
 - ⚠️ **Bug Blindness check (KN-005):** Reproduce như **user mới** — không dùng workaround quen tay, không đọc manual trang 43. Liệt kê mọi habitual mitigation mình đang làm (vd: đợi 2s mới gõ, tắt WiFi trước login) và coi đó là bug, không phải "cách dùng đúng". Nếu có thể, dùng LLM / người ngoài act as normal user để reproduce.
 
 ### Phase 2: LOCATE & ROOT CAUSE
@@ -117,7 +119,8 @@ Read Knowledge → Reproduce → Root Cause → Fix → Verify → Learn → Don
    - Thêm 1 dòng vào **Bảng tóm tắt** (ID `KN-XXX` tăng dần, Ngày, Bug, Nguyên nhân gốc, Bài học 1 câu, Tags).
    - Thêm 1 mục chi tiết ở **Chi tiết bài học** theo template trong file (Severity `critical|major|minor`, Tags, 4 mục: Triệu chứng → Nguyên nhân gốc → Cách sửa → Cách phòng tránh).
    - Cập nhật `UpdatedAt` cuối file.
-3. Nếu bug tạo ra anti-pattern mới → thêm vào **Anti-patterns tích lũy**.
+3. **Guard — lưới chống tái lập (KN-056, bắt buộc với major/critical):** thêm lưới — test mới / invariant mới trong spec cũ / dòng `- **Guard:** <path>` trong bug.md → KN. Verify: `node .github/harness/scripts/auto-learn.mjs propose --bug <slug> --strict` không còn `⛔ GUARD GATE FAIL` (exit 1).
+4. Nếu bug tạo ra anti-pattern mới → thêm vào **Anti-patterns tích lũy**.
 
 ### Phase 6: DONE
 
@@ -145,6 +148,7 @@ Mỗi `bug.md` phải có: Title, Date, Severity, Reproduce, Root Cause (5 Whys)
 
 - Không bỏ **Reproduce** — không reproduce = không được fix. Reproduce phải như **user mới**, không workaround vô thức (KN-005). Reproduce Gate FAIL → STOP / ask, không đoán.
 - Không bỏ **Learn** — fix xong không ghi `knowleged.md` = chưa xong.
+- **Chống tái lập (KN-056):** bug major/critical phải để lại **Guard** (lưới test/invariant — thiếu = chưa Done). Bug tái lập → nâng lưới TRƯỚC khi fix + ghi "vì sao lưới cũ không bắt được". Kiểm coverage: `auto-learn.mjs guards`.
 - Không fix triệu chứng — phải root cause (đào tới habitual mitigation / fan bias nếu có). Root Cause Gate uncertain → investigate / escalate, không tự biến hypothesis thành sự thật.
 - **Scope control (bounded repair loop):** Chỉ sửa ở gốc, không refactor lan rộng. Phát hiện việc lớn → ghi `Non-Goals` trong `bug.md`, không tự mở rộng.
 - **get_errors phân tầng:** Sau mỗi edit → `get_errors` **affected files**; sau khi hoàn tất fix (Phase 4) → `get_errors` **toàn scope** + build/test. Không scan toàn project sau từng edit nhỏ.

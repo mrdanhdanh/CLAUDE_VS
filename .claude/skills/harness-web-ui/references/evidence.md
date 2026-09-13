@@ -1,8 +1,8 @@
 # Evidence — harness-web-ui (DisCo arXiv:2609.02749v1 §3.2 (task-agnostic))
 
-> Substrate layer của skill — full text từ docs/knowleged.md. Sinh tự động 2026-09-12T13:11:12.598Z.
+> Substrate layer của skill — full text từ docs/knowleged.md. Sinh tự động 2026-09-13T15:21:15.438Z.
 
-## Bug reports liên quan (16/29 bugs)
+## Bug reports liên quan (17/39 bugs)
 
 - `.agent/bugs/2026-08-29-rainbow-animated/bug.md` — Bug: Rainbow border không xoay (animated)
 - `.agent/bugs/2026-08-29-status-ui/bug.md` — Bug: Trang STATUS www/ giao diện chưa hợp lý — layout, responsive, registry render sai
@@ -20,6 +20,7 @@
 - `.agent/bugs/2026-09-12-cosmos-reveal-hover-relative-url/bug.md` — Bug — Cosmos rework: reveal chết ở element > viewport + hover bị reveal đè + `./x` 404 khi URL không slash
 - `.agent/bugs/2026-09-12-status-page-audit/bug.md` — Bug: STATUS page audit — footer link 404 + registry placeholder descriptions + aria-labelledby sai ID
 - `.agent/bugs/2026-09-12-yt-summary-css-global-collision/bug.md` — Bug: YT Summary — CSS toàn cục đè trang mới (bảng bị ẩn/cắt, [hidden] vô hiệu, card nấp dưới header)
+- `.agent/bugs/2026-09-13-status-375-overflow-grid-1fr-min-content-blowout-k/bug.md` — Bug: STATUS 375 overflow — grid 1fr min-content blowout khi title dai
 
 ## Full KN details
 
@@ -376,3 +377,40 @@
   - Control không làm gì và không báo gì = bug **major**, không phải "nhỏ" — cùng class KN-011 (nút chết sau Random).
 - **Tags:** `ui` `a11y` `nav` `verify` `fail-silent`
 - **Người ghi:** YUNIE / upgrade Lab #12
+
+---
+
+### KN-050 — AI-gen UI gãy 4 luật UX: div giả button + dialog không trap + nút bé + sameness + cognitive load
+
+- **Ngày:** 2026-09-12
+- **Bug report:** N/A — bài học từ "Where AI-Generated Design Breaks UX Laws" (HackerNoon 12/09/2026, Viacheslav Derzhaiev — https://hackernoon.com/where-ai-generated-design-breaks-ux-laws). Evidence: study Web for All 04/2025 (ChatGPT+Claude gen banking homepage: nút 24-32px vs chuẩn 44px) + study 2026 (62 người × 4 màn hình: human 100% success vs AI raw 63%) + X Adam Wathan 08/2025 (bg-indigo-500 → "every AI UI indigo")
+- **Severity:** major
+- **Triệu chứng (4 luật gãy):** (1) **Keyboard:** `div+onClick` thay `<button>` → Tab bỏ qua Profile/Notifications/Billing; dialog "Delete project?" không trap focus (Tab chạy ra nền, Esc không đóng); icon-only button không tên (screen reader chỉ đọc "button"); dropdown div-stack chỉ click chuột, phím mũi tên/Enter chết. (2) **Fitts (1954):** nút AI-gen 24-32px, trung bình 32px < 44px → khó bấm (motor impairments). (3) **Von Restorff (1933):** sameness — indigo accent + gradient tím-indigo hero + Inter + card bo tròn + hero→features→proof→pricing→FAQ→footer; feedback loop (Tailwind default → tutorial copy → train → output → train tiếp). (4) **Miller/Cognitive load (1956):** AI raw clutter → 63% success, load cao nhất, chậm nhất; refine prompt → 100% (biết hỏi gì thì hết).
+- **Nguyên nhân gốc (5 Whys):** Why1: generator tối ưu plausible bề mặt (hover đẹp, spacing đều, chevron xoay) không enforce interaction contract. Why2: prompt thiếu yêu cầu tường minh → model trả default corpus (indigo/Inter/div). Why3: người dùng generator hiếm khi test Tab/Esc/screen-reader → bug chỉ lộ khi bỏ chuột. Why4: component có sẵn (Radix/shadcn) chỉ cứu phần behavior đã viết tay — không quyết màu/contrast/layout grouping. Why5 (Root): "nhìn xịn" ≠ "dùng được" — cùng lớp KN-037 (WHETHER vs HOW WELL) + KN-023 (tin mắt/self-report thay vì đo bằng tool).
+- **Cách sửa:** Prompt/UI spec phải ghi **a11y contract tường minh** (button thật không div giả · dialog trap focus + Esc · dropdown keyboard Enter/arrows · touch target ≥44px · contrast ≥4.5:1); reuse component đã verify (Radix/shadcn) thay vì gen behavior mới; verify bằng Tab-walkthrough + Esc + screen-reader + đo pixel nút, không nhìn mắt (áp product-quality audit đã có: keyboard/aria/contrast/target).
+- **Cách phòng tránh:**
+  - Không merge UI AI-gen khi chưa **Tab-walkthrough** (mọi control tới được + kích hoạt bằng Enter/Space) + **Esc đóng overlay** + focus trả về chỗ cũ.
+  - Cấm `div+onClick` cho control — phải `<button>/<a>/<select>` thật; icon-only button bắt buộc accessible name.
+  - Touch target **≥44×44px** + contrast ≥4.5:1 là requirement trong prompt/spec, không phải "nice-to-have".
+  - Chống sameness: prompt ghi palette/typo/layout khác default (không indigo/Inter mặc định) — Von Restorff là feature, không phải bug.
+  - Đo cognitive: task success + thời gian + perceived load trên scenario thật (E2E eval KN-037) — clutter là fail.
+- **Tags:** `ui` `a11y` `ux` `verify`
+- **Người ghi:** YUNIE / article-lesson (HackerNoon 12/09/2026)
+
+---
+
+### KN-055 — Grid `1fr` + flex nowrap: min-content blowout ẩn — title dài lộ bug, overflow:hidden che clip
+
+- **Ngày:** 2026-09-13
+- **Bug report:** `.agent/bugs/2026-09-13-status-375-overflow-grid-1fr-min-content-blowout-k/bug.md`
+- **Severity:** major
+- **Triệu chứng:** Thêm demo mới vào `www/status.json` với title dài (`Executive Function × Harness (KN-054)`) → trang chủ STATUS tràn ngang **56px** ở 375px (2 spec fail: `responsive.spec.ts` + `status.spec.ts`). Đo sâu hơn: sau khi hết scroll, page-link vẫn rộng 414px trong document 375px — bị **clip** bởi `.card{overflow:hidden}` (title + tag bị cắt) mà test scroll **không hề thấy**.
+- **Nguyên nhân gốc (5 Whys):** Why1: section (grid item) rộng 415px > viewport. Why2: track của `.grid-2` mobile single-col là `auto` → sized theo **min-content của item**. Why3: min-content `.page-link` = 379px = icon + title **full width** + tag — vì text title là **anonymous flex item** của div `display:flex` + `white-space:nowrap` → không co được; `text-overflow:ellipsis` đặt trên flex container không có tác dụng. Why4: `.grid-2` desktop dùng `1fr 1fr` (= `minmax(auto,1fr)`) — min=auto=min-content → track không bao giờ co dưới content; title cũ dài nhất vừa khít 343px nên bug ẩn suốt. Why5 (Root): sizing chain 3 tầng đều thiếu phòng thủ content dài (grid thiếu `minmax(0,1fr)` · flex item thiếu `min-width:0` · inner grid thiếu `minmax(0,1fr)`) + lớp 2: `.card{overflow:hidden}` biến overflow thành **clip im lặng** — invariant test hiện tại chỉ đo document scroll nên mù với clip bên trong.
+- **Cách sửa:** (1) `.grid-2`/`.grid-3`: base `grid-template-columns:minmax(0,1fr)` + desktop `repeat(n,minmax(0,1fr))`; (2) `pageEntryHtml`/`renderPlans`: bọc title text vào `<span style="min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">` (restore đúng ý đồ ellipsis); (3) `renderPages` inner grid thêm `minmax(0,1fr)`. Verify: diagnostic `roots: []`, scrollW=docW; 2 spec fail → pass; full suite regression.
+- **Cách phòng tránh:**
+  - Grid track luôn `minmax(0,1fr)` — không bao giờ bare `1fr` cho container content động (track `1fr` = `minmax(auto,1fr)` → blowout).
+  - Text `white-space:nowrap` + ellipsis: phải nằm trên element **có thể co** (`min-width:0` item) — không đặt ellipsis trên flex container chứa text trực tiếp (anonymous item không shrink, ellipsis không áp dụng).
+  - Verify responsive 2 lớp: document scroll **và** element-vs-container (`el.getBoundingClientRect().right > container.clientWidth` trên descendant của `overflow:hidden` — scroll test mù với clip).
+  - Content dài là **test input thật** — khi thêm title/entry mới vào data-driven UI, chạy lại invariant responsive trước khi claim done (title ngắn cũ "vừa khít" là điều kiện che bug, không phải bằng chứng an toàn — KN-028 bug blindness).
+- **Tags:** `ui` `css` `responsive` `grid` `verify`
+- **Người ghi:** YUNIE / verify plan `executive-function` (2026-09-13)

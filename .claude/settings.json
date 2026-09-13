@@ -11,7 +11,7 @@
           },
           {
             "type": "command",
-            "command": "echo [Auto-Learn] Gợi ý: node .github/harness/scripts/auto-learn.mjs suggest \"<từ khóa task>\" --top 3 để tránh lặp bug cũ",
+            "command": "echo [Auto-Learn] Gợi ý: node .github/harness/scripts/auto-learn.mjs suggest \"<từ khóa task>\" --top 3 để tránh lặp bug cũ — gặp lỗi thì log (tự RADAR tái lập)",
             "timeout": 5
           }
         ]
@@ -28,7 +28,7 @@
           },
           {
             "type": "command",
-            "command": "echo [Auto-Learn] Kiểm tra: node .github/harness/scripts/auto-learn.mjs status — nếu vừa fix bug thì propose KN mới",
+            "command": "echo [Auto-Learn] Kiểm tra: node .github/harness/scripts/auto-learn.mjs status — vừa fix bug thì propose KN mới + GUARD (lưới chống tái lập: guards)",
             "timeout": 5
           }
         ]

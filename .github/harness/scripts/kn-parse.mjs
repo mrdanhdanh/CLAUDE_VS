@@ -55,8 +55,9 @@ export function parseKnBlock(part) {
   if (title.includes('Tiêu đề')) return null;
   const block = firstNL >= 0 ? part.slice(firstNL + 1) : '';
   const tags = parseKnTags(block);
-  const sevM = block.match(/Severity:\s*(\w+)/i);
-  const dateM = block.match(/Ngày:\s*([0-9\-]+)/);
+  // bold format: "- **Severity:** major" — [^\w]* bỏ qua `**`/backtick giữa colon và value (bug 0/55 major 2026-09-13)
+  const sevM = block.match(/Severity:[^\w]*(\w+)/i);
+  const dateM = block.match(/Ngày:[^\d]*([0-9]{4}-[0-9]{2}-[0-9]{2})/);
   const lessonM = block.match(/Bài học[^:]*:\s*([^\n]+)/);
   const lesson = lessonM ? lessonM[1].trim().slice(0,200) : title.slice(0,120);
   const detail = block.slice(0, 2500);

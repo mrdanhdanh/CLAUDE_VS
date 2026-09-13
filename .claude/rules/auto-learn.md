@@ -55,6 +55,15 @@ node .github/harness/scripts/auto-learn.mjs watchdog --apply --sign "<tên ngư�
 - **≥90d evaporate:** note `hawking.md` (giữ lịch sử, gợi ý `propose --bug` để chuyển hoá KN) + đổi đúng 1 dòng `Status: open` → `evaporated`; entropy S tự rớt (chỉ đếm `open`).
 - **Human sign-off gate (siết 2026-09-12):** mutation bắt buộc `--apply --sign "<tên người>"` — thiếu sign hoặc sign bằng danh tính agent (YUNIE/agent/bot/copilot/verify/ci…) → **REFUSED exit 2** + in dry-run plan, **không ghi gì** (fail-closed). Agent chỉ ĐỀ XUẤT; người ký được ghi vào journal (`signedBy`). Tách intent/execution — trust ở policy layer observable, không ở stochastic process.
 
+### 6. Vòng chống tái lập (KN-056) — bug tái lập dù đã có KN thì làm gì?
+
+> KN không có lưới = wishlist (KN-047). Bug quay lại thì **KHÔNG fix lại y nguyên lần đầu** — nâng lưới TRƯỚC, fix SAU.
+
+- **Log tự RADAR:** `log` đối chiếu text bug mới với toàn bộ KN + bug cũ (BM25, ngưỡng KN ≥25 / bug ≥18) → in `🔁 RADAR TÁI LẬP` + inject block cảnh báo vào `bug.md`. Nghi tái lập → đọc **Cách phòng tránh** TRƯỚC khi fix; xác nhận tái lập thật → ghi "tái lập của KN-XXX" + **vì sao lưới cũ không bắt được** → nâng lưới (Guard) rồi mới fix. `--no-scan` tắt radar, `--dry-run` xem không ghi.
+- **Guard (lưới):** mỗi fix major/critical phải để lại lưới — test mới / invariant mới trong spec cũ / dòng `- **Guard:** <path>` trong bug.md hoặc KN. `propose` gate: thiếu Guard → `⛔ GUARD GATE FAIL`; thêm `--strict` → exit 1 (fail-closed cho pipeline).
+- **Coverage audit:** `guards` — KN nào đã có lưới (test file tham chiếu `KN-XXX`, hoặc `Guard:` line trong KN detail). `--json` cho máy, `--out <file>` mirror. Ưu tiên viết lưới cho major/critical chưa có.
+- **Định nghĩa Done của bug:** reproduce fixed + regression pass + **Guard đã thêm** + KN đã ghi. Thiếu lưới = bug sẽ còn quay lại — chưa Done.
+
 ## Checklist cho agent (tự kiểm trước khi code)
 - [ ] Đã `suggest "<từ khóa task>"` và scan KN liên quan?
 - [ ] Nếu có KN liên quan → đã áp dụng **Cách phòng tránh**?
@@ -62,6 +71,9 @@ node .github/harness/scripts/auto-learn.mjs watchdog --apply --sign "<tên ngư�
 - [ ] Sau khi fix → đã `propose --bug` và đề xuất cập nhật `knowleged.md`?
 - [ ] Đã `status` để kiểm tra health?
 - [ ] Draft cũ ≥30d → đã `watchdog` escalate chưa? ≥90d → human chạy `watchdog --apply --sign "<tên>"` (note + Status, không xoá lịch sử)? (Hawking)
+- [ ] Draft có `RADAR TÁI LẬP`? → là tái lập thật thì đã nâng lưới (Guard) TRƯỚC khi fix chưa? (KN-056)
+- [ ] KN mới có Guard (test/invariant — major/critical bắt buộc)? `propose` không còn `⛔ GUARD GATE FAIL` chưa? (KN-056)
+- [ ] Fix xong major/critical → đã defer lưới lên test file (spec tham chiếu `KN-XXX`) chưa? Kiểm: `guards`
 
 ## Ví dụ
 ```bash
@@ -74,12 +86,16 @@ node .github/harness/scripts/auto-learn.mjs log --error "RZ9986 Techniques Blazo
 
 # Sau khi fix
 node .github/harness/scripts/auto-learn.mjs propose --bug 2026-08-30-mat-dau-tieng-viet
+
+# Kiểm vòng chống tái lập (KN-056)
+node .github/harness/scripts/auto-learn.mjs guards --json
+node .github/harness/scripts/auto-learn.mjs log --error "rainbow không xoay" --title "Rainbow lặp lại" --dry-run
 ```
 
 ## Liên kết
 - Script: `.github/harness/scripts/auto-learn.mjs` (Node 18+, no deps, <50ms)
-- Knowledge: `docs/knowleged.md` (48 KN hiện tại)
-- Bugs: `.agent/bugs/<slug>/bug.md` + `_template/bug.md` · Hawking journal: `.agent/hawking.jsonl` + `hawking.md`
+- Knowledge: `docs/knowleged.md` (56 KN hiện tại)
+- Bugs: `.agent/bugs/<slug>/bug.md` + `_template/bug.md` · Hawking journal: `.agent/hawking.jsonl` + `hawking.md` · Guard spec (dogfood): `tests/e2e/auto-learn-guard.spec.ts`
 - Agent: `learn` (delegate khi cần suggest/log/propose)
 - Status: `node auto-learn.mjs status --json` cho YUNIE/www · Hawking mirror: `www/cosmos/hawking.json` (dashboard `scale.html#hawking`)
 

@@ -11,7 +11,7 @@
     ".claude/agents/yunie.md": "4e41811a503213bad8a465b8972f0f7cfec41a83299c87079deb78473b4491ed",
     ".claude/agents/learn.md": "9b5143ec798f41e9792873cd5b28c9b1a0ab3781e2925034007f1dc0dc1a6e0c",
     ".claude/agents/critic.md": "f5ccbffd49ae00d132206b406b91871546bcc3425e85305976a65d985a641ae5",
-    ".claude/commands/fixbug.md": "821a25f6b3ffb4b77fad25f9d291aa1f725f13b1d1fdf77e507a61932d84ec57",
+    ".claude/commands/fixbug.md": "0542a15f6ca1c32cc1e95136e0054d598329a6bfb26618de0cbefde67361fd8c",
     ".claude/commands/harness.md": "2e2ea61594510b5cad8c4c9234a501b6322658e0a42d58133cff7ba19d905f7d",
     ".claude/commands/implement.md": "981c68ecda5144355a5b2a4a3632cbc5ce976c50540a02c162cc1cf15107648d",
     ".claude/commands/plan.md": "4bcdb0220f844d0ff30c12c33bfd428d099a7e7926d69a0114a02fe3d374f486",
@@ -27,7 +27,7 @@
     ".claude/rules/skill-usage.md": "e9c9107d79c150b95a5df382b889366b64086844f9c0b2186def83df47c8f9bd",
     ".claude/rules/library-rag.md": "3e3b2f5465674453555699c1ae126ea438fe2de7e72f7f2a638888e78f556102",
     ".claude/rules/yunie-personality.md": "9f41dc3a82646df404bb3df0d024b93b4fec7625452d7a043ae7472bb440fc5c",
-    ".claude/rules/auto-learn.md": "0d0fa5d20bf5c15b2389f7f121c67d0415d706864839c8e5bc35e449e3ad237f",
+    ".claude/rules/auto-learn.md": "dc0fb75b59244676b77cc5cf263158fbd37ca45599b61153c20045f623274919",
     ".claude/rules/agent-governance.md": "c20591283ee0407a6455386841f052ce88d7a994e9aa58c81b0a2247bbd9d103",
     ".claude/rules/platform-seam.md": "587066566ca6e1ea4dc3560533bba1f08387562b1283b91c848a0cb4820d46a6",
     ".claude/rules/minimal-ladder.md": "4a8b49eee56cfa6f216dff3b625a9e501365507e3cceed9925039af21f0b1fb8",
@@ -80,23 +80,23 @@
     },
     ".claude/skills/harness-build-config": {
       "dir": true,
-      "digest": "caed32fb318d5e3b0a6a15b3cb22ca0025faf002897789e023bfad933d888243"
+      "digest": "72bef57739d8642fbbd8e4f09ab908a502000eaf5219552d83215ff2262722be"
     },
     ".claude/skills/harness-governance": {
       "dir": true,
-      "digest": "9bb78fbccda4a3c999275994c07dd6a99f06d6065a6ef687d5b8c4cb2e207f7e"
+      "digest": "7a0203ddefe7dee377d7b609653f252389e6181d33e517874aab3ffac2baac2e"
     },
     ".claude/skills/harness-minimal": {
       "dir": true,
-      "digest": "e8668c8180160d76b063fd042e997984519d5fdc1b00fa81fc747ca6639a2c09"
+      "digest": "baedb0b6a642e927125a206eda5b1d67600404a3e57d764dbbdd19d1d36a171f"
     },
     ".claude/skills/harness-process": {
       "dir": true,
-      "digest": "3c040acf5db129afeb584d5039455d526d3ae97751e4276d1952509a969c27bb"
+      "digest": "aca46b728cefccb6eea8ec37a3446a92b7814afd9453f130f2a179bbd454fba2"
     },
     ".claude/skills/harness-web-ui": {
       "dir": true,
-      "digest": "e817c6b14e6b4451c501e83431bfaad084a09cca92133f72eccd90855b860138"
+      "digest": "af8ece95b364a2ae9e2b85f130811b1a76a40fbc60c8f4abca6cf937c0410298"
     },
     ".claude/skills/cosmic-quantum": {
       "dir": true,
@@ -117,8 +117,8 @@
   },
   "hookCommands": [
     "echo [Harness] PostToolUse: check IDE diagnostics after edits",
-    "echo [Auto-Learn] Gợi ý: node .github/harness/scripts/auto-learn.mjs suggest \"<từ khóa task>\" --top 3 để tránh lặp bug cũ",
+    "echo [Auto-Learn] Gợi ý: node .github/harness/scripts/auto-learn.mjs suggest \"<từ khóa task>\" --top 3 để tránh lặp bug cũ — gặp lỗi thì log (tự RADAR tái lập)",
     "echo [Harness] Stop: ensure verify passed before kết thúc task",
-    "echo [Auto-Learn] Kiểm tra: node .github/harness/scripts/auto-learn.mjs status — nếu vừa fix bug thì propose KN mới"
+    "echo [Auto-Learn] Kiểm tra: node .github/harness/scripts/auto-learn.mjs status — vừa fix bug thì propose KN mới + GUARD (lưới chống tái lập: guards)"
   ]
 }

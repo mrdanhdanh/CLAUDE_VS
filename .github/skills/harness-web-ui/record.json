@@ -19,7 +19,9 @@
       "KN-040",
       "KN-042",
       "KN-045",
-      "KN-046"
+      "KN-046",
+      "KN-050",
+      "KN-055"
     ],
     "bugs": [
       ".agent/bugs/2026-08-29-modal-esc/bug.md",
@@ -38,7 +40,8 @@
       ".agent/bugs/2026-09-12-cosmos-reveal-hover-relative-url/bug.md",
       ".agent/bugs/2026-09-12-yt-summary-css-global-collision/bug.md",
       ".agent/bugs/2026-09-12-status-page-audit/bug.md",
-      ".agent/bugs/2026-09-12-cosmos-future-scroll-dot/bug.md"
+      ".agent/bugs/2026-09-12-cosmos-future-scroll-dot/bug.md",
+      ".agent/bugs/2026-09-13-status-375-overflow-grid-1fr-min-content-blowout-k/bug.md"
     ]
   },
   "capabilities": [
@@ -73,7 +76,8 @@
     "physics",
     "content-drift",
     "nav",
-    "fail-silent"
+    "fail-silent",
+    "grid"
   ],
   "evidence": [
     ".agent/bugs/2026-08-29-modal-esc/bug.md",
@@ -92,7 +96,8 @@
     ".agent/bugs/2026-09-12-cosmos-reveal-hover-relative-url/bug.md",
     ".agent/bugs/2026-09-12-yt-summary-css-global-collision/bug.md",
     ".agent/bugs/2026-09-12-status-page-audit/bug.md",
-    ".agent/bugs/2026-09-12-cosmos-future-scroll-dot/bug.md"
+    ".agent/bugs/2026-09-12-cosmos-future-scroll-dot/bug.md",
+    ".agent/bugs/2026-09-13-status-375-overflow-grid-1fr-min-content-blowout-k/bug.md"
   ],
   "checks": [
     {
@@ -114,6 +119,6 @@
   ],
   "gaps": [],
   "verdict": "G-accepted",
-  "generatedAt": "2026-09-12T13:11:12.610Z",
+  "generatedAt": "2026-09-13T15:21:15.448Z",
   "paper": "DisCo arXiv:2609.02749v1 §3.2 (task-agnostic)"
 }

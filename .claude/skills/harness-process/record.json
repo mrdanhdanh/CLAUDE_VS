@@ -23,7 +23,10 @@
       "KN-039",
       "KN-043",
       "KN-044",
-      "KN-047"
+      "KN-047",
+      "KN-053",
+      "KN-054",
+      "KN-056"
     ],
     "bugs": [
       ".agent/bugs/2026-08-30-bug-blindness/bug.md",
@@ -43,7 +46,10 @@
       ".agent/bugs/2026-09-11-ps-5-1-khong-ho-tro-trong-lenh-powershell/bug.md",
       ".agent/bugs/2026-09-12-academy-content-not-actionable/bug.md",
       ".agent/bugs/2026-09-03-rag-export-missing-grounding-chet/bug.md",
-      ".agent/plans/harness-slop-gate/gap-analysis.md"
+      ".agent/plans/harness-slop-gate/gap-analysis.md",
+      ".agent/bugs/2026-09-13-git-checkout-head-revert-nham-refactor-chua-commit/bug.md",
+      ".agent/plans/executive-function/",
+      ".agent/bugs/2026-09-13-kn-recurrence-no-guard/bug.md"
     ]
   },
   "capabilities": [
@@ -102,7 +108,11 @@
     "rag",
     "grounding",
     "slop",
-    "complexity"
+    "complexity",
+    "git",
+    "recovery",
+    "recurrence",
+    "guard"
   ],
   "evidence": [
     ".agent/bugs/2026-08-30-bug-blindness/bug.md",
@@ -122,7 +132,10 @@
     ".agent/bugs/2026-09-11-ps-5-1-khong-ho-tro-trong-lenh-powershell/bug.md",
     ".agent/bugs/2026-09-12-academy-content-not-actionable/bug.md",
     ".agent/bugs/2026-09-03-rag-export-missing-grounding-chet/bug.md",
-    ".agent/plans/harness-slop-gate/gap-analysis.md"
+    ".agent/plans/harness-slop-gate/gap-analysis.md",
+    ".agent/bugs/2026-09-13-git-checkout-head-revert-nham-refactor-chua-commit/bug.md",
+    ".agent/plans/executive-function/",
+    ".agent/bugs/2026-09-13-kn-recurrence-no-guard/bug.md"
   ],
   "checks": [
     {
@@ -144,6 +157,6 @@
   ],
   "gaps": [],
   "verdict": "G-accepted",
-  "generatedAt": "2026-09-12T13:11:12.596Z",
+  "generatedAt": "2026-09-13T15:21:15.436Z",
   "paper": "DisCo arXiv:2609.02749v1 §3.2 (task-agnostic)"
 }

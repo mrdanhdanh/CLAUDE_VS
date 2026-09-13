@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-13T14:12:54.266Z",
+  "generatedAt": "2026-09-13T15:29:34.061Z",
   "generatedBy": "cosmic-scale.mjs",
   "entropy": {
     "S": 9,
@@ -11,23 +11,23 @@
       "refused": 2,
       "disabled": 0,
       "failed": 1,
-      "refusedProbes": 19
+      "refusedProbes": 24
     }
   },
   "darkEnergy": {
     "D": 0,
     "dissentRatio": 1,
-    "plansTotal": 26,
-    "plansWithDissent": 26,
+    "plansTotal": 27,
+    "plansWithDissent": 27,
     "plansLegacy": 49,
     "advice": "Gravity thắng — mọi plan đều có Dissent/Who did you think with."
   },
   "gravity": {
-    "G": 8,
+    "G": 9,
     "level": "high",
     "cutRatio": 0.85,
-    "plansTotal": 26,
-    "plansWithCut": 22,
+    "plansTotal": 27,
+    "plansWithCut": 23,
     "plansLegacy": 49,
     "advice": "Gravity mạnh — đa số PRD có dòng CẮT/YAGNI: scope được kiểm soát tốt."
   },
@@ -40,15 +40,15 @@
     "disabledGalaxies": 0
   },
   "counts": {
-    "knTotal": 53,
-    "bugsTotal": 35,
-    "auditTotal": 132
+    "knTotal": 56,
+    "bugsTotal": 37,
+    "auditTotal": 142
   },
   "capability": {
-    "kn": 53,
+    "kn": 56,
     "skills": 19,
-    "e2eSpecs": 29,
-    "e2eTests": 146,
+    "e2eSpecs": 31,
+    "e2eTests": 158,
     "guards": 11
   },
   "mismatches": [],
@@ -334,6 +334,36 @@
         "e2eTests": 146,
         "guards": 11
       }
+    },
+    {
+      "t": "2026-09-13T15:28:19.632Z",
+      "S": 19,
+      "level": "medium",
+      "M": 0,
+      "D": 0,
+      "G": 9,
+      "C": {
+        "kn": 56,
+        "skills": 19,
+        "e2eSpecs": 31,
+        "e2eTests": 158,
+        "guards": 11
+      }
+    },
+    {
+      "t": "2026-09-13T15:29:34.061Z",
+      "S": 9,
+      "level": "low",
+      "M": 0,
+      "D": 0,
+      "G": 9,
+      "C": {
+        "kn": 56,
+        "skills": 19,
+        "e2eSpecs": 31,
+        "e2eTests": 158,
+        "guards": 11
+      }
     }
   ],
   "capabilityDelta": null,
@@ -343,19 +373,19 @@
     "gate": false,
     "window": [
       {
-        "t": "2026-09-12T14:29:16.472Z",
-        "S": 9
-      },
-      {
-        "t": "2026-09-12T14:46:08.345Z",
-        "S": 9
-      },
-      {
         "t": "2026-09-13T14:10:25.165Z",
         "S": 14
       },
       {
         "t": "2026-09-13T14:12:54.266Z",
+        "S": 9
+      },
+      {
+        "t": "2026-09-13T15:28:19.632Z",
+        "S": 19
+      },
+      {
+        "t": "2026-09-13T15:29:34.061Z",
         "S": 9
       }
     ]

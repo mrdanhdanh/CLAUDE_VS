@@ -28,6 +28,12 @@ const RECORDS_DIR = path.join(ROOT, '.agent', 'records');
 const REPORTS_FILE = path.join(ROOT, '.agent', 'reports.jsonl');
 const ATTEST_FILE = path.join(ROOT, '.agent', 'attestations.jsonl');
 
+// Vòng chống tái lập (KN-056): radar khi log + guard gate khi propose + coverage audit
+const RECURRENCE_KN_MIN = 25; // calibrate 2026-09-13: liên quan thật ≥ 31, nhiễu tối đa 15
+const RECURRENCE_BUG_MIN = 18;
+const GUARD_SCAN_DIRS = ['tests'];
+const GUARD_FILE_RE = /\.(spec|test)\.(js|ts|mjs|cs)$/i;
+
 // ---------- helpers ----------
 // tokenize/computeIDF/parseKNs/scoreKN — shared module kn-parse.mjs (trước là duplicate)
 
@@ -39,6 +45,68 @@ function normalizeSlug(s) {
 
 function todayISO() {
   return new Date().toISOString().slice(0, 10);
+}
+
+// ---------- Vòng chống tái lập (KN-056): radar tái lập ----------
+// Bug tái lập dù có KN vì không ai phát hiện "đây là tái lập" lúc log.
+// Radar đối chiếu text bug mới với toàn bộ KN + bug cũ (BM25-lite, ngưỡng calibrate).
+
+function rankCorpus(query, items, minScore, topK) {
+  const qTokens = tokenize(query);
+  if (!qTokens.length || !items.length) return [];
+  const idf = computeIDF(qTokens, items);
+  return items
+    .map((it) => ({ key: it.id, title: it.title, severity: it.severity || 'minor', score: Math.round(scoreKN(qTokens, query, it, idf) * 10) / 10 }))
+    .filter((it) => it.score >= minScore)
+    .sort((a, b) => b.score - a.score)
+    .slice(0, topK);
+}
+
+function bugToCorpusItem(slug, bugText) {
+  const { title, tags } = extractBugMeta(bugText, slug);
+  const detail = bugText.slice(0, 2500);
+  return {
+    id: slug, title, tags: tags.split(/\s+/).filter(Boolean), lesson: title, detail,
+    tokens: tokenize(`${title} ${tags} ${detail}`), titleTokens: tokenize(title), tagTokens: tokenize(tags),
+  };
+}
+
+async function scanRecurrence({ title, error, file, excludeSlug, baseDir = BUGS_DIR }) {
+  const query = [title, error, file].filter(Boolean).join(' ');
+  const { kns } = await parseKNs(KNOWLEGED);
+  const bugItems = [];
+  for (const slug of await listBugSlugs(baseDir)) {
+    if (slug === excludeSlug) continue;
+    try { bugItems.push(bugToCorpusItem(slug, await fs.readFile(path.join(baseDir, slug, 'bug.md'), 'utf8'))); } catch {}
+  }
+  return { query, kns: rankCorpus(query, kns, RECURRENCE_KN_MIN, 3), bugs: rankCorpus(query, bugItems, RECURRENCE_BUG_MIN, 3) };
+}
+
+function buildRadarBlock(radar) {
+  const lines = [
+    ...radar.kns.map((k) => `> - 🔁 NGHI TÁI LẬP **[${k.key}]** (score ${k.score}): ${k.title}`),
+    ...radar.bugs.map((b) => `> - 🔁 NGHI TÁI LẬP **bug cũ \`${b.key}\`** (score ${b.score}): ${b.title}`),
+  ];
+  if (!lines.length) return '';
+  const lead = radar.kns.length ? radar.kns[0].key : `bug cũ ${radar.bugs[0].key}`;
+  return [
+    `> 🔁 **RADAR TÁI LẬP** — đối chiếu KN + bug cũ thấy nghi vấn:`,
+    ...lines,
+    `> → Đọc **Cách phòng tránh** trong \`docs/knowleged.md\` TRƯỚC khi fix. Nếu là tái lập thật: ghi rõ "tái lập của ${lead}" + **vì sao lưới cũ không bắt được** → nâng lưới (Guard) rồi mới fix.`,
+    '',
+  ].join('\n');
+}
+
+function printRadar(radar) {
+  const n = radar.kns.length + radar.bugs.length;
+  if (!n) {
+    console.log(`✅ Radar tái lập: không thấy KN/bug tương tự (KN ≥ ${RECURRENCE_KN_MIN}, bug ≥ ${RECURRENCE_BUG_MIN}).`);
+    return;
+  }
+  console.log(`🔁 RADAR TÁI LẬP — ${n} nghi vấn:`);
+  for (const k of radar.kns) console.log(`   - [${k.key}] score ${k.score} — ${k.title}`);
+  for (const b of radar.bugs) console.log(`   - [bug cũ] ${b.key} score ${b.score} — ${b.title}`);
+  console.log(`   → Đọc Cách phòng tránh (docs/knowleged.md) TRƯỚC khi fix; là tái lập thật → nâng lưới (Guard) rồi mới fix.`);
 }
 
 // ---------- Engram-lite: Wilson score + attestations ----------
@@ -177,22 +245,22 @@ async function suggest(query, topK=3, json=false) {
   printSuggestHuman(query, kns, scored);
 }
 
-function resolveBugDir(title, slug) {
+function resolveBugDir(title, slug, baseDir = BUGS_DIR) {
   const date = todayISO();
   let dirName = `${date}-${slug}`;
-  let dir = path.join(BUGS_DIR, dirName);
+  let dir = path.join(baseDir, dirName);
   // handle duplicate
   let suffix = 2;
   while (existsSync(dir)) {
     dirName = `${date}-${slug}-${suffix}`;
-    dir = path.join(BUGS_DIR, dirName);
+    dir = path.join(baseDir, dirName);
     suffix++;
     if (suffix>20) break;
   }
   return { date, dirName, dir };
 }
 
-async function fillBugTemplate(title, dirName, date, error, file) {
+async function fillBugTemplate(title, dirName, date, error, file, radarBlock = '') {
   let template = '';
   try { template = await fs.readFile(TEMPLATE, 'utf8'); } catch {
     template = `# Bug: ${title}\n\n## Meta\n- **Slug:** ${dirName}\n- **Ngày:** ${date}\n- **Severity:** minor\n- **Tags:** \n\n## 1. Reproduce\n\n## 2. Root Cause\n\n## 3. Fix\n\n## 4. Verification\n\n## 5. Lesson\n\n## 6. Prevention\n`;
@@ -205,7 +273,7 @@ async function fillBugTemplate(title, dirName, date, error, file) {
     .replace('YYYY-MM-DD', date);
   // inject error info at top if not already
   const header = `> 🤖 Auto-log bởi auto-learn.mjs — ${now}\n> **Error:** \`${error.replace(/`/g,"'")}\`${file ? `\n> **File:** \`${file}\`` : ''}\n> **Title:** ${title}\n\n`;
-  if (!content.includes('Auto-log')) content = header + content;
+  if (!content.includes('Auto-log')) content = header + radarBlock + content;
   // ensure file:line hint
   if (file && !content.includes(file)) {
     content = content.replace('## 1. Reproduce', `## 1. Reproduce\n\n> File gợi ý: \`${file}\` — kiểm tra log/error trên.\n`);
@@ -218,10 +286,17 @@ async function logBug(opts) {
   const file = opts.file || '';
   const title = opts.title || error.slice(0, 60);
   const slug = opts.slug || normalizeSlug(title);
-  const { date, dirName, dir } = resolveBugDir(title, slug);
-  await fs.mkdir(dir, { recursive: true });
-  const content = await fillBugTemplate(title, dirName, date, error, file);
+  const baseDir = opts.dir ? path.resolve(ROOT, opts.dir) : BUGS_DIR;
+  const { date, dirName, dir } = resolveBugDir(title, slug, baseDir);
+  const radar = opts['no-scan'] ? { kns: [], bugs: [] } : await scanRecurrence({ title, error, file, excludeSlug: dirName, baseDir });
+  const content = await fillBugTemplate(title, dirName, date, error, file, buildRadarBlock(radar));
+  printRadar(radar);
   const outPath = path.join(dir, 'bug.md');
+  if (opts['dry-run']) {
+    console.log(`[dry-run] Không ghi file — sẽ tạo ${path.relative(ROOT, outPath)}:\n──────────\n${content}──────────`);
+    return dirName;
+  }
+  await fs.mkdir(dir, { recursive: true });
   await fs.writeFile(outPath, content, 'utf8');
   console.log(`✅ Đã tạo draft bug: ${path.relative(ROOT, outPath)}`);
   console.log(`   Slug: ${dirName}`);
@@ -242,27 +317,42 @@ function findNextKnId(kns) {
   return `KN-${String(maxId+1).padStart(3,'0')}`;
 }
 
-// Trích metadata từ bug.md — dùng chung propose ↔ evaluate ↔ commit (defaults khác nhau giữ y nguyên)
-function extractBugMeta(bugText, bugSlug, defaults = {}) {
-  const titleM = bugText.match(/^#\s*Bug:\s*(.+)/m) || bugText.match(/Title:\s*(.+)/);
-  const title = titleM ? titleM[1].trim().slice(0,80) : bugSlug;
-  const sevM = bugText.match(/Severity:\s*(\w+)/i);
-  const severity = sevM ? sevM[1].toLowerCase() : 'major';
-  const tagsM = bugText.match(/Tags:\s*([^\n]+)/);
-  const tags = tagsM ? tagsM[1].trim().replace(/`/g,'') : (defaults.tags || 'ui');
-  const whyM = bugText.match(/Why 5.*?:\s*(.+)/) || bugText.match(/Root.*?:\s*(.+)/i);
-  const root = whyM ? whyM[1].trim().slice(0,200) : (defaults.root || 'Chưa điền — hãy bổ sung 5 Whys trong bug.md');
-  const fixM = bugText.match(/Approach:\s*(.+)/) || bugText.match(/Cách sửa:\s*(.+)/);
-  const fix = fixM ? fixM[1].trim().slice(0,200) : (defaults.fix || 'Chưa điền — mô tả cách sửa ở gốc');
-  return { title, severity, tags, root, fix };
+// match pattern đầu tiên bắt được → group 1 (trim); không có → fallback
+function firstMatch(text, patterns, fallback = '') {
+  for (const p of patterns) {
+    const m = text.match(p);
+    if (m) return m[1].trim();
+  }
+  return fallback;
 }
 
-function buildKnDraft({ nextId, title, severity, root, fix, tags, today, bugSlug, author }) {
+// Guard (KN-056): lưới chống tái lập — test/invariant khoá bug; major/critical bắt buộc có.
+function normalizeGuard(raw) {
+  const v = (raw || '').replace(/`/g, '').trim();
+  if (!v) return { present: false, raw: '' };
+  const low = v.toLowerCase();
+  if (/^(—|–|-|n\/a|none|chưa|todo|<)/.test(low) || low.includes('chưa điền') || low.includes('chưa có')) return { present: false, raw: v };
+  return { present: true, raw: v };
+}
+
+// Trích metadata từ bug.md — dùng chung propose ↔ evaluate ↔ commit (defaults khác nhau giữ y nguyên)
+function extractBugMeta(bugText, bugSlug, defaults = {}) {
+  const title = (firstMatch(bugText, [/^#\s*Bug:\s*(.+)/m, /Title:\s*(.+)/]) || bugSlug).slice(0, 80);
+  const severity = (firstMatch(bugText, [/Severity:[^\w]*(\w+)/i]) || 'major').toLowerCase();
+  const tags = firstMatch(bugText, [/Tags:\s*([^\n]+)/]).replace(/`/g, '') || defaults.tags || 'ui';
+  const root = (firstMatch(bugText, [/Why 5.*?:\s*(.+)/, /Root.*?:\s*(.+)/i]) || defaults.root || 'Chưa điền — hãy bổ sung 5 Whys trong bug.md').slice(0, 200);
+  const fix = (firstMatch(bugText, [/Approach:\s*(.+)/, /Cách sửa:\s*(.+)/]) || defaults.fix || 'Chưa điền — mô tả cách sửa ở gốc').slice(0, 200);
+  const guard = normalizeGuard(firstMatch(bugText, [/\*\*Guard:\*\*\s*([^\n]+)/, /^\s*Guard:\s*([^\n]+)/m]));
+  return { title, severity, tags, root, fix, guard };
+}
+
+function buildKnDraft({ nextId, title, severity, root, fix, tags, today, bugSlug, author, guardText = '—' }) {
   return `### ${nextId} — ${title}
 
 - **Ngày:** ${today}
 - **Bug report:** \`.agent/bugs/${bugSlug}/bug.md\`
 - **Severity:** ${severity}
+- **Guard:** ${guardText}
 - **Triệu chứng:** ${title} — xem bug.md Reproduce
 - **Nguyên nhân gốc:** ${root}
 - **Cách sửa:** ${fix}
@@ -278,33 +368,60 @@ function buildKnTableRow({ nextId, today, title, root, tags }) {
   return `| ${nextId} | ${today} | ${title.slice(0,30)} | ${root.slice(0,30)} | ${title.slice(0,40)} | \`${tags.split(/\s+/).slice(0,3).join(' ')}\` |`;
 }
 
-async function propose(bugSlug, json=false) {
+// Guard gate (KN-056): major/critical thiếu Guard → cảnh báo; --strict → exit 1 (fail-closed)
+function computeGuardGate(nextId, severity, guard) {
+  const needsGuard = severity === 'major' || severity === 'critical';
+  if (!needsGuard) return { needsGuard, gateWarning: null, guardText: '—' };
+  if (guard.present) return { needsGuard, gateWarning: null, guardText: guard.raw };
+  return {
+    needsGuard,
+    gateWarning: `${nextId} (${severity}) THIẾU Guard — KN không có lưới sẽ tái lập. Thêm '- **Guard:** <test|invariant path>' vào bug.md rồi propose lại.`,
+    guardText: '⚠️ CHƯA CÓ — viết test/invariant trước khi close (GUARD GATE)',
+  };
+}
+
+function enforceStrictGuard(opts, gateWarning) {
+  if (opts.strict && gateWarning) process.exit(1);
+}
+
+function printGuardGate(gateWarning, needsGuard, guard) {
+  if (gateWarning) console.log(`\n⛔ GUARD GATE FAIL: ${gateWarning}\n   → node .github/harness/scripts/auto-learn.mjs guards   # xem coverage toàn bộ`);
+  else if (needsGuard) console.log(`\n✅ Guard: ${guard.raw}`);
+}
+
+async function suggestSimilarSlugs(baseDir, bugSlug) {
+  try {
+    const dirs = await fs.readdir(baseDir, { withFileTypes: true });
+    const cands = dirs.filter((d) => d.isDirectory() && d.name.includes(bugSlug.slice(0, 10))).map((d) => d.name).slice(0, 5);
+    if (cands.length) console.log(`Gợi ý slug gần đúng: ${cands.join(', ')}`);
+  } catch {}
+}
+
+async function propose(bugSlug, json=false, opts = {}) {
   if (!bugSlug) {
     console.error('❌ Thiếu --bug <slug>. Ví dụ: --bug 2026-08-30-mat-dau-tieng-viet');
     process.exit(1);
   }
-  const bugPath = path.join(BUGS_DIR, bugSlug, 'bug.md');
+  const baseDir = opts.dir ? path.resolve(ROOT, opts.dir) : BUGS_DIR;
+  const bugPath = path.join(baseDir, bugSlug, 'bug.md');
   if (!existsSync(bugPath)) {
     console.error(`❌ Không tìm thấy ${path.relative(ROOT, bugPath)}`);
-    // try find similar
-    try {
-      const dirs = await fs.readdir(BUGS_DIR, { withFileTypes:true });
-      const cands = dirs.filter(d=>d.isDirectory() && d.name.includes(bugSlug.slice(0,10))).map(d=>d.name).slice(0,5);
-      if (cands.length) console.log(`Gợi ý slug gần đúng: ${cands.join(', ')}`);
-    } catch {}
+    await suggestSimilarSlugs(baseDir, bugSlug);
     process.exit(1);
   }
   const bugText = await fs.readFile(bugPath, 'utf8');
   const { kns } = await parseKNs(KNOWLEGED);
   const nextId = findNextKnId(kns);
-  const { title, severity, tags, root, fix } = extractBugMeta(bugText, bugSlug);
+  const { title, severity, tags, root, fix, guard } = extractBugMeta(bugText, bugSlug);
   const today = todayISO();
+  const { needsGuard, gateWarning, guardText } = computeGuardGate(nextId, severity, guard);
 
-  const draft = buildKnDraft({ nextId, title, severity, root, fix, tags, today, bugSlug, author: 'YUNIE / auto-learn propose' });
+  const draft = buildKnDraft({ nextId, title, severity, root, fix, tags, today, bugSlug, author: 'YUNIE / auto-learn propose', guardText });
   const tableRow = buildKnTableRow({ nextId, today, title, root, tags });
 
   if (json) {
-    console.log(JSON.stringify({ nextId, bugSlug, title, severity, tags, draft, tableRow }, null, 2));
+    console.log(JSON.stringify({ nextId, bugSlug, title, severity, tags, guard, gateWarning, draft, tableRow }, null, 2));
+    enforceStrictGuard(opts, gateWarning);
     return;
   }
   console.log(`📋 Đề xuất KN mới từ bug ${bugSlug}:\n`);
@@ -314,11 +431,13 @@ async function propose(bugSlug, json=false) {
   console.log(draft);
   console.log(`\n— Anti-pattern (thêm vào ## Anti-patterns tích lũy nếu phù hợp):`);
   console.log(`- ❌ ${title} — ${root.slice(0,60)}`);
+  printGuardGate(gateWarning, needsGuard, guard);
   console.log(`\n✅ Sau khi dán, chạy: node .github/harness/scripts/auto-learn.mjs status`);
   console.log(`   và commit docs/knowleged.md + .agent/bugs/${bugSlug}/bug.md`);
   console.log(`\n🔬 Reef-lite: để có gate evaluate trước khi commit:`);
   console.log(`   node .github/harness/scripts/auto-learn.mjs evaluate --bug ${bugSlug}`);
   console.log(`   node .github/harness/scripts/auto-learn.mjs commit --bug ${bugSlug}  # chỉ commit khi evaluate PASS`);
+  enforceStrictGuard(opts, gateWarning);
 }
 
 // ---------- Reef-lite: Serve → Observe → Grow → Commit ----------
@@ -959,13 +1078,17 @@ async function collectBugTagData() {
   return bugs;
 }
 
-async function walkRefFiles(dir, out = []) {
+function isRefFile(name) {
+  return name.endsWith('.md') || name.endsWith('.json');
+}
+
+async function walkRefFiles(dir, out = [], match = isRefFile) {
   let entries = [];
   try { entries = await fs.readdir(dir, { withFileTypes: true }); } catch { return out; }
   for (const e of entries) {
     const p = path.join(dir, e.name);
-    if (e.isDirectory()) await walkRefFiles(p, out);
-    else if (e.isFile() && (e.name.endsWith('.md') || e.name.endsWith('.json'))) out.push(p);
+    if (e.isDirectory()) await walkRefFiles(p, out, match);
+    else if (e.isFile() && match(e.name)) out.push(p);
   }
   return out;
 }
@@ -1099,9 +1222,73 @@ async function statsHeatmap(opts = {}) {
   printHeatmapHuman({ kns, bugs, rows, months, refFiles, coldSpots, zeroRef });
 }
 
-async function listBugSlugs() {
+// ---------- Guard coverage (KN-056): KN nào có lưới chống tái lập ----------
+// Lưới = file test (spec/test) tham chiếu KN-XXX trong nội dung, HOẶC dòng "- **Guard:** <path>" trong KN detail.
+async function collectGuardMap(kns) {
+  const map = new Map(); // KN-XXX -> Set(relPath)
+  const add = (id, file) => { if (!map.has(id)) map.set(id, new Set()); map.get(id).add(file); };
+  const files = [];
+  for (const d of GUARD_SCAN_DIRS) await walkRefFiles(path.join(ROOT, d), files, (n) => GUARD_FILE_RE.test(n));
+  for (const f of files) {
+    let text = '';
+    try { text = await fs.readFile(f, 'utf8'); } catch { continue; }
+    const rel = path.relative(ROOT, f).split(path.sep).join('/');
+    for (const m of text.matchAll(/KN-\d{3}/g)) add(m[0], rel);
+  }
+  for (const kn of kns) {
+    const gm = kn.detail.match(/\*\*Guard:\*\*\s*([^\n]+)/);
+    if (!gm) continue;
+    for (const m of gm[1].matchAll(/[\w./-]+\.(?:spec|test)\.(?:ts|js|mjs|cs)/g)) {
+      if (existsSync(path.join(ROOT, m[0]))) add(kn.id, m[0]);
+    }
+  }
+  return map;
+}
+
+function printGuardsHuman(guards, result) {
+  const { counts, priority } = result;
+  console.log(`🔒 GUARD COVERAGE — ${counts.total} KN · có lưới: ${counts.withGuard} · chưa: ${counts.withoutGuard} · ưu tiên (major/critical): ${counts.priority}`);
+  for (const [id, files] of Object.entries(guards)) console.log(`   ✅ ${id} → ${files.join(', ')}`);
+  if (priority.length) {
+    const head = priority.slice(0, 12).map((m) => m.id).join(', ');
+    console.log(`   ⚠️ Ưu tiên viết lưới: ${head}${priority.length > 12 ? ` …(+${priority.length - 12})` : ''}`);
+  }
+  console.log(`   → Thêm lưới: viết test khoá bug trong tests/e2e/*.spec.ts + nhắc KN-XXX trong comment, hoặc thêm '- **Guard:** <path>' vào KN detail.`);
+}
+
+async function guardsAudit(opts = {}) {
+  const { kns } = await parseKNs(KNOWLEGED);
+  const map = await collectGuardMap(kns);
+  const guards = {};
+  const missing = [];
+  for (const kn of kns) {
+    const files = map.get(kn.id) ? [...map.get(kn.id)] : [];
+    if (files.length) guards[kn.id] = files;
+    else missing.push({ id: kn.id, title: kn.title, severity: kn.severity });
+  }
+  const isPri = (m) => m.severity === 'major' || m.severity === 'critical';
+  const ordered = [...missing.filter(isPri), ...missing.filter((m) => !isPri(m))];
+  const result = {
+    generatedAt: new Date().toISOString(),
+    generatedBy: 'auto-learn.mjs guards',
+    policy: { scanDirs: GUARD_SCAN_DIRS, detection: 'KN-XXX trong test file HOẶC "- **Guard:** <path>" trong KN', required: 'major/critical' },
+    counts: { total: kns.length, withGuard: kns.length - missing.length, withoutGuard: missing.length, priority: ordered.filter(isPri).length },
+    guards,
+    missing: ordered,
+    priority: ordered.filter(isPri),
+  };
+  if (opts.out) {
+    const outPath = path.resolve(ROOT, opts.out);
+    await fs.mkdir(path.dirname(outPath), { recursive: true });
+    await fs.writeFile(outPath, JSON.stringify(result, null, 2) + '\n', 'utf8');
+  }
+  if (opts.json || opts.out) { console.log(JSON.stringify(result, null, 2)); return; }
+  printGuardsHuman(guards, result);
+}
+
+async function listBugSlugs(dir = BUGS_DIR) {
   try {
-    const entries = await fs.readdir(BUGS_DIR, { withFileTypes:true });
+    const entries = await fs.readdir(dir, { withFileTypes:true });
     return entries.filter(e=>e.isDirectory() && e.name !== '_template').map(e=>e.name);
   } catch { return []; }
 }
@@ -1225,8 +1412,9 @@ function printHelp() {
 
 Usage:
   node .github/harness/scripts/auto-learn.mjs suggest "từ khóa" [--top 3] [--json]  (alias: search)
-  node .github/harness/scripts/auto-learn.mjs log --error "msg" --file "path" --title "tên" [--slug slug] 
-  node .github/harness/scripts/auto-learn.mjs propose --bug <slug> [--json]  (alias: get --bug <slug>)
+  node .github/harness/scripts/auto-learn.mjs log --error "msg" --file "path" --title "tên" [--slug slug] [--dir dir] [--dry-run] [--no-scan]  (tự RADAR tái lập)
+  node .github/harness/scripts/auto-learn.mjs propose --bug <slug> [--json] [--dir dir] [--strict]  (alias: get --bug <slug>)  (GUARD GATE: major/critical thiếu Guard → --strict exit 1)
+  node .github/harness/scripts/auto-learn.mjs guards [--json] [--out <file>]  (Guard coverage — KN nào có lưới chống tái lập)
   node .github/harness/scripts/auto-learn.mjs attest --kn KN-003 --result pass|fail [--score 0..1] [--note "..."]  (Engram-lite Wilson)
   node .github/harness/scripts/auto-learn.mjs status [--json]
   node .github/harness/scripts/auto-learn.mjs stats --heatmap [--json] [--out <file>] [--now ISO]  (CMB anisotropy — grid tag×tháng · điểm lạnh · KN 0 tham chiếu)
@@ -1251,8 +1439,9 @@ Examples:
 
 Flow tự động:
   1. Trước khi code → suggest "mô tả task" để xem KN liên quan
-  2. Khi lỗi → log --error "..." để tạo bug draft
-  3. Sau khi fix → propose --bug <slug> để sinh KN draft dán vào knowleged.md
+  2. Khi lỗi → log --error "..." để tạo bug draft (tự RADAR: đối chiếu KN + bug cũ — nghi tái lập là cảnh báo)
+  3. Sau khi fix → propose --bug <slug> để sinh KN draft dán vào knowleged.md (GUARD GATE: major/critical phải có lưới)
+  3b. Tái lập thật → nâng lưới (Guard) TRƯỚC, fix SAU; kiểm coverage: guards
   Reef-lite:
   4. Serve: record --prompt "..." → .agent/records/rec-xxx.json (x-reef-agent-record-id)
   5. Observe: report --score 1 --references rec-xxx → .agent/reports.jsonl
@@ -1277,7 +1466,8 @@ function requireGetBug(opts, query) {
 function makeHandlers(opts, json) {
   return new Map(Object.entries({
     log: () => logBug(opts),
-    propose: () => propose(opts.bug || opts.slug, json),
+    propose: () => propose(opts.bug || opts.slug, json, opts),
+    guards: () => guardsAudit(opts),
     attest: () => attest(opts, json),
     status: () => status(json),
     watchdog: () => watchdog(opts),
@@ -1297,7 +1487,7 @@ async function dispatch(cmd, query, opts) {
     requireSuggestQuery(query);
     return suggest(query, opts.top || 3, json);
   }
-  if (cmd === 'get') return propose(requireGetBug(opts, query), json);
+  if (cmd === 'get') return propose(requireGetBug(opts, query), json, opts);
   if (cmd === 'stats' && !opts.heatmap) {
     console.error('❌ stats cần --heatmap (view duy nhất hiện có). Ví dụ: stats --heatmap --json --out www/cosmos/heatmap.json');
     process.exit(1);

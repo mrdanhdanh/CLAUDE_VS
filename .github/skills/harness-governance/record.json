@@ -5,11 +5,15 @@
     "knowleged": [
       "KN-012",
       "KN-021",
-      "KN-048"
+      "KN-048",
+      "KN-049",
+      "KN-051",
+      "KN-052"
     ],
     "bugs": [
       ".agent/bugs/2026-09-03-agent-test-mutate-reward-hacking/bug.md",
-      ".agent/plans/rsi-singularity-lessons/gap-analysis.md"
+      ".agent/plans/rsi-singularity-lessons/gap-analysis.md",
+      ".agent/bugs/2026-09-12-entropy-probe-inflation/bug.md"
     ]
   },
   "capabilities": [
@@ -21,11 +25,14 @@
     "security",
     "rbac",
     "research",
-    "rsi"
+    "rsi",
+    "metrics",
+    "verification"
   ],
   "evidence": [
     ".agent/bugs/2026-09-03-agent-test-mutate-reward-hacking/bug.md",
-    ".agent/plans/rsi-singularity-lessons/gap-analysis.md"
+    ".agent/plans/rsi-singularity-lessons/gap-analysis.md",
+    ".agent/bugs/2026-09-12-entropy-probe-inflation/bug.md"
   ],
   "checks": [
     {
@@ -47,6 +54,6 @@
   ],
   "gaps": [],
   "verdict": "G-accepted",
-  "generatedAt": "2026-09-12T13:11:12.551Z",
+  "generatedAt": "2026-09-13T15:21:15.411Z",
   "paper": "DisCo arXiv:2609.02749v1 §3.2 (task-agnostic)"
 }

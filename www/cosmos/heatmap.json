@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-13T14:12:54.706Z",
+  "generatedAt": "2026-09-13T15:29:34.325Z",
   "generatedBy": "auto-learn.mjs stats --heatmap",
   "policy": {
     "cold": "bugCount − knCount ≥ 1",
@@ -11,16 +11,16 @@
     "bucket": "YYYY-MM"
   },
   "counts": {
-    "knTotal": 53,
-    "bugTotal": 35,
-    "tags": 103,
+    "knTotal": 56,
+    "bugTotal": 37,
+    "tags": 106,
     "months": [
       "2026-08",
       "2026-09"
     ],
-    "coldSpots": 8,
+    "coldSpots": 7,
     "zeroRef": 0,
-    "refFiles": 280
+    "refFiles": 285
   },
   "grid": {
     "months": [
@@ -30,26 +30,26 @@
     "rows": [
       {
         "tag": "process",
-        "total": 31,
+        "total": 33,
         "cells": [
           4,
-          27
+          29
         ]
       },
       {
         "tag": "ui",
-        "total": 17,
+        "total": 18,
         "cells": [
           6,
-          11
+          12
         ]
       },
       {
         "tag": "verify",
-        "total": 12,
+        "total": 13,
         "cells": [
           0,
-          12
+          13
         ]
       },
       {
@@ -70,22 +70,22 @@
       },
       {
         "tag": "css",
-        "total": 6,
+        "total": 7,
         "cells": [
           4,
-          2
-        ]
-      },
-      {
-        "tag": "governance",
-        "total": 6,
-        "cells": [
-          0,
-          6
+          3
         ]
       },
       {
         "tag": "verification",
+        "total": 7,
+        "cells": [
+          0,
+          7
+        ]
+      },
+      {
+        "tag": "governance",
         "total": 6,
         "cells": [
           0,
@@ -109,19 +109,27 @@
         ]
       },
       {
+        "tag": "responsive",
+        "total": 5,
+        "cells": [
+          1,
+          4
+        ]
+      },
+      {
+        "tag": "knowledge",
+        "total": 4,
+        "cells": [
+          1,
+          3
+        ]
+      },
+      {
         "tag": "pages",
         "total": 4,
         "cells": [
           0,
           4
-        ]
-      },
-      {
-        "tag": "responsive",
-        "total": 4,
-        "cells": [
-          1,
-          3
         ]
       },
       {
@@ -146,6 +154,22 @@
         "cells": [
           0,
           4
+        ]
+      },
+      {
+        "tag": "ux",
+        "total": 4,
+        "cells": [
+          2,
+          2
+        ]
+      },
+      {
+        "tag": "agent",
+        "total": 3,
+        "cells": [
+          0,
+          3
         ]
       },
       {
@@ -178,22 +202,6 @@
         "cells": [
           0,
           3
-        ]
-      },
-      {
-        "tag": "ux",
-        "total": 3,
-        "cells": [
-          2,
-          1
-        ]
-      },
-      {
-        "tag": "agent",
-        "total": 2,
-        "cells": [
-          0,
-          2
         ]
       },
       {
@@ -285,7 +293,7 @@
         ]
       },
       {
-        "tag": "knowledge",
+        "tag": "perf",
         "total": 2,
         "cells": [
           1,
@@ -293,11 +301,11 @@
         ]
       },
       {
-        "tag": "perf",
+        "tag": "psychology",
         "total": 2,
         "cells": [
-          1,
-          1
+          0,
+          2
         ]
       },
       {
@@ -557,7 +565,23 @@
         ]
       },
       {
+        "tag": "grid",
+        "total": 1,
+        "cells": [
+          0,
+          1
+        ]
+      },
+      {
         "tag": "grounding",
+        "total": 1,
+        "cells": [
+          0,
+          1
+        ]
+      },
+      {
+        "tag": "guard",
         "total": 1,
         "cells": [
           0,
@@ -653,14 +677,6 @@
         ]
       },
       {
-        "tag": "psychology",
-        "total": 1,
-        "cells": [
-          0,
-          1
-        ]
-      },
-      {
         "tag": "quality",
         "total": 1,
         "cells": [
@@ -694,6 +710,14 @@
       },
       {
         "tag": "recovery",
+        "total": 1,
+        "cells": [
+          0,
+          1
+        ]
+      },
+      {
+        "tag": "recurrence",
         "total": 1,
         "cells": [
           0,
@@ -860,12 +884,6 @@
       "kn": 3,
       "bug": 5,
       "coldness": 2
-    },
-    {
-      "tag": "knowledge",
-      "kn": 2,
-      "bug": 3,
-      "coldness": 1
     },
     {
       "tag": "perf",

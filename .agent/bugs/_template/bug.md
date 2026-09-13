@@ -10,6 +10,7 @@
 - **Reporter:** @user / YUNIE
 - **Related KN:** `KN-XXX` (điền sau khi cập nhật `docs/knowleged.md`, hoặc `—` nếu chưa có)
 - **Tags:** `ui` `api` `state` `async` `css` `a11y` `perf` `build` `data` ...
+- **Guard:** `tests/e2e/<spec>.spec.ts` | `—` — lưới chống tái lập (test/invariant khoá bug). **major/critical BẮT BUỘC** — `propose` gate FAIL nếu thiếu (KN-056).
 - **Status:** `open` | `fixed` | `wontfix`
 
 ---
@@ -104,6 +105,9 @@ Ví dụ: *Mọi overlay/modal phải có ESC + focus trap + aria-modal.*
 - **Cách phòng tránh lần sau:**
   - [ ] ...
   - [ ] Thêm checklist vào `docs/knowleged.md` Anti-patterns / Checklist phòng tránh chung
+- **Guard (lưới chống tái lập — KN-056):**
+  - [ ] Điền `- **Guard:**` ở Meta (test/invariant khoá bug) — major/critical bắt buộc, nếu không `propose --strict` exit 1
+  - [ ] Nếu là **TÁI LẬP** (RADAR ở đầu bug.md báo): ghi rõ "tái lập của KN-XXX" + **vì sao lưới cũ không bắt được** + nâng lưới TRƯỚC khi fix
 - **Cần cập nhật:**
   - [ ] `docs/knowleged.md` → `KN-XXX` (Bảng tóm tắt + Chi tiết)
   - [ ] `product-quality.instructions.md` (nếu là chuẩn UI mới)

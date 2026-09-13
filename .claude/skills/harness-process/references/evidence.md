@@ -1,8 +1,8 @@
 # Evidence — harness-process (DisCo arXiv:2609.02749v1 §3.2 (task-agnostic))
 
-> Substrate layer của skill — full text từ docs/knowleged.md. Sinh tự động 2026-09-12T13:11:12.580Z.
+> Substrate layer của skill — full text từ docs/knowleged.md. Sinh tự động 2026-09-13T15:21:15.428Z.
 
-## Bug reports liên quan (6/29 bugs)
+## Bug reports liên quan (8/39 bugs)
 
 - `.agent/bugs/2026-08-30-bug-blindness/bug.md` — Bug: Bug Blindness — mù bug do workaround vô thức + fan bias
 - `.agent/bugs/2026-09-03-rag-export-missing-grounding-chet/bug.md` — Bug: RAG export missing grounding chet
@@ -10,6 +10,8 @@
 - `.agent/bugs/2026-09-06-archify-skill-port/bug.md` — Bug: Archify skill port — (A) EPERM rename trên Windows + (B) diagram tràn first-screen
 - `.agent/bugs/2026-09-11-ps-5-1-khong-ho-tro-trong-lenh-powershell/bug.md` — Bug: PS 5.1 khong ho tro ?? trong lenh PowerShell
 - `.agent/bugs/2026-09-12-academy-content-not-actionable/bug.md` — Bug — Content 7 bài Agentic Academy "đúng chữ nhưng không chạy được"
+- `.agent/bugs/2026-09-13-git-checkout-head-revert-nham-refactor-chua-commit/bug.md` — Bug: git checkout HEAD -- revert nhầm refactor chưa commit của auto-learn.mjs
+- `.agent/bugs/2026-09-13-kn-recurrence-no-guard/bug.md` — Bug: Bug tái lập dù đã có KN — không gì phát hiện "tái lập" + KN không có lưới (kèm phép đo severity hỏng 0/55)
 
 ## Full KN details
 
@@ -525,3 +527,64 @@
   - Property tests (vary inputs) là technique đáng dùng khi có parser/validator — không cần lib trong 0-dep.
 - **Tags:** `process` `verification` `slop` `complexity` `evals`
 - **Người ghi:** YUNIE / Slop Gate upgrade
+
+---
+
+### KN-053 — `git checkout HEAD -- <file>` revert nhầm refactor chưa commit — recover bằng VS Code Local History
+
+- **Ngày:** 2026-09-13
+- **Bug report:** `.agent/bugs/2026-09-13-git-checkout-head-revert-nham-refactor-chua-commit/bug.md`
+- **Severity:** major
+- **Triệu chứng:** Cuối session Batch 1 (refactor 3 CLI core), chạy `git checkout HEAD -- auto-researcher.mjs auto-learn.mjs` để tạo bản orig byte-exact cho pairwise — nhưng auto-learn refactor **chưa commit** → bị revert âm thầm về bản HEAD cũ (exit 0, không warning). ~12 edits (~30 phút refactor) tưởng mất trắng; chỉ AR sống sót vì trước đó vô tình save vào keep-file.
+- **Nguyên nhân gốc (5 Whys):** Why1: `git checkout HEAD -- <file>` ghi đè working tree không hỏi, kể cả uncommitted changes — đúng hành vi thiết kế của git. Why2: mình dùng nó làm bước "restore orig byte-exact" cho pairwise nhưng chỉ save 1/2 file vào keep-file trước. Why3: đầu session (part 1) đã dùng đúng quy trình — Copy-Item working tree TRƯỚC khi edit, rồi copy làm .orig; part 2 tự phá quy trình vì refactor đã clean nên tưởng không cần. Why4: session dài + state phức tạp (orig/keep/refactored files) không checklist — thao tác phá hoại chạy bằng muscle memory. Why5 (Root): destructive command (checkout/reset) không có gate invariant "file này có uncommitted work không?" — thiếu pre-check trước thao tác phá hoại.
+- **Cách sửa:** VS Code Local History: `%APPDATA%\Code - Insiders\User\History\<hash>\entries.json` — tìm entry match path auto-learn.mjs, sort timestamp desc; entry cuối chứa bản refactored đầy đủ — verify markers TRƯỚC khi restore (`kn-parse` import + 6× `parseKNs(KNOWLEGED)` + không còn `function tokenize`) → Copy-Item về. Re-verify toàn bộ: pairwise 6/6 (AR) + 28/28 (AL) + write paths IDENTICAL + 21/21 dependent specs.
+- **Cách phòng tránh:**
+  - **CẤM `git checkout HEAD -- <file>` / `git reset --hard` khi file có uncommitted changes** — pre-check bắt buộc: `git status --short <file>` + `git diff --stat <file>` phải trống trước khi chạy (fail-closed).
+  - Tạo orig byte-exact đúng quy trình: (1) copy refactored → keep-file; (2) checkout; (3) copy làm `.orig`; (4) copy keep-file về — hoặc đơn giản hơn: Copy-Item working tree trước khi edit (đầu session).
+  - **Commit từng file khi refactor xong** (bounded task) thay vì dồn cuối session — file chưa commit = vùng nguy hiểm của mọi thao tác phá hoại.
+  - VS Code Local History là safety net đáng tin: nhớ đường dẫn + luôn verify markers entry trước khi restore (entry có thể là bản dở dang).
+  - Restore file bằng byte-level copy (`Copy-Item`/`git checkout` + copy) — KHÔNG dùng PowerShell string-piping (`git show | Out-File`) vì mangle encoding/EOL → test ra kết quả SAI giả (gặp trong cùng session).
+- **Tags:** `process` `dx` `git` `recovery`
+- **Người ghi:** YUNIE / incident 2026-09-13 (Batch 1 refactor — recovered, re-verified 57/57 pairwise)
+
+---
+
+### KN-054 — ADHD/Executive Function: harness là khung xương ngoài của não — externalize, đừng "cố gắng hơn"
+
+- **Ngày:** 2026-09-13
+- **Bug report:** N/A — bài học từ mô hình EF deficit của ADHD (Russell Barkley — mô hình nổi bật trong ADHD research; paraphrase, không copy) + DSM-5 (3 presentation types) + plan `.agent/plans/executive-function/`. Trang trực quan: `www/executive-function/`.
+- **Severity:** minor
+- **Triệu chứng:** Các failure mode của "bộ não hữu hạn" xuất hiện cả ở agent lẫn người: kẹt fix loop 1 hypothesis (hyperfocus), quên instruction giữa session dài, không time-sense (scope phình/trôi), né task khó, dội wall-of-text. Harness đã giải quyết rải rác (3-fix limit, todo, `context.mjs`, plans, evals...) nhưng không có mô hình chung → mỗi lần gặp lại xử như bug mới; output cho người chưa có luật thân thiện working memory.
+- **Nguyên nhân gốc (5 Whys):** Why1: fix triệu chứng từng cái mà không đặt tên pattern → knowledge không tích lũy (cùng lớp KN-034 nhưng ở tầng tâm lý). Why2: thiếu mô hình chuẩn để phân loại — "loop" là persistence hay pathology? "quên" là lỗi agent hay lỗi thiết kế? Why3: ADHD research đã có mô hình trả lời — Barkley: vấn đề không phải thiếu chú ý mà thiếu **executive function** (ức chế · working memory · điều tiết cảm xúc · khởi động · lập kế hoạch · tự giám sát); giải pháp nền tảng là **externalize** (bộ nhớ/thời gian/luật/động lực ra môi trường), không phải "cố gắng hơn". Why4: AI agents có cùng hạn chế cấu trúc (context = working memory hữu hạn, không time-sense, distraction-prone) → cùng mô hình áp cho cả hai. Why5 (Root): harness chưa có tầng triết lý chung cho "bộ não hữu hạn" — các accommodation mạnh nhất (todo, 3-fix limit, plans, verify) chưa được nhận diện là một hệ thống externalize thống nhất nên không được bảo vệ/giảng giải như tài sản.
+- **Cách sửa:** Đặt tên + hệ thống hóa: (1) instruction `executive-function` — nguyên lý externalize + bảng 6 EF ↔ cơ chế harness (mỗi mapping **phải trỏ cơ chế đã tồn tại**, không thêm cơ chế mới chỉ để map đẹp) + agent failure modes ↔ guardrail + output rules ADHD-friendly; (2) YUNIE personality §18 + focus guard trong `harness-workflow`; (3) trang `www/executive-function/` (mapping explorer + lab working memory) cho người; (4) KN này. Phân định rõ: persistence tốt = đổi hypothesis/đo lại (KN-023) ≠ hyperfocus loop = retry nguyên strategy (3-fix limit chặn).
+- **Cách phòng tránh:**
+  - Gặp behavior lạ (loop/quên/né/wall-of-text) → tra bảng EF failure modes TRƯỚC khi coi là bug mới.
+  - Không "cố gắng hơn": retry nguyên strategy = hyperfocus loop; đổi hypothesis/tool rồi đo lại (KN-023).
+  - Mọi task >2 bước có visible progress; decision quan trọng ghi ra file (plans/knowleged) — không giữ trong đầu.
+  - Output cho người: kết luận trước + 1 next step + chunk + micro-win; không tường chữ (đồng bộ yunie-personality §7/§17/§18).
+  - Externalize là tài sản thiết kế, không phải crutch — ai đề xuất cắt todo/limit/plan "cho nhanh" thì trả lời bằng mô hình EF (đối trọng `minimal-ladder`: cắt waste, không cắt khung xương).
+- **Tags:** `process` `psychology` `ux` `agent` `knowledge`
+- **Người ghi:** YUNIE / plan `.agent/plans/executive-function/` (2026-09-13)
+
+---
+
+### KN-056 — Vòng chống tái lập: KN không lưới = wishlist — log RADAR + Guard gate + `guards` audit
+
+- **Ngày:** 2026-09-13
+- **Bug report:** `.agent/bugs/2026-09-13-kn-recurrence-no-guard/bug.md`
+- **Severity:** major
+- **Triệu chứng:** User hỏi: "luôn có lúc vẫn tái lập bug dù có KN — làm sao hạn chế sửa đi sửa lại?" Đo được: (1) chỉ ~26/55 KN có lưới (test tham chiếu); (2) `log` tạo bug draft **im lặng** kể cả khi bug gần trùng KN/bug cũ (KN-004 là tái lập thật của KN-003 mà không gì cảnh báo); (3) không gate nào đòi lưới khi close bug; (4) phép đo phụ cũng hỏng: severity parse **0/55 major** (regex không khớp `**Severity:**` → mọi KN hiện `minor`).
+- **Nguyên nhân gốc (5 Whys):** KN là văn xuôi để đọc, không phải cơ chế để enforce — bug quay lại vì (a) không ai phát hiện "tái lập" tại thời điểm log, (b) không gì FAIL khi thiếu lưới, (c) định nghĩa Done của bug không bao gồm Guard. Sâu hơn: "phụ thuộc ai đó tự nhớ đọc KN" là thiết kế sai (KN-054 externalize) + đo lường không đáng tin thì ưu tiên sai theo (KN-049 class: test cả phép đo, không chỉ data).
+- **Cách sửa:** 3 mắt xích máy-enforce trong `auto-learn.mjs`: (1) **log RADAR** — BM25 đối chiếu text bug với toàn bộ KN + bug cũ (ngưỡng calibrate KN ≥25 / bug ≥18: liên quan thật ≥31, nhiễu ≤15) → in `🔁 RADAR TÁI LẬP` + inject block vào bug.md (flags `--dry-run`/`--no-scan`/`--dir`); (2) **Guard gate** — template bug.md thêm field `Guard:`; `propose` major/critical thiếu Guard → `⛔ GUARD GATE FAIL`, `--strict` exit 1, draft KN luôn có `- **Guard:**`; (3) **`guards` coverage audit** — quét `tests/**` tìm `KN-XXX` + `Guard:` line trong KN detail → human/`--json`/`--out`, ưu tiên major/critical chưa lưới. Kèm fix phép đo: regex severity/date `[^\w]*`/`[^\d]*` (kn-parse + extractBugMeta) → 46 major + 3 critical parse đúng.
+- **Guard:** `tests/e2e/auto-learn-guard.spec.ts` (6 test: radar dry-run không ghi file · radar inject bug.md · gateWarning JSON · `--strict` exit 1 · guard PASS strict · guards JSON + priority ≥10 — chính spec này là lưới dogfood của KN-056)
+- **Cách phòng tránh:**
+  - Bug major/critical: **Guard bắt buộc** — test mới / invariant mới / `- **Guard:** <path>`; thiếu = chưa Done (`propose --strict` là gate).
+  - RADAR báo nghi tái lập → đọc Cách phòng tránh TRƯỚC; xác nhận tái lập thật → ghi "tái lập của KN-XXX — vì sao lưới cũ không bắt được" → **nâng lưới TRƯỚC, fix SAU** (fix lại y nguyên = sửa lần 3 chắc chắn xảy ra).
+  - Định kỳ chạy `guards` — trả nợ lưới cho major/critical dần.
+  - Phép đo là hạ tầng: metric/priority build trên parser hỏng = sai âm thầm — test cả phép đo (priority ≥10), không chỉ đo data.
+- **Tags:** `process` `knowledge` `verification` `recurrence` `guard`
+- **Người ghi:** YUNIE / user request (2026-09-13)
+
+<!-- Thêm bài học mới theo template dưới — copy block này -->
+
+<!--

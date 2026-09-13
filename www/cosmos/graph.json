@@ -1,10 +1,10 @@
 {
-  "generatedAt": "2026-09-13T14:12:53.791Z",
+  "generatedAt": "2026-09-13T15:29:33.837Z",
   "generatedBy": "entangle.mjs --graph",
   "scanned": {
-    "files": 1538,
-    "edges": 1475,
-    "commits": 168
+    "files": 1547,
+    "edges": 1503,
+    "commits": 171
   },
   "thresholds": {
     "hubMinRefs": 10,
@@ -13,15 +13,15 @@
   "hubs": [
     {
       "file": "docs/knowleged.md",
-      "refs": 81
+      "refs": 86
     },
     {
       "file": "www/status.json",
-      "refs": 55
+      "refs": 60
     },
     {
       "file": "www/index.html",
-      "refs": 51
+      "refs": 52
     },
     {
       "file": "package.json",
@@ -32,12 +32,12 @@
       "refs": 33
     },
     {
-      "file": "README.md",
-      "refs": 30
+      "file": "www/styles.css",
+      "refs": 31
     },
     {
-      "file": "www/styles.css",
-      "refs": 28
+      "file": "README.md",
+      "refs": 30
     },
     {
       "file": "www/library/mcp-server.mjs",
@@ -45,7 +45,7 @@
     },
     {
       "file": "www/app.js",
-      "refs": 18
+      "refs": 19
     },
     {
       "file": "www/library/app.js",
@@ -97,21 +97,12 @@
         "www/todo-manager/styles.css"
       ],
       "weight": 4
-    },
-    {
-      "files": [
-        ".github/agents/yunie.agent.md",
-        ".github/copilot-instructions.md",
-        ".github/instructions/yunie-personality.instructions.md",
-        "CLAUDE.md"
-      ],
-      "weight": 3
     }
   ],
   "deadFilaments": [],
   "counts": {
     "hubs": 17,
-    "clusters": 3,
+    "clusters": 2,
     "deadFilaments": 0
   }
 }
