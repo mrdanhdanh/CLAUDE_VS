@@ -88,6 +88,32 @@ const typeIconSvg = {
   hook: '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22a7 7 0 0 0 7-7c0-3.5-2.5-6-7-10-4.5 4-7 6.5-7 10a7 7 0 0 0 7 7z"/></svg>',
 };
 
+function normItem(meta, iconSvg, name, desc, enabled){
+  return { type: meta.type, label: meta.label, iconSvg, name, desc, enabled };
+}
+
+function pushArrayItems(val, meta, iconSvg, out){
+  for(const item of val){
+    if(typeof item === 'string'){
+      out.push(normItem(meta, iconSvg, item, '', true));
+    } else if(item && typeof item === 'object'){
+      out.push(normItem(meta, iconSvg, item.name || item.id || 'unknown', item.description || item.desc || '', item.enabled !== false));
+    }
+  }
+}
+
+function pushObjectItems(val, meta, iconSvg, out){
+  for(const [name, info] of Object.entries(val)){
+    if(typeof info === 'string'){
+      out.push(normItem(meta, iconSvg, name, info, true));
+    } else if(info && typeof info === 'object'){
+      out.push(normItem(meta, iconSvg, name, info.description || info.desc || '', info.enabled !== false));
+    } else {
+      out.push(normItem(meta, iconSvg, name, '', !!info));
+    }
+  }
+}
+
 function normalizeRegistry(data){
   const reg = data.registry || {};
   const typeMap = {
@@ -101,25 +127,8 @@ function normalizeRegistry(data){
   for(const [key, val] of Object.entries(reg)){
     const meta = typeMap[key] || { label:key, type:key.replace(/s$/,'') };
     const iconSvg = typeIconSvg[meta.type] || '';
-    if(Array.isArray(val)){
-      for(const item of val){
-        if(typeof item === 'string'){
-          out.push({ type: meta.type, label: meta.label, iconSvg, name: item, desc: '', enabled: true });
-        } else if(item && typeof item === 'object'){
-          out.push({ type: meta.type, label: meta.label, iconSvg, name: item.name || item.id || 'unknown', desc: item.description || item.desc || '', enabled: item.enabled !== false });
-        }
-      }
-    } else if(val && typeof val === 'object'){
-      for(const [name, info] of Object.entries(val)){
-        if(typeof info === 'string'){
-          out.push({ type: meta.type, label: meta.label, iconSvg, name, desc: info, enabled: true });
-        } else if(info && typeof info === 'object'){
-          out.push({ type: meta.type, label: meta.label, iconSvg, name, desc: info.description || info.desc || '', enabled: info.enabled !== false });
-        } else {
-          out.push({ type: meta.type, label: meta.label, iconSvg, name, desc: '', enabled: !!info });
-        }
-      }
-    }
+    if(Array.isArray(val)) pushArrayItems(val, meta, iconSvg, out);
+    else if(val && typeof val === 'object') pushObjectItems(val, meta, iconSvg, out);
   }
   out.sort((a,b)=>{
     if(a.enabled !== b.enabled) return a.enabled ? -1 : 1;
@@ -141,44 +150,45 @@ function filteredRegistry(){
   });
 }
 
-function renderRegistryTable(rows){
-  const tbody = $('#registryBody');
-  const cards = $('#registryCards');
-  const empty = $('#registryEmpty');
-  if(!tbody || !cards) return;
+function registryEmptyRow(msg, hint){
+  return `<tr><td colspan="4"><div class="empty"><strong>${msg}</strong><br>${hint}</div></td></tr>`;
+}
 
-  if(!registryData.length){
-    tbody.innerHTML = `<tr><td colspan="4"><div class="empty"><strong>Chưa có dữ liệu registry</strong><br>Kiểm tra <span class="kbd">.github/harness/registry.json</span> và chạy <span class="kbd">harness-manager status</span></div></td></tr>`;
+function registryEmptyState(tbody, cards, empty, kind){
+  if(kind === 'nodata'){
+    tbody.innerHTML = registryEmptyRow('Chưa có dữ liệu registry', 'Kiểm tra <span class="kbd">.github/harness/registry.json</span> và chạy <span class="kbd">harness-manager status</span>');
     cards.innerHTML = '';
     if(empty) empty.style.display = 'none';
-    return;
-  }
-  if(!rows.length){
-    tbody.innerHTML = `<tr><td colspan="4"><div class="empty"><strong>Không tìm thấy</strong><br>Thử từ khóa khác hoặc đổi bộ lọc.</div></td></tr>`;
+  } else {
+    tbody.innerHTML = registryEmptyRow('Không tìm thấy', 'Thử từ khóa khác hoặc đổi bộ lọc.');
     cards.innerHTML = '';
     if(empty) empty.style.display = 'block';
-    return;
   }
-  if(empty) empty.style.display = 'none';
+}
 
-  tbody.innerHTML = rows.map(r=>`
+function registryStatusTag(r){
+  return r.enabled
+    ? '<span class="tag tag-on"><i class="status-dot dot-on" aria-hidden="true"></i>đang bật</span>'
+    : '<span class="tag tag-off"><i class="status-dot dot-off" aria-hidden="true"></i>đã tắt</span>';
+}
+
+function registryRowHtml(r){
+  return `
     <tr>
       <td><span class="tag">${r.iconSvg} ${r.label}</span></td>
       <td class="mono"><strong>${escapeHtml(r.name)}</strong></td>
       <td style="color:var(--color-neutral-500);max-width:420px;word-break:break-word">${r.desc ? escapeHtml(r.desc.slice(0,120)) : '<span style="color:var(--color-neutral-400)">—</span>'}</td>
-      <td>${r.enabled
-        ? '<span class="tag tag-on"><i class="status-dot dot-on" aria-hidden="true"></i>đang bật</span>'
-        : '<span class="tag tag-off"><i class="status-dot dot-off" aria-hidden="true"></i>đã tắt</span>'}</td>
+      <td>${registryStatusTag(r)}</td>
     </tr>
-  `).join('');
+  `;
+}
 
-  cards.innerHTML = rows.map(r=>`
+function registryCardHtml(r){
+  return `
     <div class="reg-card" tabindex="0" role="article" aria-label="${r.label} ${r.name} ${r.enabled?'đang bật':'đã tắt'}">
       <div class="reg-card-head">
         <span class="reg-card-title">${r.iconSvg} ${escapeHtml(r.name)}</span>
-        ${r.enabled
-          ? '<span class="tag tag-on"><i class="status-dot dot-on" aria-hidden="true"></i>đang bật</span>'
-          : '<span class="tag tag-off"><i class="status-dot dot-off" aria-hidden="true"></i>đã tắt</span>'}
+        ${registryStatusTag(r)}
       </div>
       <div style="display:flex;gap:6px;align-items:center;margin-bottom:6px">
         <span class="tag">${r.iconSvg} ${r.label}</span>
@@ -186,7 +196,19 @@ function renderRegistryTable(rows){
       </div>
       <div class="reg-card-desc">${r.desc ? escapeHtml(r.desc.slice(0,120)) : '<span style="color:var(--color-neutral-400)">Không có mô tả</span>'}</div>
     </div>
-  `).join('');
+  `;
+}
+
+function renderRegistryTable(rows){
+  const tbody = $('#registryBody');
+  const cards = $('#registryCards');
+  const empty = $('#registryEmpty');
+  if(!tbody || !cards) return;
+  if(!registryData.length) return registryEmptyState(tbody, cards, empty, 'nodata');
+  if(!rows.length) return registryEmptyState(tbody, cards, empty, 'filtered');
+  if(empty) empty.style.display = 'none';
+  tbody.innerHTML = rows.map(registryRowHtml).join('');
+  cards.innerHTML = rows.map(registryCardHtml).join('');
 }
 
 function escapeHtml(s){
@@ -307,6 +329,29 @@ function renderPlans(data){
 }
 
 // ---------- Health ----------
+function healthChecksHtml(checks){
+  return (checks||[]).map(c=>`<li style="padding:6px 0;border-bottom:1px solid #f1f5f9;display:flex;gap:8px"><span aria-hidden="true" style="color:var(--color-success)">✓</span><span>${escapeHtml(c)}</span></li>`).join('');
+}
+
+function healthStatusText(h){
+  if(h.status==='ok') return 'Hệ thống ổn định';
+  if(h.status==='warn') return 'Cần chú ý';
+  return h.status ? escapeHtml(h.status) : 'Không rõ';
+}
+
+function bindCopyStatusJson(data){
+  const btn = $('#btnCopyJson');
+  if(!btn) return;
+  btn.addEventListener('click', async ()=>{
+    try{
+      await navigator.clipboard.writeText(JSON.stringify(data, null, 2));
+      toast('Đã sao chép status.json');
+    }catch{
+      toast('Không sao chép được — hãy mở status.json thủ công');
+    }
+  }, { once:true });
+}
+
 function renderHealth(data){
   const h = data.health || {};
   const sub = $('#healthSub');
@@ -315,9 +360,9 @@ function renderHealth(data){
   if(!card) return;
   if(sub) sub.textContent = h.lastCheck ? `Kiểm tra lần cuối: ${fmtTime(h.lastCheck)}` : 'Chưa có lần kiểm tra';
   if(badge) badge.innerHTML = healthBadge(h.status||'ok');
-  const checks = (h.checks||[]).map(c=>`<li style="padding:6px 0;border-bottom:1px solid #f1f5f9;display:flex;gap:8px"><span aria-hidden="true" style="color:var(--color-success)">✓</span><span>${escapeHtml(c)}</span></li>`).join('');
+  const checks = healthChecksHtml(h.checks);
   const errors = h.errors || 0;
-  const statusText = h.status==='ok' ? 'Hệ thống ổn định' : h.status==='warn' ? 'Cần chú ý' : h.status ? escapeHtml(h.status) : 'Không rõ';
+  const statusText = healthStatusText(h);
   card.innerHTML = `
     <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;flex-wrap:wrap">
       ${healthBadge(h.status||'ok')}
@@ -336,20 +381,33 @@ function renderHealth(data){
       </button>
     </div>
   `;
-  const btn = $('#btnCopyJson');
-  if(btn){
-    btn.addEventListener('click', async ()=>{
-      try{
-        await navigator.clipboard.writeText(JSON.stringify(data, null, 2));
-        toast('Đã sao chép status.json');
-      }catch{
-        toast('Không sao chép được — hãy mở status.json thủ công');
-      }
-    }, { once:true });
-  }
+  bindCopyStatusJson(data);
 }
 
 // ---------- Pages ----------
+const pageIcons14 = {
+  demo: '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2l3 7h7l-5.5 4 2 7L12 16l-6.5 4 2-7L2 9h7z"/></svg>',
+  'tin AI': '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 20H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v1m2 13a2 2 0 0 1-2-2V7m2 13a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-2"/><path d="M7 8h6"/><path d="M7 12h6"/><path d="M7 16h6"/></svg>',
+  'so sánh': '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20V10"/><path d="M18 20V4"/><path d="M6 20v-4"/></svg>',
+  trang: '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M10 13H8"/><path d="M16 17H8"/></svg>',
+};
+
+function pageEntryHtml(e){
+  const href = /^https?:\/\//.test(e.path) ? escapeHtml(e.path) : './' + escapeHtml(e.path);
+  const rel = e.path.startsWith('http') ? 'target="_blank" rel="noopener"' : '';
+  return `
+        <a class="page-link" href="${href}" ${rel}>
+          <div style="min-width:0">
+            <div style="font-weight:700;font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;display:flex;align-items:center;gap:6px">
+              ${pageIcons14[e.type]||pageIcons14['trang']} ${escapeHtml(e.title||e.path)}
+            </div>
+            <div class="mono" style="color:var(--color-neutral-500);font-size:11px;word-break:break-all">${escapeHtml(e.path)}</div>
+          </div>
+          <span class="tag" style="flex-shrink:0">${escapeHtml(e.type||'trang')}</span>
+        </a>
+      `;
+}
+
 function renderPages(data){
   const p = data.pages || {};
   const entries = p.entries || [];
@@ -357,34 +415,25 @@ function renderPages(data){
   const tag = $('#pagesTag');
   if(!card) return;
   if(tag) tag.textContent = `${entries.length} trang`;
-  const typeIcon = {
-    demo: '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2l3 7h7l-5.5 4 2 7L12 16l-6.5 4 2-7L2 9h7z"/></svg>',
-    'tin AI': '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 20H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v1m2 13a2 2 0 0 1-2-2V7m2 13a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-2"/><path d="M7 8h6"/><path d="M7 12h6"/><path d="M7 16h6"/></svg>',
-    'so sánh': '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20V10"/><path d="M18 20V4"/><path d="M6 20v-4"/></svg>',
-    trang: '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M10 13H8"/><path d="M16 17H8"/></svg>',
-  };
+  const body = entries.length
+    ? entries.map(pageEntryHtml).join('')
+    : '<div class="empty">Chưa có trang nào<br><span class="small">Thêm tệp vào <span class="kbd">www/</span> để tạo trang mới</span></div>';
   card.innerHTML = `
     <div style="color:var(--color-neutral-500);font-size:13px;margin-bottom:12px;line-height:1.6">
       Thư mục gốc: <span class="kbd">${escapeHtml(p.root||'www')}</span> · Workflow: <span class="kbd">${escapeHtml(p.workflow||'.github/workflows/pages.yml')}</span>
     </div>
-    <div style="display:grid;gap:8px">
-      ${entries.length ? entries.map(e=>`
-        <a class="page-link" href="${/^https?:\/\//.test(e.path) ? escapeHtml(e.path) : './' + escapeHtml(e.path)}" ${e.path.startsWith('http')?'target="_blank" rel="noopener"':''}>
-          <div style="min-width:0">
-            <div style="font-weight:700;font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;display:flex;align-items:center;gap:6px">
-              ${typeIcon[e.type]||typeIcon['trang']} ${escapeHtml(e.title||e.path)}
-            </div>
-            <div class="mono" style="color:var(--color-neutral-500);font-size:11px;word-break:break-all">${escapeHtml(e.path)}</div>
-          </div>
-          <span class="tag" style="flex-shrink:0">${escapeHtml(e.type||'trang')}</span>
-        </a>
-      `).join('') : '<div class="empty">Chưa có trang nào<br><span class="small">Thêm tệp vào <span class="kbd">www/</span> để tạo trang mới</span></div>'}
-    </div>
+    <div style="display:grid;gap:8px">${body}</div>
     <div style="margin-top:12px;color:var(--color-neutral-500);font-size:12px;line-height:1.5">${escapeHtml(p.note||'Mọi tệp mới trong www/ sẽ tự động được triển khai lên GitHub Pages (workflow tải toàn bộ thư mục www).')}</div>
   `;
 }
 
 // ---------- Hero ----------
+function heroHealthHtml(h){
+  if(!h) return '—';
+  const label = h.status==='ok' ? 'Ổn định' : h.status==='warn' ? 'Cảnh báo' : h.status==='fail' ? 'Sự cố' : h.status;
+  return `${healthBadge(h.status)} <span style="margin-left:6px">${escapeHtml(label)}</span>`;
+}
+
 function renderHero(data){
   const gen = $('#metaGenerated');
   const by = $('#metaBy');
@@ -394,10 +443,8 @@ function renderHero(data){
   if(by) by.textContent = data.generatedBy || 'YUNIE';
   if(pipe) pipe.textContent = data.harness?.pipeline || 'Idea → … → Done';
   if(health){
-    const h = data.health;
-    if(h){
-      const label = h.status==='ok' ? 'Ổn định' : h.status==='warn' ? 'Cảnh báo' : h.status==='fail' ? 'Sự cố' : h.status;
-      health.innerHTML = `${healthBadge(h.status)} <span style="margin-left:6px">${escapeHtml(label)}</span>`;
+    if(data.health){
+      health.innerHTML = heroHealthHtml(data.health);
     } else {
       health.textContent = '—';
     }
@@ -460,42 +507,47 @@ function trapFocus(e){
   }
 }
 
+function bindPipelineTabs(ptabs, ppanels){
+  ptabs.forEach(tab=>{
+    tab.addEventListener('click', ()=>{
+      const target = tab.dataset.ptab;
+      ptabs.forEach(t=>{
+        const isActive = t.dataset.ptab === target;
+        t.classList.toggle('is-active', isActive);
+        t.setAttribute('aria-selected', String(isActive));
+      });
+      ppanels.forEach(p=>{
+        const isActive = p.id === `ptab-${target}`;
+        p.classList.toggle('is-active', isActive);
+        if(isActive) p.removeAttribute('hidden');
+        else p.setAttribute('hidden', '');
+      });
+    });
+  });
+}
+
+function wirePipelineButtons(){
+  const pairs = [
+    [$('#btnPipeline'), openPipeline],
+    [$('#btnPipelineHero'), openPipeline],
+    [$('#btnClosePipeline'), closePipeline],
+    [$('#btnClosePipeline2'), closePipeline],
+    [$('#pipelineOverlay'), closePipeline],
+  ];
+  pairs.forEach(([el, fn])=>{ if(el) el.addEventListener('click', fn); });
+}
+
 function bindPipeline(){
   const modal = $('#pipelineModal');
-  const overlay = $('#pipelineOverlay');
-  const btn = $('#btnPipeline');
-  const btnHero = $('#btnPipelineHero');
-  const btnClose = $('#btnClosePipeline');
-  const btnClose2 = $('#btnClosePipeline2');
-  if(btn) btn.addEventListener('click', openPipeline);
-  if(btnHero) btnHero.addEventListener('click', openPipeline);
-  if(btnClose) btnClose.addEventListener('click', closePipeline);
-  if(btnClose2) btnClose2.addEventListener('click', closePipeline);
-  if(overlay) overlay.addEventListener('click', closePipeline);
+  wirePipelineButtons();
   // pipeline tabs: /harness · /fixbug · Gates & Skills
   const ptabs = $$('.ptab', modal || document);
   const ppanels = $$('.ptab-panel', modal || document);
   if(ptabs.length && ppanels.length && !bindPipeline._ptabsBound){
-    ptabs.forEach(tab=>{
-      tab.addEventListener('click', ()=>{
-        const target = tab.dataset.ptab;
-        ptabs.forEach(t=>{
-          const isActive = t.dataset.ptab === target;
-          t.classList.toggle('is-active', isActive);
-          t.setAttribute('aria-selected', String(isActive));
-        });
-        ppanels.forEach(p=>{
-          const isActive = p.id === `ptab-${target}`;
-          p.classList.toggle('is-active', isActive);
-          if(isActive) p.removeAttribute('hidden');
-          else p.setAttribute('hidden', '');
-        });
-      });
-    });
+    bindPipelineTabs(ptabs, ppanels);
     bindPipeline._ptabsBound = true;
   }
-  if(overlay) overlay.addEventListener('click', closePipeline);
-  // close on overlay click via data-close
+  // close on [data-close] click
   if(modal){
     modal.addEventListener('click', (e)=>{
       if(e.target.dataset.close === 'true') closePipeline();
@@ -505,11 +557,33 @@ function bindPipeline(){
 
 
 // ---------- YUNIE Lore ----------
-function renderYunie(data){
-  const y = data.yunie || {};
-  const fullname = y.fullName || 'Your Unified Navigator for Intelligent Execution';
-  const pronounce = y.pronunciation || 'Yu-ni = You & I';
-  const slogan = y.slogan || 'Hiểu hệ thống. Làm thay bạn. Trực 24/7.';
+function yunieDefaultLetters(){
+  return [
+    { letter:'Y', word:'Yielding', vi:'Kiên nhẫn', desc:'Không bỏ cuộc giữa pipeline, theo tới Done', icon:'🌱' },
+    { letter:'U', word:'Understanding', vi:'Thấu hiểu', desc:'Hiểu toàn bộ registry, presets, plans, www/', icon:'🧠' },
+    { letter:'N', word:'Navigating', vi:'Dẫn đường', desc:'Dẫn qua Explore \u2192 Clarify \u2192 \u2026 \u2192 Verify không lạc', icon:'🧭' },
+    { letter:'I', word:'Intelligent', vi:'Thông minh', desc:'Thông minh nhưng không đoán bừa — luôn verify', icon:'✨' },
+    { letter:'E', word:'Executing', vi:'Thực thi', desc:'Làm tới nơi, deploy tới GitHub Pages luôn', icon:'⚡' },
+  ];
+}
+
+function yunieLetterCardsHtml(letters){
+  return letters.map(l=>`
+      <div class="yunie-letter-card" role="listitem" tabindex="0" aria-label="${escapeHtml(l.letter)} — ${escapeHtml(l.word)} — ${escapeHtml(l.vi)}">
+        <div class="yunie-letter-head">
+          <div class="yunie-letter-badge" aria-hidden="true">${escapeHtml(l.letter)}</div>
+          <div>
+            <div class="yunie-letter-word">${escapeHtml(l.word)}</div>
+            <div class="yunie-letter-vi">${escapeHtml(l.vi)}</div>
+          </div>
+          <span class="yunie-letter-icon" aria-hidden="true">${l.icon||''}</span>
+        </div>
+        <p class="yunie-letter-desc">${escapeHtml(l.desc||'')}</p>
+      </div>
+    `).join('');
+}
+
+function renderYunieHeader(y, fullname, pronounce, slogan){
   const fnEl = document.getElementById('yunieFullname');
   if(fnEl) fnEl.textContent = fullname;
   const prEl = document.getElementById('yuniePronounce');
@@ -523,38 +597,33 @@ function renderYunie(data){
   if(sub) sub.textContent = fullname + ' \u00B7 ' + pronounce;
   const tag = document.getElementById('yunieTag');
   if(tag) tag.textContent = ((y.letters||[]).length || 5) + ' chữ \u00B7 3 bản giới thiệu';
+}
 
+function renderYunieLetters(y){
   const lettersEl = document.getElementById('yunieLetters');
-  if(lettersEl){
-    const letters = y.letters && y.letters.length ? y.letters : [
-      { letter:'Y', word:'Yielding', vi:'Kiên nhẫn', desc:'Không bỏ cuộc giữa pipeline, theo tới Done', icon:'🌱' },
-      { letter:'U', word:'Understanding', vi:'Thấu hiểu', desc:'Hiểu toàn bộ registry, presets, plans, www/', icon:'🧠' },
-      { letter:'N', word:'Navigating', vi:'Dẫn đường', desc:'Dẫn qua Explore \u2192 Clarify \u2192 \u2026 \u2192 Verify không lạc', icon:'🧭' },
-      { letter:'I', word:'Intelligent', vi:'Thông minh', desc:'Thông minh nhưng không đoán bừa — luôn verify', icon:'✨' },
-      { letter:'E', word:'Executing', vi:'Thực thi', desc:'Làm tới nơi, deploy tới GitHub Pages luôn', icon:'⚡' },
-    ];
-    lettersEl.innerHTML = letters.map(l=>`
-      <div class="yunie-letter-card" role="listitem" tabindex="0" aria-label="${escapeHtml(l.letter)} — ${escapeHtml(l.word)} — ${escapeHtml(l.vi)}">
-        <div class="yunie-letter-head">
-          <div class="yunie-letter-badge" aria-hidden="true">${escapeHtml(l.letter)}</div>
-          <div>
-            <div class="yunie-letter-word">${escapeHtml(l.word)}</div>
-            <div class="yunie-letter-vi">${escapeHtml(l.vi)}</div>
-          </div>
-          <span class="yunie-letter-icon" aria-hidden="true">${l.icon||''}</span>
-        </div>
-        <p class="yunie-letter-desc">${escapeHtml(l.desc||'')}</p>
-      </div>
-    `).join('');
-  }
+  if(!lettersEl) return;
+  const letters = y.letters && y.letters.length ? y.letters : yunieDefaultLetters();
+  lettersEl.innerHTML = yunieLetterCardsHtml(letters);
+}
 
+function bindYunieAliasCopy(aliasesEl){
+  aliasesEl.querySelectorAll('.yunie-copy-alias').forEach(btn=>{
+    btn.addEventListener('click', async ()=>{
+      const txt = btn.getAttribute('data-copy') || '';
+      try{ await navigator.clipboard.writeText(txt); toast('Đã copy: ' + txt.slice(0,32) + '…'); }catch{ toast('Không copy được'); }
+    });
+  });
+}
+
+function renderYunieAliases(y){
   const aliasesEl = document.getElementById('yunieAliases');
-  if(aliasesEl){
-    const aliases = y.aliases || [];
-    if(!aliases.length){
-      aliasesEl.innerHTML = '<div class="empty small">Chưa có alias</div>';
-    } else {
-      aliasesEl.innerHTML = aliases.map(a=>`
+  if(!aliasesEl) return;
+  const aliases = y.aliases || [];
+  if(!aliases.length){
+    aliasesEl.innerHTML = '<div class="empty small">Chưa có alias</div>';
+    return;
+  }
+  aliasesEl.innerHTML = aliases.map(a=>`
         <div class="yunie-alias-item">
           <div style="min-width:0">
             <div style="font:700 12px var(--font-sans)">${escapeHtml(a.label)}</div>
@@ -564,86 +633,106 @@ function renderYunie(data){
           <button class="btn btn-ghost btn-sm yunie-copy-alias" type="button" data-copy="${escapeHtml(a.value)}" aria-label="Copy ${escapeHtml(a.label)}">📋</button>
         </div>
       `).join('');
-      aliasesEl.querySelectorAll('.yunie-copy-alias').forEach(btn=>{
-        btn.addEventListener('click', async ()=>{
-          const txt = btn.getAttribute('data-copy') || '';
-          try{ await navigator.clipboard.writeText(txt); toast('Đã copy: ' + txt.slice(0,32) + '…'); }catch{ toast('Không copy được'); }
-        });
-      });
-    }
-  }
+  bindYunieAliasCopy(aliasesEl);
+}
 
+function yunieIntroLabel(key){
+  return key==='short' ? 'ngắn' : key==='full' ? 'đầy đủ' : 'vui 🎉';
+}
+
+function setYunieIntro(y, key){
   const intros = y.intros || {};
   const introText = document.getElementById('yunieIntroText');
   const introTag = document.getElementById('yunieIntroTag');
-  let activeIntro = 'short';
-  function setIntro(key){
-    activeIntro = key;
-    const txt = intros[key] || intros.short || '—';
-    if(introText) introText.textContent = txt;
-    if(introTag) introTag.textContent = key==='short' ? 'ngắn' : key==='full' ? 'đầy đủ' : 'vui 🎉';
-    document.querySelectorAll('.yunie-tabs [data-intro]').forEach(b=>{
-      const isActive = b.dataset.intro===key;
-      b.classList.toggle('is-active', isActive);
-      b.setAttribute('aria-selected', String(isActive));
-    });
-  }
+  if(introText) introText.textContent = intros[key] || intros.short || '—';
+  if(introTag) introTag.textContent = yunieIntroLabel(key);
+  document.querySelectorAll('.yunie-tabs [data-intro]').forEach(b=>{
+    const isActive = b.dataset.intro===key;
+    b.classList.toggle('is-active', isActive);
+    b.setAttribute('aria-selected', String(isActive));
+  });
+}
+
+function bindYunieIntroTabs(y){
+  document.querySelectorAll('.yunie-tabs [data-intro]').forEach(btn=>{
+    btn.addEventListener('click', ()=> setYunieIntro(y, btn.dataset.intro));
+  });
+}
+
+function bindYunieCopyIntro(){
+  document.getElementById('btnCopyIntro')?.addEventListener('click', async ()=>{
+    const txt = document.getElementById('yunieIntroText')?.textContent || '';
+    try{ await navigator.clipboard.writeText(txt); toast('Đã copy giới thiệu'); }catch{ toast('Không copy được'); }
+  });
+}
+
+function bindYunieSpeakIntro(){
+  document.getElementById('btnSpeakIntro')?.addEventListener('click', ()=>{
+    const txt = document.getElementById('yunieIntroText')?.textContent || '';
+    if(!txt || txt==='—') return toast('Chưa có nội dung');
+    if(!('speechSynthesis' in window)) return toast('Trình duyệt không hỗ trợ đọc');
+    speechSynthesis.cancel();
+    const u = new SpeechSynthesisUtterance(txt);
+    u.lang = 'vi-VN'; u.rate = 0.95;
+    speechSynthesis.speak(u);
+    toast('🔊 Đang đọc…');
+  });
+}
+
+function bindYunieCopyShort(y, fullname, slogan){
+  document.getElementById('btnYunieCopy')?.addEventListener('click', async ()=>{
+    const txt = (y.intros||{}).short || (fullname + ' — ' + slogan);
+    try{ await navigator.clipboard.writeText(txt); toast('Đã copy giới thiệu ngắn'); }catch{ toast('Không copy được'); }
+  });
+}
+
+function bindYunieSurprise(y){
+  document.getElementById('btnYunieSurprise')?.addEventListener('click', ()=>{
+    const keys = ['short','full','fun'];
+    const rnd = keys[Math.floor(Math.random()*keys.length)];
+    setYunieIntro(y, rnd);
+    const aliasPool = y.aliases || [];
+    const pick = aliasPool.length ? aliasPool[Math.floor(Math.random()*aliasPool.length)].value : 'You & I!';
+    toast('🎲 Bản ' + (rnd==='short'?'ngắn':rnd==='full'?'đầy đủ':'vui') + ' — ' + pick.slice(0,40));
+    document.getElementById('yunieIntrosCard')?.scrollIntoView({behavior:'smooth', block:'center'});
+  });
+}
+
+function renderYunie(data){
+  const y = data.yunie || {};
+  const fullname = y.fullName || 'Your Unified Navigator for Intelligent Execution';
+  const pronounce = y.pronunciation || 'Yu-ni = You & I';
+  const slogan = y.slogan || 'Hiểu hệ thống. Làm thay bạn. Trực 24/7.';
+  renderYunieHeader(y, fullname, pronounce, slogan);
+  renderYunieLetters(y);
+  renderYunieAliases(y);
   if(!renderYunie._bound){
-    document.querySelectorAll('.yunie-tabs [data-intro]').forEach(btn=>{
-      btn.addEventListener('click', ()=> setIntro(btn.dataset.intro));
-    });
-    document.getElementById('btnCopyIntro')?.addEventListener('click', async ()=>{
-      const txt = introText?.textContent || '';
-      try{ await navigator.clipboard.writeText(txt); toast('Đã copy giới thiệu'); }catch{ toast('Không copy được'); }
-    });
-    document.getElementById('btnSpeakIntro')?.addEventListener('click', ()=>{
-      const txt = introText?.textContent || '';
-      if(!txt || txt==='—') return toast('Chưa có nội dung');
-      if(!('speechSynthesis' in window)) return toast('Trình duyệt không hỗ trợ đọc');
-      speechSynthesis.cancel();
-      const u = new SpeechSynthesisUtterance(txt);
-      u.lang = 'vi-VN'; u.rate = 0.95;
-      speechSynthesis.speak(u);
-      toast('🔊 Đang đọc…');
-    });
-    document.getElementById('btnYunieCopy')?.addEventListener('click', async ()=>{
-      const txt = intros.short || (fullname + ' — ' + slogan);
-      try{ await navigator.clipboard.writeText(txt); toast('Đã copy giới thiệu ngắn'); }catch{ toast('Không copy được'); }
-    });
-    document.getElementById('btnYunieSurprise')?.addEventListener('click', ()=>{
-      const keys = ['short','full','fun'];
-      const rnd = keys[Math.floor(Math.random()*keys.length)];
-      setIntro(rnd);
-      const aliasPool = y.aliases || [];
-      const pick = aliasPool.length ? aliasPool[Math.floor(Math.random()*aliasPool.length)].value : 'You & I!';
-      toast('🎲 Bản ' + (rnd==='short'?'ngắn':rnd==='full'?'đầy đủ':'vui') + ' — ' + pick.slice(0,40));
-      document.getElementById('yunieIntrosCard')?.scrollIntoView({behavior:'smooth', block:'center'});
-    });
+    bindYunieIntroTabs(y);
+    bindYunieCopyIntro();
+    bindYunieSpeakIntro();
+    bindYunieCopyShort(y, fullname, slogan);
+    bindYunieSurprise(y);
     renderYunie._bound = true;
   }
-  setIntro(activeIntro);
+  setYunieIntro(y, 'short');
 }
 
 // ---------- Governance (học OpenBot) ----------
-function renderGovernance(data){
-  const g = data.governance || { audit:{total:0,permitted:0,refused:0,failed:0,lastTs:null,tail:[]}, policy:{version:1,deny:0,allow:0,status:'ok'}, credentials:{count:0,status:'ok',enc:false} };
-  const audit = g.audit || {total:0,permitted:0,refused:0,failed:0,lastTs:null,tail:[]};
-  const policy = g.policy || {version:1,deny:0,allow:0,status:'ok'};
-  const cred = g.credentials || {count:0,status:'ok',enc:false};
-
+function renderGovTag(audit, policy, cred){
   const tag = $('#governanceTag');
-  if(tag){
-    const total = audit.total || 0;
-    const refused = audit.refused || 0;
-    const status = policy.status === 'error' ? 'lỗi policy' : refused ? `${refused} refused` : `${total} events`;
-    tag.textContent = `audit ${total} · policy ${policy.deny}/${policy.allow} · ${cred.count} keys`;
-    tag.title = status;
-  }
+  if(!tag) return;
+  const total = audit.total || 0;
+  const refused = audit.refused || 0;
+  const status = policy.status === 'error' ? 'lỗi policy' : refused ? `${refused} refused` : `${total} events`;
+  tag.textContent = `audit ${total} · policy ${policy.deny}/${policy.allow} · ${cred.count} keys`;
+  tag.title = status;
+}
 
+function renderGovAuditCard(audit){
   const auditCard = $('#govAuditCard');
-  if(auditCard){
-    const last = audit.lastTs ? fmtTime(audit.lastTs) : '—';
-    auditCard.innerHTML = `
+  if(!auditCard) return;
+  const last = audit.lastTs ? fmtTime(audit.lastTs) : '—';
+  auditCard.innerHTML = `
       <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
         <span style="width:32px;height:32px;border-radius:10px;display:grid;place-items:center;background:#6366f1;color:white;flex-shrink:0">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M10 13H8"/><path d="M16 17H8"/></svg>
@@ -665,12 +754,13 @@ function renderGovernance(data){
         <span class="kbd">audit.mjs tail</span>
       </div>
     `;
-  }
+}
 
+function renderGovPolicyCard(policy){
   const policyCard = $('#govPolicyCard');
-  if(policyCard){
-    const ok = policy.status === 'ok';
-    policyCard.innerHTML = `
+  if(!policyCard) return;
+  const ok = policy.status === 'ok';
+  policyCard.innerHTML = `
       <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
         <span style="width:32px;height:32px;border-radius:10px;display:grid;place-items:center;background:${ok?'#16a34a':'#dc2626'};color:white;flex-shrink:0">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22a7 7 0 0 0 7-7c0-3.5-2.5-6-7-10-4.5 4-7 6.5-7 10a7 7 0 0 0 7 7z"/></svg>
@@ -691,12 +781,13 @@ function renderGovernance(data){
         <span class="kbd">policy-check.mjs --check</span>
       </div>
     `;
-  }
+}
 
+function renderGovCredCard(cred){
   const credCard = $('#govCredCard');
-  if(credCard){
-    const ok = cred.status === 'ok';
-    credCard.innerHTML = `
+  if(!credCard) return;
+  const ok = cred.status === 'ok';
+  credCard.innerHTML = `
       <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
         <span style="width:32px;height:32px;border-radius:10px;display:grid;place-items:center;background:${ok?'#0ea5e9':'#dc2626'};color:white;flex-shrink:0">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="11" width="18" height="10" rx="2"/><path d="M7 11V7a3 3 0 0 1 5-3 3 3 0 0 1 5 3v4"/><circle cx="12" cy="16" r="1" fill="white" stroke="none"/></svg>
@@ -713,9 +804,42 @@ function renderGovernance(data){
         <span class="kbd">credentials.mjs list</span>
       </div>
     `;
-  }
+}
 
-  // tail
+function govDecisionCls(decision){
+  return decision === 'permitted' ? 'tag-on' : decision === 'refused' ? 'tag-warn' : 'tag-off';
+}
+
+function govTailDecTag(e){
+  if(e.decision === 'permitted') return '<span class="tag tag-on">permitted</span>';
+  if(e.decision === 'refused') return '<span class="tag tag-warn">refused</span>';
+  return '<span class="tag tag-off">failed</span>';
+}
+
+function govTailRowHtml(e){
+  const rule = e.rule ? `<span class="mono" style="font-size:11px">${escapeHtml(e.rule)}</span>` : '<span style="color:var(--color-neutral-400)">—</span>';
+  return `<tr><td class="mono" style="font-size:11px;white-space:nowrap">${escapeHtml(fmtTime(e.ts))}</td><td>${govTailDecTag(e)}</td><td class="mono" style="font-size:11px">${escapeHtml(e.tool||'')}</td><td class="mono" style="font-size:11px;max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" title="${escapeHtml(e.target||'')}">${escapeHtml((e.target||'').slice(0,40))}</td><td>${rule}</td></tr>`;
+}
+
+function govTailCardHtml(e){
+  return `<div class="reg-card" tabindex="0" role="article" aria-label="${escapeHtml(e.decision)} ${escapeHtml(e.tool)}">
+          <div style="display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:6px">
+            <span class="tag ${govDecisionCls(e.decision)}">${escapeHtml(e.decision)}</span>
+            <span class="mono" style="font-size:11px;color:var(--color-neutral-500)">${escapeHtml(fmtTime(e.ts))}</span>
+          </div>
+          <div style="font:600 12px var(--font-mono)">${escapeHtml(e.tool||'')} → ${escapeHtml((e.target||'').slice(0,40))}</div>
+          <div style="font:500 11px var(--font-mono);color:var(--color-neutral-500);margin-top:4px">rule: ${e.rule ? escapeHtml(e.rule) : '—'} · ${escapeHtml(e.actor||'')}</div>
+        </div>`;
+}
+
+function renderGovTailEmpty(tailBody, tailCards, tailEmpty, tailWrap){
+  if(tailBody) tailBody.innerHTML = `<tr><td colspan="5"><div class="empty" style="border:none;padding:12px">Chưa có audit — chạy <span class="kbd">audit.mjs log</span></div></td></tr>`;
+  if(tailCards) tailCards.innerHTML = '';
+  if(tailEmpty) tailEmpty.style.display = 'block';
+  if(tailWrap) tailWrap.style.display = 'none';
+}
+
+function renderGovTail(audit){
   const tail = audit.tail || [];
   const tailBody = $('#govTailBody');
   const tailCards = $('#govTailCards');
@@ -724,50 +848,52 @@ function renderGovernance(data){
   const tailWrap = $('#govTailWrap');
   if(tailTag) tailTag.textContent = tail.length ? `${tail.length} dòng` : '0 dòng';
   if(!tail.length){
-    if(tailBody) tailBody.innerHTML = `<tr><td colspan="5"><div class="empty" style="border:none;padding:12px">Chưa có audit — chạy <span class="kbd">audit.mjs log</span></div></td></tr>`;
-    if(tailCards) tailCards.innerHTML = '';
-    if(tailEmpty) tailEmpty.style.display = 'block';
-    if(tailWrap) tailWrap.style.display = 'none';
-  } else {
-    if(tailEmpty) tailEmpty.style.display = 'none';
-    if(tailWrap) tailWrap.style.display = '';
-    if(tailBody){
-      tailBody.innerHTML = tail.map(e=>{
-        const dec = e.decision === 'permitted' ? '<span class="tag tag-on">permitted</span>' : e.decision === 'refused' ? '<span class="tag tag-warn">refused</span>' : '<span class="tag tag-off">failed</span>';
-        const rule = e.rule ? `<span class="mono" style="font-size:11px">${escapeHtml(e.rule)}</span>` : '<span style="color:var(--color-neutral-400)">—</span>';
-        return `<tr><td class="mono" style="font-size:11px;white-space:nowrap">${escapeHtml(fmtTime(e.ts))}</td><td>${dec}</td><td class="mono" style="font-size:11px">${escapeHtml(e.tool||'')}</td><td class="mono" style="font-size:11px;max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" title="${escapeHtml(e.target||'')}">${escapeHtml((e.target||'').slice(0,40))}</td><td>${rule}</td></tr>`;
-      }).join('');
-    }
-    if(tailCards){
-      tailCards.innerHTML = tail.map(e=>{
-        const dec = e.decision === 'permitted' ? 'tag-on' : e.decision === 'refused' ? 'tag-warn' : 'tag-off';
-        return `<div class="reg-card" tabindex="0" role="article" aria-label="${escapeHtml(e.decision)} ${escapeHtml(e.tool)}">
-          <div style="display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:6px">
-            <span class="tag ${dec}">${escapeHtml(e.decision)}</span>
-            <span class="mono" style="font-size:11px;color:var(--color-neutral-500)">${escapeHtml(fmtTime(e.ts))}</span>
-          </div>
-          <div style="font:600 12px var(--font-mono)">${escapeHtml(e.tool||'')} → ${escapeHtml((e.target||'').slice(0,40))}</div>
-          <div style="font:500 11px var(--font-mono);color:var(--color-neutral-500);margin-top:4px">rule: ${e.rule ? escapeHtml(e.rule) : '—'} · ${escapeHtml(e.actor||'')}</div>
-        </div>`;
-      }).join('');
-    }
+    renderGovTailEmpty(tailBody, tailCards, tailEmpty, tailWrap);
+    return;
   }
+  if(tailEmpty) tailEmpty.style.display = 'none';
+  if(tailWrap) tailWrap.style.display = '';
+  if(tailBody) tailBody.innerHTML = tail.map(govTailRowHtml).join('');
+  if(tailCards) tailCards.innerHTML = tail.map(govTailCardHtml).join('');
+}
+
+function renderGovernance(data){
+  const g = data.governance || { audit:{total:0,permitted:0,refused:0,failed:0,lastTs:null,tail:[]}, policy:{version:1,deny:0,allow:0,status:'ok'}, credentials:{count:0,status:'ok',enc:false} };
+  const audit = g.audit || {total:0,permitted:0,refused:0,failed:0,lastTs:null,tail:[]};
+  const policy = g.policy || {version:1,deny:0,allow:0,status:'ok'};
+  const cred = g.credentials || {count:0,status:'ok',enc:false};
+  renderGovTag(audit, policy, cred);
+  renderGovAuditCard(audit);
+  renderGovPolicyCard(policy);
+  renderGovCredCard(cred);
+  renderGovTail(audit);
 }
 
 // ---------- Platform (học OpenBot Phase 2) ----------
-function renderPlatform(data){
-  const p = data.platform || { agents:{total:0,builtIn:0,remote:0}, mcp:{vendors:0,grants:0}, components:{total:0,published:0}, routines:{total:0,enabled:0} };
-  const agents = p.agents || {total:0,builtIn:0,remote:0};
-  const mcp = p.mcp || {vendors:0,grants:0};
-  const comps = p.components || {total:0,published:0};
-  const routines = p.routines || {total:0,enabled:0};
+function platVendorRows(vendorList){
+  if(!vendorList.length) return '<div style="font:500 11px var(--font-mono);color:var(--color-neutral-500)">Chưa có vendor nào trong catalog</div>';
+  return vendorList.map(v => `
+        <div style="display:flex;align-items:center;gap:6px;padding:4px 0;border-bottom:1px solid var(--color-neutral-200)">
+          <strong style="font:600 12px var(--font-sans);min-width:0">${escapeHtml(v.name)}</strong>
+          <span class="tag" style="margin-left:auto;flex-shrink:0">${escapeHtml(v.scope)}</span>
+          <span class="tag" style="flex-shrink:0">${v.tools} tools</span>
+        </div>`).join('');
+}
 
-  const tag = $('#platformTag');
-  if(tag) tag.textContent = `${agents.total} agents · ${mcp.vendors} mcp · ${comps.total} comps · ${routines.total} routines`;
+function platGrantRows(grantsByAgent){
+  const agents = Object.keys(grantsByAgent);
+  if(!agents.length) return '';
+  return agents.map(agent => `
+        <div style="display:flex;align-items:center;gap:6px;padding:4px 0">
+          <strong style="font:600 12px var(--font-sans)">${escapeHtml(agent)}</strong>
+          <span style="font:500 11px var(--font-mono);color:var(--color-neutral-500);min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${escapeHtml((grantsByAgent[agent]||[]).join(', ') || '—')}</span>
+        </div>`).join('');
+}
 
+function renderPlatAgents(agents){
   const agentCard = $('#platAgentCard');
-  if(agentCard){
-    agentCard.innerHTML = `
+  if(!agentCard) return;
+  agentCard.innerHTML = `
       <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
         <span style="width:32px;height:32px;border-radius:10px;display:grid;place-items:center;background:#6366f1;color:white;flex-shrink:0">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="11" width="18" height="10" rx="2"/><path d="M12 11V7a3 3 0 0 1 3-3h1"/><path d="M12 7a3 3 0 0 0-3-3H8"/></svg>
@@ -785,24 +911,16 @@ function renderPlatform(data){
       <div style="font:500 11px var(--font-mono);color:var(--color-neutral-500)">agents.yaml · AGENT_ENDPOINT_ALLOWED_HOSTS</div>
       <div style="margin-top:10px"><span class="kbd">agent-registry.mjs list</span></div>
     `;
-  }
+}
 
+function renderPlatMcp(mcp){
   const mcpCard = $('#platMcpCard');
-  if(mcpCard){
-    const vendorList = Array.isArray(mcp.list) ? mcp.list : [];
-    const grantsByAgent = mcp.grantsByAgent && typeof mcp.grantsByAgent === 'object' ? mcp.grantsByAgent : {};
-    const vendorRows = vendorList.length ? vendorList.map(v => `
-        <div style="display:flex;align-items:center;gap:6px;padding:4px 0;border-bottom:1px solid var(--color-neutral-200)">
-          <strong style="font:600 12px var(--font-sans);min-width:0">${escapeHtml(v.name)}</strong>
-          <span class="tag" style="margin-left:auto;flex-shrink:0">${escapeHtml(v.scope)}</span>
-          <span class="tag" style="flex-shrink:0">${v.tools} tools</span>
-        </div>`).join('') : '<div style="font:500 11px var(--font-mono);color:var(--color-neutral-500)">Chưa có vendor nào trong catalog</div>';
-    const grantRows = Object.keys(grantsByAgent).length ? Object.entries(grantsByAgent).map(([agent, vendors]) => `
-        <div style="display:flex;align-items:center;gap:6px;padding:4px 0">
-          <strong style="font:600 12px var(--font-sans)">${escapeHtml(agent)}</strong>
-          <span style="font:500 11px var(--font-mono);color:var(--color-neutral-500);min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${escapeHtml((vendors||[]).join(', ') || '—')}</span>
-        </div>`).join('') : '';
-    mcpCard.innerHTML = `
+  if(!mcpCard) return;
+  const vendorList = Array.isArray(mcp.list) ? mcp.list : [];
+  const grantsByAgent = mcp.grantsByAgent && typeof mcp.grantsByAgent === 'object' ? mcp.grantsByAgent : {};
+  const vendorRows = platVendorRows(vendorList);
+  const grantRows = platGrantRows(grantsByAgent);
+  mcpCard.innerHTML = `
       <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
         <span style="width:32px;height:32px;border-radius:10px;display:grid;place-items:center;background:#0ea5e9;color:white;flex-shrink:0">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22a7 7 0 0 0 7-7c0-3.5-2.5-6-7-10-4.5 4-7 6.5-7 10a7 7 0 0 0 7 7z"/></svg>
@@ -822,11 +940,12 @@ function renderPlatform(data){
       <div style="font:500 11px var(--font-mono);color:var(--color-neutral-500)">unknown tool = write → refused</div>
       <div style="margin-top:10px"><span class="kbd">mcp-check.mjs --tool google-drive</span></div>
     `;
-  }
+}
 
+function renderPlatComp(comps){
   const compCard = $('#platCompCard');
-  if(compCard){
-    compCard.innerHTML = `
+  if(!compCard) return;
+  compCard.innerHTML = `
       <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
         <span style="width:32px;height:32px;border-radius:10px;display:grid;place-items:center;background:#f59e0b;color:white;flex-shrink:0">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18"/><path d="M9 21V9"/></svg>
@@ -844,11 +963,12 @@ function renderPlatform(data){
       <div style="font:500 11px var(--font-mono);color:var(--color-neutral-500)">published + not withheld</div>
       <div style="margin-top:10px;display:flex;gap:6px;flex-wrap:wrap"><a class="kbd" href="./components/playground.html" style="text-decoration:none">playground.html</a> <span class="kbd">component-check.mjs</span></div>
     `;
-  }
+}
 
+function renderPlatRoutine(routines){
   const routineCard = $('#platRoutineCard');
-  if(routineCard){
-    routineCard.innerHTML = `
+  if(!routineCard) return;
+  routineCard.innerHTML = `
       <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
         <span style="width:32px;height:32px;border-radius:10px;display:grid;place-items:center;background:#16a34a;color:white;flex-shrink:0">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>
@@ -866,7 +986,20 @@ function renderPlatform(data){
       <div style="font:500 11px var(--font-mono);color:var(--color-neutral-500)">10 fails → off</div>
       <div style="margin-top:10px"><span class="kbd">routine.mjs add --cron "0 9 * * *"</span></div>
     `;
-  }
+}
+
+function renderPlatform(data){
+  const p = data.platform || { agents:{total:0,builtIn:0,remote:0}, mcp:{vendors:0,grants:0}, components:{total:0,published:0}, routines:{total:0,enabled:0} };
+  const agents = p.agents || {total:0,builtIn:0,remote:0};
+  const mcp = p.mcp || {vendors:0,grants:0};
+  const comps = p.components || {total:0,published:0};
+  const routines = p.routines || {total:0,enabled:0};
+  const tag = $('#platformTag');
+  if(tag) tag.textContent = `${agents.total} agents · ${mcp.vendors} mcp · ${comps.total} comps · ${routines.total} routines`;
+  renderPlatAgents(agents);
+  renderPlatMcp(mcp);
+  renderPlatComp(comps);
+  renderPlatRoutine(routines);
 }
 
 function bindTabs(){
@@ -950,22 +1083,29 @@ $('#btnCheck')?.addEventListener('click', async ()=>{
   await boot();
 });
 
-// Keyboard: / to focus search, ESC to close modal or blur search
-document.addEventListener('keydown', (e)=>{
+function isTypingInInput(){
+  const t = document.activeElement?.tagName;
+  return t === 'INPUT' || t === 'TEXTAREA';
+}
+
+function focusSearchIfIdle(e, isModalOpen){
+  if(e.key !== '/') return;
+  if(e.ctrlKey || e.metaKey || isModalOpen || isTypingInInput()) return;
+  e.preventDefault();
+  $('#registrySearch')?.focus();
+}
+
+function handleGlobalKeydown(e){
   const modal = $('#pipelineModal');
   const isModalOpen = modal && modal.classList.contains('is-open');
-  if(isModalOpen && e.key === 'Escape'){
-    // handled by trapFocus, but also here as fallback
-    return;
-  }
-  if(e.key === '/' && !e.ctrlKey && !e.metaKey && !isModalOpen && document.activeElement?.tagName !== 'INPUT' && document.activeElement?.tagName !== 'TEXTAREA'){
-    e.preventDefault();
-    $('#registrySearch')?.focus();
-  }
+  if(isModalOpen && e.key === 'Escape') return;
+  focusSearchIfIdle(e, isModalOpen);
   if(e.key === 'Escape' && document.activeElement?.id === 'registrySearch'){
     document.activeElement.blur();
   }
-});
+}
+
+document.addEventListener('keydown', handleGlobalKeydown);
 
 bindPipeline();
 boot();
