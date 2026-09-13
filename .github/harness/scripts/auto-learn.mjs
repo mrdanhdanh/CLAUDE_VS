@@ -13,6 +13,7 @@ import fs from 'node:fs/promises';
 import { existsSync } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { tokenize, computeIDF, parseKNs, scoreKN } from './kn-parse.mjs';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -28,32 +29,7 @@ const REPORTS_FILE = path.join(ROOT, '.agent', 'reports.jsonl');
 const ATTEST_FILE = path.join(ROOT, '.agent', 'attestations.jsonl');
 
 // ---------- helpers ----------
-function tokenize(text) {
-  if (!text) return [];
-  const lower = text.toLowerCase();
-  // keep Vietnamese chars
-  const tokens = lower.match(/[a-z0-9àáảãạăằắẳẵặâầấẩẫậèéẻẽẹêềếểễệìíỉĩịòóỏõọôồốổỗộơờớởỡợùúủũụưừứửữựỳýỷỹỵđ]+/gi) || [];
-  const stop = new Set([
-    'va','và','la','là','cua','của','cho','voi','với','trong','mot','một','cac','các','nhung','nhưng','de','để','co','có','khong','không','da','đã','bi','bị','thi','thì','ma','mà','ve','về','tu','từ','den','đến','khi','neu','nếu','se','sẽ','duoc','được','nay','này','do','đó','voi','với','the','and','or','a','an','is','are','to','of','in','on','for','with','as','by','at','be','this','that','it','from','are','was','were','has','have','had','will','would','can','could','should','may','might','must','been','being','also','just','only','very','more','most','some','any','all','each','few','many','other','such','no','nor','not','but','if','then','than','so','too','very'
-  ]);
-  return tokens.filter(t => t.length > 1 && !stop.has(t));
-}
-
-function computeIDF(queryTokens, kns) {
-  const N = kns.length || 1;
-  const idf = {};
-  for (const qt of queryTokens) {
-    let df = 0;
-    const qtNorm = qt.normalize('NFD').replace(/[\u0300-\u036f]/g,'');
-    for (const kn of kns) {
-      const has = kn.tokens.some(t => t===qt || t.includes(qt) || qt.includes(t) || t.normalize('NFD').replace(/[\u0300-\u036f]/g,'')===qtNorm);
-      if (has) df++;
-    }
-    // smooth IDF
-    idf[qt] = Math.log((N + 1) / (df + 1)) + 1; // 1..~2.5
-  }
-  return idf;
-}
+// tokenize/computeIDF/parseKNs/scoreKN — shared module kn-parse.mjs (trước là duplicate)
 
 function normalizeSlug(s) {
   return s.toLowerCase()
@@ -63,97 +39,6 @@ function normalizeSlug(s) {
 
 function todayISO() {
   return new Date().toISOString().slice(0, 10);
-}
-
-async function parseKNs() {
-  let text = '';
-  try { text = await fs.readFile(KNOWLEGED, 'utf8'); } catch (e) {
-    return { kns: [], raw: '', error: e.message };
-  }
-  text = text.replace(/\r\n/g, '\n');
-  const kns = [];
-  // Robust split by ### KN- to avoid regex lookahead issues with \r\n and em dash
-  const parts = text.split(/^###\s*KN-/m);
-  // parts[0] is header before first KN, rest are KN blocks
-  for (let i = 1; i < parts.length; i++) {
-    const part = 'KN-' + parts[i];
-    // First line: KN-XXX — Title
-    const firstNL = part.indexOf('\n');
-    const firstLine = firstNL >= 0 ? part.slice(0, firstNL) : part;
-    const m = firstLine.match(/KN-(\d+)\s*[—\-–]\s*(.+)/);
-    if (!m) continue;
-    const id = `KN-${m[1].padStart(3,'0')}`;
-    // Skip template placeholder KN-XXX
-    if (m[1] === 'XXX' || /Tiêu đề ngắn gọn/.test(m[2])) continue;
-    const title = m[2].trim();
-    const block = firstNL >= 0 ? part.slice(firstNL + 1) : '';
-    // Stop at next section markers inside block (but split already handles, so just trim)
-    // Extract tags: look for Tags: line and collect all `tag`
-    let tags = [];
-    const tagsLineM = block.match(/Tags:\s*([^\n]+)/);
-    if (tagsLineM) {
-      const raw = tagsLineM[1];
-      const bt = [...raw.matchAll(/`([^`]+)`/g)].map(x => x[1].trim());
-      if (bt.length) tags = bt;
-      else tags = raw.split(/[\s,]+/).filter(Boolean).map(t => t.replace(/`/g,'').trim()).filter(Boolean);
-    }
-    // Severity
-    const sevM = block.match(/Severity:\s*(\w+)/i);
-    const severity = sevM ? sevM[1].toLowerCase() : 'minor';
-    const dateM = block.match(/Ngày:\s*([0-9\-]+)/);
-    const date = dateM ? dateM[1] : '';
-    // Lesson: try to find **Bài học** or first meaningful line after table
-    let lesson = '';
-    const lessonM = block.match(/Bài học[^:]*:\s*([^\n]+)/);
-    if (lessonM) lesson = lessonM[1].trim().slice(0,200);
-    else {
-      // fallback: use title as lesson
-      lesson = title.slice(0,120);
-    }
-    const detail = block.slice(0, 2500);
-    const tokens = tokenize(`${title} ${tags.join(' ')} ${lesson} ${detail}`);
-    const titleTokens = tokenize(title);
-    const tagTokens = tokenize(tags.join(' '));
-    // Skip if title is template
-    if (title.includes('Tiêu đề')) continue;
-    kns.push({ id, title, tags, lesson, detail, severity, date, tokens, titleTokens, tagTokens, block: block.slice(0,600) });
-  }
-  // Fallback: if still 0, try table parse
-  if (kns.length === 0) {
-    const tableRe = /\|\s*(KN-\d+)\s*\|[^|]*\|[^|]*\|[^|]*\|([^|]+)\|/g;
-    let tm;
-    while ((tm = tableRe.exec(text)) !== null) {
-      const id = tm[1].trim();
-      if (id === 'KN-001' && tm[2].includes('Ví dụ')) continue;
-      const lesson = tm[2].trim();
-      kns.push({ id, title: lesson.slice(0,60), tags: [], lesson, detail: lesson, severity:'minor', date:'', tokens: tokenize(lesson), titleTokens: tokenize(lesson), tagTokens: [], block: lesson });
-    }
-  }
-  return { kns, raw: text };
-}
-
-function scoreKN(queryTokens, queryRaw, kn, idf) {
-  let score = 0;
-  const qLower = queryRaw.toLowerCase();
-  const titleLower = kn.title.toLowerCase();
-  const detailLower = kn.detail.toLowerCase();
-  // phrase boost
-  if (titleLower.includes(qLower)) score += 3;
-  if (detailLower.includes(qLower)) score += 1;
-  for (const qt of queryTokens) {
-    const w = idf ? (idf[qt] || 1) : 1;
-    const cTitle = kn.titleTokens.filter(t=>t===qt || t.includes(qt) || qt.includes(t)).length;
-    const cTag = kn.tagTokens.filter(t=>t===qt || t.includes(qt) || qt.includes(t)).length;
-    const cAll = kn.tokens.filter(t=>t===qt || t.includes(qt) || qt.includes(t)).length;
-    score += (cTitle * 1.5 + cTag * 2.0 + cAll * 0.5) * w;
-    // also partial match for Vietnamese without diacritics
-    const qtNorm = qt.normalize('NFD').replace(/[\u0300-\u036f]/g,'');
-    if (qtNorm !== qt) {
-      const cNorm = kn.tokens.filter(t=> t.normalize('NFD').replace(/[\u0300-\u036f]/g,'') === qtNorm).length;
-      score += cNorm * 0.8 * w;
-    }
-  }
-  return Math.round(score * 10) / 10;
 }
 
 // ---------- Engram-lite: Wilson score + attestations ----------
@@ -167,43 +52,59 @@ function wilsonScore(up, total, z = 1.96) {
   return (centre - margin) / denom;
 }
 
+function parseAttestLine(line, map) {
+  try {
+    const a = JSON.parse(line);
+    const id = a.kn || a.id || a.bug || '';
+    if (!id) return;
+    // normalize to KN-XXX
+    const knId = id.startsWith('KN-') ? id : null;
+    if (!knId) return;
+    if (!map.has(knId)) map.set(knId, { up: 0, total: 0 });
+    const e = map.get(knId);
+    e.total++;
+    if (a.result === 'pass' || a.score >= 0.7) e.up++;
+  } catch {}
+}
+
 async function loadAttestations() {
   const map = new Map(); // knId -> {up, total}
   try {
     if (!existsSync(ATTEST_FILE)) return map;
     const text = await fs.readFile(ATTEST_FILE, 'utf8');
-    for (const line of text.trim().split('\n').filter(Boolean)) {
-      try {
-        const a = JSON.parse(line);
-        const id = a.kn || a.id || a.bug || '';
-        if (!id) continue;
-        // normalize to KN-XXX
-        const knId = id.startsWith('KN-') ? id : null;
-        if (!knId) continue;
-        if (!map.has(knId)) map.set(knId, { up: 0, total: 0 });
-        const e = map.get(knId);
-        e.total++;
-        if (a.result === 'pass' || a.score >= 0.7) e.up++;
-      } catch {}
-    }
+    for (const line of text.trim().split('\n').filter(Boolean)) parseAttestLine(line, map);
   } catch {}
   return map;
 }
 
-async function attest(opts, json = false) {
+function resolveAttestInput(opts) {
   const kn = opts.kn || opts.id || opts.bug || '';
   const result = opts.result || opts.r || '';
-  const scoreRaw = opts.score;
   if (!kn) {
     console.error('❌ Thiếu --kn <KN-XXX> hoặc --bug <slug>. Ví dụ: attest --kn KN-003 --result pass');
     process.exit(1);
   }
-  const knId = kn.startsWith('KN-') ? kn : kn;
-  let score = scoreRaw !== undefined ? parseFloat(scoreRaw) : (result === 'pass' ? 1 : result === 'fail' ? 0 : NaN);
+  return { kn, result };
+}
+
+function resolveAttestScore(scoreRaw, result) {
+  const score = scoreRaw !== undefined ? parseFloat(scoreRaw) : (result === 'pass' ? 1 : result === 'fail' ? 0 : NaN);
   if (isNaN(score)) {
     console.error('❌ Thiếu --result pass|fail hoặc --score 0..1');
     process.exit(1);
   }
+  return score;
+}
+
+function printAttestHuman(knId, entry, wilson, e) {
+  console.log(`✅ Attested ${knId}: ${entry.result} (score=${entry.score}) — wilson=${wilson.toFixed(3)} (${e.up}/${e.total})`);
+  console.log(`   → suggest sẽ rank cao hơn cho KN có wilson cao`);
+}
+
+async function attest(opts, json = false) {
+  const { kn, result } = resolveAttestInput(opts);
+  const score = resolveAttestScore(opts.score, result);
+  const knId = kn.startsWith('KN-') ? kn : kn;
   const entry = {
     ts: new Date().toISOString(),
     kn: knId,
@@ -218,15 +119,37 @@ async function attest(opts, json = false) {
   const e = map.get(knId) || { up: 0, total: 0 };
   const wilson = wilsonScore(e.up, e.total);
   if (json) console.log(JSON.stringify({ ...entry, wilson, attestations: e }, null, 2));
-  else {
-    console.log(`✅ Attested ${knId}: ${entry.result} (score=${score}) — wilson=${wilson.toFixed(3)} (${e.up}/${e.total})`);
-    console.log(`   → suggest sẽ rank cao hơn cho KN có wilson cao`);
-  }
+  else printAttestHuman(knId, entry, wilson, e);
   return entry;
 }
 
+function scoreKnWithWilson(kns, qTokens, query, idf, attestMap, topK) {
+  return kns.map(kn => {
+    const base = scoreKN(qTokens, query, kn, idf);
+    const att = attestMap.get(kn.id);
+    const wilson = att ? wilsonScore(att.up, att.total) : 0;
+    // Wilson boost: up to +2 points for highly attested KN
+    const boosted = base + wilson * 2;
+    return { ...kn, score: Math.round(boosted * 10) / 10, baseScore: base, wilson, attestations: att || { up: 0, total: 0 } };
+  })
+    .filter(k=>k.score>0)
+    .sort((a,b)=>b.score-a.score)
+    .slice(0, topK);
+}
+
+function printSuggestHuman(query, kns, scored) {
+  console.log(`🔍 suggest "${query}" — tìm thấy ${scored.length}/${kns.length} KN liên quan:`);
+  for (const k of scored) {
+    const wilsonStr = k.attestations.total ? ` wilson=${k.wilson.toFixed(3)}(${k.attestations.up}/${k.attestations.total})` : '';
+    console.log(`  [${k.id}] score ${k.score} (base ${k.baseScore}${wilsonStr}) — ${k.title} (${k.severity}, ${k.tags.join(' ') || 'no-tags'})`);
+    if (k.lesson) console.log(`       → ${k.lesson.slice(0,100)}`);
+    console.log(`       snippet: ${k.block.slice(0,120).replace(/\n/g,' ').trim()}...`);
+  }
+  console.log(`\n📚 Xem chi tiết: docs/knowleged.md → ${scored.map(s=>s.id).join(', ')}`);
+}
+
 async function suggest(query, topK=3, json=false) {
-  const { kns, error } = await parseKNs();
+  const { kns, error } = await parseKNs(KNOWLEGED);
   if (error) {
     console.error(`⚠️  Không đọc được knowleged.md: ${error}`);
     process.exit(1);
@@ -241,17 +164,7 @@ async function suggest(query, topK=3, json=false) {
   if (qTokens.length === 0) qTokens.push(...query.toLowerCase().split(/\s+/).filter(Boolean));
   const idf = computeIDF(qTokens, kns);
   const attestMap = await loadAttestations();
-  const scored = kns.map(kn => {
-    const base = scoreKN(qTokens, query, kn, idf);
-    const att = attestMap.get(kn.id);
-    const wilson = att ? wilsonScore(att.up, att.total) : 0;
-    // Wilson boost: up to +2 points for highly attested KN
-    const boosted = base + wilson * 2;
-    return { ...kn, score: Math.round(boosted * 10) / 10, baseScore: base, wilson, attestations: att || { up: 0, total: 0 } };
-  })
-    .filter(k=>k.score>0)
-    .sort((a,b)=>b.score-a.score)
-    .slice(0, topK);
+  const scored = scoreKnWithWilson(kns, qTokens, query, idf, attestMap, topK);
   if (json) {
     console.log(JSON.stringify({ query, queryTokens: qTokens, totalKN: kns.length, results: scored.map(k=>({ id:k.id, title:k.title, tags:k.tags, severity:k.severity, date:k.date, score:k.score, baseScore:k.baseScore, wilson: Math.round(k.wilson*1000)/1000, attestations:k.attestations, lesson:k.lesson.slice(0,120), snippet:k.block.slice(0,200).replace(/\n/g,' ') })) }, null, 2));
     return;
@@ -261,21 +174,10 @@ async function suggest(query, topK=3, json=false) {
     console.log(`💡 Gợi ý: kiểm tra lại tags trong knowleged.md hoặc thêm KN mới.`);
     return;
   }
-  console.log(`🔍 suggest "${query}" — tìm thấy ${scored.length}/${kns.length} KN liên quan:`);
-  for (const k of scored) {
-    const wilsonStr = k.attestations.total ? ` wilson=${k.wilson.toFixed(3)}(${k.attestations.up}/${k.attestations.total})` : '';
-    console.log(`  [${k.id}] score ${k.score} (base ${k.baseScore}${wilsonStr}) — ${k.title} (${k.severity}, ${k.tags.join(' ') || 'no-tags'})`);
-    if (k.lesson) console.log(`       → ${k.lesson.slice(0,100)}`);
-    console.log(`       snippet: ${k.block.slice(0,120).replace(/\n/g,' ').trim()}...`);
-  }
-  console.log(`\n📚 Xem chi tiết: docs/knowleged.md → ${scored.map(s=>s.id).join(', ')}`);
+  printSuggestHuman(query, kns, scored);
 }
 
-async function logBug(opts) {
-  const error = opts.error || opts.msg || 'unknown error';
-  const file = opts.file || '';
-  const title = opts.title || error.slice(0, 60);
-  let slug = opts.slug || normalizeSlug(title);
+function resolveBugDir(title, slug) {
   const date = todayISO();
   let dirName = `${date}-${slug}`;
   let dir = path.join(BUGS_DIR, dirName);
@@ -287,7 +189,10 @@ async function logBug(opts) {
     suffix++;
     if (suffix>20) break;
   }
-  await fs.mkdir(dir, { recursive: true });
+  return { date, dirName, dir };
+}
+
+async function fillBugTemplate(title, dirName, date, error, file) {
   let template = '';
   try { template = await fs.readFile(TEMPLATE, 'utf8'); } catch {
     template = `# Bug: ${title}\n\n## Meta\n- **Slug:** ${dirName}\n- **Ngày:** ${date}\n- **Severity:** minor\n- **Tags:** \n\n## 1. Reproduce\n\n## 2. Root Cause\n\n## 3. Fix\n\n## 4. Verification\n\n## 5. Lesson\n\n## 6. Prevention\n`;
@@ -305,6 +210,17 @@ async function logBug(opts) {
   if (file && !content.includes(file)) {
     content = content.replace('## 1. Reproduce', `## 1. Reproduce\n\n> File gợi ý: \`${file}\` — kiểm tra log/error trên.\n`);
   }
+  return content;
+}
+
+async function logBug(opts) {
+  const error = opts.error || opts.msg || 'unknown error';
+  const file = opts.file || '';
+  const title = opts.title || error.slice(0, 60);
+  const slug = opts.slug || normalizeSlug(title);
+  const { date, dirName, dir } = resolveBugDir(title, slug);
+  await fs.mkdir(dir, { recursive: true });
+  const content = await fillBugTemplate(title, dirName, date, error, file);
   const outPath = path.join(dir, 'bug.md');
   await fs.writeFile(outPath, content, 'utf8');
   console.log(`✅ Đã tạo draft bug: ${path.relative(ROOT, outPath)}`);
@@ -315,6 +231,51 @@ async function logBug(opts) {
   console.log(`   1. Mở ${path.relative(ROOT, outPath)} điền Reproduce + Root Cause`);
   console.log(`   2. Sau khi fix: node .github/harness/scripts/auto-learn.mjs propose --bug ${dirName}`);
   return dirName;
+}
+
+function findNextKnId(kns) {
+  let maxId = 0;
+  for (const k of kns) {
+    const n = parseInt(k.id.replace('KN-',''),10);
+    if (n>maxId) maxId=n;
+  }
+  return `KN-${String(maxId+1).padStart(3,'0')}`;
+}
+
+// Trích metadata từ bug.md — dùng chung propose ↔ evaluate ↔ commit (defaults khác nhau giữ y nguyên)
+function extractBugMeta(bugText, bugSlug, defaults = {}) {
+  const titleM = bugText.match(/^#\s*Bug:\s*(.+)/m) || bugText.match(/Title:\s*(.+)/);
+  const title = titleM ? titleM[1].trim().slice(0,80) : bugSlug;
+  const sevM = bugText.match(/Severity:\s*(\w+)/i);
+  const severity = sevM ? sevM[1].toLowerCase() : 'major';
+  const tagsM = bugText.match(/Tags:\s*([^\n]+)/);
+  const tags = tagsM ? tagsM[1].trim().replace(/`/g,'') : (defaults.tags || 'ui');
+  const whyM = bugText.match(/Why 5.*?:\s*(.+)/) || bugText.match(/Root.*?:\s*(.+)/i);
+  const root = whyM ? whyM[1].trim().slice(0,200) : (defaults.root || 'Chưa điền — hãy bổ sung 5 Whys trong bug.md');
+  const fixM = bugText.match(/Approach:\s*(.+)/) || bugText.match(/Cách sửa:\s*(.+)/);
+  const fix = fixM ? fixM[1].trim().slice(0,200) : (defaults.fix || 'Chưa điền — mô tả cách sửa ở gốc');
+  return { title, severity, tags, root, fix };
+}
+
+function buildKnDraft({ nextId, title, severity, root, fix, tags, today, bugSlug, author }) {
+  return `### ${nextId} — ${title}
+
+- **Ngày:** ${today}
+- **Bug report:** \`.agent/bugs/${bugSlug}/bug.md\`
+- **Severity:** ${severity}
+- **Triệu chứng:** ${title} — xem bug.md Reproduce
+- **Nguyên nhân gốc:** ${root}
+- **Cách sửa:** ${fix}
+- **Cách phòng tránh:**
+  - Thêm checklist liên quan vào docs/knowleged.md Checklist phòng tránh chung
+  - Chạy \`node .github/harness/scripts/auto-learn.mjs suggest "<từ khóa>"\` trước khi code tương tự
+- **Tags:** ${tags}
+- **Người ghi:** ${author}
+`;
+}
+
+function buildKnTableRow({ nextId, today, title, root, tags }) {
+  return `| ${nextId} | ${today} | ${title.slice(0,30)} | ${root.slice(0,30)} | ${title.slice(0,40)} | \`${tags.split(/\s+/).slice(0,3).join(' ')}\` |`;
 }
 
 async function propose(bugSlug, json=false) {
@@ -334,44 +295,13 @@ async function propose(bugSlug, json=false) {
     process.exit(1);
   }
   const bugText = await fs.readFile(bugPath, 'utf8');
-  const { kns, raw } = await parseKNs();
-  // find max KN id
-  let maxId = 0;
-  for (const k of kns) {
-    const n = parseInt(k.id.replace('KN-',''),10);
-    if (n>maxId) maxId=n;
-  }
-  const nextId = `KN-${String(maxId+1).padStart(3,'0')}`;
-  // extract title from bug
-  const titleM = bugText.match(/^#\s*Bug:\s*(.+)/m) || bugText.match(/Title:\s*(.+)/);
-  const title = titleM ? titleM[1].trim().slice(0,80) : bugSlug;
-  const sevM = bugText.match(/Severity:\s*(\w+)/i);
-  const severity = sevM ? sevM[1].toLowerCase() : 'major';
-  const tagsM = bugText.match(/Tags:\s*([^\n]+)/);
-  const tags = tagsM ? tagsM[1].trim().replace(/`/g,'') : 'ui';
+  const { kns } = await parseKNs(KNOWLEGED);
+  const nextId = findNextKnId(kns);
+  const { title, severity, tags, root, fix } = extractBugMeta(bugText, bugSlug);
   const today = todayISO();
-  // try extract root cause
-  const whyM = bugText.match(/Why 5.*?:\s*(.+)/) || bugText.match(/Root.*?:\s*(.+)/i);
-  const root = whyM ? whyM[1].trim().slice(0,200) : 'Chưa điền — hãy bổ sung 5 Whys trong bug.md';
-  const fixM = bugText.match(/Approach:\s*(.+)/) || bugText.match(/Cách sửa:\s*(.+)/);
-  const fix = fixM ? fixM[1].trim().slice(0,200) : 'Chưa điền — mô tả cách sửa ở gốc';
 
-  const draft = `### ${nextId} — ${title}
-
-- **Ngày:** ${today}
-- **Bug report:** \`.agent/bugs/${bugSlug}/bug.md\`
-- **Severity:** ${severity}
-- **Triệu chứng:** ${title} — xem bug.md Reproduce
-- **Nguyên nhân gốc:** ${root}
-- **Cách sửa:** ${fix}
-- **Cách phòng tránh:**
-  - Thêm checklist liên quan vào docs/knowleged.md Checklist phòng tránh chung
-  - Chạy \`node .github/harness/scripts/auto-learn.mjs suggest "<từ khóa>"\` trước khi code tương tự
-- **Tags:** ${tags}
-- **Người ghi:** YUNIE / auto-learn propose
-`;
-
-  const tableRow = `| ${nextId} | ${today} | ${title.slice(0,30)} | ${root.slice(0,30)} | ${title.slice(0,40)} | \`${tags.split(/\s+/).slice(0,3).join(' ')}\` |`;
+  const draft = buildKnDraft({ nextId, title, severity, root, fix, tags, today, bugSlug, author: 'YUNIE / auto-learn propose' });
+  const tableRow = buildKnTableRow({ nextId, today, title, root, tags });
 
   if (json) {
     console.log(JSON.stringify({ nextId, bugSlug, title, severity, tags, draft, tableRow }, null, 2));
@@ -399,10 +329,22 @@ function genRecordId() {
   return `rec-${ts}-${rnd}`;
 }
 
-async function recordInteraction(opts, json=false) {
+function resolveRecordFields(opts) {
   const scenario = opts.scenario || opts.s || 'default';
   const prompt = opts.prompt || opts.p || opts.msg || '';
   const response = opts.response || opts.r || '';
+  return { scenario, prompt, response };
+}
+
+function printRecordHuman(rec, prompt) {
+  console.log(`✅ Recorded interaction: ${rec.id}`);
+  console.log(`   scenario: ${rec.scenario}`);
+  console.log(`   prompt: ${prompt.slice(0, 80)}`);
+  console.log(`   → report: node .github/harness/scripts/auto-learn.mjs report --references ${rec.id} --score 1 --feedback "ok"`);
+}
+
+async function recordInteraction(opts, json=false) {
+  const { scenario, prompt, response } = resolveRecordFields(opts);
   if (!prompt) {
     console.error('❌ Thiếu --prompt "mô tả interaction". Ví dụ: record --scenario "fix-rainbow" --prompt "sửa border xoay"');
     process.exit(1);
@@ -420,23 +362,15 @@ async function recordInteraction(opts, json=false) {
   await fs.writeFile(path.join(RECORDS_DIR, `${id}.json`), JSON.stringify(rec, null, 2), 'utf8');
   // also append to reports index for quick lookup
   if (json) console.log(JSON.stringify(rec, null, 2));
-  else {
-    console.log(`✅ Recorded interaction: ${id}`);
-    console.log(`   scenario: ${scenario}`);
-    console.log(`   prompt: ${prompt.slice(0, 80)}`);
-    console.log(`   → report: node .github/harness/scripts/auto-learn.mjs report --references ${id} --score 1 --feedback "ok"`);
-  }
+  else printRecordHuman(rec, prompt);
   return id;
 }
 
-async function reportFeedback(opts, json=false) {
-  const scoreRaw = opts.score;
-  const feedback = opts.feedback || opts.msg || '';
+function resolveReportRefs(opts) {
   const refsRaw = opts.references || opts.refs || opts.receipt || opts.bug || '';
-  const scenario = opts.scenario || opts.s || 'default';
-  // allow --bug <slug> as shorthand for referencing a bug
+  const bugSlug = opts.bug || '';
   let references = [];
-  let bugSlug = opts.bug || '';
+  // allow --bug <slug> as shorthand for referencing a bug
   if (bugSlug && !refsRaw) {
     // find record ids linked to bug or just use bug slug as reference
     references = [bugSlug];
@@ -444,6 +378,10 @@ async function reportFeedback(opts, json=false) {
     references = refsRaw.split(/[,\s]+/).filter(Boolean);
     // if refs contain bug slug pattern, keep as is
   }
+  return { references, bugSlug };
+}
+
+function validateReportScore(scoreRaw) {
   if (scoreRaw === undefined || scoreRaw === '') {
     console.error('❌ Thiếu --score <0..1>. Ví dụ: report --score 1 --feedback "pass" --references rec-xxx');
     process.exit(1);
@@ -453,12 +391,11 @@ async function reportFeedback(opts, json=false) {
     console.error('❌ --score phải là số 0..1 (ví dụ 0, 0.5, 1)');
     process.exit(1);
   }
-  if (references.length === 0) {
-    console.error('❌ Thiếu --references <id> hoặc --bug <slug>. Ví dụ: --references rec-abc123 hoặc --bug 2026-08-30-xyz');
-    process.exit(1);
-  }
-  await fs.mkdir(path.dirname(REPORTS_FILE), { recursive: true });
-  // validate references exist (warn if not)
+  return score;
+}
+
+// validate references exist (warn if not)
+function warnMissingRefs(references) {
   for (const r of references) {
     const recPath = path.join(RECORDS_DIR, `${r}.json`);
     const bugPath = path.join(BUGS_DIR, r, 'bug.md');
@@ -466,6 +403,39 @@ async function reportFeedback(opts, json=false) {
       console.warn(`⚠️  Reference "${r}" không tìm thấy trong records/ hay bugs/ — vẫn ghi nhưng nên kiểm tra.`);
     }
   }
+}
+
+async function appendBugNote(bugSlug, entry, score, feedback, references) {
+  const bugPath = path.join(BUGS_DIR, bugSlug, 'bug.md');
+  if (!existsSync(bugPath)) return;
+  try {
+    const bugText = await fs.readFile(bugPath, 'utf8');
+    const note = `\n\n> 📊 Report ${entry.ts}: score=${score} feedback="${feedback.slice(0,80)}" refs=${references.join(',')}\n`;
+    if (!bugText.includes(entry.ts)) {
+      await fs.appendFile(bugPath, note, 'utf8');
+    }
+  } catch {}
+}
+
+function printReportHuman(entry, score, references, scenario, bugSlug) {
+  console.log(`✅ Reported feedback: score=${score} → ${references.join(', ')}`);
+  if (entry.feedback) console.log(`   feedback: ${entry.feedback.slice(0, 100)}`);
+  console.log(`   scenario: ${scenario}`);
+  console.log(`   → evaluate: node .github/harness/scripts/auto-learn.mjs evaluate --bug ${bugSlug || references[0]}`);
+}
+
+async function reportFeedback(opts, json=false) {
+  const scoreRaw = opts.score;
+  const feedback = opts.feedback || opts.msg || '';
+  const scenario = opts.scenario || opts.s || 'default';
+  const { references, bugSlug } = resolveReportRefs(opts);
+  const score = validateReportScore(scoreRaw);
+  if (references.length === 0) {
+    console.error('❌ Thiếu --references <id> hoặc --bug <slug>. Ví dụ: --references rec-abc123 hoặc --bug 2026-08-30-xyz');
+    process.exit(1);
+  }
+  await fs.mkdir(path.dirname(REPORTS_FILE), { recursive: true });
+  warnMissingRefs(references);
   const entry = {
     ts: new Date().toISOString(),
     scenario,
@@ -476,26 +446,80 @@ async function reportFeedback(opts, json=false) {
   };
   await fs.appendFile(REPORTS_FILE, JSON.stringify(entry) + '\n', 'utf8');
   // if bug slug provided, also append a note to bug.md
-  if (bugSlug) {
-    const bugPath = path.join(BUGS_DIR, bugSlug, 'bug.md');
-    if (existsSync(bugPath)) {
-      try {
-        let bugText = await fs.readFile(bugPath, 'utf8');
-        const note = `\n\n> 📊 Report ${entry.ts}: score=${score} feedback="${feedback.slice(0,80)}" refs=${references.join(',')}\n`;
-        if (!bugText.includes(entry.ts)) {
-          await fs.appendFile(bugPath, note, 'utf8');
-        }
-      } catch {}
-    }
-  }
+  if (bugSlug) await appendBugNote(bugSlug, entry, score, feedback, references);
   if (json) console.log(JSON.stringify(entry, null, 2));
-  else {
-    console.log(`✅ Reported feedback: score=${score} → ${references.join(', ')}`);
-    if (feedback) console.log(`   feedback: ${feedback.slice(0, 100)}`);
-    console.log(`   scenario: ${scenario}`);
-    console.log(`   → evaluate: node .github/harness/scripts/auto-learn.mjs evaluate --bug ${bugSlug || references[0]}`);
-  }
+  else printReportHuman(entry, score, references, scenario, bugSlug);
   return entry;
+}
+
+function checkBugReadiness(bugText) {
+  // check Fix section filled
+  const fixSection = bugText.match(/## 3\. Fix([\s\S]*?)## 4\./);
+  const fixContent = fixSection ? fixSection[1].trim() : '';
+  const hasFix = fixContent.length > 50 && !fixContent.includes('<Tiêu đề') && !fixContent.includes('Chưa điền');
+  const hasApproach = /Approach:/i.test(bugText) && !/Approach:\s*Chưa điền/i.test(bugText);
+  // check status
+  const isFixed = /Status:\s*`?fixed`?/i.test(bugText) || /Status:\s*fixed/i.test(bugText);
+  const isOpen = /Status:\s*`?open`?/i.test(bugText);
+  return { hasFix, hasApproach, isFixed, isOpen };
+}
+
+async function loadBugReports(bugSlug) {
+  const reports = [];
+  try {
+    if (existsSync(REPORTS_FILE)) {
+      const lines = (await fs.readFile(REPORTS_FILE, 'utf8')).trim().split('\n').filter(Boolean);
+      for (const l of lines) {
+        try {
+          const r = JSON.parse(l);
+          if (r.references && r.references.includes(bugSlug) || r.bug === bugSlug) reports.push(r);
+        } catch {}
+      }
+    }
+  } catch {}
+  return reports;
+}
+
+function scoreDuplicateCandidates(kns, title) {
+  // duplicate check via suggest
+  const qTokens = tokenize(title);
+  const idf = computeIDF(qTokens, kns);
+  return kns.map(kn => ({ ...kn, score: scoreKN(qTokens, title, kn, idf) }))
+    .sort((a,b)=>b.score-a.score)
+    .slice(0, 3);
+}
+
+const DUPLICATE_THRESHOLD = 15; // tuned: >15 likely duplicate
+
+function decideEvalGate({ hasFix, isDuplicate, topScored, isOpen, isFixed, reports, avgScore, hasPositiveReport }) {
+  // gate logic: PASS if hasFix and not duplicate and (no reports or has positive)
+  let decision = 'PASS';
+  const reasons = [];
+  if (!hasFix) { decision = 'FAIL'; reasons.push('Fix section chưa điền đủ (cần Approach + Files Changed)'); }
+  if (isDuplicate) { decision = 'FAIL'; reasons.push(`Trùng KN hiện có: ${topScored.id} score ${topScored.score} ≥ ${DUPLICATE_THRESHOLD} — có thể đã có bài học tương tự`); }
+  if (reports.length > 0 && !hasPositiveReport && avgScore !== null && avgScore < 0.5) {
+    decision = 'FAIL'; reasons.push(`Reports điểm thấp avg ${avgScore.toFixed(2)} — chưa đủ bằng chứng fix tốt`);
+  }
+  if (isOpen && !isFixed && reports.length===0) {
+    // allow PASS with warning if no reports but fix exists — reef-lite local doesn't require report
+    reasons.push('Chưa có report — sẽ commit nhưng nên report --score để có version history đầy đủ');
+  }
+  if (decision === 'PASS' && reasons.length===0) reasons.push('Đủ điều kiện commit — không trùng, có fix, reports ok');
+  return { decision, reasons };
+}
+
+function printEvaluateHuman(result, bugSlug, scored) {
+  const { decision, reasons, checks } = result;
+  const icon = decision==='PASS' ? '✅' : '⛔';
+  console.log(`${icon} Evaluate ${bugSlug} → ${decision}`);
+  console.log(`   title: ${result.title}`);
+  console.log(`   nextId: ${result.nextId}`);
+  console.log(`   checks: hasFix=${checks.hasFix} hasApproach=${checks.hasApproach} isFixed=${checks.isFixed} reports=${checks.reports} avgScore=${checks.avgScore!==null?checks.avgScore.toFixed(2):'—'} duplicate=${checks.isDuplicate ? scored[0].id+'('+scored[0].score+')' : 'no'}`);
+  if (scored.length) console.log(`   top KN: ${scored.map(s=>`${s.id}(${s.score})`).join(', ')}`);
+  console.log(`   reasons:`);
+  for (const r of reasons) console.log(`     - ${r}`);
+  if (decision==='PASS') console.log(`\n→ Sẵn sàng commit: node .github/harness/scripts/auto-learn.mjs commit --bug ${bugSlug}`);
+  else console.log(`\n→ Chưa commit được — hãy bổ sung fix/report hoặc kiểm tra trùng lặp.`);
 }
 
 async function evaluateCandidate(bugSlug, json=false) {
@@ -509,55 +533,16 @@ async function evaluateCandidate(bugSlug, json=false) {
     process.exit(1);
   }
   const bugText = await fs.readFile(bugPath, 'utf8');
-  const { kns } = await parseKNs();
-  // extract title
-  const titleM = bugText.match(/^#\s*Bug:\s*(.+)/m) || bugText.match(/Title:\s*(.+)/);
-  const title = titleM ? titleM[1].trim().slice(0, 80) : bugSlug;
-  // check Fix section filled
-  const fixSection = bugText.match(/## 3\. Fix([\s\S]*?)## 4\./);
-  const fixContent = fixSection ? fixSection[1].trim() : '';
-  const hasFix = fixContent.length > 50 && !fixContent.includes('<Tiêu đề') && !fixContent.includes('Chưa điền');
-  const hasApproach = /Approach:/i.test(bugText) && !/Approach:\s*Chưa điền/i.test(bugText);
-  // check status
-  const isFixed = /Status:\s*`?fixed`?/i.test(bugText) || /Status:\s*fixed/i.test(bugText);
-  const isOpen = /Status:\s*`?open`?/i.test(bugText);
-  // duplicate check via suggest
-  const qTokens = tokenize(title);
-  const idf = computeIDF(qTokens, kns);
-  const scored = kns.map(kn => ({ ...kn, score: scoreKN(qTokens, title, kn, idf) }))
-    .sort((a,b)=>b.score-a.score)
-    .slice(0, 3);
+  const { kns } = await parseKNs(KNOWLEGED);
+  const { title } = extractBugMeta(bugText, bugSlug);
+  const { hasFix, hasApproach, isFixed, isOpen } = checkBugReadiness(bugText);
+  const scored = scoreDuplicateCandidates(kns, title);
   const topScore = scored[0]?.score || 0;
-  const duplicateThreshold = 15; // tuned: >15 likely duplicate
-  const isDuplicate = topScore >= duplicateThreshold;
-  // reports for this bug
-  let reports = [];
-  try {
-    if (existsSync(REPORTS_FILE)) {
-      const lines = (await fs.readFile(REPORTS_FILE, 'utf8')).trim().split('\n').filter(Boolean);
-      for (const l of lines) {
-        try {
-          const r = JSON.parse(l);
-          if (r.references && r.references.includes(bugSlug) || r.bug === bugSlug) reports.push(r);
-        } catch {}
-      }
-    }
-  } catch {}
+  const isDuplicate = topScore >= DUPLICATE_THRESHOLD;
+  const reports = await loadBugReports(bugSlug);
   const avgScore = reports.length ? (reports.reduce((s,r)=>s+r.score,0)/reports.length) : null;
   const hasPositiveReport = reports.some(r=>r.score >= 0.7);
-  // gate logic: PASS if hasFix and not duplicate and (no reports or has positive)
-  let decision = 'PASS';
-  let reasons = [];
-  if (!hasFix) { decision = 'FAIL'; reasons.push('Fix section chưa điền đủ (cần Approach + Files Changed)'); }
-  if (isDuplicate) { decision = 'FAIL'; reasons.push(`Trùng KN hiện có: ${scored[0].id} score ${topScore} ≥ ${duplicateThreshold} — có thể đã có bài học tương tự`); }
-  if (reports.length > 0 && !hasPositiveReport && avgScore !== null && avgScore < 0.5) {
-    decision = 'FAIL'; reasons.push(`Reports điểm thấp avg ${avgScore.toFixed(2)} — chưa đủ bằng chứng fix tốt`);
-  }
-  if (isOpen && !isFixed && reports.length===0) {
-    // allow PASS with warning if no reports but fix exists — reef-lite local doesn't require report
-    reasons.push('Chưa có report — sẽ commit nhưng nên report --score để có version history đầy đủ');
-  }
-  if (decision === 'PASS' && reasons.length===0) reasons.push('Đủ điều kiện commit — không trùng, có fix, reports ok');
+  const { decision, reasons } = decideEvalGate({ hasFix, isDuplicate, topScored: scored[0], isOpen, isFixed, reports, avgScore, hasPositiveReport });
   const result = {
     bug: bugSlug,
     title,
@@ -575,23 +560,68 @@ async function evaluateCandidate(bugSlug, json=false) {
       hasPositiveReport
     },
     scored: scored.map(s=>({ id:s.id, title:s.title, score:s.score })),
-    nextId: `KN-${String(Math.max(0, ...kns.map(k=>parseInt(k.id.replace('KN-',''),10)))+1).padStart(3,'0')}`
+    nextId: findNextKnId(kns)
   };
   if (json) {
     console.log(JSON.stringify(result, null, 2));
   } else {
-    const icon = decision==='PASS' ? '✅' : '⛔';
-    console.log(`${icon} Evaluate ${bugSlug} → ${decision}`);
-    console.log(`   title: ${title}`);
-    console.log(`   nextId: ${result.nextId}`);
-    console.log(`   checks: hasFix=${hasFix} hasApproach=${hasApproach} isFixed=${isFixed} reports=${reports.length} avgScore=${avgScore!==null?avgScore.toFixed(2):'—'} duplicate=${isDuplicate ? scored[0].id+'('+topScore+')' : 'no'}`);
-    if (scored.length) console.log(`   top KN: ${scored.map(s=>`${s.id}(${s.score})`).join(', ')}`);
-    console.log(`   reasons:`);
-    for (const r of reasons) console.log(`     - ${r}`);
-    if (decision==='PASS') console.log(`\n→ Sẵn sàng commit: node .github/harness/scripts/auto-learn.mjs commit --bug ${bugSlug}`);
-    else console.log(`\n→ Chưa commit được — hãy bổ sung fix/report hoặc kiểm tra trùng lặp.`);
+    printEvaluateHuman(result, bugSlug, scored);
   }
   return result;
+}
+
+function insertKnTableRow(text, tableRow) {
+  if (!text.includes('| KN-')) return text;
+  // find last table row
+  const lines = text.split('\n');
+  let lastTableIdx = -1;
+  for (let i=0;i<lines.length;i++) if (/^\|\s*KN-\d+/.test(lines[i])) lastTableIdx=i;
+  if (lastTableIdx < 0) return text;
+  lines.splice(lastTableIdx+1, 0, tableRow);
+  return lines.join('\n');
+}
+
+function insertKnDetail(text, detail) {
+  const marker = '<!-- Thêm bài học mới';
+  if (text.includes(marker)) return text.replace(marker, detail + '\n' + marker);
+  // fallback: append before Anti-patterns
+  const apMarker = '## Anti-patterns';
+  if (text.includes(apMarker)) return text.replace(apMarker, detail + '\n' + apMarker);
+  return text + '\n' + detail;
+}
+
+function bumpUpdatedAt(text, nextId, title, nowISO) {
+  if (!text.includes('UpdatedAt:')) return text;
+  return text.replace(/UpdatedAt:\s*[^\n]+/, `UpdatedAt: ${nowISO} — ${nextId} added (${title.slice(0,30)})`);
+}
+
+async function snapshotKnowleged(today, nextId, title) {
+  await fs.mkdir(VERSIONS_DIR, { recursive: true });
+  const snapshotName = `${today}-${nextId}-${normalizeSlug(title).slice(0,20)}`;
+  const snapshotPath = path.join(VERSIONS_DIR, `${snapshotName}.md`);
+  try {
+    const before = await fs.readFile(KNOWLEGED, 'utf8');
+    await fs.writeFile(snapshotPath, before, 'utf8');
+  } catch {}
+  return { snapshotName, snapshotPath };
+}
+
+async function markBugFixed(bugPath) {
+  try {
+    let bugT = await fs.readFile(bugPath, 'utf8');
+    if (bugT.includes('Status:** `open`') || bugT.includes('Status: `open`')) {
+      bugT = bugT.replace(/Status:\s*`?open`?/i, 'Status: `fixed`');
+      await fs.writeFile(bugPath, bugT, 'utf8');
+    }
+  } catch {}
+}
+
+function printCommitHuman(nextId, bugSlug, snapshotPath, nowISO) {
+  console.log(`\n✅ Committed ${nextId} từ ${bugSlug}`);
+  console.log(`   snapshot: ${path.relative(ROOT, snapshotPath)}`);
+  console.log(`   knowleged.md đã cập nhật — UpdatedAt: ${nowISO}`);
+  console.log(`   → kiểm tra: node .github/harness/scripts/auto-learn.mjs status`);
+  console.log(`   → history: node .github/harness/scripts/auto-learn.mjs history`);
 }
 
 async function commitCandidate(bugSlug, json=false) {
@@ -609,82 +639,24 @@ async function commitCandidate(bugSlug, json=false) {
   // generate draft
   const bugPath = path.join(BUGS_DIR, bugSlug, 'bug.md');
   const bugText = await fs.readFile(bugPath, 'utf8');
-  const { kns, raw } = await parseKNs();
-  let maxId = 0;
-  for (const k of kns) { const n=parseInt(k.id.replace('KN-',''),10); if(n>maxId) maxId=n; }
-  const nextId = `KN-${String(maxId+1).padStart(3,'0')}`;
-  const titleM = bugText.match(/^#\s*Bug:\s*(.+)/m) || bugText.match(/Title:\s*(.+)/);
-  const title = titleM ? titleM[1].trim().slice(0,80) : bugSlug;
-  const sevM = bugText.match(/Severity:\s*(\w+)/i);
-  const severity = sevM ? sevM[1].toLowerCase() : 'major';
-  const tagsM = bugText.match(/Tags:\s*([^\n]+)/);
-  const tags = tagsM ? tagsM[1].trim().replace(/`/g,'') : 'process';
+  const { kns } = await parseKNs(KNOWLEGED);
+  const nextId = findNextKnId(kns);
+  const { title, severity, tags, root, fix } = extractBugMeta(bugText, bugSlug, { tags: 'process', root: 'Xem bug.md Root Cause', fix: 'Xem bug.md Fix' });
   const today = todayISO();
-  const whyM = bugText.match(/Why 5.*?:\s*(.+)/) || bugText.match(/Root.*?:\s*(.+)/i);
-  const root = whyM ? whyM[1].trim().slice(0,200) : 'Xem bug.md Root Cause';
-  const fixM = bugText.match(/Approach:\s*(.+)/) || bugText.match(/Cách sửa:\s*(.+)/);
-  const fix = fixM ? fixM[1].trim().slice(0,200) : 'Xem bug.md Fix';
   // create version snapshot before edit
-  await fs.mkdir(VERSIONS_DIR, { recursive: true });
-  const snapshotName = `${today}-${nextId}-${normalizeSlug(title).slice(0,20)}`;
-  const snapshotPath = path.join(VERSIONS_DIR, `${snapshotName}.md`);
-  try {
-    const before = await fs.readFile(KNOWLEGED, 'utf8');
-    await fs.writeFile(snapshotPath, before, 'utf8');
-  } catch {}
+  const { snapshotName, snapshotPath } = await snapshotKnowleged(today, nextId, title);
   // build draft blocks
-  const tableRow = `| ${nextId} | ${today} | ${title.slice(0,30)} | ${root.slice(0,30)} | ${title.slice(0,40)} | \`${tags.split(/\s+/).slice(0,3).join(' ')}\` |`;
-  const detail = `### ${nextId} — ${title}
-
-- **Ngày:** ${today}
-- **Bug report:** \`.agent/bugs/${bugSlug}/bug.md\`
-- **Severity:** ${severity}
-- **Triệu chứng:** ${title} — xem bug.md Reproduce
-- **Nguyên nhân gốc:** ${root}
-- **Cách sửa:** ${fix}
-- **Cách phòng tránh:**
-  - Thêm checklist liên quan vào docs/knowleged.md Checklist phòng tránh chung
-  - Chạy \`node .github/harness/scripts/auto-learn.mjs suggest "<từ khóa>"\` trước khi code tương tự
-- **Tags:** ${tags}
-- **Người ghi:** YUNIE / reef-lite commit
-`;
+  const tableRow = buildKnTableRow({ nextId, today, title, root, tags });
+  const detail = buildKnDraft({ nextId, title, severity, root, fix, tags, today, bugSlug, author: 'YUNIE / reef-lite commit' });
   // append to knowleged.md: find table end and detail insertion point
-  let text = await fs.readFile(KNOWLEGED, 'utf8');
-  // 1) insert table row before the line that starts with "> Dòng ví dụ"
-  if (text.includes('| KN-')) {
-    // find last table row
-    const lines = text.split('\n');
-    let lastTableIdx = -1;
-    for (let i=0;i<lines.length;i++) if (/^\|\s*KN-\d+/.test(lines[i])) lastTableIdx=i;
-    if (lastTableIdx>=0) {
-      lines.splice(lastTableIdx+1, 0, tableRow);
-      text = lines.join('\n');
-    }
-  }
-  // 2) insert detail before "<!-- Thêm bài học mới"
-  const marker = '<!-- Thêm bài học mới';
-  if (text.includes(marker)) {
-    text = text.replace(marker, detail + '\n' + marker);
-  } else {
-    // fallback: append before Anti-patterns
-    const apMarker = '## Anti-patterns';
-    if (text.includes(apMarker)) text = text.replace(apMarker, detail + '\n' + apMarker);
-    else text += '\n' + detail;
-  }
-  // 3) update UpdatedAt
   const nowISO = new Date().toISOString();
-  if (text.includes('UpdatedAt:')) {
-    text = text.replace(/UpdatedAt:\s*[^\n]+/, `UpdatedAt: ${nowISO} — ${nextId} added (${title.slice(0,30)})`);
-  }
+  let text = await fs.readFile(KNOWLEGED, 'utf8');
+  text = insertKnTableRow(text, tableRow);
+  text = insertKnDetail(text, detail);
+  text = bumpUpdatedAt(text, nextId, title, nowISO);
   await fs.writeFile(KNOWLEGED, text, 'utf8');
   // update bug.md status to fixed if not already
-  try {
-    let bugT = await fs.readFile(bugPath, 'utf8');
-    if (bugT.includes('Status:** `open`') || bugT.includes('Status: `open`')) {
-      bugT = bugT.replace(/Status:\s*`?open`?/i, 'Status: `fixed`');
-      await fs.writeFile(bugPath, bugT, 'utf8');
-    }
-  } catch {}
+  await markBugFixed(bugPath);
   // write version meta
   const meta = {
     id: nextId,
@@ -698,13 +670,7 @@ async function commitCandidate(bugSlug, json=false) {
   };
   await fs.writeFile(path.join(VERSIONS_DIR, `${snapshotName}.json`), JSON.stringify(meta, null, 2), 'utf8');
   if (json) console.log(JSON.stringify({ ...meta, committed: true }, null, 2));
-  else {
-    console.log(`\n✅ Committed ${nextId} từ ${bugSlug}`);
-    console.log(`   snapshot: ${path.relative(ROOT, snapshotPath)}`);
-    console.log(`   knowleged.md đã cập nhật — UpdatedAt: ${nowISO}`);
-    console.log(`   → kiểm tra: node .github/harness/scripts/auto-learn.mjs status`);
-    console.log(`   → history: node .github/harness/scripts/auto-learn.mjs history`);
-  }
+  else printCommitHuman(nextId, bugSlug, snapshotPath, nowISO);
   return { ...meta, committed: true };
 }
 
@@ -730,8 +696,8 @@ async function listVersions(json=false) {
   if (files.length>10) console.log(`   ... và ${files.length-10} version cũ hơn`);
 }
 
-async function showHistory(json=false) {
-  let reports = [];
+async function readRecentReports(limit) {
+  const reports = [];
   try {
     if (existsSync(REPORTS_FILE)) {
       const lines = (await fs.readFile(REPORTS_FILE, 'utf8')).trim().split('\n').filter(Boolean);
@@ -740,7 +706,11 @@ async function showHistory(json=false) {
       }
     }
   } catch {}
-  let versions = [];
+  return reports.slice(-limit);
+}
+
+async function readRecentVersions(limit) {
+  const versions = [];
   try {
     const entries = await fs.readdir(VERSIONS_DIR, { withFileTypes:true });
     const jsons = entries.filter(e=>e.isFile() && e.name.endsWith('.json')).map(e=>e.name).sort().reverse().slice(0,10);
@@ -748,12 +718,17 @@ async function showHistory(json=false) {
       try { versions.push(JSON.parse(await fs.readFile(path.join(VERSIONS_DIR, f), 'utf8'))); } catch {}
     }
   } catch {}
-  let records = [];
+  return versions.slice(0, limit);
+}
+
+async function readRecentRecords() {
   try {
     const entries = await fs.readdir(RECORDS_DIR, { withFileTypes:true });
-    records = entries.filter(e=>e.isFile() && e.name.endsWith('.json')).map(e=>e.name).slice(-5);
-  } catch {}
-  if (json) { console.log(JSON.stringify({ reports: reports.slice(-10), versions: versions.slice(0,5), records }, null, 2)); return; }
+    return entries.filter(e=>e.isFile() && e.name.endsWith('.json')).map(e=>e.name).slice(-5);
+  } catch { return []; }
+}
+
+function printHistoryHuman(reports, versions, records) {
   console.log(`🔄 Reef-lite History — Serve → Observe → Grow → Commit`);
   console.log(`\n  Serve (records): ${records.length} interactions trong .agent/records/`);
   if (records.length) console.log(`    → ${records.join(', ')}`);
@@ -768,6 +743,14 @@ async function showHistory(json=false) {
   }
   if (versions.length===0) console.log('    (chưa có commit — dùng: commit --bug <slug> sau khi evaluate PASS)');
   console.log(`\n💡 Loop: record → report → propose → evaluate → commit → versions`);
+}
+
+async function showHistory(json=false) {
+  const reports = await readRecentReports(20);
+  const versions = await readRecentVersions(10);
+  const records = await readRecentRecords();
+  if (json) { console.log(JSON.stringify({ reports: reports.slice(-10), versions: versions.slice(0,5), records }, null, 2)); return; }
+  printHistoryHuman(reports, versions, records);
 }
 
 // ---------- Hawking Radiation — nợ bay hơi (roadmap card, 2026-09-12) ----------
@@ -1060,17 +1043,39 @@ function buildZeroRef(kns, raw, allRefs, nowMs) {
   return zeroRef.sort((a, b) => (b.ageDays ?? 1e9) - (a.ageDays ?? 1e9) || a.id.localeCompare(b.id));
 }
 
+async function collectRefTexts() {
+  const refFiles = [...await walkRefFiles(BUGS_DIR), ...await walkRefFiles(PLANS_DIR)];
+  const refTexts = [];
+  for (const f of refFiles) { try { refTexts.push(await fs.readFile(f, 'utf8')); } catch {} }
+  return { refFiles, refTexts };
+}
+
+function printHeatmapHuman({ kns, bugs, rows, months, refFiles, coldSpots, zeroRef }) {
+  console.log('🌡️ CMB ANISOTROPY — ' + kns.length + ' KN · ' + bugs.length + ' bug · ' + rows.length + ' tag · ' + months.length + ' tháng (' + months.join(', ') + ')');
+  console.log('   Grid: ' + rows.length + ' tag × ' + months.length + ' tháng · ref files: ' + refFiles.length);
+  if (!coldSpots.length) console.log('   ✅ không có điểm lạnh — không tag nào bug vượt KN');
+  else {
+    console.log('   ❄️ Điểm lạnh (bug > KN): ' + coldSpots.length);
+    for (const s of coldSpots.slice(0, 5)) console.log('      ' + s.tag + ' — bug ' + s.bug + ' / KN ' + s.kn + ' (cold ' + s.coldness + ')');
+  }
+  if (!zeroRef.length) console.log('   ✅ mọi KN đều được tham chiếu trong bugs/plans');
+  else {
+    console.log('   👻 KN 0 tham chiếu: ' + zeroRef.length);
+    for (const z of zeroRef) console.log('      ' + z.id + ' — ' + (z.ageDays ?? '?') + ' ngày [' + z.action + '] ' + z.title.slice(0, 60));
+  }
+  console.log('   → Ưu tiên viết KN cho điểm lạnh · KN cũ 0 ref → gộp hoặc xoá (knowleged.md)');
+  console.log('   Mirror: --out www/cosmos/heatmap.json · refresh: npm run cosmos:refresh');
+}
+
 async function statsHeatmap(opts = {}) {
   const asJson = !!opts.json;
   const nowMs = opts.now ? new Date(opts.now).getTime() : Date.now();
   if (Number.isNaN(nowMs)) throw new Error('--now không hợp lệ: ' + opts.now);
   const outPath = opts.out ? path.resolve(ROOT, opts.out) : null;
 
-  const { kns, raw } = await parseKNs();
+  const { kns, raw } = await parseKNs(KNOWLEGED);
   const bugs = await collectBugTagData();
-  const refFiles = [...await walkRefFiles(BUGS_DIR), ...await walkRefFiles(PLANS_DIR)];
-  const refTexts = [];
-  for (const f of refFiles) { try { refTexts.push(await fs.readFile(f, 'utf8')); } catch {} }
+  const { refFiles, refTexts } = await collectRefTexts();
 
   const { months, rows, tagTotals } = buildHeatmapGrid(kns, raw);
   const coldSpots = buildColdSpots(tagTotals, bugs);
@@ -1091,62 +1096,52 @@ async function statsHeatmap(opts = {}) {
     await fs.writeFile(outPath, JSON.stringify(result, null, 2) + '\n', 'utf8');
   }
   if (asJson || outPath) { console.log(JSON.stringify(result, null, 2)); return; }
-
-  console.log('🌡️ CMB ANISOTROPY — ' + kns.length + ' KN · ' + bugs.length + ' bug · ' + rows.length + ' tag · ' + months.length + ' tháng (' + months.join(', ') + ')');
-  console.log('   Grid: ' + rows.length + ' tag × ' + months.length + ' tháng · ref files: ' + refFiles.length);
-  if (!coldSpots.length) console.log('   ✅ không có điểm lạnh — không tag nào bug vượt KN');
-  else {
-    console.log('   ❄️ Điểm lạnh (bug > KN): ' + coldSpots.length);
-    for (const s of coldSpots.slice(0, 5)) console.log('      ' + s.tag + ' — bug ' + s.bug + ' / KN ' + s.kn + ' (cold ' + s.coldness + ')');
-  }
-  if (!zeroRef.length) console.log('   ✅ mọi KN đều được tham chiếu trong bugs/plans');
-  else {
-    console.log('   👻 KN 0 tham chiếu: ' + zeroRef.length);
-    for (const z of zeroRef) console.log('      ' + z.id + ' — ' + (z.ageDays ?? '?') + ' ngày [' + z.action + '] ' + z.title.slice(0, 60));
-  }
-  console.log('   → Ưu tiên viết KN cho điểm lạnh · KN cũ 0 ref → gộp hoặc xoá (knowleged.md)');
-  console.log('   Mirror: --out www/cosmos/heatmap.json · refresh: npm run cosmos:refresh');
+  printHeatmapHuman({ kns, bugs, rows, months, refFiles, coldSpots, zeroRef });
 }
 
-async function status(json=false) {
-  const { kns } = await parseKNs();
-  let bugs = [];
-  let drafts = 0;
+async function listBugSlugs() {
   try {
     const entries = await fs.readdir(BUGS_DIR, { withFileTypes:true });
-    bugs = entries.filter(e=>e.isDirectory() && e.name !== '_template').map(e=>e.name);
-    for (const b of bugs) {
-      try {
-        const t = await fs.readFile(path.join(BUGS_DIR, b, 'bug.md'), 'utf8');
-        const isOpen = t.includes('Status:** `open`') || t.includes('Status: `open`') || t.includes('**Status:** open') || /-\s*\*\*Status:\*\*\s*open/i.test(t);
-        if (isOpen) drafts++;
-      } catch {}
-    }
-  } catch {}
-  let lastUpdated = '';
+    return entries.filter(e=>e.isDirectory() && e.name !== '_template').map(e=>e.name);
+  } catch { return []; }
+}
+
+async function countOpenDrafts(bugs) {
+  let drafts = 0;
+  for (const b of bugs) {
+    try {
+      const t = await fs.readFile(path.join(BUGS_DIR, b, 'bug.md'), 'utf8');
+      const isOpen = t.includes('Status:** `open`') || t.includes('Status: `open`') || t.includes('**Status:** open') || /-\s*\*\*Status:\*\*\s*open/i.test(t);
+      if (isOpen) drafts++;
+    } catch {}
+  }
+  return drafts;
+}
+
+async function readLastUpdated() {
   try {
     const raw = await fs.readFile(KNOWLEGED, 'utf8');
     const m = raw.match(/UpdatedAt:\s*([^\n]+)/);
-    if (m) lastUpdated = m[1].trim();
+    if (m) return m[1].trim();
   } catch {}
+  return '';
+}
+
+function computeTopTags(kns) {
   const tagCount = {};
   for (const k of kns) for (const t of k.tags) tagCount[t]=(tagCount[t]||0)+1;
-  const topTags = Object.entries(tagCount).sort((a,b)=>b[1]-a[1]).slice(0,5);
-  // reef-lite counts
+  return Object.entries(tagCount).sort((a,b)=>b[1]-a[1]).slice(0,5);
+}
+
+async function countReefLite() {
   let recordsCount = 0, reportsCount = 0, versionsCount = 0;
   try { const e = await fs.readdir(RECORDS_DIR, { withFileTypes:true }); recordsCount = e.filter(x=>x.isFile() && x.name.endsWith('.json')).length; } catch {}
   try { if (existsSync(REPORTS_FILE)) { const t=(await fs.readFile(REPORTS_FILE,'utf8')).trim(); reportsCount = t ? t.split('\n').filter(Boolean).length : 0; } } catch {}
   try { const e = await fs.readdir(VERSIONS_DIR, { withFileTypes:true }); versionsCount = e.filter(x=>x.isFile() && x.name.endsWith('.json')).length; } catch {}
-  const out = { knTotal: kns.length, bugsTotal: bugs.length, drafts, lastUpdated, topTags, bugs: bugs.slice(0,10), kns: kns.map(k=>({id:k.id, title:k.title, tags:k.tags, severity:k.severity})), reefLite: { records: recordsCount, reports: reportsCount, versions: versionsCount } };
-  if (json) { console.log(JSON.stringify(out, null, 2)); return; }
-  console.log(`📊 Auto-Learn Status — ${new Date().toISOString()}`);
-  console.log(`   KN: ${kns.length} bài học trong docs/knowleged.md ${lastUpdated ? `(UpdatedAt: ${lastUpdated})` : ''}`);
-  if (kns.length) console.log(`      → ${kns.map(k=>k.id).join(', ')}`);
-  if (topTags.length) console.log(`      top tags: ${topTags.map(([t,c])=>`${t}(${c})`).join(', ')}`);
-  console.log(`   Bugs: ${bugs.length} trong .agent/bugs/ (${drafts} drafts auto-log)`);
-  if (bugs.length) console.log(`      → ${bugs.slice(0,5).join(', ')}${bugs.length>5?' ...':''}`);
-  console.log(`   Reef-lite: records=${recordsCount} reports=${reportsCount} versions=${versionsCount} (.agent/records/ + reports.jsonl + versions/)`);
-  console.log(`   Health: ${kns.length>=5 ? '✅' : '⚠️'} ${kns.length>=5 ? 'đủ bài học' : 'cần thêm KN'} | ${drafts>0 ? `⚠️ ${drafts} draft chưa propose` : '✅ không có draft tồn'}`);
+  return { records: recordsCount, reports: reportsCount, versions: versionsCount };
+}
+
+function printStatusCommands() {
   console.log(`\n💡 Lệnh:`);
   console.log(`   suggest "từ khóa"  → gợi ý KN liên quan`);
   console.log(`   log --error "msg" --file "path" --title "tên" → tạo bug draft`);
@@ -1160,27 +1155,47 @@ async function status(json=false) {
   console.log(`   watchdog --apply --sign "<tên người>" → mutation BẮT BUỘC human sign-off (agent tự ký = refused, exit 2)`);
 }
 
+function printStatusHuman({ kns, bugs, drafts, lastUpdated, topTags, reefLite }) {
+  console.log(`📊 Auto-Learn Status — ${new Date().toISOString()}`);
+  console.log(`   KN: ${kns.length} bài học trong docs/knowleged.md ${lastUpdated ? `(UpdatedAt: ${lastUpdated})` : ''}`);
+  if (kns.length) console.log(`      → ${kns.map(k=>k.id).join(', ')}`);
+  if (topTags.length) console.log(`      top tags: ${topTags.map(([t,c])=>`${t}(${c})`).join(', ')}`);
+  console.log(`   Bugs: ${bugs.length} trong .agent/bugs/ (${drafts} drafts auto-log)`);
+  if (bugs.length) console.log(`      → ${bugs.slice(0,5).join(', ')}${bugs.length>5?' ...':''}`);
+  console.log(`   Reef-lite: records=${reefLite.records} reports=${reefLite.reports} versions=${reefLite.versions} (.agent/records/ + reports.jsonl + versions/)`);
+  console.log(`   Health: ${kns.length>=5 ? '✅' : '⚠️'} ${kns.length>=5 ? 'đủ bài học' : 'cần thêm KN'} | ${drafts>0 ? `⚠️ ${drafts} draft chưa propose` : '✅ không có draft tồn'}`);
+  printStatusCommands();
+}
+
+async function status(json=false) {
+  const { kns } = await parseKNs(KNOWLEGED);
+  const bugs = await listBugSlugs();
+  const drafts = await countOpenDrafts(bugs);
+  const lastUpdated = await readLastUpdated();
+  const topTags = computeTopTags(kns);
+  const reefLite = await countReefLite();
+  const out = { knTotal: kns.length, bugsTotal: bugs.length, drafts, lastUpdated, topTags, bugs: bugs.slice(0,10), kns: kns.map(k=>({id:k.id, title:k.title, tags:k.tags, severity:k.severity})), reefLite };
+  if (json) { console.log(JSON.stringify(out, null, 2)); return; }
+  printStatusHuman({ kns, bugs, drafts, lastUpdated, topTags, reefLite });
+}
+
 // ---------- CLI ----------
-function parseArgs(argv) {
-  const args = argv.slice(2);
-  const cmd = args[0];
+function parseSuggestArgs(rest) {
   const opts = {};
-  let query = '';
-  if (cmd === 'suggest') {
-    // suggest "query with spaces" or suggest word1 word2
-    const rest = args.slice(1);
-    // handle --json, --top
-    const qParts = [];
-    for (let i=0;i<rest.length;i++) {
-      if (rest[i]==='--json') opts.json=true;
-      else if (rest[i]==='--top' || rest[i]==='--top_k') { opts.top = parseInt(rest[i+1],10); i++; }
-      else if (rest[i].startsWith('--')) {}
-      else qParts.push(rest[i]);
-    }
-    query = qParts.join(' ').replace(/^["']|["']$/g,'');
-    return { cmd, query, opts };
+  // handle --json, --top
+  const qParts = [];
+  for (let i=0;i<rest.length;i++) {
+    if (rest[i]==='--json') opts.json=true;
+    else if (rest[i]==='--top' || rest[i]==='--top_k') { opts.top = parseInt(rest[i+1],10); i++; }
+    else if (rest[i].startsWith('--')) {}
+    else qParts.push(rest[i]);
   }
+  return { opts, query: qParts.join(' ').replace(/^["']|["']$/g,'') };
+}
+
+function parseGenericArgs(args) {
   // generic --key value
+  const opts = {};
   for (let i=1;i<args.length;i++) {
     const a = args[i];
     if (a.startsWith('--')) {
@@ -1191,7 +1206,18 @@ function parseArgs(argv) {
       if (k==='json') opts.json=true;
     }
   }
-  return { cmd, query, opts };
+  return opts;
+}
+
+function parseArgs(argv) {
+  const args = argv.slice(2);
+  const cmd = args[0];
+  if (cmd === 'suggest') {
+    // suggest "query with spaces" or suggest word1 word2
+    const { opts, query } = parseSuggestArgs(args.slice(1));
+    return { cmd, query, opts };
+  }
+  return { cmd, query: '', opts: parseGenericArgs(args) };
 }
 
 function printHelp() {

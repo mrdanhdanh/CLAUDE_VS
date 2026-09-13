@@ -1,0 +1,27 @@
+≡ƒº╣ Slop Check ΓÇö 1 file ┬╖ dup ΓëÑ8 d├▓ng ┬╖ fn Γëñ80 d├▓ng ┬╖ CC Γëñ12
+
+ΓÜá∩╕Å  Duplication (1 block):
+   ΓÇó 8 d├▓ng ├ù2 ΓÇö .github/harness/scripts/harness-manager.mjs:135 Γåö .github/harness/scripts/harness-manager.mjs:186
+     Γöö description: (desc || `Skill ${name}`).slice(0, 300),
+
+ΓÜá∩╕Å  Function metrics:
+   ΓÇó [size] .github/harness/scripts/harness-manager.mjs:106 scanFs() ΓÇö 110 d├▓ng (max 80)
+   ΓÇó [complexity] .github/harness/scripts/harness-manager.mjs:106 scanFs() ΓÇö CC 39 (max 12)
+   ΓÇó [complexity] .github/harness/scripts/harness-manager.mjs:217 loadRegistry() ΓÇö CC 14 (max 12)
+   ΓÇó [complexity] .github/harness/scripts/harness-manager.mjs:288 setEnabled() ΓÇö CC 17 (max 12)
+   ΓÇó [complexity] .github/harness/scripts/harness-manager.mjs:336 list() ΓÇö CC 25 (max 12)
+   ΓÇó [complexity] .github/harness/scripts/harness-manager.mjs:396 fetchSkillFiles() ΓÇö CC 16 (max 12)
+   ΓÇó [size] .github/harness/scripts/harness-manager.mjs:457 install() ΓÇö 93 d├▓ng (max 80)
+   ΓÇó [complexity] .github/harness/scripts/harness-manager.mjs:457 install() ΓÇö CC 53 (max 12)
+   ΓÇó [size] .github/harness/scripts/harness-manager.mjs:551 installLocal() ΓÇö 86 d├▓ng (max 80)
+   ΓÇó [complexity] .github/harness/scripts/harness-manager.mjs:551 installLocal() ΓÇö CC 42 (max 12)
+   ΓÇó [complexity] .github/harness/scripts/harness-manager.mjs:653 create() ΓÇö CC 19 (max 12)
+   ΓÇó [complexity] .github/harness/scripts/harness-manager.mjs:741 presetApply() ΓÇö CC 29 (max 12)
+   ΓÇó [complexity] .github/harness/scripts/harness-manager.mjs:810 sync() ΓÇö CC 20 (max 12)
+   ΓÇó [complexity] .github/harness/scripts/harness-manager.mjs:1085 mergeHooksIntoSettings() ΓÇö CC 25 (max 12)
+   ΓÇó [size] .github/harness/scripts/harness-manager.mjs:1127 exportClaude() ΓÇö 134 d├▓ng (max 80)
+   ΓÇó [complexity] .github/harness/scripts/harness-manager.mjs:1127 exportClaude() ΓÇö CC 50 (max 12)
+   ΓÇó [size] .github/harness/scripts/harness-manager.mjs:1322 main() ΓÇö 96 d├▓ng (max 80)
+   ΓÇó [complexity] .github/harness/scripts/harness-manager.mjs:1322 main() ΓÇö CC 72 (max 12)
+
+Γ¥î 19 findings ΓÇö fix hoß║╖c justify tr╞░ß╗¢c khi Done (Slop Gate ┬╖ KN-047)

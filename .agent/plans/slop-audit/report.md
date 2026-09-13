@@ -73,6 +73,8 @@
 | **Batch 3** | `www/web-thuat-toan/app.js` | 12 → **2** (justified: wrapper IIFE aggregate artifact; gỡ wrapper làm nổ 21 → revert) | 5 spec mới + full **146/146** | `1a107ae` |
 | **Batch 2** | `www/app.js` (STATUS) | 13 → **0** ✅ | 17 spec STATUS + 5 spec mới + full **151/151** | `eec7e37` |
 
-### Còn lại — Batch 1 (44 findings, chưa làm)
-- `harness-manager.mjs` (19) · `auto-learn.mjs` (17) · `auto-researcher.mjs` (8)
-- Là CLI core — cần session riêng với full context budget + verify CLI thật từng lệnh + pairwise trước/sau. Xem chi tiết handoff: `.agent/plans/ai-news-refactor/plan.md` (mục Batch 1).
+### Còn lại — Batch 1 ✅ ĐÃ XONG (2026-09-13)
+- `harness-manager.mjs` 19 → **0** · `auto-learn.mjs` 18 → **0** · `auto-researcher.mjs` 8 → **0**
+- Cross-file dup → tách `kn-parse.mjs` (shared module) — 4 file Clean khi chạy chung
+- Verify: pairwise 6/6 (AR) + 28/28 (AL) + 23/23 (HM) + write-cycle IDENTICAL; 3 specs phụ thuộc 21/21; registry byte-exact HEAD
+- Chi tiết + incident recovery: `.agent/plans/harness-core-refactor/plan.md`

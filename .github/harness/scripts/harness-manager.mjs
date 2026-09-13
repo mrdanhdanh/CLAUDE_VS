@@ -103,115 +103,135 @@ async function safeRename(src, dst) {
 }
 
 // ---------- registry ----------
+async function readDescFromFile(fullPath) {
+  let desc = '';
+  let fm = {};
+  try {
+    const text = await fs.readFile(fullPath, 'utf8');
+    fm = parseFrontmatter(text);
+    desc = fm.description || '';
+  } catch {}
+  return { desc, fm };
+}
+
+function makeSkillEntry(def, name, desc, enabled) {
+  return {
+    source: 'local',
+    path: `skills/${name}`,
+    ref: 'local',
+    enabled,
+    description: (desc || `Skill ${name}`).slice(0, 300),
+    file: `${name}/${def.fileInFolder}`,
+    installedAt: new Date().toISOString(),
+  };
+}
+
+// Key order khớp bản cũ: enabled có applyTo, disabled không
+function makeFileEntry(type, fileName, name, desc, fm, enabled) {
+  if (enabled) {
+    return {
+      source: 'local',
+      file: fileName,
+      enabled: true,
+      description: (desc || `${type} ${name}`).slice(0, 300),
+      applyTo: fm.applyTo || undefined,
+      installedAt: new Date().toISOString(),
+    };
+  }
+  return {
+    source: 'local',
+    file: fileName,
+    enabled: false,
+    description: (desc || `${type} ${name}`).slice(0, 300),
+    installedAt: new Date().toISOString(),
+  };
+}
+
+async function scanDirEntries(def, subDir) {
+  // enabled dir = def.dir, disabled = def.disabledDir
+  let entries = [];
+  try { entries = await fs.readdir(subDir, { withFileTypes: true }); } catch {}
+  return entries;
+}
+
+async function scanEnabledEntries(def, type) {
+  const out = {};
+  const entries = await scanDirEntries(def, def.dir);
+  for (const e of entries) {
+    if (e.name === '.disabled' || e.name === 'registry.json' || e.name === 'scripts') continue;
+    if (def.isFolder) {
+      if (!e.isDirectory()) continue;
+      const name = e.name;
+      if (!validateName(name)) continue;
+      const { desc } = await readDescFromFile(path.join(def.dir, name, def.fileInFolder));
+      out[name] = makeSkillEntry(def, name, desc, true);
+    } else {
+      if (!e.isFile()) continue;
+      const m = e.name.match(def.pattern);
+      if (!m) continue;
+      const name = m[1];
+      if (!validateName(name)) continue;
+      const { desc, fm } = await readDescFromFile(path.join(def.dir, e.name));
+      out[name] = makeFileEntry(type, e.name, name, desc, fm, true);
+    }
+  }
+  return out;
+}
+
+async function scanDisabledEntries(def, type, already) {
+  const out = {};
+  const entries = await scanDirEntries(def, def.disabledDir);
+  for (const e of entries) {
+    if (def.isFolder) {
+      if (!e.isDirectory()) continue;
+      const name = e.name;
+      if (already[name]) continue; // already enabled, skip
+      if (!validateName(name)) continue;
+      const { desc } = await readDescFromFile(path.join(def.disabledDir, name, def.fileInFolder));
+      out[name] = makeSkillEntry(def, name, desc, false);
+    } else {
+      if (!e.isFile()) continue;
+      const m = e.name.match(def.pattern);
+      if (!m) continue;
+      const name = m[1];
+      if (already[name]) continue;
+      if (!validateName(name)) continue;
+      const { desc, fm } = await readDescFromFile(path.join(def.disabledDir, e.name));
+      out[name] = makeFileEntry(type, e.name, name, desc, fm, false);
+    }
+  }
+  return out;
+}
+
 async function scanFs() {
   const reg = { version: 2, skills: {}, instructions: {}, agents: {}, prompts: {}, hooks: {} };
   for (const type of ALL_TYPES) {
     const def = TYPE_DEFS[type];
     const key = type === 'skill' ? 'skills' : type + 's';
-    // enabled
-    let entries = [];
-    try {
-      entries = await fs.readdir(def.dir, { withFileTypes: true });
-    } catch {}
-    for (const e of entries) {
-      if (e.name === '.disabled' || e.name === 'registry.json' || e.name === 'scripts') continue;
-      if (def.isFolder) {
-        if (!e.isDirectory()) continue;
-        const name = e.name;
-        if (!validateName(name)) continue;
-        const skillMd = path.join(def.dir, name, def.fileInFolder);
-        let desc = '';
-        let fm = {};
-        try {
-          const text = await fs.readFile(skillMd, 'utf8');
-          fm = parseFrontmatter(text);
-          desc = fm.description || '';
-        } catch {}
-        reg[key][name] = {
-          source: 'local',
-          path: `skills/${name}`,
-          ref: 'local',
-          enabled: true,
-          description: (desc || `Skill ${name}`).slice(0, 300),
-          file: `${name}/${def.fileInFolder}`,
-          installedAt: new Date().toISOString(),
-        };
-      } else {
-        if (!e.isFile()) continue;
-        const m = e.name.match(def.pattern);
-        if (!m) continue;
-        const name = m[1];
-        if (!validateName(name)) continue;
-        const full = path.join(def.dir, e.name);
-        let desc = '';
-        let fm = {};
-        try {
-          const text = await fs.readFile(full, 'utf8');
-          fm = parseFrontmatter(text);
-          desc = fm.description || '';
-        } catch {}
-        reg[key][name] = {
-          source: 'local',
-          file: e.name,
-          enabled: true,
-          description: (desc || `${type} ${name}`).slice(0, 300),
-          applyTo: fm.applyTo || undefined,
-          installedAt: new Date().toISOString(),
-        };
-      }
+    const map = await scanEnabledEntries(def, type);
+    const disabledMap = await scanDisabledEntries(def, type, map);
+    for (const [name, meta] of Object.entries(disabledMap)) {
+      if (!map[name]) map[name] = meta;
     }
-    // disabled
-    let disabledEntries = [];
-    try {
-      disabledEntries = await fs.readdir(def.disabledDir, { withFileTypes: true });
-    } catch {}
-    for (const e of disabledEntries) {
-      if (def.isFolder) {
-        if (!e.isDirectory()) continue;
-        const name = e.name;
-        if (reg[key][name]) continue; // already enabled, skip
-        if (!validateName(name)) continue;
-        const skillMd = path.join(def.disabledDir, name, def.fileInFolder);
-        let desc = '';
-        try {
-          const text = await fs.readFile(skillMd, 'utf8');
-          const fm = parseFrontmatter(text);
-          desc = fm.description || '';
-        } catch {}
-        reg[key][name] = {
-          source: 'local',
-          path: `skills/${name}`,
-          ref: 'local',
-          enabled: false,
-          description: (desc || `Skill ${name}`).slice(0, 300),
-          file: `${name}/${def.fileInFolder}`,
-          installedAt: new Date().toISOString(),
-        };
-      } else {
-        if (!e.isFile()) continue;
-        const m = e.name.match(def.pattern);
-        if (!m) continue;
-        const name = m[1];
-        if (reg[key][name]) continue;
-        if (!validateName(name)) continue;
-        const full = path.join(def.disabledDir, e.name);
-        let desc = '';
-        try {
-          const text = await fs.readFile(full, 'utf8');
-          const fm = parseFrontmatter(text);
-          desc = fm.description || '';
-        } catch {}
-        reg[key][name] = {
-          source: 'local',
-          file: e.name,
-          enabled: false,
-          description: (desc || `${type} ${name}`).slice(0, 300),
-          installedAt: new Date().toISOString(),
-        };
-      }
-    }
+    reg[key] = map;
   }
   return reg;
+}
+
+function ensureRegistryKeys(data) {
+  for (const t of ALL_TYPES) {
+    const key = t === 'skill' ? 'skills' : t + 's';
+    if (!data[key]) data[key] = {};
+  }
+}
+
+async function backupCorruptRegistry() {
+  try {
+    const bak = REGISTRY_PATH + '.bak.' + Date.now();
+    const raw = await fs.readFile(REGISTRY_PATH, 'utf8').catch(() => '');
+    await fs.writeFile(bak, raw, 'utf8');
+    console.warn(`⚠️  harness registry corrupt — backup ${path.basename(bak)} và tạo mới`);
+  } catch {}
 }
 
 async function loadRegistry() {
@@ -219,11 +239,7 @@ async function loadRegistry() {
     const raw = await fs.readFile(REGISTRY_PATH, 'utf8');
     const data = JSON.parse(raw);
     if (!data.version) data.version = 2;
-    // ensure keys
-    for (const t of ALL_TYPES) {
-      const key = t === 'skill' ? 'skills' : t + 's';
-      if (!data[key]) data[key] = {};
-    }
+    ensureRegistryKeys(data);
     // merge with fs scan for missing entries (bootstrap)
     const scanned = await scanFs();
     let changed = false;
@@ -245,12 +261,7 @@ async function loadRegistry() {
       return scanned;
     }
     // corrupt
-    try {
-      const bak = REGISTRY_PATH + '.bak.' + Date.now();
-      const raw = await fs.readFile(REGISTRY_PATH, 'utf8').catch(() => '');
-      await fs.writeFile(bak, raw, 'utf8');
-      console.warn(`⚠️  harness registry corrupt — backup ${path.basename(bak)} và tạo mới`);
-    } catch {}
+    await backupCorruptRegistry();
     const scanned = await scanFs();
     await saveRegistry(scanned);
     return scanned;
@@ -285,6 +296,47 @@ function pathsFor(type, name) {
   }
 }
 
+async function enableItem(type, name, reg, entry, pEnabled, pDisabled) {
+  const existsEnabled = existsSync(pEnabled);
+  const existsDisabled = existsSync(pDisabled);
+  if (existsEnabled) {
+    if (entry.enabled) console.log(`ℹ️  ${type} "${name}" đã enabled`);
+    else {
+      entry.enabled = true;
+      await saveRegistry(reg);
+      console.log(`✅ ${type} "${name}" đã enabled (đã ở ${path.relative(GITHUB_DIR, pEnabled)})`);
+    }
+    return;
+  }
+  if (!existsDisabled) throw new Error(`Không tìm thấy file cho ${type} "${name}" ở cả enabled và disabled`);
+  await fs.mkdir(path.dirname(pEnabled), { recursive: true });
+  await safeRename(pDisabled, pEnabled);
+  entry.enabled = true;
+  await saveRegistry(reg);
+  console.log(`✅ Enabled ${type} "${name}" — moved .disabled → enabled`);
+}
+
+async function disableItem(type, name, reg, entry, pEnabled, pDisabled) {
+  const existsEnabled = existsSync(pEnabled);
+  const existsDisabled = existsSync(pDisabled);
+  if (existsDisabled) {
+    if (!entry.enabled) console.log(`ℹ️  ${type} "${name}" đã disabled`);
+    else {
+      entry.enabled = false;
+      await saveRegistry(reg);
+      console.log(`✅ ${type} "${name}" đã disabled (đã ở .disabled)`);
+    }
+    return;
+  }
+  if (!existsEnabled) throw new Error(`Không tìm thấy file cho ${type} "${name}"`);
+  await fs.mkdir(path.dirname(pDisabled), { recursive: true });
+  await safeRename(pEnabled, pDisabled);
+  entry.enabled = false;
+  await saveRegistry(reg);
+  console.log(`✅ Disabled ${type} "${name}" — moved enabled → .disabled/${path.basename(pDisabled)}`);
+  if (type === 'skill' || type === 'instruction') console.log(`   (sẽ không load cho đến khi enable lại)`);
+}
+
 async function setEnabled(type, name, enabled) {
   if (!TYPE_DEFS[type]) throw new Error(`Unknown type: ${type}`);
   if (!validateName(name)) throw new Error(`Tên không hợp lệ: ${name}`);
@@ -293,46 +345,42 @@ async function setEnabled(type, name, enabled) {
   const entry = reg[key][name];
   if (!entry) throw new Error(`${type} "${name}" không có trong registry. Chạy "list" để xem.`);
   const { enabled: pEnabled, disabled: pDisabled } = pathsFor(type, name);
-  const existsEnabled = existsSync(pEnabled);
-  const existsDisabled = existsSync(pDisabled);
-
-  if (enabled) {
-    if (existsEnabled) {
-      if (entry.enabled) console.log(`ℹ️  ${type} "${name}" đã enabled`);
-      else {
-        entry.enabled = true;
-        await saveRegistry(reg);
-        console.log(`✅ ${type} "${name}" đã enabled (đã ở ${path.relative(GITHUB_DIR, pEnabled)})`);
-      }
-      return;
-    }
-    if (!existsDisabled) throw new Error(`Không tìm thấy file cho ${type} "${name}" ở cả enabled và disabled`);
-    await fs.mkdir(path.dirname(pEnabled), { recursive: true });
-    await safeRename(pDisabled, pEnabled);
-    entry.enabled = true;
-    await saveRegistry(reg);
-    console.log(`✅ Enabled ${type} "${name}" — moved .disabled → enabled`);
-  } else {
-    if (existsDisabled) {
-      if (!entry.enabled) console.log(`ℹ️  ${type} "${name}" đã disabled`);
-      else {
-        entry.enabled = false;
-        await saveRegistry(reg);
-        console.log(`✅ ${type} "${name}" đã disabled (đã ở .disabled)`);
-      }
-      return;
-    }
-    if (!existsEnabled) throw new Error(`Không tìm thấy file cho ${type} "${name}"`);
-    await fs.mkdir(path.dirname(pDisabled), { recursive: true });
-    await safeRename(pEnabled, pDisabled);
-    entry.enabled = false;
-    await saveRegistry(reg);
-    console.log(`✅ Disabled ${type} "${name}" — moved enabled → .disabled/${path.basename(pDisabled)}`);
-    if (type === 'skill' || type === 'instruction') console.log(`   (sẽ không load cho đến khi enable lại)`);
-  }
+  if (enabled) return enableItem(type, name, reg, entry, pEnabled, pDisabled);
+  return disableItem(type, name, reg, entry, pEnabled, pDisabled);
 }
 
 // ---------- list / status ----------
+function listStatusOf(entry, pE, pD) {
+  const fsEnabled = existsSync(pE);
+  const fsDisabled = existsSync(pD);
+  let status = entry.enabled ? '✅ enabled' : '⏸ disabled';
+  if (entry.enabled && !fsEnabled && fsDisabled) status = '⚠️ mismatch';
+  if (!entry.enabled && fsEnabled && !fsDisabled) status = '⚠️ mismatch';
+  if (!fsEnabled && !fsDisabled) status = '❌ missing';
+  return status;
+}
+
+const TYPE_DIR_LABEL = { skill: 'skills', instruction: 'instructions', agent: 'agents', prompt: 'prompts', hook: 'hooks' };
+
+function listOneType(type, entries) {
+  const names = Object.keys(entries).sort();
+  console.log(`\n📦 ${type.toUpperCase()}S (${names.length}) — .github/${TYPE_DIR_LABEL[type]}/`);
+  if (names.length === 0) {
+    console.log('   (trống)');
+    return;
+  }
+  console.log(`   ${'NAME'.padEnd(22)} ${'STATUS'.padEnd(14)} ${'SOURCE'.padEnd(22)} DESCRIPTION`);
+  console.log(`   ${'-'.repeat(22)} ${'-'.repeat(14)} ${'-'.repeat(22)} ${'-'.repeat(36)}`);
+  for (const n of names) {
+    const e = entries[n];
+    const { enabled: pE, disabled: pD } = pathsFor(type, n);
+    const status = listStatusOf(e, pE, pD);
+    const src = (e.source || '').slice(0, 22);
+    const desc = (e.description || '').slice(0, 40);
+    console.log(`   ${n.padEnd(22)} ${status.padEnd(14)} ${src.padEnd(22)} ${desc}`);
+  }
+}
+
 async function list(filterType) {
   const reg = await loadRegistry();
   const types = filterType ? [filterType] : ALL_TYPES;
@@ -341,28 +389,8 @@ async function list(filterType) {
   for (const type of types) {
     const key = type === 'skill' ? 'skills' : type + 's';
     const entries = reg[key] || {};
-    const names = Object.keys(entries).sort();
-    total += names.length;
-    console.log(`\n📦 ${type.toUpperCase()}S (${names.length}) — .github/${type === 'skill' ? 'skills' : type === 'instruction' ? 'instructions' : type === 'agent' ? 'agents' : type === 'prompt' ? 'prompts' : 'hooks'}/`);
-    if (names.length === 0) {
-      console.log('   (trống)');
-      continue;
-    }
-    console.log(`   ${'NAME'.padEnd(22)} ${'STATUS'.padEnd(14)} ${'SOURCE'.padEnd(22)} DESCRIPTION`);
-    console.log(`   ${'-'.repeat(22)} ${'-'.repeat(14)} ${'-'.repeat(22)} ${'-'.repeat(36)}`);
-    for (const n of names) {
-      const e = entries[n];
-      const { enabled: pE, disabled: pD } = pathsFor(type, n);
-      const fsEnabled = existsSync(pE);
-      const fsDisabled = existsSync(pD);
-      let status = e.enabled ? '✅ enabled' : '⏸ disabled';
-      if (e.enabled && !fsEnabled && fsDisabled) status = '⚠️ mismatch';
-      if (!e.enabled && fsEnabled && !fsDisabled) status = '⚠️ mismatch';
-      if (!fsEnabled && !fsDisabled) status = '❌ missing';
-      const src = (e.source || '').slice(0, 22);
-      const desc = (e.description || '').slice(0, 40);
-      console.log(`   ${n.padEnd(22)} ${status.padEnd(14)} ${src.padEnd(22)} ${desc}`);
-    }
+    total += Object.keys(entries).length;
+    listOneType(type, entries);
   }
   if (!filterType) {
     console.log(`\n📊 Tổng: ${total} items — registry: .github/harness/registry.json`);
@@ -393,6 +421,23 @@ async function ghFetch(url, opts = {}) {
   return fetch(url, { headers });
 }
 
+async function downloadGhFile(url, pathLabel) {
+  const r = await fetch(url);
+  if (!r.ok) throw new Error(`Failed to download ${pathLabel}: ${r.status}`);
+  return await r.text();
+}
+
+async function downloadEntry(entry, owner, repo, ref) {
+  if (entry.type === 'file') {
+    const text = await downloadGhFile(entry.download_url, entry.download_url);
+    return [{ path: entry.path, text, downloadUrl: entry.download_url }];
+  }
+  if (entry.type === 'dir') {
+    return await fetchSkillFiles(owner, repo, entry.path, ref);
+  }
+  return [];
+}
+
 async function fetchSkillFiles(owner, repo, remotePath, ref) {
   const apiPath = remotePath ? encodeURIComponent(remotePath).replace(/%2F/g, '/') : '';
   const url = `https://api.github.com/repos/${owner}/${repo}/contents/${apiPath}?ref=${encodeURIComponent(ref)}`;
@@ -412,24 +457,14 @@ async function fetchSkillFiles(owner, repo, remotePath, ref) {
   const data = await res.json();
   if (!Array.isArray(data)) {
     if (data.type === 'file' && data.download_url) {
-      const r = await fetch(data.download_url);
-      if (!r.ok) throw new Error(`Failed to download ${data.download_url}: ${r.status}`);
-      const text = await r.text();
+      const text = await downloadGhFile(data.download_url, data.download_url);
       return [{ path: data.path, text, downloadUrl: data.download_url }];
     }
     throw new Error(`Unexpected GitHub response for ${remotePath}`);
   }
   const files = [];
   for (const entry of data) {
-    if (entry.type === 'file') {
-      const r = await fetch(entry.download_url);
-      if (!r.ok) throw new Error(`Failed to download ${entry.download_url}: ${r.status}`);
-      const text = await r.text();
-      files.push({ path: entry.path, text, downloadUrl: entry.download_url });
-    } else if (entry.type === 'dir') {
-      const sub = await fetchSkillFiles(owner, repo, entry.path, ref);
-      files.push(...sub);
-    }
+    files.push(...await downloadEntry(entry, owner, repo, ref));
   }
   return files;
 }
@@ -454,6 +489,111 @@ async function fetchSingleFile(owner, repo, remotePath, ref) {
 }
 
 // ---------- install ----------
+async function fetchSkillWithLog(owner, repo, remotePath, ref) {
+  console.log(`📦 Fetching skill ${owner}/${repo}/${remotePath || '.'}@${ref} ...`);
+  let files;
+  try {
+    files = await fetchSkillFiles(owner, repo, remotePath, ref);
+  } catch (e) {
+    console.error(`❌ Fetch failed: ${e.message}`);
+    throw e;
+  }
+  if (files.length === 0) throw new Error('Không tìm thấy file nào');
+  return files;
+}
+
+function resolveSkillName(files, customName, remotePath, owner, repo) {
+  let skillMd = files.find(f => path.posix.basename(f.path).toLowerCase() === 'skill.md');
+  if (!skillMd && files.length === 1 && files[0].path.toLowerCase().endsWith('.md')) skillMd = files[0];
+  const fm = skillMd ? parseFrontmatter(skillMd.text) : {};
+  let name = customName || fm.name || (remotePath ? path.posix.basename(remotePath.replace(/\/$/, '')) : `${owner}-${repo}`);
+  name = normalizeName(name);
+  if (!validateName(name)) throw new Error(`Tên không hợp lệ: ${name}`);
+  return { name, fm, skillMd };
+}
+
+async function writeSkillTree(destDir, files, remotePath) {
+  const prefix = remotePath ? remotePath.replace(/\/$/, '') + '/' : '';
+  for (const f of files) {
+    let rel = f.path;
+    if (prefix && rel.startsWith(prefix)) rel = rel.slice(prefix.length);
+    if (rel === '' || (rel === f.path && files.length === 1 && !prefix)) rel = path.posix.basename(f.path);
+    const local = path.join(destDir, rel);
+    await fs.mkdir(path.dirname(local), { recursive: true });
+    await fs.writeFile(local, f.text, 'utf8');
+  }
+}
+
+async function prepareSkillDest(def, name, force) {
+  const destDir = path.join(def.dir, name);
+  const disabledDest = path.join(def.disabledDir, name);
+  if (force) {
+    await fs.rm(destDir, { recursive: true, force: true });
+    await fs.rm(disabledDest, { recursive: true, force: true });
+  } else {
+    if (existsSync(destDir) || existsSync(disabledDest)) throw new Error(`Skill "${name}" đã tồn tại`);
+  }
+  await fs.mkdir(destDir, { recursive: true });
+  return destDir;
+}
+
+async function installSkillFromGh({ def, reg, key, owner, repo, remotePath, ref, customName, force }) {
+  const files = await fetchSkillWithLog(owner, repo, remotePath, ref);
+  const { name, fm, skillMd } = resolveSkillName(files, customName, remotePath, owner, repo);
+  if (reg[key][name] && !force) throw new Error(`Skill "${name}" đã tồn tại. Dùng --force`);
+  const destDir = await prepareSkillDest(def, name, force);
+  await writeSkillTree(destDir, files, remotePath);
+  if (!existsSync(path.join(destDir, 'SKILL.md')) && skillMd && files.length === 1) {
+    const singleRel = path.posix.basename(skillMd.path);
+    if (singleRel.toLowerCase() !== 'skill.md') {
+      await fs.rename(path.join(destDir, singleRel), path.join(destDir, 'SKILL.md'));
+    }
+  }
+  const desc = (fm.description || `Skill từ ${owner}/${repo}/${remotePath || ''}`).slice(0, 300);
+  reg[key][name] = { source: `${owner}/${repo}`, path: remotePath || '', ref, enabled: true, description: desc, file: `${name}/SKILL.md`, installedAt: new Date().toISOString() };
+  await saveRegistry(reg);
+  console.log(`✅ Installed skill "${name}" → .github/skills/${name} (enabled)`);
+  return name;
+}
+
+function resolveFileTypeName(customName, fm, base, def) {
+  let name = customName || fm.name || base.replace(def.ext, '');
+  // if base doesn't have ext, use name as is
+  if (!customName && !fm.name) {
+    // try to strip ext
+    if (base.endsWith(def.ext)) name = base.slice(0, -def.ext.length);
+    else name = base.replace(/\.[^.]+$/, '');
+  }
+  name = normalizeName(name);
+  if (!validateName(name)) throw new Error(`Tên không hợp lệ: ${name}`);
+  return name;
+}
+
+async function installFileFromGh({ def, reg, key, type, owner, repo, remotePath, ref, customName, force }) {
+  if (!remotePath) throw new Error(`Thiếu --path cho ${type}. Ví dụ: --path instructions/my-rule.instructions.md`);
+  console.log(`📦 Fetching ${type} ${owner}/${repo}/${remotePath}@${ref} ...`);
+  const text = await fetchSingleFile(owner, repo, remotePath, ref);
+  const fm = parseFrontmatter(text);
+  const base = path.posix.basename(remotePath);
+  const name = resolveFileTypeName(customName, fm, base, def);
+  if (reg[key][name] && !force) throw new Error(`${type} "${name}" đã tồn tại. Dùng --force`);
+  const dest = path.join(def.dir, name + def.ext);
+  const disabledDest = path.join(def.disabledDir, name + def.ext);
+  if (force) {
+    await fs.rm(dest, { force: true });
+    await fs.rm(disabledDest, { force: true });
+  } else {
+    if (existsSync(dest) || existsSync(disabledDest)) throw new Error(`${type} "${name}" đã tồn tại`);
+  }
+  await fs.mkdir(def.dir, { recursive: true });
+  await fs.writeFile(dest, text, 'utf8');
+  const desc = (fm.description || `${type} từ ${owner}/${repo}/${remotePath}`).slice(0, 300);
+  reg[key][name] = { source: `${owner}/${repo}`, path: remotePath, ref, enabled: true, description: desc, file: name + def.ext, applyTo: fm.applyTo, installedAt: new Date().toISOString() };
+  await saveRegistry(reg);
+  console.log(`✅ Installed ${type} "${name}" → ${path.relative(GITHUB_DIR, dest)} (enabled)`);
+  return name;
+}
+
 async function install({ type, owner, repo, remotePath, ref, customName, force, localPath }) {
   if (!TYPE_DEFS[type]) throw new Error(`Unknown type: ${type}`);
   const def = TYPE_DEFS[type];
@@ -463,89 +603,92 @@ async function install({ type, owner, repo, remotePath, ref, customName, force, 
   if (localPath) {
     return await installLocal({ type, localPath, customName, force });
   }
-
   if (type === 'skill') {
-    // reuse skill logic
-    console.log(`📦 Fetching skill ${owner}/${repo}/${remotePath || '.'}@${ref} ...`);
-    let files;
-    try {
-      files = await fetchSkillFiles(owner, repo, remotePath, ref);
-    } catch (e) {
-      console.error(`❌ Fetch failed: ${e.message}`);
-      throw e;
-    }
-    if (files.length === 0) throw new Error('Không tìm thấy file nào');
-    let skillMd = files.find(f => path.posix.basename(f.path).toLowerCase() === 'skill.md');
-    if (!skillMd && files.length === 1 && files[0].path.toLowerCase().endsWith('.md')) skillMd = files[0];
-    let fm = {};
-    if (skillMd) fm = parseFrontmatter(skillMd.text);
-    let name = customName || fm.name || (remotePath ? path.posix.basename(remotePath.replace(/\/$/, '')) : `${owner}-${repo}`);
-    name = normalizeName(name);
-    if (!validateName(name)) throw new Error(`Tên không hợp lệ: ${name}`);
-    if (reg[key][name] && !force) throw new Error(`Skill "${name}" đã tồn tại. Dùng --force`);
-    const destDir = path.join(def.dir, name);
-    const disabledDest = path.join(def.disabledDir, name);
-    if (force) {
-      await fs.rm(destDir, { recursive: true, force: true });
-      await fs.rm(disabledDest, { recursive: true, force: true });
-    } else {
-      if (existsSync(destDir) || existsSync(disabledDest)) throw new Error(`Skill "${name}" đã tồn tại`);
-    }
-    await fs.mkdir(destDir, { recursive: true });
-    const prefix = remotePath ? remotePath.replace(/\/$/, '') + '/' : '';
-    for (const f of files) {
-      let rel = f.path;
-      if (prefix && rel.startsWith(prefix)) rel = rel.slice(prefix.length);
-      if (rel === '' || (rel === f.path && files.length === 1 && !prefix)) rel = path.posix.basename(f.path);
-      const local = path.join(destDir, rel);
-      await fs.mkdir(path.dirname(local), { recursive: true });
-      await fs.writeFile(local, f.text, 'utf8');
-    }
-    if (!existsSync(path.join(destDir, 'SKILL.md')) && skillMd && files.length === 1) {
-      const singleRel = path.posix.basename(skillMd.path);
-      if (singleRel.toLowerCase() !== 'skill.md') {
-        await fs.rename(path.join(destDir, singleRel), path.join(destDir, 'SKILL.md'));
+    return await installSkillFromGh({ def, reg, key, owner, repo, remotePath, ref, customName, force });
+  }
+  return await installFileFromGh({ def, reg, key, type, owner, repo, remotePath, ref, customName, force });
+}
+
+async function readLocalSkillFiles(abs, stat) {
+  let files = [];
+  let skillMdText = '';
+  if (stat.isDirectory()) {
+    async function walk(dir, base) {
+      const entries = await fs.readdir(dir, { withFileTypes: true });
+      for (const e of entries) {
+        const full = path.join(dir, e.name);
+        const rel = path.posix.join(base, e.name);
+        if (e.isDirectory()) await walk(full, rel);
+        else {
+          const text = await fs.readFile(full, 'utf8');
+          files.push({ rel, text });
+          if (e.name.toLowerCase() === 'skill.md' && !skillMdText) skillMdText = text;
+        }
       }
     }
-    const desc = (fm.description || `Skill từ ${owner}/${repo}/${remotePath || ''}`).slice(0, 300);
-    reg[key][name] = { source: `${owner}/${repo}`, path: remotePath || '', ref, enabled: true, description: desc, file: `${name}/SKILL.md`, installedAt: new Date().toISOString() };
-    await saveRegistry(reg);
-    console.log(`✅ Installed skill "${name}" → .github/skills/${name} (enabled)`);
-    return name;
+    await walk(abs, '');
   } else {
-    // single file types
-    if (!remotePath) throw new Error(`Thiếu --path cho ${type}. Ví dụ: --path instructions/my-rule.instructions.md`);
-    console.log(`📦 Fetching ${type} ${owner}/${repo}/${remotePath}@${ref} ...`);
-    const text = await fetchSingleFile(owner, repo, remotePath, ref);
-    const fm = parseFrontmatter(text);
-    let base = path.posix.basename(remotePath);
-    // derive name from file
-    let name = customName || fm.name || base.replace(def.ext, '');
-    // if base doesn't have ext, use name as is
-    if (!customName && !fm.name) {
-      // try to strip ext
-      if (base.endsWith(def.ext)) name = base.slice(0, -def.ext.length);
-      else name = base.replace(/\.[^.]+$/, '');
-    }
-    name = normalizeName(name);
-    if (!validateName(name)) throw new Error(`Tên không hợp lệ: ${name}`);
-    if (reg[key][name] && !force) throw new Error(`${type} "${name}" đã tồn tại. Dùng --force`);
-    const dest = path.join(def.dir, name + def.ext);
-    const disabledDest = path.join(def.disabledDir, name + def.ext);
-    if (force) {
-      await fs.rm(dest, { force: true });
-      await fs.rm(disabledDest, { force: true });
-    } else {
-      if (existsSync(dest) || existsSync(disabledDest)) throw new Error(`${type} "${name}" đã tồn tại`);
-    }
-    await fs.mkdir(def.dir, { recursive: true });
-    await fs.writeFile(dest, text, 'utf8');
-    const desc = (fm.description || `${type} từ ${owner}/${repo}/${remotePath}`).slice(0, 300);
-    reg[key][name] = { source: `${owner}/${repo}`, path: remotePath, ref, enabled: true, description: desc, file: name + def.ext, applyTo: fm.applyTo, installedAt: new Date().toISOString() };
-    await saveRegistry(reg);
-    console.log(`✅ Installed ${type} "${name}" → ${path.relative(GITHUB_DIR, dest)} (enabled)`);
-    return name;
+    const text = await fs.readFile(abs, 'utf8');
+    files = [{ rel: path.basename(abs), text }];
+    skillMdText = text;
   }
+  return { files, skillMdText };
+}
+
+async function installLocalSkill({ def, reg, key, abs, stat, customName, force }) {
+  const { files, skillMdText } = await readLocalSkillFiles(abs, stat);
+  const fm = skillMdText ? parseFrontmatter(skillMdText) : {};
+  let name = customName || fm.name || path.basename(abs, path.extname(abs));
+  name = normalizeName(name);
+  if (!validateName(name)) throw new Error(`Tên không hợp lệ: ${name}`);
+  if (reg[key][name] && !force) throw new Error(`Skill "${name}" đã tồn tại`);
+  const destDir = await prepareSkillDest(def, name, force);
+  for (const f of files) {
+    const local = path.join(destDir, f.rel);
+    await fs.mkdir(path.dirname(local), { recursive: true });
+    await fs.writeFile(local, f.text, 'utf8');
+  }
+  if (!existsSync(path.join(destDir, 'SKILL.md')) && files.length === 1) {
+    await fs.rename(path.join(destDir, files[0].rel), path.join(destDir, 'SKILL.md'));
+  }
+  reg[key][name] = { source: `local:${abs}`, path: abs, ref: 'local', enabled: true, description: (fm.description || `Local skill ${name}`).slice(0, 300), file: `${name}/SKILL.md`, installedAt: new Date().toISOString() };
+  await saveRegistry(reg);
+  console.log(`✅ Installed local skill "${name}" → .github/skills/${name}`);
+  return name;
+}
+
+function resolveLocalFileName(customName, fm, abs, def) {
+  let name = customName || fm.name || path.basename(abs, path.extname(abs)).replace(/\.instructions|\.agent|\.prompt/, '');
+  // strip ext if present
+  if (name.endsWith(def.ext.replace(/^\./, ''))) name = name.slice(0, -def.ext.length + 1);
+  // better: derive from file name
+  const base = path.basename(abs);
+  if (!customName && !fm.name) {
+    if (base.endsWith(def.ext)) name = base.slice(0, -def.ext.length);
+    else name = path.basename(abs, path.extname(abs));
+  }
+  name = normalizeName(name);
+  if (!validateName(name)) throw new Error(`Tên không hợp lệ: ${name}`);
+  return name;
+}
+
+async function installLocalFile({ def, reg, key, type, abs, customName, force }) {
+  const text = await fs.readFile(abs, 'utf8');
+  const fm = parseFrontmatter(text);
+  const name = resolveLocalFileName(customName, fm, abs, def);
+  if (reg[key][name] && !force) throw new Error(`${type} "${name}" đã tồn tại`);
+  const dest = path.join(def.dir, name + def.ext);
+  const disabledDest = path.join(def.disabledDir, name + def.ext);
+  if (force) {
+    await fs.rm(dest, { force: true });
+    await fs.rm(disabledDest, { force: true });
+  } else if (existsSync(dest) || existsSync(disabledDest)) throw new Error(`${type} "${name}" đã tồn tại`);
+  await fs.mkdir(def.dir, { recursive: true });
+  await fs.writeFile(dest, text, 'utf8');
+  reg[key][name] = { source: `local:${abs}`, path: abs, ref: 'local', enabled: true, description: (fm.description || `Local ${type} ${name}`).slice(0, 300), file: name + def.ext, applyTo: fm.applyTo, installedAt: new Date().toISOString() };
+  await saveRegistry(reg);
+  console.log(`✅ Installed local ${type} "${name}" → ${path.relative(GITHUB_DIR, dest)}`);
+  return name;
 }
 
 async function installLocal({ type, localPath, customName, force }) {
@@ -555,84 +698,8 @@ async function installLocal({ type, localPath, customName, force }) {
   const abs = path.resolve(localPath);
   const stat = await fs.stat(abs).catch(() => null);
   if (!stat) throw new Error(`Local path không tồn tại: ${abs}`);
-
-  if (type === 'skill') {
-    // folder or file
-    let files = [];
-    let skillMdText = '';
-    if (stat.isDirectory()) {
-      async function walk(dir, base) {
-        const entries = await fs.readdir(dir, { withFileTypes: true });
-        for (const e of entries) {
-          const full = path.join(dir, e.name);
-          const rel = path.posix.join(base, e.name);
-          if (e.isDirectory()) await walk(full, rel);
-          else {
-            const text = await fs.readFile(full, 'utf8');
-            files.push({ rel, text });
-            if (e.name.toLowerCase() === 'skill.md' && !skillMdText) skillMdText = text;
-          }
-        }
-      }
-      await walk(abs, '');
-    } else {
-      const text = await fs.readFile(abs, 'utf8');
-      files = [{ rel: path.basename(abs), text }];
-      skillMdText = text;
-    }
-    const fm = skillMdText ? parseFrontmatter(skillMdText) : {};
-    let name = customName || fm.name || path.basename(abs, path.extname(abs));
-    name = normalizeName(name);
-    if (!validateName(name)) throw new Error(`Tên không hợp lệ: ${name}`);
-    if (reg[key][name] && !force) throw new Error(`Skill "${name}" đã tồn tại`);
-    const destDir = path.join(def.dir, name);
-    const disabledDest = path.join(def.disabledDir, name);
-    if (force) {
-      await fs.rm(destDir, { recursive: true, force: true });
-      await fs.rm(disabledDest, { recursive: true, force: true });
-    } else if (existsSync(destDir) || existsSync(disabledDest)) throw new Error(`Skill "${name}" đã tồn tại`);
-    await fs.mkdir(destDir, { recursive: true });
-    for (const f of files) {
-      const local = path.join(destDir, f.rel);
-      await fs.mkdir(path.dirname(local), { recursive: true });
-      await fs.writeFile(local, f.text, 'utf8');
-    }
-    if (!existsSync(path.join(destDir, 'SKILL.md')) && files.length === 1) {
-      await fs.rename(path.join(destDir, files[0].rel), path.join(destDir, 'SKILL.md'));
-    }
-    reg[key][name] = { source: `local:${abs}`, path: abs, ref: 'local', enabled: true, description: (fm.description || `Local skill ${name}`).slice(0, 300), file: `${name}/SKILL.md`, installedAt: new Date().toISOString() };
-    await saveRegistry(reg);
-    console.log(`✅ Installed local skill "${name}" → .github/skills/${name}`);
-    return name;
-  } else {
-    // single file
-    const text = await fs.readFile(abs, 'utf8');
-    const fm = parseFrontmatter(text);
-    let name = customName || fm.name || path.basename(abs, path.extname(abs)).replace(/\.instructions|\.agent|\.prompt/, '');
-    // strip ext if present
-    if (name.endsWith(def.ext.replace(/^\./, ''))) name = name.slice(0, -def.ext.length + 1);
-    // better: derive from file name
-    const base = path.basename(abs);
-    if (!customName && !fm.name) {
-      if (base.endsWith(def.ext)) name = base.slice(0, -def.ext.length);
-      else name = path.basename(abs, path.extname(abs));
-    }
-    name = normalizeName(name);
-    if (!validateName(name)) throw new Error(`Tên không hợp lệ: ${name}`);
-    if (reg[key][name] && !force) throw new Error(`${type} "${name}" đã tồn tại`);
-    const dest = path.join(def.dir, name + def.ext);
-    const disabledDest = path.join(def.disabledDir, name + def.ext);
-    if (force) {
-      await fs.rm(dest, { force: true });
-      await fs.rm(disabledDest, { force: true });
-    } else if (existsSync(dest) || existsSync(disabledDest)) throw new Error(`${type} "${name}" đã tồn tại`);
-    await fs.mkdir(def.dir, { recursive: true });
-    await fs.writeFile(dest, text, 'utf8');
-    reg[key][name] = { source: `local:${abs}`, path: abs, ref: 'local', enabled: true, description: (fm.description || `Local ${type} ${name}`).slice(0, 300), file: name + def.ext, applyTo: fm.applyTo, installedAt: new Date().toISOString() };
-    await saveRegistry(reg);
-    console.log(`✅ Installed local ${type} "${name}" → ${path.relative(GITHUB_DIR, dest)}`);
-    return name;
-  }
+  if (type === 'skill') return await installLocalSkill({ def, reg, key, abs, stat, customName, force });
+  return await installLocalFile({ def, reg, key, type, abs, customName, force });
 }
 
 // ---------- uninstall ----------
@@ -650,6 +717,22 @@ async function uninstall(type, name) {
 }
 
 // ---------- create ----------
+function scaffoldTemplate(type, name) {
+  if (type === 'skill') return { templatePath: path.join(TEMPLATES_DIR, 'skill-SKILL.md'), dest: path.join(TYPE_DEFS.skill.dir, name, 'SKILL.md') };
+  if (type === 'instruction') return { templatePath: path.join(TEMPLATES_DIR, 'instruction.md'), dest: path.join(TYPE_DEFS.instruction.dir, name + TYPE_DEFS.instruction.ext) };
+  if (type === 'agent') return { templatePath: path.join(TEMPLATES_DIR, 'agent.md'), dest: path.join(TYPE_DEFS.agent.dir, name + TYPE_DEFS.agent.ext) };
+  return { templatePath: path.join(TEMPLATES_DIR, 'prompt.md'), dest: path.join(TYPE_DEFS.prompt.dir, name + TYPE_DEFS.prompt.ext) };
+}
+
+async function createHook(name, def, reg, key) {
+  await fs.mkdir(def.dir, { recursive: true });
+  const hookContent = JSON.stringify({ hooks: { PostToolUse: [{ type: 'command', command: `echo [${name}] hook`, timeout: 5 }] } }, null, 2) + '\n';
+  await fs.writeFile(path.join(def.dir, name + def.ext), hookContent, 'utf8');
+  reg[key][name] = { source: 'local', file: name + def.ext, enabled: true, description: `Hook ${name}`, installedAt: new Date().toISOString() };
+  await saveRegistry(reg);
+  console.log(`✅ Created hook "${name}" → ${path.relative(GITHUB_DIR, path.join(def.dir, name + def.ext))}`);
+}
+
 async function create(type, name, opts = {}) {
   if (!TYPE_DEFS[type]) throw new Error(`Unknown type: ${type}`);
   name = normalizeName(name);
@@ -661,31 +744,10 @@ async function create(type, name, opts = {}) {
   const { enabled: pE, disabled: pD } = pathsFor(type, name);
   if (existsSync(pE) || existsSync(pD)) throw new Error(`File đã tồn tại cho ${type} "${name}"`);
 
-  let templatePath;
-  let dest;
-  if (type === 'skill') {
-    templatePath = path.join(TEMPLATES_DIR, 'skill-SKILL.md');
-    dest = path.join(def.dir, name, 'SKILL.md');
-    await fs.mkdir(path.dirname(dest), { recursive: true });
-  } else if (type === 'instruction') {
-    templatePath = path.join(TEMPLATES_DIR, 'instruction.md');
-    dest = path.join(def.dir, name + def.ext);
-  } else if (type === 'agent') {
-    templatePath = path.join(TEMPLATES_DIR, 'agent.md');
-    dest = path.join(def.dir, name + def.ext);
-  } else if (type === 'prompt') {
-    templatePath = path.join(TEMPLATES_DIR, 'prompt.md');
-    dest = path.join(def.dir, name + def.ext);
-  } else if (type === 'hook') {
-    // hook template is simple json
-    await fs.mkdir(def.dir, { recursive: true });
-    const hookContent = JSON.stringify({ hooks: { PostToolUse: [{ type: 'command', command: `echo [${name}] hook`, timeout: 5 }] } }, null, 2) + '\n';
-    await fs.writeFile(path.join(def.dir, name + def.ext), hookContent, 'utf8');
-    reg[key][name] = { source: 'local', file: name + def.ext, enabled: true, description: `Hook ${name}`, installedAt: new Date().toISOString() };
-    await saveRegistry(reg);
-    console.log(`✅ Created hook "${name}" → ${path.relative(GITHUB_DIR, path.join(def.dir, name + def.ext))}`);
-    return;
-  }
+  if (type === 'hook') return await createHook(name, def, reg, key);
+
+  const { templatePath, dest } = scaffoldTemplate(type, name);
+  if (type === 'skill') await fs.mkdir(path.dirname(dest), { recursive: true });
 
   let tmpl = '';
   try {
@@ -738,6 +800,59 @@ async function presetList() {
   console.log('\n  Dùng: harness-manager preset apply <name>\n');
 }
 
+async function presetEnable(pE, pD, fsEnabled, fsDisabled, entry, type, itemName) {
+  if (!fsEnabled && fsDisabled) {
+    await fs.mkdir(path.dirname(pE), { recursive: true });
+    await safeRename(pD, pE);
+    entry.enabled = true;
+    return 'enabled';
+  }
+  if (fsEnabled) {
+    if (!entry.enabled) { entry.enabled = true; return 'enabled'; }
+    return 'noop';
+  }
+  console.warn(`⚠️  Missing file for ${type} "${itemName}"`);
+  return 'skipped';
+}
+
+async function presetDisable(pE, pD, fsEnabled, fsDisabled, entry, type, itemName) {
+  if (fsEnabled && !fsDisabled) {
+    await fs.mkdir(path.dirname(pD), { recursive: true });
+    await safeRename(pE, pD);
+    entry.enabled = false;
+    return 'disabled';
+  }
+  if (fsDisabled) {
+    if (entry.enabled) { entry.enabled = false; return 'disabled'; }
+    return 'noop';
+  }
+  console.warn(`⚠️  Missing file for ${type} "${itemName}"`);
+  return 'skipped';
+}
+
+async function applyPresetItem(type, itemName, shouldEnable, reg) {
+  const key = type === 'skill' ? 'skills' : type + 's';
+  const entry = reg[key][itemName];
+  if (!entry) {
+    console.warn(`⚠️  Skip ${type} "${itemName}" — không có trong registry`);
+    return 'skipped';
+  }
+  const { enabled: pE, disabled: pD } = pathsFor(type, itemName);
+  const fsEnabled = existsSync(pE);
+  const fsDisabled = existsSync(pD);
+  if (shouldEnable) return await presetEnable(pE, pD, fsEnabled, fsDisabled, entry, type, itemName);
+  return await presetDisable(pE, pD, fsEnabled, fsDisabled, entry, type, itemName);
+}
+
+async function applyPresetMap(type, map, reg, counts) {
+  for (const [itemName, shouldEnable] of Object.entries(map)) {
+    const action = await applyPresetItem(type, itemName, shouldEnable, reg);
+    if (action === 'enabled') counts.enabled++;
+    else if (action === 'disabled') counts.disabled++;
+    else if (action === 'skipped') counts.skipped++;
+  }
+}
+
 async function presetApply(name) {
   const presetPath = path.join(PRESETS_DIR, name + '.json');
   let preset;
@@ -748,43 +863,15 @@ async function presetApply(name) {
     throw new Error(`Preset "${name}" không tồn tại: ${presetPath}`);
   }
   const reg = await loadRegistry();
-  let enabledCount = 0, disabledCount = 0, skipped = 0;
+  const counts = { enabled: 0, disabled: 0, skipped: 0 };
   for (const type of ALL_TYPES) {
     const key = type === 'skill' ? 'skills' : type + 's';
     const map = preset[key] || preset[type] || preset[type + 's'];
     if (!map) continue;
-    for (const [itemName, shouldEnable] of Object.entries(map)) {
-      const entry = reg[key][itemName];
-      if (!entry) {
-        console.warn(`⚠️  Skip ${type} "${itemName}" — không có trong registry`);
-        skipped++;
-        continue;
-      }
-      const { enabled: pE, disabled: pD } = pathsFor(type, itemName);
-      const fsEnabled = existsSync(pE);
-      const fsDisabled = existsSync(pD);
-      if (shouldEnable && !fsEnabled && fsDisabled) {
-        await fs.mkdir(path.dirname(pE), { recursive: true });
-        await safeRename(pD, pE);
-        entry.enabled = true;
-        enabledCount++;
-      } else if (shouldEnable && fsEnabled) {
-        if (!entry.enabled) { entry.enabled = true; enabledCount++; }
-      } else if (!shouldEnable && fsEnabled && !fsDisabled) {
-        await fs.mkdir(path.dirname(pD), { recursive: true });
-        await safeRename(pE, pD);
-        entry.enabled = false;
-        disabledCount++;
-      } else if (!shouldEnable && fsDisabled) {
-        if (entry.enabled) { entry.enabled = false; disabledCount++; }
-      } else if (!fsEnabled && !fsDisabled) {
-        console.warn(`⚠️  Missing file for ${type} "${itemName}"`);
-        skipped++;
-      }
-    }
+    await applyPresetMap(type, map, reg, counts);
   }
   await saveRegistry(reg);
-  console.log(`✅ Applied preset "${name}" — ${enabledCount} enabled, ${disabledCount} disabled${skipped ? `, ${skipped} skipped` : ''}`);
+  console.log(`✅ Applied preset "${name}" — ${counts.enabled} enabled, ${counts.disabled} disabled${counts.skipped ? `, ${counts.skipped} skipped` : ''}`);
   console.log(`   ${preset.description || ''}`);
 }
 
@@ -807,24 +894,34 @@ async function presetSave(name) {
 }
 
 // ---------- sync ----------
+async function syncItem(type, name, meta) {
+  const [owner, repo] = meta.source.split('/');
+  if (!owner || !repo) return;
+  if (type === 'skill') {
+    await install({ type, owner, repo: repo.replace(/\.git$/, ''), remotePath: meta.path || '', ref: meta.ref || 'main', customName: name, force: true });
+  } else {
+    await install({ type, owner, repo: repo.replace(/\.git$/, ''), remotePath: meta.path || meta.file, ref: meta.ref || 'main', customName: name, force: true });
+  }
+  // restore enabled state
+  if (!meta.enabled) await setEnabled(type, name, false);
+}
+
+function isRemoteEntry(meta) {
+  if (!meta.source || meta.source === 'local' || meta.source.startsWith('local:')) return false;
+  const [owner, repo] = meta.source.split('/');
+  return !!(owner && repo);
+}
+
 async function sync() {
   const reg = await loadRegistry();
   let total = 0, ok = 0, fail = 0;
   for (const type of ALL_TYPES) {
     const key = type === 'skill' ? 'skills' : type + 's';
     for (const [name, meta] of Object.entries(reg[key] || {})) {
-      if (!meta.source || meta.source === 'local' || meta.source.startsWith('local:')) continue;
-      const [owner, repo] = meta.source.split('/');
-      if (!owner || !repo) continue;
+      if (!isRemoteEntry(meta)) continue;
       total++;
       try {
-        if (type === 'skill') {
-          await install({ type, owner, repo: repo.replace(/\.git$/, ''), remotePath: meta.path || '', ref: meta.ref || 'main', customName: name, force: true });
-        } else {
-          await install({ type, owner, repo: repo.replace(/\.git$/, ''), remotePath: meta.path || meta.file, ref: meta.ref || 'main', customName: name, force: true });
-        }
-        // restore enabled state
-        if (!meta.enabled) await setEnabled(type, name, false);
+        await syncItem(type, name, meta);
         ok++;
         console.log(`   ✓ ${type} ${name}`);
       } catch (e) {
@@ -1081,20 +1178,19 @@ async function loadManifest() {
   }
 }
 
-// Merge hooks vào .claude/settings.json — giữ mọi key khác, remove managed hooks cũ rồi append mới
-async function mergeHooksIntoSettings({ byEvent, commands }, oldHookCommands, check) {
-  let settings = {};
-  if (existsSync(CLAUDE_SETTINGS_PATH)) {
-    try {
-      settings = JSON.parse(await fs.readFile(CLAUDE_SETTINGS_PATH, 'utf8'));
-      if (typeof settings !== 'object' || settings === null || Array.isArray(settings)) throw new Error('không phải object');
-    } catch (e) {
-      throw new Error(`.claude/settings.json lỗi (${e.message}) — KHÔNG ghi đè để tránh phá config. Tự sửa/xóa file rồi chạy lại.`);
-    }
+async function readClaudeSettings() {
+  if (!existsSync(CLAUDE_SETTINGS_PATH)) return {};
+  try {
+    const settings = JSON.parse(await fs.readFile(CLAUDE_SETTINGS_PATH, 'utf8'));
+    if (typeof settings !== 'object' || settings === null || Array.isArray(settings)) throw new Error('không phải object');
+    return settings;
+  } catch (e) {
+    throw new Error(`.claude/settings.json lỗi (${e.message}) — KHÔNG ghi đè để tránh phá config. Tự sửa/xóa file rồi chạy lại.`);
   }
-  const oldSet = new Set(oldHookCommands);
-  const hooks = settings.hooks && typeof settings.hooks === 'object' && !Array.isArray(settings.hooks) ? settings.hooks : {};
-  // 1) strip managed hooks cũ (để re-run không duplicate)
+}
+
+// 1) strip managed hooks cũ (để re-run không duplicate)
+function stripManagedHooks(hooks, oldSet) {
   for (const [event, blocks] of Object.entries(hooks)) {
     if (!Array.isArray(blocks)) continue;
     const stripped = [];
@@ -1106,13 +1202,25 @@ async function mergeHooksIntoSettings({ byEvent, commands }, oldHookCommands, ch
     if (stripped.length) hooks[event] = stripped;
     else delete hooks[event];
   }
-  // 2) append hooks mới (mỗi event 1 matcher block)
+}
+
+// 2) append hooks mới (mỗi event 1 matcher block)
+function appendNewHooks(hooks, byEvent) {
   for (const [event, handlerList] of Object.entries(byEvent)) {
     if (!handlerList.length) continue;
     const block = { matcher: HOOK_MATCHER_DEFAULTS[event] ?? '', hooks: handlerList };
     if (!Array.isArray(hooks[event])) hooks[event] = [];
     hooks[event].push(block);
   }
+}
+
+// Merge hooks vào .claude/settings.json — giữ mọi key khác, remove managed hooks cũ rồi append mới
+async function mergeHooksIntoSettings({ byEvent, commands }, oldHookCommands, check) {
+  const settings = await readClaudeSettings();
+  const oldSet = new Set(oldHookCommands);
+  const hooks = settings.hooks && typeof settings.hooks === 'object' && !Array.isArray(settings.hooks) ? settings.hooks : {};
+  stripManagedHooks(hooks, oldSet);
+  appendNewHooks(hooks, byEvent);
   settings.hooks = hooks;
   const newContent = JSON.stringify(settings, null, 2) + '\n';
   const disk = existsSync(CLAUDE_SETTINGS_PATH) ? await fs.readFile(CLAUDE_SETTINGS_PATH, 'utf8') : null;
@@ -1124,12 +1232,7 @@ async function mergeHooksIntoSettings({ byEvent, commands }, oldHookCommands, ch
   return { changed };
 }
 
-async function exportClaude({ check = false } = {}) {
-  const reg = await loadRegistry();
-  const prefix = check ? '[check] ' : '';
-  const manifest = await loadManifest();
-
-  // ---- build expected set ----
+async function buildExportSet(reg) {
   const files = new Map(); // rel → { content, source }
   const addFile = (f) => {
     if (files.has(f.rel)) console.warn(`⚠️  Trùng đích ${f.rel} (từ ${f.source}) — file sau ghi đè`);
@@ -1150,13 +1253,11 @@ async function exportClaude({ check = false } = {}) {
       claudeMdSkipped = true;
     }
   }
+  return { files, skills, claudeMd, claudeMdSkipped };
+}
 
-  const counts = { created: 0, updated: 0, unchanged: 0, deleted: 0, kept: 0, skipped: 0 };
-  const newFilesMeta = {}; // rel → sha256 | {dir:true, digest}
-  const diffs = [];
-
-  // ---- write plain files ----
-  const writeIfChanged = async (rel, bytes) => {
+function makeWriteIfChanged({ check, counts, diffs }) {
+  return async function writeIfChanged(rel, bytes) {
     const abs = absOf(rel);
     const existed = existsSync(abs);
     let changed = true;
@@ -1171,17 +1272,11 @@ async function exportClaude({ check = false } = {}) {
     if (existed) counts.updated++; else counts.created++;
     return true;
   };
+}
 
-  for (const [rel, f] of files) {
-    newFilesMeta[rel] = bytesDigest(Buffer.from(f.content, 'utf8'));
-    await writeIfChanged(rel, Buffer.from(f.content, 'utf8'));
-  }
-  if (claudeMd && !claudeMdSkipped) {
-    newFilesMeta[claudeMd.rel] = bytesDigest(Buffer.from(claudeMd.content, 'utf8'));
-    await writeIfChanged(claudeMd.rel, Buffer.from(claudeMd.content, 'utf8'));
-  }
-
-  // ---- skill dirs: rebuild khi digest đổi hoặc thiếu ----
+// ---- skill dirs: rebuild khi digest đổi hoặc thiếu ----
+async function writeSkillDirs(skills, manifest, ctx) {
+  const { check, counts, diffs, newFilesMeta } = ctx;
   for (const s of skills) {
     newFilesMeta[s.rel] = { dir: true, digest: s.digest };
     const absDir = absOf(s.rel);
@@ -1201,8 +1296,11 @@ async function exportClaude({ check = false } = {}) {
     }
     if (skillExisted) counts.updated++; else counts.created++;
   }
+}
 
-  // ---- orphan cleanup: có trong manifest cũ nhưng không còn trong expected ----
+// ---- orphan cleanup: có trong manifest cũ nhưng không còn trong expected ----
+async function cleanupOrphanExports(manifest, ctx) {
+  const { check, counts, diffs, newFilesMeta } = ctx;
   for (const [rel, meta] of Object.entries(manifest.files)) {
     if (newFilesMeta[rel]) continue; // vẫn expected
     const abs = absOf(rel);
@@ -1226,22 +1324,9 @@ async function exportClaude({ check = false } = {}) {
     await fs.rm(abs, { recursive: true, force: true });
     counts.deleted++;
   }
+}
 
-  // ---- hooks → settings.json merge ----
-  const hookData = await collectHooks(reg);
-  const { changed: hooksChanged } = await mergeHooksIntoSettings(hookData, manifest.hookCommands, check);
-  if (hooksChanged) diffs.push('.claude/settings.json (hooks)');
-
-  // ---- save manifest (chỉ khi có thay đổi; không có timestamp để idempotent) ----
-  const newManifest = { version: 1, generator: 'harness-manager export-claude', files: newFilesMeta, hookCommands: hookData.commands };
-  const manifestChanged = JSON.stringify(manifest.files) !== JSON.stringify(newFilesMeta)
-    || JSON.stringify(manifest.hookCommands) !== JSON.stringify(hookData.commands);
-  if (!check && manifestChanged) {
-    await fs.mkdir(CLAUDE_DIR, { recursive: true });
-    await fs.writeFile(EXPORT_MANIFEST_PATH, JSON.stringify(newManifest, null, 2) + '\n', 'utf8');
-  }
-
-  // ---- summary ----
+function printExportSummary(files, skills, hookData, claudeMd, claudeMdSkipped, counts, diffs, prefix, check) {
   const n = (re) => [...files.values()].filter(f => re.test(f.rel)).length;
   console.log(`\n🤖 ${prefix}export-claude — .github/ → .claude/ + CLAUDE.md (một chiều)`);
   console.log(`   ${n(/\.claude\/agents\//)} agents · ${n(/\.claude\/commands\//)} commands · ${n(/\.claude\/rules\//)} rules · ${skills.length} skills · ${hookData.commands.length} hooks${claudeMd && !claudeMdSkipped ? ' · CLAUDE.md' : ''}`);
@@ -1257,6 +1342,52 @@ async function exportClaude({ check = false } = {}) {
     return;
   }
   console.log(`   Chạy lại sau mỗi enable/disable/create/preset apply. Commit cả .claude/ + CLAUDE.md.\n`);
+}
+
+async function exportClaude({ check = false } = {}) {
+  const reg = await loadRegistry();
+  const prefix = check ? '[check] ' : '';
+  const manifest = await loadManifest();
+
+  // ---- build expected set ----
+  const { files, skills, claudeMd, claudeMdSkipped } = await buildExportSet(reg);
+
+  const counts = { created: 0, updated: 0, unchanged: 0, deleted: 0, kept: 0, skipped: 0 };
+  const ctx = { check, counts, diffs: [], newFilesMeta: {} };
+
+  // ---- write plain files ----
+  const writeIfChanged = makeWriteIfChanged(ctx);
+  for (const [rel, f] of files) {
+    ctx.newFilesMeta[rel] = bytesDigest(Buffer.from(f.content, 'utf8'));
+    await writeIfChanged(rel, Buffer.from(f.content, 'utf8'));
+  }
+  if (claudeMd && !claudeMdSkipped) {
+    ctx.newFilesMeta[claudeMd.rel] = bytesDigest(Buffer.from(claudeMd.content, 'utf8'));
+    await writeIfChanged(claudeMd.rel, Buffer.from(claudeMd.content, 'utf8'));
+  }
+
+  // ---- skill dirs ----
+  await writeSkillDirs(skills, manifest, ctx);
+
+  // ---- orphan cleanup ----
+  await cleanupOrphanExports(manifest, ctx);
+
+  // ---- hooks → settings.json merge ----
+  const hookData = await collectHooks(reg);
+  const { changed: hooksChanged } = await mergeHooksIntoSettings(hookData, manifest.hookCommands, check);
+  if (hooksChanged) ctx.diffs.push('.claude/settings.json (hooks)');
+
+  // ---- save manifest (chỉ khi có thay đổi; không có timestamp để idempotent) ----
+  const newManifest = { version: 1, generator: 'harness-manager export-claude', files: ctx.newFilesMeta, hookCommands: hookData.commands };
+  const manifestChanged = JSON.stringify(manifest.files) !== JSON.stringify(ctx.newFilesMeta)
+    || JSON.stringify(manifest.hookCommands) !== JSON.stringify(hookData.commands);
+  if (!check && manifestChanged) {
+    await fs.mkdir(CLAUDE_DIR, { recursive: true });
+    await fs.writeFile(EXPORT_MANIFEST_PATH, JSON.stringify(newManifest, null, 2) + '\n', 'utf8');
+  }
+
+  // ---- summary ----
+  printExportSummary(files, skills, hookData, claudeMd, claudeMdSkipped, counts, ctx.diffs, prefix, check);
 }
 
 // ---------- help ----------
@@ -1319,97 +1450,134 @@ Env:
 }
 
 // ---------- main ----------
+function requireTwoArgs(args, usage) {
+  const type = args[1], name = args[2];
+  if (!type || !name) throw new Error(usage);
+  return { type, name };
+}
+
+function applyEqOpt(a, acc) {
+  if (a.startsWith('--path=')) { acc.remotePath = a.slice(7); return true; }
+  if (a.startsWith('--ref=')) { acc.ref = a.slice(6); return true; }
+  if (a.startsWith('--name=')) { acc.customName = a.slice(7); return true; }
+  return false;
+}
+
+function applyInstallOpt(a, args, i, acc) {
+  if (applyEqOpt(a, acc)) return i;
+  if (a === '--path') { acc.remotePath = args[i+1] || ''; return i+1; }
+  if (a === '--ref') { acc.ref = args[i+1] || 'main'; return i+1; }
+  if (a === '--name') { acc.customName = args[i+1] || null; return i+1; }
+  if (a === '--force' || a === '-f') { acc.force = true; return i; }
+  if (a === '--local') { acc.localPath = args[i+1]; return i+1; }
+  throw new Error(`Unknown option: ${a}`);
+}
+
+function parseInstallArgs(args) {
+  const type = args[1];
+  if (!type || !ALL_TYPES.includes(type)) throw new Error(`Thiếu type. Dùng: install <type> <owner/repo>  (type: ${ALL_TYPES.join('|')})`);
+  const acc = { type, source: null, localPath: null, remotePath: '', ref: 'main', customName: null, force: false };
+  let i = 2;
+  if (args[i] === '--local') {
+    acc.localPath = args[i + 1];
+    if (!acc.localPath) throw new Error('Thiếu path sau --local');
+    i += 2;
+  } else if (args[i] && !args[i].startsWith('--')) {
+    acc.source = args[i];
+    i += 1;
+  }
+  for (; i < args.length; i++) {
+    i = applyInstallOpt(args[i], args, i, acc);
+  }
+  return acc;
+}
+
+async function runInstall(args) {
+  const { type, source, localPath, remotePath, ref, customName, force } = parseInstallArgs(args);
+  if (localPath) return await install({ type, localPath, customName, force });
+  if (!source) throw new Error(`Thiếu <owner/repo>. Ví dụ: install ${type} owner/repo --path path/to/file`);
+  const [owner, repo] = source.split('/');
+  if (!owner || !repo) throw new Error(`Source không hợp lệ: "${source}" — phải là owner/repo`);
+  return await install({ type, owner, repo: repo.replace(/\.git$/, ''), remotePath, ref, customName, force });
+}
+
+async function runPreset(args) {
+  const sub = args[1];
+  if (sub === 'list' || sub === 'ls' || !sub) return await presetList();
+  if (sub === 'apply') {
+    const name = args[2];
+    if (!name) throw new Error('Dùng: preset apply <name>');
+    return await presetApply(name);
+  }
+  if (sub === 'save') {
+    const name = args[2];
+    if (!name) throw new Error('Dùng: preset save <name>');
+    return await presetSave(name);
+  }
+  throw new Error(`Unknown preset subcommand: ${sub} (list|apply|save)`);
+}
+
+async function runList(args) {
+  let filter = null;
+  const idx = args.indexOf('--type');
+  if (idx !== -1) filter = args[idx + 1];
+  else if (args[1] && ALL_TYPES.includes(args[1])) filter = args[1];
+  return await list(filter);
+}
+
+async function runToggle(args, enabled, usage) {
+  const { type, name } = requireTwoArgs(args, usage);
+  return await setEnabled(type, name, enabled);
+}
+
+async function runUninstall(args) {
+  const { type, name } = requireTwoArgs(args, 'Dùng: uninstall <type> <name>');
+  return await uninstall(type, name);
+}
+
+async function runCreate(args) {
+  const { type, name } = requireTwoArgs(args, 'Dùng: create <type> <name>  (vd: create instruction my-rule)');
+  return await create(type, name);
+}
+
+async function runExportClaude(args) {
+  const check = args.includes('--check');
+  return await exportClaude({ check });
+}
+
+// handler map — thay chuỗi if/else 14 nhánh (Map: key lạ luôn miss)
+function makeCommands(args) {
+  return new Map(Object.entries({
+    list: () => runList(args),
+    ls: () => runList(args),
+    status: () => status(),
+    enable: () => runToggle(args, true, 'Dùng: enable <type> <name>  (vd: enable instruction product-quality)'),
+    disable: () => runToggle(args, false, 'Dùng: disable <type> <name>  (vd: disable instruction product-quality)'),
+    uninstall: () => runUninstall(args),
+    remove: () => runUninstall(args),
+    rm: () => runUninstall(args),
+    create: () => runCreate(args),
+    preset: () => runPreset(args),
+    sync: () => sync(),
+    'export-claude': () => runExportClaude(args),
+    export: () => runExportClaude(args),
+    install: () => runInstall(args),
+    add: () => runInstall(args),
+  }));
+}
+
+async function dispatch(cmd, args) {
+  const handler = makeCommands(args).get(cmd);
+  if (!handler) throw new Error(`Unknown command: ${cmd}. Chạy "help" để xem.`);
+  return await handler();
+}
+
 async function main() {
   const args = process.argv.slice(2);
   const cmd = args[0];
   if (!cmd || cmd === 'help' || cmd === '--help' || cmd === '-h') return help();
-
   try {
-    if (cmd === 'list' || cmd === 'ls') {
-      let filter = null;
-      const idx = args.indexOf('--type');
-      if (idx !== -1) filter = args[idx + 1];
-      else if (args[1] && ALL_TYPES.includes(args[1])) filter = args[1];
-      return await list(filter);
-    }
-    if (cmd === 'status') return await status();
-    if (cmd === 'enable') {
-      const type = args[1], name = args[2];
-      if (!type || !name) throw new Error('Dùng: enable <type> <name>  (vd: enable instruction product-quality)');
-      return await setEnabled(type, name, true);
-    }
-    if (cmd === 'disable') {
-      const type = args[1], name = args[2];
-      if (!type || !name) throw new Error('Dùng: disable <type> <name>  (vd: disable instruction product-quality)');
-      return await setEnabled(type, name, false);
-    }
-    if (cmd === 'uninstall' || cmd === 'remove' || cmd === 'rm') {
-      const type = args[1], name = args[2];
-      if (!type || !name) throw new Error('Dùng: uninstall <type> <name>');
-      return await uninstall(type, name);
-    }
-    if (cmd === 'create') {
-      const type = args[1], name = args[2];
-      if (!type || !name) throw new Error('Dùng: create <type> <name>  (vd: create instruction my-rule)');
-      return await create(type, name);
-    }
-    if (cmd === 'preset') {
-      const sub = args[1];
-      if (sub === 'list' || sub === 'ls' || !sub) return await presetList();
-      if (sub === 'apply') {
-        const name = args[2];
-        if (!name) throw new Error('Dùng: preset apply <name>');
-        return await presetApply(name);
-      }
-      if (sub === 'save') {
-        const name = args[2];
-        if (!name) throw new Error('Dùng: preset save <name>');
-        return await presetSave(name);
-      }
-      throw new Error(`Unknown preset subcommand: ${sub} (list|apply|save)`);
-    }
-    if (cmd === 'sync') return await sync();
-    if (cmd === 'export-claude' || cmd === 'export') {
-      const check = args.includes('--check');
-      return await exportClaude({ check });
-    }
-    if (cmd === 'install' || cmd === 'add') {
-      const type = args[1];
-      if (!type || !ALL_TYPES.includes(type)) throw new Error(`Thiếu type. Dùng: install <type> <owner/repo>  (type: ${ALL_TYPES.join('|')})`);
-      let source = null;
-      let localPath = null;
-      let remotePath = '';
-      let ref = 'main';
-      let customName = null;
-      let force = false;
-      let i = 2;
-      if (args[i] === '--local') {
-        localPath = args[i + 1];
-        if (!localPath) throw new Error('Thiếu path sau --local');
-        i += 2;
-      } else if (args[i] && !args[i].startsWith('--')) {
-        source = args[i];
-        i += 1;
-      }
-      for (; i < args.length; i++) {
-        const a = args[i];
-        if (a === '--path') remotePath = args[++i] || '';
-        else if (a.startsWith('--path=')) remotePath = a.slice(7);
-        else if (a === '--ref') ref = args[++i] || 'main';
-        else if (a.startsWith('--ref=')) ref = a.slice(6);
-        else if (a === '--name') customName = args[++i] || null;
-        else if (a.startsWith('--name=')) customName = a.slice(7);
-        else if (a === '--force' || a === '-f') force = true;
-        else if (a === '--local') { localPath = args[++i]; }
-        else throw new Error(`Unknown option: ${a}`);
-      }
-      if (localPath) return await install({ type, localPath, customName, force });
-      if (!source) throw new Error(`Thiếu <owner/repo>. Ví dụ: install ${type} owner/repo --path path/to/file`);
-      const [owner, repo] = source.split('/');
-      if (!owner || !repo) throw new Error(`Source không hợp lệ: "${source}" — phải là owner/repo`);
-      return await install({ type, owner, repo: repo.replace(/\.git$/, ''), remotePath, ref, customName, force });
-    }
-    throw new Error(`Unknown command: ${cmd}. Chạy "help" để xem.`);
+    return await dispatch(cmd, args);
   } catch (e) {
     console.error(`❌ ${e.message}`);
     process.exitCode = 1;

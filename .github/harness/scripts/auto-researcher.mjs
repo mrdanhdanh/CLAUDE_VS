@@ -13,6 +13,7 @@
  *   node auto-researcher.mjs --task "xxx" --json
  *   node auto-researcher.mjs --task "xxx" --distill --top 3 --report --json
  */
+import { tokenize, computeIDF, parseKNs, scoreKN } from './kn-parse.mjs';
 import fs from 'node:fs/promises';
 import { existsSync, readFileSync } from 'node:fs';
 import path from 'node:path';
@@ -30,102 +31,8 @@ const LIB_CANDIDATES = [
   path.join(ROOT, 'www', 'library', 'library-export-2026-08-30.json'),
 ];
 
-// ---------- tokenize (from auto-learn.mjs) ----------
-function tokenize(text) {
-  if (!text) return [];
-  const lower = text.toLowerCase();
-  const tokens = lower.match(/[a-z0-9àáảãạăằắẳẵặâầấẩẫậèéẻẽẹêềếểễệìíỉĩịòóỏõọôồốổỗộơờớởỡợùúủũụưừứửữựỳýỷỹỵđ]+/gi) || [];
-  const stop = new Set([
-    'va','và','la','là','cua','của','cho','voi','với','trong','mot','một','cac','các','nhung','nhưng','de','để','co','có','khong','không','da','đã','bi','bị','thi','thì','ma','mà','ve','về','tu','từ','den','đến','khi','neu','nếu','se','sẽ','duoc','được','nay','này','do','đó','voi','với','the','and','or','a','an','is','are','to','of','in','on','for','with','as','by','at','be','this','that','it','from','are','was','were','has','have','had','will','would','can','could','should','may','might','must','been','being','also','just','only','very','more','most','some','any','all','each','few','many','other','such','no','nor','not','but','if','then','than','so','too','very'
-  ]);
-  return tokens.filter(t => t.length > 1 && !stop.has(t));
-}
-function computeIDF(queryTokens, kns) {
-  const N = kns.length || 1;
-  const idf = {};
-  for (const qt of queryTokens) {
-    let df = 0;
-    const qtNorm = qt.normalize('NFD').replace(/[\u0300-\u036f]/g,'');
-    for (const kn of kns) {
-      const has = kn.tokens.some(t => t===qt || t.includes(qt) || qt.includes(t) || t.normalize('NFD').replace(/[\u0300-\u036f]/g,'')===qtNorm);
-      if (has) df++;
-    }
-    idf[qt] = Math.log((N + 1) / (df + 1)) + 1;
-  }
-  return idf;
-}
-async function parseKNs() {
-  let text = '';
-  try { text = await fs.readFile(KNOWLEGED, 'utf8'); } catch (e) { return { kns: [], raw: '', error: e.message }; }
-  text = text.replace(/\r\n/g, '\n');
-  const kns = [];
-  const parts = text.split(/^###\s*KN-/m);
-  for (let i = 1; i < parts.length; i++) {
-    const part = 'KN-' + parts[i];
-    const firstNL = part.indexOf('\n');
-    const firstLine = firstNL >= 0 ? part.slice(0, firstNL) : part;
-    const m = firstLine.match(/KN-(\d+)\s*[—\-–]\s*(.+)/);
-    if (!m) continue;
-    const id = `KN-${m[1].padStart(3,'0')}`;
-    if (m[1] === 'XXX' || /Tiêu đề ngắn gọn/.test(m[2])) continue;
-    const title = m[2].trim();
-    const block = firstNL >= 0 ? part.slice(firstNL + 1) : '';
-    let tags = [];
-    const tagsLineM = block.match(/Tags:\s*([^\n]+)/);
-    if (tagsLineM) {
-      const raw = tagsLineM[1];
-      const bt = [...raw.matchAll(/`([^`]+)`/g)].map(x => x[1].trim());
-      if (bt.length) tags = bt;
-      else tags = raw.split(/[\s,]+/).filter(Boolean).map(t => t.replace(/`/g,'').trim()).filter(Boolean);
-    }
-    const sevM = block.match(/Severity:\s*(\w+)/i);
-    const severity = sevM ? sevM[1].toLowerCase() : 'minor';
-    const dateM = block.match(/Ngày:\s*([0-9\-]+)/);
-    const date = dateM ? dateM[1] : '';
-    let lesson = '';
-    const lessonM = block.match(/Bài học[^:]*:\s*([^\n]+)/);
-    if (lessonM) lesson = lessonM[1].trim().slice(0,200);
-    else lesson = title.slice(0,120);
-    const detail = block.slice(0, 2500);
-    const tokens = tokenize(`${title} ${tags.join(' ')} ${lesson} ${detail}`);
-    const titleTokens = tokenize(title);
-    const tagTokens = tokenize(tags.join(' '));
-    if (title.includes('Tiêu đề')) continue;
-    kns.push({ id, title, tags, lesson, detail, severity, date, tokens, titleTokens, tagTokens, block: block.slice(0,600) });
-  }
-  if (kns.length === 0) {
-    const tableRe = /\|\s*(KN-\d+)\s*\|[^|]*\|[^|]*\|[^|]*\|([^|]+)\|/g;
-    let tm;
-    while ((tm = tableRe.exec(text)) !== null) {
-      const id = tm[1].trim();
-      if (id === 'KN-001' && tm[2].includes('Ví dụ')) continue;
-      const lesson = tm[2].trim();
-      kns.push({ id, title: lesson.slice(0,60), tags: [], lesson, detail: lesson, severity:'minor', date:'', tokens: tokenize(lesson), titleTokens: tokenize(lesson), tagTokens: [], block: lesson });
-    }
-  }
-  return { kns, raw: text };
-}
-function scoreKN(queryTokens, queryRaw, kn, idf) {
-  let score = 0;
-  const qLower = queryRaw.toLowerCase();
-  const titleLower = kn.title.toLowerCase();
-  const detailLower = kn.detail.toLowerCase();
-  if (titleLower.includes(qLower)) score += 3;
-  if (detailLower.includes(qLower)) score += 1;
-  for (const qt of queryTokens) {
-    const w = idf ? (idf[qt] || 1) : 1;
-    const cTitle = kn.titleTokens.filter(t=>t===qt || t.includes(qt) || qt.includes(t)).length;
-    const cTag = kn.tagTokens.filter(t=>t===qt || t.includes(qt) || qt.includes(t)).length;
-    const cAll = kn.tokens.filter(t=>t===qt || t.includes(qt) || qt.includes(t)).length;
-    score += (cTitle * 1.5 + cTag * 2.0 + cAll * 0.5) * w;
-    const qtNorm = qt.normalize('NFD').replace(/[\u0300-\u036f]/g,'');
-    if (qtNorm !== qt) {
-      const cNorm = kn.tokens.filter(t=> t.normalize('NFD').replace(/[\u0300-\u036f]/g,'') === qtNorm).length;
-      score += cNorm * 0.8 * w;
-    }
-  }
-  return Math.round(score * 10) / 10;
-}
+// KN parse + scoring (tokenize/computeIDF/parseKNs/scoreKN) — shared module, xem kn-parse.mjs
+// (trước là duplicate với auto-learn.mjs — tách 1 nguồn, KN-047 Slop Gate cross-file)
 
 // ---------- Library BM25 (from mcp-server.mjs) ----------
 const STOPWORDS_LIB = new Set([
@@ -138,14 +45,15 @@ function tokenizeLib(text){
     .filter(t=> t.length>=2 && !STOPWORDS_LIB.has(t));
 }
 const K1 = 1.2, B = 0.75;
+function indexChunk(c) {
+  const tokens = tokenizeLib(c.text);
+  const tf = {};
+  tokens.forEach(t => tf[t] = (tf[t] || 0) + 1);
+  return { ...c, tokens, tf, len: tokens.length };
+}
 function buildIndex(chunks, registry, enabledOnly=true){
   const enabledIds = enabledOnly ? new Set(Object.values(registry).filter(b=>b.enabled).map(b=>b.id)) : null;
-  const docs = chunks.filter(c=> !enabledOnly || enabledIds.has(c.bookId)).map(c=>{
-    const tokens = tokenizeLib(c.text);
-    const tf = {};
-    tokens.forEach(t=> tf[t]=(tf[t]||0)+1);
-    return { ...c, tokens, tf, len: tokens.length };
-  });
+  const docs = chunks.filter(c=> !enabledOnly || enabledIds.has(c.bookId)).map(indexChunk);
   const N = docs.length;
   if(N===0) return { docs:[], docFreq:{}, avgdl:0, N:0 };
   const docFreq = {};
@@ -156,37 +64,41 @@ function buildIndex(chunks, registry, enabledOnly=true){
   const avgdl = docs.reduce((a,d)=>a+d.len,0)/N;
   return { docs, docFreq, avgdl, N };
 }
+function bm25ScoreDoc(d, qTokens, docFreq, N, avgdl) {
+  let score = 0;
+  for (const t of qTokens) {
+    const tf = d.tf[t]||0;
+    if (!tf) continue;
+    const df = docFreq[t]||0;
+    const idf = Math.log(1 + (N - df + 0.5)/(df + 0.5));
+    const denom = tf + K1 * (1 - B + B * (d.len/(avgdl||1)));
+    score += idf * (tf*(K1+1))/denom;
+  }
+  return score;
+}
+function shapeLibHit(doc, score) {
+  return {
+    bookId: doc.bookId,
+    bookName: doc.bookName || doc.bookId,
+    chunkId: doc.id || doc.chunkId,
+    index: doc.index,
+    page: doc.page,
+    text: (doc.text||'').slice(0,600),
+    snippet: (doc.text||'').slice(0,300) + ((doc.text||'').length>300?'…':''),
+    score: Number(score.toFixed(3))
+  };
+}
 function searchBM25(query, chunks, registry, top_k=5, enabledOnly=true){
-  const idx = buildIndex(chunks, registry, enabledOnly);
-  if(idx.N===0) return [];
+  const { docs, docFreq, avgdl, N } = buildIndex(chunks, registry, enabledOnly);
+  if(N===0) return [];
   const qTokens = tokenizeLib(query);
   if(qTokens.length===0) return [];
-  const { docs, docFreq, avgdl, N } = idx;
-  const scored = docs.map(d=>{
-    let score=0;
-    qTokens.forEach(t=>{
-      const tf = d.tf[t]||0;
-      if(!tf) return;
-      const df = docFreq[t]||0;
-      const idf = Math.log(1 + (N - df + 0.5)/(df + 0.5));
-      const denom = tf + K1 * (1 - B + B * (d.len/(avgdl||1)));
-      score += idf * (tf*(K1+1))/denom;
-    });
-    return { doc:d, score };
-  }).filter(x=>x.score>0)
-    .sort((a,b)=>b.score-a.score)
+  return docs
+    .map(d => ({ doc: d, score: bm25ScoreDoc(d, qTokens, docFreq, N, avgdl) }))
+    .filter(x => x.score > 0)
+    .sort((a,b) => b.score - a.score)
     .slice(0, top_k)
-    .map(({doc, score})=> ({
-      bookId: doc.bookId,
-      bookName: doc.bookName || doc.bookId,
-      chunkId: doc.id || doc.chunkId,
-      index: doc.index,
-      page: doc.page,
-      text: (doc.text||'').slice(0,600),
-      snippet: (doc.text||'').slice(0,300) + ((doc.text||'').length>300?'…':''),
-      score: Number(score.toFixed(3))
-    }));
-  return scored;
+    .map(({ doc, score }) => shapeLibHit(doc, score));
 }
 function loadLibrary() {
   for (const p of LIB_CANDIDATES) {
@@ -303,28 +215,35 @@ function slugify(s) {
 // ---------- DisCo-lite Phase 1: scope → ground → construct → verify ----------
 // Paper: arXiv:2609.02749v1 §3.2 — z→scope Q→ground X→construct G~→verify (G,R)
 // Minimal, template-based, no LLM required, reuse tokenize/BM25 hiện có.
-function gapAnalysis(task, knHits, libHits) {
-  const toks = tokenize(task);
-  const isUI = /ui|css|rainbow|glass|responsive|theme|contrast|animation|a11y|grid|border|hover|www|styles/i.test(task);
-  const isBuild = /build|dotnet|test|error|fail|lock|msb/i.test(task);
+const UI_RX = /ui|css|rainbow|glass|responsive|theme|contrast|animation|a11y|grid|border|hover|www|styles/i;
+
+function gapCapabilities(task, toks) {
   const capabilities = [];
-  if (isUI) capabilities.push('ui-polish-responsive-a11y');
-  if (isBuild) capabilities.push('build-test-verify');
+  if (UI_RX.test(task)) capabilities.push('ui-polish-responsive-a11y');
+  if (/build|dotnet|test|error|fail|lock|msb/i.test(task)) capabilities.push('build-test-verify');
   // keyword capabilities từ task tokens (top 5, bỏ stop đã có trong tokenize)
   for (const t of toks.slice(0, 5)) {
     if (!capabilities.includes(t)) capabilities.push(t);
   }
   if (capabilities.length === 0) capabilities.push('general-task');
+  return capabilities;
+}
+// YAGNI: chỉ skip khi cả KN và library đều đủ mạnh (KN >=15 và lib >=3)
+// Ngưỡng thấp trước đây (5/1) khiến mọi task đều skip → không demo được distill
+function gapList(knHits, libHits) {
   const gaps = [];
   const topKN = knHits[0]?.score ?? 0;
   const topLib = libHits[0]?.score ?? 0;
-  // YAGNI: chỉ skip khi cả KN và library đều đủ mạnh (KN >=15 và lib >=3)
-  // Ngưỡng thấp trước đây (5/1) khiến mọi task đều skip → không demo được distill
   if (knHits.length === 0 || topKN < 15) gaps.push('knowleged-coverage-low');
   if (libHits.length === 0 || topLib < 3) gaps.push('library-coverage-low');
   if (gaps.length === 0) gaps.push('none-critical-keep-aar-only');
+  return gaps;
+}
+function gapAnalysis(task, knHits, libHits) {
+  const capabilities = gapCapabilities(task, tokenize(task));
+  const gaps = gapList(knHits, libHits);
   const needDistill = !(gaps.length === 1 && gaps[0] === 'none-critical-keep-aar-only');
-  return { capabilities, gaps, needDistill, topKN, topLib };
+  return { capabilities, gaps, needDistill, topKN: knHits[0]?.score ?? 0, topLib: libHits[0]?.score ?? 0 };
 }
 
 function buildSkillContent({ slug, task, capabilities, knHits, libHits, methods, gaps }) {
@@ -368,14 +287,11 @@ async function constructSkill({ slug, task, capabilities, gaps, knHits, libHits,
   return { dir, record };
 }
 
-async function verifySkill(dir, record) {
-  const checks = [];
-  const skillPath = path.join(dir, 'SKILL.md');
-  const evPath = path.join(dir, 'references', 'evidence.md');
-  const recPath = path.join(dir, 'record.json');
-  // 1. files exist
-  checks.push({ id: 'files-exist', pass: existsSync(skillPath) && existsSync(evPath) && existsSync(recPath), detail: 'SKILL.md + references/evidence.md + record.json' });
-  // 2. frontmatter
+function checkSkillFilesExist(dir) {
+  const ok = existsSync(path.join(dir, 'SKILL.md')) && existsSync(path.join(dir, 'references', 'evidence.md')) && existsSync(path.join(dir, 'record.json'));
+  return { id: 'files-exist', pass: ok, detail: 'SKILL.md + references/evidence.md + record.json' };
+}
+async function checkSkillFrontmatter(skillPath) {
   let fmPass = false;
   try {
     const txt = await fs.readFile(skillPath, 'utf8');
@@ -383,37 +299,57 @@ async function verifySkill(dir, record) {
     const fm = m ? m[1] : '';
     fmPass = /name:\s*\S+/.test(fm) && /description:/.test(fm);
   } catch {}
-  checks.push({ id: 'frontmatter', pass: fmPass, detail: 'name + description (wise loading)' });
-  // 3. record đủ fields (R)
+  return { id: 'frontmatter', pass: fmPass, detail: 'name + description (wise loading)' };
+}
+function checkSkillRecord(record) {
   const recPass = record && record.anchor && Array.isArray(record.capabilities) && record.evidence && Array.isArray(record.gaps) && record.generatedAt;
-  checks.push({ id: 'record-complete', pass: !!recPass, detail: 'anchor + capabilities + evidence + gaps + generatedAt' });
-  // 4. deny-test-mutate: skill không xúi sửa test để pass
+  return { id: 'record-complete', pass: !!recPass, detail: 'anchor + capabilities + evidence + gaps + generatedAt' };
+}
+async function checkNoTestMutateAdvice(skillPath) {
   let noHack = true;
   try {
     const txt = await fs.readFile(skillPath, 'utf8');
     noHack = !/sửa test để pass|edit.*test.*to pass|mutate.*test/i.test(txt) || /Không sửa test để pass/.test(txt);
   } catch {}
-  checks.push({ id: 'no-test-mutate-advice', pass: noHack, detail: 'KN-012 — không xúi reward hacking' });
+  return { id: 'no-test-mutate-advice', pass: noHack, detail: 'KN-012 — không xúi reward hacking' };
+}
+async function verifySkill(dir, record) {
+  const skillPath = path.join(dir, 'SKILL.md');
+  const checks = [
+    checkSkillFilesExist(dir),
+    await checkSkillFrontmatter(skillPath),
+    checkSkillRecord(record),
+    await checkNoTestMutateAdvice(skillPath),
+  ];
   const pass = checks.every(c => c.pass);
   record.checks = checks;
   record.verifiedAt = new Date().toISOString();
   record.verdict = pass ? 'G-accepted' : 'G~-candidate-needs-review';
-  try { await fs.writeFile(recPath, JSON.stringify(record, null, 2), 'utf8'); } catch {}
+  try { await fs.writeFile(path.join(dir, 'record.json'), JSON.stringify(record, null, 2), 'utf8'); } catch {}
   return { pass, checks, verdict: record.verdict };
 }
 // ---------- CLI ----------
+function tryValueOpt(a, args, i, opts) {
+  if (!args[i+1]) return null;
+  if (a === '--task') { opts.task = args[i+1]; return i + 1; }
+  if (a === '--top') { opts.top = parseInt(args[i+1],10)||3; return i + 1; }
+  return null;
+}
+const FLAG_OPTS = { '--report':'report', '--json':'json', '--distill':'distill', '--help':'help', '-h':'help' };
+function tryFlagOpt(a, opts) {
+  if (!(a in FLAG_OPTS)) return false;
+  opts[FLAG_OPTS[a]] = true;
+  return true;
+}
 function parseArgs(argv) {
   const args = argv.slice(2);
   const opts = { task: '', top: 3, report: false, json: false, distill: false, help: false };
   for (let i=0;i<args.length;i++) {
     const a = args[i];
-    if (a==='--task' && args[i+1]) { opts.task = args[++i]; }
-    else if (a==='--top' && args[i+1]) { opts.top = parseInt(args[++i],10)||3; }
-    else if (a==='--report') opts.report = true;
-    else if (a==='--json') opts.json = true;
-    else if (a==='--distill') opts.distill = true;
-    else if (a==='--help' || a==='-h') opts.help = true;
-    else if (!a.startsWith('--') && !opts.task) opts.task = a;
+    const consumed = tryValueOpt(a, args, i, opts);
+    if (consumed !== null) { i = consumed; continue; }
+    if (tryFlagOpt(a, opts)) continue;
+    if (!a.startsWith('--') && !opts.task) opts.task = a;
   }
   return opts;
 }
@@ -450,6 +386,141 @@ Examples:
 `.trim();
 }
 
+function suggestKN(task, kns, knErr, topK) {
+  if (knErr || kns.length === 0) return [];
+  const qTokens = tokenize(task);
+  if (qTokens.length === 0) qTokens.push(...task.toLowerCase().split(/\s+/).filter(Boolean));
+  const idf = computeIDF(qTokens, kns);
+  return kns.map(kn => ({ ...kn, score: scoreKN(qTokens, task, kn, idf) }))
+    .filter(k => k.score > 0)
+    .sort((a, b) => b.score - a.score)
+    .slice(0, topK);
+}
+
+function searchLib(task, lib, topK) {
+  if (lib.missing || lib.error || lib.chunks.length === 0) return [];
+  return searchBM25(task, lib.chunks, lib.registry, topK, true);
+}
+
+function recommendMethod(task, knHits, libHits) {
+  if (knHits.length > 0 && knHits[0].score >= 8) return 'A';
+  if (/ui|css|www|responsive|theme/i.test(task)) return 'B';
+  if (libHits.length > 0 && libHits[0].score >= 5) return 'C';
+  if (knHits.length === 0 && libHits.length === 0) return 'B';
+  return 'A';
+}
+
+function buildResult({ task, topK, kns, knHits, lib, libHits, methods, checks, recommended }) {
+  return {
+    task,
+    topK,
+    generatedAt: new Date().toISOString(),
+    generatedBy: 'auto-researcher.mjs (AAR for Harness v2 + DisCo-lite Phase 1)',
+    paper: 'Anthropic AAR 28/08/2026 — Automated Researchers Can Reliably Mitigate Alignment Failures + DisCo arXiv:2609.02749v1',
+    warningShot: 'OpenAI HF incident 26/08/2026 — benchmark phải check HOW not just WHETHER',
+    knowleged: { total: kns.length, hits: knHits.map(k=>({ id:k.id, title:k.title, tags:k.tags, severity:k.severity, score:k.score, lesson:k.lesson.slice(0,120), snippet:k.block.slice(0,150).replace(/\n/g,' ') })) },
+    library: { file: lib.file, totalChunks: lib.chunks.length, enabledBooks: Object.values(lib.registry).filter(b=>b.enabled).length, hits: libHits, missing: lib.missing, error: lib.error || null },
+    propose: methods,
+    benchmark: checks,
+    recommendation: { keep: recommended, reason: methods.find(m=>m.id===recommended)?.description.slice(0,120) || '' },
+  };
+}
+
+async function runDistill(result, task, knHits, libHits, methods) {
+  const gap = gapAnalysis(task, knHits, libHits);
+  result.gap = gap;
+  if (!gap.needDistill) {
+    result.distill = { skipped: true, reason: 'Đủ coverage (KN + library) — không cần distill (YAGNI).', gaps: gap.gaps };
+    return;
+  }
+  const slug = slugify(task);
+  try {
+    const { dir, record } = await constructSkill({ slug, task, capabilities: gap.capabilities, gaps: gap.gaps, knHits, libHits, methods });
+    const verify = await verifySkill(dir, record);
+    result.distill = {
+      skipped: false,
+      slug,
+      path: path.relative(ROOT, dir),
+      capabilities: gap.capabilities,
+      gaps: gap.gaps,
+      verify,
+      record: { generatedAt: record.generatedAt, verdict: record.verdict, checks: record.checks },
+    };
+  } catch (e) {
+    result.distill = { skipped: false, slug: slugify(task), error: e.message, gaps: gap.gaps };
+  }
+}
+
+async function saveReport(result, task, toStderr) {
+  const outDir = path.join(ROOT, '.agent', 'plans', 'aar-harness');
+  await fs.mkdir(outDir, { recursive: true });
+  const outPath = path.join(outDir, `report-${slugify(task)}.md`);
+  await fs.writeFile(outPath, toMarkdown(result), 'utf8');
+  const msg = toStderr ? `\n📄 Report: ${path.relative(ROOT, outPath)}` : `\n📄 Report saved: ${path.relative(ROOT, outPath)}`;
+  (toStderr ? console.error : console.log)(msg);
+}
+
+function printKnSection(kns, knErr, knHits) {
+  console.log(`📚 1. Suggest — knowleged.md (${kns.length} KN):`);
+  if (knErr) { console.log(`   ⚠️  ${knErr}`); return; }
+  if (knHits.length===0) { console.log(`   → Không tìm thấy KN liên quan (đã scan ${kns.length} KN). Gợi ý: thử từ khóa khác hoặc thêm KN mới.`); return; }
+  knHits.forEach(k=>{
+    console.log(`   [${k.id}] score ${k.score} — ${k.title} (${k.severity}, ${k.tags.join(' ')||'no-tags'})`);
+    console.log(`       → ${k.lesson.slice(0,100)}`);
+  });
+}
+
+function printLibSection(lib, libHits) {
+  console.log(`\n📖 2. Library — ${lib.missing ? '⚠️  export.json missing' : `${lib.chunks.length} chunks, ${Object.values(lib.registry).filter(b=>b.enabled).length} books enabled` } (${lib.file}):`);
+  if (lib.missing) { console.log(`   → Mở www/library/index.html → bấm Xuất để tạo export.json`); return; }
+  if (lib.error) { console.log(`   ⚠️  ${lib.error}`); return; }
+  if (libHits.length===0) { console.log(`   → Không tìm thấy trong thư viện (đã search ${lib.chunks.length} chunks).`); return; }
+  libHits.forEach(h=>{
+    console.log(`   "${h.bookName}" · chunk #${h.index} · page ${h.page} · score ${h.score}`);
+    console.log(`       → ${h.snippet.slice(0,120)}…`);
+  });
+}
+
+function printMethodsSection(methods, recommended) {
+  console.log(`\n💡 3. Propose — 3 methods (keep best, discard rest):`);
+  methods.forEach(m=>{
+    const star = m.id===recommended ? '⭐ KEEP' : '  ';
+    console.log(`   ${star} [${m.id}] ${m.title}`);
+    console.log(`       Source: ${m.source}`);
+    console.log(`       → ${m.description.slice(0,120)}`);
+    console.log(`       Steps: ${m.steps.join(' → ')}`);
+  });
+}
+
+function printDistillSection(distill) {
+  if (!distill) return;
+  console.log(`\n🧬 6. Distill — DisCo-lite (scope→ground→construct→verify):`);
+  if (distill.skipped) { console.log(`   → Skipped: ${distill.reason}`); return; }
+  if (distill.error) { console.log(`   ❌ Distill failed: ${distill.error}`); return; }
+  console.log(`   Slug: ${distill.slug} → ${distill.path}`);
+  console.log(`   Capabilities: ${distill.capabilities.join(', ')}`);
+  console.log(`   Gaps: ${distill.gaps.join(', ')}`);
+  console.log(`   Verify: ${distill.verify.pass ? '✅ G-accepted' : '⚠️ G~-candidate-needs-review'} (${distill.verify.checks.map(c=>`${c.id}:${c.pass?'pass':'FAIL'}`).join(', ')})`);
+}
+
+function printHuman(result, { task, topK, kns, knErr, knHits, lib, libHits, methods, checks, recommended }) {
+  console.log(`\n🔬 Auto-Researcher — AAR for Harness v2`);
+  console.log(`   Task: "${task}" | top ${topK} | ${new Date().toISOString()}`);
+  console.log(`   Paper: Anthropic AAR 28/08/2026 · Warning shot: OpenAI HF 26/08/2026\n`);
+  printKnSection(kns, knErr, knHits);
+  printLibSection(lib, libHits);
+  printMethodsSection(methods, recommended);
+  console.log(`\n✅ 4. Benchmark checklist (HOW not just WHETHER):`);
+  checks.forEach(c=>{
+    console.log(`   [ ] ${c.label}${c.required ? ' (required)' : ''}`);
+  });
+  console.log(`\n🎯 5. Recommendation: KEEP Method ${recommended} — ${methods.find(m=>m.id===recommended).title}`);
+  console.log(`   Reason: ${methods.find(m=>m.id===recommended).description.slice(0,100)}`);
+  printDistillSection(result.distill);
+  console.log(`\n💡 Next: Implement Method ${recommended} todo-driven (tdd-gate) → benchmark → nếu fail thì thử method khác (max 3).`);
+  console.log(`   Tip: node auto-researcher.mjs --task "${task}" --top 3 --report  → sinh .agent/plans/aar-harness/report-${slugify(task)}.md`);
+}
+
 async function main() {
   const opts = parseArgs(process.argv);
   if (opts.help || !opts.task) {
@@ -464,153 +535,34 @@ async function main() {
   const topK = opts.top;
 
   // 1. Suggest KN
-  const { kns, error: knErr } = await parseKNs();
-  let knHits = [];
-  if (!knErr && kns.length>0) {
-    const qTokens = tokenize(task);
-    if (qTokens.length===0) qTokens.push(...task.toLowerCase().split(/\s+/).filter(Boolean));
-    const idf = computeIDF(qTokens, kns);
-    knHits = kns.map(kn=> ({...kn, score: scoreKN(qTokens, task, kn, idf)}))
-      .filter(k=>k.score>0)
-      .sort((a,b)=>b.score-a.score)
-      .slice(0, topK);
-  }
+  const { kns, error: knErr } = await parseKNs(KNOWLEGED);
+  const knHits = suggestKN(task, kns, knErr, topK);
 
   // 2. Library search
   const lib = loadLibrary();
-  let libHits = [];
-  if (!lib.missing && !lib.error && lib.chunks.length>0) {
-    libHits = searchBM25(task, lib.chunks, lib.registry, topK, true);
-  }
+  const libHits = searchLib(task, lib, topK);
 
   // 3. Propose
   const methods = proposeMethods(task, knHits, libHits);
   const checks = benchmarkChecklist(task);
 
   // 4. Recommendation (simple heuristic: prefer A if KN score high, else B if UI, else C if lib hit)
-  let recommended = 'A';
-  if (knHits.length>0 && knHits[0].score >= 8) recommended = 'A';
-  else if (/ui|css|www|responsive|theme/i.test(task)) recommended = 'B';
-  else if (libHits.length>0 && libHits[0].score >= 5) recommended = 'C';
-  else if (knHits.length===0 && libHits.length===0) recommended = 'B';
+  const recommended = recommendMethod(task, knHits, libHits);
 
-  const result = {
-    task,
-    topK,
-    generatedAt: new Date().toISOString(),
-    generatedBy: 'auto-researcher.mjs (AAR for Harness v2 + DisCo-lite Phase 1)',
-    paper: 'Anthropic AAR 28/08/2026 — Automated Researchers Can Reliably Mitigate Alignment Failures + DisCo arXiv:2609.02749v1',
-    warningShot: 'OpenAI HF incident 26/08/2026 — benchmark phải check HOW not just WHETHER',
-    knowleged: { total: kns.length, hits: knHits.map(k=>({ id:k.id, title:k.title, tags:k.tags, severity:k.severity, score:k.score, lesson:k.lesson.slice(0,120), snippet:k.block.slice(0,150).replace(/\n/g,' ') })) },
-    library: { file: lib.file, totalChunks: lib.chunks.length, enabledBooks: Object.values(lib.registry).filter(b=>b.enabled).length, hits: libHits, missing: lib.missing, error: lib.error || null },
-    propose: methods,
-    benchmark: checks,
-    recommendation: { keep: recommended, reason: methods.find(m=>m.id===recommended)?.description.slice(0,120) || '' },
-  };
+  const result = buildResult({ task, topK, kns, knHits, lib, libHits, methods, checks, recommended });
 
   // 5. Distill (DisCo-lite §3.2) — chỉ khi --distill
-  if (opts.distill) {
-    const gap = gapAnalysis(task, knHits, libHits);
-    result.gap = gap;
-    if (!gap.needDistill) {
-      result.distill = { skipped: true, reason: 'Đủ coverage (KN + library) — không cần distill (YAGNI).', gaps: gap.gaps };
-    } else {
-      const slug = slugify(task);
-      try {
-        const { dir, record } = await constructSkill({ slug, task, capabilities: gap.capabilities, gaps: gap.gaps, knHits, libHits, methods });
-        const verify = await verifySkill(dir, record);
-        result.distill = {
-          skipped: false,
-          slug,
-          path: path.relative(ROOT, dir),
-          capabilities: gap.capabilities,
-          gaps: gap.gaps,
-          verify,
-          record: { generatedAt: record.generatedAt, verdict: record.verdict, checks: record.checks },
-        };
-      } catch (e) {
-        result.distill = { skipped: false, slug: slugify(task), error: e.message, gaps: gap.gaps };
-      }
-    }
-  }
+  if (opts.distill) await runDistill(result, task, knHits, libHits, methods);
 
   if (opts.json) {
     console.log(JSON.stringify(result, null, 2));
-    if (opts.report) {
-      const slug = slugify(task);
-      const outDir = path.join(ROOT, '.agent', 'plans', 'aar-harness');
-      await fs.mkdir(outDir, { recursive: true });
-      const outPath = path.join(outDir, `report-${slug}.md`);
-      const md = toMarkdown(result);
-      await fs.writeFile(outPath, md, 'utf8');
-      console.error(`\n📄 Report: ${path.relative(ROOT, outPath)}`);
-    }
+    if (opts.report) await saveReport(result, task, true);
     return;
   }
 
-  // Human readable
-  console.log(`\n🔬 Auto-Researcher — AAR for Harness v2`);
-  console.log(`   Task: "${task}" | top ${topK} | ${new Date().toISOString()}`);
-  console.log(`   Paper: Anthropic AAR 28/08/2026 · Warning shot: OpenAI HF 26/08/2026\n`);
+  printHuman(result, { task, topK, kns, knErr, knHits, lib, libHits, methods, checks, recommended });
 
-  console.log(`📚 1. Suggest — knowleged.md (${kns.length} KN):`);
-  if (knErr) console.log(`   ⚠️  ${knErr}`);
-  else if (knHits.length===0) console.log(`   → Không tìm thấy KN liên quan (đã scan ${kns.length} KN). Gợi ý: thử từ khóa khác hoặc thêm KN mới.`);
-  else knHits.forEach(k=>{
-    console.log(`   [${k.id}] score ${k.score} — ${k.title} (${k.severity}, ${k.tags.join(' ')||'no-tags'})`);
-    console.log(`       → ${k.lesson.slice(0,100)}`);
-  });
-
-  console.log(`\n📖 2. Library — ${lib.missing ? '⚠️  export.json missing' : `${lib.chunks.length} chunks, ${Object.values(lib.registry).filter(b=>b.enabled).length} books enabled` } (${lib.file}):`);
-  if (lib.missing) console.log(`   → Mở www/library/index.html → bấm Xuất để tạo export.json`);
-  else if (lib.error) console.log(`   ⚠️  ${lib.error}`);
-  else if (libHits.length===0) console.log(`   → Không tìm thấy trong thư viện (đã search ${lib.chunks.length} chunks).`);
-  else libHits.forEach(h=>{
-    console.log(`   "${h.bookName}" · chunk #${h.index} · page ${h.page} · score ${h.score}`);
-    console.log(`       → ${h.snippet.slice(0,120)}…`);
-  });
-
-  console.log(`\n💡 3. Propose — 3 methods (keep best, discard rest):`);
-  methods.forEach(m=>{
-    const star = m.id===recommended ? '⭐ KEEP' : '  ';
-    console.log(`   ${star} [${m.id}] ${m.title}`);
-    console.log(`       Source: ${m.source}`);
-    console.log(`       → ${m.description.slice(0,120)}`);
-    console.log(`       Steps: ${m.steps.join(' → ')}`);
-  });
-
-  console.log(`\n✅ 4. Benchmark checklist (HOW not just WHETHER):`);
-  checks.forEach(c=>{
-    console.log(`   [ ] ${c.label}${c.required ? ' (required)' : ''}`);
-  });
-
-  console.log(`\n🎯 5. Recommendation: KEEP Method ${recommended} — ${methods.find(m=>m.id===recommended).title}`);
-  console.log(`   Reason: ${methods.find(m=>m.id===recommended).description.slice(0,100)}`);
-  if (result.distill) {
-    console.log(`\n🧬 6. Distill — DisCo-lite (scope→ground→construct→verify):`);
-    if (result.distill.skipped) {
-      console.log(`   → Skipped: ${result.distill.reason}`);
-    } else if (result.distill.error) {
-      console.log(`   ❌ Distill failed: ${result.distill.error}`);
-    } else {
-      console.log(`   Slug: ${result.distill.slug} → ${result.distill.path}`);
-      console.log(`   Capabilities: ${result.distill.capabilities.join(', ')}`);
-      console.log(`   Gaps: ${result.distill.gaps.join(', ')}`);
-      console.log(`   Verify: ${result.distill.verify.pass ? '✅ G-accepted' : '⚠️ G~-candidate-needs-review'} (${result.distill.verify.checks.map(c=>`${c.id}:${c.pass?'pass':'FAIL'}`).join(', ')})`);
-    }
-  }
-  console.log(`\n💡 Next: Implement Method ${recommended} todo-driven (tdd-gate) → benchmark → nếu fail thì thử method khác (max 3).`);
-  console.log(`   Tip: node auto-researcher.mjs --task "${task}" --top 3 --report  → sinh .agent/plans/aar-harness/report-${slugify(task)}.md`);
-
-  if (opts.report) {
-    const slug = slugify(task);
-    const outDir = path.join(ROOT, '.agent', 'plans', 'aar-harness');
-    await fs.mkdir(outDir, { recursive: true });
-    const outPath = path.join(outDir, `report-${slug}.md`);
-    const md = toMarkdown(result);
-    await fs.writeFile(outPath, md, 'utf8');
-    console.log(`\n📄 Report saved: ${path.relative(ROOT, outPath)}`);
-  }
+  if (opts.report) await saveReport(result, task, false);
 }
 
 function toMarkdown(r) {

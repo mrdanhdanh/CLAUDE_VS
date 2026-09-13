@@ -1,0 +1,8 @@
+[
+  { "label": "help", "args": ["--help"] },
+  { "label": "human top3", "args": ["--task", "rainbow border khong xoay", "--top", "3"] },
+  { "label": "json", "args": ["--task", "rainbow border khong xoay", "--top", "3", "--json"] },
+  { "label": "distill skip (du coverage)", "args": ["--task", "zzqx flurble wibble task la", "--distill", "--json"] },
+  { "label": "missing task (exit1)", "args": [] },
+  { "label": "report human", "args": ["--task", "pairwise report check", "--top", "2", "--report"] }
+]
