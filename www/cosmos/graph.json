@@ -1,10 +1,10 @@
 {
-  "generatedAt": "2026-09-12T14:46:08.115Z",
+  "generatedAt": "2026-09-13T14:10:24.691Z",
   "generatedBy": "entangle.mjs --graph",
   "scanned": {
-    "files": 1512,
-    "edges": 1427,
-    "commits": 156
+    "files": 1538,
+    "edges": 1475,
+    "commits": 167
   },
   "thresholds": {
     "hubMinRefs": 10,
@@ -13,7 +13,7 @@
   "hubs": [
     {
       "file": "docs/knowleged.md",
-      "refs": 78
+      "refs": 81
     },
     {
       "file": "www/status.json",
@@ -29,7 +29,7 @@
     },
     {
       "file": "www/cosmos/index.html",
-      "refs": 31
+      "refs": 33
     },
     {
       "file": "README.md",
@@ -45,6 +45,10 @@
     },
     {
       "file": "www/app.js",
+      "refs": 18
+    },
+    {
+      "file": "www/library/app.js",
       "refs": 16
     },
     {
@@ -52,12 +56,16 @@
       "refs": 15
     },
     {
-      "file": "www/library/app.js",
+      "file": "www/cosmos/scale.html",
       "refs": 15
     },
     {
+      "file": "www/cosmos/scale.json",
+      "refs": 14
+    },
+    {
       "file": "www/library/export.json",
-      "refs": 13
+      "refs": 14
     },
     {
       "file": "docs/harness-flow.md",
@@ -68,12 +76,8 @@
       "refs": 12
     },
     {
-      "file": "www/cosmos/scale.html",
-      "refs": 12
-    },
-    {
-      "file": "www/cosmos/scale.json",
-      "refs": 12
+      "file": "www/web-universe/js/app.js",
+      "refs": 10
     }
   ],
   "clusters": [
@@ -106,7 +110,7 @@
   ],
   "deadFilaments": [],
   "counts": {
-    "hubs": 16,
+    "hubs": 17,
     "clusters": 3,
     "deadFilaments": 0
   }
