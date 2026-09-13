@@ -62,3 +62,17 @@
 | **5** | web-universe modules + agentic-academy | ~60+ | Thấp–TB — lab/demo, verify bằng e2e hiện có |
 
 **Justify tạm (không fix ngay):** ~62 file với 1-2 findings mỗi file — nợ nền chấp nhận được, gộp vào batch khi có dịp sửa file đó vì lý do khác (boy-scout rule).
+
+---
+
+## Tiến độ trả nợ (cập nhật 2026-09-13)
+
+| Đợt | File | Trước → Sau | Verify | Commit |
+|------|------|-------------|--------|--------|
+| Pre-batch | `www/ai-news/ai-news.js` | 17 → **0** | 7/7 + full 141/141 | `cf31556` |
+| **Batch 3** | `www/web-thuat-toan/app.js` | 12 → **2** (justified: wrapper IIFE aggregate artifact; gỡ wrapper làm nổ 21 → revert) | 5 spec mới + full **146/146** | `1a107ae` |
+| **Batch 2** | `www/app.js` (STATUS) | 13 → **0** ✅ | 17 spec STATUS + 5 spec mới + full **151/151** | `eec7e37` |
+
+### Còn lại — Batch 1 (44 findings, chưa làm)
+- `harness-manager.mjs` (19) · `auto-learn.mjs` (17) · `auto-researcher.mjs` (8)
+- Là CLI core — cần session riêng với full context budget + verify CLI thật từng lệnh + pairwise trước/sau. Xem chi tiết handoff: `.agent/plans/ai-news-refactor/plan.md` (mục Batch 1).
