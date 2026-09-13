@@ -89,13 +89,13 @@ At line:1 char:122
 - [x] `harness-manager export-claude` re-sync (nguồn 1 chiều)
 - [x] Slop-check changed files: **Clean**
 - [x] `guards` coverage: **KN-039 giờ có lưới** (`hooks-integrity.spec.ts`) — withGuard 27→29, priority 27→25
-- [ ] Full suite regression (ghi kết quả dưới)
+- [x] Full suite: **167/167 passed** (phát hiện thêm 1 latent red do refresh làm G 8→9 — đã amend `cosmos-gravity-polarity.spec.ts` bởi actor verify: bỏ pin giá trị, assert polarity contract)
 
 **Kết quả:**
 ```
 hooks-integrity: 2 passed (RED trước regenerate .claude → GREEN)
 slop-check: Clean · guards: KN-039 → tests/e2e/hooks-integrity.spec.ts
-(pending — full suite)
+full suite: 167/167 passed
 ```
 
 ---

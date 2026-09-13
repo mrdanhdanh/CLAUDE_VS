@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-13T15:29:34.866Z",
+  "generatedAt": "2026-09-13T15:52:11.282Z",
   "generatedBy": "YUNIE",
   "version": 1,
   "counts": {
@@ -287,6 +287,7 @@
     "ai-news-refactor",
     "ai-news-search",
     "ai-news-upgrades-4",
+    "ai-news-vi-summary",
     "archify-demo",
     "auto-learn",
     "auto-learn-split",
@@ -448,7 +449,7 @@
   "health": {
     "errors": 0,
     "status": "ok",
-    "lastCheck": "2026-09-13T15:29:34.866Z",
+    "lastCheck": "2026-09-13T15:52:11.282Z",
     "checks": [
       "get_errors: pass (0 errors)",
       "registry: 19 instructions (19 total) - 19 skills - 9 agents - 7 prompts - 1 hook — all enabled",
@@ -459,8 +460,8 @@
       "www: polished — responsive 375/768/1280, a11y, states, animation 150-300ms",
       "workflow: www/** -> Pages (upload-artifact path: www) — exists: true + eval job gate",
       "library: www/library/ MCP v1.2.0 (5 tools: search + iterative + list/get/status, router+cache, redacted) + library-rag instruction",
-      "auto-learn: 56 KN, 37 bugs, 0 drafts — suggest/log/propose/status (<50ms, IDF, tiếng Việt)",
-      "governance: audit 142 (Ed25519 receipt P0-4) · policy 9 deny/2 allow (ok) · credentials 0 keys plain",
+      "auto-learn: 56 KN, 38 bugs, 0 drafts — suggest/log/propose/status (<50ms, IDF, tiếng Việt)",
+      "governance: audit 148 (Ed25519 receipt P0-4) · policy 9 deny/2 allow (ok) · credentials 0 keys plain",
       "platform: agents 3 (3 built-in, 0 remote) · mcp 3 vendors/3 grants (library 1.2.0 read-only) · components 3/3 pub · routines 3/3 enabled",
       "collaboration: KN-018 — dissentGate ✅ · whoDidYouThinkWith ✅ · critic ✅ · fund-the-friction ✅ (ok)",
       "n5-blazor: www/n5-blazor/ 7 trang static + app.css + data.js + site.js — 100% Pages"
@@ -686,36 +687,19 @@
   },
   "learn": {
     "knTotal": 56,
-    "bugsTotal": 37,
+    "bugsTotal": 38,
     "drafts": 0
   },
   "governance": {
     "audit": {
-      "total": 142,
-      "permitted": 115,
-      "refused": 26,
+      "total": 148,
+      "permitted": 119,
+      "refused": 28,
       "failed": 1,
-      "lastTs": "2026-09-13T15:29:23.318Z",
+      "lastTs": "2026-09-13T15:50:38.033Z",
       "tail": [
         {
-          "ts": "2026-09-13T14:57:27.618Z",
-          "actor": "YUNIE",
-          "tool": "edit",
-          "target": "www/app.js",
-          "decision": "permitted",
-          "rule": "allow-all",
-          "durationMs": null,
-          "error": null,
-          "intent": "fix STATUS 375 overflow (grid minmax + ellipsis span + inner grid) KN-055",
-          "requestId": "ac376f",
-          "prevHash": "9763c32c5a904341",
-          "policyDigest": "190b0de217bf1dda",
-          "hash": "723a567485a3f015",
-          "sig": "hmCrIRJoYdCMCnuZG2XgAyW7po7SI7g-Jm74z1jQ--cdbXxMFopVxLr7pdFKRWUdHcOAz4b0N5sgBWhnbMRCBA",
-          "pub": "MCowBQYDK2VwAyEAY8PlU0KjXp4HJUUlNlVZdaXHUmDagUMm8rUrEShTPXo"
-        },
-        {
-          "ts": "2026-09-13T15:23:27.681Z",
+          "ts": "2026-09-13T15:43:13.323Z",
           "actor": "redteam-spec",
           "tool": "read",
           "target": "***",
@@ -724,32 +708,66 @@
           "durationMs": null,
           "error": null,
           "intent": null,
-          "requestId": "07860c",
-          "prevHash": "723a567485a3f015",
+          "requestId": "013b34",
+          "prevHash": "2916c8ab3975799c",
           "policyDigest": "190b0de217bf1dda",
-          "hash": "76c7f1eca552f7a7",
-          "sig": "Bc7lIWc3L2rtFuHi8YYW8nS6T3jZjHYahtlUIlCFLBdBYayOs2Z4WFCVp9KEBcu9rA6sMHSb0G1cZ_VI6RJEAA",
+          "hash": "e15eb47ad5239e03",
+          "sig": "GZr189efLbEBSEH5SreUhqenJTEh17xTlo0J9B0-p26S11p3jWIW5KFLYMeWl2ZrlLn4FvTIquA7fXc73n-kDQ",
           "pub": "MCowBQYDK2VwAyEAY8PlU0KjXp4HJUUlNlVZdaXHUmDagUMm8rUrEShTPXo"
         },
         {
-          "ts": "2026-09-13T15:24:10.355Z",
+          "ts": "2026-09-13T15:43:32.997Z",
           "actor": "YUNIE",
           "tool": "edit",
-          "target": "recurrence-loop: auto-learn.mjs + kn-parse.mjs + auto-learn-guard.spec.ts + docs",
+          "target": "www/ai-news/ai-news.js + ai-news.css + tests/e2e/ai-news-vi.spec.ts (vi-summary)",
+          "decision": "permitted",
+          "rule": "allow-read-www",
+          "durationMs": null,
+          "error": null,
+          "intent": "feature: dịch summary sang VI cho trang AI News",
+          "requestId": "11a782",
+          "prevHash": "e15eb47ad5239e03",
+          "policyDigest": "190b0de217bf1dda",
+          "hash": "81511cfade362472",
+          "sig": "9_F44mcnRLU2drSi9i9DyWRnYFBQLuPc963hKr1L049zbSsGfd5OmJxR2ujRpiQUSR6Fpir8Fh53JQ-rXemuAA",
+          "pub": "MCowBQYDK2VwAyEAY8PlU0KjXp4HJUUlNlVZdaXHUmDagUMm8rUrEShTPXo"
+        },
+        {
+          "ts": "2026-09-13T15:43:57.618Z",
+          "actor": "verify",
+          "tool": "edit",
+          "target": "tests/e2e/ai-news-vi.spec.ts",
           "decision": "permitted",
           "rule": "allow-all",
           "durationMs": null,
           "error": null,
-          "intent": null,
-          "requestId": "7cd3dc",
-          "prevHash": "76c7f1eca552f7a7",
+          "intent": "guard e2e: dịch VI summary (KN-056)",
+          "requestId": "26a365",
+          "prevHash": "81511cfade362472",
           "policyDigest": "190b0de217bf1dda",
-          "hash": "b44b43a5c9f3d025",
-          "sig": "wLEk6vJlZrVeO3r7KS0CdUCMpH1FqvWsbbfdd5_ek8zycXTZFus05SrNl73ljfbLWCo_5et251EQMJFEzmiHCA",
+          "hash": "e8c845e5d9f7d122",
+          "sig": "tnIKBb0jPO25mLzoF-BsoEe4rjjRzopxSJIycY1N8p3hjG34ks1gvYvx0hHyd5WWOC6ObNBhuGohB8IyY3dMDw",
           "pub": "MCowBQYDK2VwAyEAY8PlU0KjXp4HJUUlNlVZdaXHUmDagUMm8rUrEShTPXo"
         },
         {
-          "ts": "2026-09-13T15:27:34.379Z",
+          "ts": "2026-09-13T15:46:34.822Z",
+          "actor": "verify",
+          "tool": "edit",
+          "target": "tests/e2e/cosmos-gravity-polarity.spec.ts (verify actor: dynamic polarity contract thay pin G=8 — data drift 26->27 plans)",
+          "decision": "permitted",
+          "rule": "allow-all",
+          "durationMs": null,
+          "error": null,
+          "intent": "test-fixture-update",
+          "requestId": "38ca16",
+          "prevHash": "e8c845e5d9f7d122",
+          "policyDigest": "190b0de217bf1dda",
+          "hash": "366db51e30779bd3",
+          "sig": "aQuvY4FtWlQN9QZWAdQG96alZEitzylPSo3_-VYsMeKAR7kHszycAdfk9AS3odpp7GeJVnobO9Xxr1tIh2-MCA",
+          "pub": "MCowBQYDK2VwAyEAY8PlU0KjXp4HJUUlNlVZdaXHUmDagUMm8rUrEShTPXo"
+        },
+        {
+          "ts": "2026-09-13T15:50:38.033Z",
           "actor": "redteam-spec",
           "tool": "read",
           "target": "***",
@@ -758,28 +776,11 @@
           "durationMs": null,
           "error": null,
           "intent": null,
-          "requestId": "5ba9b2",
-          "prevHash": "b44b43a5c9f3d025",
+          "requestId": "274d63",
+          "prevHash": "366db51e30779bd3",
           "policyDigest": "190b0de217bf1dda",
-          "hash": "e3c8a46804766341",
-          "sig": "dA7t3ql7kXL23M1G6DjgJAAidF4A5XgDI3SnZ0_x7MBpCF4K8xrkS9moZk_zN1PF_EWUqiYQ5pOwEobChl2bAA",
-          "pub": "MCowBQYDK2VwAyEAY8PlU0KjXp4HJUUlNlVZdaXHUmDagUMm8rUrEShTPXo"
-        },
-        {
-          "ts": "2026-09-13T15:29:23.318Z",
-          "actor": "YUNIE",
-          "tool": "shell",
-          "target": "remove 2 RED-test artifacts in .agent/bugs (test-radar-dry, rainbow-hover-tai-lap-that)",
-          "decision": "permitted",
-          "rule": "allow-all",
-          "durationMs": null,
-          "error": null,
-          "intent": "cleanup-test-artifacts",
-          "requestId": "b13859",
-          "prevHash": "e3c8a46804766341",
-          "policyDigest": "190b0de217bf1dda",
-          "hash": "0e70fe60c51c357f",
-          "sig": "hoMefG5a64pVC0vrMzCPuAIiqww6SBle2bvnRJW1ZR7Up__UAeLUd-dzV-f9jA42TG_I5paZYb_A7H5oLmnWCA",
+          "hash": "024cede3c45945f9",
+          "sig": "Uxpvq7ltqnfJxbQEVj-hZ0nGlN2NNfCvY0gg8L8ziv1exif2NMX58dU2DE-GOsVYWlxbViU5WS4nWOthfxueCA",
           "pub": "MCowBQYDK2VwAyEAY8PlU0KjXp4HJUUlNlVZdaXHUmDagUMm8rUrEShTPXo"
         }
       ]
@@ -789,7 +790,7 @@
       "deny": 9,
       "allow": 2,
       "status": "ok",
-      "lastCheck": "2026-09-13T15:29:34.716Z"
+      "lastCheck": "2026-09-13T15:52:11.142Z"
     },
     "credentials": {
       "count": 0,
@@ -857,7 +858,7 @@
     "D": 0,
     "G": 9,
     "M": 0,
-    "generatedAt": "2026-09-13T15:29:34.061Z",
-    "points": 28
+    "generatedAt": "2026-09-13T15:52:10.518Z",
+    "points": 29
   }
 }

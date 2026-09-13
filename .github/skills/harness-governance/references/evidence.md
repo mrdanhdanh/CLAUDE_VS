@@ -1,8 +1,8 @@
 # Evidence — harness-governance (DisCo arXiv:2609.02749v1 §3.2 (task-agnostic))
 
-> Substrate layer của skill — full text từ docs/knowleged.md. Sinh tự động 2026-09-13T15:21:15.398Z.
+> Substrate layer của skill — full text từ docs/knowleged.md. Sinh tự động 2026-09-13T15:52:03.552Z.
 
-## Bug reports liên quan (2/39 bugs)
+## Bug reports liên quan (2/38 bugs)
 
 - `.agent/bugs/2026-09-03-agent-test-mutate-reward-hacking/bug.md` — Bug: Agent tự sửa test để pass (reward hacking)
 - `.agent/bugs/2026-09-12-entropy-probe-inflation/bug.md` — Bug: Entropy S tăng giả mỗi lần chạy e2e suite — red-team probes bị đếm như nợ thật

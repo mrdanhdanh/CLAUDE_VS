@@ -1,10 +1,10 @@
 {
-  "generatedAt": "2026-09-13T15:29:33.837Z",
+  "generatedAt": "2026-09-13T15:52:10.297Z",
   "generatedBy": "entangle.mjs --graph",
   "scanned": {
-    "files": 1547,
-    "edges": 1503,
-    "commits": 171
+    "files": 1558,
+    "edges": 1519,
+    "commits": 175
   },
   "thresholds": {
     "hubMinRefs": 10,
@@ -13,7 +13,7 @@
   "hubs": [
     {
       "file": "docs/knowleged.md",
-      "refs": 86
+      "refs": 87
     },
     {
       "file": "www/status.json",
@@ -32,12 +32,12 @@
       "refs": 33
     },
     {
-      "file": "www/styles.css",
+      "file": "README.md",
       "refs": 31
     },
     {
-      "file": "README.md",
-      "refs": 30
+      "file": "www/styles.css",
+      "refs": 31
     },
     {
       "file": "www/library/mcp-server.mjs",
@@ -69,7 +69,7 @@
     },
     {
       "file": "docs/harness-flow.md",
-      "refs": 12
+      "refs": 13
     },
     {
       "file": "scripts/slop-check.mjs",
@@ -97,12 +97,20 @@
         "www/todo-manager/styles.css"
       ],
       "weight": 4
+    },
+    {
+      "files": [
+        ".github/harness/scripts/auto-learn.mjs",
+        "package.json",
+        "www/cosmos/heatmap.json"
+      ],
+      "weight": 3
     }
   ],
   "deadFilaments": [],
   "counts": {
     "hubs": 17,
-    "clusters": 2,
+    "clusters": 3,
     "deadFilaments": 0
   }
 }

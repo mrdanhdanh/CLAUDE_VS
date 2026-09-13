@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-13T15:29:34.325Z",
+  "generatedAt": "2026-09-13T15:52:10.756Z",
   "generatedBy": "auto-learn.mjs stats --heatmap",
   "policy": {
     "cold": "bugCount − knCount ≥ 1",
@@ -12,15 +12,15 @@
   },
   "counts": {
     "knTotal": 56,
-    "bugTotal": 37,
-    "tags": 106,
+    "bugTotal": 38,
+    "tags": 123,
     "months": [
       "2026-08",
       "2026-09"
     ],
-    "coldSpots": 7,
+    "coldSpots": 9,
     "zeroRef": 0,
-    "refFiles": 285
+    "refFiles": 289
   },
   "grid": {
     "months": [
@@ -341,6 +341,118 @@
         ]
       },
       {
+        "tag": "-Command",
+        "total": 1,
+        "cells": [
+          0,
+          1
+        ]
+      },
+      {
+        "tag": "-File",
+        "total": 1,
+        "cells": [
+          0,
+          1
+        ]
+      },
+      {
+        "tag": "?",
+        "total": 1,
+        "cells": [
+          0,
+          1
+        ]
+      },
+      {
+        "tag": "??",
+        "total": 1,
+        "cells": [
+          0,
+          1
+        ]
+      },
+      {
+        "tag": "?.",
+        "total": 1,
+        "cells": [
+          0,
+          1
+        ]
+      },
+      {
+        "tag": ".Count",
+        "total": 1,
+        "cells": [
+          0,
+          1
+        ]
+      },
+      {
+        "tag": ".Length",
+        "total": 1,
+        "cells": [
+          0,
+          1
+        ]
+      },
+      {
+        "tag": "\"",
+        "total": 1,
+        "cells": [
+          0,
+          1
+        ]
+      },
+      {
+        "tag": "&&",
+        "total": 1,
+        "cells": [
+          0,
+          1
+        ]
+      },
+      {
+        "tag": "%LOCALAPPDATA%\\Programs\\PowerShell\\7.6.6",
+        "total": 1,
+        "cells": [
+          0,
+          1
+        ]
+      },
+      {
+        "tag": "${var}?.prop",
+        "total": 1,
+        "cells": [
+          0,
+          1
+        ]
+      },
+      {
+        "tag": "$null",
+        "total": 1,
+        "cells": [
+          0,
+          1
+        ]
+      },
+      {
+        "tag": "$s='abc'; $s?.Length",
+        "total": 1,
+        "cells": [
+          0,
+          1
+        ]
+      },
+      {
+        "tag": "$var?.prop",
+        "total": 1,
+        "cells": [
+          0,
+          1
+        ]
+      },
+      {
         "tag": "a-jit",
         "total": 1,
         "cells": [
@@ -366,6 +478,14 @@
       },
       {
         "tag": "archify",
+        "total": 1,
+        "cells": [
+          0,
+          1
+        ]
+      },
+      {
+        "tag": "automationProfile.windows",
         "total": 1,
         "cells": [
           0,
@@ -582,6 +702,14 @@
       },
       {
         "tag": "guard",
+        "total": 1,
+        "cells": [
+          0,
+          1
+        ]
+      },
+      {
+        "tag": "hooks",
         "total": 1,
         "cells": [
           0,
@@ -837,6 +965,14 @@
         ]
       },
       {
+        "tag": "terminal.integrated.defaultProfile.windows",
+        "total": 1,
+        "cells": [
+          0,
+          1
+        ]
+      },
+      {
         "tag": "testing",
         "total": 1,
         "cells": [
@@ -889,6 +1025,18 @@
       "tag": "perf",
       "kn": 2,
       "bug": 3,
+      "coldness": 1
+    },
+    {
+      "tag": "windows",
+      "kn": 2,
+      "bug": 3,
+      "coldness": 1
+    },
+    {
+      "tag": "powershell",
+      "kn": 1,
+      "bug": 2,
       "coldness": 1
     },
     {

@@ -1,8 +1,8 @@
 # Evidence — harness-process (DisCo arXiv:2609.02749v1 §3.2 (task-agnostic))
 
-> Substrate layer của skill — full text từ docs/knowleged.md. Sinh tự động 2026-09-13T15:21:15.428Z.
+> Substrate layer của skill — full text từ docs/knowleged.md. Sinh tự động 2026-09-13T15:52:03.579Z.
 
-## Bug reports liên quan (8/39 bugs)
+## Bug reports liên quan (8/38 bugs)
 
 - `.agent/bugs/2026-08-30-bug-blindness/bug.md` — Bug: Bug Blindness — mù bug do workaround vô thức + fan bias
 - `.agent/bugs/2026-09-03-rag-export-missing-grounding-chet/bug.md` — Bug: RAG export missing grounding chet
@@ -454,7 +454,9 @@
   - `??` trong `.mjs`/Node vẫn hợp lệ — chỉ cấm trong LỆNH PowerShell / `.ps1`.
   - Gặp `Unexpected token '??'` → viết lại TOÀN lệnh rồi mới re-run, không lặp y nguyên (KN-023).
   - Trước Done: grep sweep lệnh mới sinh (plan/docs/session) xem còn cú pháp PS 7.
-- **Cập nhật 2026-09-12 (root fix môi trường):** Cài pwsh **7.6.6** user-space — tải zip win-x64 từ GitHub release → extract `%LOCALAPPDATA%\Programs\PowerShell\7.6.6` (ZipFile + Unblock-File, không cần admin) + user PATH; VS Code user settings: `terminal.integrated.defaultProfile.windows` + `automationProfile.windows` = "PowerShell 7". **Đo trên 7.6.6:** `??` ✅ · `&&` ✅ · `?.` ⚠️ — `$var?.prop` (không brace) bị tokenizer nuốt `?` vào tên biến → kết quả sai lặng (`$s='abc'; $s?.Length` → 0, không phải 3); phải viết `${var}?.prop`. `.Length`/`.Count` trên `$null` → 0 (intrinsic) — dễ nhầm với giá trị thật. **Từ PS 5.1 gọi pwsh `-Command` chứa `"` → quote bị nuốt** (native arg mangling — đo được 2 lần) → dùng `-File` hoặc mở terminal pwsh trực tiếp. Contract 5.1 vẫn giữ cho artifact commit repo (portability floor).
+- **Tái lập class 2026-09-13 (hooks.json → subexpression):** Stop hook lỗi `The term 'lu?i' is not recognized...` — 2 lệnh echo trong `.github/hooks/hooks.json` chứa `()` (`... log (tự RADAR tái lập)` + `... GUARD (lưới chống tái lập: guards)`) → PowerShell parse thành **subexpression**, tìm command tên `lưới`. RADAR (KN-056) bắt đúng class: [KN-039] score 93.5 + bug cũ ps-5-1 score 178.6. **Vì sao lưới cũ miss:** §5d là văn xuôi cho "lệnh gõ terminal" — hooks.json là code chạy qua shell ở bề mặt khác, không spec nào đọc. **Fix:** bỏ ngoặc khỏi hook message + regenerate `.claude/settings.json` qua `export-claude`. **Guard (lưới máy):** `tests/e2e/hooks-integrity.spec.ts` — 2 test: hooks.json mọi command metachar-free + timeout dương · `.claude/settings.json` không drift. Bug: `.agent/bugs/2026-09-13-stop-hook-loi-dau-ngoac-trong-lenh-echo-bi-powersh/`.
+- **Guard:** `tests/e2e/hooks-integrity.spec.ts`
+- **Tags:** `process` `dx` `windows` `powershell` `scripts` `hooks` Cài pwsh **7.6.6** user-space — tải zip win-x64 từ GitHub release → extract `%LOCALAPPDATA%\Programs\PowerShell\7.6.6` (ZipFile + Unblock-File, không cần admin) + user PATH; VS Code user settings: `terminal.integrated.defaultProfile.windows` + `automationProfile.windows` = "PowerShell 7". **Đo trên 7.6.6:** `??` ✅ · `&&` ✅ · `?.` ⚠️ — `$var?.prop` (không brace) bị tokenizer nuốt `?` vào tên biến → kết quả sai lặng (`$s='abc'; $s?.Length` → 0, không phải 3); phải viết `${var}?.prop`. `.Length`/`.Count` trên `$null` → 0 (intrinsic) — dễ nhầm với giá trị thật. **Từ PS 5.1 gọi pwsh `-Command` chứa `"` → quote bị nuốt** (native arg mangling — đo được 2 lần) → dùng `-File` hoặc mở terminal pwsh trực tiếp. Contract 5.1 vẫn giữ cho artifact commit repo (portability floor).
 - **Tags:** `process` `dx` `windows` `powershell` `scripts`
 - **Người ghi:** YUNIE / /fixbug
 

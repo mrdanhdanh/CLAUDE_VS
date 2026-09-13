@@ -11,7 +11,7 @@ user-invocable: "false"
 
 ## When to Use
 
-- Task chạm theme **Process & Self-Improvement** (tags: process, quality, ux, perf, a11y, knowledge, automation, dx, self-improving, benchmark, aar, mcp, testing, regex, windows, fs, collaboration, diversity, pilot-in-command, metrics, evidence, research, verification, calibration, psychology, taste, human-judgment, agent, self-evolving, procedural-graph, a-jit, memory, funnel, rl, consistency, self-distillation, scaffold, rsi, harness, failure-diagnosis, reasoning, uncertainty, architecture, playbook, evals, agentic-patterns, powershell, scripts, content, docs, verify, fresh-eyes, rag, grounding, slop, complexity, git, recovery, recurrence, guard)
+- Task chạm theme **Process & Self-Improvement** (tags: process, quality, ux, perf, a11y, knowledge, automation, dx, self-improving, benchmark, aar, mcp, testing, regex, windows, fs, collaboration, diversity, pilot-in-command, metrics, evidence, research, verification, calibration, psychology, taste, human-judgment, agent, self-evolving, procedural-graph, a-jit, memory, funnel, rl, consistency, self-distillation, scaffold, rsi, harness, failure-diagnosis, reasoning, uncertainty, architecture, playbook, evals, agentic-patterns, powershell, scripts, hooks, %LOCALAPPDATA%\Programs\PowerShell\7.6.6, terminal.integrated.defaultProfile.windows, automationProfile.windows, ??, &&, ?., $var?.prop, ?, $s='abc'; $s?.Length, ${var}?.prop, .Length, .Count, $null, -Command, ", -File, content, docs, verify, fresh-eyes, rag, grounding, slop, complexity, git, recovery, recurrence, guard)
 - Trước khi code/fix — áp **Cách phòng tránh** ngay để không lặp bug cũ
 - Review/plan — check anti-patterns bên dưới
 
@@ -184,7 +184,7 @@ user-invocable: "false"
   - Claim "nhanh hơn/tốt hơn" phải kèm số đo — không vibes (KN-019).
 
 ### KN-039 — PS 5.1 không hỗ trợ `??` — lệnh PowerShell fail parse "Unexpected token" (major)
-- **Bài học:** Cấm cú pháp PS 7+ trong lệnh/script PS: `??` → `if (-not $x) { $x = 'default' }`, ternary → if/else; gặp `Unexpected token` → viết lại toàn lệnh rồi mới re-run · **2026-09-12:** local nâng pwsh **7.6.6** (user-space, no admin) + VS Code default terminal "PowerShell 7"; đo trên 7.6.6: `??`/`&&` OK, `$var?.prop` không brace **sai lặng** (dùng `${var}?.prop`)
+- **Bài học:** Cấm cú pháp PS 7+ trong lệnh/script PS: `??` → `if (-not $x) { $x = 'default' }`, ternary → if/else; gặp `Unexpected token` → viết lại toàn lệnh rồi mới re-run · **2026-09-12:** local nâng pwsh **7.6.6** (user-space, no admin) + VS Code default terminal "PowerShell 7"; đo trên 7.6.6: `??`/`&&` OK, `$var?.prop` không brace **sai lặng** (dùng `${var}?.prop`) · **2026-09-13:** hook command phải metachar-free — cấm ngoặc/chấm phẩy/`&`/pipe/backtick trong echo (subexpression); lưới máy `hooks-integrity.spec.ts`
 - **Bug report:** .agent/bugs/2026-09-11-ps-5-1-khong-ho-tro-trong-lenh-powershell/bug.md
 - **Cách phòng tránh:**
   - Sinh lệnh PowerShell: chỉ cú pháp 5.1 — `??` → `if (-not ...)`, `?.` → `if ($a -and $a.b)`, ternary → if/else, `&&` → `;`.
@@ -255,6 +255,7 @@ user-invocable: "false"
 
 ## Anti-patterns (đừng lặp lại)
 
+- - ❌ Viết lệnh trong `hooks.json`/`.claude/settings.json` như text tài liệu — đây là code chạy qua PowerShell: ngoặc, chấm phẩy, `&`, pipe, backtick bị parse thành cú pháp (subexpression) → hook lỗi mỗi lần chạy; lưới máy `hooks-integrity.spec.ts` (KN-039 tái lập 2026-09-13 + KN-056).
 - - ❌ Có KN rồi mà bug vẫn tái lập — KN văn xuôi không tự FAIL khi bị vi phạm; KN major/critical phải có lưới (test/invariant) hoặc nó chỉ là wishlist (KN-056 + KN-047).
 - - ❌ Log bug xong không đối chiếu KN/bug cũ — tái lập bị phát hiện muộn (lần 3-4); `log` giờ tự RADAR, RADAR báo thì đọc Cách phòng tránh TRƯỚC khi fix (KN-056).
 - - ❌ Bug tái lập mà fix lại y nguyên lần đầu — thiếu câu "vì sao lưới cũ không bắt được"; trình tự đúng: nâng lưới TRƯỚC, fix SAU (KN-056).
