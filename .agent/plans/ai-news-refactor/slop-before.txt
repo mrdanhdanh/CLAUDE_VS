@@ -1,0 +1,29 @@
+≡ƒº╣ Slop Check ΓÇö 1 file ┬╖ dup ΓëÑ8 d├▓ng ┬╖ fn Γëñ80 d├▓ng ┬╖ CC Γëñ12
+
+ΓÜá∩╕Å  Duplication (5 block):
+   ΓÇó 11 d├▓ng ├ù2 ΓÇö www/ai-news/ai-news.js:373 Γåö www/ai-news/ai-news.js:531
+     Γöö const genEl = $('#metaGenerated'); if (genEl) genEl.textContent = fmtDat
+   ΓÇó 9 d├▓ng ├ù2 ΓÇö www/ai-news/ai-news.js:376 Γåö www/ai-news/ai-news.js:534
+     Γöö const bar = $('#filterBar');
+   ΓÇó 18 d├▓ng ├ù2 ΓÇö www/ai-news/ai-news.js:581 Γåö www/ai-news/ai-news.js:607
+     Γöö const genEl = $('#metaGenerated'); if (genEl) genEl.textContent = fmtDat
+   ΓÇó 16 d├▓ng ├ù2 ΓÇö www/ai-news/ai-news.js:583 Γåö www/ai-news/ai-news.js:610
+     Γöö const bar = $('#filterBar');
+   ΓÇó 9 d├▓ng ├ù2 ΓÇö www/ai-news/ai-news.js:592 Γåö www/ai-news/ai-news.js:619
+     Γöö activeFilter = 'all';
+
+ΓÜá∩╕Å  Function metrics:
+   ΓÇó [complexity] www/ai-news/ai-news.js:96 fetchLiveHN() ΓÇö CC 18 (max 12)
+   ΓÇó [complexity] www/ai-news/ai-news.js:141 fetchLiveDevTo() ΓÇö CC 18 (max 12)
+   ΓÇó [complexity] www/ai-news/ai-news.js:161 fetchLiveReddit() ΓÇö CC 23 (max 12)
+   ΓÇó [complexity] www/ai-news/ai-news.js:184 fetchLiveHackerNoon() ΓÇö CC 39 (max 12)
+   ΓÇó [size] www/ai-news/ai-news.js:323 handleLiveRefresh() ΓÇö 91 d├▓ng (max 80)
+   ΓÇó [complexity] www/ai-news/ai-news.js:323 handleLiveRefresh() ΓÇö CC 42 (max 12)
+   ΓÇó [size] www/ai-news/ai-news.js:458 handleSearch() ΓÇö 111 d├▓ng (max 80)
+   ΓÇó [complexity] www/ai-news/ai-news.js:458 handleSearch() ΓÇö CC 58 (max 12)
+   ΓÇó [complexity] www/ai-news/ai-news.js:569 handleResetSearch() ΓÇö CC 25 (max 12)
+   ΓÇó [complexity] www/ai-news/ai-news.js:739 renderLast30DaysBadge() ΓÇö CC 13 (max 12)
+   ΓÇó [size] www/ai-news/ai-news.js:760 init() ΓÇö 114 d├▓ng (max 80)
+   ΓÇó [complexity] www/ai-news/ai-news.js:760 init() ΓÇö CC 54 (max 12)
+
+Γ¥î 17 findings ΓÇö fix hoß║╖c justify tr╞░ß╗¢c khi Done (Slop Gate ┬╖ KN-047)
