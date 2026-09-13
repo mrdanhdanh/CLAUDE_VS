@@ -38,7 +38,28 @@ function freshnessInfo(dateStr) {
 async function loadNews() {
   const res = await fetch('./ai-news.json', { cache: 'no-store' });
   if (!res.ok) throw new Error(`ai-news.json ${res.status} ${res.statusText}`);
-  return res.json();
+  return mergeCurated(await res.json());
+}
+
+// ── Curated mirror (KN-051/KN-052) ──
+// curated.json là file người quản (fetch.mjs không ghi đè, không phải deny-test-mutate path).
+// Pinned top + dedupe theo id; fail-open — curated lỗi thì news vẫn render.
+async function mergeCurated(data) {
+  try {
+    const res = await fetch('./curated.json', { cache: 'no-store' });
+    if (!res.ok) return data;
+    const c = await res.json();
+    const entries = Array.isArray(c && c.articles) ? c.articles : [];
+    const seen = new Set((data.articles || []).map(a => a.id));
+    const fresh = entries.filter(a => a && a.id && !seen.has(a.id));
+    if (!fresh.length) return data;
+    const articles = [...fresh, ...(data.articles || [])];
+    return { ...data, articles, meta: curatedMeta(data.meta, articles) };
+  } catch { return data; }
+}
+
+function curatedMeta(meta, articles) {
+  return { ...(meta || {}), total: articles.length, hot: articles.filter(a => a.hot).length, sources: [...new Set(articles.map(a => a.source))] };
 }
 
 function categoryColor(catId) {
@@ -754,7 +775,7 @@ async function init() {
         const ageMs = Date.now() - cachedTime;
         const maxAgeMs = 24 * 60 * 60 * 1000; // giữ cache 24h
         if (isCachedNewer && ageMs < maxAgeMs) {
-          data = cached.data;
+          data = await mergeCurated(cached.data);
           console.log('[ai-news] restored live cache from', new Date(cachedTime).toLocaleString('vi-VN'));
         } else if (!isCachedNewer) {
           console.log('[ai-news] server is newer than cache — using server data');

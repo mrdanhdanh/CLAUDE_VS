@@ -1,0 +1,27 @@
+{
+  "description": "Curated mirror — bài YUNIE tuyển chọn cho feed ai-news (ghim đầu feed). KHÔNG bị fetch.mjs ghi đè — thêm/xoá bài bằng cách sửa file này qua git. Merge bởi mergeCurated() trong ai-news.js, fail-open nếu file lỗi.",
+  "articles": [
+    {
+      "id": "curated-axios-amodei-pacing",
+      "title": "Anthropic, OpenAI CEOs call for slowdown in AI development",
+      "summary": "Amodei kêu gọi giảm tốc ngay (essay \"We Must Pace the Frontier\"): RSI đang diễn ra + vụ OAI-HF; 3 bước — embedded evaluators (verifier ngoài builder) → democratic → global coordination. Altman đồng ý. → Harness KN-052: tách claim vs mechanism, không adopt alarm timeline.",
+      "source": "Axios",
+      "sourceUrl": "https://www.axios.com/2026/09/12/anthropic-ai-amodei-pacing",
+      "category": "safety",
+      "date": "2026-09-12",
+      "hot": true,
+      "tags": ["Axios", "pacing", "governance", "KN-052"]
+    },
+    {
+      "id": "curated-pluralistic-llms-real-ai-fake",
+      "title": "LLMs are real, AI is fake — vụ hack không phải nổi loạn mà là sandbox dỏm",
+      "summary": "Doctorow: Exploit Gym chỉ là Python loop + log CTF cũ + thiếu human-in-the-loop; nguy hiểm thật là sandbox dỏm + NOBUS hoarding, không phải Skynet. → Harness KN-051: hành vi lạ phải truy về training data + loop trước khi gán agency.",
+      "source": "Pluralistic",
+      "sourceUrl": "https://pluralistic.net/2026/09/12/god-in-the-box/",
+      "category": "safety",
+      "date": "2026-09-12",
+      "hot": true,
+      "tags": ["Pluralistic", "safety", "sandbox", "KN-051"]
+    }
+  ]
+}
