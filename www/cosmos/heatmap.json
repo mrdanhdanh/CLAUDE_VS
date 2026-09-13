@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-12T14:29:16.792Z",
+  "generatedAt": "2026-09-12T14:46:08.606Z",
   "generatedBy": "auto-learn.mjs stats --heatmap",
   "policy": {
     "cold": "bugCount − knCount ≥ 1",
@@ -20,7 +20,7 @@
     ],
     "coldSpots": 7,
     "zeroRef": 0,
-    "refFiles": 258
+    "refFiles": 266
   },
   "grid": {
     "months": [

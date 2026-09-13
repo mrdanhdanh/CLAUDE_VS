@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-12T14:29:16.472Z",
+  "generatedAt": "2026-09-12T14:46:08.345Z",
   "generatedBy": "cosmic-scale.mjs",
   "entropy": {
     "S": 9,
@@ -11,23 +11,25 @@
       "refused": 2,
       "disabled": 0,
       "failed": 1,
-      "refusedProbes": 12
+      "refusedProbes": 14
     }
   },
   "darkEnergy": {
-    "D": 7,
-    "dissentRatio": 0.31,
-    "plansTotal": 72,
-    "plansWithDissent": 22,
-    "advice": "Dark energy cao — decollaboration đang nở rộng: áp KN-018 cho mọi PRD mới (Who did you think with?)."
+    "D": 0,
+    "dissentRatio": 1,
+    "plansTotal": 25,
+    "plansWithDissent": 25,
+    "plansLegacy": 49,
+    "advice": "Gravity thắng — mọi plan đều có Dissent/Who did you think with."
   },
   "gravity": {
-    "G": 4,
-    "level": "medium",
-    "cutRatio": 0.4,
-    "plansTotal": 72,
-    "plansWithCut": 29,
-    "advice": "Gravity vừa — thêm dòng CẮT/YAGNI vào PRD mới để giữ scope."
+    "G": 8,
+    "level": "high",
+    "cutRatio": 0.84,
+    "plansTotal": 25,
+    "plansWithCut": 21,
+    "plansLegacy": 49,
+    "advice": "Gravity mạnh — đa số PRD có dòng CẮT/YAGNI: scope được kiểm soát tốt."
   },
   "darkMatter": {
     "M": 0,
@@ -40,7 +42,7 @@
   "counts": {
     "knTotal": 49,
     "bugsTotal": 32,
-    "auditTotal": 104
+    "auditTotal": 109
   },
   "capability": {
     "kn": 49,
@@ -287,21 +289,29 @@
         "e2eTests": 123,
         "guards": 11
       }
+    },
+    {
+      "t": "2026-09-12T14:46:08.345Z",
+      "S": 9,
+      "level": "low",
+      "M": 0,
+      "D": 0,
+      "G": 8,
+      "C": {
+        "kn": 49,
+        "skills": 19,
+        "e2eSpecs": 24,
+        "e2eTests": 123,
+        "guards": 11
+      }
     }
   ],
-  "capabilityDelta": {
-    "e2eSpecs": 1,
-    "e2eTests": 5
-  },
+  "capabilityDelta": null,
   "trend": {
     "increases": 0,
     "needed": 3,
     "gate": false,
     "window": [
-      {
-        "t": "2026-09-12T13:51:27.932Z",
-        "S": 9
-      },
       {
         "t": "2026-09-12T14:06:46.723Z",
         "S": 9
@@ -312,6 +322,10 @@
       },
       {
         "t": "2026-09-12T14:29:16.472Z",
+        "S": 9
+      },
+      {
+        "t": "2026-09-12T14:46:08.345Z",
         "S": 9
       }
     ]

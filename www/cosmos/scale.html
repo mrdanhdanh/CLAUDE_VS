@@ -487,6 +487,10 @@
         const row=document.createElement('div'); row.className='part';
         row.innerHTML=`<span>${k}</span><b>${v}</b>`; deParts.appendChild(row);
       }
+      if(de.plansLegacy!=null){
+        const leg=document.createElement('div'); leg.className='part';
+        leg.innerHTML=`<span>Tiền-gate (trước KN-018 2026-09-07)</span><b>${de.plansLegacy} plans — không tính D/G</b>`; deParts.appendChild(leg);
+      }
       const badge=document.createElement('div'); badge.className='gauge-level '+deLevel; badge.style.marginTop='12px'; badge.style.display='inline-block'; badge.style.padding='4px 12px'; badge.style.borderRadius='999px';
       badge.textContent='D='+D+' ('+deLevel+')'; deParts.appendChild(badge);
       $('#deCode').textContent='darkEnergy: '+JSON.stringify(de,null,2);
@@ -501,7 +505,12 @@
           const row=document.createElement('div'); row.className='part';
           row.innerHTML=`<span>${k}</span><b>${v}</b>`; gp.appendChild(row);
         }
-        const gBadge=document.createElement('div'); gBadge.className='gauge-level '+(gr.level||'low'); gBadge.style.marginTop='12px'; gBadge.style.display='inline-block'; gBadge.style.padding='4px 12px'; gBadge.style.borderRadius='999px';
+        if(gr.plansLegacy!=null){
+          const leg=document.createElement('div'); leg.className='part';
+          leg.innerHTML=`<span>Tiền-gate (trước KN-018 2026-09-07)</span><b>${gr.plansLegacy} plans — không tính D/G</b>`; gp.appendChild(leg);
+        }
+        const gBadge=document.createElement('div'); gBadge.className='gauge-level '+(gr.level==='high'?'low':gr.level==='low'?'high':(gr.level||'medium')); gBadge.style.marginTop='12px'; gBadge.style.display='inline-block'; gBadge.style.padding='4px 12px'; gBadge.style.borderRadius='999px';
+        // Polarity đảo: G cao = scope kiểm soát TỐT (xanh), G thấp = scope phình (đỏ) — ngược S/D/M (cao=xấu).
         gBadge.textContent=G!=null? 'G='+G+' ('+(gr.level||'low')+')' : 'G=— (chạy lại cosmic-scale.mjs)';
         gp.appendChild(gBadge);
       }

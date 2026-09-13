@@ -1927,7 +1927,7 @@ test('checkout', async () =&gt; {
       <div class="container">
         <div class="section-head">
           <h2 id="future-title"><small>Khai thác tương lai</small>Đề tài này còn đào sâu được gì?</h2>
-          <p>9 hướng cũ đã ship và gỡ khỏi danh sách — còn 4 đề tài mới, đo được, ship dần theo quý. Gõ tên đề tài là YUNIE vào pipeline ngay.</p>
+          <p>9 hướng cũ đã ship và gỡ khỏi danh sách — còn 6 đề tài mới, đo được, ship dần theo quý. Gõ tên đề tài là YUNIE vào pipeline ngay.</p>
         </div>
         <div class="future-grid">
           <div class="future-card">
@@ -1949,6 +1949,16 @@ test('checkout', async () =&gt; {
             <h4>🌀 Wormhole — Context Teleport</h4>
             <p><strong>Hố giãn không gian giữa subtask:</strong> context.mjs <code>isolate</code> nén context mỗi subtask thành 1 cổng hẹp — agent đi qua wormhole chỉ mang summary ≤1000 chars, không lôi cả vũ trụ theo. Chống distraction + confusion (Lesson 12).</p>
             <span class="eta">→ Q1 2027 · context.mjs isolate</span>
+          </div>
+          <div class="future-card">
+            <h4>💥 Supernova — Mutation thật (kill score)</h4>
+            <p><code>scripts/mutation.mjs</code> hiện chỉ proxy <code>node --check</code> — mutant syntax-ok là “survived” mà không chạy test nào (theater, KN-047). Bản thật: mỗi mutant là 1 vụ nổ supernova — spawn test đích, <strong>killed/total = mutation score</strong>, mutant sống sót = test yếu phải vá.</p>
+            <span class="eta">→ Q3 2027 · mutation.mjs --run --limit 5</span>
+          </div>
+          <div class="future-card">
+            <h4>🔒 Event Horizon Lock — Khóa verifier ngoài workspace</h4>
+            <p>Checks còn nằm trong tầm sửa của agent = model tự chấm (KN-023). Lock: <code>slop-check.mjs</code> + policy + CI diff gate sống <strong>ngoài workspace</strong>, fail-loudly — đổi code sau green là rerun toàn bộ. Exit condition là command, không phải vibe.</p>
+            <span class="eta">→ Q3 2027 · policy-verifier-paths + ci-slop-gate</span>
           </div>
         </div>
       </div>
@@ -3910,7 +3920,7 @@ Process là định luật, verify là quan sát.`;
           <div class="de-stat ${S>=25?'hot':S>=10?'warn':''}"><span>Entropy S</span><b>${Number(S)} <small>${level}</small></b></div>
           <div class="de-stat"><span>ΔS giãn nở</span><b>${dS>0?'+':''}${Number(dS)}</b></div>
           <div class="de-stat"><span>💜 Dark Energy D</span><b>${Number(D)} <small>${D>5?'high':D>0?'medium':'low'}</small></b></div>
-          <div class="de-stat"><span>🧲 Gravity G</span><b>${Gv==null?'—':Number(Gv)} <small>${Gv==null?'—':(Gv>=6?'high':Gv>=3?'medium':'low')}</small></b></div>
+          <div class="de-stat ${Gv==null?'':Gv>=6?'':Gv>=3?'warn':'hot'}"><span>🧲 Gravity G</span><b>${Gv==null?'—':Number(Gv)} <small>${Gv==null?'—':(Gv>=6?'high':Gv>=3?'medium':'low')}</small></b></div>
           <div class="de-stat"><span>🌑 Dark Matter M</span><b>${Number(M)} <small>${mLevel}</small></b></div>
           <div class="de-stat"><span>Điểm đo</span><b>${hist.length} <small>điểm</small></b></div>`;
         deBadge.textContent = real ? ('✅ scale.json — thật' + (ageTxt && ageH>=72 ? ' · 🔴 cũ '+ageTxt : ageTxt && ageH>=24 ? ' · 🟡 '+ageTxt : '')) : '⚠️ demo (fetch fail)';

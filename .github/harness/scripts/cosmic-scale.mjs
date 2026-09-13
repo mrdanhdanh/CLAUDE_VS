@@ -193,22 +193,29 @@ function buildBlackHoles(missing, failed) {
 }
 
 // 5. dark energy — decollaboration (KN-018): tỉ lệ plans CÓ Dissent ("Who did you think with?")
+// Mẫu = plans từ ngày KN-018 ra đời (2026-09-07). Plans cũ hơn là "tiền-gate" (gate chưa tồn tại,
+// 0/49 có Dissent là đúng luật thời đó) → đếm riêng plansLegacy, KHÔNG tính D/G (tránh HIGH giả).
+const GATE_SINCE_MS = Date.parse('2026-09-07T00:00:00Z');
 async function measurePlans() {
   const PLANS_DIR = path.join(ROOT, '.agent', 'plans');
-  let plansTotal = 0, plansWithDissent = 0, plansWithCut = 0;
+  let plansTotal = 0, plansWithDissent = 0, plansWithCut = 0, plansLegacy = 0;
   try {
     const entries = await fs.readdir(PLANS_DIR, { withFileTypes: true });
     for (const e of entries) {
       if (!e.isDirectory()) continue;
       try {
-        const prd = await fs.readFile(path.join(PLANS_DIR, e.name, 'prd.md'), 'utf8');
+        const prdPath = path.join(PLANS_DIR, e.name, 'prd.md');
+        const prd = await fs.readFile(prdPath, 'utf8');
+        try {
+          if ((await fs.stat(prdPath)).mtimeMs < GATE_SINCE_MS) { plansLegacy++; continue; }
+        } catch {}
         plansTotal++;
         if (/who did you think with\?/i.test(prd) || /dissent review/i.test(prd)) plansWithDissent++;
         if (/yagni/i.test(prd) || /^[-*]\s*\*{0,2}cắt/im.test(prd)) plansWithCut++;
       } catch {}
     }
   } catch {}
-  return { plansTotal, plansWithDissent, plansWithCut };
+  return { plansTotal, plansWithDissent, plansWithCut, plansLegacy };
 }
 
 // gravity — scope control: % plans có dòng CẮT/YAGNI (đối trọng của scope creep; đo được offline)
@@ -374,7 +381,7 @@ async function main() {
   const blackHoles = buildBlackHoles(missing, failed);
 
   // 5. dark energy — decollaboration (KN-018) + gravity — scope control (YAGNI)
-  const { plansTotal, plansWithDissent, plansWithCut } = await measurePlans();
+  const { plansTotal, plansWithDissent, plansWithCut, plansLegacy } = await measurePlans();
   const { dissentRatio, darkEnergy, cutRatio, gravity, gLevel, gAdvice, deAdvice } = energyMetrics({ plansTotal, plansWithDissent, plansWithCut });
 
   // 6. entropy
@@ -384,8 +391,8 @@ async function main() {
     generatedAt: new Date().toISOString(),
     generatedBy: 'cosmic-scale.mjs',
     entropy: { S, level, advice, parts: { mismatch: mismatches.length, drafts, refused, disabled, failed, refusedProbes } },
-    darkEnergy: { D: darkEnergy, dissentRatio: Math.round(dissentRatio * 100) / 100, plansTotal, plansWithDissent, advice: deAdvice },
-    gravity: { G: gravity, level: gLevel, cutRatio: Math.round(cutRatio * 100) / 100, plansTotal, plansWithCut, advice: gAdvice },
+    darkEnergy: { D: darkEnergy, dissentRatio: Math.round(dissentRatio * 100) / 100, plansTotal, plansWithDissent, plansLegacy, advice: deAdvice },
+    gravity: { G: gravity, level: gLevel, cutRatio: Math.round(cutRatio * 100) / 100, plansTotal, plansWithCut, plansLegacy, advice: gAdvice },
     darkMatter: { M: darkMatter, level: dmLevel, advice: dmAdvice, orphans, orphanCount: orphans.length, disabledGalaxies: disabled },
     counts: { knTotal, bugsTotal, auditTotal },
     capability,

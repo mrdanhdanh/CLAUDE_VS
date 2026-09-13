@@ -1,10 +1,10 @@
 {
-  "generatedAt": "2026-09-12T14:29:16.250Z",
+  "generatedAt": "2026-09-12T14:46:08.115Z",
   "generatedBy": "entangle.mjs --graph",
   "scanned": {
-    "files": 1501,
-    "edges": 1416,
-    "commits": 150
+    "files": 1512,
+    "edges": 1427,
+    "commits": 156
   },
   "thresholds": {
     "hubMinRefs": 10,
@@ -25,7 +25,7 @@
     },
     {
       "file": "package.json",
-      "refs": 33
+      "refs": 35
     },
     {
       "file": "www/cosmos/index.html",
@@ -64,16 +64,16 @@
       "refs": 12
     },
     {
+      "file": "scripts/slop-check.mjs",
+      "refs": 12
+    },
+    {
       "file": "www/cosmos/scale.html",
-      "refs": 11
+      "refs": 12
     },
     {
       "file": "www/cosmos/scale.json",
-      "refs": 11
-    },
-    {
-      "file": "scripts/slop-check.mjs",
-      "refs": 10
+      "refs": 12
     }
   ],
   "clusters": [
