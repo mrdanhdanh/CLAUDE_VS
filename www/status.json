@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-13T15:52:11.282Z",
+  "generatedAt": "2026-09-13T15:54:38.024Z",
   "generatedBy": "YUNIE",
   "version": 1,
   "counts": {
@@ -449,7 +449,7 @@
   "health": {
     "errors": 0,
     "status": "ok",
-    "lastCheck": "2026-09-13T15:52:11.282Z",
+    "lastCheck": "2026-09-13T15:54:38.024Z",
     "checks": [
       "get_errors: pass (0 errors)",
       "registry: 19 instructions (19 total) - 19 skills - 9 agents - 7 prompts - 1 hook — all enabled",
@@ -460,8 +460,8 @@
       "www: polished — responsive 375/768/1280, a11y, states, animation 150-300ms",
       "workflow: www/** -> Pages (upload-artifact path: www) — exists: true + eval job gate",
       "library: www/library/ MCP v1.2.0 (5 tools: search + iterative + list/get/status, router+cache, redacted) + library-rag instruction",
-      "auto-learn: 56 KN, 38 bugs, 0 drafts — suggest/log/propose/status (<50ms, IDF, tiếng Việt)",
-      "governance: audit 148 (Ed25519 receipt P0-4) · policy 9 deny/2 allow (ok) · credentials 0 keys plain",
+      "auto-learn: 57 KN, 38 bugs, 0 drafts — suggest/log/propose/status (<50ms, IDF, tiếng Việt)",
+      "governance: audit 149 (Ed25519 receipt P0-4) · policy 9 deny/2 allow (ok) · credentials 0 keys plain",
       "platform: agents 3 (3 built-in, 0 remote) · mcp 3 vendors/3 grants (library 1.2.0 read-only) · components 3/3 pub · routines 3/3 enabled",
       "collaboration: KN-018 — dissentGate ✅ · whoDidYouThinkWith ✅ · critic ✅ · fund-the-friction ✅ (ok)",
       "n5-blazor: www/n5-blazor/ 7 trang static + app.css + data.js + site.js — 100% Pages"
@@ -686,35 +686,18 @@
     }
   },
   "learn": {
-    "knTotal": 56,
+    "knTotal": 57,
     "bugsTotal": 38,
     "drafts": 0
   },
   "governance": {
     "audit": {
-      "total": 148,
-      "permitted": 119,
+      "total": 149,
+      "permitted": 120,
       "refused": 28,
       "failed": 1,
-      "lastTs": "2026-09-13T15:50:38.033Z",
+      "lastTs": "2026-09-13T15:53:59.153Z",
       "tail": [
-        {
-          "ts": "2026-09-13T15:43:13.323Z",
-          "actor": "redteam-spec",
-          "tool": "read",
-          "target": "***",
-          "decision": "refused",
-          "rule": "redteam-test",
-          "durationMs": null,
-          "error": null,
-          "intent": null,
-          "requestId": "013b34",
-          "prevHash": "2916c8ab3975799c",
-          "policyDigest": "190b0de217bf1dda",
-          "hash": "e15eb47ad5239e03",
-          "sig": "GZr189efLbEBSEH5SreUhqenJTEh17xTlo0J9B0-p26S11p3jWIW5KFLYMeWl2ZrlLn4FvTIquA7fXc73n-kDQ",
-          "pub": "MCowBQYDK2VwAyEAY8PlU0KjXp4HJUUlNlVZdaXHUmDagUMm8rUrEShTPXo"
-        },
         {
           "ts": "2026-09-13T15:43:32.997Z",
           "actor": "YUNIE",
@@ -782,6 +765,23 @@
           "hash": "024cede3c45945f9",
           "sig": "Uxpvq7ltqnfJxbQEVj-hZ0nGlN2NNfCvY0gg8L8ziv1exif2NMX58dU2DE-GOsVYWlxbViU5WS4nWOthfxueCA",
           "pub": "MCowBQYDK2VwAyEAY8PlU0KjXp4HJUUlNlVZdaXHUmDagUMm8rUrEShTPXo"
+        },
+        {
+          "ts": "2026-09-13T15:53:59.153Z",
+          "actor": "YUNIE",
+          "tool": "shell",
+          "target": "git commit bf7be0f + push origin main (stop-hook paren fix + hooks-integrity guard + gravity spec dynamic contract)",
+          "decision": "permitted",
+          "rule": "allow-all",
+          "durationMs": null,
+          "error": null,
+          "intent": "fix-stop-hook-subexpression",
+          "requestId": "d07044",
+          "prevHash": "024cede3c45945f9",
+          "policyDigest": "190b0de217bf1dda",
+          "hash": "9cce61a86ca9ac54",
+          "sig": "MJX4tl4jTrc6fTK7zKn1LRHSKjZ92oX5pLD4vWgaRMOgXZFs6NsCsmXmhtVa514rZIaci-ikPhYg-OxC7Ku-DQ",
+          "pub": "MCowBQYDK2VwAyEAY8PlU0KjXp4HJUUlNlVZdaXHUmDagUMm8rUrEShTPXo"
         }
       ]
     },
@@ -790,7 +790,7 @@
       "deny": 9,
       "allow": 2,
       "status": "ok",
-      "lastCheck": "2026-09-13T15:52:11.142Z"
+      "lastCheck": "2026-09-13T15:54:37.875Z"
     },
     "credentials": {
       "count": 0,

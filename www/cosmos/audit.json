@@ -1,25 +1,8 @@
 {
-  "generatedAt": "2026-09-13T15:52:11.141Z",
+  "generatedAt": "2026-09-13T15:54:37.873Z",
   "source": ".agent/audit.jsonl",
-  "total": 148,
+  "total": 149,
   "events": [
-    {
-      "ts": "2026-09-12T14:11:31.588Z",
-      "actor": "redteam-spec",
-      "tool": "read",
-      "target": "***",
-      "decision": "refused",
-      "rule": "redteam-test",
-      "durationMs": null,
-      "error": null,
-      "intent": null,
-      "requestId": "ed0273",
-      "prevHash": "92958f91292b12b1",
-      "policyDigest": "190b0de217bf1dda",
-      "hash": "1f97f2fb5ae2700c",
-      "sig": "9QPMy_PkC53EX8TzPUxZ1TEr-325wWka40fnBGT04lofhOacmjx55i-EJVxLQOA5HC-O-l9F5m4MbIooNlGmAw",
-      "pub": "MCowBQYDK2VwAyEAY8PlU0KjXp4HJUUlNlVZdaXHUmDagUMm8rUrEShTPXo"
-    },
     {
       "ts": "2026-09-12T14:14:02.634Z",
       "actor": "YUNIE",
@@ -851,6 +834,23 @@
       "policyDigest": "190b0de217bf1dda",
       "hash": "024cede3c45945f9",
       "sig": "Uxpvq7ltqnfJxbQEVj-hZ0nGlN2NNfCvY0gg8L8ziv1exif2NMX58dU2DE-GOsVYWlxbViU5WS4nWOthfxueCA",
+      "pub": "MCowBQYDK2VwAyEAY8PlU0KjXp4HJUUlNlVZdaXHUmDagUMm8rUrEShTPXo"
+    },
+    {
+      "ts": "2026-09-13T15:53:59.153Z",
+      "actor": "YUNIE",
+      "tool": "shell",
+      "target": "git commit bf7be0f + push origin main (stop-hook paren fix + hooks-integrity guard + gravity spec dynamic contract)",
+      "decision": "permitted",
+      "rule": "allow-all",
+      "durationMs": null,
+      "error": null,
+      "intent": "fix-stop-hook-subexpression",
+      "requestId": "d07044",
+      "prevHash": "024cede3c45945f9",
+      "policyDigest": "190b0de217bf1dda",
+      "hash": "9cce61a86ca9ac54",
+      "sig": "MJX4tl4jTrc6fTK7zKn1LRHSKjZ92oX5pLD4vWgaRMOgXZFs6NsCsmXmhtVa514rZIaci-ikPhYg-OxC7Ku-DQ",
       "pub": "MCowBQYDK2VwAyEAY8PlU0KjXp4HJUUlNlVZdaXHUmDagUMm8rUrEShTPXo"
     }
   ]
