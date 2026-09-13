@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-13T14:10:25.356Z",
+  "generatedAt": "2026-09-13T14:12:54.455Z",
   "generatedBy": "auto-learn.mjs watchdog",
   "policy": {
     "escalateDays": 30,
@@ -7,19 +7,11 @@
   },
   "counts": {
     "bugsTotal": 35,
-    "open": 1,
-    "fresh": 1,
+    "open": 0,
+    "fresh": 0,
     "escalate": 0,
     "evaporate": 0,
-    "closed": 34
+    "closed": 35
   },
-  "bugs": [
-    {
-      "slug": "2026-09-13-git-checkout-head-revert-nham-refactor-chua-commit",
-      "date": "2026-09-13",
-      "ageDays": 0,
-      "status": "open",
-      "action": "fresh"
-    }
-  ]
+  "bugs": []
 }

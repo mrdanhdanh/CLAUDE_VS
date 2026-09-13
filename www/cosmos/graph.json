@@ -1,10 +1,10 @@
 {
-  "generatedAt": "2026-09-13T14:10:24.691Z",
+  "generatedAt": "2026-09-13T14:12:53.791Z",
   "generatedBy": "entangle.mjs --graph",
   "scanned": {
     "files": 1538,
     "edges": 1475,
-    "commits": 167
+    "commits": 168
   },
   "thresholds": {
     "hubMinRefs": 10,

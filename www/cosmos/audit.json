@@ -1,25 +1,8 @@
 {
-  "generatedAt": "2026-09-13T14:10:26.659Z",
+  "generatedAt": "2026-09-13T14:12:55.659Z",
   "source": ".agent/audit.jsonl",
-  "total": 131,
+  "total": 132,
   "events": [
-    {
-      "ts": "2026-09-12T13:26:51.497Z",
-      "actor": "YUNIE",
-      "tool": "edit",
-      "target": ".agent/policy.json (law v4 case-normalize - backlog item 1)",
-      "decision": "refused",
-      "rule": "deny-law-fork",
-      "durationMs": null,
-      "error": null,
-      "intent": "law-hardening-v4",
-      "requestId": "40b54c",
-      "prevHash": "e1feddf9f8fbc09b",
-      "policyDigest": "162346288ec03771",
-      "hash": "7d47e0b5083ad7a8",
-      "sig": "lVQc0mbPXs4fqmBpLPyQbXlTzGyANV42DTYU0xpi1MiejTBNnwEGQ84mjIWdCkaqAgwLUR3o44wK6dsnKw_oBQ",
-      "pub": "MCowBQYDK2VwAyEAY8PlU0KjXp4HJUUlNlVZdaXHUmDagUMm8rUrEShTPXo"
-    },
     {
       "ts": "2026-09-12T13:26:51.939Z",
       "actor": "danh",
@@ -851,6 +834,23 @@
       "policyDigest": "190b0de217bf1dda",
       "hash": "b351a07133be70df",
       "sig": "dkyUZ2RWXpnhZPUQsm7ACjjRdJsIN8X4kyFPq5DyleggSX_To5xiZ0RcSHUW6W4MNHx6UdL09GfZiwGyXy_YAQ",
+      "pub": "MCowBQYDK2VwAyEAY8PlU0KjXp4HJUUlNlVZdaXHUmDagUMm8rUrEShTPXo"
+    },
+    {
+      "ts": "2026-09-13T14:11:05.830Z",
+      "actor": "YUNIE",
+      "tool": "edit",
+      "target": "docs/knowleged.md",
+      "decision": "permitted",
+      "rule": "allow-all",
+      "durationMs": null,
+      "error": null,
+      "intent": null,
+      "requestId": "877629",
+      "prevHash": "b351a07133be70df",
+      "policyDigest": "190b0de217bf1dda",
+      "hash": "3d6d9ad0e0c41072",
+      "sig": "-clEbZB17J-6FcyyXgfRh0aVo9eLKbb4LoeCsX1WLmNOAi6mmJ9dENmnvoQ-x3EIrmsjKvBVw-JqT2_cHrU-DQ",
       "pub": "MCowBQYDK2VwAyEAY8PlU0KjXp4HJUUlNlVZdaXHUmDagUMm8rUrEShTPXo"
     }
   ]

@@ -1,13 +1,13 @@
 {
-  "generatedAt": "2026-09-13T14:10:25.165Z",
+  "generatedAt": "2026-09-13T14:12:54.266Z",
   "generatedBy": "cosmic-scale.mjs",
   "entropy": {
-    "S": 14,
-    "level": "medium",
-    "advice": "Entropy trung bình — bơm năng lượng: fix mismatch/draft, chạy generate-status, polish dead-code.",
+    "S": 9,
+    "level": "low",
+    "advice": "Vũ trụ ổn định — giữ nhịp audit + generate-status đều.",
     "parts": {
       "mismatch": 0,
-      "drafts": 1,
+      "drafts": 0,
       "refused": 2,
       "disabled": 0,
       "failed": 1,
@@ -42,7 +42,7 @@
   "counts": {
     "knTotal": 53,
     "bugsTotal": 35,
-    "auditTotal": 131
+    "auditTotal": 132
   },
   "capability": {
     "kn": 53,
@@ -319,22 +319,29 @@
         "e2eTests": 146,
         "guards": 11
       }
+    },
+    {
+      "t": "2026-09-13T14:12:54.266Z",
+      "S": 9,
+      "level": "low",
+      "M": 0,
+      "D": 0,
+      "G": 8,
+      "C": {
+        "kn": 53,
+        "skills": 19,
+        "e2eSpecs": 29,
+        "e2eTests": 146,
+        "guards": 11
+      }
     }
   ],
-  "capabilityDelta": {
-    "kn": 4,
-    "e2eSpecs": 5,
-    "e2eTests": 23
-  },
+  "capabilityDelta": null,
   "trend": {
-    "increases": 1,
+    "increases": 0,
     "needed": 3,
     "gate": false,
     "window": [
-      {
-        "t": "2026-09-12T14:13:05.428Z",
-        "S": 9
-      },
       {
         "t": "2026-09-12T14:29:16.472Z",
         "S": 9
@@ -346,6 +353,10 @@
       {
         "t": "2026-09-13T14:10:25.165Z",
         "S": 14
+      },
+      {
+        "t": "2026-09-13T14:12:54.266Z",
+        "S": 9
       }
     ]
   }

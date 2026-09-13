@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-13T14:10:25.627Z",
+  "generatedAt": "2026-09-13T14:12:54.706Z",
   "generatedBy": "auto-learn.mjs stats --heatmap",
   "policy": {
     "cold": "bugCount − knCount ≥ 1",
@@ -18,7 +18,7 @@
       "2026-08",
       "2026-09"
     ],
-    "coldSpots": 13,
+    "coldSpots": 8,
     "zeroRef": 0,
     "refFiles": 280
   },
@@ -862,51 +862,21 @@
       "coldness": 2
     },
     {
-      "tag": "perf",
-      "kn": 2,
-      "bug": 4,
-      "coldness": 2
-    },
-    {
-      "tag": "state",
-      "kn": 1,
-      "bug": 3,
-      "coldness": 2
-    },
-    {
-      "tag": "a11y",
-      "kn": 9,
-      "bug": 10,
-      "coldness": 1
-    },
-    {
-      "tag": "data",
-      "kn": 5,
-      "bug": 6,
-      "coldness": 1
-    },
-    {
-      "tag": "build",
-      "kn": 3,
-      "bug": 4,
-      "coldness": 1
-    },
-    {
-      "tag": "api",
-      "kn": 2,
-      "bug": 3,
-      "coldness": 1
-    },
-    {
       "tag": "knowledge",
       "kn": 2,
       "bug": 3,
       "coldness": 1
     },
     {
-      "tag": "async",
-      "kn": 0,
-      "bug": 1,
+      "tag": "perf",
+      "kn": 2,
+      "bug": 3,
+      "coldness": 1
+    },
+    {
+      "tag": "state",
+      "kn": 1,
+      "bug": 2,
       "coldness": 1
     },
     {
