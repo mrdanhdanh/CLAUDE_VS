@@ -262,6 +262,13 @@
   flex: 1;
 }
 
+/* Summary đã dịch tiếng Việt — chip 🇻🇳 (hover xem bản gốc qua title) */
+.news-summary[data-vi="1"]::before {
+  content: "🇻🇳";
+  margin-right: 6px;
+  font-size: 0.85em;
+}
+
 .news-footer {
   display: flex;
   align-items: center;

@@ -62,6 +62,143 @@ function curatedMeta(meta, articles) {
   return { ...(meta || {}), total: articles.length, hot: articles.filter(a => a.hot).length, sources: [...new Set(articles.map(a => a.source))] };
 }
 
+// ── Dịch mô tả ngắn sang tiếng Việt (no-key, CORS ✓ — đo thật 2026-09-13) ──
+// Chain clients5 → MyMemory + breaker theo host + cache localStorage — re-use pattern
+// đã kiểm chứng ở scripts/yt-summary/build.mjs (KN-041). Fail-open: lỗi/hết quota → giữ EN.
+const VI_CACHE_KEY = 'ai-news-vi-v1';
+const VI_CACHE_MAX = 400;
+const VI_GAP_MS = 1500; // nhịp chậm — tránh throttle burst (KN-041)
+const VI_CLIENTS5 = 'https://clients5.google.com/translate_a/t?client=dict-chrome-ex&sl=auto&tl=vi&q=';
+const VI_MYMEMORY = 'https://api.mymemory.translated.net/get?q=';
+const VI_HOSTS = ['clients5.google.com', 'api.mymemory.translated.net'];
+
+const viCache = new Map();    // id → { h: hash(summary), vi }
+const viQueued = new Set();   // id đang chờ/đang dịch
+const viQueue = [];
+const viBreakers = new Map(); // host → downUntil
+let viActive = false, viStop = false, viStopNotified = false, viMyMemoryQuota = false;
+
+const viSleep = (ms) => new Promise(r => setTimeout(r, ms));
+const viSignal = () => (typeof AbortSignal !== 'undefined' && AbortSignal.timeout) ? AbortSignal.timeout(9000) : undefined;
+// Heuristic tiếng Việt: có dấu → đã là VI (curated), không dịch lại
+const viHasVn = (s) => /[àáảãạăằắẳẵặâầấẩẫậèéẻẽẹêềếểễệìíỉĩịòóỏõọôồốổỗộơờớởỡợùúủũụưừứửữựỳýỷỹỵđ]/i.test(s || '');
+
+function viHash(s) { let h = 5381; for (let i = 0; i < (s || '').length; i++) h = ((h << 5) + h + s.charCodeAt(i)) >>> 0; return h.toString(36); }
+function viLoad() { try { for (const [id, e] of JSON.parse(localStorage.getItem(VI_CACHE_KEY) || '[]')) if (e && e.vi && e.h) viCache.set(id, e); } catch { /* cache hỏng — bỏ */ } }
+function viSave() { try { localStorage.setItem(VI_CACHE_KEY, JSON.stringify([...viCache].slice(-VI_CACHE_MAX))); } catch { /* localStorage đầy — bỏ */ } }
+function viGet(a) { const e = viCache.get(a.id); return e && e.h === viHash(a.summary || '') ? e.vi : null; }
+function viShouldSkip(a) { return !a || !a.id || !a.summary || a.summary.length < 12 || viHasVn(a.summary); }
+
+function viTrip(host) { const b = viBreakers.get(host) || { fails: 0, downUntil: 0 }; b.fails++; b.downUntil = Date.now() + (b.fails >= 2 ? 15 * 60 * 1000 : 2 * 60 * 1000); viBreakers.set(host, b); }
+const viIsDown = (host) => { const b = viBreakers.get(host); return !!(b && Date.now() < b.downUntil); };
+
+/** Parse đa hình (port từ scripts/yt-summary/build.mjs): clients5 `[["text","en"]]`, gtx-like nested, sentences objects */
+const viIsLang = (s) => /^[a-z]{2}(-[A-Za-z]{2,})?$/.test(String(s));
+function viWalkJson(x, parts) {
+  if (typeof x === 'string') { if (!viIsLang(x)) parts.push(x); return; }
+  if (Array.isArray(x)) { x.forEach(y => viWalkJson(y, parts)); return; }
+  if (x && typeof x === 'object') viCollectObj(x, parts);
+}
+function viCollectObj(x, parts) {
+  if (typeof x.trans === 'string') parts.push(x.trans);
+  if (typeof x.utf8 === 'string') parts.push(x.utf8);
+  if (Array.isArray(x.segs)) viWalkJson(x.segs, parts);
+  if (Array.isArray(x.sentences)) viWalkJson(x.sentences, parts);
+}
+function viParseJson(j) {
+  if (!j || typeof j !== 'object') return null;
+  const parts = [];
+  viWalkJson(j, parts);
+  const out = parts.join(' ').replace(/\s+/g, ' ').trim();
+  return out || null;
+}
+
+async function viFetchClients5(q) {
+  const res = await fetch(VI_CLIENTS5 + encodeURIComponent(q), { signal: viSignal() });
+  if (!res.ok) throw new Error('clients5 ' + res.status);
+  const vi = viParseJson(await res.json().catch(() => null));
+  if (!vi) throw new Error('clients5 empty');
+  return vi;
+}
+async function viFetchMyMemory(q) {
+  if (viMyMemoryQuota) throw new Error('mymemory quota');
+  const res = await fetch(VI_MYMEMORY + encodeURIComponent(q) + '&langpair=en|vi', { signal: viSignal() });
+  const j = await res.json().catch(() => null);
+  if (/USED ALL AVAILABLE FREE TRANSLATIONS/i.test(String(j && j.responseDetails || ''))) viMyMemoryQuota = true; // fail-fast quota
+  const t = j && j.responseData && j.responseData.translatedText;
+  if (res.ok && t && !/MYMEMORY WARNING|QUERY LENGTH LIMIT/i.test(String(t))) return String(t);
+  throw new Error(viMyMemoryQuota ? 'mymemory quota' : 'mymemory fail');
+}
+async function viTranslate(text) {
+  const q = text.slice(0, 460); // MyMemory cap 500 — chừa biên
+  let lastErr = null;
+  for (const [host, fn] of [['clients5.google.com', viFetchClients5], ['api.mymemory.translated.net', viFetchMyMemory]]) {
+    if (viIsDown(host)) { lastErr = new Error(host + ' open'); continue; }
+    try { const vi = await fn(q); viBreakers.delete(host); return vi; }
+    catch (e) { viTrip(host); lastErr = e; }
+  }
+  throw lastErr || new Error('no vi source');
+}
+
+function viApply(article, vi) {
+  // 1 bài có thể có 2 card (hot + all) — cập nhật hết
+  document.querySelectorAll(`.news-card[data-id="${CSS.escape(article.id)}"] .news-summary`).forEach(p => {
+    p.dataset.vi = '1';
+    p.removeAttribute('lang');
+    if (article.summary) p.title = 'Bản gốc: ' + article.summary;
+    p.innerHTML = searchKeyword ? highlightKeyword(vi, searchKeyword) : escapeHtml(vi);
+  });
+}
+
+function viEnqueue(article) {
+  if (viStop || viShouldSkip(article) || viQueued.has(article.id) || viGet(article) || article.summaryVi) return;
+  viQueued.add(article.id);
+  viQueue.push(article);
+  viPump();
+}
+
+// Ưu tiên bản dịch VI (cache | summaryVi field); chưa có → EN ngay + dịch nền (fail-open)
+function summaryParts(article) {
+  const viText = viGet(article) || article.summaryVi || null;
+  const shown = viText || article.summary || '';
+  const html = searchKeyword ? highlightKeyword(shown, searchKeyword) : escapeHtml(shown);
+  if (!viText) return { html, attr: ' lang="en"' };
+  const title = article.summary ? ` title="Bản gốc: ${escapeHtml(article.summary)}"` : '';
+  return { html, attr: ` data-vi="1"${title}` };
+}
+
+async function viProcessOne(a) {
+  if (viGet(a) || viShouldSkip(a)) return;
+  try {
+    const vi = await viTranslate(a.summary);
+    viCache.set(a.id, { h: viHash(a.summary), vi });
+    viSave();
+    viApply(a, vi);
+  } catch {
+    if (VI_HOSTS.every(viIsDown)) viStop = true; // cả 2 host chết/hết quota → dừng, không retry mù
+  }
+}
+
+function viNotifyStopped() {
+  if (!viStop || viStopNotified) return;
+  viStopNotified = true;
+  toast('Hết hạn mức dịch — tin còn lại hiển thị bản gốc (EN), lần sau YUNIE dịch tiếp nhé!', 4500);
+}
+
+async function viPump() {
+  if (viActive || viStop || !viQueue.length) return;
+  viActive = true;
+  while (viQueue.length && !viStop) {
+    const a = viQueue.shift();
+    await viProcessOne(a);
+    viQueued.delete(a.id);
+    if (viQueue.length && !viStop) await viSleep(VI_GAP_MS);
+  }
+  viActive = false;
+  viNotifyStopped();
+}
+viLoad(); // nạp cache VI ngay khi script chạy
+
 function categoryColor(catId) {
   const map = {
     'self-improving': '#6366f1',
@@ -428,7 +565,7 @@ function mergeLiveArticles(groups) {
 }
 
 function normalizeArticles(articles) {
-  return articles.map(a => ({ id:a.id, title:a.title, summary:a.summary, source:a.source, sourceUrl:a.sourceUrl, category:a.category, date:a.date, hot:!!a.hot, tags:(a.tags||[]).slice(0,5) }));
+  return articles.map(a => ({ id:a.id, title:a.title, summary:a.summary, summaryVi:a.summaryVi, source:a.source, sourceUrl:a.sourceUrl, category:a.category, date:a.date, hot:!!a.hot, tags:(a.tags||[]).slice(0,5) }));
 }
 
 function buildLiveData(articles, opts) {
@@ -772,6 +909,7 @@ function createCard(article, isHot = false) {
   const card = document.createElement('article');
   card.className = `news-card${isHot ? ' hot-card' : ''}`;
   card.dataset.category = article.category;
+  card.dataset.id = article.id || '';
 
   const cat = (data.categories || []).find(c => c.id === article.category);
   const catName = cat ? `${cat.icon} ${cat.name}` : article.category;
@@ -784,7 +922,7 @@ function createCard(article, isHot = false) {
   const moreHtml = moreCount > 0 ? `<span class="news-tag more">+${moreCount}</span>` : '';
   const fresh = freshnessInfo(article.date);
   const titleHtml = searchKeyword ? highlightKeyword(article.title, searchKeyword) : escapeHtml(article.title);
-  const summaryHtml = searchKeyword ? highlightKeyword(article.summary, searchKeyword) : escapeHtml(article.summary);
+  const { html: summaryHtml, attr: summaryAttr } = summaryParts(article);
 
   card.innerHTML = `
     <div class="news-card-header">
@@ -793,12 +931,13 @@ function createCard(article, isHot = false) {
       <span class="news-date">${fmtDate(article.date)}</span>
     </div>
     <h3 class="news-title"><a href="${escapeHtml(article.sourceUrl)}" target="_blank" rel="noopener" aria-label="${escapeHtml(article.title)} — mở nguồn">${titleHtml}</a></h3>
-    <p class="news-summary">${summaryHtml}</p>
+    <p class="news-summary"${summaryAttr}>${summaryHtml}</p>
     <div class="news-footer">
       <span class="news-source">${escapeHtml(article.source)}</span>
       <div class="news-tags">${tagsHtml}${moreHtml}</div>
     </div>
   `;
+  viEnqueue(article);
   return card;
 }
 
