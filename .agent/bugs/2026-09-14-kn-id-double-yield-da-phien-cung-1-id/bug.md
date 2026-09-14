@@ -116,7 +116,7 @@
 - GREEN: 6 passed
 - guards: ✅ KN-066 → tests/e2e/kn-id-integrity.spec.ts
 - status: KN: 65 · list …060, 062–066 · không trùng ID
-- Commit: <điền ở commit kế tiếp>
+- Commit: `b884a05` (guard spec + bug) · KN-066 content: `185f536` (cross-session sweep bởi session Orchard — disclosed)
 ```
 
 ---
@@ -149,7 +149,7 @@ ID cấp phát phải re-check ngay trước khi ghi (race propose→paste) và 
 
 - `docs/knowleged.md#KN-066`
 - Trace: `.agent/bugs/2026-09-14-routing-failover.../` + `.agent/bugs/2026-09-14-memora.../` (renumber notes) + `.agent/plans/echoverse-adopt/proposal.md` §0
-- Commit fix: `<điền ở commit kế tiếp>`
+- Commit fix: `b884a05` (guard spec + bug folder + note điều phối) · KN-066 content: `185f536` (sweep bởi session Orchard — disclosed trong message)
 
 ---
 *Template: `.agent/bugs/_template/bug.md` — dùng bởi `/fixbug` Phase 1 & 5.*
