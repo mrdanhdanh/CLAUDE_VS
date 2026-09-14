@@ -17,3 +17,9 @@
 
 ## Rollback
 - `git revert` commit; policy.json quay về v4 (9 deny) — engine vẫn backward-compat (vars mới optional).
+
+## Done (2026-09-14)
+
+- ✅ Tất cả bước pass: `--check` → **12 deny, 2 allow, v5** (digest `a4972205cc490263`) · guard spec **17/17 passed** (D1–D7) · audit chain **177/177** · `get_errors` 0 · `export-claude --check` khớp · `www/status.json` hiện policy v5.
+- **Trace:** file landed trong commit `99ca722` — session song song chạy git sweep khi mình đang stage (đã disclosure ở `2657f51`; không rewrite history mid-session — 2 session đang chạy song song).
+- Probe edge đã chạy: case-variant `SUBAGENT:*` bị chặn · `parent=verify` + child ≠ verify → `deny-test-mutate` (child hẹp hơn parent) · non-subagent regression OK.
