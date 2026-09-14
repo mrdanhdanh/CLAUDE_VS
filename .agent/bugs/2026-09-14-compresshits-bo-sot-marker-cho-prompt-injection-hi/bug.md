@@ -162,7 +162,7 @@ Adopt mechanism-half (provenance mark ở ingest + guard) từ nguồn ngoài, k
 - Proposal (owner duyệt 14/09): `.agent/plans/mai-code-of-conduct-adopt/proposal.md`
 - Nguồn: [Microsoft AI Humanist AI Code of Conduct](https://microsoft.ai/code-of-conduct/) (draft 14/09/2026)
 - Issue / PR: #
-- Commit fix: `<pending — chưa commit>`
+- Commit fix: `175d72a`
 
 ---
 *Template: `.agent/bugs/_template/bug.md` — dùng bởi `/fixbug` Phase 1 & 5.*
