@@ -114,13 +114,13 @@
     {
       "id": "curated-msr-evolib-experience-evolving-knowledge",
       "title": "EvoLib — kinh nghiệm thành tri thức tiến hoá: 'không thông minh hơn chỉ vì nhớ nhiều hơn' (Microsoft Research)",
-      "summary": "MSR (30/07): LLM không tự giỏi lên khi chỉ nhớ thêm; EvoLib chưng cất experience thành tri thức + skill tái sử dụng, giúp model học và thích nghi xuyên task 'long after deployment'. → Harness: đúng triết lý auto-learn — bug.md chất đống không làm hệ tốt lên; phải distill thành KN + skill tái sử dụng (như các skill `harness-*` regenerate bằng distill-agnostic.mjs). 'Nhớ nhiều hơn' = log dài, 'tri thức tiến hoá' = KN có Guard + checklist áp được. Đọc cặp với SkillOpt (cơ chế train) + Memora (cơ chế lưu/lấy).",
+      "summary": "MSR (30/07): LLM không tự giỏi lên khi chỉ nhớ thêm; EvoLib chưng cất experience thành tri thức + skill tái sử dụng, giúp model học và thích nghi xuyên task 'long after deployment'. → Harness: đúng triết lý auto-learn — bug.md chất đống không làm hệ tốt lên; phải distill thành KN + skill tái sử dụng (như các skill `harness-*` regenerate bằng distill-agnostic.mjs). 'Nhớ nhiều hơn' = log dài, 'tri thức tiến hoá' = KN có Guard + checklist áp được. Đọc cặp với SkillOpt (cơ chế train) + Memora (cơ chế lưu/lấy). → Đánh giá adopt 14/09 (trace: .agent/plans/evolib-adopt/proposal.md): mechanism-half đã có phần lớn trong harness — consolidation = KN-026 (experience-funnel distill/consolidate/evidence) + KN-062 (duyệt gộp, human-in-loop); weighting = attest Wilson trong suggest (base + wilson×2). Đo dup-gate vs KN-026 (40)/KN-060 (31.8) → CONSOLIDATE, không tạo KN mới; đo phụ: auto-similarity merge = nhiễu → không xây, giữ human-in-loop.",
       "source": "Microsoft Research",
       "sourceUrl": "https://www.microsoft.com/en-us/research/blog/evolib-turning-experience-into-evolving-knowledge/",
       "category": "self-improving",
       "date": "2026-07-30",
       "hot": false,
-      "tags": ["Microsoft Research", "knowledge", "distillation", "self-improving", "KN-056"]
+      "tags": ["Microsoft Research", "knowledge", "distillation", "self-improving", "KN-056", "KN-026", "KN-062"]
     },
     {
       "id": "curated-msr-flint-visualization-language",
