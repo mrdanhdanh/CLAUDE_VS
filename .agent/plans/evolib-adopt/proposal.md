@@ -71,14 +71,15 @@
 
 Session song song đang active (mtime `knowleged.md` = 23:14:36, thời điểm kiểm tra 23:15:13) — đang adopt Routing & Failover + Memora:
 
-- **BUG đánh số:** `docs/knowleged.md` có **2 KN cùng số `KN-062`** — "Routing & Failover" (detail ~line 1311) + "Memora" (detail ~line 1331); **thiếu KN-061 hoàn toàn**. Bảng tóm tắt dòng 85–86 cũng trùng `KN-062`. Đề xuất: renumber 1 block → `KN-061` (Routing trước, Memora sau — theo thứ tự xuất hiện), fix cả header + bảng tóm tắt + mọi tham chiếu nội bộ, TRƯỚC khi commit.
+- **BUG đánh số (23:15):** `docs/knowleged.md` có **2 KN cùng số `KN-062`** — "Routing & Failover" (detail ~line 1311) + "Memora" (detail ~line 1331); **thiếu KN-061 hoàn toàn**. Bảng tóm tắt dòng 85–86 cũng trùng `KN-062`.
+- **Update 23:18 — session kia đã TỰ renumber:** Memora → **KN-061**, Routing & Failover → **KN-063**; hiện header đi 060 → 063 → 061 (chưa sort lại) và **gap KN-062** (khả năng cao đang dành cho Echoverse in-flight — `echoverse-adopt`). Flag 23:15 giữ làm lịch sử; việc còn lại: xác nhận dãy số kín (Echoverse = 062?) + thứ tự block đúng khi session đó commit.
 - Dirty khác (session đó): `auto-learn.mjs` (+18/-6 — `evaluate --dir` hermetic), `tests/e2e/auto-learn-guard.spec.ts` (+51/-3), `www/ai-news/curated.json` (+2/-2), `playwright-report/index.html`.
 - **Rule (áp cho mọi session):** không edit/`git add` các file này từ bên ngoài khi session kia chưa commit — tránh sweep WIP (KN-053: file dirty là vùng nguy hiểm).
 
 ## 6. Apply checklist (sau khi tree sạch)
 
 1. `git status --short` → `docs/knowleged.md` + `www/ai-news/curated.json` không còn dirty (hoặc phần còn lại không xung đột).
-2. Nếu session kia đã commit mà **chưa fix số KN trùng**: fix `KN-062 → KN-061` (Routing) + bảng tóm tắt, commit riêng trước.
+2. Kiểm dãy số KN liên tục, không trùng (23:15 có 2× `KN-062`; 23:18 session kia tự xử → 061/063, còn gap 062 — xem §5 update). Nếu commit cuối vẫn lệch: fix số + bảng tóm tắt thành commit riêng TRƯỚC khi apply edits.
 3. Apply Edit A (anti-pattern) + Edit B (curated note + tag).
 4. Verify: `JSON.parse` curated.json OK · `node .github/harness/scripts/auto-learn.mjs status` (KN count đúng, không dup id) · `grep -i evolib docs/knowleged.md www/ai-news/curated.json` thấy trace.
 5. Commit riêng theo file: `docs(knowleged): EvoLib (MSR) adopt — không thêm KN; anti-pattern similarity-merge (đo nhiễu) + curated note`.
