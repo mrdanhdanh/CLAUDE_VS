@@ -152,7 +152,7 @@
 - `docs/knowleged.md#KN-063`
 - Article: https://devblogs.microsoft.com/dotnet/routing-and-failover-for-microsoft-extensions-ai/
 - Related: `.agent/bugs/2026-09-12-yt-summary-youtube-block-va-dich-no-key/` (KN-041 — chain sinh từ đó)
-- Commit fix: `<hash>` (điền sau)
+- Commit fix: `99ca722` (disclosure: commit vô tình gồm 11 file đã-staged của session song song — policy v5 delegation + guard-redteam + plans; không mất gì, chỉ lệch attribution)
 
 ---
 *Bug: `.agent/bugs/2026-09-14-routing-failover-chuan-hoa-pattern-khoa-luoi/` — KN-063 (article-lesson; re-ID 061→062→063 double-yield concurrent với Memora giữ 062).*
