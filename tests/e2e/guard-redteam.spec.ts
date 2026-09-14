@@ -147,3 +147,59 @@ test.describe('Content ≠ Authority — context provenance (KN-059, MAI CoC ado
     expect(clean?._injection ?? false, 'clean hit không _injection').toBe(false);
   });
 });
+
+test.describe('Delegation attenuation — subagent ⊆ parent (KN-059, mở HOLD 2026-09-14, law v5)', () => {
+  test('D1: subagent thiếu parent → fail-closed (deny-subagent-no-parent)', () => {
+    const r = run('.agent/scripts/policy-check.mjs', [
+      '--tool', 'read', '--target', 'www/index.html', '--actor', 'subagent:explore',
+    ]);
+    expect(r.code, 'subagent không khai parent phải bị chặn (exit 1)').toBe(1);
+    expect(r.out).toContain('deny-subagent-no-parent');
+  });
+
+  test('D2: chained delegation (parent là subagent) → deny-subagent-chain', () => {
+    const r = run('.agent/scripts/policy-check.mjs', [
+      '--tool', 'read', '--target', 'www/index.html', '--actor', 'subagent:a', '--parent', 'subagent:b',
+    ]);
+    expect(r.code, 'subagent → subagent phải bị chặn (không chain vô hạn)').toBe(1);
+    expect(r.out).toContain('deny-subagent-chain');
+  });
+
+  test('D3: parent đủ quyền → subagent permitted (attenuation không chặn nhầm)', () => {
+    const r = run('.agent/scripts/policy-check.mjs', [
+      '--tool', 'read', '--target', 'www/index.html', '--actor', 'subagent:explore', '--parent', 'YUNIE',
+    ]);
+    expect(r.code, 'parent permitted → child permitted').toBe(0);
+    expect(r.out.toLowerCase()).toContain('permitted');
+  });
+
+  test('D4: parent không đủ quyền → escalation refused (child không vượt parent)', () => {
+    const r = run('.agent/scripts/policy-check.mjs', [
+      '--tool', 'edit', '--target', 'N5Blazor.Tests/ServiceTests.cs', '--actor', 'subagent:impl', '--parent', 'Implement',
+    ]);
+    expect(r.code, 'child làm điều parent không được phép → refused').toBe(1);
+    expect(r.out).toContain('deny-subagent-escalation');
+  });
+
+  test('D5: parent đủ quyền nhưng child hẹp hơn — actor-gate vẫn chặn (child ≠ verify)', () => {
+    const r = run('.agent/scripts/policy-check.mjs', [
+      '--tool', 'edit', '--target', 'N5Blazor.Tests/ServiceTests.cs', '--actor', 'subagent:impl', '--parent', 'verify',
+    ]);
+    expect(r.code, 'child không được mượn quyền verify của parent').toBe(1);
+    expect(r.out).toContain('deny-test-mutate');
+  });
+
+  test('D6: case-variant actor (SUBAGENT:*) vẫn bị chặn — không bypass', () => {
+    const r = run('.agent/scripts/policy-check.mjs', [
+      '--tool', 'read', '--target', 'www/index.html', '--actor', 'SUBAGENT:EXPLORE',
+    ]);
+    expect(r.code, 'uppercase subagent actor phải bị chặn').toBe(1);
+    expect(r.out).toContain('deny-subagent-no-parent');
+  });
+
+  test('D7: non-subagent actor không bị ảnh hưởng (regression law v4 → v5)', () => {
+    const r = run('.agent/scripts/policy-check.mjs', ['--tool', 'shell', '--target', 'npm install']);
+    expect(r.code, 'request thường vẫn permitted').toBe(0);
+    expect(r.out.toLowerCase()).toContain('permitted');
+  });
+});

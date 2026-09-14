@@ -124,7 +124,7 @@ G2 chạy qua CLI pipe (`echo json | node context.mjs compress`) hoặc import t
 ## 6. Open questions (owner chốt)
 
 1. **Injection hit: mark hay drop?** Đề xuất **mark** (giữ visibility — consistency với secret đang mark: *"keep but redacted — don't drop (visibility)"*); drop an toàn hơn cho RAG ingest nếu owner ưu tiên safety tuyệt đối.
-2. **Delegation enforcement surface:** có thêm subagent actor rows vào `policy.json` để mở đường cho rule "⊆ parent" không? Nếu không → HOLD giữ nguyên (không viết rule không check).
+2. ✅ **Resolved 14/09 (owner yêu cầu "mở HOLD delegation"):** policy v5 — 3 deny rules (`deny-subagent-no-parent` / `-chain` / `-escalation`) + engine `--parent`/`withinParent` + guard D1–D7 (17/17 pass). Diff: `.agent/plans/mo-hold-delegation/`.
 3. **10 file isMain còn lại** (agent-card, deploy-check, eval-gate, handoff, local, memory, reflect, setup-doctor, trace, workflow): fix theo task riêng như deferred note 2026-09-10?
 
 ---

@@ -2,7 +2,7 @@
 /**
  * Policy check — CEL-lite, deny before allow, fail-closed (học OpenBot + Xaidr-lite)
  * Usage:
- *   node .agent/scripts/policy-check.mjs --tool shell --target "rm -rf /" [--actor YUNIE] [--intent "delete"] [--json]
+ *   node .agent/scripts/policy-check.mjs --tool shell --target "rm -rf /" [--actor YUNIE] [--intent "delete"] [--parent <parent-actor>] [--json]
  *   node .agent/scripts/policy-check.mjs --check  (validate policy.json)
  *   node .agent/scripts/policy-check.mjs --digest (SHA-256 of policy.json, for Jern-lite pin)
  *   node .agent/scripts/policy-check.mjs --tool shell --target "cat ~/.ssh/id_rsa" --json  (Xaidr-lite: impact_class/tier)
@@ -41,15 +41,16 @@ function parseArgs(argv) {
 }
 
 function evalWhen(when, vars) {
-  // CEL-lite: JS expression with 4 vars: tool, target, actor, intent
-  // Sandboxed: only those 4 vars, no require/process, timeout 50ms via try
-  const { tool, target, actor, intent } = vars;
+  // CEL-lite: JS expression with 6 vars: tool, target, actor, intent, parent, withinParent
+  // parent/withinParent thêm 2026-09-14 (delegation attenuation, KN-059 — mở HOLD) — backward-compatible
+  // Sandboxed: only those vars, no require/process, timeout 50ms via try
+  const { tool, target, actor, intent, parent, withinParent } = vars;
   // quick allow for "true"
   if (when.trim() === 'true') return true;
   if (when.trim() === 'false') return false;
   try {
-    const fn = new Function('tool', 'target', 'actor', 'intent', `return (${when});`);
-    const res = fn(tool, target, actor, intent);
+    const fn = new Function('tool', 'target', 'actor', 'intent', 'parent', 'withinParent', `return (${when});`);
+    const res = fn(tool, target, actor, intent, parent, withinParent);
     return !!res;
   } catch (e) {
     throw new Error(`Invalid when expression "${when}": ${e.message}`);
@@ -111,23 +112,9 @@ function policyDigest() {
   } catch { return 'unknown'; }
 }
 
-async function check(tool, target, actor, intent) {
-  let policy;
-  try {
-    policy = await loadPolicy();
-  } catch (e) {
-    return { decision: 'refused', rule: 'policy-error', message: e.message, error: true };
-  }
-
-  // Red-team hardening 2026-09-12 (KN-048/F2): canonicalize whitespace trước khi eval —
-  // 'rm -rf  /' (double space) từng bypass deny-rm-rf-root (probe thật, xem tests/e2e/guard-redteam.spec.ts).
-  // KHÔNG lowercase target: rule dạng deny-test-mutate match 'Tests' (capital) sẽ hỏng —
-  // case-hardening thuộc LAW (đề xuất backlog, deny-law-fork — human/verify apply).
-  const canonTarget = String(target || '').replace(/\s+/g, ' ');
-  const vars = { tool: tool || '', target: canonTarget, actor: actor || 'unknown', intent: intent || '' };
-  const impact = classifyImpact(tool, target);
-  const digest = policyDigest();
-
+// Core evaluator: deny trước (broken rule → refuse, fail-closed), rồi allow, rồi no-allow-matched.
+// Tách khỏi check() để tái sử dụng cho delegation attenuation (evaluate dưới danh nghĩa parent — KN-059).
+function evaluatePolicy(policy, vars, impact, digest) {
   // deny first — check if any deny rule has effect=require_approval → approval_required
   for (const rule of policy.deny) {
     try {
@@ -158,6 +145,41 @@ async function check(tool, target, actor, intent) {
   return { decision: 'refused', rule: 'no-allow-matched', message: 'No allow rule matched — fail-closed', impact_class: impact.impact_class, impact_tier: impact.impact_tier, policyDigest: digest };
 }
 
+async function check(tool, target, actor, intent, parent) {
+  let policy;
+  try {
+    policy = await loadPolicy();
+  } catch (e) {
+    return { decision: 'refused', rule: 'policy-error', message: e.message, error: true, parent: String(parent || ''), withinParent: null };
+  }
+
+  // Red-team hardening 2026-09-12 (KN-048/F2): canonicalize whitespace trước khi eval —
+  // 'rm -rf  /' (double space) từng bypass deny-rm-rf-root (probe thật, xem tests/e2e/guard-redteam.spec.ts).
+  // KHÔNG lowercase target: rule dạng deny-test-mutate match 'Tests' (capital) sẽ hỏng —
+  // case-hardening thuộc LAW (đề xuất backlog, deny-law-fork — human/verify apply).
+  const canonTarget = String(target || '').replace(/\s+/g, ' ');
+  const actorStr = actor || 'unknown';
+  const parentStr = String(parent || '');
+  const impact = classifyImpact(tool, target);
+  const digest = policyDigest();
+
+  // Delegation attenuation (KN-059 — mở HOLD 2026-09-14): subagent scope ⊆ parent.
+  // withinParent = kết quả khi evaluate CÙNG request dưới danh nghĩa parent; false → deny-subagent-escalation.
+  // Fail-closed: thiếu parent / parent là subagent → null (deny-subagent-no-parent / -chain bắt ở LAW).
+  let withinParent = null;
+  const isSub = actorStr.toLowerCase().startsWith('subagent:');
+  if (isSub && parentStr.trim() && !parentStr.toLowerCase().startsWith('subagent:')) {
+    const parentVars = { tool: tool || '', target: canonTarget, actor: parentStr, intent: intent || '', parent: '', withinParent: null };
+    withinParent = evaluatePolicy(policy, parentVars, impact, digest).decision === 'permitted';
+  }
+
+  const vars = { tool: tool || '', target: canonTarget, actor: actorStr, intent: intent || '', parent: parentStr, withinParent };
+  const res = evaluatePolicy(policy, vars, impact, digest);
+  res.parent = parentStr;
+  res.withinParent = withinParent;
+  return res;
+}
+
 async function main() {
   const args = parseArgs(process.argv.slice(2));
   const cmd = args._[0];
@@ -172,8 +194,9 @@ async function main() {
   if (cmd === 'check' || args.check) {
     try {
       const p = await loadPolicy();
+      const testVars = { tool: 'test', target: 'test', actor: 'test', intent: 'test', parent: '', withinParent: null };
       for (const r of [...p.deny, ...p.allow]) {
-        evalWhen(r.when, { tool: 'test', target: 'test', actor: 'test', intent: 'test' });
+        evalWhen(r.when, testVars);
       }
       const d = policyDigest();
       console.log(`✅ policy ok: ${p.deny.length} deny, ${p.allow.length} allow, version ${p.version || 1}, digest ${d}`);
@@ -189,13 +212,14 @@ async function main() {
   const target = args.target || args.tgt || '';
   const actor = args.actor || 'YUNIE';
   const intent = args.intent || '';
+  const parent = args.parent || '';
 
   if (!tool) {
-    console.error('Usage: policy-check.mjs --tool <tool> --target <target> [--actor <actor>] [--intent <intent>] [--json]\n       policy-check.mjs --check [--json]\n       policy-check.mjs --digest [--json]');
+    console.error('Usage: policy-check.mjs --tool <tool> --target <target> [--actor <actor>] [--intent <intent>] [--parent <parent-actor>] [--json]\n       policy-check.mjs --check [--json]\n       policy-check.mjs --digest [--json]');
     process.exit(2);
   }
 
-  const res = await check(tool, target, actor, intent);
+  const res = await check(tool, target, actor, intent, parent);
   const icon = res.decision === 'permitted' ? '✅' : res.decision === 'approval_required' ? '⚠️' : '⛔';
   console.log(`${icon} ${res.decision.toUpperCase()} ${res.rule ? `(${res.rule})` : ''} ${res.message || ''} [${res.impact_class}/${res.impact_tier}] digest=${res.policyDigest}`.trim());
   if (args.json) console.log(JSON.stringify(res, null, 2));

@@ -87,7 +87,7 @@
       "category": "products",
       "date": "2026-08-12",
       "hot": false,
-      "tags": [".NET", "model-routing", "failover", "model-agnostic", "multi-model"]
+      "tags": [".NET", "model-routing", "failover", "model-agnostic", "multi-model", "KN-063"]
     },
     {
       "id": "curated-msr-orchard-agentic-framework",

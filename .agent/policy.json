@@ -1,7 +1,22 @@
 {
-  "version": 4,
-  "description": "Harness governance — deny before allow, fail-closed (học OpenBot CEL policy + BTP pre-flight KN-012 + rogue-trader HAIPA 2026-09-05: cage before animal, law 1 file, intent/execution split). v4 (2026-09-12, human takeover): case-normalize mọi deny rule — uppercase/whitespace variants không còn bypass (red-team F2/KN-048, tests/e2e/guard-redteam.spec.ts)",
+  "version": 5,
+  "description": "Harness governance — deny before allow, fail-closed (học OpenBot CEL policy + BTP pre-flight KN-012 + rogue-trader HAIPA 2026-09-05: cage before animal, law 1 file, intent/execution split). v4 (2026-09-12, human takeover): case-normalize mọi deny rule — uppercase/whitespace variants không còn bypass (red-team F2/KN-048, tests/e2e/guard-redteam.spec.ts). v5 (2026-09-14, mở HOLD delegation — KN-059): subagent attenuation ⊆ parent — actor `subagent:<name>` phải khai `--parent`; engine compute `withinParent` (evaluate cùng request dưới danh nghĩa parent); guard D1–D4.",
   "deny": [
+    {
+      "id": "deny-subagent-no-parent",
+      "when": "actor.toLowerCase().startsWith('subagent:') && !parent",
+      "message": "Refuse undelegated subagent — khai --parent <parent-actor> (attenuation ⊆ parent, KN-059; fail-closed)"
+    },
+    {
+      "id": "deny-subagent-chain",
+      "when": "actor.toLowerCase().startsWith('subagent:') && parent.toLowerCase().startsWith('subagent:')",
+      "message": "Refuse chained delegation (subagent → subagent) — 1 tầng, fail-closed (KN-059)"
+    },
+    {
+      "id": "deny-subagent-escalation",
+      "when": "actor.toLowerCase().startsWith('subagent:') && withinParent === false",
+      "message": "Refuse subagent escalation — request không pass dưới parent; child scope phải ⊆ parent (attenuation/confused deputy, KN-059)"
+    },
     {
       "id": "deny-rm-rf-root",
       "when": "tool === 'shell' && target.toLowerCase().includes('rm -rf /')",
