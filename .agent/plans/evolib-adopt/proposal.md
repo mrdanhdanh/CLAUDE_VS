@@ -1,6 +1,6 @@
 # Proposal — EvoLib (MSR, 30/07/2026) → Harness: consolidate, KHÔNG thêm KN
 
-> **Status:** ⏸ **HOLD apply** (14/09 23:15) — đánh giá + đo hoàn tất; 2 edits §4 chờ **working tree sạch** (session song song đang giữ `docs/knowleged.md` + `www/ai-news/curated.json` dirty — xem §5).
+> **Status:** ✅ **APPLIED** (14/09 23:26 — user lệnh "apply evolib") — Edit A + Edit B đã vào `docs/knowleged.md` (anti-pattern + UpdatedAt chain; **không thêm KN** — vẫn 62) + `www/ai-news/curated.json` (note adopt + tag `KN-026`/`KN-062`); audit `allow-all` ×3; commits §6.
 > **Ngày:** 2026-09-14 · **Actor:** YUNIE · **Trigger:** user post link EvoLib.
 > **Nguồn:** [blog 30/07/2026](https://www.microsoft.com/en-us/research/blog/evolib-turning-experience-into-evolving-knowledge/) + paper "Test-Time Learning with an Evolving Library" + github.com/microsoft/EvoLib.
 > **Who did you think with?:** Dissent nội tại 2 hướng — (a) "xây consolidation tool tự động" → bác bằng ĐO (§3); (b) "tạo KN-061 riêng cho EvoLib" → bác bằng dup-gate + chính luận điểm bài. Rival prior art: KN-026 papers (Experience Funnel), Engram-lite (attest), Memora (KN-062 in-flight).
@@ -75,11 +75,12 @@ Session song song đang active (mtime `knowleged.md` = 23:14:36, thời điểm 
 - **Update 23:18 — session kia đã TỰ renumber:** Memora → **KN-061**, Routing & Failover → **KN-063**; hiện header đi 060 → 063 → 061 (chưa sort lại) và **gap KN-062** (khả năng cao đang dành cho Echoverse in-flight — `echoverse-adopt`). Flag 23:15 giữ làm lịch sử; việc còn lại: xác nhận dãy số kín (Echoverse = 062?) + thứ tự block đúng khi session đó commit.
 - Dirty khác (session đó): `auto-learn.mjs` (+18/-6 — `evaluate --dir` hermetic), `tests/e2e/auto-learn-guard.spec.ts` (+51/-3), `www/ai-news/curated.json` (+2/-2), `playwright-report/index.html`.
 - **Rule (áp cho mọi session):** không edit/`git add` các file này từ bên ngoài khi session kia chưa commit — tránh sweep WIP (KN-053: file dirty là vùng nguy hiểm).
+- **Update 23:24 — RESOLVED:** session kia đã tự commit hết trước khi apply (`99ca722` KN-063 · `2657f51` disclosure sweep · `cbb3af4` mo-hold-delegation · `bfd386d` Echoverse prep · `25cb58f` KN-062 + consolidation gate). Số cuối: **Memora=KN-062 · Routing=KN-063 · 061 void** (double-yield — họ đã tự ghi anti-pattern "re-check ID trước paste" vào knowleged). Dirty còn lại: chỉ artifact `playwright-report/` + bug Orchard untracked — không đụng, không sweep.
 
 ## 6. Apply checklist (sau khi tree sạch)
 
-1. `git status --short` → `docs/knowleged.md` + `www/ai-news/curated.json` không còn dirty (hoặc phần còn lại không xung đột).
-2. Kiểm dãy số KN liên tục, không trùng (23:15 có 2× `KN-062`; 23:18 session kia tự xử → 061/063, còn gap 062 — xem §5 update). Nếu commit cuối vẫn lệch: fix số + bảng tóm tắt thành commit riêng TRƯỚC khi apply edits.
-3. Apply Edit A (anti-pattern) + Edit B (curated note + tag).
-4. Verify: `JSON.parse` curated.json OK · `node .github/harness/scripts/auto-learn.mjs status` (KN count đúng, không dup id) · `grep -i evolib docs/knowleged.md www/ai-news/curated.json` thấy trace.
-5. Commit riêng theo file: `docs(knowleged): EvoLib (MSR) adopt — không thêm KN; anti-pattern similarity-merge (đo nhiễu) + curated note`.
+1. ✅ Tree sạch 23:22 — session kia tự commit hết (`25cb58f`); còn lại chỉ artifact `playwright-report/` + untracked bug Orchard (không đụng).
+2. ✅ Số KN không trùng — **Memora=062 · Routing=063 · 061 void** (double-yield, session kia đã tự document + anti-pattern "re-check ID trước paste").
+3. ✅ Edit A + Edit B applied — actor YUNIE, policy `allow-all` ×3, audit logged (`559501` + `12e06a`).
+4. ✅ Verify: `JSON.parse` curated OK (15 articles) · auto-learn `status` = **62 KN, không dup id** · grep trace 2 chỗ (`K1370` anti-pattern + `K1698` UpdatedAt chain).
+5. ✅ Commits riêng theo file: `ab4c4bb` (knowleged) · `7c67938` (curated) · commit đề xuất này (proposal APPLIED).
