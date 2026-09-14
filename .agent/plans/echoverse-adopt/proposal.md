@@ -19,6 +19,7 @@
 - **ĐÃ LÀM an toàn (file sạch, policy-check PERMITTED + audit logged):** ✅ `_template/bug.md` thêm `Layer:` + ✅ `fixbug.prompt.md` sync (field list + rule bullet) — commit partial riêng.
 - **Blocked P1–P4:** `auto-learn.mjs` + `tests/e2e/auto-learn-guard.spec.ts` + `docs/knowleged.md` (WIP session khác). Patch sẵn §7 — apply mechanical khi tree sạch.
 - **Số KN của package:** = max+1 tại paste. Hiện max = KN-063 ⇒ dự kiến **KN-064**. KHÔNG chạm 060–063.
+- **UPDATE 14/09 (phiên Routing/ID-integrity, sau paste):** Echoverse đã lấy **KN-064** ✓ · Orchard **KN-065** · phiên ID-integrity lấy **KN-066** (guard `kn-id-integrity.spec.ts` chống double-yield). Từ nay sau MỌI paste KN: chạy `npx playwright test tests/e2e/kn-id-integrity.spec.ts` (dup/orphan/order) + re-check ID ngay trước khi ghi — xem `docs/knowleged.md` KN-066.
 
 ## 1. Framing (KN-052 — tách mechanism vs claim)
 
