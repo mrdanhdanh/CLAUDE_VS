@@ -43,9 +43,10 @@ export function compressHits(hits, maxChars = 2000) {
   for (const h of sorted) {
     const q = quarantine(h.text || h.snippet || '');
     const clean = { ...h, text: redactSecrets((h.text || '').slice(0, 600)), snippet: redactSecrets((h.snippet || '').slice(0, 300)) };
-    if (!q.pass && q.reason === 'secret detected') {
-      // keep but redacted (don't drop — visibility)
+    if (!q.pass) {
+      // keep but marked (don't drop — visibility); provenance để consumer quyết định (KN-059)
       clean._quarantined = true;
+      if (q.reason === 'prompt-injection pattern') clean._injection = true;
     }
     const size = JSON.stringify(clean).length;
     if (total + size > maxChars && out.length > 0) break;
@@ -137,7 +138,7 @@ function main() {
   }
 }
 
-const isMain = process.argv[1] && import.meta.url.endsWith(process.argv[1].split('/').pop());
+const isMain = process.argv[1] && import.meta.url.endsWith(process.argv[1].split(/[\\/]/).pop()); // Windows-safe (KN-059; defer 2026-09-10 fixed here)
 if (isMain) main();
 
 export default { quarantine, compressHits, isolateContexts, inspectHits };
