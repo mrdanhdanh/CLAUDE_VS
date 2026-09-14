@@ -1,8 +1,8 @@
 # LLM Weakness Research — "Giỏi ngọn, yếu gốc" là đặc tính kiến trúc, không phải lỗi model
 
-> **Mục đích:** Tài liệu nền tảng cho triết lý **Process > Model** của Harness v2. Tổng hợp 6 bài nghiên cứu arXiv đã verify (fetch trực tiếp, có link) chứng minh: model giỏi **sinh ra plausible output**, không giỏi **tự xác nhận đúng** → verification phải nằm **ngoài** model.
+> **Mục đích:** Tài liệu nền tảng cho triết lý **Process > Model** của Harness v2. Tổng hợp 6 bài nghiên cứu arXiv + nguồn bổ sung 2026 (§2b–§2c) đã verify (fetch trực tiếp, có link) chứng minh: model giỏi **sinh ra plausible output**, không giỏi **tự xác nhận đúng** → verification phải nằm **ngoài** model.
 >
-> **Ngày:** 2026-09-10 · **Người tổng hợp:** YUNIE · **KN liên quan:** KN-023 (xem `docs/knowleged.md`)
+> **Ngày:** 2026-09-10 · bổ sung §2c: 2026-09-14 · **Người tổng hợp:** YUNIE · **KN liên quan:** KN-023 (gốc) · KN-024 (§2b) · KN-059 (§2c — xem `docs/knowleged.md`)
 
 ---
 
@@ -18,6 +18,7 @@
 | 6 | GSM-Symbolic: Understanding the Limitations of Mathematical Reasoning in LLMs | Mirzadeh et al. (Apple), **ICLR 2025** — [arXiv:2410.05229](https://arxiv.org/abs/2410.05229) | "Reasoning" thật ra là **pattern matching** — đổi số/mệnh đề nhiễu → sụt tới 65% | KN-020, KN-022 (pipeline > agency) |
 | 7 | Defining AI Psychosis. Part 2: "Prolific AI Psychosis" | Jeff Clark, MD (psychiatrist), 2026-09-09 — [jeffs.blog](https://jeffs.blog/p/defining-ai-psychosis-part-2-prolific) | Output rẻ làm **mù khả năng đánh giá** — "can't assess the quality of their own work" | KN-024 (mới) |
 | 8 | Good Taste Can't Be Taught, Bought or Learned, Sorry AI | Emily Oberg (founder Sporty & Rich), 2026-09-08 — [emilyoberg.substack.com](https://emilyoberg.substack.com/p/good-taste-cant-be-taught-bought) | **Taste is felt, not learned** — Claude tự nhận "What I 'know' is patterns" | KN-024 (mới) |
+| 9 | Building Agents that Act on Your Behalf with Toolboxes in Foundry | Linda Li & Maria Naggaga (Microsoft Foundry), 2026-07-22 — [devblogs.microsoft.com/foundry](https://devblogs.microsoft.com/foundry/building-agents-that-act-on-your-behalf-with-toolboxes-in-foundry/) | Identity/delegation là **quyết định per-connection** ("Never in agent code"); sai token cache key → **silent cross-user leak**; guardrails screen cả input + output tool call | KN-059 (§8 HOLD delegation) |
 
 ---
 
@@ -135,6 +136,36 @@ Khi output trở nên rẻ và tự tin (KN-023), **nút thắt chuyển từ "s
 - Ai giữ verification ngoài model + human judgment (taste/craft) → productive — "senior engineer side".
 
 Đây là bằng chứng thực chiến (không phải lab) cho Process > Model: **human pilot-in-command không phải sự bảo thủ — là điều kiện sống còn** khi output rẻ.
+
+---
+
+## 2c. Bổ sung 2026-09-14 — Agent delegation & auth boundary (Microsoft Foundry Toolboxes)
+
+**Nguồn:** [Building Agents that Act on Your Behalf with Toolboxes in Foundry](https://devblogs.microsoft.com/foundry/building-agents-that-act-on-your-behalf-with-toolboxes-in-foundry/) — Linda Li (PM) + Maria Naggaga (Microsoft Foundry), 2026-07-22.
+
+**Câu hỏi trung tâm — đúng chủ đề §8 HOLD của `agent-governance`:**
+> "At some point, many agents move from answering questions to taking action. And when it does, the question becomes: **whose identity is it acting with?**"
+
+**3 takeaway:**
+
+1. **User-delegation ≠ agent-identity — danh tính là quyết định per-connection, không phải thuộc tính agent.**
+   Employee agent gọi MCP orders + Work IQ: *"the agent can't run as a managed identity or service account. It has to act as the **real signed-in user** — with that user's permissions, access boundaries, and data protections."* Cơ chế: OAuth2 + Entra On-Behalf-Of; auth type chọn **một lần khi tạo connection** (portal/azd/REST) — *"Never in agent code."*
+
+2. **Auth ở boundary, không trong agent — token isolation là chỗ chết người.**
+   *"Auth lives on the toolbox, not in the agent"* — Foundry acquire/exchange/refresh token **server-side**. Tự build = "weeks of plumbing" với 3 cửa tử (token isolation · consent management · duplicated implementation), nặng nhất:
+   > "**A wrong cache key can silently leak one user's downstream API access to another user.**"
+   → Họ confused-deputy: sai một config key, quyền của user A chảy sang user B — im lặng, không crash. Đúng lý do §8 HOLD chưa viết rule khi chưa có enforcement surface.
+
+3. **Guardrail screen cả input + output tại boundary.**
+   RAI guardrails *"screen every tool's input and output, so an untrusted MCP response can't smuggle prompt-injection or unsafe content back into the agent"*; BYO gateway (APIM) cho rate-limit/log/network → *"enforce policy at the boundary — not per-agent code."*
+
+**Mapping KN:**
+- "Wrong cache key → silent cross-user leak" → KN-059 §8 HOLD (delegation ⊆ parent; confused deputy / capability security) — evidence khi mở lại: cơ chế đúng là **danh tính per-connection ở policy layer**, để agent code auth-free.
+- "Auth never in agent code" → `agent-governance` §6 (law 1 file; tách intent/execution; trust ở policy layer observable, không ở stochastic process).
+- "Guardrails screen input AND output" → KN-059 (content ≠ authority; `_injection` provenance trong `compressHits`) — enforcement ở boundary/ingest, không thêm discretion tier cho model.
+- "Tool thứ 3 = 1 connection + 1 dòng" → KN-013 (minimal ladder: tool mới không viết plumbing mới).
+
+**Không adopt:** platform-specific (Foundry/Entra/APIM) — harness file-based giữ **mechanism-half** (KN-052): (a) actor là input tường minh của `policy-check` (`--actor`), không suy diễn; (b) delegation luôn ⊆ parent khi có enforcement surface; (c) tool output phải screen + mark provenance trước khi vào context.
 
 ---
 
