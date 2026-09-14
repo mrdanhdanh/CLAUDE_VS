@@ -1,6 +1,6 @@
 ---
 name: harness-process
-description: "Task-agnostic lessons 'Process & Self-Improvement' chưng cất từ docs/knowleged.md (24 KN: KN-005, KN-007, KN-010, KN-014, KN-016, KN-018, KN-019, KN-023, KN-024, KN-025, KN-026, KN-027, KN-033, KN-034, KN-035, KN-036, KN-037, KN-039, KN-043, KN-044, KN-047, KN-053, KN-054, KN-056) + .agent/bugs/. Use when task chạm process, quality, ux, perf, a11y, knowledge, automation, dx, self-improving, benchmark — áp Cách phòng tránh trước khi code, tránh lặp bug cũ. DisCo-lite, regenerate bằng distill-agnostic.mjs."
+description: "Task-agnostic lessons 'Process & Self-Improvement' chưng cất từ docs/knowleged.md (25 KN: KN-005, KN-007, KN-010, KN-014, KN-016, KN-018, KN-019, KN-023, KN-024, KN-025, KN-026, KN-027, KN-033, KN-034, KN-035, KN-036, KN-037, KN-039, KN-043, KN-044, KN-047, KN-053, KN-054, KN-056, KN-057) + .agent/bugs/. Use when task chạm process, quality, ux, perf, a11y, knowledge, automation, dx, self-improving, benchmark — áp Cách phòng tránh trước khi code, tránh lặp bug cũ. DisCo-lite, regenerate bằng distill-agnostic.mjs."
 user-invocable: false
 ---
 
@@ -10,11 +10,11 @@ user-invocable: false
 
 ## When to Use
 
-- Task chạm theme **Process & Self-Improvement** (tags: process, quality, ux, perf, a11y, knowledge, automation, dx, self-improving, benchmark, aar, mcp, testing, regex, windows, fs, collaboration, diversity, pilot-in-command, metrics, evidence, research, verification, calibration, psychology, taste, human-judgment, agent, self-evolving, procedural-graph, a-jit, memory, funnel, rl, consistency, self-distillation, scaffold, rsi, harness, failure-diagnosis, reasoning, uncertainty, architecture, playbook, evals, agentic-patterns, powershell, scripts, hooks, %LOCALAPPDATA%\Programs\PowerShell\7.6.6, terminal.integrated.defaultProfile.windows, automationProfile.windows, ??, &&, ?., $var?.prop, ?, $s='abc'; $s?.Length, ${var}?.prop, .Length, .Count, $null, -Command, ", -File, content, docs, verify, fresh-eyes, rag, grounding, slop, complexity, git, recovery, recurrence, guard)
+- Task chạm theme **Process & Self-Improvement** (tags: process, quality, ux, perf, a11y, knowledge, automation, dx, self-improving, benchmark, aar, mcp, testing, regex, windows, fs, collaboration, diversity, pilot-in-command, metrics, evidence, research, verification, calibration, psychology, taste, human-judgment, agent, self-evolving, procedural-graph, a-jit, memory, funnel, rl, consistency, self-distillation, scaffold, rsi, harness, failure-diagnosis, reasoning, uncertainty, architecture, playbook, evals, agentic-patterns, powershell, scripts, hooks, %LOCALAPPDATA%\Programs\PowerShell\7.6.6, terminal.integrated.defaultProfile.windows, automationProfile.windows, ??, &&, ?., $var?.prop, ?, $s='abc'; $s?.Length, ${var}?.prop, .Length, .Count, $null, -Command, ", -File, content, docs, verify, fresh-eyes, rag, grounding, slop, complexity, git, recovery, recurrence, guard, review)
 - Trước khi code/fix — áp **Cách phòng tránh** ngay để không lặp bug cũ
 - Review/plan — check anti-patterns bên dưới
 
-## Bài học (24 KN)
+## Bài học (25 KN)
 
 ### KN-005 — Bug Blindness — mù bug do workaround vô thức + fan bias (major)
 - **Bài học:** Chữa mù bug: fresh eyes, test như user mới, chỉ ra bug liên tục, không workaround vô thức, dogfooding có ý thức
@@ -252,8 +252,23 @@ user-invocable: false
   - Định kỳ chạy `guards` — trả nợ lưới cho major/critical dần.
   - Phép đo là hạ tầng: metric/priority build trên parser hỏng = sai âm thầm — test cả phép đo (priority ≥10), không chỉ đo data.
 
+### KN-057 — Ranh giới vibe coding vs engineering ở review/verify chain, không ở label — "keep holding the wheel" (minor)
+- **Bài học:** Neo ranh giới vào review/verify chain, không vào label: vibe-only OK cho prototype/demo; hệ thống nhạy cảm bắt buộc review + verify; "hiểu mới merge"; "AI viết" không phải thẻ miễn trách nhiệm — keep holding the wheel
+- **Bug report:** —
+- **Cách phòng tránh:**
+  - Trước khi gọi output AI là "engineering/sản phẩm sẵn sàng": hỏi **"verify chain ở đâu?"** — review + reproduce + test + audit; thiếu → chỉ là prototype (label không thay bằng chứng — KN-019).
+  - Sản phẩm chạm dữ liệu nhạy cảm (tiền/y tế/cá nhân): cấm prompt-and-ship end-to-end — full pipeline + review từng phần (KN-037 + KN-047 + KN-018).
+  - Không dùng "AI viết" làm câu trả lời khi sự cố — accountability thuộc người/process đã cho ship (KN-051 + agent-governance §7 "disclosure bắt buộc").
+  - Feature AI viết 100% vẫn phải qua câu "mình hiểu không? đọc lại giải thích được không?" trước merge (KN-024).
+  - Claim kèm incentive phải tách mechanism vs claim (KN-052): con số "2-4 tuần học basics" trong bài là claim không đo được — lấy cơ chế (hiểu trước khi tin output), không lấy con số làm chuẩn.
+
 ## Anti-patterns (đừng lặp lại)
 
+- - ❌ Guard asset chỉ check `fs.existsSync` — "tồn tại" ≠ "render được": SVG lọt foreignObject + `<br>` không đóng → XML gãy → `<img>` không decode (ảnh vỡ im lặng); verify bằng DOMParser + `img.decode()`, có negative control trên bản cũ (KN-058 + KN-047 + KN-049).
+- - ❌ Thấy `naturalWidth:0`/decode FAIL trong verify mà gán cho "cache/artifact" khi chưa có control image trên cùng page — avatar load OK + asset mình fail = asset lỗi thật (KN-058 + KN-019).
+- - ❌ Sửa syntax/format khi lỗi render nằm ở renderer bên thứ ba (race/lifecycle) — repro bằng chính bundle của họ trước; front page quan trọng dùng asset tĩnh `<picture>` light/dark thay vì iframe rich-display (KN-058 + KN-019).
+- - ❌ Gọi prompt-and-ship là "engineering" để mượn uy tín — label không mang theo review/verify; hỏi "verify chain ở đâu?" (review + reproduce + test + audit) trước khi tin, thiếu = prototype (KN-057).
+- - ❌ Ship hệ thống chạm tiền/y tế/dữ liệu cá nhân bằng vibe end-to-end không review — "AI viết" không phải thẻ miễn trách nhiệm; accountability trace về người/process cho ship (KN-057 + KN-051).
 - - ❌ Viết lệnh trong `hooks.json`/`.claude/settings.json` như text tài liệu — đây là code chạy qua PowerShell: ngoặc, chấm phẩy, `&`, pipe, backtick bị parse thành cú pháp (subexpression) → hook lỗi mỗi lần chạy; lưới máy `hooks-integrity.spec.ts` (KN-039 tái lập 2026-09-13 + KN-056).
 - - ❌ Có KN rồi mà bug vẫn tái lập — KN văn xuôi không tự FAIL khi bị vi phạm; KN major/critical phải có lưới (test/invariant) hoặc nó chỉ là wishlist (KN-056 + KN-047).
 - - ❌ Log bug xong không đối chiếu KN/bug cũ — tái lập bị phát hiện muộn (lần 3-4); `log` giờ tự RADAR, RADAR báo thì đọc Cách phòng tránh TRƯỚC khi fix (KN-056).
@@ -337,6 +352,6 @@ user-invocable: false
 
 ## Nguồn
 
-- `docs/knowleged.md` — KN-005, KN-007, KN-010, KN-014, KN-016, KN-018, KN-019, KN-023, KN-024, KN-025, KN-026, KN-027, KN-033, KN-034, KN-035, KN-036, KN-037, KN-039, KN-043, KN-044, KN-047, KN-053, KN-054, KN-056
+- `docs/knowleged.md` — KN-005, KN-007, KN-010, KN-014, KN-016, KN-018, KN-019, KN-023, KN-024, KN-025, KN-026, KN-027, KN-033, KN-034, KN-035, KN-036, KN-037, KN-039, KN-043, KN-044, KN-047, KN-053, KN-054, KN-056, KN-057
 - Chi tiết đầy đủ: `references/evidence.md` (progressive disclosure)
 - Regenerate: `node .github/harness/scripts/distill-agnostic.mjs`

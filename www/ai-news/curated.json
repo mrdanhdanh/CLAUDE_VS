@@ -2,6 +2,17 @@
   "description": "Curated mirror — bài YUNIE tuyển chọn cho feed ai-news (ghim đầu feed). KHÔNG bị fetch.mjs ghi đè — thêm/xoá bài bằng cách sửa file này qua git. Merge bởi mergeCurated() trong ai-news.js, fail-open nếu file lỗi.",
   "articles": [
     {
+      "id": "curated-cohere-who-writes-ai-rules",
+      "title": "Who gets to define the rules for AI? — Cohere phản biện đề xuất pacing của Anthropic",
+      "summary": "Gomez (Cohere): xin antitrust waiver để nhóm frontier labs tự viết chuẩn safety toàn ngành = cartel trá hình — tiền lệ SEC bond ratings 1975 (3 tổ chức được chỉ định, 25 năm không tiêu chí mới) + EU Motor Vehicle Block Exemption 1985 ('safety' thành moat). 4 trụ cột thay thế: risk framework theo bằng chứng (bind theo capability, không theo quy mô công ty), transparency bắt buộc, testing scoped theo bằng chứng, assurance thật (auditor không do bên bị đo chọn/trả tiền). Vụ OAI-HF: cái fail là instruction quality + walls quanh test + thời gian agents chạy không giám sát — không phải compute threshold. → Harness: dissent cho KN-052 — verifier independence phải gồm 'không do bên bị đo chọn/trả tiền' + tiêu chí published collectively; fix theo deployment context (observability, walls), không theo quy mô lab.",
+      "source": "Cohere",
+      "sourceUrl": "https://cohere.com/blog/who-gets-to-define-the-rules-for-ai",
+      "category": "safety",
+      "date": "2026-09-14",
+      "hot": true,
+      "tags": ["Cohere", "pacing", "dissent", "governance", "KN-052"]
+    },
+    {
       "id": "curated-axios-amodei-pacing",
       "title": "Anthropic, OpenAI CEOs call for slowdown in AI development",
       "summary": "Amodei kêu gọi giảm tốc ngay (essay \"We Must Pace the Frontier\"): RSI đang diễn ra + vụ OAI-HF; 3 bước — embedded evaluators (verifier ngoài builder) → democratic → global coordination. Altman đồng ý. → Harness KN-052: tách claim vs mechanism, không adopt alarm timeline.",

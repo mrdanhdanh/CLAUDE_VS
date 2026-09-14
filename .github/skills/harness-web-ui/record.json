@@ -21,7 +21,8 @@
       "KN-045",
       "KN-046",
       "KN-050",
-      "KN-055"
+      "KN-055",
+      "KN-058"
     ],
     "bugs": [
       ".agent/bugs/2026-08-29-modal-esc/bug.md",
@@ -41,7 +42,8 @@
       ".agent/bugs/2026-09-12-yt-summary-css-global-collision/bug.md",
       ".agent/bugs/2026-09-12-status-page-audit/bug.md",
       ".agent/bugs/2026-09-12-cosmos-future-scroll-dot/bug.md",
-      ".agent/bugs/2026-09-13-status-375-overflow-grid-1fr-min-content-blowout-k/bug.md"
+      ".agent/bugs/2026-09-13-status-375-overflow-grid-1fr-min-content-blowout-k/bug.md",
+      ".agent/bugs/2026-09-13-github-viewscreen-race-readme-mermaid-khong-render/bug.md"
     ]
   },
   "capabilities": [
@@ -77,7 +79,11 @@
     "content-drift",
     "nav",
     "fail-silent",
-    "grid"
+    "grid",
+    "render",
+    "github",
+    "mermaid",
+    "race"
   ],
   "evidence": [
     ".agent/bugs/2026-08-29-modal-esc/bug.md",
@@ -97,7 +103,8 @@
     ".agent/bugs/2026-09-12-yt-summary-css-global-collision/bug.md",
     ".agent/bugs/2026-09-12-status-page-audit/bug.md",
     ".agent/bugs/2026-09-12-cosmos-future-scroll-dot/bug.md",
-    ".agent/bugs/2026-09-13-status-375-overflow-grid-1fr-min-content-blowout-k/bug.md"
+    ".agent/bugs/2026-09-13-status-375-overflow-grid-1fr-min-content-blowout-k/bug.md",
+    ".agent/bugs/2026-09-13-github-viewscreen-race-readme-mermaid-khong-render/bug.md"
   ],
   "checks": [
     {
@@ -119,6 +126,6 @@
   ],
   "gaps": [],
   "verdict": "G-accepted",
-  "generatedAt": "2026-09-13T15:52:03.595Z",
+  "generatedAt": "2026-09-14T15:03:34.553Z",
   "paper": "DisCo arXiv:2609.02749v1 §3.2 (task-agnostic)"
 }

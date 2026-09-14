@@ -26,7 +26,8 @@
       "KN-047",
       "KN-053",
       "KN-054",
-      "KN-056"
+      "KN-056",
+      "KN-057"
     ],
     "bugs": [
       ".agent/bugs/2026-08-30-bug-blindness/bug.md",
@@ -129,7 +130,8 @@
     "git",
     "recovery",
     "recurrence",
-    "guard"
+    "guard",
+    "review"
   ],
   "evidence": [
     ".agent/bugs/2026-08-30-bug-blindness/bug.md",
@@ -174,6 +176,6 @@
   ],
   "gaps": [],
   "verdict": "G-accepted",
-  "generatedAt": "2026-09-13T15:52:03.587Z",
+  "generatedAt": "2026-09-14T15:03:34.538Z",
   "paper": "DisCo arXiv:2609.02749v1 §3.2 (task-agnostic)"
 }

@@ -1,6 +1,6 @@
 ---
 name: harness-web-ui
-description: "Task-agnostic lessons 'Web UI & UX' chưng cất từ docs/knowleged.md (19 KN: KN-001, KN-002, KN-003, KN-004, KN-006, KN-011, KN-017, KN-028, KN-029, KN-030, KN-031, KN-032, KN-038, KN-040, KN-042, KN-045, KN-046, KN-050, KN-055) + .agent/bugs/. Use when task chạm ui, a11y, css, responsive, data, animation, spacing, i18n, theme, contrast — áp Cách phòng tránh trước khi code, tránh lặp bug cũ. DisCo-lite, regenerate bằng distill-agnostic.mjs."
+description: "Task-agnostic lessons 'Web UI & UX' chưng cất từ docs/knowleged.md (20 KN: KN-001, KN-002, KN-003, KN-004, KN-006, KN-011, KN-017, KN-028, KN-029, KN-030, KN-031, KN-032, KN-038, KN-040, KN-042, KN-045, KN-046, KN-050, KN-055, KN-058) + .agent/bugs/. Use when task chạm ui, a11y, css, responsive, data, animation, spacing, i18n, theme, contrast — áp Cách phòng tránh trước khi code, tránh lặp bug cũ. DisCo-lite, regenerate bằng distill-agnostic.mjs."
 user-invocable: false
 ---
 
@@ -10,11 +10,11 @@ user-invocable: false
 
 ## When to Use
 
-- Task chạm theme **Web UI & UX** (tags: ui, a11y, css, responsive, data, animation, spacing, i18n, theme, contrast, state, ux, button, diagram, archify, verify, canvas, bug-blindness, perf, font, script-blocking, pages, fetch, url, reduced-motion, edge, error-handling, docs, physics, content-drift, nav, fail-silent, grid)
+- Task chạm theme **Web UI & UX** (tags: ui, a11y, css, responsive, data, animation, spacing, i18n, theme, contrast, state, ux, button, diagram, archify, verify, canvas, bug-blindness, perf, font, script-blocking, pages, fetch, url, reduced-motion, edge, error-handling, docs, physics, content-drift, nav, fail-silent, grid, render, github, mermaid, race)
 - Trước khi code/fix — áp **Cách phòng tránh** ngay để không lặp bug cũ
 - Review/plan — check anti-patterns bên dưới
 
-## Bài học (19 KN)
+## Bài học (20 KN)
 
 ### KN-001 — Định dạng mẫu: Modal không đóng khi bấm ESC (minor)
 - **Bài học:** Mọi overlay/modal phải có ESC + focus trap + aria
@@ -187,8 +187,24 @@ user-invocable: false
   - Verify responsive 2 lớp: document scroll **và** element-vs-container (`el.getBoundingClientRect().right > container.clientWidth` trên descendant của `overflow:hidden` — scroll test mù với clip).
   - Content dài là **test input thật** — khi thêm title/entry mới vào data-driven UI, chạy lại invariant responsive trước khi claim done (title ngắn cũ "vừa khít" là điều kiện che bug, không phải bằng chứng an toàn — KN-028 bug blindness).
 
+### KN-058 — GitHub viewscreen race: mermaid README lỗi "Cannot read properties of undefined (reading 'render')" — syntax đúng không cứu được race, front page dùng asset tĩnh (minor)
+- **Bài học:** Front page dùng SVG tĩnh `<picture>` light/dark; regenerate với `{ htmlLabels:false, flowchart:{ htmlLabels:false } }` → pure SVG text, XML valid, decode OK; guard 5 test (cấm mermaid + tồn tại + XML validity/không foreignObject + img.decode + source giữ)
+- **Bug report:** .agent/bugs/2026-09-13-github-viewscreen-race-readme-mermaid-khong-render/bug.md
+- **Cách phòng tránh:**
+  - Rich-display/render lỗi từ bên thứ ba (GitHub mermaid, embed, CMS): **repro bằng chính asset/bundle của họ TRƯỚC khi sửa** (download JS → chạy in-process, dispatch đúng protocol) — sửa mù theo triệu chứng chỉ tốn thời gian (KN-023).
+  - **"Tồn tại" ≠ "render được"**: guard asset không dừng ở `fs.existsSync` — verify bằng **decode thật** (`img.decode()` + `naturalWidth>0`) và **DOMParser** cho SVG (bắt `parsererror`); negative control: chạy check trên bản cũ phải FAIL (test cả phép đo — KN-049).
+  - **img `nw:0` + `decode FAIL` KHÔNG được dismiss là "cache/artifact"** — kiểm soát bằng control image trên cùng page (avatar GitHub load OK mà asset mình fail = asset lỗi thật, không phải môi trường).
+  - SVG cho `<img>` phải là XML hợp lệ + không `foreignObject`: mermaid v11 cần `htmlLabels:false` ở **cả top-level lẫn `flowchart`**; `<br>` không đóng từ HTML label là dấu hiệu config chưa chuẩn.
+  - Trang quan trọng (front page, README, landing): **không phụ thuộc renderer ngoài kiểm soát** — asset tĩnh (SVG/PNG, cả light/dark) là mặc định; mermaid chỉ để ở docs có thể chấp nhận rủi ro.
+  - Tiêu chí đúng là "**render ở MỌI môi trường**", không phải "render ở máy mình" (KN-019); môi trường khác (fetch tool/browser khác/shard khác) là phép thử thật.
+  - Error message JS generic (`Cannot read properties of undefined (reading 'X')`) từ app bên thứ ba: grep bundle của họ tìm call site `.X` để khoanh vùng, đừng đoán theo nguyên nhân "hợp lý".
+
 ## Anti-patterns (đừng lặp lại)
 
+- - ❌ Guard asset chỉ check `fs.existsSync` — "tồn tại" ≠ "render được": SVG lọt foreignObject + `<br>` không đóng → XML gãy → `<img>` không decode (ảnh vỡ im lặng); verify bằng DOMParser + `img.decode()`, có negative control trên bản cũ (KN-058 + KN-047 + KN-049).
+- - ❌ Thấy `naturalWidth:0`/decode FAIL trong verify mà gán cho "cache/artifact" khi chưa có control image trên cùng page — avatar load OK + asset mình fail = asset lỗi thật (KN-058 + KN-019).
+- - ❌ Sửa syntax/format khi lỗi render nằm ở renderer bên thứ ba (race/lifecycle) — repro bằng chính bundle của họ trước; front page quan trọng dùng asset tĩnh `<picture>` light/dark thay vì iframe rich-display (KN-058 + KN-019).
+- - ❌ Tin "render được ở máy mình" = "render được" — fetch tool/browser/shard khác là môi trường thật; mermaid trên GitHub là iframe có race `ready:ack` trước `data` (KN-058).
 - - ❌ Dùng bare `1fr` cho grid container chứa content động — `1fr` = `minmax(auto,1fr)`, min-content blowout khi content (title/text dài) vượt track; luôn `minmax(0,1fr)` (KN-055).
 - - ❌ Đặt `text-overflow:ellipsis` trên flex container có text trực tiếp (anonymous flex item không shrink, ellipsis vô hiệu) — bọc text vào span `min-width:0` (KN-055).
 - - ❌ Tin "responsive pass" chỉ từ document scroll trong khi cha `overflow:hidden` — overflow có thể thành **clip im lặng** (element 414px trong doc 375px, test mù) — verify thêm element-vs-container (KN-055).
@@ -238,6 +254,6 @@ user-invocable: false
 
 ## Nguồn
 
-- `docs/knowleged.md` — KN-001, KN-002, KN-003, KN-004, KN-006, KN-011, KN-017, KN-028, KN-029, KN-030, KN-031, KN-032, KN-038, KN-040, KN-042, KN-045, KN-046, KN-050, KN-055
+- `docs/knowleged.md` — KN-001, KN-002, KN-003, KN-004, KN-006, KN-011, KN-017, KN-028, KN-029, KN-030, KN-031, KN-032, KN-038, KN-040, KN-042, KN-045, KN-046, KN-050, KN-055, KN-058
 - Chi tiết đầy đủ: `references/evidence.md` (progressive disclosure)
 - Regenerate: `node .github/harness/scripts/distill-agnostic.mjs`

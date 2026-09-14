@@ -1,8 +1,8 @@
 # Evidence — harness-web-ui (DisCo arXiv:2609.02749v1 §3.2 (task-agnostic))
 
-> Substrate layer của skill — full text từ docs/knowleged.md. Sinh tự động 2026-09-13T15:52:03.588Z.
+> Substrate layer của skill — full text từ docs/knowleged.md. Sinh tự động 2026-09-14T15:03:34.540Z.
 
-## Bug reports liên quan (17/38 bugs)
+## Bug reports liên quan (18/39 bugs)
 
 - `.agent/bugs/2026-08-29-rainbow-animated/bug.md` — Bug: Rainbow border không xoay (animated)
 - `.agent/bugs/2026-08-29-status-ui/bug.md` — Bug: Trang STATUS www/ giao diện chưa hợp lý — layout, responsive, registry render sai
@@ -20,6 +20,7 @@
 - `.agent/bugs/2026-09-12-cosmos-reveal-hover-relative-url/bug.md` — Bug — Cosmos rework: reveal chết ở element > viewport + hover bị reveal đè + `./x` 404 khi URL không slash
 - `.agent/bugs/2026-09-12-status-page-audit/bug.md` — Bug: STATUS page audit — footer link 404 + registry placeholder descriptions + aria-labelledby sai ID
 - `.agent/bugs/2026-09-12-yt-summary-css-global-collision/bug.md` — Bug: YT Summary — CSS toàn cục đè trang mới (bảng bị ẩn/cắt, [hidden] vô hiệu, card nấp dưới header)
+- `.agent/bugs/2026-09-13-github-viewscreen-race-readme-mermaid-khong-render/bug.md` — Bug: GitHub viewscreen race - README mermaid khong render
 - `.agent/bugs/2026-09-13-status-375-overflow-grid-1fr-min-content-blowout-k/bug.md` — Bug: STATUS 375 overflow — grid 1fr min-content blowout khi title dai
 
 ## Full KN details
@@ -414,3 +415,30 @@
   - Content dài là **test input thật** — khi thêm title/entry mới vào data-driven UI, chạy lại invariant responsive trước khi claim done (title ngắn cũ "vừa khít" là điều kiện che bug, không phải bằng chứng an toàn — KN-028 bug blindness).
 - **Tags:** `ui` `css` `responsive` `grid` `verify`
 - **Người ghi:** YUNIE / verify plan `executive-function` (2026-09-13)
+
+---
+
+### KN-058 — GitHub viewscreen race: mermaid README lỗi "Cannot read properties of undefined (reading 'render')" — syntax đúng không cứu được race, front page dùng asset tĩnh
+
+- **Ngày:** 2026-09-13
+- **Bug report:** `.agent/bugs/2026-09-13-github-viewscreen-race-readme-mermaid-khong-render/bug.md`
+- **Severity:** minor
+- **Triệu chứng:** Front page `github.com/mrdanhdanh/CLAUDE_VS` hiện box đỏ **"Unable to render rich display — Cannot read properties of undefined (reading 'render')"** thay cho diagram mermaid trong README. Cùng block trên blob page + 4 diagram `docs/harness-flow.md` vẫn render bình thường. Environment-dependent: fetch tool 3/3 lần lỗi; Chromium (5 config: viewport 480→1920, tall 10000px, CPU throttle 6×) 5/5 lần OK.
+- **Nguyên nhân gốc (5 Whys):** Box lỗi do viewscreen app (`mermaidMarkdown-*.js`, mermaid 11.17.2) `reportError` → `onAfterLoad` catch TypeError → `t.render()` với `t` (view) còn `undefined` vì event `ready:ack` xử lý TRƯỚC event `data` (view chưa tạo). Parent chỉ gửi `ready:ack` khi nhận status `ready` (sau render thành công) — nghĩa là ở môi trường lỗi, ack rơi vào **document mới** (iframe bị replace/reload sau render bởi hydration/enrichment của GitHub). **Nội dung mermaid không liên quan**: crash xảy ra trước parse — repro 100% bằng chính bundle GitHub (dispatch `ready:ack` trước `data` → post y nguyên message lỗi, kể cả khi không có data). Bác bỏ giả thuyết syntax bằng sweep 15 version mermaid (10.2.1→11.17.2, có negative control) — tất cả pass.
+- **Cách sửa:** Không thể sửa race phía GitHub → **loại bỏ đường lỗi**: README front page chuyển mermaid → **SVG tĩnh** (render bằng mermaid 11.17.2, `<picture>` theo `prefers-color-scheme` — bản dark có fill tối cho 2 node custom-style). Nguồn mermaid giữ nguyên ở `docs/harness-flow.md`.
+  - **Fix v2 (sau khi user báo "vẫn lỗi"):** SVG v1 ship xong nhưng **không decode được** (ảnh vỡ im lặng — `img.decode()` FAIL, naturalWidth 0). Root: **mermaid v11 đọc `htmlLabels` ở TOP-LEVEL** — `flowchart.htmlLabels:false` một mình KHÔNG đủ, output vẫn còn `foreignObject` chứa `<br>` không đóng → XML invalid. Regenerate với `{ htmlLabels:false, flowchart:{ htmlLabels:false } }` → pure SVG text (không foreignObject), XML valid, decode OK (nw=383).
+- **Guard:** `tests/e2e/readme-guard.spec.ts` (5 test: README cấm ` ```mermaid ` · SVG tồn tại + được `<picture>` tham chiếu · mermaid source còn ở `docs/harness-flow.md` · **XML hợp lệ + không foreignObject** · **decode thật dạng `<img>` (img.decode + naturalWidth>0)** — 2 test sau ra đời từ lớp 2, có negative control: bản SVG cũ ở HEAD fail cả 3 check)
+- **Cách phòng tránh:**
+  - Rich-display/render lỗi từ bên thứ ba (GitHub mermaid, embed, CMS): **repro bằng chính asset/bundle của họ TRƯỚC khi sửa** (download JS → chạy in-process, dispatch đúng protocol) — sửa mù theo triệu chứng chỉ tốn thời gian (KN-023).
+  - **"Tồn tại" ≠ "render được"**: guard asset không dừng ở `fs.existsSync` — verify bằng **decode thật** (`img.decode()` + `naturalWidth>0`) và **DOMParser** cho SVG (bắt `parsererror`); negative control: chạy check trên bản cũ phải FAIL (test cả phép đo — KN-049).
+  - **img `nw:0` + `decode FAIL` KHÔNG được dismiss là "cache/artifact"** — kiểm soát bằng control image trên cùng page (avatar GitHub load OK mà asset mình fail = asset lỗi thật, không phải môi trường).
+  - SVG cho `<img>` phải là XML hợp lệ + không `foreignObject`: mermaid v11 cần `htmlLabels:false` ở **cả top-level lẫn `flowchart`**; `<br>` không đóng từ HTML label là dấu hiệu config chưa chuẩn.
+  - Trang quan trọng (front page, README, landing): **không phụ thuộc renderer ngoài kiểm soát** — asset tĩnh (SVG/PNG, cả light/dark) là mặc định; mermaid chỉ để ở docs có thể chấp nhận rủi ro.
+  - Tiêu chí đúng là "**render ở MỌI môi trường**", không phải "render ở máy mình" (KN-019); môi trường khác (fetch tool/browser khác/shard khác) là phép thử thật.
+  - Error message JS generic (`Cannot read properties of undefined (reading 'X')`) từ app bên thứ ba: grep bundle của họ tìm call site `.X` để khoanh vùng, đừng đoán theo nguyên nhân "hợp lý".
+- **Tags:** `ui` `render` `github` `mermaid` `race` `verify`
+- **Người ghi:** YUNIE / user request (2026-09-13)
+
+<!-- Thêm bài học mới theo template dưới — copy block này -->
+
+<!--
