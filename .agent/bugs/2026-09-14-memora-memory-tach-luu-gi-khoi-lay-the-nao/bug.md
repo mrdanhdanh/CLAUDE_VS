@@ -159,4 +159,4 @@ Memory tốt khi tách "lưu gì" khỏi "lấy thế nào": abstraction scan-đ
 - `docs/knowleged.md#KN-062`
 - Nguồn: MSR Memora blog 29/06/2026 · ICML 2026 · github.com/microsoft/Memora
 - Issue / PR: #
-- Commit fix: `<hash>`
+- Commit fix: `25cb58f` (code + spec + curated + snapshot) · `99ca722` (knowleged KN-062 — cross-session sweep của session Routing, disclosed `2657f51`)
