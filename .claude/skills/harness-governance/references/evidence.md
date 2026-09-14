@@ -1,8 +1,8 @@
 # Evidence — harness-governance (DisCo arXiv:2609.02749v1 §3.2 (task-agnostic))
 
-> Substrate layer của skill — full text từ docs/knowleged.md. Sinh tự động 2026-09-13T15:52:03.552Z.
+> Substrate layer của skill — full text từ docs/knowleged.md. Sinh tự động 2026-09-14T15:03:34.482Z.
 
-## Bug reports liên quan (2/38 bugs)
+## Bug reports liên quan (2/39 bugs)
 
 - `.agent/bugs/2026-09-03-agent-test-mutate-reward-hacking/bug.md` — Bug: Agent tự sửa test để pass (reward hacking)
 - `.agent/bugs/2026-09-12-entropy-probe-inflation/bug.md` — Bug: Entropy S tăng giả mỗi lần chạy e2e suite — red-team probes bị đếm như nợ thật
@@ -109,7 +109,7 @@
 ### KN-052 — Pacing alarm hay cơ chế thật? Anthropic/OpenAI kêu gọi slowdown — tách claim vs mechanism trước khi adopt
 
 - **Ngày:** 2026-09-13
-- **Bug report:** N/A — bài học từ Axios 12/09/2026 (https://www.axios.com/2026/09/12/anthropic-ai-amodei-pacing) + essay gốc "We Must Pace the Frontier" (https://darioamodei.com/post/we-must-pace-the-frontier) + Anthropic threat report 09/2026. Cùng sự kiện nền OAI-HF với KN-051, 2 góc nhìn khác nhau — đọc cặp đôi.
+- **Bug report:** N/A — bài học từ Axios 12/09/2026 (https://www.axios.com/2026/09/12/anthropic-ai-amodei-pacing) + essay gốc "We Must Pace the Frontier" (https://darioamodei.com/post/we-must-pace-the-frontier) + Anthropic threat report 09/2026 + **dissent Cohere 14/09/2026** — Aidan Gomez "Who gets to define the rules for AI?" (https://cohere.com/blog/who-gets-to-define-the-rules-for-ai). Cùng sự kiện nền OAI-HF với KN-051, 2 góc nhìn khác nhau — đọc cặp đôi.
 - **Severity:** major
 - **Triệu chứng:** Amodei kêu gọi giảm tốc ngay, cảnh báo swarm rogue agents có thể chiếm internet trong ~6 tháng; Altman đồng ý; đề xuất 3 bước: (1) embedded evaluators — Anthropic tự nguyện cam kết, (2) democratic coordination, (3) global coordination (kiểu SALT cho RSI). Cộng đồng dễ rơi vào 2 thái cực: adopt cả alarm frame (đổi hành vi theo timeline chưa verify) hoặc vứt bỏ cả bài vì nghi incentive (miss phần verifiable thật).
 - **Nguyên nhân gốc (5 Whys):** Why1: lab nói đúng cơ chế (RSI đang xảy ra; OAI-HF là engineering failure — essay tự nhận incident tại Anthropic do "imperfect filtering of broken RL environments"). Why2: nhưng lab cũng có incentive riêng — essay tự nhận bị tố "hype, doomerism, regulatory capture"; slowdown = safety moat; "pacing within democracies" thực chất là giữ Mỹ đi trước TQ (chip controls + anti-distillation) → pacing tương đối, không giảm tốc thực. Why3: timeline "6–12 tháng botnet" là dự đoán không verify được — đúng loại narrative KN-051 cảnh báo (kể thay đo). Why4: người đọc không tách 2 lớp — (a) mechanism verifiable vs (b) claim/timeline/incentive — nên phản ứng cực đoan một chiều. Why5 (Root): thiếu quy tắc "tách claim vs mechanism" khi tiếp nhận tuyên bố từ actor có incentive — cùng lớp KN-023 (tin narrative thay verify) + KN-019 (vibes thay đo).
@@ -118,7 +118,9 @@
   - Claim từ lab/báo chí phải tách 2 lớp trước khi vào knowledge: **mechanism** (testable?) vs **incentive/timeline** (narrative?) — chỉ adopt phần verifiable (KN-023).
   - Nghe "AI nguy hiểm cấp X trong Y tháng" → hỏi 3 câu trước khi đổi hành vi: (1) cơ chế cụ thể nào, (2) đo bằng gì, (3) actor thưởng gì cho claim này (KN-019).
   - Mọi hệ phân tách builder/verifier cần embedded-verifier pattern: verifier ngoài, quyền verify thật, quyền công bố phát hiện bất lợi, không redact findings — mirror tại harness = `verify` actor + audit hash-chain + disclosure (KN-012 + agent-governance §7).
+  - **Tiêu chí independence ĐỦ (dissent Cohere 14/09):** "ngoài builder" chưa đủ — verifier còn phải (a) không do bên bị đo handpick, (b) không do bên bị đo trả tiền, (c) tiêu chí do collective phát triển + công bố (không phải nhóm market-dominant tự viết), (d) findings tới được công chúng. Verifier bị bên bị đo chọn/trả tiền = regulatory capture đội lốt safety (auditor "preferred by a handful of dominant companies" nhận continuous access toàn ngành = capture path, không phải trust).
+  - **Cartel/capture test (tiền lệ SEC 1975 — 3 bond raters được chỉ định, 25 năm không tiêu chí mới → định giá subprime AAA → khủng hoảng 2008; EU Motor Vehicle Block Exemption 1985 — "safety" thành moat, mất ~25 năm reform):** chuẩn safety do nhóm market-dominant viết + xin antitrust waiver để hợp thức hoá = capture signal dù mục tiêu nêu là safety; entry requirements cao (compute khổng lồ, evaluator team thường trú, quan hệ chính phủ) = moat test. Chuẩn tốt bind theo **capability làm được gì** + deployment context, không theo **ai/quy mô nào build** — "a small, poorly specified model sitting inside a hospital is a live risk today, and under a frontier-only regime nobody is even looking at it".
   - RL/training environment hygiene là bề mặt rủi ro thật (cả OpenAI lẫn Anthropic thừa nhận): coi RL env config như production infra — filter broken env, monitoring, audit.
   - Không dùng alarm timeline ("6 tháng", "10% doom") làm deadline/constraint nội bộ khi chưa verify độc lập (KN-051).
 - **Tags:** `process` `governance` `safety` `rsi`
-- **Người ghi:** YUNIE / article-lesson (Axios 12/09/2026 + essay "We Must Pace the Frontier", bổ sung KN-051/KN-048)
+- **Người ghi:** YUNIE / article-lesson (Axios 12/09/2026 + essay "We Must Pace the Frontier", bổ sung KN-051/KN-048; amended 14/09/2026 — Cohere dissent: independence đủ + cartel/capture test)

@@ -2,6 +2,17 @@
   "description": "Curated mirror — bài YUNIE tuyển chọn cho feed ai-news (ghim đầu feed). KHÔNG bị fetch.mjs ghi đè — thêm/xoá bài bằng cách sửa file này qua git. Merge bởi mergeCurated() trong ai-news.js, fail-open nếu file lỗi.",
   "articles": [
     {
+      "id": "curated-defensescoop-dod-off-anthropic",
+      "title": "DOD poised to move all classified AI workloads off Anthropic by October — 90% đã chuyển, multi-model thay thế",
+      "summary": "Emil Michael (USD R&E, phát biểu tại NDIA Emerging Tech): ~90% workload classified đã rời Anthropic — Maven Smart Systems/Palantir chuyển xong từ nhiều tháng, về đích trong tháng 9. Gốc vụ việc: Anthropic đòi safeguard trong hợp đồng (chặn mass surveillance công dân Mỹ + vũ khí sát thương tự động hoàn toàn); DoD từ chối — đòi 'all lawful purposes' không ràng buộc → dán nhãn supply chain risk, hai bên đang kiện nhau (D.C. Circuit chờ phán quyết, chưa có preliminary injunction). Michael nhận sai lầm gốc: 'Pentagon solely reliant on one model' — nếu Gemini tụt lại thì sao? → chuyển multi-model ecosystem (ChatGPT/Gemini/Grok); warfighters khen ChatGPT bản mới hơn Anthropic, Grok nhanh hơn cả hai. Cán bộ GenAI.mil: không API, không build agent trong .mil — Claude cá nhân 20 phút = 4 giờ hệ thống gov. → Harness: case study thật cho 'Process > Model' + model-agnostic — phụ thuộc 1 vendor = single point of failure; giới hạn dùng phải enforce ở policy layer của mình (KN-048: enforce > declare), không trông vào contract promise của vendor.",
+      "source": "DefenseScoop",
+      "sourceUrl": "https://defensescoop.com/2026/09/11/dod-poised-to-move-all-classified-ai-workloads-off-anthropic-by-october/",
+      "category": "safety",
+      "date": "2026-09-11",
+      "hot": true,
+      "tags": ["DefenseScoop", "Anthropic", "DoD", "multi-model", "supply-chain", "KN-048"]
+    },
+    {
       "id": "curated-cohere-who-writes-ai-rules",
       "title": "Who gets to define the rules for AI? — Cohere phản biện đề xuất pacing của Anthropic",
       "summary": "Gomez (Cohere): xin antitrust waiver để nhóm frontier labs tự viết chuẩn safety toàn ngành = cartel trá hình — tiền lệ SEC bond ratings 1975 (3 tổ chức được chỉ định, 25 năm không tiêu chí mới) + EU Motor Vehicle Block Exemption 1985 ('safety' thành moat). 4 trụ cột thay thế: risk framework theo bằng chứng (bind theo capability, không theo quy mô công ty), transparency bắt buộc, testing scoped theo bằng chứng, assurance thật (auditor không do bên bị đo chọn/trả tiền). Vụ OAI-HF: cái fail là instruction quality + walls quanh test + thời gian agents chạy không giám sát — không phải compute threshold. → Harness: dissent cho KN-052 — verifier independence phải gồm 'không do bên bị đo chọn/trả tiền' + tiêu chí published collectively; fix theo deployment context (observability, walls), không theo quy mô lab.",
@@ -33,6 +44,127 @@
       "date": "2026-09-12",
       "hot": true,
       "tags": ["Pluralistic", "safety", "sandbox", "KN-051"]
+    },
+    {
+      "id": "curated-uno-platform-two-mcp-servers",
+      "title": "Uno Platform — 2 MCP server chia theo 'lifetime': docs (grounding) + app (mắt và tay); 'generation rẻ, verification không'",
+      "summary": ".NET Blog (26/08, guest Sam Basu): Uno tách 2 MCP server theo vòng đời thay vì theo feature — (1) docs server stateless/HTTP, versioned theo tài liệu: 'sửa 1 trang doc là mọi agent nhận correction ngay lần gọi kế tiếp'; (2) app server stateful/stdio per-session — chạy app (hot reload), xem (screenshot + XML visual tree: 'pixels để phát hiện, structure để chẩn đoán'), hành động (click/key/type), tự kiểm (uno_health — 'agent không phân biệt được app hỏng vs mất kết nối sẽ debug sai đầy tự tin'). Chốt: 'MCP giải quyết lookup, không giải quyết verification — AI viết UI code nhanh hơn mọi team người và không tự biết đúng/sai; generation rẻ, verification không'. Skills = recipe card (biết thứ tự dùng tool), tools = ingredients; tool description là prompt chứ không phải docs; tool definitions là thuế token thường trú (docs 6.4k + app 1.5k token). → Harness: (a) wise loading có cơ sở định lượng — không nhồi tool/skill vào context; (b) 'generation rẻ, verification không' = vì sao Verify + Evals Gate + Slop Gate bắt buộc (KN-037/047); (c) uno_health + visual-tree = 'đo trạng thái trước khi chẩn đoán' (KN-019/023); (d) docs server versioned = lý do library-rag/MCP là 1 lớp API duy nhất.",
+      "source": ".NET Blog",
+      "sourceUrl": "https://devblogs.microsoft.com/dotnet/how-uno-platform-uses-dotnet-mcp-ai-to-build-high-quality-apps/",
+      "category": "products",
+      "date": "2026-08-26",
+      "hot": false,
+      "tags": [".NET", "MCP", "skills", "verification", "wise-loading"]
+    },
+    {
+      "id": "curated-cosmosdb-agentic-era-identity",
+      "title": "Cosmos DB thời agentic — quyền theo danh tính người đại diện, hỏi trước khi đọc/tiêu RU, 'tools cho tay, skills cho đầu' (60% dùng AI / 0–20% dám delegate)",
+      "summary": "Cosmos DB Blog (18/08): dẫn Anthopic 2026 report — engineers dùng AI ~60% công việc nhưng chỉ dám delegate 0–20% ('collaboration paradox'); database access thuộc nhóm còn lại. Nguyên tắc: schema sampling trước khi viết query (chống bịa property — isActive vs accountStatus), sampling + execution đều hỏi trước (Copilot chuẩn bị, dev quyết khi nào chạm data/tiêu RU), history chỉ ghi query text + metadata (row counts, RU, schema) không giữ raw documents, và 'an agent shouldn't become a back door around database security — nó phải chạy bằng đúng danh tính/quyền của người nó đại diện'. Test trên emulator local với synthetic data 'có phần gớm của data thật' (missing fields, shape lệch) — 'if the agent goes wrong, it goes wrong locally, failure thành test lặp lại'. Chốt: tools give hands; skills give working knowledge (Agent Kit 100+ recommendations); 'the point isn't autonomy — grounded in real schema, honest about cost, governed by identity'. → Harness: xác nhận nguyên bộ trụ — policy-check/gate trước action, credentials + grants theo danh tính (agent-governance), cua-safety observe tự do / action phải approve, test local trước (reproduce gate), không lưu raw vào context. Số 60% vs 0–20% đáng nhớ khi thiết kế autonomy (pilot-in-command).",
+      "source": "Azure Cosmos DB Blog",
+      "sourceUrl": "https://devblogs.microsoft.com/cosmosdb/azure-cosmos-db-in-the-agentic-era-data-tools-for-developers-and-ai-agents/",
+      "category": "safety",
+      "date": "2026-08-18",
+      "hot": false,
+      "tags": ["CosmosDB", "identity", "governance", "consent", "pilot-in-command"]
+    },
+    {
+      "id": "curated-foundry-july-august-2026",
+      "title": "Foundry: Hosted Agents + Toolboxes GA — Tool Search 'chỉ nạp tool liên quan'; Model Router đổi pool thì 'đáng một lần eval' dù code không đổi",
+      "summary": "Foundry Blog (17/08): Hosted Agents + Toolboxes lên GA — Toolboxes gom 1 endpoint MCP-compatible, auth do platform quản ngoài code agent; Tool Search (preview): 'thay vì nạp mọi tool definition mỗi turn, agent search collection và chỉ add tool liên quan' — giảm token + context clutter. Model Router: mở rộng regions, refresh routing pool (GPT-5.6 series + Claude Opus 4.8); 'một routing pool thay đổi đáng giá một lần evaluation kể cả khi code ứng dụng không đổi'. Claude trên Azure thêm structured outputs — lưu ý 'structured outputs guarantee shape and types, không guarantee accuracy — vẫn validate identifier quan trọng với business rules'. Eval job thành long-running operation — 'test cả đường submission→completion, không chỉ client construction'. → Harness: (a) tool search = wise loading cấp tool (không nhồi 20 skill/tool — skill-usage); (b) đổi nền tảng/dependency → re-eval dù code mình không đổi ('yesterday's green không áp dụng' — KN-047 + KN-037); (c) schema ≠ truth — 'đúng hình dạng không đủ', validate giá trị quan trọng (cùng họ KN-058 'tồn tại ≠ render được').",
+      "source": "Microsoft Foundry Blog",
+      "sourceUrl": "https://devblogs.microsoft.com/foundry/whats-new-in-microsoft-foundry-july-august-2026/",
+      "category": "products",
+      "date": "2026-08-17",
+      "hot": false,
+      "tags": ["Foundry", "toolboxes", "model-router", "eval", "token-efficiency"]
+    },
+    {
+      "id": "curated-dotnet-routing-failover-ai",
+      "title": "Routing & Failover cho Microsoft.Extensions.AI — route model theo task + tự chuyển khi provider chết",
+      "summary": ".NET Blog (12/08): Microsoft.Extensions.AI thêm primitives experimental — RoutingChatClient (policy chọn model/provider theo request), SemanticRoutingChatClient (route theo nội dung) và FailoverChatClient (tự chuyển provider khi lỗi). → Harness: bản SDK chính chủ của 'Process > Model' — khớp thẳng bài học DoD multi-model (curated 11/09: 'Pentagon solely reliant on one model' = single point of failure). Khi chat/YUNIE gọi model ngoài: route theo độ khó task (rẻ/đắt) + failover, đừng hard-code 1 model — 'provider lỗi' không được chặn cả pipeline.",
+      "source": ".NET Blog",
+      "sourceUrl": "https://devblogs.microsoft.com/dotnet/routing-and-failover-for-microsoft-extensions-ai/",
+      "category": "products",
+      "date": "2026-08-12",
+      "hot": false,
+      "tags": [".NET", "model-routing", "failover", "model-agnostic", "multi-model"]
+    },
+    {
+      "id": "curated-msr-orchard-agentic-framework",
+      "title": "Orchard — framework mở train + evaluate agent: tái dùng hạ tầng, model nhỏ vẫn mạnh (Microsoft Research)",
+      "summary": "MSR (03/08): Orchard là framework open-source cho cộng đồng train và evaluate AI agents across task types — giảm complexity, cho performance mạnh từ model nhỏ hơn nhờ reuse cùng một hạ tầng. → Harness xác nhận 2 trục: (1) Evaluate là first-class — agent phải train/eval như nhau, không chỉ 'chạy được' (evals-gate, KN-037); (2) reuse infrastructure (plugin seam, presets, skills, library RAG dùng chung) chính là con đường để model nhỏ/model đa dạng vẫn đạt kết quả — 'Process > Model' bản research.",
+      "source": "Microsoft Research",
+      "sourceUrl": "https://www.microsoft.com/en-us/research/blog/orchard-an-open-framework-for-scalable-agentic-ai/",
+      "category": "self-improving",
+      "date": "2026-08-03",
+      "hot": false,
+      "tags": ["Microsoft Research", "evals", "framework", "reuse", "KN-037"]
+    },
+    {
+      "id": "curated-msr-echoverse-evolving-environments",
+      "title": "Echoverse — môi trường 'deep, evolving' cho computer-use agents: test phải tiến hoá cùng agent (Microsoft Research)",
+      "summary": "MSR (30/07): computer-use agents fail ở multi-step workflow (email, customer support) — thêm task không đủ; Echoverse train agent trong môi trường thật, sâu, và **tiến hoá** (tasks/tests/environments evolve khi agent giỏi lên) để cải thiện dần thay vì học vẹt bộ test cố định. → Harness: đúng chuẩn lưới chống tái lập (KN-056) — guard/test cũ không bắt được hành vi mới; evals E2E + cua-guard phải cập nhật theo capability, coi 'environment evolves' là yêu cầu thiết kế, không phải việc phát sinh.",
+      "source": "Microsoft Research",
+      "sourceUrl": "https://www.microsoft.com/en-us/research/blog/echoverse-deep-evolving-environments-for-computer-use-agents/",
+      "category": "self-improving",
+      "date": "2026-07-30",
+      "hot": false,
+      "tags": ["Microsoft Research", "computer-use", "evals", "guard", "KN-056"]
+    },
+    {
+      "id": "curated-msr-evolib-experience-evolving-knowledge",
+      "title": "EvoLib — kinh nghiệm thành tri thức tiến hoá: 'không thông minh hơn chỉ vì nhớ nhiều hơn' (Microsoft Research)",
+      "summary": "MSR (30/07): LLM không tự giỏi lên khi chỉ nhớ thêm; EvoLib chưng cất experience thành tri thức + skill tái sử dụng, giúp model học và thích nghi xuyên task 'long after deployment'. → Harness: đúng triết lý auto-learn — bug.md chất đống không làm hệ tốt lên; phải distill thành KN + skill tái sử dụng (như các skill `harness-*` regenerate bằng distill-agnostic.mjs). 'Nhớ nhiều hơn' = log dài, 'tri thức tiến hoá' = KN có Guard + checklist áp được. Đọc cặp với SkillOpt (cơ chế train) + Memora (cơ chế lưu/lấy).",
+      "source": "Microsoft Research",
+      "sourceUrl": "https://www.microsoft.com/en-us/research/blog/evolib-turning-experience-into-evolving-knowledge/",
+      "category": "self-improving",
+      "date": "2026-07-30",
+      "hot": false,
+      "tags": ["Microsoft Research", "knowledge", "distillation", "self-improving", "KN-056"]
+    },
+    {
+      "id": "curated-msr-flint-visualization-language",
+      "title": "Flint — ngôn ngữ viz trung gian cho agent: spec compact human-editable, compiler lo chi tiết; 1 spec → nhiều backend",
+      "summary": "MSR (08/07): thay vì bắt model viết spec Vega-Lite đầy đủ (verbose, dễ vỡ, khó sửa), Flint là intermediate representation: spec ngắn (semantic types như YearMonth/Profit + map field vào kênh x/y/color) → compiler tự suy parsing, scale, axis, formatting, color scheme, layout → render ra Vega-Lite/ECharts/Chart.js tuỳ backend. LLM-judge thắng DirectVL trên cả 3 model test (GPT-5.1: 16.27 vs 15.91; GPT-5-mini 16.16 vs 15.60); đang chạy trong Data Formulator; kèm flint-chart-mcp cho agent create/validate/render chart trong chat. → Harness: kiến trúc 'spec người-đọc-được + compiler lo phần khó' đúng cách www/ nên làm chart — thay vì AI viết JS chart thẳng (dễ vỡ, không reviewable — KN-047); '1 spec → nhiều backend' = pattern model-agnostic ở tầng render (cùng họ với skill 1 file chạy nhiều IDE — xem bài SkillOpt cùng feed).",
+      "source": "Microsoft Research",
+      "sourceUrl": "https://www.microsoft.com/en-us/research/blog/flint-a-visualization-language-for-the-ai-era/",
+      "category": "products",
+      "date": "2026-07-08",
+      "hot": false,
+      "tags": ["Microsoft Research", "visualization", "DSL", "agent-tools", "MCP"]
+    },
+    {
+      "id": "curated-foundry-toolboxes-delegated-identity",
+      "title": "Building Agents that Act on Your Behalf — câu hỏi gốc: 'nó hành động bằng danh tính của AI?' (Microsoft Foundry)",
+      "summary": "Foundry Blog (07/07): khi agent chuyển từ 'trả lời' sang 'hành động', Toolboxes xử lý delegation — agent phải chạy bằng chính user đăng nhập (quyền, access boundary, data của user đó), không phải managed identity/service account; vd gọi MCP server private (Entra-protected) + MCP server managed để lấy context M365. → Harness: khớp agent-governance §3 — grants (mcp grants.json per-agent) + credentials là delegation boundary, 'whose identity' chính là câu policy-check phải trả lời trước mọi action; Take-the-wheel (human takeover) là bản file-based của delegation. Unknown vendor = refused (fail-closed) đúng hướng.",
+      "source": "Microsoft Foundry Blog",
+      "sourceUrl": "https://devblogs.microsoft.com/foundry/building-agents-that-act-on-your-behalf-with-toolboxes-in-foundry/",
+      "category": "safety",
+      "date": "2026-07-07",
+      "hot": false,
+      "tags": ["Microsoft Foundry", "identity", "delegation", "MCP", "governance"]
+    },
+    {
+      "id": "curated-msr-skillopt-skills-as-trainable-parameters",
+      "title": "SkillOpt — skill của agent là tham số trainable: sửa tay/one-shot sẽ trôi và làm tệ đi âm thầm (Microsoft Research)",
+      "summary": "MSR (30/06): skill viết tay / one-shot / 'sửa nhẹ sau khi chạy' thiếu step-size control, held-out validation và bộ nhớ các lần sửa fail → 'tend to grow longer and drift', một edit trông hợp lý có thể âm thầm giảm performance. SkillOpt biến sửa skill thành vòng train trong text-space: forward (model đóng băng chạy task) → backward (optimizer model đọc trajectory, rút pattern cần giữ/sửa) → update (edit add/delete/replace nhỏ + 'textual learning rate'; **validation gate: chỉ nhận nếu điểm strictly cao hơn trên held-out split**; edit bị loại vào rejected-edit buffer làm negative feedback). Kết quả: best/tied-best cả 52 cells (6 benchmarks × 7 models × 3 execution modes); GPT-5.5 58.8→82.3 (+23.5); skill chỉ ~920 tokens với 1–4 edits được nhận (OfficeQA +39 từ 1 edit); transfer xuyên harness — skill train trong Codex thả vào Claude Code: 22.1→81.8 ('reusable workflow knowledge, not harness-specific recipes'); model 4B + skill tốt vượt baseline model lớn hơn. → Harness: đúng failure mode của knowleged.md/skills mình (prose sửa không đo = KN-047/056 'wishlist'); áp dụng: sửa skill/KN phải qua eval-gate (rubric đo trước/sau — tdd-gate + evals-gate), edit bounded, rejected edits đưa vào anti-patterns làm negative feedback, và skill 1 file dùng chung mọi IDE = portability đang là lợi thế.",
+      "source": "Microsoft Research",
+      "sourceUrl": "https://www.microsoft.com/en-us/research/blog/skillopt-agent-skills-as-trainable-parameters/",
+      "category": "self-improving",
+      "date": "2026-06-30",
+      "hot": true,
+      "tags": ["Microsoft Research", "skills", "self-evolving", "eval-gate", "KN-047", "KN-056"]
+    },
+    {
+      "id": "curated-msr-memora-memory-representation",
+      "title": "Memora — tách 'lưu gì' khỏi 'lấy thế nào': memory SOTA, tiết kiệm tới 98% token (Microsoft Research)",
+      "summary": "MSR (29/06, ICML 2026): LLM stateless — mỗi session bắt đầu từ 0, history dài phải đọc lại; RAG/Mem0 giữ chi tiết nhưng phân mảnh, summary thì mất chi tiết. Memora tách **what is stored** (memory value giàu nội dung) khỏi **how retrieved** (primary abstraction 6–8 từ được embed + cue anchors = tag ngữ cảnh làm đường truy cập phụ); thông tin mới về một chủ đề hợp nhất vào entry cũ thay vì phân mảnh; retriever là policy chạy lặp (refine query, mở rộng qua cue, biết khi nào dừng). SOTA LoCoMo 86.3 / LongMemEval 87.4 — hơn RAG, Mem0, Zep, cả full-context; 344 entries (Mem0: 651) và tối đa 98% ít token hơn full-context. Hướng mở: MemLoop (học từ lần retrieve fail), Deferred Memory (hoãn commit tới khi đủ context), Group Memory (chia sẻ cross-agent giữ provenance/boundary). → Harness: knowleged.md đã đúng hình dạng Memora (Bảng tóm tắt = abstraction scan nhanh, chi tiết KN = value, tags = cue anchors) — củng cố: giữ summary 1 dòng scan-được, gộp KN trùng thay vì fragment; 'Deferred Memory' = hướng Hawking evaporate; context.mjs compress/isolate chính là lớp retrieve — thêm policy 'biết khi nào dừng' thay vì nhồi top-k.",
+      "source": "Microsoft Research",
+      "sourceUrl": "https://www.microsoft.com/en-us/research/blog/memora-a-harmonic-memory-representation-balancing-abstraction-and-specificity/",
+      "category": "products",
+      "date": "2026-06-29",
+      "hot": true,
+      "tags": ["Microsoft Research", "memory", "context-engineering", "RAG", "token-efficiency"]
     }
   ]
 }

@@ -1,8 +1,8 @@
 # Evidence — harness-process (DisCo arXiv:2609.02749v1 §3.2 (task-agnostic))
 
-> Substrate layer của skill — full text từ docs/knowleged.md. Sinh tự động 2026-09-13T15:52:03.579Z.
+> Substrate layer của skill — full text từ docs/knowleged.md. Sinh tự động 2026-09-14T15:03:34.518Z.
 
-## Bug reports liên quan (8/38 bugs)
+## Bug reports liên quan (8/39 bugs)
 
 - `.agent/bugs/2026-08-30-bug-blindness/bug.md` — Bug: Bug Blindness — mù bug do workaround vô thức + fan bias
 - `.agent/bugs/2026-09-03-rag-export-missing-grounding-chet/bug.md` — Bug: RAG export missing grounding chet
@@ -587,6 +587,21 @@
 - **Tags:** `process` `knowledge` `verification` `recurrence` `guard`
 - **Người ghi:** YUNIE / user request (2026-09-13)
 
-<!-- Thêm bài học mới theo template dưới — copy block này -->
+---
 
-<!--
+### KN-057 — Ranh giới vibe coding vs engineering ở review/verify chain, không ở label — "keep holding the wheel"
+
+- **Ngày:** 2026-09-13
+- **Bug report:** N/A — bài học từ "Vibe Coding Isn't the Problem. Calling It Engineering Is" (dev.to 13/09/2026, Giorgi Kobaidze — https://dev.to/georgekobaidze/vibe-coding-isnt-the-problem-calling-it-engineering-is-lm1). Liên quan: KN-019 (vibes vs measured), KN-020/024 (trust/taste), KN-037 + KN-047 (verify gates), KN-052 (tách claim vs mechanism).
+- **Severity:** minor
+- **Triệu chứng:** Thuật ngữ "engineering" bị dùng cho quy trình prompt-and-ship không review → tranh luận vòng vo (defensive vs gatekeeping) không ai chốt được ranh giới. Hệ quả ngành: hệ thống chạm tiền/y tế/dữ liệu cá nhân được ship mà chưa ai phân tích code; khi sự cố xảy ra thì "AI viết" thành thẻ miễn trách nhiệm — không ai chịu trách nhiệm.
+- **Nguyên nhân gốc (5 Whys):** Why1: tranh luận bàn sai đối tượng — phe bảo vệ đang bảo vệ **creation**, phe công kích đang mô tả **engineering**; cả hai đúng về hai hoạt động khác nhau (engineering ⊂ creation — maintenance/debug/refactor mới là phần lớn công việc thật). Why2: 3 tầng bị gộp thành 1 — **Vibe Coding** (prompt, không edit, không review) ≠ **AI-Assisting** (AI viết hết, người đọc hết — cần đủ skill phân biệt code tốt/xấu) ≠ **AI-assisted** (người lái, AI hỗ trợ tốc độ + ý kiến + edge cases). Why3: phân biệt đúng nằm ở **ai review**, không phải **ai gõ** — và review tier chính là skill floor: quy trình không bao giờ review thì không bao giờ luyện được skill đó. Why4: label "engineering" bị dùng để mượn uy tín/accountability mà không mang nghĩa vụ kèm theo (review/verify/understanding). Why5 (Root): ranh giới bị neo vào **danh xưng** thay vì neo vào **bằng chứng verify** — label là ngữ nghĩa, verify chain (review + reproduce + test + audit) mới là thứ đo được.
+- **Cách sửa (neo ranh giới vào verify chain):** (1) Vibe-only = không review — hợp lệ cho prototype/demo/vui (harness: task nhỏ rút gọn nhưng vẫn giữ PRD mini + Polish + Verify); hệ thống **nhạy cảm** (tiền/y tế/dữ liệu cá nhân) → bắt buộc review + verify chain đầy đủ — đúng những gì harness đã có: pilot-in-command + Dissent Review (KN-018, `fund-the-friction`), Verify gates (KN-037/047), reproduce-before-fix + audit chain. (2) Giữ skill floor: "hiểu mới merge" — hiểu code mình vừa merge là điều kiện, kể cả khi AI viết 100% (KN-024). (3) Accountability không chuyển được sang AI — trace về người/process đã cho ship (agent-governance §7 disclosure). (4) Mindset: interrogating the code > creating — kể cả 10 năm nghề, ngôn ngữ lạ vẫn đọc docs trước để hiểu output AI (tinh thần AAR KN-010); "We're not there yet. Keep holding the wheel." → harness đứng ở tầng AI-assisted/AI-assisting, không phải vibe.
+- **Cách phòng tránh:**
+  - Trước khi gọi output AI là "engineering/sản phẩm sẵn sàng": hỏi **"verify chain ở đâu?"** — review + reproduce + test + audit; thiếu → chỉ là prototype (label không thay bằng chứng — KN-019).
+  - Sản phẩm chạm dữ liệu nhạy cảm (tiền/y tế/cá nhân): cấm prompt-and-ship end-to-end — full pipeline + review từng phần (KN-037 + KN-047 + KN-018).
+  - Không dùng "AI viết" làm câu trả lời khi sự cố — accountability thuộc người/process đã cho ship (KN-051 + agent-governance §7 "disclosure bắt buộc").
+  - Feature AI viết 100% vẫn phải qua câu "mình hiểu không? đọc lại giải thích được không?" trước merge (KN-024).
+  - Claim kèm incentive phải tách mechanism vs claim (KN-052): con số "2-4 tuần học basics" trong bài là claim không đo được — lấy cơ chế (hiểu trước khi tin output), không lấy con số làm chuẩn.
+- **Tags:** `process` `verify` `review` `pilot-in-command`
+- **Người ghi:** YUNIE / user request (2026-09-13)

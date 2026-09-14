@@ -97,7 +97,7 @@ node .github/harness/scripts/auto-learn.mjs log --error "rainbow không xoay" --
 
 ## Liên kết
 - Script: `.github/harness/scripts/auto-learn.mjs` (Node 18+, no deps, <50ms)
-- Knowledge: `docs/knowleged.md` (56 KN hiện tại)
+- Knowledge: `docs/knowleged.md` (KN count: lấy động từ `status --json` — không pin số, dễ drift)
 - Bugs: `.agent/bugs/<slug>/bug.md` + `_template/bug.md` · Hawking journal: `.agent/hawking.jsonl` + `hawking.md` · Guard spec (dogfood): `tests/e2e/auto-learn-guard.spec.ts`
 - Agent: `learn` (delegate khi cần suggest/log/propose)
 - Status: `node auto-learn.mjs status --json` cho YUNIE/www · Hawking mirror: `www/cosmos/hawking.json` (dashboard `scale.html#hawking`)

@@ -1,8 +1,8 @@
 # Evidence — harness-build-config (DisCo arXiv:2609.02749v1 §3.2 (task-agnostic))
 
-> Substrate layer của skill — full text từ docs/knowleged.md. Sinh tự động 2026-09-13T15:52:03.572Z.
+> Substrate layer của skill — full text từ docs/knowleged.md. Sinh tự động 2026-09-14T15:03:34.509Z.
 
-## Bug reports liên quan (4/38 bugs)
+## Bug reports liên quan (4/39 bugs)
 
 - `.agent/bugs/2026-08-30-ai-server-slot-hardcode-tunnel/bug.md` — Bug: Slot máy chủ AI không hoạt động — hardcode localhost dev tunnel trong app released
 - `.agent/bugs/2026-08-30-dotnet-build-fail-do-file-lock-n5blazor-exe-ang-ch/bug.md` — Bug: dotnet build fail do file lock N5Blazor.exe đang chạy

@@ -27,8 +27,8 @@
     ".claude/rules/skill-usage.md": "e9c9107d79c150b95a5df382b889366b64086844f9c0b2186def83df47c8f9bd",
     ".claude/rules/library-rag.md": "3e3b2f5465674453555699c1ae126ea438fe2de7e72f7f2a638888e78f556102",
     ".claude/rules/yunie-personality.md": "9f41dc3a82646df404bb3df0d024b93b4fec7625452d7a043ae7472bb440fc5c",
-    ".claude/rules/auto-learn.md": "dc0fb75b59244676b77cc5cf263158fbd37ca45599b61153c20045f623274919",
-    ".claude/rules/agent-governance.md": "c20591283ee0407a6455386841f052ce88d7a994e9aa58c81b0a2247bbd9d103",
+    ".claude/rules/auto-learn.md": "c26bdfd0a00328c5de2f0eed02feb7eff180a250b996ebdd14f5033e6051e589",
+    ".claude/rules/agent-governance.md": "17e5ae2db7b8955380647be778ba51291db1be0ea23dc7601dfe7fcd93a25882",
     ".claude/rules/platform-seam.md": "587066566ca6e1ea4dc3560533bba1f08387562b1283b91c848a0cb4820d46a6",
     ".claude/rules/minimal-ladder.md": "4a8b49eee56cfa6f216dff3b625a9e501365507e3cceed9925039af21f0b1fb8",
     ".claude/rules/context-engineering.md": "0d6380fc8c852f43d59fc850d23badfc34763ca127c776055411a07aeb851bff",
@@ -80,23 +80,23 @@
     },
     ".claude/skills/harness-build-config": {
       "dir": true,
-      "digest": "d500a0eaf86a2a9db33dd2900732d15482729dc540d4437a0ef8cce42bd7ced9"
+      "digest": "98a361f56d625ad5321d70536a7804dee8e7397f7629f198179d75b0eddddf19"
     },
     ".claude/skills/harness-governance": {
       "dir": true,
-      "digest": "c6e38f556af6c719510e602f00dc6d01981798f3abf933c79936a9beaa83e836"
+      "digest": "609194e4c7ebc8fda14f662b9c01f9473a2d98951c0e86f510c49e38a3040e5d"
     },
     ".claude/skills/harness-minimal": {
       "dir": true,
-      "digest": "320b5023d4a44fdbd322819ccc3f0cf33cbedca899d7210e2b5240d05f2238c7"
+      "digest": "5c72c31e3e388335d4ee14a458cd889cb6e983036601e1e0afbc794cad2630fa"
     },
     ".claude/skills/harness-process": {
       "dir": true,
-      "digest": "f728e63c6a5001a3d07f37355ab16ca9eb93e6326ce80757c25c148e54ffa1e1"
+      "digest": "b9520157d0ecc75fc8d641e00362dfdfffbec6877c4a73fd02bac41e33a94284"
     },
     ".claude/skills/harness-web-ui": {
       "dir": true,
-      "digest": "95a5266d065b6a30bc90d0d8546110bf3aa57c3985eb0fac66023820c6f1f427"
+      "digest": "9d53c1bc92ac79404d6ad159943c11197137891997de8a6d676a5e4a10fcb012"
     },
     ".claude/skills/cosmic-quantum": {
       "dir": true,
