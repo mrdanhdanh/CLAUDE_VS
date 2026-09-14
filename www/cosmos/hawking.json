@@ -1,17 +1,25 @@
 {
-  "generatedAt": "2026-09-13T15:52:10.625Z",
+  "generatedAt": "2026-09-14T16:27:28.908Z",
   "generatedBy": "auto-learn.mjs watchdog",
   "policy": {
     "escalateDays": 30,
     "evaporateDays": 90
   },
   "counts": {
-    "bugsTotal": 38,
-    "open": 0,
-    "fresh": 0,
+    "bugsTotal": 46,
+    "open": 1,
+    "fresh": 1,
     "escalate": 0,
     "evaporate": 0,
-    "closed": 38
+    "closed": 45
   },
-  "bugs": []
+  "bugs": [
+    {
+      "slug": "2026-09-14-kn-id-double-yield-da-phien-cung-1-id",
+      "date": "2026-09-14",
+      "ageDays": 0,
+      "status": "open",
+      "action": "fresh"
+    }
+  ]
 }

@@ -140,13 +140,14 @@ docs/knowleged.md           # knowledge dài hạn — BẮT BUỘC đọc trư�
 
 ## Template bug.md (tham chiếu `.agent/bugs/_template/bug.md`)
 
-Mỗi `bug.md` phải có: Title, Date, Severity, Reproduce, Root Cause (5 Whys), Fix, Verification, Lesson (1 câu), Prevention, Related KN, Tags.
+Mỗi `bug.md` phải có: Title, Date, Severity, Layer (suspicion order — soft), Reproduce, Root Cause (5 Whys), Fix, Verification, Lesson (1 câu), Prevention, Related KN, Tags.
 
 ## Quy tắc
 
 - Không bỏ **Reproduce** — không reproduce = không được fix. Reproduce phải như **user mới**, không workaround vô thức (KN-005). Reproduce Gate FAIL → STOP / ask, không đoán.
 - Không bỏ **Learn** — fix xong không ghi `knowleged.md` = chưa xong.
 - **Chống tái lập (KN-056):** bug major/critical phải để lại **Guard** (lưới test/invariant — thiếu = chưa Done). Bug tái lập → nâng lưới TRƯỚC khi fix + ghi "vì sao lưới cũ không bắt được". Kiểm coverage: `auto-learn.mjs guards`.
+- **Layer — quy tầng trước khi fix (co-evolution, Echoverse):** điền `- **Layer:**` (code · test-spec · env-fixture · measure-verifier · task-spec · process — suspicion order, không phải luật). Check đỏ đọc 2 lần: defect ở test/env/đo → **sửa world TRƯỚC** (ranh giới KN-012: KHÔNG hạ expectation để đỏ thành xanh); chỉ failure sống sót mới thành bài học. `propose` soft-warn khi thiếu — không hard gate.
 - Không fix triệu chứng — phải root cause (đào tới habitual mitigation / fan bias nếu có). Root Cause Gate uncertain → investigate / escalate, không tự biến hypothesis thành sự thật.
 - **Scope control (bounded repair loop):** Chỉ sửa ở gốc, không refactor lan rộng. Phát hiện việc lớn → ghi `Non-Goals` trong `bug.md`, không tự mở rộng.
 - **IDE diagnostics phân tầng:** Sau mỗi edit → `IDE diagnostics` **affected files**; sau khi hoàn tất fix (Phase 4) → `IDE diagnostics` **toàn scope** + build/test. Không scan toàn project sau từng edit nhỏ.

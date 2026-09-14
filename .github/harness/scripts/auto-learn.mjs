@@ -335,6 +335,15 @@ function normalizeGuard(raw) {
   return { present: true, raw: v };
 }
 
+// Layer (co-evolution, Echoverse): tầng chứa defect — suspicion order; defect ở test/env/đo → sửa world TRƯỚC.
+function normalizeLayer(raw) {
+  const v = (raw || '').replace(/`/g, '').trim();
+  if (!v) return { present: false, raw: '' };
+  const low = v.toLowerCase();
+  if (/^(—|–|-|n\/a|none|chưa|todo|<)/.test(low) || low.includes('chưa điền') || low.includes('chưa có')) return { present: false, raw: v };
+  return { present: true, raw: v };
+}
+
 // Trích metadata từ bug.md — dùng chung propose ↔ evaluate ↔ commit (defaults khác nhau giữ y nguyên)
 function extractBugMeta(bugText, bugSlug, defaults = {}) {
   const title = (firstMatch(bugText, [/^#\s*Bug:\s*(.+)/m, /Title:\s*(.+)/]) || bugSlug).slice(0, 80);
@@ -344,16 +353,19 @@ function extractBugMeta(bugText, bugSlug, defaults = {}) {
   const root = (firstMatch(bugText, [/Why 5.*?:\s*(.+)/, /Root.*?:\s*(.+)/i]) || defaults.root || 'Chưa điền — hãy bổ sung 5 Whys trong bug.md').slice(0, 200);
   const fix = (firstMatch(bugText, [/Approach:\s*(.+)/, /Cách sửa:\s*(.+)/]) || defaults.fix || 'Chưa điền — mô tả cách sửa ở gốc').slice(0, 200);
   const guard = normalizeGuard(firstMatch(bugText, [/\*\*Guard:\*\*\s*([^\n]+)/, /^\s*Guard:\s*([^\n]+)/m]));
-  return { title, severity, tags, root, fix, guard };
+  // Layer (co-evolution, Echoverse): tầng chứa defect — soft-warn ở propose, không hard gate
+  const layer = normalizeLayer(firstMatch(bugText, [/\*\*Layer:\*\*\s*([^\n]+)/, /^\s*Layer:\s*([^\n]+)/m]));
+  return { title, severity, tags, root, fix, guard, layer };
 }
 
-function buildKnDraft({ nextId, title, severity, root, fix, tags, today, bugSlug, author, guardText = '—' }) {
+function buildKnDraft({ nextId, title, severity, root, fix, tags, today, bugSlug, author, guardText = '—', layerText = '—' }) {
   return `### ${nextId} — ${title}
 
 - **Ngày:** ${today}
 - **Bug report:** \`.agent/bugs/${bugSlug}/bug.md\`
 - **Severity:** ${severity}
 - **Guard:** ${guardText}
+- **Layer:** ${layerText}
 - **Triệu chứng:** ${title} — xem bug.md Reproduce
 - **Nguyên nhân gốc:** ${root}
 - **Cách sửa:** ${fix}
@@ -413,15 +425,17 @@ async function propose(bugSlug, json=false, opts = {}) {
   const bugText = await fs.readFile(bugPath, 'utf8');
   const { kns } = await parseKNs(KNOWLEGED);
   const nextId = findNextKnId(kns);
-  const { title, severity, tags, root, fix, guard } = extractBugMeta(bugText, bugSlug);
+  const { title, severity, tags, root, fix, guard, layer } = extractBugMeta(bugText, bugSlug);
   const today = todayISO();
   const { needsGuard, gateWarning, guardText } = computeGuardGate(nextId, severity, guard);
+  // Layer soft-warn (co-evolution): quy tầng trước khi fix — KHÔNG chặn (attribution đúng = human judgment)
+  const layerWarning = layer.present ? null : 'Thiếu Layer — quy tầng trước khi fix (code · test-spec · env-fixture · measure-verifier · task-spec): defect ở test/env/đo → sửa world TRƯỚC; chỉ failure sống sót mới thành bài học.';
 
-  const draft = buildKnDraft({ nextId, title, severity, root, fix, tags, today, bugSlug, author: 'YUNIE / auto-learn propose', guardText });
+  const draft = buildKnDraft({ nextId, title, severity, root, fix, tags, today, bugSlug, author: 'YUNIE / auto-learn propose', guardText, layerText: layer.present ? layer.raw : '— (chưa điền trong bug.md)' });
   const tableRow = buildKnTableRow({ nextId, today, title, root, tags });
 
   if (json) {
-    console.log(JSON.stringify({ nextId, bugSlug, title, severity, tags, guard, gateWarning, draft, tableRow }, null, 2));
+    console.log(JSON.stringify({ nextId, bugSlug, title, severity, tags, guard, layer, layerWarning, gateWarning, draft, tableRow }, null, 2));
     enforceStrictGuard(opts, gateWarning);
     return;
   }
@@ -433,6 +447,7 @@ async function propose(bugSlug, json=false, opts = {}) {
   console.log(`\n— Anti-pattern (thêm vào ## Anti-patterns tích lũy nếu phù hợp):`);
   console.log(`- ❌ ${title} — ${root.slice(0,60)}`);
   printGuardGate(gateWarning, needsGuard, guard);
+  if (layerWarning) console.log(`\n💡 LAYER (soft, không chặn): ${layerWarning}`);
   console.log(`\n✅ Sau khi dán, chạy: node .github/harness/scripts/auto-learn.mjs status`);
   console.log(`   và commit docs/knowleged.md + .agent/bugs/${bugSlug}/bug.md`);
   console.log(`\n🔬 Reef-lite: để có gate evaluate trước khi commit:`);

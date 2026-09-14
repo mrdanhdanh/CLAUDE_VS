@@ -25,7 +25,7 @@
 - **Related KN:** KN-034 (phân loại model-vs-harness — bài này mở rộng thành 5 tầng world + world-first), KN-049 (tách lớp ĐO + negative control), KN-056 (nâng lưới trước khi fix), KN-058 (tồn tại ≠ render — cùng họ shallow-check), CMB heatmap (diversity), KN-023, KN-052. Draft = **KN-0XX** — id chốt tại paste: KN-061 đã bị chiếm bởi 2 draft in-flight (Routing & Failover + Memora — session song song, uncommitted) → next free khả năng KN-062/063; dup-gate flag KN-033 (39.2) — đã đọc: RSI roadmap, KHÔNG trùng thật (xem §2).
 - **Tags:** `process` `verify` `evals` `guard` `self-improving`
 - **Guard:** `tests/e2e/auto-learn-guard.spec.ts` — **behavioral wiring test**: `propose` parse `Layer:` + soft-warn khi thiếu. **Nói thẳng: wiring test chỉ chứng minh parse/report; attribution ĐÚNG là human judgment — không claim là gate chặn** (critic 14/09). Soft-warn, không hard gate.
-- **Status:** open
+- **Status:** fixed
 
 ---
 
@@ -95,23 +95,27 @@
 - **Non-Goals:** Không sửa dup-gate heuristic trong proposal này (self-serving gate edit — smell KN-012; false-positive tăng do KN process mới = backlog riêng ở proposal §Open); không hard-gate `Layer`; không đổi RADAR/guard gate hiện có; không nâng sang RL thật (file-based, 0 deps — minimal ladder).
 - **Fix Confidence:** `MEDIUM` → lên HIGH sau Verify (spec pass + guards detect).
 - **get_errors:** Sau mỗi edit → affected files; full scope ở Phase 4.
-- **Progress (14/09 23:2x — partial, collision-safe):** ✅ 2/6 áp dụng: `_template/bug.md` `Layer:` + `fixbug.prompt.md` sync (policy-check PERMITTED + audit logged). ⏸️ Blocked: `auto-learn.mjs` + `tests/e2e/auto-learn-guard.spec.ts` + `docs/knowleged.md` — WIP chưa commit của session Routing/Memora + coordination rule (evolib §5: không edit/git-add file dirty). Patch sẵn: proposal §7 (P1–P4) — apply mechanical khi tree sạch.
+- **Progress (14/09 23:3x — APPLIED ✅):** 6/6 file: `_template/bug.md` `Layer:` + `fixbug.prompt.md` sync (commit bfd386d partial prep) · `auto-learn.mjs` parse/soft-warn/json/draft-line · spec mắt xích 5 (RED→GREEN 9/9) · `docs/knowleged.md` KN-064 (row + detail + 2 anti-patterns + UpdatedAt chain). Điều kiện tree sạch đã đạt sau 25cb58f (Memora session tự commit); ID re-check ngay trước paste (anti-pattern KN-063) → KN-064 free ✓.
 
 ---
 
 ## 4. Verification
 
-- [ ] TDD RED: behavioral test fail TRƯỚC (propose chưa parse Layer)
-- [ ] `npx playwright test tests/e2e/auto-learn-guard.spec.ts` → PASS (kèm các test cũ)
-- [ ] Fixture no-Layer → propose soft-warn; fixture có Layer → parse đúng (`--json` trả `layer`)
-- [ ] `node .github/harness/scripts/auto-learn.mjs guards --json` → KN-0XX xuất hiện trong coverage
-- [ ] Regression: spec liên quan (ai-news, hooks) không vỡ
-- [ ] `get_errors` toàn scope → 0 errors
-- [ ] Sau paste KN: `guards` không còn report KN-0XX "missing guard"
+- [x] TDD RED: behavioral test fail TRƯỚC (exit 1 — `d1.layer?.present` = undefined)
+- [x] `npx playwright test tests/e2e/auto-learn-guard.spec.ts` → **9/9 PASS** (6.3s)
+- [x] Fixture no-Layer → soft-warn; fixture có Layer → parse đúng (`--json` trả `layer` + draft mang Layer line)
+- [x] `guards --json` → `KN-064: ["tests/e2e/auto-learn-guard.spec.ts"]`, counts total 63 / withGuard 36, priority ⊅ KN-064
+- [x] Regression: auto-learn-guard spec re-run sau paste (fresh) OK; CLI `status` smoke OK — **full suite không re-run (disclosure: thay đổi chỉ ở CLI parse + data doc)**
+- [x] `get_errors` toàn scope → 0 errors
+- [x] Sau paste KN: `guards` không report KN-064 "missing guard" ✓
 
 **Kết quả:**
 ```
-<pending — P1–P4 sẵn ở proposal §7 (chờ tree sạch). ĐÃ XONG (partial 14/09 23:2x): template `Layer:` + `fixbug.prompt.md` sync — 2/6 file; phần còn lại blocked bởi WIP session Routing/Memora (auto-learn.mjs + spec + knowleged).>
+✅ APPLIED 14/09 23:3x — tree sạch sau 25cb58f (Memora session tự commit); ID re-check → KN-064 free.
+- RED:  1 failed (layer.present undefined) — exit 1
+- GREEN: 9 passed (6.3s) — npx playwright test tests/e2e/auto-learn-guard.spec.ts
+- guards --json: KN-064 → ["tests/e2e/auto-learn-guard.spec.ts"]; counts total=63 withGuard=36; priority ⊅ 064
+- KN-064 pasted: row + detail (Guard line trong 2500-char cap) + 2 anti-patterns + UpdatedAt chain
 ```
 
 ---

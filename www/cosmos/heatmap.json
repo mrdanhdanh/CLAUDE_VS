@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-13T15:52:10.756Z",
+  "generatedAt": "2026-09-14T16:27:29.056Z",
   "generatedBy": "auto-learn.mjs stats --heatmap",
   "policy": {
     "cold": "bugCount − knCount ≥ 1",
@@ -11,16 +11,16 @@
     "bucket": "YYYY-MM"
   },
   "counts": {
-    "knTotal": 56,
-    "bugTotal": 38,
-    "tags": 123,
+    "knTotal": 63,
+    "bugTotal": 46,
+    "tags": 133,
     "months": [
       "2026-08",
       "2026-09"
     ],
-    "coldSpots": 9,
+    "coldSpots": 16,
     "zeroRef": 0,
-    "refFiles": 289
+    "refFiles": 302
   },
   "grid": {
     "months": [
@@ -30,26 +30,26 @@
     "rows": [
       {
         "tag": "process",
-        "total": 33,
+        "total": 38,
         "cells": [
           4,
-          29
+          34
         ]
       },
       {
         "tag": "ui",
-        "total": 18,
+        "total": 19,
         "cells": [
           6,
-          12
+          13
         ]
       },
       {
         "tag": "verify",
-        "total": 13,
+        "total": 18,
         "cells": [
           0,
-          13
+          18
         ]
       },
       {
@@ -77,6 +77,14 @@
         ]
       },
       {
+        "tag": "governance",
+        "total": 7,
+        "cells": [
+          0,
+          7
+        ]
+      },
+      {
         "tag": "verification",
         "total": 7,
         "cells": [
@@ -85,11 +93,11 @@
         ]
       },
       {
-        "tag": "governance",
+        "tag": "knowledge",
         "total": 6,
         "cells": [
-          0,
-          6
+          1,
+          5
         ]
       },
       {
@@ -117,11 +125,11 @@
         ]
       },
       {
-        "tag": "knowledge",
-        "total": 4,
+        "tag": "safety",
+        "total": 5,
         "cells": [
-          1,
-          3
+          0,
+          5
         ]
       },
       {
@@ -141,7 +149,7 @@
         ]
       },
       {
-        "tag": "safety",
+        "tag": "self-evolving",
         "total": 4,
         "cells": [
           0,
@@ -149,11 +157,11 @@
         ]
       },
       {
-        "tag": "self-evolving",
+        "tag": "self-improving",
         "total": 4,
         "cells": [
-          0,
-          4
+          1,
+          3
         ]
       },
       {
@@ -173,11 +181,35 @@
         ]
       },
       {
+        "tag": "api",
+        "total": 3,
+        "cells": [
+          1,
+          2
+        ]
+      },
+      {
+        "tag": "architecture",
+        "total": 3,
+        "cells": [
+          0,
+          3
+        ]
+      },
+      {
         "tag": "build",
         "total": 3,
         "cells": [
           2,
           1
+        ]
+      },
+      {
+        "tag": "evals",
+        "total": 3,
+        "cells": [
+          0,
+          3
         ]
       },
       {
@@ -202,22 +234,6 @@
         "cells": [
           0,
           3
-        ]
-      },
-      {
-        "tag": "api",
-        "total": 2,
-        "cells": [
-          1,
-          1
-        ]
-      },
-      {
-        "tag": "architecture",
-        "total": 2,
-        "cells": [
-          0,
-          2
         ]
       },
       {
@@ -261,7 +277,7 @@
         ]
       },
       {
-        "tag": "evals",
+        "tag": "evidence",
         "total": 2,
         "cells": [
           0,
@@ -269,7 +285,7 @@
         ]
       },
       {
-        "tag": "evidence",
+        "tag": "guard",
         "total": 2,
         "cells": [
           0,
@@ -293,6 +309,14 @@
         ]
       },
       {
+        "tag": "memory",
+        "total": 2,
+        "cells": [
+          0,
+          2
+        ]
+      },
+      {
         "tag": "perf",
         "total": 2,
         "cells": [
@@ -301,7 +325,31 @@
         ]
       },
       {
+        "tag": "pilot-in-command",
+        "total": 2,
+        "cells": [
+          0,
+          2
+        ]
+      },
+      {
         "tag": "psychology",
+        "total": 2,
+        "cells": [
+          0,
+          2
+        ]
+      },
+      {
+        "tag": "rag",
+        "total": 2,
+        "cells": [
+          0,
+          2
+        ]
+      },
+      {
+        "tag": "review",
         "total": 2,
         "cells": [
           0,
@@ -314,14 +362,6 @@
         "cells": [
           0,
           2
-        ]
-      },
-      {
-        "tag": "self-improving",
-        "total": 2,
-        "cells": [
-          1,
-          1
         ]
       },
       {
@@ -565,6 +605,22 @@
         ]
       },
       {
+        "tag": "context",
+        "total": 1,
+        "cells": [
+          0,
+          1
+        ]
+      },
+      {
+        "tag": "context-engineering",
+        "total": 1,
+        "cells": [
+          0,
+          1
+        ]
+      },
+      {
         "tag": "contrast",
         "total": 1,
         "cells": [
@@ -621,7 +677,23 @@
         ]
       },
       {
+        "tag": "eval",
+        "total": 1,
+        "cells": [
+          0,
+          1
+        ]
+      },
+      {
         "tag": "fail-silent",
+        "total": 1,
+        "cells": [
+          0,
+          1
+        ]
+      },
+      {
+        "tag": "failover",
         "total": 1,
         "cells": [
           0,
@@ -685,6 +757,14 @@
         ]
       },
       {
+        "tag": "github",
+        "total": 1,
+        "cells": [
+          0,
+          1
+        ]
+      },
+      {
         "tag": "grid",
         "total": 1,
         "cells": [
@@ -694,14 +774,6 @@
       },
       {
         "tag": "grounding",
-        "total": 1,
-        "cells": [
-          0,
-          1
-        ]
-      },
-      {
-        "tag": "guard",
         "total": 1,
         "cells": [
           0,
@@ -733,7 +805,7 @@
         ]
       },
       {
-        "tag": "memory",
+        "tag": "mermaid",
         "total": 1,
         "cells": [
           0,
@@ -758,14 +830,6 @@
       },
       {
         "tag": "physics",
-        "total": 1,
-        "cells": [
-          0,
-          1
-        ]
-      },
-      {
-        "tag": "pilot-in-command",
         "total": 1,
         "cells": [
           0,
@@ -805,6 +869,14 @@
         ]
       },
       {
+        "tag": "prompt-injection",
+        "total": 1,
+        "cells": [
+          0,
+          1
+        ]
+      },
+      {
         "tag": "quality",
         "total": 1,
         "cells": [
@@ -813,7 +885,7 @@
         ]
       },
       {
-        "tag": "rag",
+        "tag": "race",
         "total": 1,
         "cells": [
           0,
@@ -869,7 +941,7 @@
         ]
       },
       {
-        "tag": "review",
+        "tag": "render",
         "total": 1,
         "cells": [
           0,
@@ -918,6 +990,14 @@
       },
       {
         "tag": "security",
+        "total": 1,
+        "cells": [
+          0,
+          1
+        ]
+      },
+      {
+        "tag": "skills",
         "total": 1,
         "cells": [
           0,
@@ -1024,6 +1104,42 @@
     {
       "tag": "perf",
       "kn": 2,
+      "bug": 4,
+      "coldness": 2
+    },
+    {
+      "tag": "state",
+      "kn": 1,
+      "bug": 3,
+      "coldness": 2
+    },
+    {
+      "tag": "a11y",
+      "kn": 9,
+      "bug": 10,
+      "coldness": 1
+    },
+    {
+      "tag": "data",
+      "kn": 5,
+      "bug": 6,
+      "coldness": 1
+    },
+    {
+      "tag": "api",
+      "kn": 3,
+      "bug": 4,
+      "coldness": 1
+    },
+    {
+      "tag": "build",
+      "kn": 3,
+      "bug": 4,
+      "coldness": 1
+    },
+    {
+      "tag": "docs",
+      "kn": 2,
       "bug": 3,
       "coldness": 1
     },
@@ -1040,9 +1156,9 @@
       "coldness": 1
     },
     {
-      "tag": "state",
-      "kn": 1,
-      "bug": 2,
+      "tag": "async",
+      "kn": 0,
+      "bug": 1,
       "coldness": 1
     },
     {
@@ -1053,6 +1169,12 @@
     },
     {
       "tag": "demo",
+      "kn": 0,
+      "bug": 1,
+      "coldness": 1
+    },
+    {
+      "tag": "env",
       "kn": 0,
       "bug": 1,
       "coldness": 1

@@ -1,6 +1,6 @@
 # Proposal — Echoverse (MSR 30/07/2026) → KN-0XX (next free, §0) + Layer attribution surface (slim, critic-gated)
 
-> Trạng thái: **chờ owner duyệt** — chưa paste `knowleged.md`, chưa sửa code. Draft bug.md đã viết tại `.agent/bugs/2026-09-14-echoverse-co-evolution-check-do-doc-2-lan-world-fi/bug.md` (propose PASS guard gate; evaluate FAIL dup-gate — đã adjudicate, xem §2/§6).
+> Trạng thái: **ADOPTED & APPLIED ✅ (14/09 23:3x)** — owner duyệt + full apply xong: template/prompt (bfd386d) + auto-learn.mjs Layer wiring + spec mắt xích 5 (9/9) + KN-064 pasted. Bug: `.agent/bugs/2026-09-14-echoverse-co-evolution-check-do-doc-2-lan-world-fi/bug.md` (fixed).
 
 ## 0. ⚠️ Collision & coordination (phát hiện 14/09 ~23:30)
 

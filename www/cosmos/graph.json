@@ -1,10 +1,10 @@
 {
-  "generatedAt": "2026-09-13T15:52:10.297Z",
+  "generatedAt": "2026-09-14T16:27:28.549Z",
   "generatedBy": "entangle.mjs --graph",
   "scanned": {
-    "files": 1558,
-    "edges": 1519,
-    "commits": 175
+    "files": 1572,
+    "edges": 1589,
+    "commits": 199
   },
   "thresholds": {
     "hubMinRefs": 10,
@@ -13,15 +13,15 @@
   "hubs": [
     {
       "file": "docs/knowleged.md",
-      "refs": 87
+      "refs": 102
     },
     {
       "file": "www/status.json",
-      "refs": 60
+      "refs": 63
     },
     {
       "file": "www/index.html",
-      "refs": 52
+      "refs": 53
     },
     {
       "file": "package.json",
@@ -29,15 +29,15 @@
     },
     {
       "file": "www/cosmos/index.html",
-      "refs": 33
+      "refs": 34
     },
     {
       "file": "README.md",
-      "refs": 31
+      "refs": 32
     },
     {
       "file": "www/styles.css",
-      "refs": 31
+      "refs": 32
     },
     {
       "file": "www/library/mcp-server.mjs",
@@ -49,6 +49,10 @@
     },
     {
       "file": "www/library/app.js",
+      "refs": 17
+    },
+    {
+      "file": "docs/harness-flow.md",
       "refs": 16
     },
     {
@@ -60,20 +64,24 @@
       "refs": 15
     },
     {
+      "file": "www/library/export.json",
+      "refs": 15
+    },
+    {
       "file": "www/cosmos/scale.json",
       "refs": 14
     },
     {
-      "file": "www/library/export.json",
-      "refs": 14
-    },
-    {
-      "file": "docs/harness-flow.md",
+      "file": "scripts/slop-check.mjs",
       "refs": 13
     },
     {
-      "file": "scripts/slop-check.mjs",
-      "refs": 12
+      "file": "tests/e2e/auto-learn-guard.spec.ts",
+      "refs": 10
+    },
+    {
+      "file": "tests/e2e/guard-redteam.spec.ts",
+      "refs": 10
     },
     {
       "file": "www/web-universe/js/app.js",
@@ -109,7 +117,7 @@
   ],
   "deadFilaments": [],
   "counts": {
-    "hubs": 17,
+    "hubs": 19,
     "clusters": 3,
     "deadFilaments": 0
   }
