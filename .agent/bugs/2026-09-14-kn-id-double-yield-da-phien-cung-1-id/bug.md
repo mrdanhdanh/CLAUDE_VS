@@ -92,7 +92,7 @@
 // after
 - spec kn-id-integrity.spec.ts (6 test) + protocol; file sạch dup/orphan/order
 ```
-- **Non-Goals:** Không sửa `findNextKnId`; không renumber lại ai; không wire status warning (auto-learn.mjs vừa có WIP session khác — ghi hướng mở trong KN-066).
+- **Non-Goals:** Không sửa `findNextKnId`; không renumber lại ai; status warning wiring **hoãn lúc đó** (auto-learn.mjs đang WIP session khác) — **đã wire cùng ngày khi file sạch** (xem §7 amend).
 - **Fix Confidence:** `HIGH` — guard fail-closed, đã chứng minh RED→GREEN + bắt tái diễn live.
 - **get_errors:** Sau mỗi edit → affected files; full scope ở Phase 4 Verify.
 
@@ -150,6 +150,15 @@ ID cấp phát phải re-check ngay trước khi ghi (race propose→paste) và 
 - `docs/knowleged.md#KN-066`
 - Trace: `.agent/bugs/2026-09-14-routing-failover.../` + `.agent/bugs/2026-09-14-memora.../` (renumber notes) + `.agent/plans/echoverse-adopt/proposal.md` §0
 - Commit fix: `b884a05` (guard spec + bug folder + note điều phối) · KN-066 content: `185f536` (sweep bởi session Orchard — disclosed trong message)
+
+---
+
+## 7. Amend — 2026-09-14 (wire nốt `status` khi auto-learn.mjs sạch)
+
+- **Bối cảnh:** hạng mục (4) "hướng mở" của §3 hoãn vì `auto-learn.mjs` có WIP session Echoverse; cùng ngày file sạch → thực hiện.
+- **Thay đổi (bounded):** (1) `kn-parse.mjs` + `checkKnIntegrity(text)` — shared, 1 nguồn cho status + guard; (2) `auto-learn.mjs status` trả `idIntegrity {ok, issues}` (JSON) + in dòng ✅/⚠️ human + liệt kê tối đa 5 issue; (3) spec dùng shared function (bỏ ~35 dòng local helpers) + **2 CLI wiring test** — phát hiện 1 **pass giả** (assert `toContain('KN ID integrity')` trùng chữ trong dòng UpdatedAt) → siết thành `/[✅⚠️] KN ID integrity/` (test chính phép đo — KN-049).
+- **RED→GREEN:** RED 1 fail (`status --json` chưa có `idIntegrity`) → GREEN 8/8; `status` human in `✅ KN ID integrity OK (dup/orphan/order)`; JSON `{"ok":true,"issues":[]}`.
+- **Commit amend:** `<điền sau commit>`
 
 ---
 *Template: `.agent/bugs/_template/bug.md` — dùng bởi `/fixbug` Phase 1 & 5.*

@@ -13,7 +13,7 @@ import fs from 'node:fs/promises';
 import { existsSync } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { tokenize, computeIDF, parseKNs, scoreKN } from './kn-parse.mjs';
+import { tokenize, computeIDF, parseKNs, scoreKN, checkKnIntegrity } from './kn-parse.mjs';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -1361,7 +1361,7 @@ function printStatusCommands() {
   console.log(`   watchdog --apply --sign "<tên người>" → mutation BẮT BUỘC human sign-off (agent tự ký = refused, exit 2)`);
 }
 
-function printStatusHuman({ kns, bugs, drafts, lastUpdated, topTags, reefLite }) {
+function printStatusHuman({ kns, bugs, drafts, lastUpdated, topTags, reefLite, idIntegrity }) {
   console.log(`📊 Auto-Learn Status — ${new Date().toISOString()}`);
   console.log(`   KN: ${kns.length} bài học trong docs/knowleged.md ${lastUpdated ? `(UpdatedAt: ${lastUpdated})` : ''}`);
   if (kns.length) console.log(`      → ${kns.map(k=>k.id).join(', ')}`);
@@ -1370,19 +1370,26 @@ function printStatusHuman({ kns, bugs, drafts, lastUpdated, topTags, reefLite })
   if (bugs.length) console.log(`      → ${bugs.slice(0,5).join(', ')}${bugs.length>5?' ...':''}`);
   console.log(`   Reef-lite: records=${reefLite.records} reports=${reefLite.reports} versions=${reefLite.versions} (.agent/records/ + reports.jsonl + versions/)`);
   console.log(`   Health: ${kns.length>=5 ? '✅' : '⚠️'} ${kns.length>=5 ? 'đủ bài học' : 'cần thêm KN'} | ${drafts>0 ? `⚠️ ${drafts} draft chưa propose` : '✅ không có draft tồn'}`);
+  // KN ID integrity (KN-066): dup/orphan/order — double-yield đa phiên
+  if (idIntegrity.length === 0) console.log(`   ✅ KN ID integrity OK (dup/orphan/order)`);
+  else {
+    console.log(`   ⚠️ KN ID integrity: ${idIntegrity.length} vấn đề — renumber + update refs, rồi chạy: npx playwright test tests/e2e/kn-id-integrity.spec.ts`);
+    for (const s of idIntegrity.slice(0, 5)) console.log(`      • ${s}`);
+  }
   printStatusCommands();
 }
 
 async function status(json=false) {
-  const { kns } = await parseKNs(KNOWLEGED);
+  const { kns, raw } = await parseKNs(KNOWLEGED);
   const bugs = await listBugSlugs();
   const drafts = await countOpenDrafts(bugs);
   const lastUpdated = await readLastUpdated();
   const topTags = computeTopTags(kns);
   const reefLite = await countReefLite();
-  const out = { knTotal: kns.length, bugsTotal: bugs.length, drafts, lastUpdated, topTags, bugs: bugs.slice(0,10), kns: kns.map(k=>({id:k.id, title:k.title, tags:k.tags, severity:k.severity})), reefLite };
+  const idIssues = checkKnIntegrity(raw || '');
+  const out = { knTotal: kns.length, bugsTotal: bugs.length, drafts, lastUpdated, topTags, bugs: bugs.slice(0,10), kns: kns.map(k=>({id:k.id, title:k.title, tags:k.tags, severity:k.severity})), reefLite, idIntegrity: { ok: idIssues.length === 0, issues: idIssues } };
   if (json) { console.log(JSON.stringify(out, null, 2)); return; }
-  printStatusHuman({ kns, bugs, drafts, lastUpdated, topTags, reefLite });
+  printStatusHuman({ kns, bugs, drafts, lastUpdated, topTags, reefLite, idIntegrity: idIssues });
 }
 
 // ---------- CLI ----------

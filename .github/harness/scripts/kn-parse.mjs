@@ -99,6 +99,53 @@ export async function parseKNs(knowlegedPath) {
   return { kns: kns.length ? kns : parseKnTableFallback(text), raw: text };
 }
 
+// ---------- integrity (KN-066) ----------
+// Dup/orphan/order giữa Bảng tóm tắt (`| KN-XXX |`) vs Chi tiết (`### KN-XXX —`).
+// Chống double-yield ID đa phiên (14/09: 3 phiên cùng nhận 1 ID, 2 phiên cùng yield).
+// Dùng CHUNG bởi `auto-learn.mjs status` (idIntegrity) + guard `tests/e2e/kn-id-integrity.spec.ts`.
+const KN_ROW_RE = /^\|\s*(KN-\d{3})\s*\|/gm;
+const KN_DET_RE = /^###\s+(KN-\d{3})\b/gm;
+
+function collectKnIds(text, re) {
+  return [...text.matchAll(re)].map((m) => m[1]);
+}
+
+function knDupIssues(list, label) {
+  const issues = [];
+  const count = new Map();
+  for (const id of list) count.set(id, (count.get(id) || 0) + 1);
+  for (const [id, n] of count) if (n > 1) issues.push(`${label}: trùng ${id} ×${n}`);
+  return issues;
+}
+
+function knOrphanIssues(list, other, label, otherLabel) {
+  const has = new Set(other);
+  return list.filter((id) => !has.has(id)).map((id) => `${label} có ${id}, ${otherLabel} thiếu`);
+}
+
+function knOrderIssues(list, label) {
+  const num = (x) => parseInt(x.slice(3), 10);
+  const issues = [];
+  for (let i = 1; i < list.length; i++) {
+    if (num(list[i]) < num(list[i - 1])) issues.push(`${label} sai thứ tự: ${list[i - 1]} → ${list[i]}`);
+  }
+  return issues;
+}
+
+/** checkKnIntegrity: [] = sạch — dup (2 danh sách) + orphan row↔detail + order (gap OK). */
+export function checkKnIntegrity(text) {
+  const rows = collectKnIds(text, KN_ROW_RE);
+  const det = collectKnIds(text, KN_DET_RE);
+  return [
+    ...knDupIssues(rows, 'bảng tóm tắt'),
+    ...knDupIssues(det, 'chi tiết'),
+    ...knOrphanIssues(rows, det, 'bảng', 'chi tiết'),
+    ...knOrphanIssues(det, rows, 'chi tiết', 'bảng'),
+    ...knOrderIssues(rows, 'bảng tóm tắt'),
+    ...knOrderIssues(det, 'chi tiết'),
+  ];
+}
+
 // ---------- scoring ----------
 export function countTokenMatches(tokens, qt) {
   return tokens.filter(t => t === qt || t.includes(qt) || qt.includes(t)).length;
