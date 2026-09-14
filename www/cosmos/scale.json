@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-14T16:27:28.796Z",
+  "generatedAt": "2026-09-14T16:31:24.470Z",
   "generatedBy": "cosmic-scale.mjs",
   "entropy": {
     "S": 14,
@@ -40,12 +40,12 @@
     "disabledGalaxies": 0
   },
   "counts": {
-    "knTotal": 63,
+    "knTotal": 65,
     "bugsTotal": 46,
     "auditTotal": 186
   },
   "capability": {
-    "kn": 63,
+    "kn": 65,
     "skills": 19,
     "e2eSpecs": 36,
     "e2eTests": 191,
@@ -77,11 +77,6 @@
     "ok": true
   },
   "history": [
-    {
-      "t": "2026-09-06T09:20:30.421Z",
-      "S": 0,
-      "level": "low"
-    },
     {
       "t": "2026-09-06T09:22:04.682Z",
       "S": 0,
@@ -394,23 +389,31 @@
         "e2eTests": 191,
         "guards": 14
       }
+    },
+    {
+      "t": "2026-09-14T16:31:24.470Z",
+      "S": 14,
+      "level": "medium",
+      "M": 0,
+      "D": 0,
+      "G": 9,
+      "C": {
+        "kn": 65,
+        "skills": 19,
+        "e2eSpecs": 36,
+        "e2eTests": 191,
+        "guards": 14
+      }
     }
   ],
   "capabilityDelta": {
-    "kn": 7,
-    "e2eSpecs": 3,
-    "e2eTests": 29,
-    "guards": 3
+    "kn": 2
   },
   "trend": {
-    "increases": 1,
+    "increases": 0,
     "needed": 3,
     "gate": false,
     "window": [
-      {
-        "t": "2026-09-13T15:28:19.632Z",
-        "S": 19
-      },
       {
         "t": "2026-09-13T15:29:34.061Z",
         "S": 9
@@ -421,6 +424,10 @@
       },
       {
         "t": "2026-09-14T16:27:28.796Z",
+        "S": 14
+      },
+      {
+        "t": "2026-09-14T16:31:24.470Z",
         "S": 14
       }
     ]

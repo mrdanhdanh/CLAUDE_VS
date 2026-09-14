@@ -1,10 +1,10 @@
 {
-  "generatedAt": "2026-09-14T16:27:28.549Z",
+  "generatedAt": "2026-09-14T16:31:24.050Z",
   "generatedBy": "entangle.mjs --graph",
   "scanned": {
-    "files": 1572,
-    "edges": 1589,
-    "commits": 199
+    "files": 1574,
+    "edges": 1613,
+    "commits": 201
   },
   "thresholds": {
     "hubMinRefs": 10,
@@ -13,11 +13,11 @@
   "hubs": [
     {
       "file": "docs/knowleged.md",
-      "refs": 102
+      "refs": 103
     },
     {
       "file": "www/status.json",
-      "refs": 63
+      "refs": 64
     },
     {
       "file": "www/index.html",
@@ -29,14 +29,14 @@
     },
     {
       "file": "www/cosmos/index.html",
-      "refs": 34
-    },
-    {
-      "file": "README.md",
-      "refs": 32
+      "refs": 35
     },
     {
       "file": "www/styles.css",
+      "refs": 33
+    },
+    {
+      "file": "README.md",
       "refs": 32
     },
     {
@@ -49,10 +49,14 @@
     },
     {
       "file": "www/library/app.js",
-      "refs": 17
+      "refs": 18
     },
     {
       "file": "docs/harness-flow.md",
+      "refs": 17
+    },
+    {
+      "file": "www/library/export.json",
       "refs": 16
     },
     {
@@ -64,27 +68,27 @@
       "refs": 15
     },
     {
-      "file": "www/library/export.json",
-      "refs": 15
+      "file": "scripts/slop-check.mjs",
+      "refs": 14
     },
     {
       "file": "www/cosmos/scale.json",
       "refs": 14
     },
     {
-      "file": "scripts/slop-check.mjs",
-      "refs": 13
-    },
-    {
       "file": "tests/e2e/auto-learn-guard.spec.ts",
-      "refs": 10
+      "refs": 11
     },
     {
       "file": "tests/e2e/guard-redteam.spec.ts",
+      "refs": 11
+    },
+    {
+      "file": "docs/capabilities.md",
       "refs": 10
     },
     {
-      "file": "www/web-universe/js/app.js",
+      "file": "www/ai-news/curated.json",
       "refs": 10
     }
   ],
@@ -100,24 +104,25 @@
     },
     {
       "files": [
-        "www/todo-manager/app.js",
-        "www/todo-manager/index.html",
-        "www/todo-manager/styles.css"
+        ".github/harness/scripts/auto-learn.mjs",
+        "package.json",
+        "tests/e2e/auto-learn-guard.spec.ts",
+        "www/cosmos/heatmap.json"
       ],
       "weight": 4
     },
     {
       "files": [
-        ".github/harness/scripts/auto-learn.mjs",
-        "package.json",
-        "www/cosmos/heatmap.json"
+        "www/todo-manager/app.js",
+        "www/todo-manager/index.html",
+        "www/todo-manager/styles.css"
       ],
-      "weight": 3
+      "weight": 4
     }
   ],
   "deadFilaments": [],
   "counts": {
-    "hubs": 19,
+    "hubs": 20,
     "clusters": 3,
     "deadFilaments": 0
   }

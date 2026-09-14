@@ -98,7 +98,7 @@
       "category": "self-improving",
       "date": "2026-08-03",
       "hot": true,
-      "tags": ["Microsoft Research", "harness", "train-deploy-mismatch", "generalization", "KN-060", "KN-037"]
+      "tags": ["Microsoft Research", "harness", "train-deploy-mismatch", "generalization", "KN-060", "KN-037", "KN-065"]
     },
     {
       "id": "curated-msr-echoverse-evolving-environments",

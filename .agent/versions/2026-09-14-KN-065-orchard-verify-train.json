@@ -1,0 +1,19 @@
+{
+  "id": "KN-065",
+  "bug": "2026-09-14-orchard-verify-train-trong-harness-that-stand-in-m",
+  "title": "Orchard — verify/train TRONG harness thật — stand-in mismatch",
+  "committedAt": "2026-09-14T16:35:00.000Z",
+  "snapshot": ".agent/versions/2026-09-14-KN-065-orchard-verify-train.md",
+  "flow": "manual (article-lesson; log → RADAR → hand-craft; paste 23:29 — batch 14/09 đa session: KN-064 Echoverse đã commit d63d8d8 trước)",
+  "eval": {
+    "decision": "FAIL",
+    "bypass": "disclosure — dup self-match SAU paste (KN-065 66.7 = chính nó); pre-paste RADAR: KN-037(167.3)/KN-015(156.4)/KN-057(104.8) liên quan, not-dup (meta-rule 'đo trong môi trường đích' + generalization evidence xuyên harness); như KN-060/062 — heuristic recall-heavy, threshold 15",
+    "reasons": [
+      "Trùng KN hiện có: KN-065 score 66.7 ≥ 15 — self-match (evaluate chạy post-paste)"
+    ]
+  },
+  "concurrency": "Batch 14/09 đa session: Memora=062 · Routing=063 (R/M commits) · Echoverse=064 (E commit d63d8d8) → Orchard=065 (session này, paste 23:29). kn-id workstream WIP độc lập (spec kn-id-integrity chưa commit — 2 test đỏ: order 063↔062 pre-existing + negative-control pin ID — không do KN-065; handoff lại)",
+  "integrity": "rows 64 = details 64 · dupRow none · dupDet none · orphan none · curated JSON OK · guards: KN-065 = [hooks-integrity, status-audit, readme-guard]",
+  "tableRow": "| KN-065 | 2026-09-14 | Orchard (MSR 03/08, arXiv:2605.15040): train/eval agent qua stand-in đơn giản hoá → train–deploy mismatch vô hình; generalization sang harness CHƯA THẤY khi train mới là thước thật (45.0 vs sụp 3.6/0.0); env reuse cho cả train+eval+data | ... (full row trong docs/knowleged.md)",
+  "detail": "### KN-065 — Orchard: verify/train phải chạy TRONG harness thật — stand-in đơn giản hoá tạo mismatch vô hình (full detail trong docs/knowleged.md)"
+}

@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-14T16:27:29.056Z",
+  "generatedAt": "2026-09-14T16:31:24.835Z",
   "generatedBy": "auto-learn.mjs stats --heatmap",
   "policy": {
     "cold": "bugCount − knCount ≥ 1",
@@ -11,14 +11,14 @@
     "bucket": "YYYY-MM"
   },
   "counts": {
-    "knTotal": 63,
+    "knTotal": 65,
     "bugTotal": 46,
-    "tags": 133,
+    "tags": 135,
     "months": [
       "2026-08",
       "2026-09"
     ],
-    "coldSpots": 16,
+    "coldSpots": 15,
     "zeroRef": 0,
     "refFiles": 302
   },
@@ -30,10 +30,10 @@
     "rows": [
       {
         "tag": "process",
-        "total": 38,
+        "total": 40,
         "cells": [
           4,
-          34
+          36
         ]
       },
       {
@@ -46,10 +46,18 @@
       },
       {
         "tag": "verify",
-        "total": 18,
+        "total": 19,
         "cells": [
           0,
-          18
+          19
+        ]
+      },
+      {
+        "tag": "dx",
+        "total": 10,
+        "cells": [
+          3,
+          7
         ]
       },
       {
@@ -58,14 +66,6 @@
         "cells": [
           4,
           5
-        ]
-      },
-      {
-        "tag": "dx",
-        "total": 9,
-        "cells": [
-          3,
-          6
         ]
       },
       {
@@ -85,19 +85,19 @@
         ]
       },
       {
+        "tag": "knowledge",
+        "total": 7,
+        "cells": [
+          1,
+          6
+        ]
+      },
+      {
         "tag": "verification",
         "total": 7,
         "cells": [
           0,
           7
-        ]
-      },
-      {
-        "tag": "knowledge",
-        "total": 6,
-        "cells": [
-          1,
-          5
         ]
       },
       {
@@ -130,6 +130,14 @@
         "cells": [
           0,
           5
+        ]
+      },
+      {
+        "tag": "evals",
+        "total": 4,
+        "cells": [
+          0,
+          4
         ]
       },
       {
@@ -205,7 +213,7 @@
         ]
       },
       {
-        "tag": "evals",
+        "tag": "harness",
         "total": 3,
         "cells": [
           0,
@@ -286,14 +294,6 @@
       },
       {
         "tag": "guard",
-        "total": 2,
-        "cells": [
-          0,
-          2
-        ]
-      },
-      {
-        "tag": "harness",
         "total": 2,
         "cells": [
           0,
@@ -573,6 +573,14 @@
         ]
       },
       {
+        "tag": "concurrency",
+        "total": 1,
+        "cells": [
+          0,
+          1
+        ]
+      },
+      {
         "tag": "config",
         "total": 1,
         "cells": [
@@ -662,6 +670,14 @@
       },
       {
         "tag": "edge",
+        "total": 1,
+        "cells": [
+          0,
+          1
+        ]
+      },
+      {
+        "tag": "env",
         "total": 1,
         "cells": [
           0,
@@ -1169,12 +1185,6 @@
     },
     {
       "tag": "demo",
-      "kn": 0,
-      "bug": 1,
-      "coldness": 1
-    },
-    {
-      "tag": "env",
       "kn": 0,
       "bug": 1,
       "coldness": 1

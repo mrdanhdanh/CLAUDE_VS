@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-14T16:27:29.825Z",
+  "generatedAt": "2026-09-14T16:31:25.657Z",
   "generatedBy": "YUNIE",
   "version": 1,
   "counts": {
@@ -453,7 +453,7 @@
   "health": {
     "errors": 0,
     "status": "warn",
-    "lastCheck": "2026-09-14T16:27:29.825Z",
+    "lastCheck": "2026-09-14T16:31:25.657Z",
     "checks": [
       "get_errors: pass (0 errors)",
       "registry: 19 instructions (19 total) - 19 skills - 9 agents - 7 prompts - 1 hook — all enabled",
@@ -464,7 +464,7 @@
       "www: polished — responsive 375/768/1280, a11y, states, animation 150-300ms",
       "workflow: www/** -> Pages (upload-artifact path: www) — exists: true + eval job gate",
       "library: www/library/ MCP v1.2.0 (5 tools: search + iterative + list/get/status, router+cache, redacted) + library-rag instruction",
-      "auto-learn: 63 KN, 46 bugs, 1 drafts — suggest/log/propose/status (<50ms, IDF, tiếng Việt)",
+      "auto-learn: 65 KN, 46 bugs, 1 drafts — suggest/log/propose/status (<50ms, IDF, tiếng Việt)",
       "governance: audit 186 (Ed25519 receipt P0-4) · policy 12 deny/2 allow (ok) · credentials 0 keys plain",
       "platform: agents 3 (3 built-in, 0 remote) · mcp 3 vendors/3 grants (library 1.2.0 read-only) · components 3/3 pub · routines 3/3 enabled",
       "collaboration: KN-018 — dissentGate ✅ · whoDidYouThinkWith ✅ · critic ✅ · fund-the-friction ✅ (ok)",
@@ -690,7 +690,7 @@
     }
   },
   "learn": {
-    "knTotal": 63,
+    "knTotal": 65,
     "bugsTotal": 46,
     "drafts": 1
   },
@@ -794,7 +794,7 @@
       "deny": 12,
       "allow": 2,
       "status": "ok",
-      "lastCheck": "2026-09-14T16:27:29.660Z"
+      "lastCheck": "2026-09-14T16:31:25.468Z"
     },
     "credentials": {
       "count": 0,
@@ -862,7 +862,7 @@
     "D": 0,
     "G": 9,
     "M": 0,
-    "generatedAt": "2026-09-14T16:27:28.796Z",
+    "generatedAt": "2026-09-14T16:31:24.470Z",
     "points": 30
   }
 }
