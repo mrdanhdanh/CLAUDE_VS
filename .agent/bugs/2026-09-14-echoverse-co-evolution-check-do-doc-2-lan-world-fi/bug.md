@@ -13,7 +13,7 @@
 > → Đọc **Cách phòng tránh** trong `docs/knowleged.md` TRƯỚC khi fix. Nếu là tái lập thật: ghi rõ "tái lập của KN-056" + **vì sao lưới cũ không bắt được** → nâng lưới (Guard) rồi mới fix.
 # Bug: Echoverse — co-evolution: check đỏ đọc 2 lần theo tầng (code · test · env · đo), sửa 'world' trước; guard phải sâu + held-out
 
-> Article-lesson (không phải incident): Echoverse — Microsoft Research 30/07/2026 (deep, evolving environments cho computer-use agents; github.com/microsoft/Echoverse). Meta template thay bằng nội dung thật — số KN cuối cùng: **KN-0XX** (chốt tại paste; KN-061 đã bị chiếm bởi 2 draft in-flight tu session song song — xem proposal §0).
+> Article-lesson (không phải incident): Echoverse — Microsoft Research 30/07/2026 (deep, evolving environments cho computer-use agents; github.com/microsoft/Echoverse). Meta template thay bằng nội dung thật — số KN cuối cùng: **KN-064** (chốt tại paste 14/09 23:3x sau khi tree sạch — KN-061/062/063 thuộc session song song; xem proposal §0 + §7).
 
 ## Meta
 
@@ -22,7 +22,7 @@
 - **Severity:** major
 - **Layer:** process (bài meta — dogfood taxonomy ngay trên chính bug.md này)
 - **Reporter:** YUNIE / user request (article-lesson)
-- **Related KN:** KN-034 (phân loại model-vs-harness — bài này mở rộng thành 5 tầng world + world-first), KN-049 (tách lớp ĐO + negative control), KN-056 (nâng lưới trước khi fix), KN-058 (tồn tại ≠ render — cùng họ shallow-check), CMB heatmap (diversity), KN-023, KN-052. Draft = **KN-0XX** — id chốt tại paste: KN-061 đã bị chiếm bởi 2 draft in-flight (Routing & Failover + Memora — session song song, uncommitted) → next free khả năng KN-062/063; dup-gate flag KN-033 (39.2) — đã đọc: RSI roadmap, KHÔNG trùng thật (xem §2).
+- **Related KN:** KN-034 (phân loại model-vs-harness — bài này mở rộng thành 5 tầng world + world-first), KN-049 (tách lớp ĐO + negative control), KN-056 (nâng lưới trước khi fix), KN-058 (tồn tại ≠ render — cùng họ shallow-check), CMB heatmap (diversity), KN-023, KN-052. Draft = **KN-064** (chốt tại paste 23:3x — Routing=063/Memora=062 thuộc session song song; gap 061). Dup-gate flag KN-033 (39.2) — đã đọc: RSI roadmap, KHÔNG trùng thật (xem §2).
 - **Tags:** `process` `verify` `evals` `guard` `self-improving`
 - **Guard:** `tests/e2e/auto-learn-guard.spec.ts` — **behavioral wiring test**: `propose` parse `Layer:` + soft-warn khi thiếu. **Nói thẳng: wiring test chỉ chứng minh parse/report; attribution ĐÚNG là human judgment — không claim là gate chặn** (critic 14/09). Soft-warn, không hard gate.
 - **Status:** fixed
@@ -80,17 +80,17 @@
 
 ## 3. Fix
 
-- **Approach:** Adopt mechanism-half (KN-052/059), **slim theo critic (14/09) — 4 delta thật** (world-first · defect-vs-lesson hygiene · held-out · diversity>volume), cross-ref KN-034/049/056/058/CMB thay vì restate: (1) KN-0XX slim vào `docs/knowleged.md` + 2 anti-patterns; (2) `Layer:` vào template bug.md; (3) `Layer` load-bearing: parse trong `extractBugMeta` + soft-warn ở `propose`; (4) behavioral test wiring; (5) sync `fixbug.prompt.md`.
+- **Approach:** Adopt mechanism-half (KN-052/059), **slim theo critic (14/09) — 4 delta thật** (world-first · defect-vs-lesson hygiene · held-out · diversity>volume), cross-ref KN-034/049/056/058/CMB thay vì restate: (1) KN-064 slim vào `docs/knowleged.md` + 2 anti-patterns; (2) `Layer:` vào template bug.md; (3) `Layer` load-bearing: parse trong `extractBugMeta` + soft-warn ở `propose`; (4) behavioral test wiring; (5) sync `fixbug.prompt.md`.
 - **Files Changed:**
-  - `docs/knowleged.md` — KN-0XX slim + 2 anti-patterns + row Bảng tóm tắt
+  - `docs/knowleged.md` — KN-064 slim + 2 anti-patterns + row Bảng tóm tắt
   - `.agent/bugs/_template/bug.md` — Meta: thêm `Layer:` (menu 5 tầng world + process) + hướng dẫn "suspicion order", không phải luật
   - `.github/harness/scripts/auto-learn.mjs` — parse `Layer` + soft-warn (không hard gate)
   - `tests/e2e/auto-learn-guard.spec.ts` — behavioral test: propose parse + warn (TDD RED→GREEN)
   - `.github/prompts/fixbug.prompt.md` — thêm `Layer` vào field list
 - **Diff tóm tắt:**
 ```diff
-+ - **Layer:** code | test-spec | env-fixture | measure-verifier | task-spec | process — tầng chứa defect; check đỏ đọc 2 lần, lỗi ở test/env/measure → sửa world TRƯỚC (KN-0XX)
-+ test('guard KN-0XX: propose parse Layer + soft-warn khi thiếu (behavioral wiring)', ...)
++ - **Layer:** code | test-spec | env-fixture | measure-verifier | task-spec | process — tầng chứa defect; check đỏ đọc 2 lần, lỗi ở test/env/measure → sửa world TRƯỚC (KN-064)
++ test('guard co-evolution: propose parse Layer + soft-warn khi thiếu (behavioral wiring)', ...)
 ```
 - **Non-Goals:** Không sửa dup-gate heuristic trong proposal này (self-serving gate edit — smell KN-012; false-positive tăng do KN process mới = backlog riêng ở proposal §Open); không hard-gate `Layer`; không đổi RADAR/guard gate hiện có; không nâng sang RL thật (file-based, 0 deps — minimal ladder).
 - **Fix Confidence:** `MEDIUM` → lên HIGH sau Verify (spec pass + guards detect).
@@ -141,7 +141,7 @@
   - [x] `- **Guard:**` đã điền ở Meta (spec + GUARD GATE)
   - [ ] TÁI LẬP? → **không** — RADAR flag KN-056/027/037 nhưng đây là bài generalization mới (đã ghi ở §2)
 - **Cần cập nhật:**
-  - [ ] `docs/knowleged.md` → KN-0XX (Bảng tóm tắt + Chi tiết + Anti-patterns)
+  - [x] `docs/knowleged.md` → KN-064 (Bảng tóm tắt + Chi tiết + Anti-patterns)
   - [ ] `.agent/bugs/_template/bug.md` → Layer
   - [ ] Test mới: `tests/e2e/auto-learn-guard.spec.ts`
 
@@ -149,10 +149,10 @@
 
 ## References
 
-- `docs/knowleged.md#KN-0XX`
+- `docs/knowleged.md#KN-064`
 - Echoverse: https://www.microsoft.com/en-us/research/blog/echoverse-deep-evolving-environments-for-computer-use-agents/ · https://github.com/microsoft/Echoverse
 - Related KN: KN-056 · KN-037 · KN-047 · KN-049 · KN-027 · KN-023 · KN-052
-- Commit fix: (điền sau khi implement)
+- Commit fix: `d63d8d8` (full apply) + `bfd386d` (template/prompt partial prep)
 
 ---
 *Template: `.agent/bugs/_template/bug.md` — dùng bởi `/fixbug` Phase 1 & 5.*

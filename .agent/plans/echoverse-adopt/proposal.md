@@ -119,7 +119,7 @@ Nguồn có incentive (MSR tự đo, tự công bố) — theo KN-052: lấy mec
 ## 7. Pending patches — apply khi tree sạch (collision-safe, mechanical)
 
 > **Điều kiện tiên quyết:** `docs/knowleged.md` + `auto-learn.mjs` + `tests/e2e/auto-learn-guard.spec.ts` không còn dirty (session Routing/Memora đã commit + fix số). **Đã xong trước:** template `Layer:` + `fixbug.prompt.md` sync (commit partial — không làm lại).
-> **Số KN:** max+1 tại paste — hiện max = KN-063 ⇒ dự kiến **KN-064**; KHÔNG dùng KN-061/062/063 (contested).
+> **Số KN:** chốt **KN-064** tại paste 23:3x (đã re-check ngay trước paste: max = KN-063; gap 061) ✓
 
 ### P1. `tests/e2e/auto-learn-guard.spec.ts` — RED trước (TDD)
 
