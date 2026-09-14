@@ -158,7 +158,7 @@ ID cấp phát phải re-check ngay trước khi ghi (race propose→paste) và 
 - **Bối cảnh:** hạng mục (4) "hướng mở" của §3 hoãn vì `auto-learn.mjs` có WIP session Echoverse; cùng ngày file sạch → thực hiện.
 - **Thay đổi (bounded):** (1) `kn-parse.mjs` + `checkKnIntegrity(text)` — shared, 1 nguồn cho status + guard; (2) `auto-learn.mjs status` trả `idIntegrity {ok, issues}` (JSON) + in dòng ✅/⚠️ human + liệt kê tối đa 5 issue; (3) spec dùng shared function (bỏ ~35 dòng local helpers) + **2 CLI wiring test** — phát hiện 1 **pass giả** (assert `toContain('KN ID integrity')` trùng chữ trong dòng UpdatedAt) → siết thành `/[✅⚠️] KN ID integrity/` (test chính phép đo — KN-049).
 - **RED→GREEN:** RED 1 fail (`status --json` chưa có `idIntegrity`) → GREEN 8/8; `status` human in `✅ KN ID integrity OK (dup/orphan/order)`; JSON `{"ok":true,"issues":[]}`.
-- **Commit amend:** `<điền sau commit>`
+- **Commit amend:** `845e8e5` (wiring: kn-parse `checkKnIntegrity` + auto-learn `idIntegrity` + spec CLI tests) — mirror refresh kèm ở `77fd494` (bug khác)
 
 ---
 *Template: `.agent/bugs/_template/bug.md` — dùng bởi `/fixbug` Phase 1 & 5.*

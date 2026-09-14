@@ -140,7 +140,7 @@ Generated mirror không tự cập nhật theo state — regen sau mỗi lần s
 
 - `docs/knowleged.md#KN-002` (cùng hệ — mirror regenerate)
 - Bug discover: full suite run 14/09 ("check lại hết" — KN-066 session)
-- Commit fix: `<điền sau commit>`
+- Commit fix: `77fd494` (regen www/status.json + www/cosmos/audit.json; verify full suite 198/198)
 
 ---
 *Template: `.agent/bugs/_template/bug.md` — dùng bởi `/fixbug` Phase 1 & 5.*
