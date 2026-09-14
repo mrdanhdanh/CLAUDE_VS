@@ -8,10 +8,12 @@ import path from 'node:path';
  * Auto-Learn — Vòng chống tái lập (KN-056): bug đã có KN vẫn quay lại vì
  * KN chỉ là văn xuôi — không có gì tự phát hiện "tái lập" và không có gì FAIL khi thiếu lưới.
  *
- * Spec này khoá 3 mắt xích (dogfood: chính nó là guard của KN-056):
+ * Spec này khoá 4 mắt xích (dogfood: guard của KN-056 + KN-062):
  *  1. `log` tự RADAR — đối chiếu KN + bug cũ (BM25, ngưỡng 25/18) → cảnh báo + inject vào bug.md.
  *  2. `propose` GUARD GATE — bug major/critical thiếu `Guard:` → cảnh báo; `--strict` exit 1.
  *  3. `guards` coverage audit — KN nào có lưới (được test file tham chiếu) — đo được, không wish.
+ *  4. `evaluate` CONSOLIDATION gate (KN-062 — Memora): KN trùng ≥ threshold → FAIL + chỉ đích danh + hint GỘP;
+ *     chủ đề mới → PASS không chặn oan. Retrieval/consolidation phải có lưới, không chỉ văn xuôi.
  */
 
 const ROOT = process.cwd();
@@ -30,8 +32,8 @@ function writeFixture(dir: string, slug: string, body: string) {
   fs.writeFileSync(path.join(dir, slug, 'bug.md'), body, 'utf8');
 }
 
-function fixtureBug(slug: string, extraMeta = ''): string {
-  return `# Bug: Fixture tái lập (spec auto-learn-guard)
+function fixtureBug(slug: string, extraMeta = '', title = 'Fixture tái lập (spec auto-learn-guard)'): string {
+  return `# Bug: ${title}
 
 - **Slug:** \`${slug}\`
 - **Ngày:** 2026-09-13
@@ -40,7 +42,11 @@ function fixtureBug(slug: string, extraMeta = ''): string {
 ${extraMeta}
 ## 3. Fix
 
-- **Approach:** fixture để test guard gate — không phải bug thật
+- **Approach:** fixture để test guard gate — không phải bug thật, nội dung đủ dài để qua checkBugReadiness (>50 ký tự)
+
+## 4. Verification
+
+- [x] N/A — fixture hermetic (spec spawn CLI), không cần re-run thật
 `;
 }
 
@@ -155,7 +161,44 @@ test('guards --json: coverage hợp lệ + bắt guard đã biết (KN-049, KN-0
       expect(data.guard.present).toBe(true);
       expect(data.gateWarning).toBeNull();
       expect(data.draft).toContain('tests/e2e/auto-learn-guard.spec.ts');
+      // KN-062: tags parse không được lẫn '**' từ format '- **Tags:**' (leak vào table row/draft)
+      expect(data.tags, 'tags phải sạch khỏi ký tự bold').not.toContain('*');
     } finally {
       fs.rmSync(dir, { recursive: true, force: true });
     }
 });
+
+  test('evaluate: KN trùng → FAIL + chỉ đích danh + hint GỘP (consolidation gate — KN-062)', () => {
+    const dir = tmpdir('dup');
+    const slug = '2026-09-14-fixture-dup';
+    try {
+      writeFixture(dir, slug, fixtureBug(slug, '', 'Rainbow border conic-gradient var lồng không xoay khi hover'));
+
+      const r = run(['evaluate', '--bug', slug, '--dir', dir, '--json']);
+      expect(r.status, `evaluate exit 0 — stderr: ${r.stderr}`).toBe(0);
+      const data = JSON.parse(r.stdout);
+      expect(data.decision).toBe('FAIL');
+      expect(data.checks.isDuplicate).toBe(true);
+      const reasons = data.reasons.join(' ');
+      expect(reasons, 'phải chỉ đích danh KN cũ (consolidation)').toMatch(/KN-00[34]/);
+      expect(reasons, 'phải hint GỘP/amend thay vì tạo mới (Memora consolidation)').toMatch(/GỘP|amend/);
+    } finally {
+      fs.rmSync(dir, { recursive: true, force: true });
+    }
+  });
+
+  test('evaluate: chủ đề mới → không trùng → PASS (không chặn oan)', () => {
+    const dir = tmpdir('novel');
+    const slug = '2026-09-14-fixture-novel';
+    try {
+      writeFixture(dir, slug, fixtureBug(slug, '', 'Zqxjvk kxqzvj mqzvjk'));
+
+      const r = run(['evaluate', '--bug', slug, '--dir', dir, '--json']);
+      expect(r.status, `evaluate exit 0 — stderr: ${r.stderr}`).toBe(0);
+      const data = JSON.parse(r.stdout);
+      expect(data.checks.isDuplicate, 'query novel không được trùng').toBe(false);
+      expect(data.decision).toBe('PASS');
+    } finally {
+      fs.rmSync(dir, { recursive: true, force: true });
+    }
+  });

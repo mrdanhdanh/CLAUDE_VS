@@ -1,0 +1,18 @@
+{
+  "id": "KN-062",
+  "bug": "2026-09-14-memora-memory-tach-luu-gi-khoi-lay-the-nao",
+  "title": "Memora — memory: tách lưu gì khỏi lấy thế nào — fragment thay vì gộp, thiếu stop condition",
+  "committedAt": "2026-09-14T16:20:00.000Z",
+  "snapshot": ".agent/versions/2026-09-14-KN-062-memora-memory-tach-l.md",
+  "flow": "manual (reef-lite commit bị dup-gate chặn — bypass có disclosure, như KN-060)",
+  "eval": {
+    "decision": "FAIL",
+    "bypass": "disclosure — dup-gate: KN-043(48) / KN-060(36.3) / KN-005(35.6) ≥ 15 (heuristic recall-heavy, threshold 15)",
+    "reasons": [
+      "Trùng KN hiện có: KN-043 score 48 ≥ 15 — có thể đã có bài học tương tự; cân nhắc GỘP (amend) vào KN-043 thay vì tạo KN mới (consolidation — Memora KN-062)"
+    ]
+  },
+  "concurrency": "Va chạm 2 session cùng ghi knowleged.md ngày 14/09 (Memora + Routing & Failover) — double-yield 2 lần, chốt cuối: Memora=KN-062 · Routing=KN-063 (061 bỏ trống)",
+  "tableRow": "| KN-062 | 2026-09-14 | Memora (MSR 29/06, ICML 2026): memory tốt khi tách \"lưu gì\" (value) khỏi \"lấy thế nào\" (abstraction 6–8 từ + cue anchors) — fragment thay vì gộp + retrieval không stop condition = nợ kép | ... (full row trong docs/knowleged.md)",
+  "detail": "### KN-062 — Memora: tách \"lưu gì\" khỏi \"lấy thế nào\" — gộp thay vì phân mảnh, retrieval có stop condition (full detail trong docs/knowleged.md)"
+}

@@ -339,7 +339,8 @@ function normalizeGuard(raw) {
 function extractBugMeta(bugText, bugSlug, defaults = {}) {
   const title = (firstMatch(bugText, [/^#\s*Bug:\s*(.+)/m, /Title:\s*(.+)/]) || bugSlug).slice(0, 80);
   const severity = (firstMatch(bugText, [/Severity:[^\w]*(\w+)/i]) || 'major').toLowerCase();
-  const tags = firstMatch(bugText, [/Tags:\s*([^\n]+)/]).replace(/`/g, '') || defaults.tags || 'ui';
+  // strip backtick + ký tự bold đầu dòng ('**Tags:** x' → 'x') — KN-062 (tags = cue anchors, không lẫn rác)
+  const tags = firstMatch(bugText, [/Tags:\s*([^\n]+)/]).replace(/`/g, '').replace(/^[\s*]+/, '') || defaults.tags || 'ui';
   const root = (firstMatch(bugText, [/Why 5.*?:\s*(.+)/, /Root.*?:\s*(.+)/i]) || defaults.root || 'Chưa điền — hãy bổ sung 5 Whys trong bug.md').slice(0, 200);
   const fix = (firstMatch(bugText, [/Approach:\s*(.+)/, /Cách sửa:\s*(.+)/]) || defaults.fix || 'Chưa điền — mô tả cách sửa ở gốc').slice(0, 200);
   const guard = normalizeGuard(firstMatch(bugText, [/\*\*Guard:\*\*\s*([^\n]+)/, /^\s*Guard:\s*([^\n]+)/m]));
@@ -615,7 +616,7 @@ function decideEvalGate({ hasFix, isDuplicate, topScored, isOpen, isFixed, repor
   let decision = 'PASS';
   const reasons = [];
   if (!hasFix) { decision = 'FAIL'; reasons.push('Fix section chưa điền đủ (cần Approach + Files Changed)'); }
-  if (isDuplicate) { decision = 'FAIL'; reasons.push(`Trùng KN hiện có: ${topScored.id} score ${topScored.score} ≥ ${DUPLICATE_THRESHOLD} — có thể đã có bài học tương tự`); }
+  if (isDuplicate) { decision = 'FAIL'; reasons.push(`Trùng KN hiện có: ${topScored.id} score ${topScored.score} ≥ ${DUPLICATE_THRESHOLD} — có thể đã có bài học tương tự; cân nhắc GỘP (amend) vào ${topScored.id} thay vì tạo KN mới (consolidation — Memora KN-062)`); }
   if (reports.length > 0 && !hasPositiveReport && avgScore !== null && avgScore < 0.5) {
     decision = 'FAIL'; reasons.push(`Reports điểm thấp avg ${avgScore.toFixed(2)} — chưa đủ bằng chứng fix tốt`);
   }
@@ -641,12 +642,14 @@ function printEvaluateHuman(result, bugSlug, scored) {
   else console.log(`\n→ Chưa commit được — hãy bổ sung fix/report hoặc kiểm tra trùng lặp.`);
 }
 
-async function evaluateCandidate(bugSlug, json=false) {
+async function evaluateCandidate(bugSlug, json=false, opts = {}) {
   if (!bugSlug) {
     console.error('❌ Thiếu --bug <slug>. Ví dụ: evaluate --bug 2026-08-30-xyz');
     process.exit(1);
   }
-  const bugPath = path.join(BUGS_DIR, bugSlug, 'bug.md');
+  // --dir: fixture hermetic cho spec (như log/propose) — mặc định BUGS_DIR (KN-062)
+  const baseDir = opts.dir ? path.resolve(ROOT, opts.dir) : BUGS_DIR;
+  const bugPath = path.join(baseDir, bugSlug, 'bug.md');
   if (!existsSync(bugPath)) {
     console.error(`❌ Không tìm thấy ${path.relative(ROOT, bugPath)}`);
     process.exit(1);
@@ -711,7 +714,8 @@ function insertKnDetail(text, detail) {
 
 function bumpUpdatedAt(text, nextId, title, nowISO) {
   if (!text.includes('UpdatedAt:')) return text;
-  return text.replace(/UpdatedAt:\s*[^\n]+/, `UpdatedAt: ${nowISO} — ${nextId} added (${title.slice(0,30)})`);
+  // KN-062: prepend entry mới, GIỮ chain lịch sử — regex cũ replace cả dòng (data loss — phát hiện khi dogfood commit flow)
+  return text.replace(/UpdatedAt:\s*([^\n]+)/, (_, rest) => `UpdatedAt: ${nowISO} — ${nextId} added (${title.slice(0,30)}) — ${rest}`);
 }
 
 async function snapshotKnowleged(today, nextId, title) {
@@ -1422,7 +1426,7 @@ Usage:
   # Reef-lite (Serve → Observe → Grow → Commit):
   node .github/harness/scripts/auto-learn.mjs record --prompt "mô tả" [--scenario name] [--response "..."] [--json]
   node .github/harness/scripts/auto-learn.mjs report --score 0..1 --feedback "ok" --references <id> [--bug <slug>] [--scenario name] [--json]
-  node .github/harness/scripts/auto-learn.mjs evaluate --bug <slug> [--json]
+  node .github/harness/scripts/auto-learn.mjs evaluate --bug <slug> [--json] [--dir dir]
   node .github/harness/scripts/auto-learn.mjs commit --bug <slug> [--json]
   node .github/harness/scripts/auto-learn.mjs history [--json]
   node .github/harness/scripts/auto-learn.mjs versions [--json]
@@ -1474,7 +1478,7 @@ function makeHandlers(opts, json) {
     stats: () => statsHeatmap(opts),
     record: () => recordInteraction(opts, json),
     report: () => reportFeedback(opts, json),
-    evaluate: () => evaluateCandidate(opts.bug || opts.slug, json),
+    evaluate: () => evaluateCandidate(opts.bug || opts.slug, json, opts),
     commit: () => commitCandidate(opts.bug || opts.slug, json),
     history: () => showHistory(json),
     versions: () => listVersions(json),
