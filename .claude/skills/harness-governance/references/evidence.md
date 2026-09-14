@@ -1,11 +1,12 @@
 # Evidence — harness-governance (DisCo arXiv:2609.02749v1 §3.2 (task-agnostic))
 
-> Substrate layer của skill — full text từ docs/knowleged.md. Sinh tự động 2026-09-14T15:03:34.482Z.
+> Substrate layer của skill — full text từ docs/knowleged.md. Sinh tự động 2026-09-14T16:07:21.974Z.
 
-## Bug reports liên quan (2/39 bugs)
+## Bug reports liên quan (3/43 bugs)
 
 - `.agent/bugs/2026-09-03-agent-test-mutate-reward-hacking/bug.md` — Bug: Agent tự sửa test để pass (reward hacking)
 - `.agent/bugs/2026-09-12-entropy-probe-inflation/bug.md` — Bug: Entropy S tăng giả mỗi lần chạy e2e suite — red-team probes bị đếm như nợ thật
+- `.agent/bugs/2026-09-14-compresshits-bo-sot-marker-cho-prompt-injection-hi/bug.md` — Bug: compressHits bỏ sót marker cho prompt-injection hits
 
 ## Full KN details
 
@@ -120,7 +121,28 @@
   - Mọi hệ phân tách builder/verifier cần embedded-verifier pattern: verifier ngoài, quyền verify thật, quyền công bố phát hiện bất lợi, không redact findings — mirror tại harness = `verify` actor + audit hash-chain + disclosure (KN-012 + agent-governance §7).
   - **Tiêu chí independence ĐỦ (dissent Cohere 14/09):** "ngoài builder" chưa đủ — verifier còn phải (a) không do bên bị đo handpick, (b) không do bên bị đo trả tiền, (c) tiêu chí do collective phát triển + công bố (không phải nhóm market-dominant tự viết), (d) findings tới được công chúng. Verifier bị bên bị đo chọn/trả tiền = regulatory capture đội lốt safety (auditor "preferred by a handful of dominant companies" nhận continuous access toàn ngành = capture path, không phải trust).
   - **Cartel/capture test (tiền lệ SEC 1975 — 3 bond raters được chỉ định, 25 năm không tiêu chí mới → định giá subprime AAA → khủng hoảng 2008; EU Motor Vehicle Block Exemption 1985 — "safety" thành moat, mất ~25 năm reform):** chuẩn safety do nhóm market-dominant viết + xin antitrust waiver để hợp thức hoá = capture signal dù mục tiêu nêu là safety; entry requirements cao (compute khổng lồ, evaluator team thường trú, quan hệ chính phủ) = moat test. Chuẩn tốt bind theo **capability làm được gì** + deployment context, không theo **ai/quy mô nào build** — "a small, poorly specified model sitting inside a hospital is a live risk today, and under a frontier-only regime nobody is even looking at it".
+  - **Bidirectional — áp luật cho CẢ challenger (Cohere 14/09):** rebuttal cũng là claim từ actor có incentive — Cohere bán sovereign/private deployment (bank/telco/defense — chính bài tự nói; "security comes from sovereignty" = product pitch), nên "bind theo capability không theo scale" phục vụ vị thế của họ; adopt mechanism (independence ĐỦ + cartel test + fix theo deployment context/observability), đánh dấu "cartel"/"wolf in sheep's clothing" framing là advocacy — không thay agency của incumbent bằng agency của challenger (Gomez tự thừa nhận: quy trình đúng phải "include people who'd rule against even companies like Cohere").
   - RL/training environment hygiene là bề mặt rủi ro thật (cả OpenAI lẫn Anthropic thừa nhận): coi RL env config như production infra — filter broken env, monitoring, audit.
   - Không dùng alarm timeline ("6 tháng", "10% doom") làm deadline/constraint nội bộ khi chưa verify độc lập (KN-051).
 - **Tags:** `process` `governance` `safety` `rsi`
-- **Người ghi:** YUNIE / article-lesson (Axios 12/09/2026 + essay "We Must Pace the Frontier", bổ sung KN-051/KN-048; amended 14/09/2026 — Cohere dissent: independence đủ + cartel/capture test)
+- **Người ghi:** YUNIE / article-lesson (Axios 12/09/2026 + essay "We Must Pace the Frontier", bổ sung KN-051/KN-048; amended 14/09/2026 — Cohere dissent: independence đủ + cartel/capture test + bidirectional check)
+
+---
+
+### KN-059 — Content ≠ Authority: adopt mechanism-half, không adopt doctrine-half
+
+- **Ngày:** 2026-09-14
+- **Bug report:** `.agent/bugs/2026-09-14-compresshits-bo-sot-marker-cho-prompt-injection-hi/bug.md`
+- **Severity:** major
+- **Triệu chứng:** `compressHits` chỉ mark `_quarantined` cho secret — prompt-injection hit giữ nguyên text, 0 marker, lọt compressed context im lặng; CLI `quarantine` fail-silent trên Windows (isMain defer).
+- **Nguyên nhân gốc:** Contract "quarantine fail → phải để lại provenance" chưa tồn tại ở tầng ingest — detect (CLI) và enforce (pipeline) tách rời; adopt từ nguồn ngoài chọn narrative-half thay vì mechanism-half.
+- **Cách sửa:** A1 mark `_injection` trong `compressHits` + 1-line isMain Windows-safe; A2 §8 agent-governance (2 rules + hold note + enforcement pointer); A3 guard corpus trong `guard-redteam.spec.ts`.
+- **Cách phòng tránh:**
+  - Rule governance chỉ vào file khi có check chạy được (KN-047); mỗi bullet nêu rõ Enforcement.
+  - Content từ tool/file/web/AI khác = 0 authority; untrusted content phải được đánh dấu provenance khi vào context (`_quarantined` + `_injection`).
+  - Subagent/delegation luôn viết dạng attenuation **⊆ parent**, không "≥".
+  - Adopt từ actor có incentive: tách mechanism vs claim (KN-052) — mechanism-half của MSR (Spotlighting) đáng adopt hơn narrative-half.
+- **Guard:** `tests/e2e/guard-redteam.spec.ts` (G1 quarantine corpus + G2 compressHits provenance)
+- **Tags:** `governance` `context` `safety` `prompt-injection` `verify`
+- **Nguồn:** Microsoft AI Humanist AI CoC (draft 14/09/2026) §2.2/§2.4/§4.5 · AgentDojo 2024 · CaMeL 2025 · dual-LLM 2023 · MSR Spotlighting 2024
+- **Người ghi:** YUNIE (owner duyệt 14/09 — proposal `.agent/plans/mai-code-of-conduct-adopt/proposal.md`)

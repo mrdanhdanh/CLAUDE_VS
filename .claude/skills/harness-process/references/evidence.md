@@ -1,8 +1,8 @@
 # Evidence — harness-process (DisCo arXiv:2609.02749v1 §3.2 (task-agnostic))
 
-> Substrate layer của skill — full text từ docs/knowleged.md. Sinh tự động 2026-09-14T15:03:34.518Z.
+> Substrate layer của skill — full text từ docs/knowleged.md. Sinh tự động 2026-09-14T16:07:22.003Z.
 
-## Bug reports liên quan (8/39 bugs)
+## Bug reports liên quan (8/43 bugs)
 
 - `.agent/bugs/2026-08-30-bug-blindness/bug.md` — Bug: Bug Blindness — mù bug do workaround vô thức + fan bias
 - `.agent/bugs/2026-09-03-rag-export-missing-grounding-chet/bug.md` — Bug: RAG export missing grounding chet
@@ -605,3 +605,29 @@
   - Claim kèm incentive phải tách mechanism vs claim (KN-052): con số "2-4 tuần học basics" trong bài là claim không đo được — lấy cơ chế (hiểu trước khi tin output), không lấy con số làm chuẩn.
 - **Tags:** `process` `verify` `review` `pilot-in-command`
 - **Người ghi:** YUNIE / user request (2026-09-13)
+
+---
+
+### KN-060 — SkillOpt: sửa skill/KN không qua validation gate — edit trôi, rejected edits không thành negative feedback
+
+- **Ngày:** 2026-09-14
+- **Bug report:** N/A — bài học từ "SkillOpt: Agent skills as trainable parameters" (Microsoft Research 30/06/2026 — https://www.microsoft.com/en-us/research/blog/skillopt-agent-skills-as-trainable-parameters/; paper + github.com/microsoft/SkillOpt). Liên quan: KN-037 (evals gate), KN-047 (slop gate), KN-056 (guard gate), KN-023 (tự review = self-preference), KN-007 (auto-learn).
+- **Severity:** major
+- **Guard:** `tests/e2e/auto-learn-guard.spec.ts` + GUARD GATE trong `.github/harness/scripts/auto-learn.mjs` (propose) — KN major/critical thiếu lưới → FAIL (KN-056). Eval-gate tự động per skill-edit = hướng mở, chưa claim là đã có (tách claim vs mechanism — KN-052).
+- **Triệu chứng:** Skill/KN/instruction sửa one-shot bằng tay/prompt → file "tend to grow longer and drift"; một edit "trông hợp lý" có thể âm thầm giảm performance; edit xấu không được ghi nhớ → cùng kiểu edit lỗi được đề xuất lại; không gì FAIL khi bản sửa làm tệ đi.
+- **Nguyên nhân gốc (5 Whys):** Why1: skill/KN là văn xuôi sửa không phép đo — thiếu step-size control, held-out validation, rejected-edit memory (SkillOpt mô tả chính failure mode này: "uncontrolled skill evolution"). Why2: không validation gate → model tự review mình = self-preference (KN-023), "trông hợp lý" thay cho đo. Why3: không rejected-edit memory → edit xấu không thành negative feedback. Why4: edit không bounded → rewrite lớn trộn good+bad, không truy vết phần nào gây hại (đối chiếu KN-047 ≤200 LOC). Why5 (Root): tầng tri thức bị đối xử như "tài liệu để đọc" thay vì "tham số đang được tối ưu" — cần *train* (bounded + validated + versioned), không chỉ *viết*.
+- **Cách sửa:** Adopt cơ chế SkillOpt ở quy mô harness (file-based, 0 deps — không xây optimizer tự động): (1) mọi edit skill/KN = hypothesis + evidence trước/sau (rubric/eval tối thiểu — KN-037), chỉ nhận khi tốt hơn thật; (2) bounded add/delete/replace, không rewrite; (3) rejected edits → Anti-patterns (negative feedback), không xoá dấu vết; (4) best-version = git + guard (held-out validation thô); (5) slow/meta update định kỳ — gộp theo CMB heatmap/Hawking thay vì thêm vô hạn; (6) giữ skill model-agnostic 1 file nhiều IDE — portability là tài sản.
+- **Cách phòng tránh:**
+  - Trước khi sửa skill/KN/instruction: ghi 1 dòng kỳ vọng "tốt hơn ở đâu, đo bằng gì" — không đo được thì edit phải nhỏ hơn nữa (KN-060 + KN-037).
+  - Edit bounded: add/delete/replace nhỏ; rewrite toàn file = nghi vấn — tách thành nhiều edit có lý do (KN-060 + KN-047).
+  - Edit bị loại/backtrack → ghi vào Anti-patterns, đừng xoá — cùng một edit lỗi không được đề xuất lại (KN-060).
+  - Skill giữ model-agnostic (không pin model) — portability là tài sản (SkillOpt: skill train ở Codex thả vào Claude Code +59.7 điểm).
+  - Định kỳ gộp/vệ sinh tri thức (CMB heatmap + Hawking) thay vì chỉ thêm (KN-060 + KN-024).
+  - Guard line của KN mới phải nằm trong **2500 ký tự đầu** của detail (`kn-parse.mjs` cap `detail = block.slice(0,2500)` cho scoring) — đặt ngay sau Severity; nếu không, `guards` không detect dù lưới tồn tại (gặp thật 14/09: index 2857 → "missing").
+- **Dẫn chứng (ngoài model — KN-023):** best/tied 52/52 cells (6 benchmarks × 7 models × 3 execution modes); GPT-5.5 58.8→82.3 (+23.5); skill cuối ~920 tokens với chỉ 1–4 edits được nhận (OfficeQA +39.0 từ 1 accepted edit); model 4B + skill vượt baseline model lớn hơn.
+- **Tags:** `process` `knowledge` `skills` `self-improving` `eval`
+- **Người ghi:** YUNIE / article-lesson (SkillOpt MSR 30/06/2026; bug `.agent/bugs/2026-09-14-skill-kn-sua-khong-qua-eval-gate-bi-troi-am-tham/` — propose auto-gen KN-060; paste tay sau khi evaluate dup-gate flag KN-056 (36.8)/KN-037 (68.4) ở ngưỡng heuristic 15 — người duyệt "làm cả 2" (disclosure: bypass dup-gate có chủ đích — heuristic quá thấp cho mọi bài eval/gate); mirror `www/ai-news/curated.json`)
+
+<!-- Thêm bài học mới theo template dưới — copy block này -->
+
+<!--

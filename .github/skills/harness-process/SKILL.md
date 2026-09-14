@@ -1,6 +1,6 @@
 ---
 name: harness-process
-description: "Task-agnostic lessons 'Process & Self-Improvement' chưng cất từ docs/knowleged.md (25 KN: KN-005, KN-007, KN-010, KN-014, KN-016, KN-018, KN-019, KN-023, KN-024, KN-025, KN-026, KN-027, KN-033, KN-034, KN-035, KN-036, KN-037, KN-039, KN-043, KN-044, KN-047, KN-053, KN-054, KN-056, KN-057) + .agent/bugs/. Use when task chạm process, quality, ux, perf, a11y, knowledge, automation, dx, self-improving, benchmark — áp Cách phòng tránh trước khi code, tránh lặp bug cũ. DisCo-lite, regenerate bằng distill-agnostic.mjs."
+description: "Task-agnostic lessons 'Process & Self-Improvement' chưng cất từ docs/knowleged.md (26 KN: KN-005, KN-007, KN-010, KN-014, KN-016, KN-018, KN-019, KN-023, KN-024, KN-025, KN-026, KN-027, KN-033, KN-034, KN-035, KN-036, KN-037, KN-039, KN-043, KN-044, KN-047, KN-053, KN-054, KN-056, KN-057, KN-060) + .agent/bugs/. Use when task chạm process, quality, ux, perf, a11y, knowledge, automation, dx, self-improving, benchmark — áp Cách phòng tránh trước khi code, tránh lặp bug cũ. DisCo-lite, regenerate bằng distill-agnostic.mjs."
 user-invocable: false
 ---
 
@@ -10,11 +10,11 @@ user-invocable: false
 
 ## When to Use
 
-- Task chạm theme **Process & Self-Improvement** (tags: process, quality, ux, perf, a11y, knowledge, automation, dx, self-improving, benchmark, aar, mcp, testing, regex, windows, fs, collaboration, diversity, pilot-in-command, metrics, evidence, research, verification, calibration, psychology, taste, human-judgment, agent, self-evolving, procedural-graph, a-jit, memory, funnel, rl, consistency, self-distillation, scaffold, rsi, harness, failure-diagnosis, reasoning, uncertainty, architecture, playbook, evals, agentic-patterns, powershell, scripts, hooks, %LOCALAPPDATA%\Programs\PowerShell\7.6.6, terminal.integrated.defaultProfile.windows, automationProfile.windows, ??, &&, ?., $var?.prop, ?, $s='abc'; $s?.Length, ${var}?.prop, .Length, .Count, $null, -Command, ", -File, content, docs, verify, fresh-eyes, rag, grounding, slop, complexity, git, recovery, recurrence, guard, review)
+- Task chạm theme **Process & Self-Improvement** (tags: process, quality, ux, perf, a11y, knowledge, automation, dx, self-improving, benchmark, aar, mcp, testing, regex, windows, fs, collaboration, diversity, pilot-in-command, metrics, evidence, research, verification, calibration, psychology, taste, human-judgment, agent, self-evolving, procedural-graph, a-jit, memory, funnel, rl, consistency, self-distillation, scaffold, rsi, harness, failure-diagnosis, reasoning, uncertainty, architecture, playbook, evals, agentic-patterns, powershell, scripts, hooks, %LOCALAPPDATA%\Programs\PowerShell\7.6.6, terminal.integrated.defaultProfile.windows, automationProfile.windows, ??, &&, ?., $var?.prop, ?, $s='abc'; $s?.Length, ${var}?.prop, .Length, .Count, $null, -Command, ", -File, content, docs, verify, fresh-eyes, rag, grounding, slop, complexity, git, recovery, recurrence, guard, review, skills, eval)
 - Trước khi code/fix — áp **Cách phòng tránh** ngay để không lặp bug cũ
 - Review/plan — check anti-patterns bên dưới
 
-## Bài học (25 KN)
+## Bài học (26 KN)
 
 ### KN-005 — Bug Blindness — mù bug do workaround vô thức + fan bias (major)
 - **Bài học:** Chữa mù bug: fresh eyes, test như user mới, chỉ ra bug liên tục, không workaround vô thức, dogfooding có ý thức
@@ -262,8 +262,24 @@ user-invocable: false
   - Feature AI viết 100% vẫn phải qua câu "mình hiểu không? đọc lại giải thích được không?" trước merge (KN-024).
   - Claim kèm incentive phải tách mechanism vs claim (KN-052): con số "2-4 tuần học basics" trong bài là claim không đo được — lấy cơ chế (hiểu trước khi tin output), không lấy con số làm chuẩn.
 
+### KN-060 — SkillOpt: sửa skill/KN không qua validation gate — edit trôi, rejected edits không thành negative feedback (major)
+- **Bài học:** Edit = hypothesis + evidence trước/sau (KN-037); bounded add/delete/replace, không rewrite (KN-047); rejected edits → Anti-patterns (negative feedback); best-version = git + guard; slow/meta update định kỳ (CMB heatmap + Hawking); skill model-agnostic (transfer Codex→Claude Code +59.7)
+- **Bug report:** —
+- **Cách phòng tránh:**
+  - Trước khi sửa skill/KN/instruction: ghi 1 dòng kỳ vọng "tốt hơn ở đâu, đo bằng gì" — không đo được thì edit phải nhỏ hơn nữa (KN-060 + KN-037).
+  - Edit bounded: add/delete/replace nhỏ; rewrite toàn file = nghi vấn — tách thành nhiều edit có lý do (KN-060 + KN-047).
+  - Edit bị loại/backtrack → ghi vào Anti-patterns, đừng xoá — cùng một edit lỗi không được đề xuất lại (KN-060).
+  - Skill giữ model-agnostic (không pin model) — portability là tài sản (SkillOpt: skill train ở Codex thả vào Claude Code +59.7 điểm).
+  - Định kỳ gộp/vệ sinh tri thức (CMB heatmap + Hawking) thay vì chỉ thêm (KN-060 + KN-024).
+  - Guard line của KN mới phải nằm trong **2500 ký tự đầu** của detail (`kn-parse.mjs` cap `detail = block.slice(0,2500)` cho scoring) — đặt ngay sau Severity; nếu không, `guards` không detect dù lưới tồn tại (gặp thật 14/09: index 2857 → "missing").
+
 ## Anti-patterns (đừng lặp lại)
 
+- - ❌ Sửa skill/KN bằng one-shot không có phép đo trước/sau — "trông hợp lý hơn" không phải evidence; edit là hypothesis: ghi kỳ vọng đo được, không đo được thì edit nhỏ hơn nữa (KN-060 + KN-037 + KN-023).
+- - ❌ Xoá dấu vết edit bị loại/backtrack — rejected edits là negative feedback; ghi vào Anti-patterns để cùng một edit lỗi không quay lại (KN-060).
+- - ❌ Rewrite toàn bộ skill/KN trong một lần — trộn good+bad, không truy vết phần nào gây hại; tách bounded add/delete/replace (KN-060 + KN-047).
+- - ❌ Chỉ thêm KN/skill mà không bao giờ gộp/vệ sinh — "uncontrolled skill evolution" là drift; slow/meta update định kỳ theo CMB heatmap + Hawking (KN-060 + KN-024).
+- - ❌ Adopt doctrine/narrative từ nguồn ngoài khi phần check được chưa tồn tại — "content ≠ authority" viết dạng rule prose không phải enforcement (AgentDojo: agent vẫn thực thi injection dù được lệnh không); adopt mechanism-half (provenance mark) trước, rule sau (KN-059 + KN-052 + KN-047).
 - - ❌ Guard asset chỉ check `fs.existsSync` — "tồn tại" ≠ "render được": SVG lọt foreignObject + `<br>` không đóng → XML gãy → `<img>` không decode (ảnh vỡ im lặng); verify bằng DOMParser + `img.decode()`, có negative control trên bản cũ (KN-058 + KN-047 + KN-049).
 - - ❌ Thấy `naturalWidth:0`/decode FAIL trong verify mà gán cho "cache/artifact" khi chưa có control image trên cùng page — avatar load OK + asset mình fail = asset lỗi thật (KN-058 + KN-019).
 - - ❌ Sửa syntax/format khi lỗi render nằm ở renderer bên thứ ba (race/lifecycle) — repro bằng chính bundle của họ trước; front page quan trọng dùng asset tĩnh `<picture>` light/dark thay vì iframe rich-display (KN-058 + KN-019).
@@ -352,6 +368,6 @@ user-invocable: false
 
 ## Nguồn
 
-- `docs/knowleged.md` — KN-005, KN-007, KN-010, KN-014, KN-016, KN-018, KN-019, KN-023, KN-024, KN-025, KN-026, KN-027, KN-033, KN-034, KN-035, KN-036, KN-037, KN-039, KN-043, KN-044, KN-047, KN-053, KN-054, KN-056, KN-057
+- `docs/knowleged.md` — KN-005, KN-007, KN-010, KN-014, KN-016, KN-018, KN-019, KN-023, KN-024, KN-025, KN-026, KN-027, KN-033, KN-034, KN-035, KN-036, KN-037, KN-039, KN-043, KN-044, KN-047, KN-053, KN-054, KN-056, KN-057, KN-060
 - Chi tiết đầy đủ: `references/evidence.md` (progressive disclosure)
 - Regenerate: `node .github/harness/scripts/distill-agnostic.mjs`

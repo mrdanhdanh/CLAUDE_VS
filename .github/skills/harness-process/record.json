@@ -27,7 +27,8 @@
       "KN-053",
       "KN-054",
       "KN-056",
-      "KN-057"
+      "KN-057",
+      "KN-060"
     ],
     "bugs": [
       ".agent/bugs/2026-08-30-bug-blindness/bug.md",
@@ -131,7 +132,9 @@
     "recovery",
     "recurrence",
     "guard",
-    "review"
+    "review",
+    "skills",
+    "eval"
   ],
   "evidence": [
     ".agent/bugs/2026-08-30-bug-blindness/bug.md",
@@ -176,6 +179,6 @@
   ],
   "gaps": [],
   "verdict": "G-accepted",
-  "generatedAt": "2026-09-14T15:03:34.538Z",
+  "generatedAt": "2026-09-14T16:07:22.018Z",
   "paper": "DisCo arXiv:2609.02749v1 §3.2 (task-agnostic)"
 }

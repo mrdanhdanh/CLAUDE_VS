@@ -1,8 +1,8 @@
 # Evidence — harness-web-ui (DisCo arXiv:2609.02749v1 §3.2 (task-agnostic))
 
-> Substrate layer của skill — full text từ docs/knowleged.md. Sinh tự động 2026-09-14T15:03:34.540Z.
+> Substrate layer của skill — full text từ docs/knowleged.md. Sinh tự động 2026-09-14T16:07:22.021Z.
 
-## Bug reports liên quan (18/39 bugs)
+## Bug reports liên quan (18/43 bugs)
 
 - `.agent/bugs/2026-08-29-rainbow-animated/bug.md` — Bug: Rainbow border không xoay (animated)
 - `.agent/bugs/2026-08-29-status-ui/bug.md` — Bug: Trang STATUS www/ giao diện chưa hợp lý — layout, responsive, registry render sai
@@ -438,7 +438,3 @@
   - Error message JS generic (`Cannot read properties of undefined (reading 'X')`) từ app bên thứ ba: grep bundle của họ tìm call site `.X` để khoanh vùng, đừng đoán theo nguyên nhân "hợp lý".
 - **Tags:** `ui` `render` `github` `mermaid` `race` `verify`
 - **Người ghi:** YUNIE / user request (2026-09-13)
-
-<!-- Thêm bài học mới theo template dưới — copy block này -->
-
-<!--
