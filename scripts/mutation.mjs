@@ -129,8 +129,10 @@ async function main() {
     process.exit(1);
   }
 
-  console.log(`🧬 Flawd-lite — mutation testing (${targets.join(', ')}) — limit ${limit} mutants`);
+  console.log(`🧬 Flawd-lite — mutation PROXY scan (${targets.join(', ')}) — limit ${limit} mutants`);
   console.log(`   Operators: ${OPERATORS.map(o => o.desc).join(', ')}`);
+  console.log('   ⚠️  LITE/PROXY — mỗi mutant chỉ chạy `node --check` (syntax), KHÔNG chạy test thật.');
+  console.log('   ⚠️  "killed" = phá syntax · "survived" = syntax còn hợp lệ — KHÔNG phải mutation score (KN-049 calibrate-before-gate).');
   console.log('');
 
   let allMutants = [];
@@ -150,7 +152,7 @@ async function main() {
       else if (result === 'survived') survived++;
       else timeout++;
       const icon = result === 'killed' ? '✅' : result === 'survived' ? '⚠️' : '⏱️';
-      if (!json) console.log(`  ${icon} ${m.id} [${m.operator}] ${m.desc} at ${m.pos} → ${result}`);
+      if (!json) console.log(`  ${icon} ${m.id} [${m.operator}] ${m.desc} at ${m.pos} → ${result === 'survived' ? 'syntax-ok (proxy — chưa rõ test)' : result}`);
     }
   }
 
@@ -159,6 +161,8 @@ async function main() {
   const report = {
     generatedAt: new Date().toISOString(),
     generatedBy: 'flawd-lite',
+    mode: 'lite-proxy',
+    disclaimer: 'PROXY ONLY — mỗi mutant chỉ chạy `node --check` (syntax); KHÔNG test thật nào chạy per-mutant → không phải mutation score, cấm gate/claim tests strong/weak (KN-049 calibrate-before-gate; backlog mutation-real = chạy test thật per-mutant).',
     targets,
     operators: OPERATORS.map(o => o.id),
     total,
@@ -173,13 +177,13 @@ async function main() {
   await fs.writeFile(REPORT_PATH, JSON.stringify(report, null, 2), 'utf8');
 
   console.log('');
-  console.log(`📊 Mutation score: ${killed}/${total} killed (${score}%) — survived: ${survived}, timeout: ${timeout}`);
-  console.log(`   Report: .agent/mutation-report.json`);
+  console.log(`📊 Proxy result: ${killed}/${total} syntax-killed (${score}%) — syntax-ok: ${survived}, timeout: ${timeout}`);
+  console.log(`   ⚠️  KHÔNG phải mutation score — không test thật nào chạy per-mutant; cấm claim "tests strong/weak" từ số này (KN-049 calibrate-before-gate · backlog "mutation-real").`);
+  console.log(`   Report (mode: lite-proxy): .agent/mutation-report.json`);
   if (survived > 0) {
-    console.log(`   ⚠️  ${survived} mutants survived — tests may be weak (KN-012 reward hacking risk)`);
-    console.log(`   Survived: ${allMutants.filter(m => m.result === 'survived').map(m => `${m.id}[${m.operator}]@${m.target}:${m.pos}`).join(', ')}`);
+    console.log(`   Syntax-ok mutants (chưa biết test có bắt được không): ${allMutants.filter(m => m.result === 'survived').map(m => `${m.id}[${m.operator}]@${m.target}:${m.pos}`).join(', ')}`);
   } else if (total > 0) {
-    console.log(`   ✅ All mutants killed — tests are strong!`);
+    console.log(`   ✅ Mọi mutant phá syntax — cũng KHÔNG chứng minh tests mạnh (mutant yếu).`);
   }
   if (json) console.log(JSON.stringify(report, null, 2));
 }

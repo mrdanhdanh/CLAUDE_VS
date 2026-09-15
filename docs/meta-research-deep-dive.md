@@ -2,7 +2,7 @@
 
 > **Mục đích:** Đào sâu các research/report gần đây của Meta (research.meta.ai + ai.meta.com) và trích ra **mechanism học được** cho Harness v2 — cái gì adopt, cái gì note, cái gì bỏ. Theo luật tách lớp KN-052: chỉ lấy **mechanism verifiable** (có số liệu + cơ chế cụ thể), không lấy claim/marketing.
 >
-> **Ngày:** 2026-09-15 · **Người tổng hợp:** YUNIE · **Trạng thái áp dụng:** D0a ✅ + D0b ✅ + D0c ✅ + D1 ✅ đã áp cùng ngày (luật modality vào `cua-safety` §1/§5 + `agent-governance` §8 + re-export `.claude/rules`; amendment KN-059 dán; G3 guard ENFORCED — human takeover, spec 18/18; lethal trifecta checklist vào `agent-governance` §8 + `cua-safety` §4) — D3/D5/D6 còn pending.
+> **Ngày:** 2026-09-15 · **Người tổng hợp:** YUNIE · **Trạng thái áp dụng:** D0a ✅ + D0b ✅ + D0c ✅ + D1 ✅ + D6 ✅ đã áp cùng ngày (luật modality vào `cua-safety` §1/§5 + `agent-governance` §8 + re-export `.claude/rules`; amendment KN-059 dán; G3 guard ENFORCED — human takeover, spec 18/18; lethal trifecta checklist vào `agent-governance` §8 + `cua-safety` §4; calibrate-before-gate GỘP vào KN-049 + `mutation.mjs` lite-proxy self-declare) — D2/D3/D4/D5 còn pending.
 > **KN liên quan (đã check qua `auto-learn suggest`):** KN-059 (content≠authority) · KN-048 (RSI safety) · KN-052 (mechanism vs claim) · KN-019 (measured>perceived) · KN-047 (slop/spec-vs-wish) · KN-049 (synthetic signal) · KN-054 (externalize) · KN-023 (verify ngoài model) · KN-062 (memory shape) · KN-065 (declared guard)
 
 ---
@@ -197,11 +197,11 @@ Attack vector này nhắm đúng kịch bản harness sẽ gặp khi làm visual
 | **D3** | Query expansion cho `suggest`/RADAR (SIRA-style + discriminate filter) — **kèm eval known-pairs trước/sau** | B1 | Code (tdd-gate) | P2 | ~0.5–1 ngày | Bộ ~20 cặp known: hit-rate trước vs sau; không cải thiện = revert |
 | **D4** | Taint awareness cho egress — **note**, cần session state | A1-M3 | Design note | P3 | — | — |
 | **D5** | `credentials exec -- <cmd>` inject env không in value (surrogate lite) | A1-M5 | Code (tdd-gate) | P2 | ~2h | Test: stdout không chứa value; process con nhận đúng env |
-| **D6** | Rule "calibrate before gate" — **GỘP** vào KN-019/KN-049 family (không tạo KN mới) | B3 | GỘP | P2 | ~10 phút | Human dán; hoặc xử lý luôn `mutation.mjs` (calibrate hoặc gỡ khỏi gate) |
+| **D6** ✅ | Rule "calibrate before gate" — **GỘP** vào KN-049 (không tạo KN mới) — **đã dán 15/09** + `mutation.mjs` honesty-labeling (`mode:'lite-proxy'` + cấm claim strong/weak) | B3 | GỘP | P2 | done | KN-049 bullet ✅ · script self-declare ✅ · guard tĩnh pending takeover |
 | — | B2 (reasoning-benefit weighting) | B2 | Gộp vào D3 khi làm | P3 | — | Cùng bộ known pairs |
 | — | B4, B5, A3 | — | **Cite only** (không action) | — | — | — |
 
-**Thứ tự đề xuất:** ~~D0a + D0b + D0c + D1~~ ✅ (done 15/09) → D3/D5/D6 khi có lịch.
+**Thứ tự đề xuất:** ~~D0a + D0b + D0c + D1 + D6~~ ✅ (done 15/09) → D3/D5 khi có lịch (D2/D4 là design seed — chờ executor/state).
 
 ---
 
@@ -250,11 +250,13 @@ Attack vector này nhắm đúng kịch bản harness sẽ gặp khi làm visual
 
 > ⚠️ **2 công cụ, 2 cách chấm:** `suggest` cho KN-059 = 28.4 (đo liên quan chủ đề) nhưng `evaluate` dup-check = **42.5 ≥ 15** (đo khả năng trùng bài học). Ngưỡng quyết định là của `evaluate` → **phương án chính là 5.1 (amend KN-059)**; block này chỉ giữ làm tham chiếu.
 
-### GỘP — Delta D6 (không tạo KN mới, theo KN-062)
+### GỘP — Delta D6 ✅ đã dán 2026-09-15 vào KN-049 (không tạo KN mới, theo KN-062)
 
 Thêm vào KN-049 (hoặc KN-019) 1 dòng **Cách phòng tránh**:
 
 > **Calibrate before gate** (RL for Code Optimization, Meta 29/07/2026): metric nhiễu làm reward/gate **làm hại** — "once timing drives the reward, small problems in measurement noise... make RL fail". Trước khi gate bằng metric mới: (1) calibrate đo (sandbox ổn định, chạy N lần); (2) tách synthetic vs tín hiệu thật (KN-049); (3) metric chưa calibrate → sửa hoặc **gỡ khỏi gate**, không để trong loop. Áp dụng ngay: `scripts/mutation.mjs` (proxy `node --check` — calibrate thật hoặc bỏ).
+
+> **Kết quả áp dụng (15/09):** KN-049 ✅ bullet dán · `scripts/mutation.mjs` ✅ honesty-labeling — banner + summary tự khai `lite-proxy`, report JSON thêm `mode` + `disclaimer`, cấm claim "tests strong/weak"; calibrate thật per-mutant (backlog "mutation-real") chưa làm · guard tĩnh (assert label + không còn claim cũ) = **pending takeover** (spec immutable — như G3).
 
 ---
 
