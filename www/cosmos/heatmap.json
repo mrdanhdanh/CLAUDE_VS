@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-14T16:31:24.835Z",
+  "generatedAt": "2026-09-15T16:26:39.741Z",
   "generatedBy": "auto-learn.mjs stats --heatmap",
   "policy": {
     "cold": "bugCount − knCount ≥ 1",
@@ -11,16 +11,16 @@
     "bucket": "YYYY-MM"
   },
   "counts": {
-    "knTotal": 65,
-    "bugTotal": 46,
-    "tags": 135,
+    "knTotal": 66,
+    "bugTotal": 49,
+    "tags": 137,
     "months": [
       "2026-08",
       "2026-09"
     ],
-    "coldSpots": 15,
+    "coldSpots": 14,
     "zeroRef": 0,
-    "refFiles": 302
+    "refFiles": 313
   },
   "grid": {
     "months": [
@@ -30,10 +30,10 @@
     "rows": [
       {
         "tag": "process",
-        "total": 40,
+        "total": 41,
         "cells": [
           4,
-          36
+          37
         ]
       },
       {
@@ -125,11 +125,27 @@
         ]
       },
       {
+        "tag": "rsi",
+        "total": 5,
+        "cells": [
+          0,
+          5
+        ]
+      },
+      {
         "tag": "safety",
         "total": 5,
         "cells": [
           0,
           5
+        ]
+      },
+      {
+        "tag": "self-improving",
+        "total": 5,
+        "cells": [
+          1,
+          4
         ]
       },
       {
@@ -149,27 +165,11 @@
         ]
       },
       {
-        "tag": "rsi",
-        "total": 4,
-        "cells": [
-          0,
-          4
-        ]
-      },
-      {
         "tag": "self-evolving",
         "total": 4,
         "cells": [
           0,
           4
-        ]
-      },
-      {
-        "tag": "self-improving",
-        "total": 4,
-        "cells": [
-          1,
-          3
         ]
       },
       {
@@ -701,6 +701,14 @@
         ]
       },
       {
+        "tag": "exploration",
+        "total": 1,
+        "cells": [
+          0,
+          1
+        ]
+      },
+      {
         "tag": "fail-silent",
         "total": 1,
         "cells": [
@@ -965,6 +973,14 @@
         ]
       },
       {
+        "tag": "replay",
+        "total": 1,
+        "cells": [
+          0,
+          1
+        ]
+      },
+      {
         "tag": "reward-hacking",
         "total": 1,
         "cells": [
@@ -1118,21 +1134,9 @@
       "coldness": 2
     },
     {
-      "tag": "perf",
-      "kn": 2,
-      "bug": 4,
-      "coldness": 2
-    },
-    {
-      "tag": "state",
-      "kn": 1,
-      "bug": 3,
-      "coldness": 2
-    },
-    {
-      "tag": "a11y",
-      "kn": 9,
-      "bug": 10,
+      "tag": "dx",
+      "kn": 10,
+      "bug": 11,
       "coldness": 1
     },
     {
@@ -1142,19 +1146,13 @@
       "coldness": 1
     },
     {
-      "tag": "api",
-      "kn": 3,
-      "bug": 4,
-      "coldness": 1
-    },
-    {
-      "tag": "build",
-      "kn": 3,
-      "bug": 4,
-      "coldness": 1
-    },
-    {
       "tag": "docs",
+      "kn": 2,
+      "bug": 3,
+      "coldness": 1
+    },
+    {
+      "tag": "perf",
       "kn": 2,
       "bug": 3,
       "coldness": 1
@@ -1166,15 +1164,27 @@
       "coldness": 1
     },
     {
+      "tag": "context",
+      "kn": 1,
+      "bug": 2,
+      "coldness": 1
+    },
+    {
       "tag": "powershell",
       "kn": 1,
       "bug": 2,
       "coldness": 1
     },
     {
-      "tag": "async",
-      "kn": 0,
-      "bug": 1,
+      "tag": "prompt-injection",
+      "kn": 1,
+      "bug": 2,
+      "coldness": 1
+    },
+    {
+      "tag": "state",
+      "kn": 1,
+      "bug": 2,
       "coldness": 1
     },
     {

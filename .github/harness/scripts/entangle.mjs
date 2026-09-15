@@ -1,12 +1,15 @@
 #!/usr/bin/env node
 /**
  * entangle.mjs — Entanglement Graph: sửa 1 file thì kéo theo file nào?
- * Hiện thực hoá future card "Entanglement Graph" + "Cosmic Web" (www/cosmos):
+ * Hiện thực hoá future card "Entanglement Graph" + "Cosmic Web" + "Gravitational Lensing" (www/cosmos):
  *   --file  : forward refs (file trỏ tới ai) + reverse refs (ai trỏ tới nó)
  *   --graph : Cosmic Web v2 — 1-pass scan toàn repo → vẽ cấu trúc lớn:
  *             hub       = ≥10 reverse refs      → sửa là phải test rộng
  *             cluster   = đổi cùng nhau ≥3 lần   (git co-change) → gộp 1 plan
  *             dead      = www/ 0 ref, không entrypoint → grep rồi xoá (minimal-ladder)
+ *   --lens  : Gravitational Lensing v3 — blast radius 2-hop (pre-flight trước refactor):
+ *             hop1 = ai ref X trực tiếp · hop2 = ai ref người đó · testSet = test trong blast
+ *             text-refs reachability (edges như --graph) — KHÔNG phải runtime impact
  * 0 deps, Node 18+, chỉ đọc (trừ file --out).
  *
  * Usage:
@@ -14,6 +17,7 @@
  *   node .github/harness/scripts/entangle.mjs --file www/cosmos/index.html --json
  *   node .github/harness/scripts/entangle.mjs --file www/cosmos/index.html --max 30
  *   node .github/harness/scripts/entangle.mjs --graph [--json] [--out www/cosmos/graph.json] [--max N]
+ *   node .github/harness/scripts/entangle.mjs --lens --file <path> [--hops 2] [--json] [--max N] [--out file]
  * Exit: 0 OK · 1 file không tồn tại / thiếu --file.
  */
 import fs from 'node:fs/promises';
@@ -51,6 +55,19 @@ async function* walk(dir, depth = 0) {
   }
 }
 
+// Ref (từ quotes) → đường dẫn thật: ./ ../ · web-root '/' (specs goto) · repo-root · cùng thư mục
+function resolveRefCand(ref, dir) {
+  if (ref.startsWith('.')) return path.resolve(dir, ref);
+  if (ref.startsWith('/')) {
+    const bare = ref.replace(/^\/+/, '');
+    const w = path.resolve(ROOT, 'www', bare);
+    return existsSync(w) ? w : path.resolve(ROOT, bare);
+  }
+  if (ref.includes('/')) return path.resolve(ROOT, ref);
+  const a = path.resolve(dir, ref);
+  return existsSync(a) ? a : path.resolve(ROOT, ref);
+}
+
 // Forward refs — chuỗi trong quotes trông như đường dẫn file & tồn tại thật
 function forwardRefs(targetAbs, content) {
   const dir = path.dirname(targetAbs);
@@ -66,10 +83,7 @@ function forwardRefs(targetAbs, content) {
     const ext = path.extname(ref).toLowerCase();
     const looksPath = ref.startsWith('./') || ref.startsWith('../') || ref.includes('/') || SCAN_EXT.has(ext);
     if (!looksPath) continue;
-    let cand;
-    if (ref.startsWith('.')) cand = path.resolve(dir, ref);
-    else if (ref.includes('/')) cand = path.resolve(ROOT, ref);
-    else { const a = path.resolve(dir, ref); cand = existsSync(a) ? a : path.resolve(ROOT, ref); }
+    const cand = resolveRefCand(ref, dir);
     if (!existsSync(cand)) continue;
     try { if (statSync(cand).isDirectory()) continue; } catch { continue; } // ref trỏ tới thư mục (vd "www/") — không phải file
     const r = rel(cand);
@@ -103,6 +117,7 @@ async function reverseRefs(targetAbs, needles) {
 
 async function main() {
   const args = process.argv.slice(2);
+  if (args.includes('--lens')) return runLens(args);
   if (args.includes('--graph')) return runGraph(args);
   const fi = args.indexOf('--file');
   const fileArg = fi !== -1 ? args[fi + 1] : null;
@@ -305,6 +320,8 @@ async function runGraph(args) {
     clusters: git.clusters,
     deadFilaments,
     counts: { hubs: hubs.length, clusters: git.clusters.length, deadFilaments: deadFilaments.length },
+    // edge list [[from, to]] — nguồn duy nhất cho lens client-side (scale.html widget, không file mới)
+    edges: edges.map((e) => [e.from, e.to]),
   };
 
   if (outPath) {
@@ -328,6 +345,112 @@ async function runGraph(args) {
   for (const d of deadFilaments) console.log('   ' + d);
   console.log('');
   console.log('Hành động: hub ⇒ entangle --file + test rộng · cluster ⇒ gộp 1 plan · dead ⇒ grep usage rồi xoá.');
+}
+
+// ===== Lens mode — Gravitational Lensing v3: blast radius 2-hop (pre-flight) =====
+const LENS_MAX_HOPS = 3; // sâu hơn = nhiễu (mọi thứ nối mọi thứ)
+const LENS_METHOD = 'text-refs reachability (edges như --graph) — pre-flight checklist, không phải runtime impact';
+// artifacts lịch sử (bug report/plan/version snapshot cũ) ref code nhưng không bị ảnh hưởng — loại khỏi blast (mirror gitClusters)
+const LENS_NOISE_FROM = ['.agent/bugs/', '.agent/plans/', '.agent/versions/'];
+
+// test set = blast ∩ isTest — mirror rule deny-test-mutate (policy.json)
+function isTestPath(f) {
+  const segs = f.toLowerCase().split('/');
+  return segs.some((s) => s === 'test' || s === 'tests' || s.endsWith('.test') || s.endsWith('.tests'))
+    || /\.spec\.|\.test\./.test(f.toLowerCase());
+}
+
+async function runLens(args) {
+  const { fileArg, asJson, outPath, hops, max } = parseLensArgs(args);
+  if (!fileArg) { console.error('Usage: entangle.mjs --lens --file <path> [--hops 2] [--json] [--max N] [--out file]'); process.exit(1); }
+  const targetAbs = path.resolve(ROOT, fileArg);
+  if (!existsSync(targetAbs)) { console.error('⛔ Không thấy file: ' + fileArg); process.exit(1); }
+  const targetRel = rel(targetAbs);
+
+  const { allFiles, edges } = await scanGraph();
+  const lensEdges = edges.filter((e) => !LENS_NOISE_FROM.some((p) => e.from.startsWith(p)));
+  const { blast, byHop } = lensBFS(buildRev(lensEdges), targetRel, hops);
+  const testSet = blast.filter((b) => isTestPath(b.file)).map((b) => ({ file: b.file, hop: b.hop, via: b.via }));
+  const result = {
+    generatedAt: new Date().toISOString(),
+    generatedBy: 'entangle.mjs --lens',
+    file: targetRel,
+    hops,
+    method: LENS_METHOD,
+    counts: { byHop, blast: blast.length, testSet: testSet.length, edgesScanned: lensEdges.length, filesScanned: allFiles.length },
+    blastRadius: blast,
+    testSet,
+  };
+
+  if (outPath) {
+    await fs.mkdir(path.dirname(outPath), { recursive: true });
+    await fs.writeFile(outPath, JSON.stringify(result, null, 2) + '\n', 'utf8');
+  }
+  if (asJson || outPath) { console.log(JSON.stringify(result, null, 2)); return; }
+  printLens(result, max);
+}
+
+function parseLensArgs(args) {
+  const pick = (flag) => { const i = args.indexOf(flag); return i !== -1 && args[i + 1] ? args[i + 1] : null; };
+  let hops = pick('--hops') ? Number(pick('--hops')) : 2;
+  if (!Number.isInteger(hops) || hops < 1) hops = 2;
+  if (hops > LENS_MAX_HOPS) hops = LENS_MAX_HOPS;
+  const out = pick('--out');
+  const rawMax = pick('--max');
+  return { fileArg: pick('--file'), asJson: args.includes('--json'), outPath: out ? path.resolve(ROOT, out) : null, hops, max: rawMax ? Number(rawMax) : 20 };
+}
+
+// edges → reverse adjacency (to → Set(from))
+function buildRev(edges) {
+  const rev = new Map();
+  for (const e of edges) { if (!rev.has(e.to)) rev.set(e.to, new Set()); rev.get(e.to).add(e.from); }
+  return rev;
+}
+
+// BFS reverse — shortest-hop thắng, dedup toàn cục
+function lensBFS(rev, targetRel, hops) {
+  const hopOf = new Map([[targetRel, 0]]);
+  let frontier = [targetRel];
+  const blast = [];
+  const byHop = {};
+  for (let h = 1; h <= hops; h++) {
+    const next = new Set();
+    for (const f of frontier) for (const src of rev.get(f) || []) {
+      if (hopOf.has(src)) continue;
+      hopOf.set(src, h);
+      next.add(src);
+    }
+    if (!next.size) { byHop[h] = 0; break; }
+    byHop[h] = next.size;
+    for (const f of [...next].sort()) {
+      const refs = rev.get(f) || new Set();
+      blast.push({ file: f, hop: h, refs: refs.size, via: [...refs].filter((s) => hopOf.get(s) === h - 1).sort() });
+    }
+    frontier = [...next];
+  }
+  return { blast, byHop };
+}
+
+function lensHopTitle(h) { return h === 1 ? 'Hop 1 — ref trực tiếp' : 'Hop ' + h + ' — bẻ cong qua hop ' + (h - 1); }
+function lensVia(b, h) { return h > 1 && b.via.length ? '   ← via ' + b.via[0] + (b.via.length > 1 ? ' +' + (b.via.length - 1) : '') : ''; }
+function printLensHop(rows, h, max) {
+  console.log(lensHopTitle(h) + ' (' + rows.length + ')' + (h === 1 ? ' — sửa là đụng ngay:' : ':'));
+  if (!rows.length) console.log('   (không có)');
+  for (const b of rows.slice(0, max)) console.log('   ' + b.file + '  (' + b.refs + ' refs)' + lensVia(b, h));
+  if (rows.length > max) console.log('   … +' + (rows.length - max) + ' file nữa (--max để xem thêm)');
+  console.log('');
+}
+function printLens(result, max) {
+  const { file, hops, blastRadius: blast, testSet } = result;
+  console.log('🌐 LENSING — blast radius of ' + file + ' · ' + hops + ' hop');
+  console.log('');
+  for (let h = 1; h <= hops; h++) printLensHop(blast.filter((b) => b.hop === h), h, max);
+  console.log('🔬 Pre-flight test set (' + testSet.length + ') — chạy TRƯỚC khi refactor:');
+  if (!testSet.length) console.log('   (không có test nào trong blast — tự cân nhắc coverage)');
+  for (const t of testSet) console.log('   ' + t.file + '  (hop ' + t.hop + ')');
+  console.log('');
+  console.log('ⓘ ' + LENS_METHOD + '.');
+  console.log('   File không xuất hiện KHÔNG có nghĩa an toàn tuyệt đối — refs là text-scan, không thấy runtime/dynamic.');
 }
 
 main().catch((e) => { console.error(e); process.exit(1); });

@@ -110,6 +110,17 @@
     .web-chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
     .web-chip{font:600 10px var(--font-mono);color:#c4b5fd;background:rgba(124,58,237,.1);border:1px solid rgba(124,58,237,.18);padding:4px 7px;border-radius:8px;word-break:break-all;max-width:100%}
     .web-empty{font:400 12px var(--font-sans);color:var(--cosmos-text-muted);padding:10px 0}
+    /* Lensing — blast radius 2-hop (namespace .lens-*/#webLens*, tránh trùng class toàn cục KN-042) */
+    .lens-controls{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-top:10px}
+    .lens-controls label{font:600 11px var(--font-mono);letter-spacing:.06em;text-transform:uppercase;color:var(--cosmos-text-dim)}
+    #webLensFile{flex:1 1 220px;min-width:0;max-width:100%;background:rgba(255,255,255,.06);color:var(--cosmos-text);border:1px solid rgba(255,255,255,.12);border-radius:10px;padding:8px 10px;font:500 12px var(--font-mono)}
+    #webLensFile:focus-visible{outline:2px solid var(--cosmos-primary);outline-offset:2px}
+    .lens-summary{margin-top:12px;font:500 12px var(--font-sans);color:var(--cosmos-text-muted);word-break:break-all}
+    .lens-summary b{color:#fff}
+    .lens-summary code{font:600 11px var(--font-mono);color:#c4b5fd;background:rgba(124,58,237,.1);border:1px solid rgba(124,58,237,.15);padding:2px 6px;border-radius:6px}
+    .lens-block{margin-top:10px}
+    .lens-title{font:700 11px var(--font-mono);letter-spacing:.05em;text-transform:uppercase;color:var(--cosmos-text-dim)}
+    .lens-note{margin-top:10px;font:400 11px var(--font-sans);color:var(--cosmos-text-dim)}
     /* CMB Anisotropy — heatmap grid (namespace .cmb-*, tránh trùng class toàn cục KN-042) */
     .cmb-grid{display:flex;flex-direction:column;gap:4px;margin-top:10px;min-width:0}
     .cmb-row{display:flex;gap:4px;min-width:0}
@@ -316,7 +327,18 @@
             <div id="webDead" role="list" style="margin-top:10px"></div>
           </div>
         </div>
-        <div class="code-block" id="webCode">Hub ⇒ <code>entangle --file</code> + test rộng · Cluster ⇒ gộp 1 plan · Dead ⇒ grep usage rồi xoá · Đo bằng: <code>node .github/harness/scripts/entangle.mjs --graph</code> (hoặc <code>npm run cosmos:refresh</code>)</div>
+        <div class="card" style="margin-top:14px">
+          <h3>🔭 Lensing — blast radius 2-hop</h3>
+          <p>Sửa 1 file → ai ref nó (hop 1) → ai ref người đó (hop 2): vùng ảnh hưởng + <strong>test set tối thiểu</strong> chạy trước khi refactor. Ship 2026-09-15 (future card #1) · CLI đầy đủ: <code>entangle --lens --file X --hops 2</code>.</p>
+          <div class="lens-controls">
+            <label for="webLensFile">File</label>
+            <select id="webLensFile" aria-label="Chọn file để chiếu lens"></select>
+            <button class="btn btn-primary" id="webLensBtn" type="button">🔭 Chiếu lens</button>
+          </div>
+          <div id="webLensOut" role="list" aria-live="polite"></div>
+          <p class="lens-note">ⓘ Text-refs reachability (edges như <code>--graph</code>) — pre-flight checklist, không phải runtime impact; file không xuất hiện ≠ an toàn tuyệt đối.</p>
+        </div>
+        <div class="code-block" id="webCode">Hub ⇒ <code>entangle --file</code> + test rộng · Cluster ⇒ gộp 1 plan · Dead ⇒ grep usage rồi xoá · 🔭 Lens ⇒ <code>entangle --lens --file X --hops 2</code> · Đo bằng: <code>node .github/harness/scripts/entangle.mjs --graph</code> (hoặc <code>npm run cosmos:refresh</code>)</div>
       </div>
     </section>
 
@@ -709,6 +731,57 @@
         div.innerHTML='<div class="bh-icon" aria-hidden="true">🪶</div><div class="bh-info"><strong style="word-break:break-all">'+f+'</strong><span>0 ref — grep usage rồi xoá (minimal-ladder)</span></div>';
         dEl.appendChild(div);
       });
+      // lensing widget — dựng reverse index + auto-run (🔭)
+      lensPrep(g);
+    }
+    // ===== Lensing — blast radius 2-hop (entangle --lens, future card #1 shipped 2026-09-15) =====
+    const LENS_HOPS=2, LENS_CHIP_CAP=12, LENS_NOISE=['.agent/bugs/','.agent/plans/','.agent/versions/'];
+    let lensRev=null;
+    const lensIsTest=(f)=>{ const segs=f.toLowerCase().split('/'); return segs.some(s=>s==='test'||s==='tests'||s.endsWith('.test')||s.endsWith('.tests')) || /\.spec\.|\.test\./.test(f.toLowerCase()); };
+    function lensPrep(g){
+      const edges=(g.edges||[]).filter(([from])=>!LENS_NOISE.some(p=>from.startsWith(p)));
+      lensRev=new Map();
+      for(const [from,to] of edges){ if(!lensRev.has(to)) lensRev.set(to,new Set()); lensRev.get(to).add(from); }
+      const sel=$('#webLensFile'); if(!sel) return;
+      sel.innerHTML='';
+      const targets=[...lensRev.keys()].sort((a,b)=>lensRev.get(b).size-lensRev.get(a).size||a.localeCompare(b));
+      if(!targets.length){ $('#webLensOut').innerHTML='<div class="web-empty">— graph.json chưa có edges — chạy: npm run cosmos:refresh —</div>'; return; }
+      for(const t of targets){ const o=document.createElement('option'); o.value=t; o.textContent=t+' ('+lensRev.get(t).size+' refs)'; sel.appendChild(o); }
+      lensRun();
+    }
+    function lensChips(arr,color){
+      if(!arr.length) return '<div class="web-empty">— không có ref nào —</div>';
+      const shown=arr.slice(0,LENS_CHIP_CAP);
+      let html=shown.map(b=>{
+        const via=b.hop===2&&b.via.length?' ← '+b.via[0].split('/').pop():'';
+        return '<span class="web-chip" style="color:'+color+';border-color:'+color+'55">'+b.file+via+'</span>';
+      }).join('');
+      if(arr.length>shown.length) html+='<span class="web-empty" style="display:inline-block;padding:0">+ '+(arr.length-shown.length)+' nữa</span>';
+      return html;
+    }
+    function lensBlock(title,arr,color){
+      return '<div class="lens-block"><div class="lens-title">'+title+'</div><div class="web-chips">'+lensChips(arr,color)+'</div></div>';
+    }
+    function lensBFS(file){
+      const hopOf=new Map([[file,0]]); let frontier=[file]; const blast=[];
+      for(let h=1;h<=LENS_HOPS;h++){
+        const next=new Set();
+        for(const f of frontier) for(const src of lensRev.get(f)||[]){ if(hopOf.has(src)) continue; hopOf.set(src,h); next.add(src); }
+        if(!next.size) break;
+        for(const f of [...next].sort()) blast.push({file:f,hop:h,refs:(lensRev.get(f)||new Set()).size,via:[...(lensRev.get(f)||[])].filter(s=>hopOf.get(s)===h-1).sort()});
+        frontier=[...next];
+      }
+      return blast;
+    }
+    function lensRun(){
+      const file=$('#webLensFile')?.value, out=$('#webLensOut');
+      if(!file||!lensRev||!out) return;
+      const blast=lensBFS(file);
+      const hop1=blast.filter(b=>b.hop===1), hop2=blast.filter(b=>b.hop===2), tests=blast.filter(b=>lensIsTest(b.file));
+      out.innerHTML='<div class="lens-summary"><code>'+file+'</code> — hop 1: <b>'+hop1.length+'</b> · hop 2: <b>'+hop2.length+'</b> · 🔬 test set: <b>'+tests.length+'</b></div>'
+        +lensBlock('Hop 1 — ref trực tiếp ('+hop1.length+')',hop1,'#f59e0b')
+        +lensBlock('Hop 2 — bẻ cong qua hop 1 ('+hop2.length+')',hop2,'#c4b5fd')
+        +lensBlock('Test set pre-flight ('+tests.length+') — chạy trước khi refactor',tests,'#6ee7b7');
     }
     // ===== Hawking Radiation — auto-learn watchdog → hawking.json =====
     async function loadHawking(){
@@ -839,6 +912,7 @@
       renderCmbZero($('#cmbZero'), h.zeroRef||[], h.policy?.freshDays);
     }
     $('#btnRefresh')?.addEventListener('click', ()=>{ load(); loadWeb(); loadHawking(); loadCmb(); toast('↻ Đã refresh'); });
+    $('#webLensBtn')?.addEventListener('click', lensRun);
     $('#btnCopyCmd')?.addEventListener('click', async()=>{
       const t='node .github/harness/scripts/cosmic-scale.mjs --json --out www/cosmos/scale.json';
       try{ await navigator.clipboard.writeText(t); toast('📋 Đã copy lệnh'); }catch{ toast('Copy hụt — sếp copy tay nhé'); }

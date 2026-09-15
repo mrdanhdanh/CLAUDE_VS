@@ -6,6 +6,7 @@ import { test, expect } from '@playwright/test';
  * - còn ≥6 đề tài mới, mỗi đề tài có ETA
  * - 2026-09-12: QEC shipped (Lab #12) → Light Echo; Cosmic Web → Gravitational Lensing; Hawking → Escape Velocity; Escape Velocity shipped (cosmic-scale --trend gate); CMB Anisotropy shipped (stats --heatmap + #cmb, 2026-09-12) → còn 4 đề tài; section có id="future" (fix scroll-dot chết)
  * - 2026-09-12 bổ sung Supernova (mutation thật) + Event Horizon Lock (khóa verifier) → 6 đề tài.
+ * - 2026-09-15: Lensing shipped (entangle --lens --hops 2 + widget scale.html#web, spec entangle-lensing.spec.ts) → Cosmic Ray (flaky detector) → 10 hướng cũ, vẫn 6 đề tài.
  * Evidence → .agent/plans/cosmos-future-roads/verify/
  */
 
@@ -21,8 +22,8 @@ test('future section — 6 đề tài mới, không còn card Done', async ({ pa
   const section = page.locator('section[aria-labelledby="future-title"]');
   const cards = section.locator('.future-card');
   await expect(cards).toHaveCount(6);
-  // counter sống cùng danh sách — 9 hướng đã ship (QEC/Cosmic Web/Hawking/Escape Velocity/CMB...), còn 6
-  await expect(section).toContainText('9 hướng cũ đã ship');
+  // counter sống cùng danh sách — 10 hướng đã ship (QEC/Cosmic Web/Hawking/Escape Velocity/CMB/Lensing...), còn 6
+  await expect(section).toContainText('10 hướng cũ đã ship');
   await expect(section).toContainText('còn 6 đề tài');
 
   // đã gỡ hết card đã-xong: không tag Done, không chữ "✅ Done"
@@ -33,9 +34,11 @@ test('future section — 6 đề tài mới, không còn card Done', async ({ pa
   await expect(section).toContainText('LIGO');
   await expect(section).toContainText('Light Echo');
   await expect(section).toContainText('Wormhole');
-  await expect(section).toContainText('Gravitational Lensing');
+  await expect(section).toContainText('Cosmic Ray');
   await expect(section).toContainText('Supernova');
   await expect(section).toContainText('Event Horizon Lock');
+  // Lensing đã ship (entangle --lens + widget scale.html#web, 2026-09-15) → rời danh sách "chưa làm"
+  await expect(section).not.toContainText('Gravitational Lensing');
   // Escape Velocity đã ship (cosmic-scale --trend gate, 2026-09-12) → rời danh sách "chưa làm"
   await expect(section).not.toContainText('Escape Velocity');
   // Hawking đã ship (watchdog nợ bay hơi, 2026-09-12) → rời danh sách "chưa làm"
