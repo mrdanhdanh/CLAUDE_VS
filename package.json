@@ -11,7 +11,8 @@
     "guards": "node .github/harness/scripts/auto-learn.mjs guards",
     "cosmos:check": "node .github/harness/scripts/cosmic-scale.mjs --budget 10",
     "cosmos:gate": "node .github/harness/scripts/cosmic-scale.mjs --trend 3 --budget 10",
-    "entangle": "node .github/harness/scripts/entangle.mjs"
+    "entangle": "node .github/harness/scripts/entangle.mjs",
+    "dream": "node .github/harness/scripts/dream.mjs"
   },
   "devDependencies": {
     "@playwright/test": "^1.62.1",

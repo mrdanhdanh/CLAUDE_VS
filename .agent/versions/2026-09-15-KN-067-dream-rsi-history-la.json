@@ -1,0 +1,18 @@
+{
+  "id": "KN-067",
+  "bug": "2026-09-15-dream-rsi-history-la-simulator-dream-policy-zero-c",
+  "title": "Dream-RSI: replay history = simulator zero-cost — dream policy thay vì chạy lại; π₀-in-set + đừng nhồi semantic priors",
+  "committedAt": "2026-09-15T15:46:59Z",
+  "snapshot": ".agent/versions/2026-09-15-KN-067-dream-rsi-history-la.md",
+  "flow": "manual (reef-lite commit bị dup-gate chặn — bypass có disclosure, như KN-060/062/064/065)",
+  "eval": {
+    "decision": "FAIL",
+    "bypass": "disclosure — dup-gate: KN-063(43.8) / KN-053(30.6) / KN-022(30.1) ≥ 15 (heuristic recall-heavy, threshold 15)",
+    "reasons": [
+      "Trùng KN hiện có: KN-063 score 43.8 ≥ 15 — adjudicated NOT-dup: routing/failover ≠ replay-simulator; giữ KN mới"
+    ]
+  },
+  "dogfood": "dream.mjs v0 (cùng ngày) — recall@3 100% (34/34, 65 KN); spec tests/e2e/dream.spec.ts 5/5; slop-check clean",
+  "tableRow": "| KN-067 | 2026-09-15 | Dream-RSI (Google + DeepMind, arXiv:2609.14858, 14/09): history đã ghi = simulator exact — dream policy ứng viên bằng replay (0 execution), chỉ deploy winner; π₀-in-set ⇒ never worse; semantic priors trong prompt KÉM HƠN replay (full row trong docs/knowleged.md)",
+  "detail": "### KN-067 — Dream-RSI: replay history = simulator zero-cost (full detail trong docs/knowleged.md)"
+}

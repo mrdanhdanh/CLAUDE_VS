@@ -2,6 +2,17 @@
   "description": "Curated mirror — bài YUNIE tuyển chọn cho feed ai-news (ghim đầu feed). KHÔNG bị fetch.mjs ghi đè — thêm/xoá bài bằng cách sửa file này qua git. Merge bởi mergeCurated() trong ai-news.js, fail-open nếu file lỗi.",
   "articles": [
     {
+      "id": "curated-google-dream-rsi",
+      "title": "Dream-RSI — history đã ghi là simulator: dream policy thay vì chạy lại, 162× ít compute hơn (Google + DeepMind)",
+      "summary": "Tong Zheng et al. (Google · Google DeepMind · U Maryland · U Virginia, 14/09/2026; arXiv:2609.14858; dream-rsi.com; code github.com/zhengkid/Dream-RSI): RSI loop ở scale thật tốn compute vì exploration policy viết tay + đóng băng. Insight: discovery tree đã hoàn thành = replay simulator EXACT (không phải approximation) — mỗi node là 1 attempt + outcome thật; policy khác chỉ đi lại cây theo thứ tự khác → dream hàng nghìn candidate với 0 execution, chỉ deploy winner (π₀ trong candidate set ⇒ winner never worse — 'bars only go up'). Kết quả: Lasso 162× ít agent calls hơn SimpleTES (317 vs 51,200) · VGG16 2.43× ít generations · ConvDiv 2.09× điểm cao hơn cùng budget; policy học được adaptive (tiến bộ → tiết kiệm 110→50 attempts, plateau → bung lại). Bonus: 'semantic guidance is worse than replay' — nhồi insight cấp cao vào prompt KÉM HƠN replay (over-constrain + suppress diversity). Giới hạn tự nhận: chỉ dream được ở nơi history đã đi ⇒ bắt buộc là loop (mỗi lap +1 world). → Harness KN-067: replay > re-execute (history đã trả tiền sẵn); π₀-in-set cho mọi vòng improvement; đừng nhồi semantic priors; dogfood `dream.mjs` v0 — recall@3 100% (35/35).",
+      "source": "Google Research",
+      "sourceUrl": "https://dream-rsi.com/",
+      "category": "self-improving",
+      "date": "2026-09-14",
+      "hot": true,
+      "tags": ["Google", "Google DeepMind", "Dream-RSI", "RSI", "replay", "KN-067"]
+    },
+    {
       "id": "curated-defensescoop-dod-off-anthropic",
       "title": "DOD poised to move all classified AI workloads off Anthropic by October — 90% đã chuyển, multi-model thay thế",
       "summary": "Emil Michael (USD R&E, phát biểu tại NDIA Emerging Tech): ~90% workload classified đã rời Anthropic — Maven Smart Systems/Palantir chuyển xong từ nhiều tháng, về đích trong tháng 9. Gốc vụ việc: Anthropic đòi safeguard trong hợp đồng (chặn mass surveillance công dân Mỹ + vũ khí sát thương tự động hoàn toàn); DoD từ chối — đòi 'all lawful purposes' không ràng buộc → dán nhãn supply chain risk, hai bên đang kiện nhau (D.C. Circuit chờ phán quyết, chưa có preliminary injunction). Michael nhận sai lầm gốc: 'Pentagon solely reliant on one model' — nếu Gemini tụt lại thì sao? → chuyển multi-model ecosystem (ChatGPT/Gemini/Grok); warfighters khen ChatGPT bản mới hơn Anthropic, Grok nhanh hơn cả hai. Cán bộ GenAI.mil: không API, không build agent trong .mil — Claude cá nhân 20 phút = 4 giờ hệ thống gov. → Harness: case study thật cho 'Process > Model' + model-agnostic — phụ thuộc 1 vendor = single point of failure; giới hạn dùng phải enforce ở policy layer của mình (KN-048: enforce > declare), không trông vào contract promise của vendor.",
