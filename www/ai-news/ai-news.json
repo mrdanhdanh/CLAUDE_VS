@@ -1,12 +1,12 @@
 {
-  "generatedAt": "2026-09-14T07:34:40.630Z",
+  "generatedAt": "2026-09-15T07:12:41.245Z",
   "generatedBy": "YUNIE × Last30Days",
   "version": 2,
   "description": "Tin AI mới nhất — tổng hợp từ Last30Days (HN, GitHub, DEV.to, Reddit, arXiv, HackerNoon) trong 30 ngày qua. Chủ đề: AI. Tự động cập nhật bởi YUNIE.",
   "last30days": {
     "enabled": true,
     "topic": "AI",
-    "since": "2026-08-15",
+    "since": "2026-08-16",
     "days": 30,
     "sources": [
       "Hacker News (Algolia, free)",
@@ -55,252 +55,252 @@
   ],
   "articles": [
     {
-      "id": "hnoon-how-agentic-ai-is-becoming-a-non-negotiable-cx-powerhouse-fo",
-      "title": "How Agentic AI is Becoming a Non-Negotiable CX Powerhouse for SMBs",
-      "summary": "The capabilities of agentic AI have rapidly evolved into an essential consideration for SMBs that are serious about their customer experience models, as well as serving on a B2B cl — by Dmytro Spilka on HackerNoon.",
-      "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/how-agentic-ai-is-becoming-a-non-negotiable-cx-powerhouse-for-smbs",
+      "id": "hn-49708711",
+      "title": "KnowBench: Evaluating clinical AI with effort reduction",
+      "summary": "KnowBench: Evaluating clinical AI with effort reduction — 4 points, 1 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://arxiv.org/abs/2609.15794",
       "category": "products",
-      "date": "2026-09-14",
+      "date": "2026-09-15",
       "hot": true,
       "tags": [
-        "HackerNoon",
-        "smbs",
-        "AI"
+        "HN",
+        "AI",
+        "story",
+        "author_kangjl888"
       ]
     },
     {
-      "id": "hn-49692118",
-      "title": "Who gets to define the rules for AI?",
-      "summary": "Who gets to define the rules for AI? — 22 points, 20 comments on HN.",
+      "id": "hn-49707981",
+      "title": "Investors nervous about AI spending slowdown after industry warnings",
+      "summary": "Investors nervous about AI spending slowdown after industry warnings — 4 points, 0 comments on HN.",
       "source": "Hacker News",
-      "sourceUrl": "https://cohere.com/blog/who-gets-to-define-the-rules-for-ai",
+      "sourceUrl": "https://www.reuters.com/legal/transactional/investors-nervous-about-ai-spending-slowdown-after-industry-warnings-2026-09-15/",
       "category": "products",
-      "date": "2026-09-14",
-      "hot": false,
+      "date": "2026-09-15",
+      "hot": true,
       "tags": [
         "HN",
         "AI",
         "story",
-        "author_throwworhtthrow"
+        "author_1vuio0pswjnm7"
       ]
     },
     {
-      "id": "hn-49692344",
-      "title": "Airbnb Preventing the Use of BnB",
-      "summary": "Airbnb Preventing the Use of BnB — 18 points, 2 comments on HN.",
+      "id": "hn-49707510",
+      "title": "Europe must build own AI, says ECB's Lagarde",
+      "summary": "Europe must build own AI, says ECB's Lagarde — 3 points, 2 comments on HN.",
       "source": "Hacker News",
-      "sourceUrl": "https://www.theguardian.com/technology/2026/sep/14/portland-bnb-airbnb-silicon-valley-legal-battle-festival",
+      "sourceUrl": "https://www.theguardian.com/technology/2026/sep/14/europe-ai-datacentres-growth-us-china-ecb-christine-lagarde",
       "category": "products",
-      "date": "2026-09-14",
+      "date": "2026-09-15",
       "hot": false,
       "tags": [
         "HN",
         "AI",
         "story",
-        "author_cycomanic"
+        "author_FearNotDaniel"
       ]
     },
     {
-      "id": "hn-49692215",
-      "title": "Ask HN: Do you worry about fires in AI datacenters?",
-      "summary": "Ask HN: Do you worry about fires in AI datacenters? — 5 points, 8 comments on HN.",
+      "id": "hn-49708628",
+      "title": "Show HN: Jinfer – AI inference engine for the JVM. AI in a jar",
+      "summary": "Hi HN,\nSome would call AI on the JVM quixotic. And so, Quixotic AI was born.<p>jinfer is an inference engine for the JVM: chat, vision, audio, embeddings, reranking, and TTS. No Python runtime, no ONNX, no Docker contain — 2 points, 0 comments on HN.",
       "source": "Hacker News",
-      "sourceUrl": "https://news.ycombinator.com/item?id=49692215",
+      "sourceUrl": "https://qxotic.ai/",
       "category": "products",
-      "date": "2026-09-14",
+      "date": "2026-09-15",
       "hot": false,
       "tags": [
         "HN",
         "AI",
         "story",
-        "author_roschdal"
+        "author_mukel"
       ]
     },
     {
-      "id": "hn-49692586",
-      "title": "AI is breaking our proxies for expertise",
-      "summary": "AI is breaking our proxies for expertise — 3 points, 0 comments on HN.",
+      "id": "hn-49708440",
+      "title": "NASA and IBM open source lunar mapping tools",
+      "summary": "NASA and IBM open source lunar mapping tools — 2 points, 0 comments on HN.",
       "source": "Hacker News",
-      "sourceUrl": "https://www.seangoedecke.com/ai-is-breaking-our-proxies-for-expertise/",
+      "sourceUrl": "https://www.theregister.com/ai-and-ml/2026/09/10/nasa-and-ibm-open-source-lunar-mapping-tools/5295633",
       "category": "products",
-      "date": "2026-09-14",
+      "date": "2026-09-15",
       "hot": false,
       "tags": [
         "HN",
         "AI",
         "story",
-        "author_vismit2000"
+        "author_benkan"
       ]
     },
     {
-      "id": "hn-49692134",
-      "title": "Open-Weight Diplomacy: How China's AI Models Are Rerunning the Digital Silk Road",
-      "summary": "Open-Weight Diplomacy: How China's AI Models Are Rerunning the Digital Silk Road — 3 points, 0 comments on HN.",
+      "id": "hn-49708350",
+      "title": "Dan Selsam (OpenAI Researcher) Personal Statement on AI Risk",
+      "summary": "Dan Selsam (OpenAI Researcher) Personal Statement on AI Risk — 2 points, 0 comments on HN.",
       "source": "Hacker News",
-      "sourceUrl": "https://www.lawfaremedia.org/article/open-weight-diplomacy--how-china-s-ai-models-are-rerunning-the-digital-silk-road",
-      "category": "safety",
-      "date": "2026-09-14",
+      "sourceUrl": "https://docs.google.com/document/d/e/2PACX-1vQNl3SEX5IyA6d9qHjjFZN-qzGRZNFI6b63g-yu1Fy-ZYkVfCWm7i9WXRXw63m6yDB_auDuPLyQ7jBm/pub",
+      "category": "big-tech",
+      "date": "2026-09-15",
       "hot": false,
       "tags": [
         "HN",
         "AI",
         "story",
-        "author_usmlatif"
+        "author_cubefox"
       ]
     },
     {
-      "id": "hn-49691998",
-      "title": "Does AI Assistance Enhance or Erode Expertise?",
-      "summary": "Does AI Assistance Enhance or Erode Expertise? — 3 points, 1 comments on HN.",
+      "id": "hn-49708069",
+      "title": "Show HN: Chronicle – Local-first, open-source authoring software for writers",
+      "summary": "About a year and a half ago I started my writing journey by beginning to work on my first novella. During this time, I felt the need for different tools, like a timeline editor, a character sheet and so on, features that — 2 points, 8 comments on HN.",
       "source": "Hacker News",
-      "sourceUrl": "https://www.nber.org/papers/w35720",
+      "sourceUrl": "https://pazvanti.github.io/Chronicle/",
       "category": "products",
-      "date": "2026-09-14",
+      "date": "2026-09-15",
       "hot": false,
       "tags": [
         "HN",
         "AI",
         "story",
-        "author_x312"
+        "author_pazvanti"
       ]
     },
     {
-      "id": "hn-49692773",
-      "title": "'Tidal wave' of PFAS being launched to satisfy AI industry",
-      "summary": "'Tidal wave' of PFAS being launched to satisfy AI industry — 2 points, 0 comments on HN.",
+      "id": "hn-49708026",
+      "title": "The Productivity Illusion of Enterprise AI Coding",
+      "summary": "The Productivity Illusion of Enterprise AI Coding — 2 points, 0 comments on HN.",
       "source": "Hacker News",
-      "sourceUrl": "https://www.theguardian.com/environment/2026/sep/14/pfas-firms-tidal-wave-forever-chemicals-ai-industry-demand-datacentres",
+      "sourceUrl": "https://cacm.acm.org/blogcacm/the-productivity-illusion-at-the-heart-of-enterprise-ai-coding/",
       "category": "products",
-      "date": "2026-09-14",
+      "date": "2026-09-15",
       "hot": false,
       "tags": [
         "HN",
         "AI",
         "story",
-        "author_defrost"
+        "author_visha1v"
       ]
     },
     {
-      "id": "hn-49692583",
-      "title": "New AI fake text generator may be too dangerous to release, say creators (2019)",
-      "summary": "New AI fake text generator may be too dangerous to release, say creators (2019) — 2 points, 1 comments on HN.",
+      "id": "hn-49707856",
+      "title": "Mourning the Loss of AI Companions",
+      "summary": "Mourning the Loss of AI Companions — 2 points, 0 comments on HN.",
       "source": "Hacker News",
-      "sourceUrl": "https://www.theguardian.com/technology/2019/feb/14/elon-musk-backed-ai-writes-convincing-news-fiction",
+      "sourceUrl": "https://www.nature.com/articles/s41562-026-02569-3",
       "category": "products",
-      "date": "2026-09-14",
+      "date": "2026-09-15",
       "hot": false,
       "tags": [
         "HN",
         "AI",
         "story",
-        "author_mrtksn"
+        "author_geox"
       ]
     },
     {
-      "id": "hn-49692470",
-      "title": "Ask HN: Is opaque over-engineering with frontier AI the future of software?",
-      "summary": "I read this from Amazon CTO’s feed. It feels to me as the kool-aid driven hype driven version of software engineering. Is it the new normal? Are people at FAANG just accepting blindly opaque overengineered software as a  — 2 points, 1 comments on HN.",
+      "id": "hn-49708836",
+      "title": "A Blueprint for Keeping Humans in Control of AI",
+      "summary": "A Blueprint for Keeping Humans in Control of AI — 1 points, 0 comments on HN.",
       "source": "Hacker News",
-      "sourceUrl": "https://news.ycombinator.com/item?id=49692470",
+      "sourceUrl": "https://www.gsb.stanford.edu/insights/blueprint-keeping-humans-control-ai",
       "category": "products",
-      "date": "2026-09-14",
+      "date": "2026-09-15",
       "hot": false,
       "tags": [
         "HN",
         "AI",
         "story",
-        "author_reacharavindh"
+        "author_geox"
       ]
     },
     {
-      "id": "hn-49692366",
-      "title": "Show HN: Kepil – passport, mandate and tamper-evident journal for AI agents",
-      "summary": "Show HN: Kepil – passport, mandate and tamper-evident journal for AI agents — 2 points, 0 comments on HN.",
+      "id": "hn-49708793",
+      "title": "AI bots \"Timmy,\" \"Ren,\" and \"Jackie\" are flooding social media with slop",
+      "summary": "AI bots \"Timmy,\" \"Ren,\" and \"Jackie\" are flooding social media with slop — 1 points, 0 comments on HN.",
       "source": "Hacker News",
-      "sourceUrl": "https://github.com/oleg-vdv/kepil",
+      "sourceUrl": "https://arstechnica.com/ai/2026/09/ai-agents-flood-the-internet-with-slop-infused-spam/",
       "category": "products",
-      "date": "2026-09-14",
+      "date": "2026-09-15",
       "hot": false,
       "tags": [
         "HN",
         "AI",
         "story",
-        "author_ipgleg"
+        "author_joozio"
       ]
     },
     {
-      "id": "hn-49692144",
-      "title": "Show HN: I was frustrated with AI giving confident answer,Even when it was wrong",
-      "summary": "Show HN: I was frustrated with AI giving confident answer,Even when it was wrong — 2 points, 0 comments on HN.",
+      "id": "hn-49708474",
+      "title": "What the New AI Layoff Data Proves",
+      "summary": "What the New AI Layoff Data Proves — 1 points, 0 comments on HN.",
       "source": "Hacker News",
-      "sourceUrl": "https://demo.aqqai.in",
+      "sourceUrl": "https://www.youtube.com/watch?v=k8pTfkA6sio",
+      "category": "big-tech",
+      "date": "2026-09-15",
+      "hot": false,
+      "tags": [
+        "HN",
+        "AI",
+        "story",
+        "author_cable2600"
+      ]
+    },
+    {
+      "id": "hn-49708262",
+      "title": "Benchmark for AI Assistants",
+      "summary": "Benchmark for AI Assistants — 1 points, 0 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://assistantbenchmark.com/",
       "category": "products",
-      "date": "2026-09-14",
+      "date": "2026-09-15",
       "hot": false,
       "tags": [
         "HN",
         "AI",
         "story",
-        "author_Vineetyadav2"
+        "author_soltanov"
       ]
     },
     {
-      "id": "hn-49693186",
-      "title": "Human bottleneck will not let AI replace any jobs",
-      "summary": "I am convinced that as long as human bottlenecks exist, ai adoption will take time and probably will never happen in traditional companies. — 1 points, 0 comments on HN.",
+      "id": "hn-49708001",
+      "title": "Show HN: White-label AI voice and chat agent platform for resellers",
+      "summary": "Show HN: White-label AI voice and chat agent platform for resellers — 1 points, 0 comments on HN.",
       "source": "Hacker News",
-      "sourceUrl": "https://news.ycombinator.com/item?id=49693186",
+      "sourceUrl": "https://www.famulor.io/whitelabel",
       "category": "products",
-      "date": "2026-09-14",
+      "date": "2026-09-15",
       "hot": false,
       "tags": [
         "HN",
         "AI",
         "story",
-        "author_jatindavis05"
+        "author_imankoma"
       ]
     },
     {
-      "id": "hn-49692990",
-      "title": "Show HN: I made an unlimited TikTok video generator to get views on the internet",
-      "summary": "I got tired of all the expensive and complicated ways of making tiktok videos to promote my app (like using higgsfield or paying strangers $20 to act surprised on video), so I built somewhere you can paste any viral tikt — 1 points, 0 comments on HN.",
+      "id": "hn-49707995",
+      "title": "The real AI economy is being built by ordinary people",
+      "summary": "The real AI economy is being built by ordinary people — 1 points, 0 comments on HN.",
       "source": "Hacker News",
-      "sourceUrl": "https://cloney.app",
-      "category": "fun",
-      "date": "2026-09-14",
-      "hot": false,
-      "tags": [
-        "HN",
-        "AI",
-        "story",
-        "author_phanahm"
-      ]
-    },
-    {
-      "id": "hn-49692840",
-      "title": "TimIQ – Smart Tech, AI and Software Insights",
-      "summary": "TimIQ – Smart Tech, AI and Software Insights — 1 points, 0 comments on HN.",
-      "source": "Hacker News",
-      "sourceUrl": "https://timiq.blogspot.com/",
+      "sourceUrl": "https://restofworld.org/2026/global-workers-using-ai-at-work/",
       "category": "products",
-      "date": "2026-09-14",
+      "date": "2026-09-15",
       "hot": false,
       "tags": [
         "HN",
         "AI",
         "story",
-        "author_Timmphil"
+        "author_thm"
       ]
     }
   ],
   "meta": {
-    "fetchedAt": "2026-09-14T07:34:40.630Z",
+    "fetchedAt": "2026-09-15T07:12:41.245Z",
     "topic": "AI",
     "total": 15,
-    "hot": 1,
+    "hot": 2,
     "sources": [
-      "HackerNoon",
       "Hacker News"
     ]
   }
