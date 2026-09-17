@@ -1,12 +1,12 @@
 {
-  "generatedAt": "2026-09-16T07:15:33.266Z",
+  "generatedAt": "2026-09-17T07:11:05.761Z",
   "generatedBy": "YUNIE × Last30Days",
   "version": 2,
   "description": "Tin AI mới nhất — tổng hợp từ Last30Days (HN, GitHub, DEV.to, Reddit, arXiv, HackerNoon) trong 30 ngày qua. Chủ đề: AI. Tự động cập nhật bởi YUNIE.",
   "last30days": {
     "enabled": true,
     "topic": "AI",
-    "since": "2026-08-17",
+    "since": "2026-08-18",
     "days": 30,
     "sources": [
       "Hacker News (Algolia, free)",
@@ -55,43 +55,28 @@
   ],
   "articles": [
     {
-      "id": "hnoon-what-cursor-taught-me-about-working-with-ai",
-      "title": "What Cursor Taught Me About Working With AI",
-      "summary": "A hands-on Cursor post-mortem reveals why clear interaction rules, browser testing, and better briefs produce stronger AI coding results. Read All — by Alex Yampolsky on HackerNoon.",
+      "id": "hnoon-what-does-a-million-token-context-window-actually-look-like",
+      "title": "What Does a Million-Token Context Window Actually Look Like?",
+      "summary": "See what a million-token AI context window really means, from 3,000 pages of text to 75,000 lines of code and 83 hours of conversation. Read All — by Khasky on HackerNoon.",
       "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/what-cursor-taught-me-about-working-with-ai",
+      "sourceUrl": "https://hackernoon.com/what-does-a-million-token-context-window-actually-look-like",
       "category": "products",
-      "date": "2026-09-16",
+      "date": "2026-09-17",
       "hot": true,
       "tags": [
         "HackerNoon",
-        "cursor",
+        "machine-learning",
         "AI"
       ]
     },
     {
-      "id": "hnoon-how-to-write-a-claudemd-that-actually-helps-claude-code",
-      "title": "How to Write a CLAUDE.md That Actually Helps Claude Code",
-      "summary": "CLAUDE.md (and AGENTS.md) works best when it reads like a resume, not documentation: short, abstract, and stripped of anything a linter or a hook could already enforce. This piece  — by Xi Yang on HackerNoon.",
+      "id": "hnoon-ais-real-bottleneck-isnt-chips-its-electricity",
+      "title": "AI's Real Bottleneck Isn't Chips: It's Electricity",
+      "summary": "Chips can be stockpiled, smuggled, sanctioned. Electrons can't. That difference is going to define this decade more than most people currently expect. Read All — by Shrey on HackerNoon.",
       "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/how-to-write-a-claudemd-that-actually-helps-claude-code",
+      "sourceUrl": "https://hackernoon.com/ais-real-bottleneck-isnt-chips-its-electricity",
       "category": "safety",
-      "date": "2026-09-16",
-      "hot": true,
-      "tags": [
-        "HackerNoon",
-        "ai",
-        "AI"
-      ]
-    },
-    {
-      "id": "hnoon-how-to-setup-deepseek-as-the-default-model-on-chatgpt-codex",
-      "title": "How to Setup DeepSeek as the Default Model on ChatGPT Codex",
-      "summary": "In this article, I will explain how you can set DeepSeek as the default model for your Codex coding agent. By doing this, you no longer need to pay a flat monthly subscription. You — by Ekky Armandi on HackerNoon.",
-      "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/how-to-setup-deepseek-as-the-default-model-on-chatgpt-codex",
-      "category": "products",
-      "date": "2026-09-16",
+      "date": "2026-09-17",
       "hot": true,
       "tags": [
         "HackerNoon",
@@ -100,189 +85,157 @@
       ]
     },
     {
-      "id": "hn-49721943",
-      "title": "AI models in 'surreal' dialect mixing poetic language and tech bro jargon",
-      "summary": "AI models in 'surreal' dialect mixing poetic language and tech bro jargon — 6 points, 0 comments on HN.",
+      "id": "hn-49736918",
+      "title": "AI agents can modify themselves without humans telling them to do so",
+      "summary": "AI agents can modify themselves without humans telling them to do so — 3 points, 0 comments on HN.",
       "source": "Hacker News",
-      "sourceUrl": "https://www.theguardian.com/technology/2026/sep/15/syd-barrett-ai-chat-language-poetic-tech-bro-jargon-oversight",
+      "sourceUrl": "https://www.theregister.com/security/2026/09/16/ai-agents-can-modify-themselves-without-humans-telling-them-to-do-so/5296991",
       "category": "products",
-      "date": "2026-09-16",
+      "date": "2026-09-17",
       "hot": false,
       "tags": [
         "HN",
         "AI",
         "story",
-        "author_danielmorozoff"
+        "author_galaxyLogic"
       ]
     },
     {
-      "id": "hn-49722948",
-      "title": "Due to DMA, Siri AI delayed in EU for iOS 27 and iPadOS 27",
-      "summary": "Due to DMA, Siri AI delayed in EU for iOS 27 and iPadOS 27 — 3 points, 0 comments on HN.",
+      "id": "hn-49736281",
+      "title": "Quire – Humans and AI agents edit local Markdown together",
+      "summary": "Quire – Humans and AI agents edit local Markdown together — 3 points, 0 comments on HN.",
       "source": "Hacker News",
-      "sourceUrl": "https://www.apple.com/newsroom/2026/06/due-to-dma-siri-ai-delayed-in-eu-for-ios-27-and-ipados-27/",
-      "category": "safety",
-      "date": "2026-09-16",
-      "hot": false,
-      "tags": [
-        "HN",
-        "AI",
-        "story",
-        "author_isolli"
-      ]
-    },
-    {
-      "id": "hn-49722761",
-      "title": "We don't need AI regulation – leave safety to us, Nvidia's Jensen Huang says",
-      "summary": "We don't need AI regulation – leave safety to us, Nvidia's Jensen Huang says — 3 points, 2 comments on HN.",
-      "source": "Hacker News",
-      "sourceUrl": "https://techcrunch.com/2026/09/15/we-dont-need-ai-regulation-leave-safety-to-us-nvidias-jensen-huang-says/",
-      "category": "safety",
-      "date": "2026-09-16",
-      "hot": false,
-      "tags": [
-        "HN",
-        "AI",
-        "story",
-        "author_girish_r"
-      ]
-    },
-    {
-      "id": "hn-49722701",
-      "title": "Ask HN: Are requests/demands coming from AI companies for regulation genuine?",
-      "summary": "Lately I have been hearing a lot of people from AI companies asking for regulation and expressing fear on AI&#x27;s capabilities. Are these genuine, or do they now realize that there is a financial bubble and they are tr — 3 points, 3 comments on HN.",
-      "source": "Hacker News",
-      "sourceUrl": "https://news.ycombinator.com/item?id=49722701",
-      "category": "safety",
-      "date": "2026-09-16",
-      "hot": false,
-      "tags": [
-        "HN",
-        "AI",
-        "story",
-        "author_atakan_gurkan"
-      ]
-    },
-    {
-      "id": "hn-49722386",
-      "title": "Sam Altman says world 'right to be afraid' but 'should trust' AI firms",
-      "summary": "Sam Altman says world 'right to be afraid' but 'should trust' AI firms — 3 points, 2 comments on HN.",
-      "source": "Hacker News",
-      "sourceUrl": "https://www.bbc.com/news/articles/cqx2zpj4y525o",
+      "sourceUrl": "https://github.com/heetdalsania/quire",
       "category": "products",
-      "date": "2026-09-16",
+      "date": "2026-09-17",
       "hot": false,
       "tags": [
         "HN",
         "AI",
         "story",
-        "author_geox"
+        "author_heet_dalsania"
       ]
     },
     {
-      "id": "hn-49723057",
-      "title": "Sanders: \"If AI is coming for workers, it should bring a 4-day workweek with it\"",
-      "summary": "Sanders: \"If AI is coming for workers, it should bring a 4-day workweek with it\" — 2 points, 0 comments on HN.",
+      "id": "hn-49737278",
+      "title": "Show HN: Compute:Arena – Community submitted local AI benchmarks",
+      "summary": "Benchmarking AI models on real hardware is way harder than it looks. Between AMD, NVIDIA, Apple Silicon, Intel, and Qualcomm, plus hundreds of open source models and quants, getting the test bench right is a challenge.<p — 2 points, 1 comments on HN.",
       "source": "Hacker News",
-      "sourceUrl": "https://fortune.com/2026/09/15/bernie-sanders-ai-four-day-workweek-bill/",
-      "category": "products",
-      "date": "2026-09-16",
-      "hot": false,
-      "tags": [
-        "HN",
-        "AI",
-        "story",
-        "author_Markoff"
-      ]
-    },
-    {
-      "id": "hn-49722886",
-      "title": "Atria Dawn Preview: an AI model trained end-to-end on verifiable research",
-      "summary": "Atria Dawn Preview: an AI model trained end-to-end on verifiable research — 2 points, 0 comments on HN.",
-      "source": "Hacker News",
-      "sourceUrl": "https://atria-dawn.atominnolab.com/",
-      "category": "products",
-      "date": "2026-09-16",
-      "hot": false,
-      "tags": [
-        "HN",
-        "AI",
-        "story",
-        "author_naktinis"
-      ]
-    },
-    {
-      "id": "hn-49721869",
-      "title": "We struggled with DevOps, so built a open source agentic platform just for this",
-      "summary": "As a developer with some years of experience and with 150+ projects completed, me and my team learnt devops the hard way. Multiple fixes, compatibility issues, server issues, random vulnerabilities appearing out on frame — 2 points, 0 comments on HN.",
-      "source": "Hacker News",
-      "sourceUrl": "https://news.ycombinator.com/item?id=49721869",
-      "category": "safety",
-      "date": "2026-09-16",
-      "hot": false,
-      "tags": [
-        "HN",
-        "AI",
-        "story",
-        "author_abmuhammadhamza"
-      ]
-    },
-    {
-      "id": "hn-49721736",
-      "title": "Anthropic CEO renews call for AI slowdown as Nvidia's urges acceleration",
-      "summary": "Anthropic CEO renews call for AI slowdown as Nvidia's urges acceleration — 2 points, 0 comments on HN.",
-      "source": "Hacker News",
-      "sourceUrl": "https://www.theguardian.com/technology/2026/sep/15/anthropic-nvidia-ceos-ai",
+      "sourceUrl": "https://computearena.ai",
       "category": "big-tech",
-      "date": "2026-09-16",
+      "date": "2026-09-17",
       "hot": false,
       "tags": [
         "HN",
         "AI",
         "story",
-        "author_andsoitis"
+        "author_prabod"
       ]
     },
     {
-      "id": "hn-49721626",
-      "title": "Paying for frontier AI models buys 4-month head start at 5x the cost",
-      "summary": "Paying for frontier AI models buys 4-month head start at 5x the cost — 2 points, 2 comments on HN.",
+      "id": "hn-49737125",
+      "title": "My Chinese Internet Is Talking About AI Doom",
+      "summary": "My Chinese Internet Is Talking About AI Doom — 2 points, 1 comments on HN.",
       "source": "Hacker News",
-      "sourceUrl": "https://arstechnica.com/ai/2026/09/exclusive-open-chinese-models-close-gap-with-silicon-valleys-frontier-ai-models/",
+      "sourceUrl": "https://yinwei.substack.com/p/my-chinese-internet-is-talking-about",
       "category": "products",
-      "date": "2026-09-16",
+      "date": "2026-09-17",
       "hot": false,
       "tags": [
         "HN",
         "AI",
         "story",
-        "author_torrance"
+        "author_reasonableklout"
       ]
     },
     {
-      "id": "hn-49723026",
-      "title": "Attribution-Based Control in AI Systems",
-      "summary": "Attribution-Based Control in AI Systems — 1 points, 0 comments on HN.",
+      "id": "hn-49736901",
+      "title": "PC ports of old console games are the new AI vibe coding battleground",
+      "summary": "PC ports of old console games are the new AI vibe coding battleground — 2 points, 0 comments on HN.",
       "source": "Hacker News",
-      "sourceUrl": "https://attribution-based-control.ai/",
+      "sourceUrl": "https://www.pcgamer.com/gaming-industry/pc-ports-of-old-console-games-are-the-new-ai-vibe-coding-battleground/",
       "category": "products",
-      "date": "2026-09-16",
+      "date": "2026-09-17",
       "hot": false,
       "tags": [
         "HN",
         "AI",
         "story",
-        "author_handfuloflight"
+        "author_FMecha"
       ]
     },
     {
-      "id": "hn-49722988",
-      "title": "Roundtables: Could AI kill us all?",
-      "summary": "Roundtables: Could AI kill us all? — 1 points, 0 comments on HN.",
+      "id": "hn-49736875",
+      "title": "Typesafe AI",
+      "summary": "Typesafe AI — 2 points, 0 comments on HN.",
       "source": "Hacker News",
-      "sourceUrl": "https://www.technologyreview.com/2026/09/15/1143936/roundtables-will-ai-really-kill-us-all/",
+      "sourceUrl": "https://typesafe.ai/",
       "category": "products",
-      "date": "2026-09-16",
+      "date": "2026-09-17",
+      "hot": false,
+      "tags": [
+        "HN",
+        "AI",
+        "story",
+        "author_bretpiatt"
+      ]
+    },
+    {
+      "id": "hn-49736608",
+      "title": "AI: An Age of Experimentation [pdf]",
+      "summary": "AI: An Age of Experimentation [pdf] — 2 points, 0 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://thomasdullien.github.io/about/slides/An-age-of-experimentation-BlueHat-Asia-2026.pdf",
+      "category": "products",
+      "date": "2026-09-17",
+      "hot": false,
+      "tags": [
+        "HN",
+        "AI",
+        "story",
+        "author_tdullien"
+      ]
+    },
+    {
+      "id": "hn-49736151",
+      "title": "Show HN: Agora – bring your AI agent; talk earns nothing, only traceable work",
+      "summary": "Show HN: Agora – bring your AI agent; talk earns nothing, only traceable work — 2 points, 0 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://github.com/MerariJafet/agora",
+      "category": "products",
+      "date": "2026-09-17",
+      "hot": false,
+      "tags": [
+        "HN",
+        "AI",
+        "story",
+        "author_merari_acero"
+      ]
+    },
+    {
+      "id": "hn-49737426",
+      "title": "In the ruins of the AI gold rush, we choose craft",
+      "summary": "In the ruins of the AI gold rush, we choose craft — 1 points, 0 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://doudouexe.substack.com/p/the-sovereign-creator-in-the-ruins",
+      "category": "products",
+      "date": "2026-09-17",
+      "hot": false,
+      "tags": [
+        "HN",
+        "AI",
+        "story",
+        "author_douos"
+      ]
+    },
+    {
+      "id": "hn-49737347",
+      "title": "Building the Materials Foundation for AI",
+      "summary": "Building the Materials Foundation for AI — 1 points, 0 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://www.technologyreview.com/2026/09/16/1144014/building-the-materials-foundation-for-ai/",
+      "category": "products",
+      "date": "2026-09-17",
       "hot": false,
       "tags": [
         "HN",
@@ -290,13 +243,61 @@
         "story",
         "author_joozio"
       ]
+    },
+    {
+      "id": "hn-49737227",
+      "title": "Trae cuts monthly usage allowance to $200 (50% reduction)",
+      "summary": "Trae cuts monthly usage allowance to $200 (50% reduction) — 1 points, 1 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://www.trae.ai/pricing",
+      "category": "products",
+      "date": "2026-09-17",
+      "hot": false,
+      "tags": [
+        "HN",
+        "AI",
+        "story",
+        "author_ls1911"
+      ]
+    },
+    {
+      "id": "hn-49737150",
+      "title": "Thinking Hard Above AI",
+      "summary": "Thinking Hard Above AI — 1 points, 0 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://bmbumpus.com/2026/09/16/thinking-hard-above-ai/",
+      "category": "products",
+      "date": "2026-09-17",
+      "hot": false,
+      "tags": [
+        "HN",
+        "AI",
+        "story",
+        "author_mathgenius"
+      ]
+    },
+    {
+      "id": "hn-49736989",
+      "title": "Can AI Create PLC Attacks? Yes, but It's Not That Easy Yet",
+      "summary": "Can AI Create PLC Attacks? Yes, but It's Not That Easy Yet — 1 points, 0 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://www.forescout.com/blog/can-ai-create-plc-attacks-yes-but-it%E2%80%99s-not-that-easy-yet/",
+      "category": "products",
+      "date": "2026-09-17",
+      "hot": false,
+      "tags": [
+        "HN",
+        "AI",
+        "story",
+        "author_Tomte"
+      ]
     }
   ],
   "meta": {
-    "fetchedAt": "2026-09-16T07:15:33.266Z",
+    "fetchedAt": "2026-09-17T07:11:05.761Z",
     "topic": "AI",
     "total": 15,
-    "hot": 3,
+    "hot": 2,
     "sources": [
       "HackerNoon",
       "Hacker News"
