@@ -128,7 +128,7 @@ Mọi sản phẩm web PHẢI đạt:
 - Ghi pattern quan trọng sau khi Verify pass
 - PRD/Design/Plan lưu tại `.agent/plans/<task>/` để trace (không flat)
 
-## 7. Anti-Patterns (CẤM)
+## 7. Anti-Patterns (CẤM) — 🤖 = máy đã giữ (trỏ check, đừng restate; mục mới phải kèm guard hoặc lý do không-guard-được — KN-056, 2026-09-16)
 
 - ❌ Code ngay không Explore/Clarify/PRD/Design
 - ❌ Bỏ Polish — giao diện xấu, không responsive
@@ -143,14 +143,14 @@ Mọi sản phẩm web PHẢI đạt:
 - ❌ Sửa file trực tiếp mà không qua `harness-manager` (lệch `registry.json`)
 - ❌ Khi user nói "thử lại / vẫn lỗi / lặp lại" mà lặp nguyên output cũ — phải đổi strategy, diff file trước/sau, đo lại bằng tool
 - ❌ Viết script kiểu *nix trên Windows (dùng `&&`, path `\`, `.ps1` không BOM) → lỗi vặt PowerShell 5.1 (xem §5d)
-- ❌ Sinh lệnh PS 7+ (`??`/ternary) khi session chưa verify là pwsh 7, hoặc `$var?.prop` không brace (tokenizer nuốt `?` → sai lặng), hoặc nhét cú pháp 7+ vào `.ps1`/snippet commit repo (KN-039)
-- ❌ Verify animation bằng mắt thường thay vì đo `--angle` bằng Playwright (KN-003/KN-004)
+- ❌ Sinh lệnh PS 7+ (`??`/ternary) khi session chưa verify là pwsh 7, hoặc `$var?.prop` không brace (tokenizer nuốt `?` → sai lặng), hoặc nhét cú pháp 7+ vào `.ps1`/snippet commit repo (KN-039) — 🤖 guard (file commit): `tests/e2e/hooks-integrity.spec.ts`
+- ❌ Verify animation bằng mắt thường thay vì đo `--angle` bằng Playwright (KN-003/KN-004) — 🤖 guard: `tests/e2e/angle.spec.ts`, `cosmos-rework.spec.ts`
 - ❌ Sửa `www/status.json` tay thay vì regenerate từ `registry.json` (KN-002)
 - ❌ Nói "nút chạy được trên Pages" suông — phải có bằng chứng: `curl -I` CORS + `grep addEventListener` + test cache/F5 (chronicle 2026-09-03)
 - ❌ PRD trang static không ghi `Persistence · F5 · Scope` — để user phát hiện sau 2 vòng sửa (chronicle 2026-09-03)
 - ❌ Ở mode YUNIE mà trả lời như Copilot thường (sai persona/ngôn ngữ) — xem `yunie.agent.md` §Identity-Mode (chronicle 2026-09-03)
 - ❌ Fix bug không reproduce/root cause — sửa triệu chứng thay vì gốc (chronicle 2026-08-31 `cd881000` random disable)
-- ❌ Claim Done khi build/test/lint pass nhưng output open-ended chưa có evals (rubric + component/E2E) — "chạy được" ≠ "tốt đến đâu" (KN-037)
+- ❌ Claim Done khi build/test/lint pass nhưng output open-ended chưa có evals (rubric + component/E2E) — "chạy được" ≠ "tốt đến đâu" (KN-037) — 🤖 gate: `scripts/slop-check.mjs` + `eval-gate.mjs` (chạy trong `generate-status`)
 
 ---
 *Harness v2: Process > Model. Idea nhỏ → Product đẹp. Mọi model đều chạy cùng pipeline.*

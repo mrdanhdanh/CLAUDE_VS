@@ -2,6 +2,28 @@
   "description": "Curated mirror — bài YUNIE tuyển chọn cho feed ai-news (ghim đầu feed). KHÔNG bị fetch.mjs ghi đè — thêm/xoá bài bằng cách sửa file này qua git. Merge bởi mergeCurated() trong ai-news.js, fail-open nếu file lỗi.",
   "articles": [
     {
+      "id": "curated-hackernoon-claudemd-resume",
+      "title": "How to Write a CLAUDE.md That Actually Helps Claude Code — 'như résumé, không phải documentation' (≤200 dòng, hooks giữ phần máy enforce được)",
+      "summary": "Xi Yang (HackerNoon, 16/09/2026): CLAUDE.md/AGENTS.md nên là onboarding guide ngắn nhất cho 'new hire' — model bắt đầu mỗi session từ 0, file này dạy nó đủ để không phá codebase. Nguyên tắc: (1) nén từng câu như résumé; (2) chỉ giữ kiến thức trừu tượng — line number/chi tiết để hook lo (file đổi liên tục); (3) framework 7 phần — one-line intro → architecture → tech stack → commands → conventions → boundaries → domain doc map; (4) trim theo thứ tự ưu tiên: sub-agents → rules folder (path-scoped) → subdirectory CLAUDE.md → skills → docs; (5) cảnh báo 'Never section' = graveyard — chỉ có động lực THÊM, không có động lực XÓA, kể cả chính agent cũng nhét vào → luật âm nên flip thành positive rule. → Harness: đúng chỗ đau đã đo — pool instruction always-on 1395 dòng / 17 file (root CLAUDE.md 121 dòng thì đạt chuẩn <200); hành động cùng ngày: script `scripts/instruction-budget.mjs` + gate `npm run budget:check` (ratchet 1400 dòng) + §7 Anti-Patterns thêm quy ước '🤖 = máy giữ, trỏ check không restate' (3 mục được trỏ guard thật).",
+      "source": "HackerNoon",
+      "sourceUrl": "https://hackernoon.com/how-to-write-a-claudemd-that-actually-helps-claude-code",
+      "category": "self-improving",
+      "date": "2026-09-16",
+      "hot": true,
+      "tags": ["HackerNoon", "CLAUDE.md", "instruction-budget", "wise-loading", "KN-056"]
+    },
+    {
+      "id": "curated-techcrunch-nvidia-huang-no-regulation",
+      "title": "Nvidia 'không cần luật AI — để tụi tôi lo safety' (Huang) đối đầu Anthropic 'giảm tốc' — cặp đối trọng incentive cho KN-052",
+      "summary": "TechCrunch 15/09/2026 (Jensen Huang: 'We don't need AI regulation – leave safety to us') + Guardian cùng ngày ('Anthropic CEO renews call for AI slowdown as Nvidia's urges acceleration') + HN cùng ngày có Ask HN 'Are requests for regulation genuine?' + Sam Altman 'right to be afraid but should trust': hai phía đầu ngành phát biểu ngược chiều trong cùng 24h — Nvidia bán compute (incentive tăng tốc tối đa + self-regulation) vs Anthropic bán frontier safety (incentive pacing + regulation-as-moat). → Harness: hoàn chỉnh cặp đối trọng cho KN-052 — luật 'tách mechanism (verifiable → adopt) khỏi claim/timeline/incentive (chờ đo)' áp cho MỌI actor, bất kể ta nghiêng về phía nào; không tạo KN mới (dup-gate) — amend KN-052 detail + summary row 16/09 với đối trọng phía tăng tốc.",
+      "source": "TechCrunch",
+      "sourceUrl": "https://techcrunch.com/2026/09/15/we-dont-need-ai-regulation-leave-safety-to-us-nvidias-jensen-huang-says/",
+      "category": "safety",
+      "date": "2026-09-15",
+      "hot": true,
+      "tags": ["TechCrunch", "Nvidia", "regulation", "dissent", "KN-052"]
+    },
+    {
       "id": "curated-google-dream-rsi",
       "title": "Dream-RSI — history đã ghi là simulator: dream policy thay vì chạy lại, 162× ít compute hơn (Google + DeepMind)",
       "summary": "Tong Zheng et al. (Google · Google DeepMind · U Maryland · U Virginia, 14/09/2026; arXiv:2609.14858; dream-rsi.com; code github.com/zhengkid/Dream-RSI): RSI loop ở scale thật tốn compute vì exploration policy viết tay + đóng băng. Insight: discovery tree đã hoàn thành = replay simulator EXACT (không phải approximation) — mỗi node là 1 attempt + outcome thật; policy khác chỉ đi lại cây theo thứ tự khác → dream hàng nghìn candidate với 0 execution, chỉ deploy winner (π₀ trong candidate set ⇒ winner never worse — 'bars only go up'). Kết quả: Lasso 162× ít agent calls hơn SimpleTES (317 vs 51,200) · VGG16 2.43× ít generations · ConvDiv 2.09× điểm cao hơn cùng budget; policy học được adaptive (tiến bộ → tiết kiệm 110→50 attempts, plateau → bung lại). Bonus: 'semantic guidance is worse than replay' — nhồi insight cấp cao vào prompt KÉM HƠN replay (over-constrain + suppress diversity). Giới hạn tự nhận: chỉ dream được ở nơi history đã đi ⇒ bắt buộc là loop (mỗi lap +1 world). → Harness KN-067: replay > re-execute (history đã trả tiền sẵn); π₀-in-set cho mọi vòng improvement; đừng nhồi semantic priors; dogfood `dream.mjs` v0 — recall@3 100% (35/35).",
