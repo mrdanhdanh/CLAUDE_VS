@@ -12,6 +12,8 @@ import path from 'node:path';
  *  2. ratchet: pool always-on ≤ softBudget (vượt = phải path-scope/gộp trước — KN-047)
  *  3. gate `--budget`: vượt → exit 1, trong → exit 0
  *  4. fail-closed: dir rỗng / không tồn tại → exit 2 (không pass oan)
+ *  5. fail-closed arg: số rác / flag thiếu giá trị / dạng "=" / flag lạ → exit 2
+ *     (regression 2026-09-18: parseInt('abc') = NaN → so sánh luôn false → pass oan exit 0)
  */
 
 const ROOT = process.cwd();
@@ -71,4 +73,22 @@ test('fail-closed: dir rỗng → exit 2, dir không tồn tại → exit 2', ()
 
   const missing = run(['--dir', path.join(os.tmpdir(), `budget-nope-${Date.now()}`)]);
   expect(missing.status).toBe(2);
+});
+
+test('fail-closed arg: số rác/flag lạ không được NaN-pass oan — --budget abc / --top abc / thiếu giá trị / --budget=9999 → exit 2', () => {
+  const nanBudget = run(['--budget', 'abc']);
+  expect(nanBudget.status, '--budget abc phải exit 2 (trước fix 18/09: NaN-pass exit 0)').toBe(2);
+  expect(nanBudget.stderr).toMatch(/fail-closed/);
+
+  const nanTop = run(['--top', 'abc']);
+  expect(nanTop.status, '--top abc phải exit 2 thay vì top rỗng').toBe(2);
+
+  const missingValue = run(['--budget']);
+  expect(missingValue.status, '--budget thiếu giá trị phải exit 2 (flag không được nuốt im lặng)').toBe(2);
+
+  const topMissing = run(['--top']);
+  expect(topMissing.status, '--top thiếu giá trị cũng phải exit 2 (nhất quán với --budget)').toBe(2);
+
+  const eqForm = run(['--budget=9999']);
+  expect(eqForm.status, '--budget=9999 (dạng =) không nhận diện → exit 2, gate không được tưởng bật mà tắt').toBe(2);
 });

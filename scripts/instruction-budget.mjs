@@ -14,7 +14,7 @@
  *   node scripts/instruction-budget.mjs --budget 1200      # gate: always-on > 1200 dòng → exit 1
  *   node scripts/instruction-budget.mjs --top 8            # số file lớn nhất ở phần "top"
  *
- * Exit: 0 = trong ngân sách · 1 = vượt --budget · 2 = fail-closed (0 file / dir lỗi)
+ * Exit: 0 = trong ngân sách · 1 = vượt --budget · 2 = fail-closed (0 file / dir lỗi / arg số không hợp lệ)
  */
 import fs from 'node:fs';
 import path from 'node:path';
@@ -24,15 +24,31 @@ import path from 'node:path';
 const SOFT_BUDGET = 1400;
 
 function parseArgs(args) {
+  // Fail-closed (bug 2026-09-18 + OCR delegate review): chặn arg lạ / dạng "=" —
+  // gate không bao giờ được "tưởng bật mà tắt" (im lặng bỏ qua --budget=1400, --budjet...).
+  const KNOWN = new Set(['--budget', '--top', '--dir', '--json']);
+  const unknown = args.find((a) => a.startsWith('--') && !KNOWN.has(a));
+  if (unknown) {
+    console.error(`⛔ fail-closed: arg không nhận diện — "${unknown}" (dùng: --budget <n> · --top <n> · --dir <path> · --json)`);
+    process.exit(2);
+  }
   const opt = (name, def) => {
     const i = args.indexOf(name);
     return i !== -1 && args[i + 1] != null && !args[i + 1].startsWith('--') ? args[i + 1] : def;
   };
-  const budgetRaw = opt('--budget', null);
+  // parseInt('abc') = NaN → so sánh luôn false → gate PASS oan. Flag CÓ MẶT thì PHẢI có giá trị hữu hạn.
+  const num = (raw, name) => {
+    const n = Number(raw);
+    if (raw == null || String(raw).trim() === '' || !Number.isFinite(n)) {
+      console.error(`⛔ fail-closed: ${name} không hợp lệ — "${raw ?? ''}" (cần số hữu hạn)`);
+      process.exit(2);
+    }
+    return Math.trunc(n);
+  };
   return {
     dir: opt('--dir', path.join('.github', 'instructions')),
-    top: parseInt(opt('--top', '8'), 10),
-    budget: budgetRaw != null ? parseInt(budgetRaw, 10) : null,
+    top: args.includes('--top') ? num(opt('--top', null), '--top') : 8,
+    budget: args.includes('--budget') ? num(opt('--budget', null), '--budget') : null,
     jsonOut: args.includes('--json'),
   };
 }
