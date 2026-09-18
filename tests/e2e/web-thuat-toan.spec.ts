@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test';
 
-// web-thuat-toan — step/auto/reset controller invariants (KN-047 refactor safety net).
+// web-thuat-toan — step/auto/reset controller invariants (KN-047 refactor safety net + KN-011 Random không disable stepBtn).
 // Lưu ý: id bắt đầu bằng số → CSS '#001-...' invalid, phải dùng [id="..."];
 // serve local không rewrite /web-thuat-toan/ → dùng explicit index.html (như cosmos specs).
 const S = (id: string) => `[id="${id}"]`;
@@ -59,6 +59,19 @@ test.describe('web-thuat-toan — visualizer controller', () => {
     await expect(page.locator(S('010-viz-card'))).toBeVisible();
     await page.click(S('010-step-btn'));
     await expect(page.locator(`${S('010-steps-list')} li`)).toHaveCount(1);
+    expect(pageErrors).toEqual([]);
+  });
+
+  test('004 Random → stepBtn enabled + step chạy (KN-011)', async ({ page }) => {
+    await page.click('.nav-item[data-bai="004"]');
+    await page.click(S('004-random-btn'));
+    await expect(page.locator(S('004-step-btn'))).toBeEnabled();
+    await page.click(S('004-step-btn'));
+    await expect(page.locator(S('004-viz-card'))).toBeVisible();
+    const after1 = await page.locator(`${S('004-steps-list')} li`).count();
+    await page.click(S('004-step-btn'));
+    const after2 = await page.locator(`${S('004-steps-list')} li`).count();
+    expect(after2, 'step phải advance (số bước tăng) — KN-011').toBeGreaterThan(after1);
     expect(pageErrors).toEqual([]);
   });
 

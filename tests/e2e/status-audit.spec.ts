@@ -1,7 +1,9 @@
 import { test, expect } from '@playwright/test';
+import fs from 'node:fs';
+import path from 'node:path';
 
 /**
- * STATUS audit lock tests (bug 2026-09-12)
+ * STATUS audit lock tests (bug 2026-09-12) — Guard: KN-045 (L1 link 404 · L2 registry desc thật · L3 ARIA trỏ ID tồn tại · L4 tab switch)
  * - L1: mọi link same-origin phải resolve (bắt ../README.md → 404)
  * - L2: registry descriptions phải thật (bắt placeholder "hook hooks", "agent designer", "prompt harness")
  * - L3: mọi aria-labelledby/controls/describedby phải trỏ vào ID tồn tại (bắt tab panels trỏ "governance"/"platform")
@@ -68,6 +70,19 @@ test.describe('STATUS audit lock', () => {
       return out;
     });
     expect(bad, 'placeholder descriptions found').toEqual([]);
+  });
+
+  test('L5: status.json counts khớp registry.json — single source of truth (KN-002)', async () => {
+    // KN-002: status.json phải regenerate từ registry.json — hand-edit lệch số là bug.
+    const registry = JSON.parse(fs.readFileSync(path.join(process.cwd(), '.github/harness/registry.json'), 'utf8'));
+    const status = JSON.parse(fs.readFileSync(path.join(process.cwd(), 'www/status.json'), 'utf8'));
+    for (const type of ['skills', 'instructions', 'agents', 'prompts', 'hooks']) {
+      const entries = Object.values(registry[type] || {}) as Array<{ enabled?: boolean }>;
+      expect(status.counts[type].total, `${type}.total khớp registry`).toBe(entries.length);
+      expect(status.counts[type].enabled, `${type}.enabled khớp registry`).toBe(
+        entries.filter((e) => e.enabled !== false).length
+      );
+    }
   });
 
   test('L3: all aria references point to existing IDs', async ({ page }) => {

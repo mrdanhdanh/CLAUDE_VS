@@ -1242,6 +1242,11 @@ async function statsHeatmap(opts = {}) {
 
 // ---------- Guard coverage (KN-056): KN nào có lưới chống tái lập ----------
 // Lưới = file test (spec/test) tham chiếu KN-XXX trong nội dung, HOẶC dòng "- **Guard:** <path>" trong KN detail.
+// Bỏ ref dạng chuỗi trần 'KN-XXX'/"KN-XXX" (fixture DATA — vd dream.spec row('KN-001',...)) — review OCR 2026-09-18: đếm nhầm = guard ảo (KN-049 class: đo nhầm tín hiệu).
+function isBareQuotedRef(text, idx, len) {
+  const prev = text[idx - 1], next = text[idx + len];
+  return (prev === "'" || prev === '"') && next === prev;
+}
 async function collectGuardMap(kns) {
   const map = new Map(); // KN-XXX -> Set(relPath)
   const add = (id, file) => { if (!map.has(id)) map.set(id, new Set()); map.get(id).add(file); };
@@ -1251,7 +1256,9 @@ async function collectGuardMap(kns) {
     let text = '';
     try { text = await fs.readFile(f, 'utf8'); } catch { continue; }
     const rel = path.relative(ROOT, f).split(path.sep).join('/');
-    for (const m of text.matchAll(/KN-\d{3}/g)) add(m[0], rel);
+    // Bỏ ref chuỗi trần 'KN-XXX' (fixture DATA) — đếm nhầm = guard ảo (review OCR 2026-09-18, KN-049 class).
+    const unquoted = [...text.matchAll(/KN-\d{3}/g)].filter((m) => !isBareQuotedRef(text, m.index, m[0].length));
+    for (const m of unquoted) add(m[0], rel);
   }
   for (const kn of kns) {
     const gm = kn.detail.match(/\*\*Guard:\*\*\s*([^\n]+)/);
@@ -1289,7 +1296,7 @@ async function guardsAudit(opts = {}) {
   const result = {
     generatedAt: new Date().toISOString(),
     generatedBy: 'auto-learn.mjs guards',
-    policy: { scanDirs: GUARD_SCAN_DIRS, detection: 'KN-XXX trong test file HOẶC "- **Guard:** <path>" trong KN', required: 'major/critical' },
+    policy: { scanDirs: GUARD_SCAN_DIRS, detection: 'KN-XXX trong test file (bỏ chuỗi trần fixture) HOẶC "- **Guard:** <path>" trong KN', required: 'major/critical' },
     counts: { total: kns.length, withGuard: kns.length - missing.length, withoutGuard: missing.length, priority: ordered.filter(isPri).length },
     guards,
     missing: ordered,

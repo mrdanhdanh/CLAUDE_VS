@@ -24,6 +24,28 @@ for (const vp of viewports) {
       // header actions should be visible (at least one btn)
       await expect(page.locator('.header-actions .btn, .header-actions a').first()).toBeVisible();
     });
+
+    test(`no clipped content (element-vs-container) at ${vp.width}`, async ({ page }) => {
+      // KN-055: overflow:hidden che clip — document-scroll không bắt được; đo link vs container.
+      await page.setViewportSize({ width: vp.width, height: vp.height });
+      await page.goto('/');
+      await page.waitForTimeout(500);
+      const clipped = await page.evaluate(() => {
+        const out: string[] = [];
+        document.querySelectorAll<HTMLElement>('.page-link').forEach((link) => {
+          let p: HTMLElement | null = link.parentElement;
+          while (p && getComputedStyle(p).overflow === 'visible') p = p.parentElement;
+          if (!p) return;
+          const lr = link.getBoundingClientRect();
+          const pr = p.getBoundingClientRect();
+          if (lr.right > pr.right + 1 || lr.left < pr.left - 1) {
+            out.push(`${link.getAttribute('href')} bị clip trong ${p.className}`);
+          }
+        });
+        return out;
+      });
+      expect(clipped, `clip tại ${vp.width} (KN-055)`).toEqual([]);
+    });
   });
 }
 

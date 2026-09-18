@@ -83,6 +83,17 @@ test('guards --json: coverage hợp lệ + bắt guard đã biết (KN-049, KN-0
     ).toBeGreaterThanOrEqual(10);
   });
 
+  test('guards: fixture refs KHÔNG tính là lưới (guard ảo — review 2026-09-18)', () => {
+    const r = run(['guards', '--json']);
+    expect(r.status).toBe(0);
+    const data = JSON.parse(r.stdout);
+    const files = (id: string): string[] => data.guards[id] || [];
+    // dream.spec.ts dùng các id KN-0xx làm fixture DATA (row/block/toEqual) — không phải citation bài học (KN-049 class: đo nhầm tín hiệu)
+    expect(files('KN-001'), 'fixture dream.spec không tính là lưới').not.toContain('tests/e2e/dream.spec.ts');
+    expect(files('KN-003'), 'KN-003 vẫn giữ lưới thật angle.spec').toContain('tests/e2e/angle.spec.ts');
+    expect(files('KN-003'), 'dream.spec (fixture) không tính').not.toContain('tests/e2e/dream.spec.ts');
+  });
+
   test('guards: human output có coverage summary (fail-loud, không im lặng)', () => {
     const r = run(['guards']);
     expect(r.status).toBe(0);

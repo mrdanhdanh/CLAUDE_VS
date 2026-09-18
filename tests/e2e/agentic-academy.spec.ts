@@ -14,6 +14,7 @@ import { test, expect } from '@playwright/test';
  *  7. Responsive 375: 0 overflow ngang (home + deck) + fullscreen immersive fallback không pageerror
  *  8. Reduced-motion: nội dung hiện đủ, no pageerror (KN-031)
  *  9-10. Light theme: toggle persist + theo hệ thống + contrast ≥4.5 (KN-006)
+ * Guard: KN-043 — path prefix IDE + chip "Cần trước" + deep-link/F5 (content 'đúng chữ nhưng chạy được').
  */
 
 const SHOTS = '.agent/plans/agentic-academy/verify';

@@ -1,7 +1,7 @@
 import { test, expect } from '@playwright/test';
 
 /**
- * Verify --angle animation (KN-003/KN-004)
+ * Verify --angle animation (KN-003/KN-004) — hard-assert: animation khai báo thì --angle PHẢI đổi (poll ≤3s, không soft-pass)
  * Must measure via getComputedStyle, not visual (harness rule)
  * Tests both native @property and JS fallback (.js-rainbow on <html>)
  */
@@ -51,11 +51,12 @@ test.describe('Rainbow --angle animation', () => {
       return;
     }
     // At least one should be non-zero or they differ
-    const changed = before !== after || a !== b || a !== 0 || b !== 0;
-    // Soft check: if still 0/0, warn but don't fail hard (fallback may need more time)
-    if (!changed) {
-      await page.waitForTimeout(1200);
-      const third = await page.evaluate((s) => {
+    let changed = before !== after || a !== b || a !== 0 || b !== 0;
+    // KN-003 hard-assert (review 2026-09-18): animation khai báo mà `--angle` đứng im = regression
+    // (custom property không re-resolve). Bounded poll ~3s cho fallback rAF rồi FAIL — không soft-pass.
+    for (let i = 0; i < 6 && !changed; i++) {
+      await page.waitForTimeout(500);
+      const later = await page.evaluate((s) => {
         const e = document.querySelector(s) as HTMLElement;
         if (!e) return null;
         const beforeVal = getComputedStyle(e, '::before').getPropertyValue('--angle').trim();
@@ -63,22 +64,15 @@ test.describe('Rainbow --angle animation', () => {
         const htmlVal = getComputedStyle(document.documentElement).getPropertyValue('--angle').trim();
         return beforeVal || elVal || htmlVal || '0deg';
       }, sel);
-      // If still 0deg, check if animation is actually running via animationName
-      const animName = await page.evaluate((s) => {
-        const e = document.querySelector(s) as HTMLElement;
-        if (!e) return '';
-        return getComputedStyle(e, '::before').animationName || getComputedStyle(e).animationName || '';
-      }, sel);
-      const hasAnimation = animName && animName !== 'none';
-      if (hasAnimation) {
-        // Animation is running but --angle not interpolating (e.g. @property not supported) — pass if animation exists
-        expect(hasAnimation).toBeTruthy();
-      } else {
-        expect(third !== before || parseAngle(third || '0deg') !== 0, `expected --angle to animate: before=${before} after=${after} third=${third} anim=${animName}`).toBeTruthy();
-      }
-    } else {
-      expect(changed).toBeTruthy();
+      const l = parseAngle(later || '0deg');
+      changed = later !== before || l !== b || l !== 0;
     }
+    const animName = await page.evaluate((s) => {
+      const e = document.querySelector(s) as HTMLElement;
+      if (!e) return '';
+      return getComputedStyle(e, '::before').animationName || getComputedStyle(e).animationName || '';
+    }, sel);
+    expect(changed, `expected --angle to animate: before=${before} after=${after} anim=${animName}`).toBeTruthy();
   });
 
   test('www STATUS has no --angle regression (smoke)', async ({ page }) => {

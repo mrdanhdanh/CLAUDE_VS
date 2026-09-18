@@ -2,6 +2,7 @@
  * yt-summary.spec.ts — e2e trang YT Summary (www/yt-summary/)
  * Kiểm: render library + bảng tóm tắt, toggle vi/gốc, accordion, states, responsive 375/768/1280,
  * URL không slash cuối (KN-030/KN-040), không pageerror (KN-032).
+ * Guard: KN-042 — mobile table/scrollWidth/[hidden]/scroll-margin invariants (bảng không cắt, detail [hidden] hiệu lực).
  */
 import { test, expect, type Page } from '@playwright/test';
 
