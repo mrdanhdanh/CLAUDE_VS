@@ -11,6 +11,8 @@
  *   2. Không trùng ID trong Chi tiết (`### KN-XXX —`)
  *   3. Không orphan: mọi row có detail + mọi detail có row
  *   4. Thứ tự tăng dần ở cả 2 danh sách (gap được phép — 061 bỏ trống sau renumber)
+ *   5. nextId claims-aware: claim "Related KN" trong draft bug.md CHƯA paste không bị yield trùng
+ *     (near-miss 16→18/09: draft 16/09 giữ KN-068 → propose 18/09 cũng ra KN-068 — fix 18/09)
  * Negative control: mutant text phải FAIL (test chính phép đo — KN-049/KN-058).
  * 2 test CLI wiring: `auto-learn.mjs status` trả `idIntegrity` (JSON) + in dòng human.
  *
@@ -19,6 +21,7 @@
 import { test, expect } from '@playwright/test';
 import { execFileSync } from 'node:child_process';
 import fs from 'node:fs';
+import os from 'node:os';
 import path from 'node:path';
 
 const KN_PATH = path.resolve(__dirname, '..', '..', 'docs', 'knowleged.md');
@@ -35,6 +38,10 @@ const knParsePromise = import('../../.github/harness/scripts/kn-parse.mjs');
 async function checkKnIds(text: string): Promise<string[]> {
   const { checkKnIntegrity } = (await knParsePromise) as { checkKnIntegrity: (t: string) => string[] };
   return checkKnIntegrity(text);
+}
+
+function tmpdir(tag: string) {
+  return fs.mkdtempSync(path.join(os.tmpdir(), `knid-${tag}-`));
 }
 
 test.describe('knowleged.md ID integrity — guard KN-066', () => {
@@ -70,6 +77,42 @@ test.describe('knowleged.md ID integrity — guard KN-066', () => {
     expect((await checkKnIds(mutant)).join('\n')).toMatch(
       new RegExp(`bảng tóm tắt sai thứ tự: ${lastRow} → KN-061`)
     );
+  });
+});
+
+test.describe('kn-id — nextId allocation + CLI wiring (KN-066, mở rộng 18/09)', () => {
+  test('nextId claims-aware: claim trong draft chưa paste không bị yield trùng (double-yield guard)', async () => {
+    const { computeNextKnId, collectClaimedKnIds } = (await knParsePromise) as unknown as {
+      computeNextKnId: (existing?: string[], claimed?: string[]) => string;
+      collectClaimedKnIds: (bugsDir: string, excludeSlug?: string) => Promise<string[]>;
+    };
+    // pure: max(file ∪ claims un-pasted) là căn cứ chọn nextId
+    expect(computeNextKnId(['KN-067'], [])).toBe('KN-068');
+    expect(computeNextKnId(['KN-067'], ['KN-068'])).toBe('KN-069'); // draft giữ 068 → propose phải ra 069
+    expect(computeNextKnId(['KN-067'], ['KN-010'])).toBe('KN-068'); // claim cũ ≤ max → no-op
+    expect(computeNextKnId(['KN-069'], ['KN-068', 'KN-069'])).toBe('KN-070');
+
+    // scan thật trên tmpdir: đọc claim từ bug.md, bỏ qua _template, exclude own slug (idempotent)
+    const dir = tmpdir('claim');
+    fs.mkdirSync(path.join(dir, '_template'), { recursive: true });
+    fs.writeFileSync(path.join(dir, '_template', 'bug.md'), '- **Related KN:** `KN-900`', 'utf8');
+    fs.mkdirSync(path.join(dir, 'draft-a'), { recursive: true });
+    fs.mkdirSync(path.join(dir, 'draft-b'), { recursive: true });
+    fs.writeFileSync(path.join(dir, 'draft-a', 'bug.md'), '- **Related KN:** `KN-102` (đang chờ paste)', 'utf8');
+    fs.writeFileSync(path.join(dir, 'draft-b', 'bug.md'), '# Bug: x\n\n- **Related KN:** `KN-103`\n', 'utf8');
+    expect(await collectClaimedKnIds(dir)).toEqual(['KN-102', 'KN-103']);
+    expect(await collectClaimedKnIds(dir, 'draft-a')).toEqual(['KN-103']); // exclude own → idempotent
+    expect(await collectClaimedKnIds(dir, 'draft-a')).not.toContain('KN-900'); // _template bỏ qua
+  });
+
+  test('CLI wiring: propose --json trả nextId > mọi ID đã paste (không bao giờ yield trùng)', () => {
+    const out = execFileSync(process.execPath, ['.github/harness/scripts/auto-learn.mjs', 'propose', '--json', '--bug', '2026-09-18-instruction-budget-gate-fail-open-voi-arg-khong-ph'], {
+      encoding: 'utf8', cwd: path.resolve(__dirname, '..', '..'), maxBuffer: 16 * 1024 * 1024,
+    });
+    // stdout có thể kèm cảnh báo sau JSON (guard/layer) → cắt từ { đầu đến } cuối
+    const j = JSON.parse(out.slice(out.indexOf('{'), out.lastIndexOf('}') + 1));
+    const maxPasted = Math.max(...collectIds(SOURCE, ROW_RE).map((id) => parseInt(id.slice(3), 10)));
+    expect(Number(j.nextId.slice(3)), 'nextId phải > mọi ID đã paste — yield trùng = double-yield KN-066').toBeGreaterThan(maxPasted);
   });
 
   test('CLI wiring: status --json trả idIntegrity.ok=true (file thật sạch)', () => {

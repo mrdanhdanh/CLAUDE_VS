@@ -13,7 +13,7 @@ import fs from 'node:fs/promises';
 import { existsSync } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { tokenize, computeIDF, parseKNs, scoreKN, checkKnIntegrity } from './kn-parse.mjs';
+import { tokenize, computeIDF, parseKNs, scoreKN, checkKnIntegrity, computeNextKnId, collectClaimedKnIds } from './kn-parse.mjs';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -308,13 +308,12 @@ async function logBug(opts) {
   return dirName;
 }
 
-function findNextKnId(kns) {
-  let maxId = 0;
-  for (const k of kns) {
-    const n = parseInt(k.id.replace('KN-',''),10);
-    if (n>maxId) maxId=n;
-  }
-  return `KN-${String(maxId+1).padStart(3,'0')}`;
+// KN-066 class (fix 2026-09-18 — OCR review near-miss 16→18/09): claims-aware — draft bug.md có thể giữ
+// "Related KN: KN-XXX" TRƯỚC khi paste; không tính claim draft KHÁC vào max → propose yield trùng.
+// exclude ownSlug giữ idempotent (regenerate draft của chính bug không tự đẩy số lên).
+async function findNextKnId(kns, ownSlug = null) {
+  const claimed = await collectClaimedKnIds(BUGS_DIR, ownSlug);
+  return computeNextKnId(kns.map((k) => k.id), claimed);
 }
 
 // match pattern đầu tiên bắt được → group 1 (trim); không có → fallback
@@ -424,7 +423,7 @@ async function propose(bugSlug, json=false, opts = {}) {
   }
   const bugText = await fs.readFile(bugPath, 'utf8');
   const { kns } = await parseKNs(KNOWLEGED);
-  const nextId = findNextKnId(kns);
+  const nextId = await findNextKnId(kns, bugSlug);
   const { title, severity, tags, root, fix, guard, layer } = extractBugMeta(bugText, bugSlug);
   const today = todayISO();
   const { needsGuard, gateWarning, guardText } = computeGuardGate(nextId, severity, guard);
@@ -697,7 +696,7 @@ async function evaluateCandidate(bugSlug, json=false, opts = {}) {
       hasPositiveReport
     },
     scored: scored.map(s=>({ id:s.id, title:s.title, score:s.score })),
-    nextId: findNextKnId(kns)
+    nextId: await findNextKnId(kns, bugSlug)
   };
   if (json) {
     console.log(JSON.stringify(result, null, 2));
@@ -778,7 +777,7 @@ async function commitCandidate(bugSlug, json=false) {
   const bugPath = path.join(BUGS_DIR, bugSlug, 'bug.md');
   const bugText = await fs.readFile(bugPath, 'utf8');
   const { kns } = await parseKNs(KNOWLEGED);
-  const nextId = findNextKnId(kns);
+  const nextId = await findNextKnId(kns, bugSlug);
   const { title, severity, tags, root, fix } = extractBugMeta(bugText, bugSlug, { tags: 'process', root: 'Xem bug.md Root Cause', fix: 'Xem bug.md Fix' });
   const today = todayISO();
   // create version snapshot before edit

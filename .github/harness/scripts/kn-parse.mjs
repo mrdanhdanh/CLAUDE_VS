@@ -118,6 +118,35 @@ function knDupIssues(list, label) {
   return issues;
 }
 
+// ---------- next ID allocation (KN-066: chống double-yield khi draft chưa paste) ----------
+// Draft bug.md có thể giữ "Related KN: `KN-XXX`" TRƯỚC khi paste; không tính claim này vào max →
+// propose yield trùng (near-miss 18/09: draft 16/09 giữ KN-068 → propose 18/09 cũng ra KN-068).
+// excludeSlug: bỏ qua claim của CHÍNH bug đang propose — giữ idempotent (regenerate draft không tự đẩy số lên).
+export function computeNextKnId(existingIds = [], claimedIds = []) {
+  let maxId = 0;
+  for (const id of [...existingIds, ...claimedIds]) {
+    const n = parseInt(String(id).replace(/^KN-/, ''), 10);
+    if (Number.isFinite(n) && n > maxId) maxId = n;
+  }
+  return `KN-${String(maxId + 1).padStart(3, '0')}`;
+}
+
+export async function collectClaimedKnIds(bugsDir, excludeSlug = null) {
+  const claimed = [];
+  let entries;
+  try { entries = await fs.readdir(bugsDir, { withFileTypes: true }); } catch { return claimed; }
+  entries.sort((a, b) => a.name.localeCompare(b.name));
+  for (const e of entries) {
+    if (!e.isDirectory() || e.name.startsWith('_') || e.name === excludeSlug) continue;
+    try {
+      const text = await fs.readFile(`${bugsDir}/${e.name}/bug.md`, 'utf8');
+      const m = text.match(/Related KN:\*\*[^\n]*?(KN-\d{3})/);
+      if (m) claimed.push(m[1]);
+    } catch {}
+  }
+  return claimed;
+}
+
 function knOrphanIssues(list, other, label, otherLabel) {
   const has = new Set(other);
   return list.filter((id) => !has.has(id)).map((id) => `${label} có ${id}, ${otherLabel} thiếu`);

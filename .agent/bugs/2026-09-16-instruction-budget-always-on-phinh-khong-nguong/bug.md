@@ -20,7 +20,7 @@
 - **Severity:** `major`
 - **Layer:** `process` — tầng tri thức/đo lường: không gate nào FAIL khi pool instruction phình.
 - **Reporter:** YUNIE (`/article-lesson` — HackerNoon "How to Write a CLAUDE.md That Actually Helps Claude Code", Xi Yang, 16/09/2026; mirror `www/ai-news/curated.json`)
-- **Related KN:** `KN-068`
+- **Related KN:** `KN-068` (paste 2026-09-18 — human duyệt, dup-gate disclosure)
 - **Tags:** `process` `knowledge` `wise-loading` `token-budget` `guard`
 - **Guard:** `tests/e2e/instruction-budget.spec.ts` + `npm run budget:check` (ratchet 1400)
 - **Status:** `fixed`
@@ -132,7 +132,7 @@ slop-check → ✅ Clean
   - [x] `- **Guard:**` đã điền: `tests/e2e/instruction-budget.spec.ts` + `npm run budget:check`.
   - [x] Không phải tái lập (RADAR false positive — đã ghi ở đầu file).
 - **Cần cập nhật:**
-  - [x] `docs/knowleged.md` → `KN-068` (Bảng tóm tắt + Chi tiết) — paste sau khi `propose` sinh draft.
+  - [x] `docs/knowleged.md` → `KN-068` (Bảng tóm tắt + Chi tiết) — ✅ đã paste 2026-09-18 (human duyệt, dup-gate disclosure).
   - [x] Guard mới: `tests/e2e/instruction-budget.spec.ts`.
 
 ---

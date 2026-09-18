@@ -8,6 +8,7 @@
 6. [x] Curated mirror 2 entry + KN-052 amend (đối trọng Nvidia 15/09) — consolidate, không tạo KN mới (dup-gate).
 7. [x] Verify: budget:check + specs liên quan + slop-check + get_errors + full suite + status regen.
 8. [x] Learn: log bug + RADAR (6 hit — toàn false positive BM25) + propose KN-068 (Guard Gate ✅) + evaluate dup-gate **FAIL — KN-037(16.4 ≥ 15)** → KHÔNG paste, giữ draft chờ human duyệt (luật: "chỉ propose, dev duyệt rồi dán"; precedent KN-060 cần sign-off khi bypass).
+9. [x] 2026-09-18 (human duyệt "A"): **paste KN-068** (dup-gate disclosure như KN-060/062/064/065/067); kèm bài 18/09 (gate fail-open arg rác) → **KN-069**; fix vụ ID: `findNextKnId` claims-aware (double-yield KN-066 class — draft claim un-pasted không còn bị yield trùng) + guard `tests/e2e/kn-id-integrity.spec.ts` mở rộng (10/10).
 
 ## Evidence
 
