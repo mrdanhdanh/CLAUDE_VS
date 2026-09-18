@@ -1,0 +1,1251 @@
+{
+  "counts": {
+    "total": 68,
+    "ge15": 68,
+    "ge25": 60,
+    "ge40": 43,
+    "ge50": 28
+  },
+  "hist": {
+    "15": 2,
+    "20": 6,
+    "25": 5,
+    "30": 4,
+    "35": 8,
+    "40": 7,
+    "45": 8,
+    "50": 6,
+    "55": 6,
+    "60": 4,
+    "65": 7,
+    "70": 2,
+    "75": 2,
+    "90": 1
+  },
+  "rows": [
+    {
+      "id": "KN-001",
+      "top1": {
+        "id": "KN-030",
+        "title": "Fetch ra ngoài deploy root + relative URL không slash cuối →",
+        "score": 22.6
+      },
+      "top2": {
+        "id": "KN-037",
+        "title": "Evals Gap — \"single biggest predictor\" là evals discipline (",
+        "score": 20.7
+      },
+      "top3": {
+        "id": "KN-050",
+        "title": "AI-gen UI gãy 4 luật UX: div giả button + dialog không trap ",
+        "score": 18.5
+      }
+    },
+    {
+      "id": "KN-002",
+      "top1": {
+        "id": "KN-054",
+        "title": "ADHD/Executive Function: harness là khung xương ngoài của nã",
+        "score": 23.2
+      },
+      "top2": {
+        "id": "KN-038",
+        "title": "Trang cosmos lệch tài liệu: physics shorthand + metric drift",
+        "score": 22
+      },
+      "top3": {
+        "id": "KN-045",
+        "title": "STATUS audit: link footer 404 trên Pages + registry placehol",
+        "score": 20.6
+      }
+    },
+    {
+      "id": "KN-003",
+      "top1": {
+        "id": "KN-004",
+        "title": "grid-2 thừa khoảng cách + rainbow border index.html không xo",
+        "score": 42.8
+      },
+      "top2": {
+        "id": "KN-050",
+        "title": "AI-gen UI gãy 4 luật UX: div giả button + dialog không trap ",
+        "score": 27.5
+      },
+      "top3": {
+        "id": "KN-024",
+        "title": "Prolific AI Psychosis — output rẻ làm mù khả năng đánh giá",
+        "score": 23.3
+      }
+    },
+    {
+      "id": "KN-004",
+      "top1": {
+        "id": "KN-066",
+        "title": "KN ID double-yield: đa phiên song song cùng nhận 1 ID — re-c",
+        "score": 38.4
+      },
+      "top2": {
+        "id": "KN-003",
+        "title": "Rainbow border GlassUI không xoay (animated) ở một số browse",
+        "score": 37.2
+      },
+      "top3": {
+        "id": "KN-055",
+        "title": "Grid `1fr` + flex nowrap: min-content blowout ẩn — title dài",
+        "score": 33.8
+      }
+    },
+    {
+      "id": "KN-005",
+      "top1": {
+        "id": "KN-028",
+        "title": "Canvas quên invoke `resize()` → burst sai gốc + behavior tes",
+        "score": 25.5
+      },
+      "top2": {
+        "id": "KN-024",
+        "title": "Prolific AI Psychosis — output rẻ làm mù khả năng đánh giá",
+        "score": 24.1
+      },
+      "top3": {
+        "id": "KN-055",
+        "title": "Grid `1fr` + flex nowrap: min-content blowout ẩn — title dài",
+        "score": 18
+      }
+    },
+    {
+      "id": "KN-006",
+      "top1": {
+        "id": "KN-008",
+        "title": "dotnet build fail MSB3027/MSB3021 do file lock — N5Blazor.ex",
+        "score": 67.2
+      },
+      "top2": {
+        "id": "KN-037",
+        "title": "Evals Gap — \"single biggest predictor\" là evals discipline (",
+        "score": 21.8
+      },
+      "top3": {
+        "id": "KN-013",
+        "title": "Tích hợp Ponytail ladder vào Harness v2 (minimal-ladder + le",
+        "score": 14.5
+      }
+    },
+    {
+      "id": "KN-007",
+      "top1": {
+        "id": "KN-005",
+        "title": "Bug Blindness — mù bug do workaround vô thức + fan bias",
+        "score": 72.2
+      },
+      "top2": {
+        "id": "KN-049",
+        "title": "Entropy đo nhầm tín hiệu synthetic: red-team probes bị tính ",
+        "score": 65.1
+      },
+      "top3": {
+        "id": "KN-023",
+        "title": "Model \"giỏi ngọn, yếu gốc\" — 6 papers chứng minh verificatio",
+        "score": 59.6
+      }
+    },
+    {
+      "id": "KN-008",
+      "top1": {
+        "id": "KN-029",
+        "title": "Google Fonts script-blocking làm intro \"không hiện\" trên mạn",
+        "score": 36.7
+      },
+      "top2": {
+        "id": "KN-006",
+        "title": "N5 Blazor thieu theme sang + tieng Viet mat dau + menu chua ",
+        "score": 34.8
+      },
+      "top3": {
+        "id": "KN-053",
+        "title": "`git checkout HEAD -- <file>` revert nhầm refactor chưa comm",
+        "score": 32.5
+      }
+    },
+    {
+      "id": "KN-009",
+      "top1": {
+        "id": "KN-063",
+        "title": "Routing & Failover: select trước khi gọi · output đã commit ",
+        "score": 34.1
+      },
+      "top2": {
+        "id": "KN-057",
+        "title": "Ranh giới vibe coding vs engineering ở review/verify chain, ",
+        "score": 28.3
+      },
+      "top3": {
+        "id": "KN-021",
+        "title": "Governance rule-based cứng không scale — cần đo + RBAC linh ",
+        "score": 27.6
+      }
+    },
+    {
+      "id": "KN-010",
+      "top1": {
+        "id": "KN-020",
+        "title": "Generate easy, trust hard — output agent phải qua review/ben",
+        "score": 18.9
+      },
+      "top2": {
+        "id": "KN-052",
+        "title": "Pacing alarm hay cơ chế thật? Anthropic/OpenAI kêu gọi slowd",
+        "score": 18.1
+      },
+      "top3": {
+        "id": "KN-053",
+        "title": "`git checkout HEAD -- <file>` revert nhầm refactor chưa comm",
+        "score": 14.8
+      }
+    },
+    {
+      "id": "KN-011",
+      "top1": {
+        "id": "KN-043",
+        "title": "Content \"đúng chữ nhưng không chạy\": path thiếu prefix IDE +",
+        "score": 39.2
+      },
+      "top2": {
+        "id": "KN-050",
+        "title": "AI-gen UI gãy 4 luật UX: div giả button + dialog không trap ",
+        "score": 34.4
+      },
+      "top3": {
+        "id": "KN-023",
+        "title": "Model \"giỏi ngọn, yếu gốc\" — 6 papers chứng minh verificatio",
+        "score": 22.3
+      }
+    },
+    {
+      "id": "KN-012",
+      "top1": {
+        "id": "KN-037",
+        "title": "Evals Gap — \"single biggest predictor\" là evals discipline (",
+        "score": 36.8
+      },
+      "top2": {
+        "id": "KN-047",
+        "title": "Slop accumulation: code pass hết test vẫn mục dần khi agent ",
+        "score": 29.8
+      },
+      "top3": {
+        "id": "KN-007",
+        "title": "Thiếu hệ thống tự học hỏi tự động — phải làm tay, dễ quên",
+        "score": 27.5
+      }
+    },
+    {
+      "id": "KN-013",
+      "top1": {
+        "id": "KN-057",
+        "title": "Ranh giới vibe coding vs engineering ở review/verify chain, ",
+        "score": 26.8
+      },
+      "top2": {
+        "id": "KN-034",
+        "title": "Ecdysis — Failure diagnosis: model-specific vs harness-level",
+        "score": 22.9
+      },
+      "top3": {
+        "id": "KN-065",
+        "title": "Orchard: verify/train phải chạy TRONG harness thật — stand-i",
+        "score": 22.4
+      }
+    },
+    {
+      "id": "KN-014",
+      "top1": {
+        "id": "KN-066",
+        "title": "KN ID double-yield: đa phiên song song cùng nhận 1 ID — re-c",
+        "score": 27.4
+      },
+      "top2": {
+        "id": "KN-063",
+        "title": "Routing & Failover: select trước khi gọi · output đã commit ",
+        "score": 27.2
+      },
+      "top3": {
+        "id": "KN-065",
+        "title": "Orchard: verify/train phải chạy TRONG harness thật — stand-i",
+        "score": 24.6
+      }
+    },
+    {
+      "id": "KN-015",
+      "top1": {
+        "id": "KN-058",
+        "title": "GitHub viewscreen race: mermaid README lỗi \"Cannot read prop",
+        "score": 65.3
+      },
+      "top2": {
+        "id": "KN-037",
+        "title": "Evals Gap — \"single biggest predictor\" là evals discipline (",
+        "score": 56.1
+      },
+      "top3": {
+        "id": "KN-030",
+        "title": "Fetch ra ngoài deploy root + relative URL không slash cuối →",
+        "score": 54.8
+      }
+    },
+    {
+      "id": "KN-016",
+      "top1": {
+        "id": "KN-034",
+        "title": "Ecdysis — Failure diagnosis: model-specific vs harness-level",
+        "score": 36.4
+      },
+      "top2": {
+        "id": "KN-011",
+        "title": "Random làm disable nút ▶ Bước tiếp theo (Bài 004 & 005)",
+        "score": 34.3
+      },
+      "top3": {
+        "id": "KN-065",
+        "title": "Orchard: verify/train phải chạy TRONG harness thật — stand-i",
+        "score": 28.9
+      }
+    },
+    {
+      "id": "KN-017",
+      "top1": {
+        "id": "KN-058",
+        "title": "GitHub viewscreen race: mermaid README lỗi \"Cannot read prop",
+        "score": 20.1
+      },
+      "top2": {
+        "id": "KN-018",
+        "title": "Waymo effect / Decollaboration — AI tiện quá khiến human ngừ",
+        "score": 19.9
+      },
+      "top3": {
+        "id": "KN-006",
+        "title": "N5 Blazor thieu theme sang + tieng Viet mat dau + menu chua ",
+        "score": 19
+      }
+    },
+    {
+      "id": "KN-018",
+      "top1": {
+        "id": "KN-037",
+        "title": "Evals Gap — \"single biggest predictor\" là evals discipline (",
+        "score": 46.2
+      },
+      "top2": {
+        "id": "KN-024",
+        "title": "Prolific AI Psychosis — output rẻ làm mù khả năng đánh giá",
+        "score": 27.7
+      },
+      "top3": {
+        "id": "KN-057",
+        "title": "Ranh giới vibe coding vs engineering ở review/verify chain, ",
+        "score": 23
+      }
+    },
+    {
+      "id": "KN-019",
+      "top1": {
+        "id": "KN-052",
+        "title": "Pacing alarm hay cơ chế thật? Anthropic/OpenAI kêu gọi slowd",
+        "score": 47.8
+      },
+      "top2": {
+        "id": "KN-057",
+        "title": "Ranh giới vibe coding vs engineering ở review/verify chain, ",
+        "score": 44.8
+      },
+      "top3": {
+        "id": "KN-021",
+        "title": "Governance rule-based cứng không scale — cần đo + RBAC linh ",
+        "score": 40.9
+      }
+    },
+    {
+      "id": "KN-020",
+      "top1": {
+        "id": "KN-069",
+        "title": "Gate fail-open với arg rác: NaN-pass ẩn (exit 0) — gate phải",
+        "score": 44.8
+      },
+      "top2": {
+        "id": "KN-010",
+        "title": "AAR pattern từ Anthropic — propose 3 methods, benchmark, kee",
+        "score": 32.9
+      },
+      "top3": {
+        "id": "KN-023",
+        "title": "Model \"giỏi ngọn, yếu gốc\" — 6 papers chứng minh verificatio",
+        "score": 25.7
+      }
+    },
+    {
+      "id": "KN-021",
+      "top1": {
+        "id": "KN-043",
+        "title": "Content \"đúng chữ nhưng không chạy\": path thiếu prefix IDE +",
+        "score": 22.5
+      },
+      "top2": {
+        "id": "KN-009",
+        "title": "Slot máy chủ AI không hoạt động (hardcode localhost dev tunn",
+        "score": 18.6
+      },
+      "top3": {
+        "id": "KN-052",
+        "title": "Pacing alarm hay cơ chế thật? Anthropic/OpenAI kêu gọi slowd",
+        "score": 17.8
+      }
+    },
+    {
+      "id": "KN-022",
+      "top1": {
+        "id": "KN-050",
+        "title": "AI-gen UI gãy 4 luật UX: div giả button + dialog không trap ",
+        "score": 17.3
+      },
+      "top2": {
+        "id": "KN-041",
+        "title": "YT Summary: mọi lane trích transcript no-key bị chặn + dịch ",
+        "score": 14.7
+      },
+      "top3": {
+        "id": "KN-067",
+        "title": "Dream-RSI: replay history = simulator zero-cost — dream poli",
+        "score": 12.9
+      }
+    },
+    {
+      "id": "KN-023",
+      "top1": {
+        "id": "KN-037",
+        "title": "Evals Gap — \"single biggest predictor\" là evals discipline (",
+        "score": 42.9
+      },
+      "top2": {
+        "id": "KN-030",
+        "title": "Fetch ra ngoài deploy root + relative URL không slash cuối →",
+        "score": 34.6
+      },
+      "top3": {
+        "id": "KN-020",
+        "title": "Generate easy, trust hard — output agent phải qua review/ben",
+        "score": 30.7
+      }
+    },
+    {
+      "id": "KN-024",
+      "top1": {
+        "id": "KN-005",
+        "title": "Bug Blindness — mù bug do workaround vô thức + fan bias",
+        "score": 43
+      },
+      "top2": {
+        "id": "KN-063",
+        "title": "Routing & Failover: select trước khi gọi · output đã commit ",
+        "score": 38.3
+      },
+      "top3": {
+        "id": "KN-067",
+        "title": "Dream-RSI: replay history = simulator zero-cost — dream poli",
+        "score": 34.4
+      }
+    },
+    {
+      "id": "KN-025",
+      "top1": {
+        "id": "KN-027",
+        "title": "Feedback-Enriched Environments + Consistency Gap + SOLID — S",
+        "score": 42.8
+      },
+      "top2": {
+        "id": "KN-036",
+        "title": "Auto-RecSys + Cognitive Digital Twin — cognitive-procedural ",
+        "score": 39.4
+      },
+      "top3": {
+        "id": "KN-026",
+        "title": "Experience Funnel + ADMET-EvO — State-Policy Alternating Loo",
+        "score": 39.3
+      }
+    },
+    {
+      "id": "KN-026",
+      "top1": {
+        "id": "KN-036",
+        "title": "Auto-RecSys + Cognitive Digital Twin — cognitive-procedural ",
+        "score": 63.6
+      },
+      "top2": {
+        "id": "KN-025",
+        "title": "Procedural Graphs + A-JIT — Self-Evolving Execution Structur",
+        "score": 36.9
+      },
+      "top3": {
+        "id": "KN-027",
+        "title": "Feedback-Enriched Environments + Consistency Gap + SOLID — S",
+        "score": 30.7
+      }
+    },
+    {
+      "id": "KN-027",
+      "top1": {
+        "id": "KN-033",
+        "title": "Recursive Self-Improvement — Roadmap 5 tầng autonomy + Resea",
+        "score": 51.4
+      },
+      "top2": {
+        "id": "KN-066",
+        "title": "KN ID double-yield: đa phiên song song cùng nhận 1 ID — re-c",
+        "score": 40.3
+      },
+      "top3": {
+        "id": "KN-025",
+        "title": "Procedural Graphs + A-JIT — Self-Evolving Execution Structur",
+        "score": 38.9
+      }
+    },
+    {
+      "id": "KN-028",
+      "top1": {
+        "id": "KN-050",
+        "title": "AI-gen UI gãy 4 luật UX: div giả button + dialog không trap ",
+        "score": 24.1
+      },
+      "top2": {
+        "id": "KN-007",
+        "title": "Thiếu hệ thống tự học hỏi tự động — phải làm tay, dễ quên",
+        "score": 21.6
+      },
+      "top3": {
+        "id": "KN-024",
+        "title": "Prolific AI Psychosis — output rẻ làm mù khả năng đánh giá",
+        "score": 20.9
+      }
+    },
+    {
+      "id": "KN-029",
+      "top1": {
+        "id": "KN-037",
+        "title": "Evals Gap — \"single biggest predictor\" là evals discipline (",
+        "score": 26.1
+      },
+      "top2": {
+        "id": "KN-005",
+        "title": "Bug Blindness — mù bug do workaround vô thức + fan bias",
+        "score": 24.7
+      },
+      "top3": {
+        "id": "KN-043",
+        "title": "Content \"đúng chữ nhưng không chạy\": path thiếu prefix IDE +",
+        "score": 24.5
+      }
+    },
+    {
+      "id": "KN-030",
+      "top1": {
+        "id": "KN-015",
+        "title": "GitHub Pages deploy fail — 2 workflows cùng `github-pages` e",
+        "score": 94.1
+      },
+      "top2": {
+        "id": "KN-040",
+        "title": "Cosmos rework: reveal chết ở element cao hơn viewport + hove",
+        "score": 75.9
+      },
+      "top3": {
+        "id": "KN-045",
+        "title": "STATUS audit: link footer 404 trên Pages + registry placehol",
+        "score": 55.6
+      }
+    },
+    {
+      "id": "KN-031",
+      "top1": {
+        "id": "KN-049",
+        "title": "Entropy đo nhầm tín hiệu synthetic: red-team probes bị tính ",
+        "score": 33.4
+      },
+      "top2": {
+        "id": "KN-060",
+        "title": "SkillOpt: sửa skill/KN không qua validation gate — edit trôi",
+        "score": 25.8
+      },
+      "top3": {
+        "id": "KN-038",
+        "title": "Trang cosmos lệch tài liệu: physics shorthand + metric drift",
+        "score": 20.4
+      }
+    },
+    {
+      "id": "KN-032",
+      "top1": {
+        "id": "KN-069",
+        "title": "Gate fail-open với arg rác: NaN-pass ẩn (exit 0) — gate phải",
+        "score": 27.9
+      },
+      "top2": {
+        "id": "KN-040",
+        "title": "Cosmos rework: reveal chết ở element cao hơn viewport + hove",
+        "score": 22.1
+      },
+      "top3": {
+        "id": "KN-046",
+        "title": "Cosmos: scroll-dot \"Tương lai\" chết (section thiếu `id`) — đ",
+        "score": 21.1
+      }
+    },
+    {
+      "id": "KN-033",
+      "top1": {
+        "id": "KN-048",
+        "title": "RSI & agentic safety: coordination ngầm + sandbox escape là ",
+        "score": 50.7
+      },
+      "top2": {
+        "id": "KN-067",
+        "title": "Dream-RSI: replay history = simulator zero-cost — dream poli",
+        "score": 49.7
+      },
+      "top3": {
+        "id": "KN-027",
+        "title": "Feedback-Enriched Environments + Consistency Gap + SOLID — S",
+        "score": 47.1
+      }
+    },
+    {
+      "id": "KN-034",
+      "top1": {
+        "id": "KN-069",
+        "title": "Gate fail-open với arg rác: NaN-pass ẩn (exit 0) — gate phải",
+        "score": 35.5
+      },
+      "top2": {
+        "id": "KN-016",
+        "title": "harness-manager disable fail EPERM trên Windows (fs.rename f",
+        "score": 25.8
+      },
+      "top3": {
+        "id": "KN-068",
+        "title": "Instruction pool always-on phình không ngưỡng: kế toán + rat",
+        "score": 24
+      }
+    },
+    {
+      "id": "KN-035",
+      "top1": {
+        "id": "KN-027",
+        "title": "Feedback-Enriched Environments + Consistency Gap + SOLID — S",
+        "score": 48
+      },
+      "top2": {
+        "id": "KN-033",
+        "title": "Recursive Self-Improvement — Roadmap 5 tầng autonomy + Resea",
+        "score": 34.5
+      },
+      "top3": {
+        "id": "KN-025",
+        "title": "Procedural Graphs + A-JIT — Self-Evolving Execution Structur",
+        "score": 30.6
+      }
+    },
+    {
+      "id": "KN-036",
+      "top1": {
+        "id": "KN-053",
+        "title": "`git checkout HEAD -- <file>` revert nhầm refactor chưa comm",
+        "score": 50.2
+      },
+      "top2": {
+        "id": "KN-026",
+        "title": "Experience Funnel + ADMET-EvO — State-Policy Alternating Loo",
+        "score": 43.4
+      },
+      "top3": {
+        "id": "KN-025",
+        "title": "Procedural Graphs + A-JIT — Self-Evolving Execution Structur",
+        "score": 39.5
+      }
+    },
+    {
+      "id": "KN-037",
+      "top1": {
+        "id": "KN-015",
+        "title": "GitHub Pages deploy fail — 2 workflows cùng `github-pages` e",
+        "score": 59.2
+      },
+      "top2": {
+        "id": "KN-048",
+        "title": "RSI & agentic safety: coordination ngầm + sandbox escape là ",
+        "score": 52.9
+      },
+      "top3": {
+        "id": "KN-066",
+        "title": "KN ID double-yield: đa phiên song song cùng nhận 1 ID — re-c",
+        "score": 50.6
+      }
+    },
+    {
+      "id": "KN-038",
+      "top1": {
+        "id": "KN-030",
+        "title": "Fetch ra ngoài deploy root + relative URL không slash cuối →",
+        "score": 24.7
+      },
+      "top2": {
+        "id": "KN-040",
+        "title": "Cosmos rework: reveal chết ở element cao hơn viewport + hove",
+        "score": 18.3
+      },
+      "top3": {
+        "id": "KN-049",
+        "title": "Entropy đo nhầm tín hiệu synthetic: red-team probes bị tính ",
+        "score": 17.9
+      }
+    },
+    {
+      "id": "KN-039",
+      "top1": {
+        "id": "KN-068",
+        "title": "Instruction pool always-on phình không ngưỡng: kế toán + rat",
+        "score": 30
+      },
+      "top2": {
+        "id": "KN-069",
+        "title": "Gate fail-open với arg rác: NaN-pass ẩn (exit 0) — gate phải",
+        "score": 25.7
+      },
+      "top3": {
+        "id": "KN-024",
+        "title": "Prolific AI Psychosis — output rẻ làm mù khả năng đánh giá",
+        "score": 17.2
+      }
+    },
+    {
+      "id": "KN-040",
+      "top1": {
+        "id": "KN-030",
+        "title": "Fetch ra ngoài deploy root + relative URL không slash cuối →",
+        "score": 70.8
+      },
+      "top2": {
+        "id": "KN-046",
+        "title": "Cosmos: scroll-dot \"Tương lai\" chết (section thiếu `id`) — đ",
+        "score": 38.4
+      },
+      "top3": {
+        "id": "KN-063",
+        "title": "Routing & Failover: select trước khi gọi · output đã commit ",
+        "score": 32.4
+      }
+    },
+    {
+      "id": "KN-041",
+      "top1": {
+        "id": "KN-042",
+        "title": "YT Summary mobile: CSS toàn cục đè trang mới (bảng ẩn/cắt, `",
+        "score": 42.7
+      },
+      "top2": {
+        "id": "KN-005",
+        "title": "Bug Blindness — mù bug do workaround vô thức + fan bias",
+        "score": 31.1
+      },
+      "top3": {
+        "id": "KN-057",
+        "title": "Ranh giới vibe coding vs engineering ở review/verify chain, ",
+        "score": 28.6
+      }
+    },
+    {
+      "id": "KN-042",
+      "top1": {
+        "id": "KN-031",
+        "title": "Edge PC \"không thấy hiệu ứng\" do reduced-motion bị xử lý quá",
+        "score": 58.2
+      },
+      "top2": {
+        "id": "KN-040",
+        "title": "Cosmos rework: reveal chết ở element cao hơn viewport + hove",
+        "score": 55.9
+      },
+      "top3": {
+        "id": "KN-055",
+        "title": "Grid `1fr` + flex nowrap: min-content blowout ẩn — title dài",
+        "score": 48.1
+      }
+    },
+    {
+      "id": "KN-043",
+      "top1": {
+        "id": "KN-037",
+        "title": "Evals Gap — \"single biggest predictor\" là evals discipline (",
+        "score": 57.8
+      },
+      "top2": {
+        "id": "KN-065",
+        "title": "Orchard: verify/train phải chạy TRONG harness thật — stand-i",
+        "score": 41.7
+      },
+      "top3": {
+        "id": "KN-055",
+        "title": "Grid `1fr` + flex nowrap: min-content blowout ẩn — title dài",
+        "score": 35.6
+      }
+    },
+    {
+      "id": "KN-044",
+      "top1": {
+        "id": "KN-050",
+        "title": "AI-gen UI gãy 4 luật UX: div giả button + dialog không trap ",
+        "score": 50.8
+      },
+      "top2": {
+        "id": "KN-037",
+        "title": "Evals Gap — \"single biggest predictor\" là evals discipline (",
+        "score": 29.6
+      },
+      "top3": {
+        "id": "KN-046",
+        "title": "Cosmos: scroll-dot \"Tương lai\" chết (section thiếu `id`) — đ",
+        "score": 27.6
+      }
+    },
+    {
+      "id": "KN-045",
+      "top1": {
+        "id": "KN-015",
+        "title": "GitHub Pages deploy fail — 2 workflows cùng `github-pages` e",
+        "score": 61.3
+      },
+      "top2": {
+        "id": "KN-030",
+        "title": "Fetch ra ngoài deploy root + relative URL không slash cuối →",
+        "score": 60.5
+      },
+      "top3": {
+        "id": "KN-055",
+        "title": "Grid `1fr` + flex nowrap: min-content blowout ẩn — title dài",
+        "score": 45
+      }
+    },
+    {
+      "id": "KN-046",
+      "top1": {
+        "id": "KN-040",
+        "title": "Cosmos rework: reveal chết ở element cao hơn viewport + hove",
+        "score": 49.2
+      },
+      "top2": {
+        "id": "KN-008",
+        "title": "dotnet build fail MSB3027/MSB3021 do file lock — N5Blazor.ex",
+        "score": 48.4
+      },
+      "top3": {
+        "id": "KN-055",
+        "title": "Grid `1fr` + flex nowrap: min-content blowout ẩn — title dài",
+        "score": 43.5
+      }
+    },
+    {
+      "id": "KN-047",
+      "top1": {
+        "id": "KN-069",
+        "title": "Gate fail-open với arg rác: NaN-pass ẩn (exit 0) — gate phải",
+        "score": 44.5
+      },
+      "top2": {
+        "id": "KN-012",
+        "title": "Agent tự sửa test để pass (reward hacking)",
+        "score": 27.9
+      },
+      "top3": {
+        "id": "KN-037",
+        "title": "Evals Gap — \"single biggest predictor\" là evals discipline (",
+        "score": 26.9
+      }
+    },
+    {
+      "id": "KN-048",
+      "top1": {
+        "id": "KN-065",
+        "title": "Orchard: verify/train phải chạy TRONG harness thật — stand-i",
+        "score": 60.2
+      },
+      "top2": {
+        "id": "KN-051",
+        "title": "\"LLMs are real, AI is fake\": vụ hack không phải nổi loạn mà ",
+        "score": 42.4
+      },
+      "top3": {
+        "id": "KN-052",
+        "title": "Pacing alarm hay cơ chế thật? Anthropic/OpenAI kêu gọi slowd",
+        "score": 41.7
+      }
+    },
+    {
+      "id": "KN-049",
+      "top1": {
+        "id": "KN-065",
+        "title": "Orchard: verify/train phải chạy TRONG harness thật — stand-i",
+        "score": 56.1
+      },
+      "top2": {
+        "id": "KN-031",
+        "title": "Edge PC \"không thấy hiệu ứng\" do reduced-motion bị xử lý quá",
+        "score": 52.7
+      },
+      "top3": {
+        "id": "KN-023",
+        "title": "Model \"giỏi ngọn, yếu gốc\" — 6 papers chứng minh verificatio",
+        "score": 33
+      }
+    },
+    {
+      "id": "KN-050",
+      "top1": {
+        "id": "KN-011",
+        "title": "Random làm disable nút ▶ Bước tiếp theo (Bài 004 & 005)",
+        "score": 55.7
+      },
+      "top2": {
+        "id": "KN-008",
+        "title": "dotnet build fail MSB3027/MSB3021 do file lock — N5Blazor.ex",
+        "score": 31.7
+      },
+      "top3": {
+        "id": "KN-054",
+        "title": "ADHD/Executive Function: harness là khung xương ngoài của nã",
+        "score": 30.7
+      }
+    },
+    {
+      "id": "KN-051",
+      "top1": {
+        "id": "KN-069",
+        "title": "Gate fail-open với arg rác: NaN-pass ẩn (exit 0) — gate phải",
+        "score": 33.6
+      },
+      "top2": {
+        "id": "KN-046",
+        "title": "Cosmos: scroll-dot \"Tương lai\" chết (section thiếu `id`) — đ",
+        "score": 33.5
+      },
+      "top3": {
+        "id": "KN-048",
+        "title": "RSI & agentic safety: coordination ngầm + sandbox escape là ",
+        "score": 27.9
+      }
+    },
+    {
+      "id": "KN-052",
+      "top1": {
+        "id": "KN-065",
+        "title": "Orchard: verify/train phải chạy TRONG harness thật — stand-i",
+        "score": 59.4
+      },
+      "top2": {
+        "id": "KN-051",
+        "title": "\"LLMs are real, AI is fake\": vụ hack không phải nổi loạn mà ",
+        "score": 51.6
+      },
+      "top3": {
+        "id": "KN-037",
+        "title": "Evals Gap — \"single biggest predictor\" là evals discipline (",
+        "score": 45.6
+      }
+    },
+    {
+      "id": "KN-053",
+      "top1": {
+        "id": "KN-067",
+        "title": "Dream-RSI: replay history = simulator zero-cost — dream poli",
+        "score": 47.8
+      },
+      "top2": {
+        "id": "KN-063",
+        "title": "Routing & Failover: select trước khi gọi · output đã commit ",
+        "score": 45.3
+      },
+      "top3": {
+        "id": "KN-066",
+        "title": "KN ID double-yield: đa phiên song song cùng nhận 1 ID — re-c",
+        "score": 38.2
+      }
+    },
+    {
+      "id": "KN-054",
+      "top1": {
+        "id": "KN-037",
+        "title": "Evals Gap — \"single biggest predictor\" là evals discipline (",
+        "score": 65.8
+      },
+      "top2": {
+        "id": "KN-023",
+        "title": "Model \"giỏi ngọn, yếu gốc\" — 6 papers chứng minh verificatio",
+        "score": 24.5
+      },
+      "top3": {
+        "id": "KN-030",
+        "title": "Fetch ra ngoài deploy root + relative URL không slash cuối →",
+        "score": 23.6
+      }
+    },
+    {
+      "id": "KN-055",
+      "top1": {
+        "id": "KN-066",
+        "title": "KN ID double-yield: đa phiên song song cùng nhận 1 ID — re-c",
+        "score": 68.2
+      },
+      "top2": {
+        "id": "KN-042",
+        "title": "YT Summary mobile: CSS toàn cục đè trang mới (bảng ẩn/cắt, `",
+        "score": 40.4
+      },
+      "top3": {
+        "id": "KN-046",
+        "title": "Cosmos: scroll-dot \"Tương lai\" chết (section thiếu `id`) — đ",
+        "score": 37
+      }
+    },
+    {
+      "id": "KN-056",
+      "top1": {
+        "id": "KN-069",
+        "title": "Gate fail-open với arg rác: NaN-pass ẩn (exit 0) — gate phải",
+        "score": 64.8
+      },
+      "top2": {
+        "id": "KN-039",
+        "title": "PS 5.1 không hỗ trợ `??` — lệnh PowerShell fail parse \"Unexp",
+        "score": 52.4
+      },
+      "top3": {
+        "id": "KN-060",
+        "title": "SkillOpt: sửa skill/KN không qua validation gate — edit trôi",
+        "score": 50
+      }
+    },
+    {
+      "id": "KN-057",
+      "top1": {
+        "id": "KN-037",
+        "title": "Evals Gap — \"single biggest predictor\" là evals discipline (",
+        "score": 52.8
+      },
+      "top2": {
+        "id": "KN-052",
+        "title": "Pacing alarm hay cơ chế thật? Anthropic/OpenAI kêu gọi slowd",
+        "score": 24.6
+      },
+      "top3": {
+        "id": "KN-020",
+        "title": "Generate easy, trust hard — output agent phải qua review/ben",
+        "score": 22.4
+      }
+    },
+    {
+      "id": "KN-058",
+      "top1": {
+        "id": "KN-015",
+        "title": "GitHub Pages deploy fail — 2 workflows cùng `github-pages` e",
+        "score": 77.6
+      },
+      "top2": {
+        "id": "KN-063",
+        "title": "Routing & Failover: select trước khi gọi · output đã commit ",
+        "score": 62.2
+      },
+      "top3": {
+        "id": "KN-066",
+        "title": "KN ID double-yield: đa phiên song song cùng nhận 1 ID — re-c",
+        "score": 60.7
+      }
+    },
+    {
+      "id": "KN-059",
+      "top1": {
+        "id": "KN-052",
+        "title": "Pacing alarm hay cơ chế thật? Anthropic/OpenAI kêu gọi slowd",
+        "score": 36.2
+      },
+      "top2": {
+        "id": "KN-062",
+        "title": "Memora: tách \"lưu gì\" khỏi \"lấy thế nào\" — gộp thay vì phân ",
+        "score": 18.6
+      },
+      "top3": {
+        "id": "KN-043",
+        "title": "Content \"đúng chữ nhưng không chạy\": path thiếu prefix IDE +",
+        "score": 17.9
+      }
+    },
+    {
+      "id": "KN-060",
+      "top1": {
+        "id": "KN-066",
+        "title": "KN ID double-yield: đa phiên song song cùng nhận 1 ID — re-c",
+        "score": 65.1
+      },
+      "top2": {
+        "id": "KN-056",
+        "title": "Vòng chống tái lập: KN không lưới = wishlist — log RADAR + G",
+        "score": 37.7
+      },
+      "top3": {
+        "id": "KN-026",
+        "title": "Experience Funnel + ADMET-EvO — State-Policy Alternating Loo",
+        "score": 30.8
+      }
+    },
+    {
+      "id": "KN-062",
+      "top1": {
+        "id": "KN-060",
+        "title": "SkillOpt: sửa skill/KN không qua validation gate — edit trôi",
+        "score": 37.4
+      },
+      "top2": {
+        "id": "KN-021",
+        "title": "Governance rule-based cứng không scale — cần đo + RBAC linh ",
+        "score": 36.1
+      },
+      "top3": {
+        "id": "KN-043",
+        "title": "Content \"đúng chữ nhưng không chạy\": path thiếu prefix IDE +",
+        "score": 33.8
+      }
+    },
+    {
+      "id": "KN-063",
+      "top1": {
+        "id": "KN-064",
+        "title": "Echoverse co-evolution: check đỏ đọc 2 lần theo tầng (world-",
+        "score": 65.3
+      },
+      "top2": {
+        "id": "KN-056",
+        "title": "Vòng chống tái lập: KN không lưới = wishlist — log RADAR + G",
+        "score": 58.2
+      },
+      "top3": {
+        "id": "KN-053",
+        "title": "`git checkout HEAD -- <file>` revert nhầm refactor chưa comm",
+        "score": 54.2
+      }
+    },
+    {
+      "id": "KN-064",
+      "top1": {
+        "id": "KN-033",
+        "title": "Recursive Self-Improvement — Roadmap 5 tầng autonomy + Resea",
+        "score": 65.2
+      },
+      "top2": {
+        "id": "KN-056",
+        "title": "Vòng chống tái lập: KN không lưới = wishlist — log RADAR + G",
+        "score": 58.7
+      },
+      "top3": {
+        "id": "KN-063",
+        "title": "Routing & Failover: select trước khi gọi · output đã commit ",
+        "score": 58.6
+      }
+    },
+    {
+      "id": "KN-065",
+      "top1": {
+        "id": "KN-028",
+        "title": "Canvas quên invoke `resize()` → burst sai gốc + behavior tes",
+        "score": 45.4
+      },
+      "top2": {
+        "id": "KN-054",
+        "title": "ADHD/Executive Function: harness là khung xương ngoài của nã",
+        "score": 41
+      },
+      "top3": {
+        "id": "KN-049",
+        "title": "Entropy đo nhầm tín hiệu synthetic: red-team probes bị tính ",
+        "score": 38.3
+      }
+    },
+    {
+      "id": "KN-066",
+      "top1": {
+        "id": "KN-058",
+        "title": "GitHub viewscreen race: mermaid README lỗi \"Cannot read prop",
+        "score": 78.4
+      },
+      "top2": {
+        "id": "KN-037",
+        "title": "Evals Gap — \"single biggest predictor\" là evals discipline (",
+        "score": 63.2
+      },
+      "top3": {
+        "id": "KN-055",
+        "title": "Grid `1fr` + flex nowrap: min-content blowout ẩn — title dài",
+        "score": 58.7
+      }
+    },
+    {
+      "id": "KN-067",
+      "top1": {
+        "id": "KN-063",
+        "title": "Routing & Failover: select trước khi gọi · output đã commit ",
+        "score": 47
+      },
+      "top2": {
+        "id": "KN-011",
+        "title": "Random làm disable nút ▶ Bước tiếp theo (Bài 004 & 005)",
+        "score": 42.2
+      },
+      "top3": {
+        "id": "KN-053",
+        "title": "`git checkout HEAD -- <file>` revert nhầm refactor chưa comm",
+        "score": 35.8
+      }
+    },
+    {
+      "id": "KN-068",
+      "top1": {
+        "id": "KN-069",
+        "title": "Gate fail-open với arg rác: NaN-pass ẩn (exit 0) — gate phải",
+        "score": 49.7
+      },
+      "top2": {
+        "id": "KN-037",
+        "title": "Evals Gap — \"single biggest predictor\" là evals discipline (",
+        "score": 25.2
+      },
+      "top3": {
+        "id": "KN-056",
+        "title": "Vòng chống tái lập: KN không lưới = wishlist — log RADAR + G",
+        "score": 20.8
+      }
+    },
+    {
+      "id": "KN-069",
+      "top1": {
+        "id": "KN-047",
+        "title": "Slop accumulation: code pass hết test vẫn mục dần khi agent ",
+        "score": 54.1
+      },
+      "top2": {
+        "id": "KN-046",
+        "title": "Cosmos: scroll-dot \"Tương lai\" chết (section thiếu `id`) — đ",
+        "score": 44.4
+      },
+      "top3": {
+        "id": "KN-056",
+        "title": "Vòng chống tái lập: KN không lưới = wishlist — log RADAR + G",
+        "score": 42.9
+      }
+    }
+  ]
+}

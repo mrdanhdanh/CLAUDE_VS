@@ -12,7 +12,8 @@ import path from 'node:path';
  *  1. `log` tự RADAR — đối chiếu KN + bug cũ (BM25, ngưỡng 25/18) → cảnh báo + inject vào bug.md.
  *  2. `propose` GUARD GATE — bug major/critical thiếu `Guard:` → cảnh báo; `--strict` exit 1.
  *  3. `guards` coverage audit — KN nào có lưới (được test file tham chiếu) — đo được, không wish.
- *  4. `evaluate` CONSOLIDATION gate (KN-062 — Memora): KN trùng ≥ threshold → FAIL + chỉ đích danh + hint GỘP;
+ *  4. `evaluate` CONSOLIDATION screening (KN-062 — Memora): KN trùng ≥ threshold → advisory + chỉ đích danh + hint GỘP (KHÔNG chặn — calibration 18/09: score không phân tách);
+ *     chủ đề mới → không flag. `suggest` smoke (KN-007 dogfood): query quen thuộc → trả KN liên quan.
  *     chủ đề mới → PASS không chặn oan. Retrieval/consolidation phải có lưới, không chỉ văn xuôi.
  *  5. `propose` LAYER (co-evolution — Echoverse): parse `Layer:` (tầng chứa defect) + soft-warn khi thiếu
  *     — load-bearing wiring (parse/warn/json/draft), không hard gate. Attribution đúng = human judgment.
@@ -181,7 +182,7 @@ test('guards --json: coverage hợp lệ + bắt guard đã biết (KN-049, KN-0
     }
 });
 
-  test('evaluate: KN trùng → FAIL + chỉ đích danh + hint GỘP (consolidation gate — KN-062)', () => {
+  test('evaluate: KN trùng (screening) → advisory GỘP + KHÔNG chặn (calibration 2026-09-18)', () => {
     const dir = tmpdir('dup');
     const slug = '2026-09-14-fixture-dup';
     try {
@@ -190,11 +191,14 @@ test('guards --json: coverage hợp lệ + bắt guard đã biết (KN-049, KN-0
       const r = run(['evaluate', '--bug', slug, '--dir', dir, '--json']);
       expect(r.status, `evaluate exit 0 — stderr: ${r.stderr}`).toBe(0);
       const data = JSON.parse(r.stdout);
-      expect(data.decision).toBe('FAIL');
-      expect(data.checks.isDuplicate).toBe(true);
+      // Calibration 18/09: 68/68 KN corpus vượt ngưỡng 15 + dup thật (004→003: 37.2) < non-dup (030→015: 94.1)
+      // → score không phân tách → dup-check = ADVISORY (screening, không chặn; người adjudicate + disclosure).
+      expect(data.checks.isDuplicate, 'screening vẫn phải bắt fixture trùng').toBe(true);
+      expect(data.decision, 'advisory không được chặn oan commit').toBe('PASS');
       const reasons = data.reasons.join(' ');
       expect(reasons, 'phải chỉ đích danh KN cũ (consolidation)').toMatch(/KN-00[34]/);
       expect(reasons, 'phải hint GỘP/amend thay vì tạo mới (Memora consolidation)').toMatch(/GỘP|amend/);
+      expect(reasons, 'phải đánh dấu advisory + lý do không chặn').toMatch(/advisory/);
     } finally {
       fs.rmSync(dir, { recursive: true, force: true });
     }
@@ -214,6 +218,12 @@ test('guards --json: coverage hợp lệ + bắt guard đã biết (KN-049, KN-0
     } finally {
       fs.rmSync(dir, { recursive: true, force: true });
     }
+  });
+
+  test('suggest: query quen thuộc → trả về KN liên quan (KN-007 dogfood)', () => {
+    const r = run(['suggest', 'rainbow border conic-gradient khong xoay khi hover', '--top', '3']);
+    expect(r.status, `suggest exit 0 — stderr: ${r.stderr}`).toBe(0);
+    expect(r.stdout, 'phải trả KN-003/KN-004 cho query rainbow').toMatch(/KN-00[34]/);
   });
 
   test('guard co-evolution: propose parse Layer + soft-warn khi thiếu (behavioral wiring, không hard gate)', () => {

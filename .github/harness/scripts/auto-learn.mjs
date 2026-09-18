@@ -623,14 +623,17 @@ function scoreDuplicateCandidates(kns, title) {
     .slice(0, 3);
 }
 
-const DUPLICATE_THRESHOLD = 15; // tuned: >15 likely duplicate
+// Screening trigger (ADVISORY — không chặn): calibration 2026-09-18 (OCR review #14a): 68/68 KN corpus đạt top1 ≥15,
+// dup thật (KN-004→KN-003: 37.2) THẤP HƠN non-dup (KN-030→KN-015: 94.1) → score không phân tách dup/không-dup.
+// Giữ 15 làm con trỏ soi (sensitivity cao); adjudication ở người + disclosure khi bỏ qua (KN-062; chống alarm-fatigue KN-049).
+const DUPLICATE_THRESHOLD = 15;
 
 function decideEvalGate({ hasFix, isDuplicate, topScored, isOpen, isFixed, reports, avgScore, hasPositiveReport }) {
-  // gate logic: PASS if hasFix and not duplicate and (no reports or has positive)
+  // gate logic: PASS if hasFix and (no reports or has positive); duplicate = ADVISORY (screening, không chặn — calibration 18/09)
   let decision = 'PASS';
   const reasons = [];
   if (!hasFix) { decision = 'FAIL'; reasons.push('Fix section chưa điền đủ (cần Approach + Files Changed)'); }
-  if (isDuplicate) { decision = 'FAIL'; reasons.push(`Trùng KN hiện có: ${topScored.id} score ${topScored.score} ≥ ${DUPLICATE_THRESHOLD} — có thể đã có bài học tương tự; cân nhắc GỘP (amend) vào ${topScored.id} thay vì tạo KN mới (consolidation — Memora KN-062)`); }
+  if (isDuplicate) { reasons.push(`(advisory) Nghi trùng: ${topScored.id} score ${topScored.score} ≥ ${DUPLICATE_THRESHOLD} — cân nhắc GỘP/amend vào ${topScored.id} thay vì tạo KN mới (consolidation — Memora KN-062). KHÔNG chặn: calibration 18/09 — screening 100% (score không phân tách) → adjudicate bởi người + ghi disclosure khi bỏ qua`); }
   if (reports.length > 0 && !hasPositiveReport && avgScore !== null && avgScore < 0.5) {
     decision = 'FAIL'; reasons.push(`Reports điểm thấp avg ${avgScore.toFixed(2)} — chưa đủ bằng chứng fix tốt`);
   }
@@ -648,7 +651,7 @@ function printEvaluateHuman(result, bugSlug, scored) {
   console.log(`${icon} Evaluate ${bugSlug} → ${decision}`);
   console.log(`   title: ${result.title}`);
   console.log(`   nextId: ${result.nextId}`);
-  console.log(`   checks: hasFix=${checks.hasFix} hasApproach=${checks.hasApproach} isFixed=${checks.isFixed} reports=${checks.reports} avgScore=${checks.avgScore!==null?checks.avgScore.toFixed(2):'—'} duplicate=${checks.isDuplicate ? scored[0].id+'('+scored[0].score+')' : 'no'}`);
+  console.log(`   checks: hasFix=${checks.hasFix} hasApproach=${checks.hasApproach} isFixed=${checks.isFixed} reports=${checks.reports} avgScore=${checks.avgScore!==null?checks.avgScore.toFixed(2):'—'} duplicate=${checks.isDuplicate ? scored[0].id+'('+scored[0].score+', advisory)' : 'no'}`);
   if (scored.length) console.log(`   top KN: ${scored.map(s=>`${s.id}(${s.score})`).join(', ')}`);
   console.log(`   reasons:`);
   for (const r of reasons) console.log(`     - ${r}`);
