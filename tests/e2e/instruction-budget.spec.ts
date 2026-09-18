@@ -14,6 +14,7 @@ import path from 'node:path';
  *  4. fail-closed: dir rỗng / không tồn tại → exit 2 (không pass oan)
  *  5. fail-closed arg: số rác / flag thiếu giá trị / dạng "=" / flag lạ → exit 2
  *     (regression 2026-09-18: parseInt('abc') = NaN → so sánh luôn false → pass oan exit 0)
+ *     + vòng 3 (OCR review): single-dash `-budget` / positional `budget 1100` → exit 2
  */
 
 const ROOT = process.cwd();
@@ -75,7 +76,7 @@ test('fail-closed: dir rỗng → exit 2, dir không tồn tại → exit 2', ()
   expect(missing.status).toBe(2);
 });
 
-test('fail-closed arg: số rác/flag lạ không được NaN-pass oan — --budget abc / --top abc / thiếu giá trị / --budget=9999 → exit 2', () => {
+test('fail-closed arg: số rác/flag lạ không được NaN-pass oan — --budget abc / --top abc / thiếu giá trị / --budget=9999 / -budget / positional → exit 2', () => {
   const nanBudget = run(['--budget', 'abc']);
   expect(nanBudget.status, '--budget abc phải exit 2 (trước fix 18/09: NaN-pass exit 0)').toBe(2);
   expect(nanBudget.stderr).toMatch(/fail-closed/);
@@ -91,4 +92,10 @@ test('fail-closed arg: số rác/flag lạ không được NaN-pass oan — --bu
 
   const eqForm = run(['--budget=9999']);
   expect(eqForm.status, '--budget=9999 (dạng =) không nhận diện → exit 2, gate không được tưởng bật mà tắt').toBe(2);
+
+  const singleDash = run(['-budget', '1100']);
+  expect(singleDash.status, '-budget (single-dash typo) không được nuốt im lặng → exit 2 (vòng 3 OCR review)').toBe(2);
+
+  const positional = run(['budget', '1100']);
+  expect(positional.status, 'positional "budget 1100" (thiếu --) không được tắt gate im lặng → exit 2 (vòng 3 OCR review)').toBe(2);
 });

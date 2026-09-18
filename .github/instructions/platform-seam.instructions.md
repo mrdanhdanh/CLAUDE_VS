@@ -1,6 +1,6 @@
 ---
 description: "Platform seam — AG-UI + MCP + Components + Routines (học OpenBot). Bring your own agent, governed MCP, generative UI, scheduled routines. Use when adding agent, MCP, component, routine, or platform capability."
-applyTo: "**"
+applyTo: ".agent/**,www/components/**"
 ---
 
 # Platform Seam — AG-UI + MCP + Components + Routines (học OpenBot)

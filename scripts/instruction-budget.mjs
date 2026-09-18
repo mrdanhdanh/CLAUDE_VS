@@ -20,18 +20,27 @@ import fs from 'node:fs';
 import path from 'node:path';
 
 // Ratchet 2026-09-16: pool always-on đo được = 1395 dòng → freeze ở 1400.
+// Ratchet 2026-09-18: path-scope yunie-personality/platform-seam/cosmic-quantum → pool 1028 → siết xuống 1100.
 // Muốn thêm file/dòng always-on → path-scope (applyTo hẹp hơn) hoặc gộp trước.
-const SOFT_BUDGET = 1400;
+const SOFT_BUDGET = 1100;
 
-function parseArgs(args) {
-  // Fail-closed (bug 2026-09-18 + OCR delegate review): chặn arg lạ / dạng "=" —
-  // gate không bao giờ được "tưởng bật mà tắt" (im lặng bỏ qua --budget=1400, --budjet...).
-  const KNOWN = new Set(['--budget', '--top', '--dir', '--json']);
-  const unknown = args.find((a) => a.startsWith('--') && !KNOWN.has(a));
-  if (unknown) {
-    console.error(`⛔ fail-closed: arg không nhận diện — "${unknown}" (dùng: --budget <n> · --top <n> · --dir <path> · --json)`);
+// Fail-closed (bug 2026-09-18 + OCR delegate review vòng 3): mọi token phải là KNOWN flag
+// hoặc value của flag đứng ngay trước — gate không bao giờ "tưởng bật mà tắt"
+// (--budget=1400, --budjet, -budget single-dash, positional "budget 1400" đều exit 2).
+const KNOWN_ARGS = new Set(['--budget', '--top', '--dir', '--json']);
+const VALUE_ARGS = new Set(['--budget', '--top', '--dir']);
+function assertKnownArgs(args) {
+  for (let i = 0; i < args.length; i++) {
+    const a = args[i];
+    if (KNOWN_ARGS.has(a)) continue;
+    if (i > 0 && VALUE_ARGS.has(args[i - 1])) continue; // value hợp lệ của flag trước
+    console.error(`⛔ fail-closed: arg không nhận diện — "${a}" (dùng: --budget <n> · --top <n> · --dir <path> · --json)`);
     process.exit(2);
   }
+}
+
+function parseArgs(args) {
+  assertKnownArgs(args);
   const opt = (name, def) => {
     const i = args.indexOf(name);
     return i !== -1 && args[i + 1] != null && !args[i + 1].startsWith('--') ? args[i + 1] : def;

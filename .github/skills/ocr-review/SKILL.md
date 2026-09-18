@@ -109,6 +109,7 @@ ocr review --from main --to HEAD --format json
 
 - **2026-09-18:** delegate trên commit `ab2a875` (59 file → 6 reviewable) — tìm ra bug **fail-open** trong `scripts/instruction-budget.mjs` (`--budget abc` → NaN → exit 0 thay vì exit 2 fail-closed). Đáng tin để làm lưới review cuối pipeline.
 - **2026-09-18 (vòng 2):** delegate review qua **subagent** trên diff fix (`scripts/instruction-budget.mjs` +13/-4) — tìm thêm **2 minor cùng class fail-open** (`--top` thiếu giá trị còn default im lặng; dạng `--budget=1400`/typo bị nuốt → gate "tưởng bật mà tắt") → đã fix trong loop + mở rộng guard test (5 assert). Xác nhận review→fix loop hoạt động, context chính sạch.
+- **2026-09-18 (vòng 3):** delegate qua subagent trên diff `instruction-budget-trim` (6 reviewable / 13 total — `splitGlobs` mới, budget ratchet, `.agent/kn-review/check.mjs`) — **7 findings, 0 critical/major**: splitGlobs sinh phần tử rỗng (comma đôi → YAML `- ""`), gate arg còn hở **single-dash/positional** (class KN-069), check.mjs ~10/16 refs false-positive, drift `1399/1400` ở docs/status → fix loop: guard phần tử rỗng + main-guard, **spec mới `tests/e2e/harness-manager-export.spec.ts`** (splitGlobs unit qua node con + export thật + CLI-alive), +2 assert arg (7/7 GREEN), check.mjs skip placeholder/relative/KN-001 + `--out` utf8 (16→1 refs), docs/status → `1028/1100`. Giới hạn đã biết: `docs/agent-notes.md` (quote KN-043) vẫn bị flag — reviewer tự phân loại.
 
 ---
 *Skill: ocr-review — Mức 3 thủ công, $0 token. Tool: alibaba/open-code-review (Apache-2.0).*

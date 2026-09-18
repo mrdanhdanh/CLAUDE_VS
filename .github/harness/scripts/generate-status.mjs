@@ -378,7 +378,7 @@ async function main() {
         '2.1-beta': ['P1-1 Multi-Agent handoff (08+09)', 'P1-2 Observability traces (10)', 'P1-3 Protocols MCP 1.2.0 (11)', 'P1-4 Context pipeline (12)', 'P1-5 Memory tiers (13)', 'P1-6 Router+cache (16)'],
         '2.2': ['P2-1 MAF workflows (14)', 'P2-2 CUA guardrails (15)', 'P2-3 Local SLM (17)', 'P2-4 Setup doctor (00)'],
         '2.3': ['Evals Gate (KN-037 — Andrew Ng Playbook 2026)', 'Skill evals-gate: rubric + component/E2E evals + error analysis', 'Verify: không claim Done khi output open-ended chưa đo'],
-        '2.4': ['OCR Review cuối pipeline (skill ocr-review — alibaba/open-code-review delegate $0 token, qua subagent)', 'Governance policy v5 — delegation attenuation (12 deny + 2 allow)', 'Instruction budget ratchet 1399/1400 (KN-068) · gate fail-closed với arg rác (KN-069)'],
+        '2.4': ['OCR Review cuối pipeline (skill ocr-review — alibaba/open-code-review delegate $0 token, qua subagent)', 'Governance policy v5 — delegation attenuation (12 deny + 2 allow)', 'Instruction budget ratchet 1028/1100 (KN-068 — path-scope 18/09) · gate fail-closed với arg rác (KN-069)'],
       },
     },
     learn: learnStats,

@@ -3,7 +3,7 @@
 > Harness 2.4 (P0+P1+P2 + Evals Gate KN-037 + OCR Review cuối pipeline) + Registry tháo lắp wise — VS Code Copilot Chat. Mọi customization đều là plugin.
 >
 > **Mới 2.1/2.2/2.3 (2026-09-11):** Agentic RAG loop · Tool hardening · Planning JSON · Receipt Ed25519 · Multi-Agent handoff · Observability traces · MCP 1.2.0 · Context pipeline · Memory tiers · Router+cache · MAF workflows · CUA guardrails · Local SLM · Setup doctor · **Evals Gate (KN-037 — Andrew Ng Playbook 2026)**. Chi tiết: `docs/harness-2.1-upgrade.md` (DONE) + `docs/knowleged.md`.
-> **Mới 2.4 (2026-09-18):** **OCR Review cuối pipeline** (skill `ocr-review` — alibaba/open-code-review delegate $0 token, qua subagent) · **policy v5** delegation attenuation (12 deny + 2 allow) · **instruction budget ratchet** 1399/1400 (KN-068) · **gate fail-closed** với arg rác + KN ID claims-aware (KN-069).
+> **Mới 2.4 (2026-09-18):** **OCR Review cuối pipeline** (skill `ocr-review` — alibaba/open-code-review delegate $0 token, qua subagent) · **policy v5** delegation attenuation (12 deny + 2 allow) · **instruction budget ratchet** 1028/1100 (KN-068 — path-scope 3 rule 18/09) · **gate fail-closed** với arg rác + KN ID claims-aware (KN-069).
 
 ---
 

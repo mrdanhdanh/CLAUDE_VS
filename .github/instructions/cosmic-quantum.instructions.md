@@ -1,6 +1,6 @@
 ---
 description: "Cosmic-Quantum Thinking — triết lý vũ trụ + lượng tử cho Harness. Use when designing system philosophy, harness theory, product vision, need cosmic/quantum metaphors, scale thinking, entanglement, superposition, uncertainty, or user says vũ trụ/lượng tử/cosmos/quantum/triết lý/lý thuyết/hệ thống/scale"
-applyTo: "**"
+applyTo: ".agent/plans/**,www/cosmos/**,www/cosmos.html"
 ---
 
 # Cosmic-Quantum Thinking — Rule

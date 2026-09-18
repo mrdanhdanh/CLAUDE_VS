@@ -1013,6 +1013,21 @@ const CLAUDE_MD_REPLACEMENTS = [
 ];
 
 function fmQuote(v) { return JSON.stringify(String(v)); }
+// Tách comma top-level của applyTo → list glob (không tách trong {} — vd "**/*.{html,css}")
+// Bỏ phần tử rỗng (comma đôi/đầu chuỗi) — không sinh YAML `- ""` (OCR review vòng 3, 18/09).
+// Export cho guard spec (KN-056): tests/e2e/harness-manager-export.spec.ts
+function splitGlobs(s) {
+  const out = []; let depth = 0; let cur = '';
+  for (const ch of s) {
+    if (ch === '{') depth++;
+    else if (ch === '}') depth = Math.max(0, depth - 1);
+    if (ch === ',' && depth === 0) { if (cur.trim()) out.push(cur.trim()); cur = ''; continue; }
+    cur += ch;
+  }
+  if (cur.trim()) out.push(cur.trim());
+  return out;
+}
+export { splitGlobs };
 // Ghép marker + body: đúng 1 dòng trống giữa marker và nội dung, kết thúc bằng \n
 function withMarker(marker, body) {
   return marker + '\n\n' + body.replace(/^[ \t]*(\r?\n)+/, '').replace(/(\r?\n)+$/, '\n');
@@ -1066,8 +1081,11 @@ async function buildRules(reg) {
     const src = relPosix(srcPath);
     const applyTo = (fm.applyTo || entry.applyTo || '**').trim();
     // applyTo "**" → rule luôn load (không frontmatter); glob khác → paths: list
+    // comma top-level = nhiều glob (VS Code applyTo hỗ trợ "a/**,b/**") → YAML list; giữ nguyên {} chứa comma
     let head = '';
-    if (applyTo !== '**') head = `---\npaths:\n  - ${fmQuote(applyTo)}\n---\n`;
+    if (applyTo !== '**') {
+      head = `---\npaths:\n${splitGlobs(applyTo).map((g) => `  - ${fmQuote(g)}`).join('\n')}\n---\n`;
+    }
     const content = head + withMarker(MARKER(src), translateBody(body));
     files.push({ rel: `.claude/rules/${name}.md`, content, source: src });
   }
@@ -1584,4 +1602,7 @@ async function main() {
   }
 }
 
-main();
+// Chỉ chạy CLI khi gọi trực tiếp — import từ guard spec (KN-056) không kích hoạt main.
+const cliEntry = process.argv[1] ? path.resolve(process.argv[1]) : '';
+const isCliEntry = cliEntry && (process.platform === 'win32' ? cliEntry.toLowerCase() === __filename.toLowerCase() : cliEntry === __filename);
+if (isCliEntry) main();
