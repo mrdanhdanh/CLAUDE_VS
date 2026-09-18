@@ -1,14 +1,16 @@
-﻿# CLAUDE HARNESS 2.3 — VS Code Copilot
+﻿# CLAUDE HARNESS 2.4 — VS Code Copilot
 
 > **Process > Model, Agent tự làm việc.** Dù GPT / Claude / Gemini đều chạy cùng pipeline. Một ý tưởng nhỏ → **sản phẩm hoàn chỉnh, giao diện đẹp** — không phụ thuộc model.
 >
 > **Mới 2.1/2.2/2.3 (2026-09-11, DONE):** Agentic RAG loop · Tool hardening · Planning JSON · Receipt Ed25519 · Multi-Agent handoff · Observability traces + eval gate · MCP 1.2.0 · Context pipeline · Memory tiers · Router+cache · MAF workflows · CUA guardrails · Local SLM hybrid · Setup doctor · **Evals Gate (KN-037 — Andrew Ng Playbook 2026)**. Chi tiết: `docs/harness-2.1-upgrade.md` + `docs/knowleged.md`.
 >
 > **Bổ sung (2026-09-13):** KN-049→KN-058 · **Vòng chống tái lập** — log tự RADAR + Guard gate + `guards` audit (KN-056) · **Executive Function/ADHD** (KN-054 — instruction + `www/executive-function/`) · **Hawking watchdog** (draft ≥30d escalate / ≥90d evaporate, human sign-off) · Slop paydown toàn repo (KN-047) · AI News curated mirror + bản VI · README pipeline diagram → **SVG tĩnh light/dark** (né race rich-display của GitHub — KN-057).
+>
+> **Mới 2.4 (2026-09-18):** **OCR Review** — skill `ocr-review` chạy cuối pipeline (alibaba/open-code-review, delegate mode $0 token, qua subagent, user quyết) · Governance **policy v5** (12 deny + 2 allow — delegation attenuation: `deny-subagent-no-parent/chain/escalation`) · **Instruction budget ratchet** 1399/1400 — `npm run budget:check` (KN-068) · Gate **fail-closed với arg rác** — NaN-pass fixed (KN-069) · KN ID allocation **claims-aware** (chống double-yield).
 
 Harness biến VS Code Copilot Chat thành **Claude Code Extension**: tự động, todo-driven, explore trước khi code, plan trước khi implement, polish trước khi done. Mọi customization (skill / rule / agent / prompt / hook) đều **tháo lắp như plugin** — bật/tắt không xóa, preset theo dự án, scaffold 1 lệnh.
 
-> **Trạng thái hiện tại (2026-09-13):** 19 skills (+evals-gate, cosmic-quantum, cosmic-scale, archify, 5 harness-* lesson skills) · 19 instructions (+awesome-design, cosmic-quantum, fund-the-friction, executive-function) · 9 agents (+critic) · 7 prompts · 1 hook — tất cả enabled · 4 presets · **58 KN** · 39 bugs · 83 plans · 12 lab COSMOS + Cosmic Web graph + Hawking watchdog + Escape Velocity gate (`www/cosmos/`) · 16 demos `www/` · 24 scripts harness · 3 routines · MCP library 1.2.0 · governance policy v4 (9 deny + 2 allow, Ed25519) · `www/status.json` do YUNIE generate.
+> **Trạng thái hiện tại (Harness 2.4 — 2026-09-18):** 20 skills (+ocr-review, evals-gate, cosmic-quantum, cosmic-scale, archify, 5 harness-* lesson skills) · 19 instructions · 9 agents · 7 prompts · 1 hook — tất cả enabled · 4 presets · **68 KN** · 51 bugs · 91 plans · 12 lab COSMOS + Cosmic Web graph + Hawking watchdog + Escape Velocity gate (`www/cosmos/`) · 16 demos `www/` · 25 scripts harness + 7 `.agent/scripts` · instruction budget ratchet 1399/1400 (`npm run budget:check`) · 3 routines · MCP library 1.2.0 · governance policy v5 (12 deny + 2 allow, Ed25519) · `www/status.json` do YUNIE generate.
 
 ---
 
@@ -112,6 +114,7 @@ Idea → Explore → Clarify → PRD → Design → Plan → Implement → Polis
 - **Todo-driven:** 5-10 todos, 3-7 từ/todo, 1 `in-progress` tại 1 thời điểm, `get_errors` sau mỗi edit.
 - **Verify loop:** Fail → fix → re-run, max 3 lần/check. Chỉ `task_complete` khi PASS.
 - **/fixbug:** `Read Knowledge → Reproduce → Root Cause → Fix → Verify → Learn → Done` · Reproduce FAIL→STOP/ask · Confidence HIGH/MEDIUM/LOW (LOW→STOP) · `get_errors` phân tầng (affected ở Fix, full scope ở Verify).
+- **OCR Review (2.4):** sau Verify — diff ≥100 LOC / ≥5 file / sensitive → đề xuất chạy skill `ocr-review` (alibaba/open-code-review, delegate `$0` token) qua subagent trước Done; light ops (preview/rule) agent tự chủ, user quyết review đầy đủ.
 
 Chi tiết: [`docs/harness-flow.md`](docs/harness-flow.md) (flowchart + sequence + architecture + decision) · `.github/prompts/fixbug.prompt.md`
 
@@ -121,7 +124,7 @@ Chi tiết: [`docs/harness-flow.md`](docs/harness-flow.md) (flowchart + sequence
 
 | Nhóm | Cái gì (hiện tại) | Tháo lắp | Cài GitHub | Tạo mới | Slash | Subagent |
 |------|--------|:--------:|:----------:|:-------:|:-----:|:--------:|
-| **Skill (19)** | claude-harness, custom-registry, skill-registry, glass-rainbow-effects, ui-design-system, ui-ux-pro-max, tdd-gate, systematic-debugging, auto-researcher, last30days, harness-build-config, harness-governance, harness-minimal, harness-process, harness-web-ui, cosmic-quantum, cosmic-scale, archify, evals-gate | ✅ | ✅ | ✅ | ✅ | — |
+| **Skill (20)** | claude-harness, custom-registry, skill-registry, glass-rainbow-effects, ui-design-system, ui-ux-pro-max, tdd-gate, systematic-debugging, auto-researcher, last30days, harness-build-config, harness-governance, harness-minimal, harness-process, harness-web-ui, cosmic-quantum, cosmic-scale, archify, evals-gate, ocr-review | ✅ | ✅ | ✅ | ✅ | — |
 | **Instruction (19)** | harness-workflow, knowleged, product-quality, skill-usage, custom-registry, locale-i18n, plugin-seam, library-rag, yunie-personality, auto-learn, agent-governance, platform-seam, minimal-ladder, context-engineering, cua-safety, awesome-design, cosmic-quantum, fund-the-friction, executive-function | ✅ | ✅ | ✅ | — | — |
 | **Agent (9)** | Explore, Plan, Designer, Implement, Polish, Verify, YUNIE, learn, Critic | ✅ | ✅ | ✅ | — | ✅ |
 | **Prompt (7)** | /harness, /product, /plan, /implement, /polish, /verify, /fixbug | ✅ | ✅ | ✅ | ✅ | — |
@@ -217,11 +220,11 @@ Templates: `.github/harness/templates/` (instruction.md, agent.md, prompt.md, sk
 
 Bộ nhớ dài hạn + tự học — không lặp bug cũ.
 
-- **Knowledge:** `docs/knowleged.md` — **BẮT BUỘC đọc trước mọi task** (58 KN: KN-001 → KN-058, tags `process` `ui` `dx` `a11y` `css` `governance` `minimal` `self-evolving` `rsi` `failure-diagnosis` `guard`...). Mỗi KN: Triệu chứng → Nguyên nhân gốc → Cách sửa → Cách phòng tránh.
+- **Knowledge:** `docs/knowleged.md` — **BẮT BUỘC đọc trước mọi task** (68 KN: KN-001 → KN-069, gap 061, tags `process` `ui` `dx` `a11y` `css` `governance` `minimal` `self-evolving` `rsi` `failure-diagnosis` `guard` `token-budget` `fail-closed`...). Mỗi KN: Triệu chứng → Nguyên nhân gốc → Cách sửa → Cách phòng tránh.
 - **Auto-Learn:** `node .github/harness/scripts/auto-learn.mjs <suggest|log|propose|status|guards|watchdog>` — suggest KN liên quan (BM25-lite + IDF, <50ms), log bug draft vào `.agent/bugs/`, propose KN mới sau fix. Hooks `PostToolUse`/`Stop` nhắc tự động.
 - **Chống tái lập (KN-056):** `log` tự RADAR đối chiếu KN/bug cũ (BM25) → cảnh báo tái lập; `propose` có **Guard gate** (`--strict` → exit 1) — fix major/critical phải để lại lưới (test/invariant); `guards` audit coverage.
 - **Hawking watchdog:** draft ≥30d → escalate (journal `.agent/hawking.jsonl`), ≥90d → evaporate — chỉ human `--apply --sign "<tên>"` mới ghi (agent chỉ đề xuất).
-- **Bugs:** `.agent/bugs/<slug>/bug.md` (39 bugs đã lưu + `_template/bug.md`). Sau `/fixbug` phải cập nhật cả `bug.md` + `knowleged.md`.
+- **Bugs:** `.agent/bugs/<slug>/bug.md` (51 bugs đã lưu + `_template/bug.md`). Sau `/fixbug` phải cập nhật cả `bug.md` + `knowleged.md`.
 - **Agent `learn`:** delegate suggest/log/propose khi cần.
 
 ```bash
@@ -235,9 +238,9 @@ node .github/harness/scripts/auto-learn.mjs status
 
 ## Governance
 
-Audit + policy + credentials — học OpenBot, fail-closed. **Mới 2.1/2.2/2.3:** Receipt Ed25519 + traces + eval gate + CUA guardrails + Evals Gate (KN-037).
+Audit + policy + credentials — học OpenBot, fail-closed. **Mới 2.1/2.2/2.3:** Receipt Ed25519 + traces + eval gate + CUA guardrails + Evals Gate (KN-037). **2.4:** OCR Review + policy v5 (delegation attenuation — subagent ⊆ parent).
 
-- **Policy gate:** `node .agent/scripts/policy-check.mjs --tool <tool> --target "<target>" --actor <actor>` — deny trước allow, malformed `policy.json` → deny all. Hiện tại **v4**: **9 deny** (rm-rf-root, env-read, credentials-direct, private-hosts, test-mutate, destructive-sql, rm-rf-variants, law-fork, law-copy-in-skill — case-normalize, uppercase hết bypass) + **2 allow** (read-www, all).
+- **Policy gate:** `node .agent/scripts/policy-check.mjs --tool <tool> --target "<target>" --actor <actor>` — deny trước allow, malformed `policy.json` → deny all. Hiện tại **v5**: **12 deny** (9 cũ + delegation attenuation: `deny-subagent-no-parent`, `deny-subagent-chain`, `deny-subagent-escalation` — child scope ⊆ parent) + **2 allow** (read-www, all).
 - **Verifier integrity (KN-012):** test là immutable (`*.Tests.*`, `*.test.*`, `*.spec.*`, `ai-news.json`) — chỉ `verify` actor hoặc human takeover (`intent=takeover`) mới được sửa test. Sửa test để pass = reward hacking.
 - **Audit trail:** `node .agent/scripts/audit.mjs <log|tail|stats|verify|keygen|pubkey>` — append-only JSONL + hash-chain (SHA-256/16) + **receipt Ed25519 + JCS** (P0-4, sửa 1 byte → fail) + **trace linkage** (`--traceId --spanId`, P1-2), secret auto-redact. `verify` phải chain OK sau mỗi session.
 - **Credentials:** `node .agent/scripts/credentials.mjs <set|list|get|delete>` — AES-256-GCM, never logged.
@@ -332,13 +335,13 @@ Mở local: `www/index.html` (file://) hoặc `npx serve www` → `http://localh
 ├── docs/
 │   ├── harness-flow.md      # Sơ đồ /harness (flowchart, sequence, architecture) — nguồn mermaid
 │   ├── capabilities.md      # Toàn bộ khả năng hệ thống
-│   ├── knowleged.md         # BẮT BUỘC đọc trước mọi task — 58 KN + anti-patterns + checklist
+│   ├── knowleged.md         # BẮT BUỘC đọc trước mọi task — 68 KN + anti-patterns + checklist
 │   ├── assets/              # SVG tĩnh — harness-pipeline light/dark (README front page, KN-057)
 │   └── yunie-brain-upgrade.md # Personality v2 + RAG citations (6 sách, 303 chunks)
 ├── .agent/                             # Trace + governance (học OpenBot)
-│   ├── plans/ (83)          # PRD/Design/Plan mỗi task 1 thư mục: aar-harness, ai-news-search, cosmos-macro-expansion, web-011-part1..7, ...
-│   ├── bugs/ (39)           # bug.md mỗi bug 1 thư mục + _template/bug.md
-│   ├── policy.json          # v4: 9 deny + 2 allow, fail-closed (case-normalize)
+│   ├── plans/ (91)          # PRD/Design/Plan mỗi task 1 thư mục: aar-harness, ai-news-search, cosmos-macro-expansion, web-011-part1..7, ...
+│   ├── bugs/ (51)           # bug.md mỗi bug 1 thư mục + _template/bug.md
+│   ├── policy.json          # v5: 12 deny + 2 allow, fail-closed (delegation attenuation)
 │   ├── audit.jsonl          # append-only + hash-chain (gitignore)
 │   ├── credentials.enc.json # AES-256-GCM (gitignore)
 │   ├── agents.yaml          # 3 built-in: general, knowledge, risk
@@ -350,12 +353,12 @@ Mở local: `www/index.html` (file://) hoặc `npx serve www` → `http://localh
 │   ├── copilot-instructions.md          # Harness v2 — Identity + Pipeline (source of truth)
 │   ├── workflows/ (pages.yml + ai-news.yml) # Deploy www/ → GitHub Pages
 │   ├── harness/
-│   │   ├── registry.json                # v2 unified (commit vào git) — 19 skills, 19 instructions, 9 agents, 7 prompts, 1 hook
+│   │   ├── registry.json                # v2 unified (commit vào git) — 20 skills, 19 instructions, 9 agents, 7 prompts, 1 hook
 │   │   ├── presets/                     # full, web-product, api-minimal, lean-product
 │   │   ├── templates/                   # instruction, agent, prompt, skill
 │   │   ├── scripts/ (harness-manager, generate-status, auto-learn, auto-researcher)
 │   │   └── README.md
-│   ├── skills/ (19)         # claude-harness, custom-registry, skill-registry, evals-gate, glass-rainbow-effects, ui-design-system, ui-ux-pro-max, tdd-gate, systematic-debugging, auto-researcher, last30days, harness-build-config, harness-governance, harness-minimal, harness-process, harness-web-ui, cosmic-quantum, cosmic-scale, archify
+│   ├── skills/ (20)         # claude-harness, custom-registry, skill-registry, evals-gate, glass-rainbow-effects, ui-design-system, ui-ux-pro-max, tdd-gate, systematic-debugging, auto-researcher, last30days, harness-build-config, harness-governance, harness-minimal, harness-process, harness-web-ui, cosmic-quantum, cosmic-scale, archify, ocr-review
 │   ├── instructions/ (19)   # harness-workflow, knowleged, product-quality, skill-usage, custom-registry, locale-i18n, plugin-seam, library-rag, yunie-personality, auto-learn, agent-governance, platform-seam, minimal-ladder, context-engineering, cua-safety, awesome-design, cosmic-quantum, fund-the-friction, executive-function
 │   ├── agents/ (9)          # Explore, Plan, Designer, Implement, Polish, Verify, YUNIE, learn, Critic
 │   ├── prompts/ (7)         # harness, product, plan, implement, polish, verify, fixbug
@@ -375,9 +378,9 @@ Mở local: `www/index.html` (file://) hoặc `npx serve www` → `http://localh
 
 | Doc | Mô tả |
 |-----|-------|
-| [`docs/knowleged.md`](docs/knowleged.md) | ⚠️ BẮT BUỘC đọc trước mọi task — 58 KN (KN-001→KN-058) + anti-patterns + checklist phòng tránh |
+| [`docs/knowleged.md`](docs/knowleged.md) | ⚠️ BẮT BUỘC đọc trước mọi task — 68 KN (KN-001→KN-069, gap 061) + anti-patterns + checklist phòng tránh |
 | [`docs/harness-flow.md`](docs/harness-flow.md) | Sơ đồ khi dùng `/harness` — flowchart, sequence, architecture, decision, chi tiết 8 phase |
-| [`docs/capabilities.md`](docs/capabilities.md) | Toàn bộ khả năng — Harness 2.3 + Skills(19) + Instructions(19) + Agents(9) + 24 scripts + Governance + Library RAG 1.2.0 |
+| [`docs/capabilities.md`](docs/capabilities.md) | Toàn bộ khả năng — Harness 2.4 + Skills(20) + Instructions(19) + Agents(9) + 25 scripts + Governance (policy v5) + Library RAG 1.2.0 |
 | [`docs/harness-2.1-upgrade.md`](docs/harness-2.1-upgrade.md) | ✅ DONE — Roadmap P0/P1/P2 (14 commits) + verification checklist + citations |
 | [`docs/yunie-brain-upgrade.md`](docs/yunie-brain-upgrade.md) | YUNIE Personality v2 — GenZ + ấm áp + hài duyên, RAG citations, SSA |
 | [`.github/harness/README.md`](.github/harness/README.md) | Harness Registry — tháo lắp, preset, scaffold |
@@ -397,4 +400,4 @@ Mở local: `www/index.html` (file://) hoặc `npx serve www` → `http://localh
 
 ---
 
-*Harness 2.3 (2026-09-13 — cập nhật KN-049→056): Process > Model, Agent tự làm việc. Idea nhỏ → Product đẹp. Mọi model đều chạy cùng pipeline. Mọi thứ đều là plugin — YUNIE trực hệ thống, www/ lên Pages. Knowledge first (`docs/knowleged.md`), TDD gate, governance fail-closed + Ed25519 (policy v4), minimal ladder, cosmic-quantum thinking, fund the friction (KN-018), evals gate — "chạy được" ≠ "tốt đến đâu" (KN-037), vòng chống tái lập (KN-056: RADAR + Guard gate), executive function (KN-054), Hawking watchdog. Số liệu chính xác nhất: `www/status.json`.*
+*Harness 2.4 (2026-09-18 — OCR Review + policy v5 + guard fail-closed KN-068/069): Process > Model, Agent tự làm việc. Idea nhỏ → Product đẹp. Mọi model đều chạy cùng pipeline. Mọi thứ đều là plugin — YUNIE trực hệ thống, www/ lên Pages. Knowledge first (`docs/knowleged.md`), TDD gate, governance fail-closed + Ed25519 (policy v5), minimal ladder, cosmic-quantum thinking, fund the friction (KN-018), evals gate — "chạy được" ≠ "tốt đến đâu" (KN-037), vòng chống tái lập (KN-056: RADAR + Guard gate), executive function (KN-054), Hawking watchdog, OCR review cuối pipeline (skill `ocr-review`, $0 token). Số liệu chính xác nhất: `www/status.json`.*

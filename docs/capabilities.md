@@ -1,8 +1,9 @@
 ﻿# Capabilities — Toàn bộ khả năng của hệ thống
 
-> Harness 2.3-done (P0+P1+P2 + Evals Gate KN-037) + Registry tháo lắp wise — VS Code Copilot Chat. Mọi customization đều là plugin.
+> Harness 2.4 (P0+P1+P2 + Evals Gate KN-037 + OCR Review cuối pipeline) + Registry tháo lắp wise — VS Code Copilot Chat. Mọi customization đều là plugin.
 >
 > **Mới 2.1/2.2/2.3 (2026-09-11):** Agentic RAG loop · Tool hardening · Planning JSON · Receipt Ed25519 · Multi-Agent handoff · Observability traces · MCP 1.2.0 · Context pipeline · Memory tiers · Router+cache · MAF workflows · CUA guardrails · Local SLM · Setup doctor · **Evals Gate (KN-037 — Andrew Ng Playbook 2026)**. Chi tiết: `docs/harness-2.1-upgrade.md` (DONE) + `docs/knowleged.md`.
+> **Mới 2.4 (2026-09-18):** **OCR Review cuối pipeline** (skill `ocr-review` — alibaba/open-code-review delegate $0 token, qua subagent) · **policy v5** delegation attenuation (12 deny + 2 allow) · **instruction budget ratchet** 1399/1400 (KN-068) · **gate fail-closed** với arg rác + KN ID claims-aware (KN-069).
 
 ---
 
@@ -45,11 +46,12 @@ Idea → Explore → Clarify → PRD → Design → Plan → Implement → Polis
 | Plan | Chia nhỏ để code | `.agent/plans/<slug>/plan.md` + todos | Plan | ❌ |
 | Implement | Code todo-driven | Files code | Implement | ❌ |
 | Polish | Làm đẹp + UX | Responsive, states, animation, a11y | Polish | ❌ |
-| Verify | Đảm bảo chất lượng | build/test/lint pass + visual check | Verify | ❌ |
+| Verify | Đảm bảo chất lượng + **OCR Review** (đề xuất cuối — `ocr-review`) | build/test/lint pass + visual check + evals + OCR review (diff ≥100 LOC / ≥5 file / sensitive) | Verify | ❌ |
 
 - **Todo-driven:** Mọi task >2 bước phải `manage_todo_list` (5-10 todos, 3-7 từ/todo), 1 `in-progress` tại 1 thời điểm, `get_errors` sau mỗi edit.
 - **Rút gọn cho task nhỏ (1-2 file):** Explore(quick) → Clarify(1 câu) → PRD mini → Design mini → Plan(3 todos) → Implement → Polish → Verify. Không bỏ Polish.
 - **Verify loop:** Fail → fix → re-run, max 3 lần/check. Chỉ `task_complete` khi PASS.
+- **OCR Review (bổ sung 18/09):** sau Verify — diff ≥100 LOC / ≥5 file / sensitive → đề xuất user chạy skill `ocr-review` (alibaba/open-code-review delegate mode, $0 token) qua subagent; light ops (preview/rule) agent tự chủ.
 
 Chi tiết: `.github/copilot-instructions.md` · `.github/skills/claude-harness/SKILL.md` · `docs/harness-flow.md`
 
@@ -90,6 +92,7 @@ Skills là workflow on-demand, agent chỉ load khi `description` match task (pr
 | `tdd-gate` | **TDD gate** — RED-GREEN-REFACTOR bắt buộc, không production code nếu chưa có test fail trước (inspired by `obra/superpowers` TDD) | Implementing feature, fixing bug, refactoring — enforces failing test first | `/tdd-gate` |
 | `systematic-debugging` | **Systematic debugging 4-phase** — root cause first, evidence gathering, single hypothesis, TDD fix, 3-fix limit (inspired by `obra/superpowers`) | Bug, test failure, build failure, unexpected behavior — before proposing fixes | `/systematic-debugging` |
 | `evals-gate` | **Evals gate** — rubric + component/E2E evals + error analysis cho output open-ended, không chỉ "chạy được" (inspired by Andrew Ng — Agentic AI Playbook 2026, KN-037) | Output open-ended (UI/plan/report/agent), trước claim Done | `/evals-gate` |
+| `ocr-review` | **Code review cuối pipeline** — ocr (alibaba/open-code-review) delegate mode **$0 token**: chọn file deterministic + rule resolution; chạy qua subagent trước Done | Trước Done (diff ≥100 LOC / ≥5 file / sensitive), user asks review | `/ocr-review` |
 | `skill-registry` | Tháo lắp skill như plugin | Cài/gỡ/bật/tắt skill từ GitHub | `/skill-registry` |
 | `custom-registry` | Tháo lắp toàn bộ (skill/instruction/agent/prompt/hook) + preset + scaffold | Quản lý rule, preset, tạo mới customization | `/custom-registry` |
 | `glass-rainbow-effects` | Liquid glass + rainbow border effects | Cần glassmorphism, rainbow border, animated gradient | — |
@@ -405,6 +408,7 @@ Mở: `www/library/index.html` — kéo thả PDF/DOCX/TXT/MD, gõ `/` để tì
 /implement               # chỉ implement
 /polish [target]         # chỉ polish
 /verify                  # chỉ verify
+/ocr-review              # code review cuối pipeline (skill ocr-review, $0 token, qua subagent)
 /skill-registry          # hướng dẫn skill registry
 /custom-registry         # hướng dẫn custom registry
 ```

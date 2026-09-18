@@ -13,7 +13,7 @@ Idea → Explore → Clarify → PRD → Design → Plan → Implement → Polis
 - **Model-agnostic:** GPT / Claude / Gemini đều chạy cùng pipeline — chất lượng đến từ **process**, không phụ thuộc model.
 - **Product-driven:** Mọi task phải ra sản phẩm dùng được, UI đẹp, UX mượt.
 - **Todo-driven:** Mọi task >2 bước phải `manage_todo_list`, 1 todo `in-progress` tại 1 thời điểm, `get_errors` sau mỗi edit.
-- **Verify before Done:** Không `task_complete` khi chưa build/test/lint pass + visual check + **Evals Gate** (KN-037 — rubric + component/E2E evals cho output open-ended).
+- **Verify before Done:** Không `task_complete` khi chưa build/test/lint pass + visual check + **Evals Gate** (KN-037 — rubric + component/E2E evals cho output open-ended). Sau Verify: **OCR Review** (đề xuất — skill `ocr-review`, $0 token, qua subagent) trước Done.
 
 ---
 
@@ -190,7 +190,7 @@ flowchart LR
 | **Plan** | Chia nhỏ để code | PRD + Design | `.agent/plans/<slug>/plan.md` + `manage_todo_list` | `manage_todo_list` | `Plan` | ❌ |
 | **Implement** | Code todo-driven **+ TDD Gate** | Plan + todos | Files code (RED→GREEN→REFACTOR) | `tdd-gate` skill, `replace_string_in_file`, `multi_replace`, `get_errors` | `Implement` | ❌ |
 | **Polish** | Làm đẹp + UX | Code + Design | Responsive, states, animation, a11y | `read_file`, `replace`, `open_browser_page` | `Polish` | ❌ |
-| **Verify** | Đảm bảo chất lượng **+ Evals Gate (KN-037)** + verification-before-completion | Code | build/test/lint pass + visual check + evals (rubric/component/E2E nếu open-ended) — fresh evidence | `evals-gate` skill, `systematic-debugging` Phase 4.3, `get_errors`, `run_in_terminal` | `Verify` | ❌ |
+| **Verify** | Đảm bảo chất lượng **+ Evals Gate (KN-037)** + **OCR Review (đề xuất cuối)** + verification-before-completion | Code | build/test/lint pass + visual check + evals (rubric/component/E2E nếu open-ended) — fresh evidence + đề xuất OCR review (diff ≥100 LOC / ≥5 file / sensitive) | `evals-gate`, `ocr-review` skills, `systematic-debugging` Phase 4.3, `get_errors`, `run_in_terminal` | `Verify` | ❌ |
 
 ### Outputs mẫu (Focus Flow demo)
 
@@ -303,6 +303,7 @@ flowchart TD
 | `/implement` | Chỉ implement plan đã duyệt (todo-driven) |
 | `/polish [target]` | Chỉ polish UI/UX theo product-quality |
 | `/verify` | Verify build/test/lint + visual + evals (rubric/E2E nếu output open-ended — KN-037) |
+| skill `ocr-review` | Sau Verify — đề xuất chạy review cuối (`ocr delegate preview`, $0 token) qua subagent trước Done |
 
 Tham chiếu: `.github/skills/claude-harness/SKILL.md` · `.github/prompts/harness.prompt.md` · `.github/copilot-instructions.md`
 
