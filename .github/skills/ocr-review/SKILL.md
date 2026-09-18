@@ -1,0 +1,114 @@
+---
+name: ocr-review
+description: "Manual code review cuối pipeline bằng ocr (alibaba/open-code-review) — delegate mode $0 token, deterministic file selection + rules. Use when about to finish a coding task before Done, review diff/changes, kiểm tra code trước push/merge, user asks for code review, or says ocr/review cuối/final review/chạy review."
+user-invocable: true
+---
+
+# OCR Review — Bước review thủ công cuối pipeline ($0 token)
+
+> **Mức 3 thủ công:** thay vì CI auto-review (tốn LLM token mỗi PR), chạy **trong chat** bằng **delegate mode** — OCR lo *chọn file + resolve rules* (deterministic engineering), agent tự review theo rules đó. Không gọi LLM ngoài → **$0 token**.
+> Tool: `ocr` = [alibaba/open-code-review](https://github.com/alibaba/open-code-review) v1.12+ (đã cài global; nếu thiếu: `npm i -g @alibaba-group/open-code-review`).
+
+## Vị trí trong pipeline
+
+`... → Implement → Polish → Verify → [OCR Review — đề xuất] → Done`
+
+- Chạy **sau Verify, trước Done** (hoặc trước push/merge cho feature lớn).
+- **Mức nhẹ** (preview/rule — lọc file + resolve rules, $0): agent **tự chủ** khi cần, không cần hỏi.
+- **Full review:** agent **đề xuất — user quyết**, và **thực thi qua subagent** (mục 2) để giữ context chính sạch.
+
+## 1. Quyết định có ĐỀ XUẤT hay không
+
+| Tín hiệu | Đề xuất? |
+|----------|----------|
+| Diff ≥100 LOC hoặc ≥5 file (không tính generated) | ✅ Đề xuất |
+| Chạm vùng nhạy cảm: `.agent/scripts/`, `policy.json`, hooks, credentials, auth, CI workflows | ✅ Đề xuất (luôn) |
+| Task major/critical (bug.md) hoặc sửa logic fail-open/fail-closed | ✅ Đề xuất |
+| Trước push/merge lên `main` cho feature lớn | ✅ Đề xuất |
+| Docs/CSS/i18n <50 LOC, generated (`status.json` auto, PNG), plans/bug.md | ⏭️ Bỏ qua |
+| Đã review đúng diff này rồi (không đổi từ lần trước) | ⏭️ Bỏ qua |
+
+Format đề xuất (1 câu TL;DR + lý do + chi phí) — VD:
+> "Sếp muốn mình chạy `ocr review` cho diff này không? Chạm `.agent/scripts/` + 120 LOC — delegate mode **$0 token**, ~1-2 phút. Gõ 'chạy' là mình làm."
+
+## 2. Quy trình chạy — BẮT BUỘC qua subagent (delegate mode, $0)
+
+```bash
+# B1. (main agent) Chọn scope
+git status --short                                # workspace (staged/unstaged/untracked)
+ocr delegate preview --commit <sha>               # 1 commit vs parent
+ocr delegate preview --from main --to <branch>    # range (merge-base)
+
+# B2. File list — OCR tự lọc binary/test files/unsupported ext
+#     → "# Files (N reviewable / M total)" + lý do exclude từng file
+# B3. Rules theo file (template-engine, grouped by content)
+ocr delegate rule <file1> <file2> ...
+
+# B4. SUBAGENT (runSubagent) đọc diff + các file được chọn → review theo rules (mục 3)
+# B5. Subagent trả về DUY NHẤT bảng findings → main agent trình user → xử lý (mục 4)
+```
+
+**B4 bắt buộc — không review trong context chính:**
+
+- **Lý do:** đọc diff + full file hàng chục file vào context chính = context pollution (chính tác giả OCR: "running as sub-agents is an elegant way to reduce context pollution"). Subagent xong là chết → main context chỉ nhận bảng findings gọn.
+- **Prompt subagent phải có:** (1) scope (`--commit <sha>` / `--from A --to B` / workspace); (2) quyền chạy `ocr delegate preview|rule`, `git diff/show`, đọc file; (3) file list + rules đã resolve (nhúng sẵn hoặc tự chạy); (4) severity taxonomy + format bảng findings, **0 findings thì ghi "0 findings"** (cấm bịa); (5) **CẤM sửa/fix/stage bất kỳ file — review-only**.
+- Subagent không chạy được terminal → main agent chạy B1-B3 (2-3 lệnh ngắn, $0) rồi nhúng output vào prompt.
+- Mức nhẹ (preview/rule để quyết định có đề xuất) — main agent chạy trực tiếp.
+
+- `--format json` nếu cần máy đọc; `--background "mô tả task"` để model hiểu intent (LLM mode).
+- Nhiều file → OCR gộp thành bundle theo nhóm liên quan — giữ nguyên nhóm khi review.
+
+## 3. Review theo gì
+
+1. **Rules OCR** cho từng file (deterministic — dead code, `var`/`==`, XSS, eval, sensitive info, typo...).
+2. **Conventions harness:** policy (deny-list), KN liên quan (`auto-learn suggest`), locale/i18n, slop gate (≤200 LOC, dup ≥8 dòng, func >80 dòng), fail-closed.
+3. **Chỉ comment code thay đổi (+ lines)** — không review lan, không nit style ngoài rules.
+
+Format findings:
+
+| # | Severity | File:line | Vấn đề | Vì sao | Fix gợi ý |
+|---|----------|-----------|--------|--------|-----------|
+
+Severity: `critical` (security/data-loss/fail-open) · `major` (bug logic) · `minor` (quality) · `info` (nit).
+**0 findings = ghi "0 findings"** — trung thực, không bịa finding cho có (false positive giết tool — bài học HN).
+
+## 4. Xử lý sau review
+
+- Bug thật → `/fixbug` flow + `auto-learn log` + **Guard** nếu major/critical (KN-056).
+- Findings chưa rõ → hỏi user, không tự sửa ngoài scope.
+- Không sửa test để pass (KN-012) — OCR cũng loại test files mặc định (`default_path`), khớp chủ trương.
+
+## 5. Chế độ LLM (tuỳ chọn — TỐN TOKEN, chỉ khi user yêu cầu)
+
+Dùng khi cần "model khác review" (giảm self-review bias — KN-023) và đã cấu hình provider:
+
+```bash
+ocr config provider   # OpenAI-compatible (Zen, OpenAI...) hoặc Anthropic
+ocr config model
+ocr review --from main --to HEAD --format json
+```
+
+- Cost: model rẻ ~$0.01–0.05/review · OpenCode Zen gateway `https://opencode.ai/zen/v1/chat/completions` (DeepSeek V4 Flash $0.14/$0.28 per 1M).
+- Chưa có key → chỉ delegate mode. **Không tự bật mode tốn tiền** — luôn hỏi user. Chạy cũng qua subagent (mục 2 B4).
+
+## 6. Bias & giới hạn (trung thực)
+
+- **Self-review bias:** delegate = agent review code mình viết → thiên vị (KN-023). Giảm thiểu: rules deterministic (external), fresh-eyes pass, LLM mode nếu cần model khác.
+- OCR **loại test files** mặc định → review nhắm production code.
+- Delegate mode = review tĩnh (text + rules), không chạy runtime — kết hợp test/build thật ở Verify trước đó.
+
+## 7. Fallback & lỗi thường gặp
+
+| Lỗi | Fix |
+|-----|-----|
+| `ocr` not found | `npm i -g @alibaba-group/open-code-review` (cần Git ≥2.41, Node ≥18) |
+| `Cannot find merge-base` | fetch đủ history: `git fetch --unshallow` |
+| Không có git history | dùng `--commit` hoặc workspace mode |
+
+## 8. Lịch sử dogfood
+
+- **2026-09-18:** delegate trên commit `ab2a875` (59 file → 6 reviewable) — tìm ra bug **fail-open** trong `scripts/instruction-budget.mjs` (`--budget abc` → NaN → exit 0 thay vì exit 2 fail-closed). Đáng tin để làm lưới review cuối pipeline.
+- **2026-09-18 (vòng 2):** delegate review qua **subagent** trên diff fix (`scripts/instruction-budget.mjs` +13/-4) — tìm thêm **2 minor cùng class fail-open** (`--top` thiếu giá trị còn default im lặng; dạng `--budget=1400`/typo bị nuốt → gate "tưởng bật mà tắt") → đã fix trong loop + mở rộng guard test (5 assert). Xác nhận review→fix loop hoạt động, context chính sạch.
+
+---
+*Skill: ocr-review — Mức 3 thủ công, $0 token. Tool: alibaba/open-code-review (Apache-2.0).*

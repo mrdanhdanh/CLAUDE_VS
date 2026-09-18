@@ -36,7 +36,7 @@ Read docs/knowleged.md  # <— bước 0, không bỏ
 | **Plan** | `.agent/plans/<task>/plan.md` + `TodoWrite` | ❌ |
 | **Implement** | Code todo-driven, `IDE diagnostics` sau mỗi edit | ❌ |
 | **Polish** | Responsive 375/768/1280, states, animation, a11y | ❌ — giao diện xấu = chưa xong |
-| **Verify** | build/test/lint pass + visual check + **Evals Gate** (rubric + component/E2E evals cho output open-ended, KN-037) + **Slop Gate** (slop-check + ≤200 LOC + spec-vs-wish, KN-047) + **Dissent Review** (1 critique độc lập: rival work / assumption sai / giải pháp khác, KN-018) | ❌ |
+| **Verify** | build/test/lint pass + visual check + **Evals Gate** (rubric + component/E2E evals cho output open-ended, KN-037) + **Slop Gate** (slop-check + ≤200 LOC + spec-vs-wish, KN-047) + **Dissent Review** (1 critique độc lập: rival work / assumption sai / giải pháp khác, KN-018) + **OCR Review** (đề xuất cuối — skill `ocr-review`, $0, subagent) | ❌ |
 
 Với task nhỏ (1-2 file): rút gọn Explore(quick) → Clarify(1 câu) → PRD mini → Design mini → Plan(3 todos) → Implement → Polish → Verify. **Không bỏ Polish.**
 
@@ -65,6 +65,10 @@ Với task nhỏ (1-2 file): rút gọn Explore(quick) → Clarify(1 câu) → P
 - **Diff reviewable:** ~≤200 LOC/lần (không tính generated) — vượt → chia bounded task trước khi tiếp.
 - **Loop it:** checks pass rồi mà còn đổi code → chạy lại toàn bộ (yesterday's green không áp dụng).
 - ⚠️ Đã biết: `scripts/mutation.mjs` là bản lite dùng `node --check` proxy — **chưa** chạy test thật per-mutant; đừng tin "survived" (xem `.agent/plans/harness-slop-gate/gap-analysis.md`).
+
+### OCR Review — đề xuất cuối pipeline (skill `ocr-review`, $0 token, qua subagent)
+
+- Sau Verify: diff ≥100 LOC / ≥5 file hoặc chạm `.agent/scripts/`, policy, hooks, auth, CI → **đề xuất** user chạy (delegate mode $0, thực thi qua subagent); user quyết. Mức nhẹ (preview/rule) — agent tự chủ. Chi tiết: skill `ocr-review`.
 
 ## Pipeline /fixbug (Bug — gọn nhẹ, bounded repair loop)
 

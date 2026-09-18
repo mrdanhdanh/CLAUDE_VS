@@ -170,6 +170,15 @@
       "description": "Evals Gate — 'NO DONE WITHOUT EVALS': đo chất lượng output open-ended bằng rubric + component evals + E2E evals + error analysis, không chỉ build/test/lint. Use when verifying agent/product output, before claiming done, when quality can't be measured by pass/fail tests, need quality gate or rubric, ",
       "file": "evals-gate/SKILL.md",
       "installedAt": "2026-09-11T15:42:48.805Z"
+    },
+    "ocr-review": {
+      "source": "local:D:\\CLAUDE_VS\\.github\\skills\\ocr-review",
+      "path": "D:\\CLAUDE_VS\\.github\\skills\\ocr-review",
+      "ref": "local",
+      "enabled": true,
+      "description": "Manual code review cuối pipeline bằng ocr (alibaba/open-code-review) — delegate mode $0 token, deterministic file selection + rules. Use when about to finish a coding task before Done, review diff/changes, kiểm tra code trước push/merge, user asks for code review, or says ocr/review cuối/final revie",
+      "file": "ocr-review/SKILL.md",
+      "installedAt": "2026-09-18T13:08:26.033Z"
     }
   }
 }

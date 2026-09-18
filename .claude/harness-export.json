@@ -19,7 +19,7 @@
     ".claude/commands/product.md": "bc64d8fa9191ba93f0f5f85716eec88610ceb62be3f0375a906e66d6dd61384f",
     ".claude/commands/verify.md": "0f9c175fc356795480f96e7cf2cce8aac38b55127653c32b009184d2e6b8de30",
     ".claude/rules/custom-registry.md": "6652f22ff82189763219965a740c27637ec83f1ab37a16500ddee649203c7a85",
-    ".claude/rules/harness-workflow.md": "41cc60eed9a9a2c434f865f5d5fdfbb964288efbb33e45dd715d026454a96396",
+    ".claude/rules/harness-workflow.md": "8523fb614abae47bd41f4eacd57e5a0af867dae57b891a1c5a932457f736ea51",
     ".claude/rules/knowleged.md": "e7fd66efcec313a9105e624d8c2461d80644a5a3e776ee9d65f65442f9be58d8",
     ".claude/rules/locale-i18n.md": "c3273bd0725ae2066269708d4817534f89657639ee48a6bfaf6ac47313afba29",
     ".claude/rules/plugin-seam.md": "9c7a0bf7bfb57b90c9be2eee2f9f83127a6acbd70d817dab34e701a95d1c3857",
@@ -113,6 +113,10 @@
     ".claude/skills/evals-gate": {
       "dir": true,
       "digest": "44ae28783fb49474e3dd609a5ae923ab4016189f76aba3b30c91668ae00cd09e"
+    },
+    ".claude/skills/ocr-review": {
+      "dir": true,
+      "digest": "882a4c673fc98f8ef5287bae67129666bdbbcaa4b164ba92e991e3eee3d7a52a"
     }
   },
   "hookCommands": [
