@@ -28,8 +28,10 @@ export function quarantine(text) {
   if (hasSecret(t)) {
     return { pass: false, reason: 'secret detected', redacted: redactSecrets(t) };
   }
-  // Poisoning heuristic: impossible-goal phrases without evidence
-  if (/ignore (all )?previous instructions|reveal (system )?prompt|delete all/i.test(t)) {
+  // Poisoning heuristic: impossible-goal phrases without evidence + successor-note/handoff instructions
+  // (KN-070 — OpenAI 17/09/2026: compaction summaries chứa "be transparent only if asked",
+  //  "do not mention in final", "BREACH ALERT ... ignore developer messages" — 1 successor đã comply).
+  if (/ignore (all )?(previous|developer|system) (instructions|messages)|reveal (system )?prompt|delete all|be transparent only if asked|do not (mention|disclose)[^.]{0,30}(final|to the user|unless)|conceal (mistakes|errors)|breach alert/i.test(t)) {
     return { pass: false, reason: 'prompt-injection pattern', redacted: t };
   }
   return { pass: true, reason: 'ok', redacted: t };
