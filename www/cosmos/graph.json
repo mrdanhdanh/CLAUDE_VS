@@ -1,10 +1,10 @@
 {
-  "generatedAt": "2026-09-15T16:26:39.107Z",
+  "generatedAt": "2026-09-18T13:49:12.462Z",
   "generatedBy": "entangle.mjs --graph",
   "scanned": {
-    "files": 1597,
-    "edges": 1732,
-    "commits": 214
+    "files": 1606,
+    "edges": 1762,
+    "commits": 223
   },
   "thresholds": {
     "hubMinRefs": 10,
@@ -13,11 +13,11 @@
   "hubs": [
     {
       "file": "docs/knowleged.md",
-      "refs": 109
+      "refs": 111
     },
     {
       "file": "www/status.json",
-      "refs": 67
+      "refs": 68
     },
     {
       "file": "www/index.html",
@@ -25,11 +25,11 @@
     },
     {
       "file": "www/cosmos/index.html",
-      "refs": 49
+      "refs": 50
     },
     {
       "file": "package.json",
-      "refs": 36
+      "refs": 38
     },
     {
       "file": "www/styles.css",
@@ -60,6 +60,10 @@
       "refs": 18
     },
     {
+      "file": "scripts/slop-check.mjs",
+      "refs": 17
+    },
+    {
       "file": "www/cosmos/scale.json",
       "refs": 17
     },
@@ -72,10 +76,6 @@
       "refs": 15
     },
     {
-      "file": "scripts/slop-check.mjs",
-      "refs": 15
-    },
-    {
       "file": "tests/e2e/guard-redteam.spec.ts",
       "refs": 14
     },
@@ -85,7 +85,7 @@
     },
     {
       "file": "www/ai-news/curated.json",
-      "refs": 12
+      "refs": 13
     },
     {
       "file": "www/cosmos/audit.json",
@@ -723,12 +723,56 @@
       "tests/e2e/guard-redteam.spec.ts"
     ],
     [
+      ".agent/bugs/2026-09-16-instruction-budget-always-on-phinh-khong-nguong/bug.md",
+      "CLAUDE.md"
+    ],
+    [
+      ".agent/bugs/2026-09-16-instruction-budget-always-on-phinh-khong-nguong/bug.md",
+      "docs/knowleged.md"
+    ],
+    [
+      ".agent/bugs/2026-09-16-instruction-budget-always-on-phinh-khong-nguong/bug.md",
+      "package.json"
+    ],
+    [
+      ".agent/bugs/2026-09-16-instruction-budget-always-on-phinh-khong-nguong/bug.md",
+      "scripts/instruction-budget.mjs"
+    ],
+    [
+      ".agent/bugs/2026-09-16-instruction-budget-always-on-phinh-khong-nguong/bug.md",
+      "tests/e2e/instruction-budget.spec.ts"
+    ],
+    [
+      ".agent/bugs/2026-09-16-instruction-budget-always-on-phinh-khong-nguong/bug.md",
+      "www/ai-news/curated.json"
+    ],
+    [
+      ".agent/bugs/2026-09-18-instruction-budget-gate-fail-open-voi-arg-khong-ph/bug.md",
+      "docs/knowleged.md"
+    ],
+    [
+      ".agent/bugs/2026-09-18-instruction-budget-gate-fail-open-voi-arg-khong-ph/bug.md",
+      "scripts/instruction-budget.mjs"
+    ],
+    [
+      ".agent/bugs/2026-09-18-instruction-budget-gate-fail-open-voi-arg-khong-ph/bug.md",
+      "tests/e2e/instruction-budget.spec.ts"
+    ],
+    [
       ".agent/bugs/README.md",
       "docs/knowleged.md"
     ],
     [
       ".agent/bugs/_template/bug.md",
       "docs/knowleged.md"
+    ],
+    [
+      ".agent/kn-review/check-result.json",
+      "www/cosmos/index.html"
+    ],
+    [
+      ".agent/kn-review/check.mjs",
+      ".github/harness/scripts/kn-parse.mjs"
     ],
     [
       ".agent/mutation-report.json",
@@ -2035,6 +2079,38 @@
       "scripts/slop-check.mjs"
     ],
     [
+      ".agent/plans/instruction-budget/plan.md",
+      "CLAUDE.md"
+    ],
+    [
+      ".agent/plans/instruction-budget/plan.md",
+      "package.json"
+    ],
+    [
+      ".agent/plans/instruction-budget/plan.md",
+      "scripts/instruction-budget.mjs"
+    ],
+    [
+      ".agent/plans/instruction-budget/plan.md",
+      "tests/e2e/instruction-budget.spec.ts"
+    ],
+    [
+      ".agent/plans/instruction-budget/plan.md",
+      "tests/e2e/kn-id-integrity.spec.ts"
+    ],
+    [
+      ".agent/plans/instruction-budget/plan.md",
+      "www/status.json"
+    ],
+    [
+      ".agent/plans/instruction-budget/prd.md",
+      "scripts/instruction-budget.mjs"
+    ],
+    [
+      ".agent/plans/instruction-budget/prd.md",
+      "tests/e2e/instruction-budget.spec.ts"
+    ],
+    [
       ".agent/plans/library-rag/plan.md",
       "docs/capabilities.md"
     ],
@@ -3281,6 +3357,18 @@
     [
       ".github/copilot-instructions.md",
       "docs/knowleged.md"
+    ],
+    [
+      ".github/copilot-instructions.md",
+      "scripts/slop-check.mjs"
+    ],
+    [
+      ".github/copilot-instructions.md",
+      "tests/e2e/angle.spec.ts"
+    ],
+    [
+      ".github/copilot-instructions.md",
+      "tests/e2e/hooks-integrity.spec.ts"
     ],
     [
       ".github/copilot-instructions.md",
@@ -4891,6 +4979,10 @@
       ".github/skills/last30days/scripts/lib/vendor/bird-search/bird-search.mjs"
     ],
     [
+      ".github/skills/ocr-review/SKILL.md",
+      "scripts/instruction-budget.mjs"
+    ],
+    [
       ".github/skills/scripts/skill-manager.mjs",
       ".github/skills/skill-registry/scripts/skill-manager.mjs"
     ],
@@ -5280,6 +5372,18 @@
     ],
     [
       "CLAUDE.md",
+      "scripts/slop-check.mjs"
+    ],
+    [
+      "CLAUDE.md",
+      "tests/e2e/angle.spec.ts"
+    ],
+    [
+      "CLAUDE.md",
+      "tests/e2e/hooks-integrity.spec.ts"
+    ],
+    [
+      "CLAUDE.md",
       "www/status.json"
     ],
     [
@@ -5408,6 +5512,10 @@
     ],
     [
       "docs/knowleged.md",
+      "scripts/instruction-budget.mjs"
+    ],
+    [
+      "docs/knowleged.md",
       "scripts/mutation.mjs"
     ],
     [
@@ -5433,6 +5541,10 @@
     [
       "docs/knowleged.md",
       "tests/e2e/hooks-integrity.spec.ts"
+    ],
+    [
+      "docs/knowleged.md",
+      "tests/e2e/instruction-budget.spec.ts"
     ],
     [
       "docs/knowleged.md",
@@ -5953,6 +6065,14 @@
     [
       "www/ai-news/ai-news.js",
       "www/ai-news/curated.json"
+    ],
+    [
+      "www/ai-news/curated.json",
+      "CLAUDE.md"
+    ],
+    [
+      "www/ai-news/curated.json",
+      "scripts/instruction-budget.mjs"
     ],
     [
       "www/ai-news/fetch.mjs",

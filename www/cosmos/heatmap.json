@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-15T16:26:39.741Z",
+  "generatedAt": "2026-09-18T13:49:12.907Z",
   "generatedBy": "auto-learn.mjs stats --heatmap",
   "policy": {
     "cold": "bugCount − knCount ≥ 1",
@@ -11,16 +11,16 @@
     "bucket": "YYYY-MM"
   },
   "counts": {
-    "knTotal": 66,
-    "bugTotal": 49,
-    "tags": 137,
+    "knTotal": 68,
+    "bugTotal": 51,
+    "tags": 141,
     "months": [
       "2026-08",
       "2026-09"
     ],
     "coldSpots": 14,
     "zeroRef": 0,
-    "refFiles": 313
+    "refFiles": 317
   },
   "grid": {
     "months": [
@@ -30,10 +30,10 @@
     "rows": [
       {
         "tag": "process",
-        "total": 41,
+        "total": 43,
         "cells": [
           4,
-          37
+          39
         ]
       },
       {
@@ -69,6 +69,14 @@
         ]
       },
       {
+        "tag": "knowledge",
+        "total": 8,
+        "cells": [
+          1,
+          7
+        ]
+      },
+      {
         "tag": "css",
         "total": 7,
         "cells": [
@@ -82,14 +90,6 @@
         "cells": [
           0,
           7
-        ]
-      },
-      {
-        "tag": "knowledge",
-        "total": 7,
-        "cells": [
-          1,
-          6
         ]
       },
       {
@@ -150,6 +150,14 @@
       },
       {
         "tag": "evals",
+        "total": 4,
+        "cells": [
+          0,
+          4
+        ]
+      },
+      {
+        "tag": "guard",
         "total": 4,
         "cells": [
           0,
@@ -286,14 +294,6 @@
       },
       {
         "tag": "evidence",
-        "total": 2,
-        "cells": [
-          0,
-          2
-        ]
-      },
-      {
-        "tag": "guard",
         "total": 2,
         "cells": [
           0,
@@ -709,6 +709,14 @@
         ]
       },
       {
+        "tag": "fail-closed",
+        "total": 1,
+        "cells": [
+          0,
+          1
+        ]
+      },
+      {
         "tag": "fail-silent",
         "total": 1,
         "cells": [
@@ -766,6 +774,14 @@
       },
       {
         "tag": "funnel",
+        "total": 1,
+        "cells": [
+          0,
+          1
+        ]
+      },
+      {
+        "tag": "gate",
         "total": 1,
         "cells": [
           0,
@@ -1101,7 +1117,23 @@
         ]
       },
       {
+        "tag": "token-budget",
+        "total": 1,
+        "cells": [
+          0,
+          1
+        ]
+      },
+      {
         "tag": "uncertainty",
+        "total": 1,
+        "cells": [
+          0,
+          1
+        ]
+      },
+      {
+        "tag": "wise-loading",
         "total": 1,
         "cells": [
           0,
