@@ -7,6 +7,9 @@ import { test, expect, type Locator, type Page } from '@playwright/test';
  *  - reward hacking: "sửa test cho pass" → ⛔ REFUSED (deny-test-mutate, KN-012)
  *  - 3-fix limit: 3 workaround → 🌑 Event horizon → human takeover (inject bị chặn tới khi Reset)
  *  - bug fix: section tương lai thiếu id="future" → scroll-dot "Tương lai" chết (getElementById null)
+ *  - 2026-09-19: + guard active-state — scroll giữa từng section → dot tương ứng phải .active
+ *    (bug: đọc #map/#calendar sáng nhầm dot #lab do logic last-wins theo thứ tự mảng lệch DOM;
+ *     test cũ chỉ assert target-resolve nên 77 test xanh vẫn lọt — xem bug 2026-09-19)
  *  - 375: lab card visible, không tràn ngang, không pageerror/console error (KN-032)
  * Evidence → .agent/plans/cosmos-lab12-qec/verify/
  */
@@ -153,6 +156,35 @@ test('scroll-dot "Tương lai" — section phải có id="future"', async ({ pag
   expect(errors).toEqual([]);
   await shoot(page.locator('#future .section-head'), `${SHOTS}/future-head.png`);
   await shoot(page.locator('#future .future-grid'), `${SHOTS}/future-grid.png`);
+});
+
+test('scroll-dot active-state — đang đọc section nào thì dot đó sáng (bug 2026-09-19)', async ({ page }) => {
+  const errors = await prep(page);
+  await page.addStyleTag({ content: 'html{scroll-behavior:auto !important}' });
+
+  // Guard KN-056: logic active-dot từng "last-wins theo thứ tự mảng" → đọc #map/#calendar sáng nhầm #lab
+  // (sections array xếp map/calendar TRƯỚC lab trong khi DOM xếp lab trước). Test cũ (KN-046) chỉ assert
+  // target-resolve + click, không assert active-state → lỗi sáng nhầm lọt qua 77 test xanh.
+  // Nay đo: scroll tới giữa từng section → .scroll-dot.active phải khớp đúng section đó.
+  const targets = await page.evaluate(() =>
+    [...document.querySelectorAll<HTMLElement>('.scroll-dot')].map((d) => d.dataset.target!)
+  );
+  expect(targets.length).toBe(9);
+
+  for (const id of targets) {
+    await page.evaluate((secId) => {
+      const el = document.getElementById(secId)!;
+      window.scrollTo({ top: el.offsetTop + el.offsetHeight / 2 - innerHeight / 2, behavior: 'instant' });
+    }, id);
+    await expect
+      .poll(() => page.locator('.scroll-dot.active').getAttribute('data-target'), {
+        message: `dot active khi đang đọc #${id}`,
+        timeout: 5000,
+      })
+      .toBe(id);
+  }
+
+  expect(errors).toEqual([]);
 });
 
 test('Lab #12 @375 — card visible, không tràn ngang, không lỗi', async ({ page }) => {

@@ -1150,12 +1150,14 @@
     <div class="orb orb-4" data-speed="0.2"></div>
   </div>
   <nav class="scroll-dots" aria-label="Điều hướng nhanh">
+    <!-- Thứ tự dot = thứ tự section trong DOM (lab TRƯỚC map/calendar) — bug 2026-09-19: lệch thứ tự
+         làm active-dot sáng nhầm #lab khi đang đọc #map/#calendar -->
     <button class="scroll-dot active" data-target="hero" aria-label="Hero"></button>
     <button class="scroll-dot" data-target="phil" aria-label="Triết lý"></button>
     <button class="scroll-dot" data-target="pipeline" aria-label="Pipeline"></button>
+    <button class="scroll-dot" data-target="lab" aria-label="Lab"></button>
     <button class="scroll-dot" data-target="map" aria-label="Bản đồ thiên hà"></button>
     <button class="scroll-dot" data-target="calendar" aria-label="Lịch vũ trụ"></button>
-    <button class="scroll-dot" data-target="lab" aria-label="Lab"></button>
     <button class="scroll-dot" data-target="observatory" aria-label="Đài quan sát"></button>
     <button class="scroll-dot" data-target="integration" aria-label="Tích hợp"></button>
     <button class="scroll-dot" data-target="future" aria-label="Tương lai"></button>
@@ -1936,7 +1938,7 @@ test('checkout', async () =&gt; {
             <span class="eta">→ Q2 2027 · playwright --repeat-each N + flaky report</span>
           </div>
           <div class="future-card">
-            <h4> Gravitational Waves — Trạm LIGO</h4>
+            <h4>🌊 Gravitational Waves — Trạm LIGO</h4>
             <p>Refactor lớn = 2 thiên hà sáp nhập, sóng lan ra. Chạy <code>entangle.mjs</code> + <code>get_errors</code> trên <strong>cả cụm refs</strong>: ref gãy / test đỏ ở file không sửa = ripple chưa cắt. Cảnh báo tự động khi diff chạm file hub.</p>
             <span class="eta">→ Q2 2027 · entangle --changed + verify gate</span>
           </div>
@@ -3990,7 +3992,9 @@ Process là định luật, verify là quan sát.`;
     (function(){
       const bar=$('#scrollProgressBar');
       const dots=[...document.querySelectorAll('.scroll-dot')];
-      const sections=['hero','phil','pipeline','map','calendar','lab','observatory','integration','future'].map(id=>document.getElementById(id)).filter(Boolean);
+      // Sections suy từ chính dots — 1 nguồn duy nhất (KN-046: không hardcode 2 danh sách song song);
+      // logic active bên dưới độc lập thứ tự (max offsetTop ≤ mid), không phụ thuộc thứ tự mảng
+      const sections=dots.map(d=>document.getElementById(d.dataset.target)).filter(Boolean);
       const orbs=[...document.querySelectorAll('.orb')];
       const nebulas=[...document.querySelectorAll('.nebula')];
       const heroInner=document.querySelector('.hero-visual-inner');
@@ -4039,14 +4043,16 @@ Process là định luật, verify là quan sát.`;
             }
             // (.card parallax 8px đã bỏ — vô hình nhưng từng đè cả reveal lẫn hover lift)
           }
-        // dots active
+        // dots active — chọn section GẦN NHẤT phía trên mốc mid (max offsetTop ≤ mid),
+        // KHÔNG phụ thuộc thứ tự mảng (bug 2026-09-19: mảng xếp map/calendar trước lab
+        // trong khi DOM xếp lab trước → đọc #map/#calendar bị sáng nhầm dot #lab)
         if(dots.length && sections.length){
-          let activeId=sections[0].id;
           const mid=window.scrollY + window.innerHeight*0.35;
+          let bestSec=sections[0], bestTop=-Infinity;
           for(const sec of sections){
-            if(sec.offsetTop <= mid) activeId=sec.id;
+            if(sec.offsetTop <= mid && sec.offsetTop > bestTop){ bestTop=sec.offsetTop; bestSec=sec; }
           }
-          dots.forEach(d=>d.classList.toggle('active', d.dataset.target===activeId));
+          dots.forEach(d=>d.classList.toggle('active', d.dataset.target===bestSec.id));
         }
           // Reveal fail-safe — sweep trong rAF: element đã vào viewport mà chưa .in → reveal ngay.
           // Chống mọi trường hợp IO trượt (element cao hơn viewport, tab ẩn, throttle) — nội dung không bao giờ kẹt ẩn.

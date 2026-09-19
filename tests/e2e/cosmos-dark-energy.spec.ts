@@ -7,8 +7,11 @@ import path from 'node:path';
  * Dark Energy D fix — ship 2026-09-12 (PRD .agent/plans/cosmos-dark-energy-fix/prd.md):
  *  - measurePlans() chỉ đếm plans có prd.md mtime >= 2026-09-07 (ngày KN-018)
  *  - plans cũ hơn = "tiền-gate" → plansLegacy, KHÔNG tính D/G (tránh HIGH giả)
- *  - web-011-part8/prd.md đã append Dissent → D về 0
+ *  - web-011-part8/prd.md đã append Dissent → D về 0 (thời điểm ship)
  *  - scale.html#deParts render row tiền-gate + badge D
+ *  - 2026-09-19 (human approve, intent=takeover): DOM test chuyển DATA-DRIVEN — assert #deParts khớp
+ *    scale.json HIỆN TẠI, không pin cứng D=0 (D là metric sống; plan mới thiếu Dissent → D tăng là
+ *    tín hiệu thật, không phải lỗi render — pin cứng gây false-negative)
  * Evidence → .agent/plans/cosmos-dark-energy-fix/verify/
  */
 
@@ -58,17 +61,23 @@ test('CLI: web-011-part8/prd.md chứa "Who did you think with?"', () => {
   expect(prd).toContain('Who did you think with?');
 });
 
-test('scale.html — #deParts chứa "Tiền-gate" + badge D=0 (low)', async ({ page }) => {
+test('scale.html — #deParts khớp scale.json thật (Tiền-gate + badge D + level)', async ({ page }) => {
   const errors: string[] = [];
   page.on('pageerror', (e) => errors.push(String(e)));
   await page.goto('/cosmos/scale.html');
 
+  // Data-driven (2026-09-19): DOM phải khớp scale.json HIỆN TẠI — không pin cứng giá trị.
+  // Invariant "D <= 1" do test CLI phía trên giữ; test này giữ invariant "render đúng từ data".
+  const scale = JSON.parse(fs.readFileSync(path.join(ROOT, 'www', 'cosmos', 'scale.json'), 'utf8'));
+  const D: number = scale.darkEnergy?.D ?? 0;
+  const deLevel = D === 0 ? 'low' : D <= 5 ? 'medium' : 'high';
+
   const de = page.locator('#deParts');
   await expect(de, '#deParts phải render từ scale.json thật').toBeVisible({ timeout: 10_000 });
   await expect(de).toContainText('Tiền-gate', { timeout: 10_000 });
-  await expect(de).toContainText('D=0', { timeout: 10_000 });
-  await expect(de).toContainText('(low)', { timeout: 10_000 });
-  await expect(de.locator('.gauge-level.low')).toBeVisible();
+  await expect(de).toContainText(`D=${D} (`, { timeout: 10_000 });
+  await expect(de).toContainText(`(${deLevel})`, { timeout: 10_000 });
+  await expect(de.locator(`.gauge-level.${deLevel}`)).toBeVisible();
   expect(errors).toEqual([]);
 
   await page.locator('#de-title').scrollIntoViewIfNeeded();
