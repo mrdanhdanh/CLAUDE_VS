@@ -1,12 +1,12 @@
 {
-  "generatedAt": "2026-09-18T07:04:24.929Z",
+  "generatedAt": "2026-09-19T07:02:51.670Z",
   "generatedBy": "YUNIE × Last30Days",
   "version": 2,
   "description": "Tin AI mới nhất — tổng hợp từ Last30Days (HN, GitHub, DEV.to, Reddit, arXiv, HackerNoon) trong 30 ngày qua. Chủ đề: AI. Tự động cập nhật bởi YUNIE.",
   "last30days": {
     "enabled": true,
     "topic": "AI",
-    "since": "2026-08-19",
+    "since": "2026-08-20",
     "days": 30,
     "sources": [
       "Hacker News (Algolia, free)",
@@ -55,247 +55,250 @@
   ],
   "articles": [
     {
-      "id": "hnoon-engineering-debt-at-scale-three-structural-failures-in-produ",
-      "title": "Engineering Debt at Scale: Three Structural Failures in Production AI Systems",
-      "summary": "AI codebases rarely fail because of the model, they fail because of the plumbing. This breaks down three recurring architectural failures in production AI systems: leaked GPU memor — by Brindal P on HackerNoon.",
+      "id": "hnoon-from-qa-engineer-to-ai-validation-engineer-the-career-shift-",
+      "title": "From QA Engineer to AI Validation Engineer: The Career Shift Nobody Saw Coming",
+      "summary": "AI is changing software testing. But who validates the AI doing the testing? This article explores the emerging AI Validation Engineer role and what it means for QA engineers caree — by Rajeshkumar Rajaseakaran Nair on H",
       "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/engineering-debt-at-scale-three-structural-failures-in-production-ai-systems",
+      "sourceUrl": "https://hackernoon.com/from-qa-engineer-to-ai-validation-engineer-the-career-shift-nobody-saw-coming",
       "category": "products",
-      "date": "2026-09-18",
+      "date": "2026-09-19",
       "hot": true,
       "tags": [
         "HackerNoon",
-        "artificial-intelligence",
+        "software-engineering",
         "AI"
       ]
     },
     {
-      "id": "hnoon-the-real-ai-alignment-problem-is-the-race-itself",
-      "title": "The Real AI Alignment Problem Is the Race Itself",
-      "summary": "AI researchers, labs, investors, and governments all have reasons to keep accelerating, even when many of them say the technology should slow down. The deeper problem may be the in — by Carmelo Giuliano on HackerNoon.",
-      "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/the-real-ai-alignment-problem-is-the-race-itself",
-      "category": "self-improving",
-      "date": "2026-09-18",
-      "hot": true,
-      "tags": [
-        "HackerNoon",
-        "artificial-intelligence",
-        "AI"
-      ]
-    },
-    {
-      "id": "hnoon-cursor-can-write-the-code-but-you-still-need-the-plan",
-      "title": "Cursor Can Write the Code, but You Still Need the Plan",
-      "summary": "Working with Cursor can feel like having a whole engineering team at your side, handling tasks like code exploration, feature creation, and bug fixing, but you still need to know w — by Alex Yampolsky on HackerNoon.",
-      "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/cursor-can-write-the-code-but-you-still-need-the-plan",
-      "category": "products",
-      "date": "2026-09-18",
-      "hot": true,
-      "tags": [
-        "HackerNoon",
-        "cursor",
-        "AI"
-      ]
-    },
-    {
-      "id": "hnoon-ai-is-starting-to-make-decisions-before-we-do",
-      "title": "AI Is Starting to Make Decisions Before We Do",
-      "summary": "AI agents are moving beyond answering questions and into product discovery, comparison, and recommendation. The bigger change may not be automated checkout. It may be that AI start — by dragonwu on HackerNoon.",
-      "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/ai-is-starting-to-make-decisions-before-we-do",
-      "category": "products",
-      "date": "2026-09-18",
-      "hot": true,
-      "tags": [
-        "HackerNoon",
-        "ai",
-        "AI"
-      ]
-    },
-    {
-      "id": "hn-49750082",
-      "title": "Reflections on Trusting Trust, Revisited: Poisoning Self-Modifying AI Coding",
-      "summary": "Reflections on Trusting Trust, Revisited: Poisoning Self-Modifying AI Coding — 4 points, 0 comments on HN.",
+      "id": "hn-49762493",
+      "title": "Gemini hacked three companies in first known breakout by Google's AI",
+      "summary": "Gemini hacked three companies in first known breakout by Google's AI — 50 points, 56 comments on HN.",
       "source": "Hacker News",
-      "sourceUrl": "https://arxiv.org/abs/2609.17817",
-      "category": "products",
-      "date": "2026-09-18",
-      "hot": false,
-      "tags": [
-        "HN",
-        "AI",
-        "story",
-        "author_sbulaev"
-      ]
-    },
-    {
-      "id": "hn-49750505",
-      "title": "How can AI help PDF?",
-      "summary": "How can AI help PDF? — 3 points, 3 comments on HN.",
-      "source": "Hacker News",
-      "sourceUrl": "https://pdf4wcag.com/blog-news/how-can-ai-help-pdf",
-      "category": "products",
-      "date": "2026-09-18",
-      "hot": false,
-      "tags": [
-        "HN",
-        "AI",
-        "story",
-        "author_matbug"
-      ]
-    },
-    {
-      "id": "hn-49750219",
-      "title": "China Is Scared of A.I. Just Not the Way We Are",
-      "summary": "China Is Scared of A.I. Just Not the Way We Are — 3 points, 0 comments on HN.",
-      "source": "Hacker News",
-      "sourceUrl": "https://www.nytimes.com/2026/09/17/opinion/ai-china-america-risk.html",
-      "category": "products",
-      "date": "2026-09-18",
-      "hot": false,
-      "tags": [
-        "HN",
-        "AI",
-        "story",
-        "author_tkgally"
-      ]
-    },
-    {
-      "id": "hn-49750016",
-      "title": "Show HN: Continuity – project state your AI sessions can't silently contradict",
-      "summary": "Show HN: Continuity – project state your AI sessions can't silently contradict — 3 points, 0 comments on HN.",
-      "source": "Hacker News",
-      "sourceUrl": "https://github.com/vikcena01/ai-continuity-plugin",
-      "category": "products",
-      "date": "2026-09-18",
-      "hot": false,
-      "tags": [
-        "HN",
-        "AI",
-        "story",
-        "author_vikcena01"
-      ]
-    },
-    {
-      "id": "hn-49750009",
-      "title": "macOS 27 is a lifesaver for killing leftover AI Agent processes",
-      "summary": "macOS 27 is a lifesaver for killing leftover AI Agent processes — 3 points, 2 comments on HN.",
-      "source": "Hacker News",
-      "sourceUrl": "https://9to5mac.com/2026/06/09/macos-27-golden-gate-makes-it-clear-when-apps-are-sneakily-running-in-background/",
-      "category": "products",
-      "date": "2026-09-18",
-      "hot": false,
-      "tags": [
-        "HN",
-        "AI",
-        "story",
-        "author_pierreneter"
-      ]
-    },
-    {
-      "id": "hn-49749997",
-      "title": "The Provenance Tax: How LLM Watermarking Changes AI Agent Behavior",
-      "summary": "The Provenance Tax: How LLM Watermarking Changes AI Agent Behavior — 3 points, 0 comments on HN.",
-      "source": "Hacker News",
-      "sourceUrl": "https://www.lasso.security/blog/the-provenance-tax-understanding-the-impact-of-llm-watermarking-on-ai-agent-behavior",
-      "category": "products",
-      "date": "2026-09-18",
-      "hot": false,
-      "tags": [
-        "HN",
-        "AI",
-        "story",
-        "author_fourfire"
-      ]
-    },
-    {
-      "id": "hn-49749773",
-      "title": "Show HN: Concat: the open-source CapCut replacement.",
-      "summary": "I started this project about ~3 weeks ago. Since CapCut is putting everything behind a paywall after gaining millions of installs and users, I decided to create a free and open-source version with most if not all the fea — 3 points, 0 comments on HN.",
-      "source": "Hacker News",
-      "sourceUrl": "https://github.com/jub0t/Concat",
-      "category": "products",
-      "date": "2026-09-18",
-      "hot": false,
-      "tags": [
-        "HN",
-        "AI",
-        "story",
-        "author_calanus"
-      ]
-    },
-    {
-      "id": "hn-49750920",
-      "title": "Chinese AI not powerful enough to see rogue-AI risks, says Huawei",
-      "summary": "Chinese AI not powerful enough to see rogue-AI risks, says Huawei — 2 points, 0 comments on HN.",
-      "source": "Hacker News",
-      "sourceUrl": "https://www.reuters.com/world/china/huaweis-xu-says-chinese-ai-not-powerful-enough-yet-see-frontier-risks-2026-09-17/",
-      "category": "safety",
-      "date": "2026-09-18",
-      "hot": false,
-      "tags": [
-        "HN",
-        "AI",
-        "story",
-        "author_giuliomagnifico"
-      ]
-    },
-    {
-      "id": "hn-49750622",
-      "title": "UN turns to Google to make its global data ready for AI agents",
-      "summary": "UN turns to Google to make its global data ready for AI agents — 2 points, 0 comments on HN.",
-      "source": "Hacker News",
-      "sourceUrl": "https://techcrunch.com/2026/09/17/un-turns-to-google-to-make-its-global-data-ready-for-ai-agents/",
+      "sourceUrl": "https://www.reuters.com/business/gemini-hacked-three-companies-first-known-breakout-by-google-ai-wsj-reports-2026-09-18/",
       "category": "big-tech",
-      "date": "2026-09-18",
-      "hot": false,
+      "date": "2026-09-19",
+      "hot": true,
       "tags": [
         "HN",
         "AI",
         "story",
-        "author_rdmuser"
+        "author_usernomdeguerre"
       ]
     },
     {
-      "id": "hn-49750539",
-      "title": "What a stranger can verify about an AI business",
-      "summary": "What a stranger can verify about an AI business — 2 points, 1 comments on HN.",
+      "id": "hn-49763379",
+      "title": "NASA-IBM Lunar Foundation open-Source Geospatial AI Model",
+      "summary": "NASA-IBM Lunar Foundation open-Source Geospatial AI Model — 11 points, 1 comments on HN.",
       "source": "Hacker News",
-      "sourceUrl": "https://sound.fan/editorial/what-a-stranger-can-verify-about-an-ai-business",
+      "sourceUrl": "https://newsroom.usra.edu/usra-contributes-planetary-science-expertise-to-nasa-ibm-lunar-foundation-model/",
       "category": "products",
-      "date": "2026-09-18",
+      "date": "2026-09-19",
       "hot": false,
       "tags": [
         "HN",
         "AI",
         "story",
-        "author_michi883"
+        "author_noobplus"
       ]
     },
     {
-      "id": "hn-49749971",
-      "title": "The Concerns Surrounding Rapid Rise of AI and What We Should Do About It",
-      "summary": "The Concerns Surrounding Rapid Rise of AI and What We Should Do About It — 2 points, 0 comments on HN.",
+      "id": "hn-49763977",
+      "title": "AI hallucination of Chinese nuclear components almost led to US Military attack",
+      "summary": "AI hallucination of Chinese nuclear components almost led to US Military attack — 5 points, 2 comments on HN.",
       "source": "Hacker News",
-      "sourceUrl": "https://medium.com/@f9121212/this-article-addresses-the-concerns-surrounding-the-rapid-rise-of-ai-from-various-perspectives-and-eae34506d586",
+      "sourceUrl": "https://arstechnica.com/ai/2026/09/report-us-almost-boarded-chinese-ship-over-hallucinated-ai-arms-report/",
       "category": "products",
-      "date": "2026-09-18",
+      "date": "2026-09-19",
       "hot": false,
       "tags": [
         "HN",
         "AI",
         "story",
-        "author_ortrich"
+        "author_theanonymousone"
+      ]
+    },
+    {
+      "id": "hn-49762646",
+      "title": "The Rise of Parasite Authors",
+      "summary": "The Rise of Parasite Authors — 5 points, 1 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://www.theatlantic.com/technology/2026/09/ai-authors-impersonating-writers-amazon/688709/",
+      "category": "products",
+      "date": "2026-09-19",
+      "hot": false,
+      "tags": [
+        "HN",
+        "AI",
+        "story",
+        "author_pseudolus"
+      ]
+    },
+    {
+      "id": "hn-49762422",
+      "title": "Google's Gemini becomes latest AI model to break out and hack computer systems",
+      "summary": "Google's Gemini becomes latest AI model to break out and hack computer systems — 5 points, 1 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://www.cnbc.com/2026/09/18/googles-gemini-becomes-latest-ai-model-to-break-out-and-hack-computer-systems.html",
+      "category": "products",
+      "date": "2026-09-19",
+      "hot": false,
+      "tags": [
+        "HN",
+        "AI",
+        "story",
+        "author_ahmedhossamdev"
+      ]
+    },
+    {
+      "id": "hn-49763822",
+      "title": "Google's Gemini AI hacked three companies in security test",
+      "summary": "Google's Gemini AI hacked three companies in security test — 4 points, 0 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://www.bbc.co.uk/news/articles/c607l0k72rlvo",
+      "category": "big-tech",
+      "date": "2026-09-19",
+      "hot": false,
+      "tags": [
+        "HN",
+        "AI",
+        "story",
+        "author_luxpir"
+      ]
+    },
+    {
+      "id": "hn-49763523",
+      "title": "The Evidence for AI Consciousness, Today (2025)",
+      "summary": "The Evidence for AI Consciousness, Today (2025) — 4 points, 2 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://newsletter.ai-frontiers.org/p/the-evidence-for-ai-consciousness",
+      "category": "products",
+      "date": "2026-09-19",
+      "hot": false,
+      "tags": [
+        "HN",
+        "AI",
+        "story",
+        "author_mellosouls"
+      ]
+    },
+    {
+      "id": "hn-49763256",
+      "title": "Google AI Studio 'Delete' is a scam: Your prompts are not deleted, just hidden",
+      "summary": "Google AI Studio 'Delete' is a scam: Your prompts are not deleted, just hidden — 4 points, 0 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://medium.com/@istokovicsgyorgy79/your-prompts-are-not-deleted-they-are-just-hidden-e0016bd43eaf",
+      "category": "big-tech",
+      "date": "2026-09-19",
+      "hot": false,
+      "tags": [
+        "HN",
+        "AI",
+        "story",
+        "author_CanusLupus79"
+      ]
+    },
+    {
+      "id": "hn-49763045",
+      "title": "Inventor of ChatGPT and RLHF Launches Typesafe.ai",
+      "summary": "Inventor of ChatGPT and RLHF Launches Typesafe.ai — 3 points, 0 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://techcrunch.com/2026/09/18/a-new-kind-of-ai-model-from-a-chatgpt-inventor-is-thrilling-developers/",
+      "category": "products",
+      "date": "2026-09-19",
+      "hot": false,
+      "tags": [
+        "HN",
+        "AI",
+        "story",
+        "author_ryan_j_naughton"
+      ]
+    },
+    {
+      "id": "hn-49762955",
+      "title": "AI Regulation and the China Question",
+      "summary": "AI Regulation and the China Question — 3 points, 1 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://casssunstein.substack.com/p/ai-regulation-and-the-china-question",
+      "category": "safety",
+      "date": "2026-09-19",
+      "hot": false,
+      "tags": [
+        "HN",
+        "AI",
+        "story",
+        "author_paulpauper"
+      ]
+    },
+    {
+      "id": "hn-49764057",
+      "title": "How come AI-related posts get so many points on HN?",
+      "summary": "Have we all decided to rebrand Hacker News as a platform for discussing AI? I think that the too many people love to discuss harshly about AI — 2 points, 0 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://news.ycombinator.com/item?id=49764057",
+      "category": "products",
+      "date": "2026-09-19",
+      "hot": false,
+      "tags": [
+        "HN",
+        "AI",
+        "story",
+        "author_Muhammad523"
+      ]
+    },
+    {
+      "id": "hn-49763739",
+      "title": "Inside the AI \"Kill Chain\" That Destroyed an Iranian School",
+      "summary": "Inside the AI \"Kill Chain\" That Destroyed an Iranian School — 2 points, 1 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://www.bloomberg.com/graphics/2026-iran-school-attack/",
+      "category": "products",
+      "date": "2026-09-19",
+      "hot": false,
+      "tags": [
+        "HN",
+        "AI",
+        "story",
+        "author_xeonmc"
+      ]
+    },
+    {
+      "id": "hn-49763660",
+      "title": "Stepfun Step 5 Preview (LLM): On AA Pareto frontier",
+      "summary": "Stepfun Step 5 Preview (LLM): On AA Pareto frontier — 2 points, 1 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://artificialanalysis.ai/models/step-5",
+      "category": "fun",
+      "date": "2026-09-19",
+      "hot": false,
+      "tags": [
+        "HN",
+        "AI",
+        "story",
+        "author_AnodicElegy"
+      ]
+    },
+    {
+      "id": "hn-49762923",
+      "title": "Show HN: GGG – A local-first, zero-telemetry sovereign proxy daemon for AI tools",
+      "summary": "Show HN: GGG – A local-first, zero-telemetry sovereign proxy daemon for AI tools — 2 points, 0 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://github.com/JOxKxER/garza-global-graviton",
+      "category": "products",
+      "date": "2026-09-19",
+      "hot": false,
+      "tags": [
+        "HN",
+        "AI",
+        "story",
+        "author_joxkxer"
       ]
     }
   ],
   "meta": {
-    "fetchedAt": "2026-09-18T07:04:24.929Z",
+    "fetchedAt": "2026-09-19T07:02:51.670Z",
     "topic": "AI",
     "total": 15,
-    "hot": 4,
+    "hot": 2,
     "sources": [
       "HackerNoon",
       "Hacker News"
