@@ -1,12 +1,12 @@
 {
-  "generatedAt": "2026-09-19T07:02:51.670Z",
+  "generatedAt": "2026-09-20T07:27:50.151Z",
   "generatedBy": "YUNIE × Last30Days",
   "version": 2,
   "description": "Tin AI mới nhất — tổng hợp từ Last30Days (HN, GitHub, DEV.to, Reddit, arXiv, HackerNoon) trong 30 ngày qua. Chủ đề: AI. Tự động cập nhật bởi YUNIE.",
   "last30days": {
     "enabled": true,
     "topic": "AI",
-    "since": "2026-08-20",
+    "since": "2026-08-21",
     "days": 30,
     "sources": [
       "Hacker News (Algolia, free)",
@@ -55,252 +55,252 @@
   ],
   "articles": [
     {
-      "id": "hnoon-from-qa-engineer-to-ai-validation-engineer-the-career-shift-",
-      "title": "From QA Engineer to AI Validation Engineer: The Career Shift Nobody Saw Coming",
-      "summary": "AI is changing software testing. But who validates the AI doing the testing? This article explores the emerging AI Validation Engineer role and what it means for QA engineers caree — by Rajeshkumar Rajaseakaran Nair on H",
-      "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/from-qa-engineer-to-ai-validation-engineer-the-career-shift-nobody-saw-coming",
-      "category": "products",
-      "date": "2026-09-19",
-      "hot": true,
-      "tags": [
-        "HackerNoon",
-        "software-engineering",
-        "AI"
-      ]
-    },
-    {
-      "id": "hn-49762493",
-      "title": "Gemini hacked three companies in first known breakout by Google's AI",
-      "summary": "Gemini hacked three companies in first known breakout by Google's AI — 50 points, 56 comments on HN.",
+      "id": "hn-49772544",
+      "title": "Google AI Studio fakes data deletion. VRP auto-banned me in 60s for reporting it",
+      "summary": "Google AI Studio fakes data deletion. VRP auto-banned me in 60s for reporting it — 34 points, 15 comments on HN.",
       "source": "Hacker News",
-      "sourceUrl": "https://www.reuters.com/business/gemini-hacked-three-companies-first-known-breakout-by-google-ai-wsj-reports-2026-09-18/",
+      "sourceUrl": "https://medium.com/@istokovicsgyorgy79/google-ai-studio-fakes-data-deletion-vrp-auto-banned-me-in-60s-for-reporting-it-ea68e06f9bc2",
       "category": "big-tech",
-      "date": "2026-09-19",
+      "date": "2026-09-20",
       "hot": true,
       "tags": [
         "HN",
         "AI",
         "story",
-        "author_usernomdeguerre"
+        "author_Bitu79"
       ]
     },
     {
-      "id": "hn-49763379",
-      "title": "NASA-IBM Lunar Foundation open-Source Geospatial AI Model",
-      "summary": "NASA-IBM Lunar Foundation open-Source Geospatial AI Model — 11 points, 1 comments on HN.",
+      "id": "hn-49772608",
+      "title": "Anthropic creates AI powered wetlab",
+      "summary": "Anthropic creates AI powered wetlab — 7 points, 2 comments on HN.",
       "source": "Hacker News",
-      "sourceUrl": "https://newsroom.usra.edu/usra-contributes-planetary-science-expertise-to-nasa-ibm-lunar-foundation-model/",
-      "category": "products",
-      "date": "2026-09-19",
-      "hot": false,
-      "tags": [
-        "HN",
-        "AI",
-        "story",
-        "author_noobplus"
-      ]
-    },
-    {
-      "id": "hn-49763977",
-      "title": "AI hallucination of Chinese nuclear components almost led to US Military attack",
-      "summary": "AI hallucination of Chinese nuclear components almost led to US Military attack — 5 points, 2 comments on HN.",
-      "source": "Hacker News",
-      "sourceUrl": "https://arstechnica.com/ai/2026/09/report-us-almost-boarded-chinese-ship-over-hallucinated-ai-arms-report/",
-      "category": "products",
-      "date": "2026-09-19",
-      "hot": false,
-      "tags": [
-        "HN",
-        "AI",
-        "story",
-        "author_theanonymousone"
-      ]
-    },
-    {
-      "id": "hn-49762646",
-      "title": "The Rise of Parasite Authors",
-      "summary": "The Rise of Parasite Authors — 5 points, 1 comments on HN.",
-      "source": "Hacker News",
-      "sourceUrl": "https://www.theatlantic.com/technology/2026/09/ai-authors-impersonating-writers-amazon/688709/",
-      "category": "products",
-      "date": "2026-09-19",
-      "hot": false,
-      "tags": [
-        "HN",
-        "AI",
-        "story",
-        "author_pseudolus"
-      ]
-    },
-    {
-      "id": "hn-49762422",
-      "title": "Google's Gemini becomes latest AI model to break out and hack computer systems",
-      "summary": "Google's Gemini becomes latest AI model to break out and hack computer systems — 5 points, 1 comments on HN.",
-      "source": "Hacker News",
-      "sourceUrl": "https://www.cnbc.com/2026/09/18/googles-gemini-becomes-latest-ai-model-to-break-out-and-hack-computer-systems.html",
-      "category": "products",
-      "date": "2026-09-19",
-      "hot": false,
-      "tags": [
-        "HN",
-        "AI",
-        "story",
-        "author_ahmedhossamdev"
-      ]
-    },
-    {
-      "id": "hn-49763822",
-      "title": "Google's Gemini AI hacked three companies in security test",
-      "summary": "Google's Gemini AI hacked three companies in security test — 4 points, 0 comments on HN.",
-      "source": "Hacker News",
-      "sourceUrl": "https://www.bbc.co.uk/news/articles/c607l0k72rlvo",
+      "sourceUrl": "https://www.reuters.com/world/anthropic-quietly-sets-up-biology-lab-it-ramps-ai-drug-program-2026-09-18/",
       "category": "big-tech",
-      "date": "2026-09-19",
-      "hot": false,
+      "date": "2026-09-20",
+      "hot": true,
       "tags": [
         "HN",
         "AI",
         "story",
-        "author_luxpir"
+        "author_theahura"
       ]
     },
     {
-      "id": "hn-49763523",
-      "title": "The Evidence for AI Consciousness, Today (2025)",
-      "summary": "The Evidence for AI Consciousness, Today (2025) — 4 points, 2 comments on HN.",
+      "id": "hn-49772427",
+      "title": "OpenAI researcher on AI communicating across air-gaps via thermal side-channels [video]",
+      "summary": "OpenAI researcher on AI communicating across air-gaps via thermal side-channels [video] — 5 points, 1 comments on HN.",
       "source": "Hacker News",
-      "sourceUrl": "https://newsletter.ai-frontiers.org/p/the-evidence-for-ai-consciousness",
-      "category": "products",
-      "date": "2026-09-19",
-      "hot": false,
-      "tags": [
-        "HN",
-        "AI",
-        "story",
-        "author_mellosouls"
-      ]
-    },
-    {
-      "id": "hn-49763256",
-      "title": "Google AI Studio 'Delete' is a scam: Your prompts are not deleted, just hidden",
-      "summary": "Google AI Studio 'Delete' is a scam: Your prompts are not deleted, just hidden — 4 points, 0 comments on HN.",
-      "source": "Hacker News",
-      "sourceUrl": "https://medium.com/@istokovicsgyorgy79/your-prompts-are-not-deleted-they-are-just-hidden-e0016bd43eaf",
+      "sourceUrl": "https://www.youtube.com/watch?v=6AgOfiZOWiY",
       "category": "big-tech",
-      "date": "2026-09-19",
+      "date": "2026-09-20",
       "hot": false,
       "tags": [
         "HN",
         "AI",
         "story",
-        "author_CanusLupus79"
+        "author_nujan_dev"
       ]
     },
     {
-      "id": "hn-49763045",
-      "title": "Inventor of ChatGPT and RLHF Launches Typesafe.ai",
-      "summary": "Inventor of ChatGPT and RLHF Launches Typesafe.ai — 3 points, 0 comments on HN.",
+      "id": "hn-49772834",
+      "title": "AI art is theft – on artists, mathematicians impact on AI",
+      "summary": "AI art is theft – on artists, mathematicians impact on AI — 4 points, 0 comments on HN.",
       "source": "Hacker News",
-      "sourceUrl": "https://techcrunch.com/2026/09/18/a-new-kind-of-ai-model-from-a-chatgpt-inventor-is-thrilling-developers/",
+      "sourceUrl": "https://twitter.com/wordgrammer/status/2101429761528455669",
       "category": "products",
-      "date": "2026-09-19",
+      "date": "2026-09-20",
       "hot": false,
       "tags": [
         "HN",
         "AI",
         "story",
-        "author_ryan_j_naughton"
+        "author_diginova"
       ]
     },
     {
-      "id": "hn-49762955",
-      "title": "AI Regulation and the China Question",
-      "summary": "AI Regulation and the China Question — 3 points, 1 comments on HN.",
+      "id": "hn-49772745",
+      "title": "VoltGrid AI: Mitigating GPU cluster dI/dt power surges in software",
+      "summary": "VoltGrid AI: Mitigating GPU cluster dI/dt power surges in software — 4 points, 0 comments on HN.",
       "source": "Hacker News",
-      "sourceUrl": "https://casssunstein.substack.com/p/ai-regulation-and-the-china-question",
+      "sourceUrl": "https://zenodo.org/records/22824778",
+      "category": "products",
+      "date": "2026-09-20",
+      "hot": false,
+      "tags": [
+        "HN",
+        "AI",
+        "story",
+        "author_samganyx"
+      ]
+    },
+    {
+      "id": "hn-49772368",
+      "title": "Nscale S-1 demonstrates unprofitability of AI",
+      "summary": "Nscale S-1 demonstrates unprofitability of AI — 4 points, 0 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://www.reddit.com/r/BetterOffline/comments/1wl3kkf/nscale_s1_demonstrates_unprofitability_of_ai/",
+      "category": "products",
+      "date": "2026-09-20",
+      "hot": false,
+      "tags": [
+        "HN",
+        "AI",
+        "story",
+        "author_aliasxneo"
+      ]
+    },
+    {
+      "id": "hn-49772165",
+      "title": "The Ethics Issue of AI-Assisted Creation",
+      "summary": "The Ethics Issue of AI-Assisted Creation — 4 points, 2 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://im.not.ci/ai-creator-ethic/",
+      "category": "products",
+      "date": "2026-09-20",
+      "hot": false,
+      "tags": [
+        "HN",
+        "AI",
+        "story",
+        "author_uneven9434"
+      ]
+    },
+    {
+      "id": "hn-49772946",
+      "title": "Free scanner for exposed Supabase data in AI-built apps (Lovable, Bolt, Base44)",
+      "summary": "Free scanner for exposed Supabase data in AI-built apps (Lovable, Bolt, Base44) — 3 points, 0 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://api.trustboost.dev/free-scan",
+      "category": "products",
+      "date": "2026-09-20",
+      "hot": false,
+      "tags": [
+        "HN",
+        "AI",
+        "story",
+        "author_Teocrispin"
+      ]
+    },
+    {
+      "id": "hn-49772924",
+      "title": "Here’s How an AI Slowdown An AI Slowdown Could Be Enforced",
+      "summary": "Here’s How an AI Slowdown An AI Slowdown Could Be Enforced — 3 points, 0 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://www.wired.com/story/heres-how-an-ai-slowdown-could-actually-work/",
+      "category": "products",
+      "date": "2026-09-20",
+      "hot": false,
+      "tags": [
+        "HN",
+        "AI",
+        "story",
+        "author_ent101"
+      ]
+    },
+    {
+      "id": "hn-49772767",
+      "title": "Phylo brings frontier AI to more scientists with open models on Fireworks",
+      "summary": "Phylo brings frontier AI to more scientists with open models on Fireworks — 3 points, 0 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://fireworks.ai/blog/phylo-brings-frontier-ai-to-more-scientists-with-open-models-on-fireworks",
+      "category": "products",
+      "date": "2026-09-20",
+      "hot": false,
+      "tags": [
+        "HN",
+        "AI",
+        "story",
+        "author_measurablefunc"
+      ]
+    },
+    {
+      "id": "hn-49772738",
+      "title": "A Man Who Named AI: John McCarthy and the End of the Code–Data Divide",
+      "summary": "A Man Who Named AI: John McCarthy and the End of the Code–Data Divide — 3 points, 1 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://nirmalutwani.substack.com/p/week-06-john-mccarthy-the-man-who",
+      "category": "products",
+      "date": "2026-09-20",
+      "hot": false,
+      "tags": [
+        "HN",
+        "AI",
+        "story",
+        "author_nutwani91"
+      ]
+    },
+    {
+      "id": "hn-49772474",
+      "title": "Adapting Fossil-scm as a platform for AI agentic workflow",
+      "summary": "Adapting Fossil-scm as a platform for AI agentic workflow — 3 points, 0 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://github.com/BenSiv/fossil-scm",
+      "category": "products",
+      "date": "2026-09-20",
+      "hot": false,
+      "tags": [
+        "HN",
+        "AI",
+        "story",
+        "author_thunderbong"
+      ]
+    },
+    {
+      "id": "hn-49772434",
+      "title": "Integrating Volt Active Data with AI Agents and Chatbots",
+      "summary": "Integrating Volt Active Data with AI Agents and Chatbots — 3 points, 0 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://docs.voltdb.com/UsingVoltDB/ChapAI.php",
+      "category": "products",
+      "date": "2026-09-20",
+      "hot": false,
+      "tags": [
+        "HN",
+        "AI",
+        "story",
+        "author_Bluestein"
+      ]
+    },
+    {
+      "id": "hn-49772225",
+      "title": "China doesn't need to beat US AI [video]",
+      "summary": "China doesn't need to beat US AI [video] — 3 points, 1 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://www.youtube.com/watch?v=sXA77wLF678",
+      "category": "products",
+      "date": "2026-09-20",
+      "hot": false,
+      "tags": [
+        "HN",
+        "AI",
+        "story",
+        "author_verdverm"
+      ]
+    },
+    {
+      "id": "hn-49771931",
+      "title": "Using system-one models inside high-throughput data pipelines",
+      "summary": "Using system-one models inside high-throughput data pipelines — 3 points, 0 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://www.southbridge.ai/blog/jev-entity-resolution",
       "category": "safety",
-      "date": "2026-09-19",
+      "date": "2026-09-20",
       "hot": false,
       "tags": [
         "HN",
         "AI",
         "story",
-        "author_paulpauper"
-      ]
-    },
-    {
-      "id": "hn-49764057",
-      "title": "How come AI-related posts get so many points on HN?",
-      "summary": "Have we all decided to rebrand Hacker News as a platform for discussing AI? I think that the too many people love to discuss harshly about AI — 2 points, 0 comments on HN.",
-      "source": "Hacker News",
-      "sourceUrl": "https://news.ycombinator.com/item?id=49764057",
-      "category": "products",
-      "date": "2026-09-19",
-      "hot": false,
-      "tags": [
-        "HN",
-        "AI",
-        "story",
-        "author_Muhammad523"
-      ]
-    },
-    {
-      "id": "hn-49763739",
-      "title": "Inside the AI \"Kill Chain\" That Destroyed an Iranian School",
-      "summary": "Inside the AI \"Kill Chain\" That Destroyed an Iranian School — 2 points, 1 comments on HN.",
-      "source": "Hacker News",
-      "sourceUrl": "https://www.bloomberg.com/graphics/2026-iran-school-attack/",
-      "category": "products",
-      "date": "2026-09-19",
-      "hot": false,
-      "tags": [
-        "HN",
-        "AI",
-        "story",
-        "author_xeonmc"
-      ]
-    },
-    {
-      "id": "hn-49763660",
-      "title": "Stepfun Step 5 Preview (LLM): On AA Pareto frontier",
-      "summary": "Stepfun Step 5 Preview (LLM): On AA Pareto frontier — 2 points, 1 comments on HN.",
-      "source": "Hacker News",
-      "sourceUrl": "https://artificialanalysis.ai/models/step-5",
-      "category": "fun",
-      "date": "2026-09-19",
-      "hot": false,
-      "tags": [
-        "HN",
-        "AI",
-        "story",
-        "author_AnodicElegy"
-      ]
-    },
-    {
-      "id": "hn-49762923",
-      "title": "Show HN: GGG – A local-first, zero-telemetry sovereign proxy daemon for AI tools",
-      "summary": "Show HN: GGG – A local-first, zero-telemetry sovereign proxy daemon for AI tools — 2 points, 0 comments on HN.",
-      "source": "Hacker News",
-      "sourceUrl": "https://github.com/JOxKxER/garza-global-graviton",
-      "category": "products",
-      "date": "2026-09-19",
-      "hot": false,
-      "tags": [
-        "HN",
-        "AI",
-        "story",
-        "author_joxkxer"
+        "author_hrishi"
       ]
     }
   ],
   "meta": {
-    "fetchedAt": "2026-09-19T07:02:51.670Z",
+    "fetchedAt": "2026-09-20T07:27:50.151Z",
     "topic": "AI",
     "total": 15,
     "hot": 2,
     "sources": [
-      "HackerNoon",
       "Hacker News"
     ]
   }
