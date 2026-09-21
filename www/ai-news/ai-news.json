@@ -1,12 +1,12 @@
 {
-  "generatedAt": "2026-09-20T07:27:50.151Z",
+  "generatedAt": "2026-09-21T07:38:26.860Z",
   "generatedBy": "YUNIE × Last30Days",
   "version": 2,
   "description": "Tin AI mới nhất — tổng hợp từ Last30Days (HN, GitHub, DEV.to, Reddit, arXiv, HackerNoon) trong 30 ngày qua. Chủ đề: AI. Tự động cập nhật bởi YUNIE.",
   "last30days": {
     "enabled": true,
     "topic": "AI",
-    "since": "2026-08-21",
+    "since": "2026-08-22",
     "days": 30,
     "sources": [
       "Hacker News (Algolia, free)",
@@ -55,252 +55,252 @@
   ],
   "articles": [
     {
-      "id": "hn-49772544",
-      "title": "Google AI Studio fakes data deletion. VRP auto-banned me in 60s for reporting it",
-      "summary": "Google AI Studio fakes data deletion. VRP auto-banned me in 60s for reporting it — 34 points, 15 comments on HN.",
-      "source": "Hacker News",
-      "sourceUrl": "https://medium.com/@istokovicsgyorgy79/google-ai-studio-fakes-data-deletion-vrp-auto-banned-me-in-60s-for-reporting-it-ea68e06f9bc2",
+      "id": "hnoon-gpt-6-astra-vs-meshy-7-for-3d-creation-what-three-creator-wo",
+      "title": "GPT-6 Astra vs. Meshy 7 for 3D Creation: What Three Creator Workflows Reveal",
+      "summary": "Creators are combining OpenAI's GPT-6 Astra with Meshy for 3D generation, with Astra good at scene reasoning, Blender automation, and code, while Meshy is more reliable for generat — by BrunoLi on HackerNoon.",
+      "source": "HackerNoon",
+      "sourceUrl": "https://hackernoon.com/gpt-6-astra-vs-meshy-7-for-3d-creation-what-three-creator-workflows-reveal",
       "category": "big-tech",
-      "date": "2026-09-20",
+      "date": "2026-09-21",
       "hot": true,
       "tags": [
-        "HN",
-        "AI",
-        "story",
-        "author_Bitu79"
+        "HackerNoon",
+        "ai",
+        "AI"
       ]
     },
     {
-      "id": "hn-49772608",
-      "title": "Anthropic creates AI powered wetlab",
-      "summary": "Anthropic creates AI powered wetlab — 7 points, 2 comments on HN.",
+      "id": "hn-49783062",
+      "title": "AI chatbots give wrong answers to financial queries 'most of the time'",
+      "summary": "AI chatbots give wrong answers to financial queries 'most of the time' — 71 points, 29 comments on HN.",
       "source": "Hacker News",
-      "sourceUrl": "https://www.reuters.com/world/anthropic-quietly-sets-up-biology-lab-it-ramps-ai-drug-program-2026-09-18/",
+      "sourceUrl": "https://www.ft.com/content/c0cd359d-df84-4208-a789-ffa864b43666",
+      "category": "products",
+      "date": "2026-09-21",
+      "hot": false,
+      "tags": [
+        "HN",
+        "AI",
+        "story",
+        "author_1vuio0pswjnm7"
+      ]
+    },
+    {
+      "id": "hn-49782409",
+      "title": "AI Weekly Warns Firms on Google AI Studio Data Retention Fraud",
+      "summary": "AI Weekly Warns Firms on Google AI Studio Data Retention Fraud — 19 points, 4 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://bitu79.substack.com/p/ai-weekly-issues-warning-on-google",
       "category": "big-tech",
-      "date": "2026-09-20",
-      "hot": true,
+      "date": "2026-09-21",
+      "hot": false,
       "tags": [
         "HN",
         "AI",
         "story",
-        "author_theahura"
+        "author_CanusLupus79"
       ]
     },
     {
-      "id": "hn-49772427",
-      "title": "OpenAI researcher on AI communicating across air-gaps via thermal side-channels [video]",
-      "summary": "OpenAI researcher on AI communicating across air-gaps via thermal side-channels [video] — 5 points, 1 comments on HN.",
+      "id": "hn-49782986",
+      "title": "College Is Coming Apart After Successive, Overlapping Crises",
+      "summary": "College Is Coming Apart After Successive, Overlapping Crises — 11 points, 6 comments on HN.",
       "source": "Hacker News",
-      "sourceUrl": "https://www.youtube.com/watch?v=6AgOfiZOWiY",
+      "sourceUrl": "https://www.theatlantic.com/ideas/2026/09/college-education-future-ai/688655/",
+      "category": "products",
+      "date": "2026-09-21",
+      "hot": false,
+      "tags": [
+        "HN",
+        "AI",
+        "story",
+        "author_ryan_j_naughton"
+      ]
+    },
+    {
+      "id": "hn-49782916",
+      "title": "The president wanted to unleash AI. Then came Anthropic",
+      "summary": "The president wanted to unleash AI. Then came Anthropic — 10 points, 1 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://www.politico.com/news/magazine/2026/09/20/anthropic-white-house-ai-01085212",
       "category": "big-tech",
-      "date": "2026-09-20",
+      "date": "2026-09-21",
       "hot": false,
       "tags": [
         "HN",
         "AI",
         "story",
-        "author_nujan_dev"
+        "author_elorant"
       ]
     },
     {
-      "id": "hn-49772834",
-      "title": "AI art is theft – on artists, mathematicians impact on AI",
-      "summary": "AI art is theft – on artists, mathematicians impact on AI — 4 points, 0 comments on HN.",
+      "id": "hn-49783018",
+      "title": "Why Do We Need Human Mathematicians Anymore?",
+      "summary": "Why Do We Need Human Mathematicians Anymore? — 4 points, 1 comments on HN.",
       "source": "Hacker News",
-      "sourceUrl": "https://twitter.com/wordgrammer/status/2101429761528455669",
+      "sourceUrl": "https://poshenloh.com/posts/20260919-math-ai",
       "category": "products",
-      "date": "2026-09-20",
+      "date": "2026-09-21",
       "hot": false,
       "tags": [
         "HN",
         "AI",
         "story",
-        "author_diginova"
+        "author_stikit"
       ]
     },
     {
-      "id": "hn-49772745",
-      "title": "VoltGrid AI: Mitigating GPU cluster dI/dt power surges in software",
-      "summary": "VoltGrid AI: Mitigating GPU cluster dI/dt power surges in software — 4 points, 0 comments on HN.",
+      "id": "hn-49783809",
+      "title": "Shopify CEO says employees' `slop grenades` making more work for everyone else",
+      "summary": "Shopify CEO says employees' `slop grenades` making more work for everyone else — 3 points, 0 comments on HN.",
       "source": "Hacker News",
-      "sourceUrl": "https://zenodo.org/records/22824778",
+      "sourceUrl": "https://fortune.com/2026/09/17/shopify-tobias-lutke-ai-slop-grenades/",
       "category": "products",
-      "date": "2026-09-20",
+      "date": "2026-09-21",
       "hot": false,
       "tags": [
         "HN",
         "AI",
         "story",
-        "author_samganyx"
+        "author_theanonymousone"
       ]
     },
     {
-      "id": "hn-49772368",
-      "title": "Nscale S-1 demonstrates unprofitability of AI",
-      "summary": "Nscale S-1 demonstrates unprofitability of AI — 4 points, 0 comments on HN.",
+      "id": "hn-49783456",
+      "title": "You could have built Jev",
+      "summary": "You could have built Jev — 3 points, 0 comments on HN.",
       "source": "Hacker News",
-      "sourceUrl": "https://www.reddit.com/r/BetterOffline/comments/1wl3kkf/nscale_s1_demonstrates_unprofitability_of_ai/",
+      "sourceUrl": "https://sgnt.ai/p/jev/",
       "category": "products",
-      "date": "2026-09-20",
+      "date": "2026-09-21",
       "hot": false,
       "tags": [
         "HN",
         "AI",
         "story",
-        "author_aliasxneo"
+        "author_andsoitis"
       ]
     },
     {
-      "id": "hn-49772165",
-      "title": "The Ethics Issue of AI-Assisted Creation",
-      "summary": "The Ethics Issue of AI-Assisted Creation — 4 points, 2 comments on HN.",
+      "id": "hn-49783339",
+      "title": "Compsci grads facing recession-like job prospects thanks to AI",
+      "summary": "Compsci grads facing recession-like job prospects thanks to AI — 3 points, 0 comments on HN.",
       "source": "Hacker News",
-      "sourceUrl": "https://im.not.ci/ai-creator-ethic/",
+      "sourceUrl": "https://www.theregister.com/ai-and-ml/2026/09/18/compsci-grads-facing-recession-like-job-prospects-thanks-to-ai/5297537",
       "category": "products",
-      "date": "2026-09-20",
+      "date": "2026-09-21",
       "hot": false,
       "tags": [
         "HN",
         "AI",
         "story",
-        "author_uneven9434"
+        "author_pjmlp"
       ]
     },
     {
-      "id": "hn-49772946",
-      "title": "Free scanner for exposed Supabase data in AI-built apps (Lovable, Bolt, Base44)",
-      "summary": "Free scanner for exposed Supabase data in AI-built apps (Lovable, Bolt, Base44) — 3 points, 0 comments on HN.",
+      "id": "hn-49782644",
+      "title": "A Silicon Valley radical: Trump's AI whisperer pushing for limited regulation",
+      "summary": "A Silicon Valley radical: Trump's AI whisperer pushing for limited regulation — 3 points, 0 comments on HN.",
       "source": "Hacker News",
-      "sourceUrl": "https://api.trustboost.dev/free-scan",
-      "category": "products",
-      "date": "2026-09-20",
-      "hot": false,
-      "tags": [
-        "HN",
-        "AI",
-        "story",
-        "author_Teocrispin"
-      ]
-    },
-    {
-      "id": "hn-49772924",
-      "title": "Here’s How an AI Slowdown An AI Slowdown Could Be Enforced",
-      "summary": "Here’s How an AI Slowdown An AI Slowdown Could Be Enforced — 3 points, 0 comments on HN.",
-      "source": "Hacker News",
-      "sourceUrl": "https://www.wired.com/story/heres-how-an-ai-slowdown-could-actually-work/",
-      "category": "products",
-      "date": "2026-09-20",
-      "hot": false,
-      "tags": [
-        "HN",
-        "AI",
-        "story",
-        "author_ent101"
-      ]
-    },
-    {
-      "id": "hn-49772767",
-      "title": "Phylo brings frontier AI to more scientists with open models on Fireworks",
-      "summary": "Phylo brings frontier AI to more scientists with open models on Fireworks — 3 points, 0 comments on HN.",
-      "source": "Hacker News",
-      "sourceUrl": "https://fireworks.ai/blog/phylo-brings-frontier-ai-to-more-scientists-with-open-models-on-fireworks",
-      "category": "products",
-      "date": "2026-09-20",
-      "hot": false,
-      "tags": [
-        "HN",
-        "AI",
-        "story",
-        "author_measurablefunc"
-      ]
-    },
-    {
-      "id": "hn-49772738",
-      "title": "A Man Who Named AI: John McCarthy and the End of the Code–Data Divide",
-      "summary": "A Man Who Named AI: John McCarthy and the End of the Code–Data Divide — 3 points, 1 comments on HN.",
-      "source": "Hacker News",
-      "sourceUrl": "https://nirmalutwani.substack.com/p/week-06-john-mccarthy-the-man-who",
-      "category": "products",
-      "date": "2026-09-20",
-      "hot": false,
-      "tags": [
-        "HN",
-        "AI",
-        "story",
-        "author_nutwani91"
-      ]
-    },
-    {
-      "id": "hn-49772474",
-      "title": "Adapting Fossil-scm as a platform for AI agentic workflow",
-      "summary": "Adapting Fossil-scm as a platform for AI agentic workflow — 3 points, 0 comments on HN.",
-      "source": "Hacker News",
-      "sourceUrl": "https://github.com/BenSiv/fossil-scm",
-      "category": "products",
-      "date": "2026-09-20",
-      "hot": false,
-      "tags": [
-        "HN",
-        "AI",
-        "story",
-        "author_thunderbong"
-      ]
-    },
-    {
-      "id": "hn-49772434",
-      "title": "Integrating Volt Active Data with AI Agents and Chatbots",
-      "summary": "Integrating Volt Active Data with AI Agents and Chatbots — 3 points, 0 comments on HN.",
-      "source": "Hacker News",
-      "sourceUrl": "https://docs.voltdb.com/UsingVoltDB/ChapAI.php",
-      "category": "products",
-      "date": "2026-09-20",
-      "hot": false,
-      "tags": [
-        "HN",
-        "AI",
-        "story",
-        "author_Bluestein"
-      ]
-    },
-    {
-      "id": "hn-49772225",
-      "title": "China doesn't need to beat US AI [video]",
-      "summary": "China doesn't need to beat US AI [video] — 3 points, 1 comments on HN.",
-      "source": "Hacker News",
-      "sourceUrl": "https://www.youtube.com/watch?v=sXA77wLF678",
-      "category": "products",
-      "date": "2026-09-20",
-      "hot": false,
-      "tags": [
-        "HN",
-        "AI",
-        "story",
-        "author_verdverm"
-      ]
-    },
-    {
-      "id": "hn-49771931",
-      "title": "Using system-one models inside high-throughput data pipelines",
-      "summary": "Using system-one models inside high-throughput data pipelines — 3 points, 0 comments on HN.",
-      "source": "Hacker News",
-      "sourceUrl": "https://www.southbridge.ai/blog/jev-entity-resolution",
+      "sourceUrl": "https://www.theguardian.com/us-news/2026/sep/20/david-sacks-trump-ai-czar",
       "category": "safety",
-      "date": "2026-09-20",
+      "date": "2026-09-21",
       "hot": false,
       "tags": [
         "HN",
         "AI",
         "story",
-        "author_hrishi"
+        "author_kuerbel"
+      ]
+    },
+    {
+      "id": "hn-49782310",
+      "title": "What Is Coastline Index and Why Focus Only on Confirmed GTA VI Facts?",
+      "summary": "Coastline Index is a structured reference site for GTA VI aimed primarily at Chinese-speaking players.<p>The constraint: only Rockstar-confirmed information is allowed.<p>That means:\n- Release date, platforms, editions,  — 3 points, 0 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://news.ycombinator.com/item?id=49782310",
+      "category": "products",
+      "date": "2026-09-21",
+      "hot": false,
+      "tags": [
+        "HN",
+        "AI",
+        "story",
+        "author_kydfeng"
+      ]
+    },
+    {
+      "id": "hn-49783941",
+      "title": "Where Do Chatbots Come From? What I Wish Everyone Knew About AI in 2026",
+      "summary": "Where Do Chatbots Come From? What I Wish Everyone Knew About AI in 2026 — 2 points, 0 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://www.lesswrong.com/posts/dww6cpbo2XoKbsxyw/where-do-chatbots-come-from-what-i-wish-everyone-knew-about",
+      "category": "products",
+      "date": "2026-09-21",
+      "hot": false,
+      "tags": [
+        "HN",
+        "AI",
+        "story",
+        "author_joozio"
+      ]
+    },
+    {
+      "id": "hn-49783671",
+      "title": "Evaluating Long-Term Memory for AI Agents: AML Cycle 2 Is Now Open",
+      "summary": "Evaluating Long-Term Memory for AI Agents: AML Cycle 2 Is Now Open — 2 points, 0 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://twitter.com/AgentMemoryL/status/2101515447816663222",
+      "category": "products",
+      "date": "2026-09-21",
+      "hot": false,
+      "tags": [
+        "HN",
+        "AI",
+        "story",
+        "author_IreneAI"
+      ]
+    },
+    {
+      "id": "hn-49783622",
+      "title": "A computer scientist-novelist reflects on AI and our understanding of maths",
+      "summary": "A computer scientist-novelist reflects on AI and our understanding of maths — 2 points, 1 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://scroll.in/article/1095809/how-ai-could-influence-our-understanding-of-mathematics-a-computer-scientist-novelists-reflections",
+      "category": "products",
+      "date": "2026-09-21",
+      "hot": false,
+      "tags": [
+        "HN",
+        "AI",
+        "story",
+        "author_adityaathalye"
+      ]
+    },
+    {
+      "id": "hn-49783107",
+      "title": "Investment Seer: Agentic AI-Powered Stock and Crypto Analyst",
+      "summary": "Investment Seer: Agentic AI-Powered Stock and Crypto Analyst — 2 points, 0 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://investmentseer.com/",
+      "category": "products",
+      "date": "2026-09-21",
+      "hot": false,
+      "tags": [
+        "HN",
+        "AI",
+        "story",
+        "author_fooctrl"
       ]
     }
   ],
   "meta": {
-    "fetchedAt": "2026-09-20T07:27:50.151Z",
+    "fetchedAt": "2026-09-21T07:38:26.860Z",
     "topic": "AI",
     "total": 15,
-    "hot": 2,
+    "hot": 1,
     "sources": [
+      "HackerNoon",
       "Hacker News"
     ]
   }
