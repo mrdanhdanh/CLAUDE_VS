@@ -1,0 +1,25 @@
+three.js v0.186.0 (r186) — MIT License (xem LICENSE)
+Tải về 2026-09-22, self-host để www/ không phụ thuộc CDN (KN-029).
+
+NGUỒN TẢI
+- three.core.min.js    <- https://cdn.jsdelivr.net/npm/three@0.186.0/build/three.core.min.js   (406 KB)
+- three.module.min.js  <- https://cdn.jsdelivr.net/npm/three@0.186.0/build/three.module.min.js (384 KB)
+  * ĐÃ PATCH 1 STRING: import './three.core.js' -> './three.core.min.js' (2 chỗ) để trỏ đúng file min self-host.
+- addons/controls/OrbitControls.js  <- https://unpkg.com/three@0.186.0/examples/jsm/controls/OrbitControls.js  (nguyên bản)
+- addons/renderers/CSS2DRenderer.js <- https://unpkg.com/three@0.186.0/examples/jsm/renderers/CSS2DRenderer.js (nguyên bản)
+- LICENSE <- https://unpkg.com/three@0.186.0/LICENSE
+
+LƯU Ý LAYOUT: giữ ĐÚNG cấu trúc addons/controls/ và addons/renderers/ như upstream — importmap
+map "three/addons/" -> "../vendor/three/addons/" nên import { OrbitControls } from 'three/addons/controls/OrbitControls.js'
+phải khớp đường dẫn thật.
+
+VÌ SAO PHẢI PATCH
+npm registry KHÔNG ship file *.min.js (unpkg 404; GitHub tag cũng không có bản min).
+Bản min duy nhất là của jsdelivr (Terser) — wrapper của nó vẫn import './three.core.js' (bản unminified không tồn tại
+trong vendor của mình), nên patch string là bắt buộc và chỉ ảnh hưởng 1 dòng import.
+
+NÂNG CẤP (khi có version mới, ví dụ 0.187.0)
+1. Tải lại 4 file trên với version mới (giữ nguyên pattern URL).
+2. Patch lại string trong three.module.min.js:
+   node -e "const f='www/vendor/three/three.module.min.js',fs=require('fs');let s=fs.readFileSync(f,'utf8');s=s.split('./three.core.js').join('./three.core.min.js');fs.writeFileSync(f,s);console.log('patched')"
+3. Chạy guard: npx playwright test tests/e2e/cosmos-3d.spec.ts
