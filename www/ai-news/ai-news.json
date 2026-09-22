@@ -1,12 +1,12 @@
 {
-  "generatedAt": "2026-09-21T07:38:26.860Z",
+  "generatedAt": "2026-09-22T07:19:59.897Z",
   "generatedBy": "YUNIE × Last30Days",
   "version": 2,
   "description": "Tin AI mới nhất — tổng hợp từ Last30Days (HN, GitHub, DEV.to, Reddit, arXiv, HackerNoon) trong 30 ngày qua. Chủ đề: AI. Tự động cập nhật bởi YUNIE.",
   "last30days": {
     "enabled": true,
     "topic": "AI",
-    "since": "2026-08-22",
+    "since": "2026-08-23",
     "days": 30,
     "sources": [
       "Hacker News (Algolia, free)",
@@ -55,13 +55,13 @@
   ],
   "articles": [
     {
-      "id": "hnoon-gpt-6-astra-vs-meshy-7-for-3d-creation-what-three-creator-wo",
-      "title": "GPT-6 Astra vs. Meshy 7 for 3D Creation: What Three Creator Workflows Reveal",
-      "summary": "Creators are combining OpenAI's GPT-6 Astra with Meshy for 3D generation, with Astra good at scene reasoning, Blender automation, and code, while Meshy is more reliable for generat — by BrunoLi on HackerNoon.",
+      "id": "hnoon-how-ai-watermarking-actually-works-at-the-token-level-and-wh",
+      "title": "How AI Watermarking Actually Works at the Token Level — And Why Developers Should Pay Attention",
+      "summary": "Anthropic is watermarking Claude's output at the token level. Here's how the green/red list mechanism works and what it means for developers building on LLM API Read All — by Anish Kumar Singh on HackerNoon.",
       "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/gpt-6-astra-vs-meshy-7-for-3d-creation-what-three-creator-workflows-reveal",
-      "category": "big-tech",
-      "date": "2026-09-21",
+      "sourceUrl": "https://hackernoon.com/how-ai-watermarking-actually-works-at-the-token-level-and-why-developers-should-pay-attention",
+      "category": "products",
+      "date": "2026-09-22",
       "hot": true,
       "tags": [
         "HackerNoon",
@@ -70,109 +70,219 @@
       ]
     },
     {
-      "id": "hn-49783062",
-      "title": "AI chatbots give wrong answers to financial queries 'most of the time'",
-      "summary": "AI chatbots give wrong answers to financial queries 'most of the time' — 71 points, 29 comments on HN.",
+      "id": "hnoon-the-real-reason-ai-companys-are-tapping-the-brakes-hint-its-",
+      "title": "The Real Reason AI Company's Are Tapping the Brakes (Hint: It’s Not Safety)",
+      "summary": "The AI revolution is facing an existential crisis due to the depletion of high-quality, human-generated public text and the rise of toxic, synthetic internet content. As a result,  — by GlobalHawk on HackerNoon.",
+      "source": "HackerNoon",
+      "sourceUrl": "https://hackernoon.com/the-real-reason-ai-companys-are-tapping-the-brakes-hint-its-not-safety",
+      "category": "safety",
+      "date": "2026-09-22",
+      "hot": true,
+      "tags": [
+        "HackerNoon",
+        "ai",
+        "AI"
+      ]
+    },
+    {
+      "id": "hnoon-trust-risk-and-money-interview-with-t54-ceo-chandler-fang-on",
+      "title": "Trust, Risk and Money: Interview With t54 CEO Chandler Fang on AI Agents That Spend",
+      "summary": "The biggest trust issues with autonomous agents involve risk, liability, and security, particularly when they have access to users' money and wallets. To build trust, agents should — by Olayimika Oyebanji on HackerNoon.",
+      "source": "HackerNoon",
+      "sourceUrl": "https://hackernoon.com/trust-risk-and-money-interview-with-t54-ceo-chandler-fang-on-ai-agents-that-spend",
+      "category": "safety",
+      "date": "2026-09-22",
+      "hot": true,
+      "tags": [
+        "HackerNoon",
+        "ai",
+        "AI"
+      ]
+    },
+    {
+      "id": "hn-49797177",
+      "title": "Why AI resembles a charismatic religious leader",
+      "summary": "Why AI resembles a charismatic religious leader — 7 points, 1 comments on HN.",
       "source": "Hacker News",
-      "sourceUrl": "https://www.ft.com/content/c0cd359d-df84-4208-a789-ffa864b43666",
+      "sourceUrl": "https://theconversation.com/why-ai-resembles-a-charismatic-religious-leader-291831",
       "category": "products",
-      "date": "2026-09-21",
+      "date": "2026-09-22",
       "hot": false,
       "tags": [
         "HN",
         "AI",
         "story",
-        "author_1vuio0pswjnm7"
+        "author_billybuckwheat"
       ]
     },
     {
-      "id": "hn-49782409",
-      "title": "AI Weekly Warns Firms on Google AI Studio Data Retention Fraud",
-      "summary": "AI Weekly Warns Firms on Google AI Studio Data Retention Fraud — 19 points, 4 comments on HN.",
+      "id": "hn-49797034",
+      "title": "Nearly half of young people trust AI over a human for fact-checking, report says",
+      "summary": "Nearly half of young people trust AI over a human for fact-checking, report says — 6 points, 4 comments on HN.",
       "source": "Hacker News",
-      "sourceUrl": "https://bitu79.substack.com/p/ai-weekly-issues-warning-on-google",
+      "sourceUrl": "https://news.sky.com/story/nearly-half-of-young-people-trust-ai-over-a-human-for-fact-checking-report-says-13590558",
+      "category": "products",
+      "date": "2026-09-22",
+      "hot": false,
+      "tags": [
+        "HN",
+        "AI",
+        "story",
+        "author_austinallegro"
+      ]
+    },
+    {
+      "id": "hn-49796949",
+      "title": "Tiny Startups Are Getting Even Smaller with Help from AI",
+      "summary": "Tiny Startups Are Getting Even Smaller with Help from AI — 4 points, 1 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://www.wsj.com/tech/ai/startup-hiring-ai-staffing-8c626f75",
+      "category": "products",
+      "date": "2026-09-22",
+      "hot": false,
+      "tags": [
+        "HN",
+        "AI",
+        "story",
+        "author_rvz"
+      ]
+    },
+    {
+      "id": "hn-49796865",
+      "title": "Pangram flags award-winning novel as largely AI written",
+      "summary": "Pangram flags award-winning novel as largely AI written — 4 points, 0 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://twitter.com/Pangramed/status/2102045146674053162",
+      "category": "products",
+      "date": "2026-09-22",
+      "hot": false,
+      "tags": [
+        "HN",
+        "AI",
+        "story",
+        "author_fbrusch"
+      ]
+    },
+    {
+      "id": "hn-49796792",
+      "title": "Six clones of Jev in 2 days",
+      "summary": "Six clones of Jev in 2 days — 4 points, 1 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://www.latent.space/p/ainews-here-are-6-clones-of-jev-in",
+      "category": "products",
+      "date": "2026-09-22",
+      "hot": false,
+      "tags": [
+        "HN",
+        "AI",
+        "story",
+        "author_pelcg"
+      ]
+    },
+    {
+      "id": "hn-49796998",
+      "title": "StepFun teases Step 5 Preview, a 600B/27B MoE, open weights coming Oct 15",
+      "summary": "StepFun teases Step 5 Preview, a 600B/27B MoE, open weights coming Oct 15 — 3 points, 1 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://twitter.com/StepFun_ai/status/2101510462685003786",
+      "category": "fun",
+      "date": "2026-09-22",
+      "hot": false,
+      "tags": [
+        "HN",
+        "AI",
+        "story",
+        "author_WavyPeng"
+      ]
+    },
+    {
+      "id": "hn-49796966",
+      "title": "OpenAI forms math advisory group as its AI resolves more than 100 open problems",
+      "summary": "OpenAI forms math advisory group as its AI resolves more than 100 open problems — 3 points, 0 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://techcrunch.com/2026/09/21/openai-forms-math-advisory-group-as-its-ai-resolves-more-than-100-open-problems/",
       "category": "big-tech",
-      "date": "2026-09-21",
+      "date": "2026-09-22",
       "hot": false,
       "tags": [
         "HN",
         "AI",
         "story",
-        "author_CanusLupus79"
+        "author_sophymarine"
       ]
     },
     {
-      "id": "hn-49782986",
-      "title": "College Is Coming Apart After Successive, Overlapping Crises",
-      "summary": "College Is Coming Apart After Successive, Overlapping Crises — 11 points, 6 comments on HN.",
+      "id": "hn-49796834",
+      "title": "iPhone owners can now submit claims in Apple's $250M Siri AI settlement",
+      "summary": "iPhone owners can now submit claims in Apple's $250M Siri AI settlement — 3 points, 1 comments on HN.",
       "source": "Hacker News",
-      "sourceUrl": "https://www.theatlantic.com/ideas/2026/09/college-education-future-ai/688655/",
+      "sourceUrl": "https://www.theverge.com/tech/998191/apple-siri-ai-iphone-16-class-action-lawsuit-settlement",
+      "category": "safety",
+      "date": "2026-09-22",
+      "hot": false,
+      "tags": [
+        "HN",
+        "AI",
+        "story",
+        "author_pelcg"
+      ]
+    },
+    {
+      "id": "hn-49797581",
+      "title": "Ask HN: Is Astra's writing starting to bother anyone else?",
+      "summary": "As someone who pretty much only uses GPT models (due to how generous the limits are), I always felt like I’d dodged a bullet when people complained about Claude and its load-bearing Claude-isms. GPT models, up to 5.6 Sol — 2 points, 1 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://news.ycombinator.com/item?id=49797581",
       "category": "products",
-      "date": "2026-09-21",
+      "date": "2026-09-22",
       "hot": false,
       "tags": [
         "HN",
         "AI",
         "story",
-        "author_ryan_j_naughton"
+        "author_demibabs"
       ]
     },
     {
-      "id": "hn-49782916",
-      "title": "The president wanted to unleash AI. Then came Anthropic",
-      "summary": "The president wanted to unleash AI. Then came Anthropic — 10 points, 1 comments on HN.",
+      "id": "hn-49797546",
+      "title": "AI staff complain of mental toll over fears of threat to society",
+      "summary": "AI staff complain of mental toll over fears of threat to society — 2 points, 0 comments on HN.",
       "source": "Hacker News",
-      "sourceUrl": "https://www.politico.com/news/magazine/2026/09/20/anthropic-white-house-ai-01085212",
-      "category": "big-tech",
-      "date": "2026-09-21",
-      "hot": false,
-      "tags": [
-        "HN",
-        "AI",
-        "story",
-        "author_elorant"
-      ]
-    },
-    {
-      "id": "hn-49783018",
-      "title": "Why Do We Need Human Mathematicians Anymore?",
-      "summary": "Why Do We Need Human Mathematicians Anymore? — 4 points, 1 comments on HN.",
-      "source": "Hacker News",
-      "sourceUrl": "https://poshenloh.com/posts/20260919-math-ai",
+      "sourceUrl": "https://www.ft.com/content/60870960-f433-48ca-bc2c-708686a69ae7",
       "category": "products",
-      "date": "2026-09-21",
+      "date": "2026-09-22",
       "hot": false,
       "tags": [
         "HN",
         "AI",
         "story",
-        "author_stikit"
+        "author_bazzmt"
       ]
     },
     {
-      "id": "hn-49783809",
-      "title": "Shopify CEO says employees' `slop grenades` making more work for everyone else",
-      "summary": "Shopify CEO says employees' `slop grenades` making more work for everyone else — 3 points, 0 comments on HN.",
+      "id": "hn-49797039",
+      "title": "JP Morgan CEO says hyperscaler AI spending could hit $1T in 2027",
+      "summary": "JP Morgan CEO says hyperscaler AI spending could hit $1T in 2027 — 2 points, 0 comments on HN.",
       "source": "Hacker News",
-      "sourceUrl": "https://fortune.com/2026/09/17/shopify-tobias-lutke-ai-slop-grenades/",
+      "sourceUrl": "https://www.cnbc.com/2026/09/21/jamie-dimon-jpm-jpmorgan-indiaconference.html",
       "category": "products",
-      "date": "2026-09-21",
+      "date": "2026-09-22",
       "hot": false,
       "tags": [
         "HN",
         "AI",
         "story",
-        "author_theanonymousone"
+        "author_pelcg"
       ]
     },
     {
-      "id": "hn-49783456",
-      "title": "You could have built Jev",
-      "summary": "You could have built Jev — 3 points, 0 comments on HN.",
+      "id": "hn-49796787",
+      "title": "Gates Foundation coalition for more representative language data sets in AI",
+      "summary": "Gates Foundation coalition for more representative language data sets in AI — 2 points, 0 comments on HN.",
       "source": "Hacker News",
-      "sourceUrl": "https://sgnt.ai/p/jev/",
+      "sourceUrl": "https://abcnews.com/Technology/wireStory/gates-foundation-launches-coalition-build-representative-language-data-136622214",
       "category": "products",
-      "date": "2026-09-21",
+      "date": "2026-09-22",
       "hot": false,
       "tags": [
         "HN",
@@ -180,125 +290,13 @@
         "story",
         "author_andsoitis"
       ]
-    },
-    {
-      "id": "hn-49783339",
-      "title": "Compsci grads facing recession-like job prospects thanks to AI",
-      "summary": "Compsci grads facing recession-like job prospects thanks to AI — 3 points, 0 comments on HN.",
-      "source": "Hacker News",
-      "sourceUrl": "https://www.theregister.com/ai-and-ml/2026/09/18/compsci-grads-facing-recession-like-job-prospects-thanks-to-ai/5297537",
-      "category": "products",
-      "date": "2026-09-21",
-      "hot": false,
-      "tags": [
-        "HN",
-        "AI",
-        "story",
-        "author_pjmlp"
-      ]
-    },
-    {
-      "id": "hn-49782644",
-      "title": "A Silicon Valley radical: Trump's AI whisperer pushing for limited regulation",
-      "summary": "A Silicon Valley radical: Trump's AI whisperer pushing for limited regulation — 3 points, 0 comments on HN.",
-      "source": "Hacker News",
-      "sourceUrl": "https://www.theguardian.com/us-news/2026/sep/20/david-sacks-trump-ai-czar",
-      "category": "safety",
-      "date": "2026-09-21",
-      "hot": false,
-      "tags": [
-        "HN",
-        "AI",
-        "story",
-        "author_kuerbel"
-      ]
-    },
-    {
-      "id": "hn-49782310",
-      "title": "What Is Coastline Index and Why Focus Only on Confirmed GTA VI Facts?",
-      "summary": "Coastline Index is a structured reference site for GTA VI aimed primarily at Chinese-speaking players.<p>The constraint: only Rockstar-confirmed information is allowed.<p>That means:\n- Release date, platforms, editions,  — 3 points, 0 comments on HN.",
-      "source": "Hacker News",
-      "sourceUrl": "https://news.ycombinator.com/item?id=49782310",
-      "category": "products",
-      "date": "2026-09-21",
-      "hot": false,
-      "tags": [
-        "HN",
-        "AI",
-        "story",
-        "author_kydfeng"
-      ]
-    },
-    {
-      "id": "hn-49783941",
-      "title": "Where Do Chatbots Come From? What I Wish Everyone Knew About AI in 2026",
-      "summary": "Where Do Chatbots Come From? What I Wish Everyone Knew About AI in 2026 — 2 points, 0 comments on HN.",
-      "source": "Hacker News",
-      "sourceUrl": "https://www.lesswrong.com/posts/dww6cpbo2XoKbsxyw/where-do-chatbots-come-from-what-i-wish-everyone-knew-about",
-      "category": "products",
-      "date": "2026-09-21",
-      "hot": false,
-      "tags": [
-        "HN",
-        "AI",
-        "story",
-        "author_joozio"
-      ]
-    },
-    {
-      "id": "hn-49783671",
-      "title": "Evaluating Long-Term Memory for AI Agents: AML Cycle 2 Is Now Open",
-      "summary": "Evaluating Long-Term Memory for AI Agents: AML Cycle 2 Is Now Open — 2 points, 0 comments on HN.",
-      "source": "Hacker News",
-      "sourceUrl": "https://twitter.com/AgentMemoryL/status/2101515447816663222",
-      "category": "products",
-      "date": "2026-09-21",
-      "hot": false,
-      "tags": [
-        "HN",
-        "AI",
-        "story",
-        "author_IreneAI"
-      ]
-    },
-    {
-      "id": "hn-49783622",
-      "title": "A computer scientist-novelist reflects on AI and our understanding of maths",
-      "summary": "A computer scientist-novelist reflects on AI and our understanding of maths — 2 points, 1 comments on HN.",
-      "source": "Hacker News",
-      "sourceUrl": "https://scroll.in/article/1095809/how-ai-could-influence-our-understanding-of-mathematics-a-computer-scientist-novelists-reflections",
-      "category": "products",
-      "date": "2026-09-21",
-      "hot": false,
-      "tags": [
-        "HN",
-        "AI",
-        "story",
-        "author_adityaathalye"
-      ]
-    },
-    {
-      "id": "hn-49783107",
-      "title": "Investment Seer: Agentic AI-Powered Stock and Crypto Analyst",
-      "summary": "Investment Seer: Agentic AI-Powered Stock and Crypto Analyst — 2 points, 0 comments on HN.",
-      "source": "Hacker News",
-      "sourceUrl": "https://investmentseer.com/",
-      "category": "products",
-      "date": "2026-09-21",
-      "hot": false,
-      "tags": [
-        "HN",
-        "AI",
-        "story",
-        "author_fooctrl"
-      ]
     }
   ],
   "meta": {
-    "fetchedAt": "2026-09-21T07:38:26.860Z",
+    "fetchedAt": "2026-09-22T07:19:59.897Z",
     "topic": "AI",
     "total": 15,
-    "hot": 1,
+    "hot": 3,
     "sources": [
       "HackerNoon",
       "Hacker News"
