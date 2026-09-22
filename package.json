@@ -10,6 +10,7 @@
     "cosmos:refresh": "node .github/harness/scripts/entangle.mjs --graph --out www/cosmos/graph.json && node .github/harness/scripts/cosmic-scale.mjs --json --out www/cosmos/scale.json && node .github/harness/scripts/auto-learn.mjs watchdog --json --out www/cosmos/hawking.json && node .github/harness/scripts/auto-learn.mjs stats --heatmap --json --out www/cosmos/heatmap.json && node .github/harness/scripts/generate-status.mjs",
     "hawking": "node .github/harness/scripts/auto-learn.mjs watchdog",
     "guards": "node .github/harness/scripts/auto-learn.mjs guards",
+    "evals:components": "node .github/harness/scripts/eval-gate.mjs --scope components",
     "cosmos:check": "node .github/harness/scripts/cosmic-scale.mjs --budget 10",
     "cosmos:gate": "node .github/harness/scripts/cosmic-scale.mjs --trend 3 --budget 10",
     "entangle": "node .github/harness/scripts/entangle.mjs",

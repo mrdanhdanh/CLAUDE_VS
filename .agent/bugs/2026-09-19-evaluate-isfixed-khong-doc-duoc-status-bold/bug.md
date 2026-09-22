@@ -17,115 +17,104 @@
 
 ## Meta
 
-- **Slug:** `2026-09-19-<slug>` (vd: `2026-08-29-modal-esc`)
-- **Ngày:** YYYY-MM-DD
-- **Severity:** `critical` | `major` | `minor`
-- **Layer:** `—` (điền: `code` | `test-spec` | `env-fixture` | `measure-verifier` | `task-spec` | `process`) — tầng chứa defect (suspicion order, không phải luật). Check đỏ đọc 2 lần: defect ở test/env/đo → **sửa world TRƯỚC**; chỉ failure sống sót qua cả stack mới thành bài học.
-- **Reporter:** @user / YUNIE
-- **Related KN:** `KN-XXX` (điền sau khi cập nhật `docs/knowleged.md`, hoặc `—` nếu chưa có)
-- **Tags:** `ui` `api` `state` `async` `css` `a11y` `perf` `build` `data` ...
-- **Guard:** `tests/e2e/<spec>.spec.ts` | `—` — lưới chống tái lập (test/invariant khoá bug). **major/critical BẮT BUỘC** — `propose` gate FAIL nếu thiếu (KN-056).
-- **Status:** `open` | `fixed` | `wontfix`
+- **Slug:** `2026-09-19-evaluate-isfixed-khong-doc-duoc-status-bold`
+- **Ngày:** 2026-09-19 (stub auto-log) → xử lý 2026-09-22 bởi YUNIE
+- **Severity:** `major` (curator evaluate/commit gate đọc sai trạng thái bug)
+- **Layer:** `code` — regex trong auto-learn.mjs, không phải fixture
+- **Reporter:** auto-learn radar (stub) → YUNIE
+- **Related KN:** `KN-056` (guard gate) · `KN-069` (boundary validation — verifier phải đọc đúng thế giới thực)
+- **Tags:** `process` `automation` `gate`
+- **Guard:** `tests/e2e/auto-learn-guard.spec.ts` — test “evaluate: đọc Status bold + backtick”
+- **Status:** `fixed`
 
 ---
 
 ## 1. Reproduce
 
 ### Steps
-1. ...
-2. ...
-3. ...
+1. Viết fixture bug.md theo ĐÚNG format template: dòng `- **Status:** \`fixed\`` + section Fix đã điền
+2. `node .github/harness/scripts/auto-learn.mjs evaluate --bug <fixture> --dir <tmp> --json`
+3. Trước fix: `checks.isFixed=false` **và** `checks.isOpen=false` dù file rõ ràng fixed
 
 ### Expected vs Actual
-- **Expected:** ...
-- **Actual:** ...
+- **Expected:** `isFixed=true` khi dòng trạng thái bold + backtick, giá trị fixed; tương tự cho open
+- **Actual:** cả hai false — regex `Status:\s*\`?fixed\`?` không khớp vì có `**` (bold) xen giữa `Status:` và backtick
 
 ### Evidence
-- Log / screenshot / test fail / video:
 ```
-< dán log hoặc link ảnh >
+Trước fix: /Status:\s*`?fixed`?/i.test('- **Status:** `fixed`')  === false
+Sau fix:   /Status:\*{0,2}\s*`?fixed`?/i.test('- **Status:** `fixed`') === true
 ```
 
 ### Environment
-- Branch: `main`
-- Commit: `<hash>`
-- OS/Browser: ...
+- Branch: `main` · Node local · stub auto-log 19/09 (drafts treo 3 ngày) → xử lý cùng session 22/09 (health=warn do drafts treo)
 
 ---
 
 ## 2. Root Cause (5 Whys)
 
-- **File:Line:** `path/to/file.ts:123`
-- **Why 1:** ...
-- **Why 2:** ...
-- **Why 3:** ...
-- **Why 4:** ...
-- **Why 5 (Root):** ...
+- **File:Line:** `.github/harness/scripts/auto-learn.mjs` — `checkBugReadiness()` (isFixed/isOpen) + `markBugFixed()`
+- **Why 1:** evaluate in isFixed=false dù bug đã fixed? Regex không match dòng trạng thái.
+- **Why 2:** Vì sao? Pattern `Status:\s*\`?fixed\`?` giả định backtick đứng ngay sau `Status: `; template repo dùng `- **Status:** \`fixed\`` (bold `**` xen giữa).
+- **Why 3:** Vì sao lọt? Đường GHI status (người/agent điền tay theo template bold) khác đường ĐỌC (regex “tự nghĩ”) — không có test khoá cặp write/read.
+- **Why 4:** Vì sao 3 ngày không phát hiện? Stub 19/09 treo trong drafts; drafts>0 làm health=warn nhưng không ai truy nguyên tới regex.
+- **Why 5 (Root):** Verifier đọc format không theo template thật — “lưới rỗng”: tool dùng để đọc trạng thái chưa bao giờ được test với chính format template sinh ra.
 
-- **Impact:** Ảnh hưởng tới đâu, bao nhiêu user/case?
-- **Hypothesis:** Giả thuyết ban đầu (nếu có) + đã verify chưa?
-- **Confidence:** `HIGH` (proven + regression pass) | `MEDIUM` (strongly supported + reproduction fixed) | `LOW` (symptom fixed, root uncertain) — nếu LOW → STOP, report uncertainty, ask/escalate to `/harness`
+- **Impact:** `evaluate`/commit gate đọc sai trạng thái → quyết định KN-worthy sai; `markBugFixed` no-op âm thầm với file bold (bug “đã fix” mà file vẫn open).
+- **Hypothesis:** verified bằng fixture 2 chiều trong spec mới.
+- **Confidence:** `HIGH`
 
-> Nếu bug chạm pattern trong `docs/knowleged.md` → ghi `Related KN: KN-XXX` và áp dụng **Cách phòng tránh** ngay.
-> **Root Cause Gate:** Nếu uncertain → investigate / escalate, không tự biến hypothesis thành sự thật.
+> Cùng lớp KN-069 (boundary/verifier đọc sai thế giới thực) — không phải tái lập, cơ chế khác (format mismatch).
 
 ---
 
 ## 3. Fix
 
-- **Approach:** Sửa ở gốc như thế nào (không patch triệu chứng)? Bounded — không refactor lan rộng.
+- **Approach:** Regex nhận cả `Status:` lẫn `Status:**` + backtick (`\*{0,2}\s*`); `markBugFixed` giữ nguyên wrapper khi replace (không phá bold, không no-op ngầm).
 - **Files Changed:**
-  - `path/to/file.ts` — mô tả thay đổi
+  - `.github/harness/scripts/auto-learn.mjs` — `checkBugReadiness` (isFixed/isOpen) + `markBugFixed`
+  - `tests/e2e/auto-learn-guard.spec.ts` — 1 test mới (fixed/open bold)
 - **Diff tóm tắt:**
 ```diff
-// before
-// after
+- const isFixed = /Status:\s*`?fixed`?/i.test(bugText);
++ const isFixed = /Status:\*{0,2}\s*`?fixed`?/i.test(bugText);
+- bugT = bugT.replace(/Status:\s*`?open`?/i, 'Status: `fixed`');
++ bugT = bugT.replace(/(Status:)(\*{0,2}\s*)`?open`?/i, (_, l, gap) => `${l}${gap}\`fixed\``);
 ```
-- **Non-Goals:** Việc gì KHÔNG làm trong lần fix này (tránh scope creep — bounded repair loop)?
-- **Fix Confidence:** `HIGH` | `MEDIUM` | `LOW` — đánh giá trước khi sang Verify. Nếu LOW → STOP, report uncertainty, ask/escalate.
-- **get_errors:** Sau mỗi edit → affected files; full scope ở Phase 4 Verify.
+- **Non-Goals:** không đổi format template bug.md; không đụng watchdog regex (đã bold-aware từ trước).
+- **Fix Confidence:** `HIGH`
+- **get_errors:** affected files 0 errors
 
 ---
 
 ## 4. Verification
 
-- [ ] Re-run steps reproduce → **Fixed** (Expected = Actual)
-- [ ] Edge cases:
-  - [ ] case 1: ...
-  - [ ] case 2: ...
-- [ ] Regression: các case liên quan vẫn pass
-- [ ] `get_errors` **toàn scope** → 0 errors (Phase 3 chỉ check affected files)
-- [ ] `lint` / `build` / `test` → PASS (ghi lệnh đã chạy)
-- [ ] UI audit (nếu là bug UI): responsive 375/768/1280, states, a11y
-- [ ] Fresh-eyes tier: `REQUIRED` (UX/UI/workflow/ambiguous) | `RECOMMENDED` (regression-prone) | `OPTIONAL` (deterministic: typo/null check/API mapping) — ghi tier đã áp dụng
+- [x] Re-test: fixture bold (fixed) → `checks.isFixed=true`; fixture bold (open) → `checks.isOpen=true`, isFixed=false
+- [x] Regression: `npx playwright test tests/e2e/auto-learn-guard.spec.ts` → toàn bộ pass (evaluate/propose/guards/log/suggest)
+- [x] Fresh-eyes tier: `OPTIONAL` (deterministic regex)
 
 **Kết quả:**
 ```
-< dán output verify >
+auto-learn-guard.spec.ts → pass (bao gồm test mới 'evaluate: đọc Status bold + backtick')
 ```
 
 ---
 
 ## 5. Lesson (1 câu)
 
-> Bài học rút ra, 1 câu súc tích — sẽ copy vào `docs/knowleged.md` Bảng tóm tắt.
-
-Ví dụ: *Mọi overlay/modal phải có ESC + focus trap + aria-modal.*
+> Verifier đọc format phải theo đúng template thật (`- **Status:** \`fixed\``) — regex “tự nghĩ” là lưới rỗng; mọi cặp write/read format cần 1 test khoá.
 
 ---
 
 ## 6. Prevention
 
 - **Cách phòng tránh lần sau:**
-  - [ ] ...
-  - [ ] Thêm checklist vào `docs/knowleged.md` Anti-patterns / Checklist phòng tránh chung
+  - [x] Test khoá cả 2 chiều: bold + backtick cho mọi regex đọc Status
+  - [x] Stub draft cũ (không nội dung) phải được xử lý/đóng — drafts treo làm health=warn mờ nghĩa
 - **Guard (lưới chống tái lập — KN-056):**
-  - [ ] Điền `- **Guard:**` ở Meta (test/invariant khoá bug) — major/critical bắt buộc, nếu không `propose --strict` exit 1
-  - [ ] Nếu là **TÁI LẬP** (RADAR ở đầu bug.md báo): ghi rõ "tái lập của KN-XXX" + **vì sao lưới cũ không bắt được** + nâng lưới TRƯỚC khi fix
+  - [x] `- **Guard:**` ở Meta — test mới trong `auto-learn-guard.spec.ts`
 - **Cần cập nhật:**
-  - [ ] `docs/knowleged.md` → `KN-XXX` (Bảng tóm tắt + Chi tiết)
-  - [ ] `product-quality.instructions.md` (nếu là chuẩn UI mới)
-  - [ ] Test mới: `path/to/test.spec.ts`
+  - [ ] `docs/knowleged.md` — gộp vào KN cùng lớp “verifier đọc sai format” (propose từ bug 22/09 kèm theo)
 
 ---
 

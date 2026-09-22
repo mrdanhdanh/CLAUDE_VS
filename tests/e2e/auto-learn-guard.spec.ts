@@ -220,6 +220,27 @@ test('guards --json: coverage hợp lệ + bắt guard đã biết (KN-049, KN-0
     }
   });
 
+  test('evaluate: đọc Status bold + backtick (**Status:** `fixed`/`open`) — bug 2026-09-19', () => {
+    const dir = tmpdir('status-bold');
+    try {
+      writeFixture(dir, '2026-09-19-fixture-bold-fixed', fixtureBug('2026-09-19-fixture-bold-fixed', '- **Status:** `fixed`\n'));
+      const rf = run(['evaluate', '--bug', '2026-09-19-fixture-bold-fixed', '--dir', dir, '--json']);
+      expect(rf.status, `fixed fixture exit 0 — stderr: ${rf.stderr}`).toBe(0);
+      const jf = JSON.parse(rf.stdout);
+      expect(jf.checks.isFixed, 'isFixed phải true với **Status:** + backtick + fixed').toBe(true);
+      expect(jf.checks.isOpen, 'fixed không được coi là open').toBe(false);
+
+      writeFixture(dir, '2026-09-19-fixture-bold-open', fixtureBug('2026-09-19-fixture-bold-open', '- **Status:** `open`\n'));
+      const ro = run(['evaluate', '--bug', '2026-09-19-fixture-bold-open', '--dir', dir, '--json']);
+      expect(ro.status, `open fixture exit 0 — stderr: ${ro.stderr}`).toBe(0);
+      const jo = JSON.parse(ro.stdout);
+      expect(jo.checks.isOpen, 'isOpen phải true với **Status:** + backtick + open').toBe(true);
+      expect(jo.checks.isFixed, 'file open không được coi là fixed').toBe(false);
+    } finally {
+      fs.rmSync(dir, { recursive: true, force: true });
+    }
+  });
+
   test('suggest: query quen thuộc → trả về KN liên quan (KN-007 dogfood)', () => {
     const r = run(['suggest', 'rainbow border conic-gradient khong xoay khi hover', '--top', '3']);
     expect(r.status, `suggest exit 0 — stderr: ${r.stderr}`).toBe(0);

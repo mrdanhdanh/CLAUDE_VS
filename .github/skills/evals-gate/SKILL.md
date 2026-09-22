@@ -54,6 +54,8 @@ Mỗi bước pipeline tự verify phần mình trước khi chuyển bước sa
 
 Lợi ích: failures khoanh vùng được — không phải debug cả chuỗi.
 
+**Mechanism (22/09 — KN-072):** `node .github/harness/scripts/eval-gate.mjs --scope components` chạy registry `.github/harness/evals/components.json` — mỗi entry = 1 mắt xích + command + kỳ vọng exit code/stdout marker **đo thật** (không đoán). Fail-closed: registry thiếu/hỏng → FAIL. Thêm mắt xích mới = thêm 1 entry JSON. `--scope all` (generate-status) chạy kèm components.
+
 ### 3. End-to-end evals — đo goal
 - Chạy **scenario thật** từ đầu đến cuối như user mới (không workaround — KN-005).
 - Đo **goal achieved** — không chỉ "không lỗi".
@@ -63,6 +65,13 @@ Lợi ích: failures khoanh vùng được — không phải debug cả chuỗi.
 - Gom failures cùng loại (≥2 instances) → tìm **recurring pattern** (KN-034).
 - Phân loại: instance-specific (fix local) vs pattern-level (fix gốc — gate/skill/process).
 - Fix pattern → verify trên **task chưa từng thấy**, không chỉ re-test case đã fail.
+
+### 5. Grounding fact-grader — chặn số/quote bịa (học Opus 5.5, 22/09)
+Output có số liệu/trích dẫn nguồn ngoài (report, plan, summary, PRD, curated) → verify từng figure/quote TRƯỚC khi Done:
+- `node .github/harness/scripts/eval-gate.mjs --scope grounding --content <f> --sources "a,b,c"` — offline, 0 dep; sources = file/dir.
+- Claim = number (đa format `1,846`/`1.846`/`40%`/`0,20`) + quote (`"…"`/`“…”`/`«…»`/`'…'`); invented → exit 1 + liệt kê từng dòng.
+- Fail-closed: thiếu content/sources hoặc claims < min → exit 2 · advisory → `--warn` · file thật sự không số/quote → `--allow-empty`.
+- Bằng chứng gốc: Anthropic grader tách 16/18 report đạt chuẩn vs **0** với model không grounded — "invented figure or quote would have failed".
 
 ## Slop dimension — đừng chỉ check bugs (KN-047)
 > "Code can pass every behavior test and still be miserable to maintain" — SlopCodeBench: 3/4 agent runs phình complexity + redundant khi extend.
@@ -96,7 +105,8 @@ Không dùng (các) pattern nào task không cần — agency là cost phải ju
 
 ## Checklist trước Done
 - [ ] Rubric viết TRƯỚC khi đo (không "trông ổn")?
-- [ ] Component evals — từng bước pipeline đã verified?
+- [ ] Component evals — từng bước pipeline đã verified? (scripted: `eval-gate --scope components`)
+- [ ] Output có số/quote nguồn ngoài → đã chạy grounding fact-grader (`--scope grounding` — invented = fail)?
 - [ ] E2E — scenario thật, goal achieved, không chỉ build xanh?
 - [ ] Error analysis — failures cùng loại ≥2 đã aggregate trước khi fix?
 - [ ] Critique có nguồn ngoài model (tool đo / framing đối lập)?
@@ -105,7 +115,8 @@ Không dùng (các) pattern nào task không cần — agency là cost phải ju
 
 ## Nguồn
 - Andrew Ng — "Agentic AI" (DeepLearning.AI, Playbook 2026) — distilled: `books/Andrew-Ng-Agentic-AI-Playbook-2026-Distilled.md`
-- Harness: KN-037 · liên quan: KN-018 (dissent), KN-019 (metrics), KN-022 (pipeline vs agency), KN-023 (verify ngoài model), KN-034 (error analysis), KN-047 (slop gate)
+- Cơ chế: `eval-gate.mjs --scope components` (registry `.github/harness/evals/components.json`) + `--scope grounding` (fact-grader) — KN-072 (component-level), KN-056 (guard), spec `tests/e2e/eval-gate-components.spec.ts`
+- Harness: KN-037 · liên quan: KN-018 (dissent), KN-019 (metrics), KN-022 (pipeline vs agency), KN-023 (verify ngoài model), KN-034 (error analysis), KN-047 (slop gate), KN-072 (component-level evidence)
 
 ---
 *Skill: evals-gate — enforce bởi Harness v2. KN-037 — "single biggest predictor" là evals discipline.*

@@ -1,4 +1,4 @@
-﻿# CLAUDE HARNESS 2.4 — VS Code Copilot
+﻿# CLAUDE HARNESS 2.5 — VS Code Copilot
 
 > **Process > Model, Agent tự làm việc.** Dù GPT / Claude / Gemini đều chạy cùng pipeline. Một ý tưởng nhỏ → **sản phẩm hoàn chỉnh, giao diện đẹp** — không phụ thuộc model.
 >
@@ -7,10 +7,12 @@
 > **Bổ sung (2026-09-13):** KN-049→KN-058 · **Vòng chống tái lập** — log tự RADAR + Guard gate + `guards` audit (KN-056) · **Executive Function/ADHD** (KN-054 — instruction + `www/executive-function/`) · **Hawking watchdog** (draft ≥30d escalate / ≥90d evaporate, human sign-off) · Slop paydown toàn repo (KN-047) · AI News curated mirror + bản VI · README pipeline diagram → **SVG tĩnh light/dark** (né race rich-display của GitHub — KN-057).
 >
 > **Mới 2.4 (2026-09-18):** **OCR Review** — skill `ocr-review` chạy cuối pipeline (alibaba/open-code-review, delegate mode $0 token, qua subagent, user quyết) · Governance **policy v5** (12 deny + 2 allow — delegation attenuation: `deny-subagent-no-parent/chain/escalation`) · **Instruction budget ratchet** 1399/1400 — `npm run budget:check` (KN-068) · Gate **fail-closed với arg rác** — NaN-pass fixed (KN-069) · KN ID allocation **claims-aware** (chống double-yield).
+>
+> **Mới 2.5 (2026-09-22):** **Component-level evals** — registry `.github/harness/evals/components.json` + `eval-gate --scope components` / `npm run evals:components` (KN-037/KN-072 — đo từng mắt xích bằng số đo thật) · **Grounding fact-grader** — `eval-gate --scope grounding` chặn số/quote bịa trong output (Opus 5.5 pattern 22/09) · **Fail-silent fix** — `isMain` Windows-safe cho 10 harness scripts + MCP smoke cross-platform: eval-gate thật sự chạy lại trên Windows (trước đó exit 0 không chạy gì).
 
 Harness biến VS Code Copilot Chat thành **Claude Code Extension**: tự động, todo-driven, explore trước khi code, plan trước khi implement, polish trước khi done. Mọi customization (skill / rule / agent / prompt / hook) đều **tháo lắp như plugin** — bật/tắt không xóa, preset theo dự án, scaffold 1 lệnh.
 
-> **Trạng thái hiện tại (Harness 2.4 — 2026-09-18):** 20 skills (+ocr-review, evals-gate, cosmic-quantum, cosmic-scale, archify, 5 harness-* lesson skills) · 19 instructions · 9 agents · 7 prompts · 1 hook — tất cả enabled · 4 presets · **68 KN** · 51 bugs · 91 plans · 12 lab COSMOS + Cosmic Web graph + Hawking watchdog + Escape Velocity gate (`www/cosmos/`) · 16 demos `www/` · 25 scripts harness + 7 `.agent/scripts` · instruction budget ratchet 1399/1400 (`npm run budget:check`) · 3 routines · MCP library 1.2.0 · governance policy v5 (12 deny + 2 allow, Ed25519) · `www/status.json` do YUNIE generate.
+> **Trạng thái hiện tại (Harness 2.5 — 2026-09-22):** 20 skills (+ocr-review, evals-gate, cosmic-quantum, cosmic-scale, archify, 5 harness-* lesson skills) · 19 instructions · 9 agents · 7 prompts · 1 hook — tất cả enabled · 4 presets · **68 KN** · 51 bugs · 91 plans · 12 lab COSMOS + Cosmic Web graph + Hawking watchdog + Escape Velocity gate (`www/cosmos/`) · 16 demos `www/` · 25 scripts harness + 7 `.agent/scripts` · instruction budget ratchet 1399/1400 (`npm run budget:check`) · 3 routines · MCP library 1.2.0 · governance policy v5 (12 deny + 2 allow, Ed25519) · `www/status.json` do YUNIE generate.
 
 ---
 

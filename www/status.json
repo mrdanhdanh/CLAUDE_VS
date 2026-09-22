@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-18T14:40:40.630Z",
+  "generatedAt": "2026-09-22T17:20:15.051Z",
   "generatedBy": "YUNIE",
   "version": 1,
   "counts": {
@@ -297,6 +297,7 @@
     "auto-learn",
     "auto-learn-split",
     "cosmic-scale-dark-matter",
+    "cosmos-3d",
     "cosmos-cmb-anisotropy",
     "cosmos-cosmic-web",
     "cosmos-dark-energy-fix",
@@ -322,6 +323,7 @@
     "disco-phase3",
     "dream-simulator",
     "echoverse-adopt",
+    "evals-component-grounding",
     "evolib-adopt",
     "executive-function",
     "focus-flow",
@@ -404,6 +406,11 @@
       "status": "ok"
     },
     {
+      "name": "cosmos-3d",
+      "path": "cosmos-3d/index.html",
+      "status": "ok"
+    },
+    {
       "name": "design-showcase",
       "path": "design-showcase/index.html",
       "status": "ok"
@@ -462,19 +469,19 @@
   "health": {
     "errors": 0,
     "status": "ok",
-    "lastCheck": "2026-09-18T14:40:40.630Z",
+    "lastCheck": "2026-09-22T17:20:15.051Z",
     "checks": [
       "get_errors: pass (0 errors)",
       "registry: 19 instructions (19 total) - 20 skills - 9 agents - 7 prompts - 1 hook — all enabled",
-      "harness: 2.4 — P0 (RAG loop, tool hardening, planning JSON, receipt Ed25519) + P1 (multi-agent, observability, protocols, context, memory, deploy) + P2 (MAF workflows, CUA guardrails, local SLM, setup doctor) + 2.3 (Evals Gate KN-037) + 2.4 (OCR Review cuối pipeline — skill ocr-review $0 token qua subagent + policy v5 delegation attenuation + guard fail-closed KN-068/069)",
+      "harness: 2.5 — P0 (RAG loop, tool hardening, planning JSON, receipt Ed25519) + P1 (multi-agent, observability, protocols, context, memory, deploy) + P2 (MAF workflows, CUA guardrails, local SLM, setup doctor) + 2.3 (Evals Gate KN-037) + 2.4 (OCR Review cuối pipeline — skill ocr-review $0 token qua subagent + policy v5 delegation attenuation + guard fail-closed KN-068/069) + 2.5 (component-evals registry + grounding fact-grader + fail-silent isMain fix)",
       "scripts: 25 harness .mjs (plan-validate, handoff, reflect, trace, eval-gate, deploy-check, agent-card, context, memory, workflow, cua-guard, local, setup-doctor, procedural-graph, experience-funnel, consistency-gap)",
-      "eval-gate: PASS (syntax + MCP smoke + plan-validate + self-improving)",
+      "eval-gate: PASS (syntax + MCP smoke + plan-validate + self-improving + component-evals)",
       "evals-gate: ✅ skill + KN-037 — rubric → component evals → E2E evals → error analysis (KHÔNG claim Done khi output open-ended chưa đo)",
       "www: polished — responsive 375/768/1280, a11y, states, animation 150-300ms",
       "workflow: www/** -> Pages (upload-artifact path: www) — exists: true + eval job gate",
       "library: www/library/ MCP v1.2.0 (5 tools: search + iterative + list/get/status, router+cache, redacted) + library-rag instruction",
-      "auto-learn: 71 KN, 52 bugs, 0 drafts — suggest/log/propose/status (<50ms, IDF, tiếng Việt)",
-      "governance: audit 253 (Ed25519 receipt P0-4) · policy 12 deny/2 allow (ok) · credentials 0 keys plain",
+      "auto-learn: 73 KN, 55 bugs, 0 drafts — suggest/log/propose/status (<50ms, IDF, tiếng Việt)",
+      "governance: audit 285 (Ed25519 receipt P0-4) · policy 12 deny/2 allow (ok) · credentials 0 keys plain",
       "platform: agents 3 (3 built-in, 0 remote) · mcp 3 vendors/3 grants (library 1.2.0 read-only) · components 3/3 pub · routines 3/3 enabled",
       "collaboration: KN-018 — dissentGate ✅ · whoDidYouThinkWith ✅ · critic ✅ · fund-the-friction ✅ (ok)",
       "n5-blazor: www/n5-blazor/ 7 trang static + app.css + data.js + site.js — 100% Pages"
@@ -507,6 +514,11 @@
       {
         "path": "cosmos/index.html",
         "title": "cosmos",
+        "type": "demo"
+      },
+      {
+        "path": "cosmos-3d/index.html",
+        "title": "cosmos-3d",
         "type": "demo"
       },
       {
@@ -666,7 +678,7 @@
     }
   },
   "harness": {
-    "version": "2.4",
+    "version": "2.5",
     "pipeline": "Idea → Explore → Clarify → PRD → Design → Plan → Implement → Polish → Verify → Done",
     "philosophy": "Process > Model, Agent tự làm việc",
     "fixbug": "Knowledge → Reproduce → Root Cause → Fix → Verify → Learn → Done",
@@ -700,105 +712,110 @@
         "OCR Review cuối pipeline (skill ocr-review — alibaba/open-code-review delegate $0 token, qua subagent)",
         "Governance policy v5 — delegation attenuation (12 deny + 2 allow)",
         "Instruction budget ratchet 1028/1100 (KN-068 — path-scope 18/09) · gate fail-closed với arg rác (KN-069)"
+      ],
+      "2.5": [
+        "Component-level evals — registry .github/harness/evals/components.json + --scope components (KN-037/KN-072)",
+        "Grounding fact-grader — --scope grounding chặn số/quote bịa (Opus 5.5 pattern 22/09)",
+        "Fail-silent fix — isMain Windows-safe (10 scripts) + MCP smoke cross-platform: eval-gate thật sự chạy lại trên Windows"
       ]
     }
   },
   "learn": {
-    "knTotal": 71,
-    "bugsTotal": 52,
+    "knTotal": 73,
+    "bugsTotal": 55,
     "drafts": 0
   },
   "governance": {
     "audit": {
-      "total": 253,
-      "permitted": 214,
+      "total": 285,
+      "permitted": 246,
       "refused": 38,
       "failed": 1,
-      "lastTs": "2026-09-18T14:38:44.114Z",
+      "lastTs": "2026-09-22T17:18:40.174Z",
       "tail": [
         {
-          "ts": "2026-09-18T14:29:09.133Z",
+          "ts": "2026-09-22T17:12:45.139Z",
           "actor": "YUNIE",
           "tool": "edit",
-          "target": ".github/harness/scripts/auto-learn.mjs (dup-gate advisory + calibration)",
+          "target": ".agent/bugs/2026-09-19-evaluate-isfixed-khong-doc-duoc-status-bold/bug.md",
           "decision": "permitted",
           "rule": "allow-all",
           "durationMs": null,
           "error": null,
-          "intent": null,
-          "requestId": "6d2d7f",
-          "prevHash": "61df93eef2a8e08a",
+          "intent": "fill bug doc + close (fixed)",
+          "requestId": "4de0e6",
+          "prevHash": "c6333bb8b2552a80",
           "policyDigest": "a4972205cc490263",
-          "hash": "21507176ea0ce3b1",
-          "sig": "oVkmLrHXZUwGqsiwYSJdkRHR_RG03oGJLvuQTOblExSyHLnwiCBBVYqCyqa0VXJUNJaQLRqpmYpDp9RO35sPAg",
+          "hash": "b2be2a95dad3e630",
+          "sig": "Wuy3rdXJgCVieenCahScVHKFIlIAK5pnHRGkSI-I4OutTtxdgxi7PdHV0r2J5gP1jaMyiVONRUCgWlcXXuHlDQ",
           "pub": "MCowBQYDK2VwAyEAY8PlU0KjXp4HJUUlNlVZdaXHUmDagUMm8rUrEShTPXo"
         },
         {
-          "ts": "2026-09-18T14:29:09.297Z",
-          "actor": "verify",
+          "ts": "2026-09-22T17:12:45.262Z",
+          "actor": "YUNIE",
           "tool": "edit",
-          "target": "tests/e2e/3 spec (dup advisory contract + self-evolving smoke + workflows guard + suggest)",
+          "target": ".agent/bugs/2026-09-22-eval-gate-fail-silent-tren-windows-ismain-backslas/bug.md",
           "decision": "permitted",
           "rule": "allow-all",
           "durationMs": null,
           "error": null,
-          "intent": null,
-          "requestId": "5891cb",
-          "prevHash": "21507176ea0ce3b1",
+          "intent": "fill bug doc + close (fixed) + guard line",
+          "requestId": "0cbd90",
+          "prevHash": "b2be2a95dad3e630",
           "policyDigest": "a4972205cc490263",
-          "hash": "c579dcb6596006f0",
-          "sig": "-xnbD8YBFhcONUntYV9TS91_q9VyjV-FlaLdaKYOLIS84PnhEFzBZSgFZWqxBxmnzu0rzMuuTlfcfAephwpsAw",
+          "hash": "95230cf116b3a427",
+          "sig": "mkyhvyDaTwvg9QKVLGJQXcivXTXWNNEopUdUX1jIZTAkKZFq2A-lEZDERhG8uh9yJHdP8aKQzolz_9oPjcnHAA",
           "pub": "MCowBQYDK2VwAyEAY8PlU0KjXp4HJUUlNlVZdaXHUmDagUMm8rUrEShTPXo"
         },
         {
-          "ts": "2026-09-18T14:32:16.744Z",
-          "actor": "redteam-spec",
-          "tool": "read",
-          "target": "***",
-          "decision": "refused",
-          "rule": "redteam-test",
-          "durationMs": null,
-          "error": null,
-          "intent": null,
-          "requestId": "d96505",
-          "prevHash": "c579dcb6596006f0",
-          "policyDigest": "a4972205cc490263",
-          "hash": "64b4e337e7de2491",
-          "sig": "AX0-7MGaWkhyGDPfWe4nl-wDhcsGm5ACpwtgj1AmTl3ZbBzjSPXYE13PfuxxyjwuBzHqkIYmna9uuKA9kDyaDw",
-          "pub": "MCowBQYDK2VwAyEAY8PlU0KjXp4HJUUlNlVZdaXHUmDagUMm8rUrEShTPXo"
-        },
-        {
-          "ts": "2026-09-18T14:34:07.313Z",
+          "ts": "2026-09-22T17:15:49.123Z",
           "actor": "YUNIE",
-          "tool": "shell",
-          "target": "git push integrate (2f7271c, KN-070/071/072 + 4 amend)",
+          "tool": "edit",
+          "target": ".agent/plans/evals-component-grounding/plan.md",
           "decision": "permitted",
           "rule": "allow-all",
           "durationMs": null,
           "error": null,
-          "intent": null,
-          "requestId": "1da960",
-          "prevHash": "64b4e337e7de2491",
+          "intent": "finalize plan checkboxes + phát sinh section",
+          "requestId": "aeaaeb",
+          "prevHash": "95230cf116b3a427",
           "policyDigest": "a4972205cc490263",
-          "hash": "f7a0740e63d3e812",
-          "sig": "hr1C9_unnu7EONEFv2Kvu25KnEIGTOTW8iVRlsLGhjuZnzIX34JmoT3ABDwfi0HVwIbly-jBs6TzLbOAqcPLBg",
+          "hash": "67e90241d7b81a35",
+          "sig": "mgoNwLG1Ghzq6xC5i5DO2XZNuMo_KlwkIgHPTuON2ym9pp1jbS18pPsSH7-qkKDw5wgDGkmi_ywUDMvtekeVBg",
           "pub": "MCowBQYDK2VwAyEAY8PlU0KjXp4HJUUlNlVZdaXHUmDagUMm8rUrEShTPXo"
         },
         {
-          "ts": "2026-09-18T14:38:44.114Z",
+          "ts": "2026-09-22T17:15:49.397Z",
           "actor": "YUNIE",
-          "tool": "shell",
-          "target": "verify push state (session sync: 2f7271c da push origin)",
+          "tool": "edit",
+          "target": ".github/harness/scripts/eval-gate.mjs",
           "decision": "permitted",
           "rule": "allow-all",
           "durationMs": null,
           "error": null,
-          "intent": null,
-          "requestId": "49e5a0",
-          "prevHash": "f7a0740e63d3e812",
+          "intent": "refactor CC<=12 pass Slop Gate (checkSelfImproving/checkComponents/checkGrounding/main split)",
+          "requestId": "1eb34c",
+          "prevHash": "67e90241d7b81a35",
           "policyDigest": "a4972205cc490263",
-          "hash": "05909167e9145714",
-          "sig": "FHyVV8qdYi3MlcDR75upJQWUkC0Rs8qajdYsMaZ23MdHvzd4OE7sH8_3hCNNT2JtrU3SxnClDnx-Wkts-66mCg",
+          "hash": "33c15c7eca598b60",
+          "sig": "wlCXxpPWXz9ls5Jy4r9GbirKwIBw4Asj4Km2AHbJIJ-IsCjG5Dwf8ZuXdTvBJZBtZy9oNwFGrItAje-ZUhPPAg",
+          "pub": "MCowBQYDK2VwAyEAY8PlU0KjXp4HJUUlNlVZdaXHUmDagUMm8rUrEShTPXo"
+        },
+        {
+          "ts": "2026-09-22T17:18:40.174Z",
+          "actor": "YUNIE",
+          "tool": "edit",
+          "target": "docs/knowleged.md",
+          "decision": "permitted",
+          "rule": "allow-all",
+          "durationMs": null,
+          "error": null,
+          "intent": "paste KN-074 (eval-gate fail-silent Windows) + anti-pattern + checklist — human approved 23/09",
+          "requestId": "557ec4",
+          "prevHash": "33c15c7eca598b60",
+          "policyDigest": "a4972205cc490263",
+          "hash": "d9b68d30f2a6ca99",
+          "sig": "lmw1nrMkhZT_GCjeIeVmiNvA0raZwIkvcwspj26nWQQmGPkNEYGfkXrnML16fyMFbhaCg3x4x8-_xYyAoZiNCA",
           "pub": "MCowBQYDK2VwAyEAY8PlU0KjXp4HJUUlNlVZdaXHUmDagUMm8rUrEShTPXo"
         }
       ]
@@ -808,7 +825,7 @@
       "deny": 12,
       "allow": 2,
       "status": "ok",
-      "lastCheck": "2026-09-18T14:40:40.507Z"
+      "lastCheck": "2026-09-22T17:20:09.735Z"
     },
     "credentials": {
       "count": 0,

@@ -115,7 +115,7 @@ function main() {
   })();
 }
 
-const isMain = process.argv[1] && import.meta.url.endsWith(process.argv[1].split('/').pop());
+const isMain = process.argv[1] && import.meta.url.endsWith(process.argv[1].split(/[\\/]/).pop()); // Windows-safe (fail-silent class fix 2026-09-22)
 if (isMain) main();
 
 export default { routeLocality, checkStatus, chatLocal };

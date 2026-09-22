@@ -284,9 +284,9 @@ async function main() {
   const healthChecks = [
     `get_errors: pass (0 errors)`,
     `registry: ${counts.instructions.enabled} instructions (${counts.instructions.total} total) - ${counts.skills.enabled} skills - ${counts.agents.enabled} agents - ${counts.prompts.enabled} prompts - ${counts.hooks.enabled} hook — all enabled`,
-    `harness: 2.4 — P0 (RAG loop, tool hardening, planning JSON, receipt Ed25519) + P1 (multi-agent, observability, protocols, context, memory, deploy) + P2 (MAF workflows, CUA guardrails, local SLM, setup doctor) + 2.3 (Evals Gate KN-037) + 2.4 (OCR Review cuối pipeline — skill ocr-review $0 token qua subagent + policy v5 delegation attenuation + guard fail-closed KN-068/069)`,
+    `harness: 2.5 — P0 (RAG loop, tool hardening, planning JSON, receipt Ed25519) + P1 (multi-agent, observability, protocols, context, memory, deploy) + P2 (MAF workflows, CUA guardrails, local SLM, setup doctor) + 2.3 (Evals Gate KN-037) + 2.4 (OCR Review cuối pipeline — skill ocr-review $0 token qua subagent + policy v5 delegation attenuation + guard fail-closed KN-068/069) + 2.5 (component-evals registry + grounding fact-grader + fail-silent isMain fix)`,
     `scripts: ${scriptCount} harness .mjs (plan-validate, handoff, reflect, trace, eval-gate, deploy-check, agent-card, context, memory, workflow, cua-guard, local, setup-doctor, procedural-graph, experience-funnel, consistency-gap)`,
-    `eval-gate: ${evalStatus} (syntax + MCP smoke + plan-validate + self-improving)`,
+    `eval-gate: ${evalStatus} (syntax + MCP smoke + plan-validate + self-improving + component-evals)`,
     `evals-gate: ${existsSync(path.join(GITHUB_DIR, 'skills', 'evals-gate', 'SKILL.md')) ? '✅ skill + KN-037 — rubric → component evals → E2E evals → error analysis (KHÔNG claim Done khi output open-ended chưa đo)' : '❌ thiếu skill evals-gate'}`,
     `www: polished — responsive 375/768/1280, a11y, states, animation 150-300ms`,
     `workflow: www/** -> Pages (upload-artifact path: www) — exists: ${existsSync(path.join(GITHUB_DIR, 'workflows', 'pages.yml'))} + eval job gate`,
@@ -369,7 +369,7 @@ async function main() {
       },
     },
     harness: {
-      version: '2.4',
+      version: '2.5',
       pipeline: 'Idea → Explore → Clarify → PRD → Design → Plan → Implement → Polish → Verify → Done',
       philosophy: 'Process > Model, Agent tự làm việc',
       fixbug: 'Knowledge → Reproduce → Root Cause → Fix → Verify → Learn → Done',
@@ -379,6 +379,7 @@ async function main() {
         '2.2': ['P2-1 MAF workflows (14)', 'P2-2 CUA guardrails (15)', 'P2-3 Local SLM (17)', 'P2-4 Setup doctor (00)'],
         '2.3': ['Evals Gate (KN-037 — Andrew Ng Playbook 2026)', 'Skill evals-gate: rubric + component/E2E evals + error analysis', 'Verify: không claim Done khi output open-ended chưa đo'],
         '2.4': ['OCR Review cuối pipeline (skill ocr-review — alibaba/open-code-review delegate $0 token, qua subagent)', 'Governance policy v5 — delegation attenuation (12 deny + 2 allow)', 'Instruction budget ratchet 1028/1100 (KN-068 — path-scope 18/09) · gate fail-closed với arg rác (KN-069)'],
+        '2.5': ['Component-level evals — registry .github/harness/evals/components.json + --scope components (KN-037/KN-072)', 'Grounding fact-grader — --scope grounding chặn số/quote bịa (Opus 5.5 pattern 22/09)', 'Fail-silent fix — isMain Windows-safe (10 scripts) + MCP smoke cross-platform: eval-gate thật sự chạy lại trên Windows'],
       },
     },
     learn: learnStats,

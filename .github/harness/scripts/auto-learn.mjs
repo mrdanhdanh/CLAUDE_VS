@@ -592,9 +592,9 @@ function checkBugReadiness(bugText) {
   const fixContent = fixSection ? fixSection[1].trim() : '';
   const hasFix = fixContent.length > 50 && !fixContent.includes('<Tiêu đề') && !fixContent.includes('Chưa điền');
   const hasApproach = /Approach:/i.test(bugText) && !/Approach:\s*Chưa điền/i.test(bugText);
-  // check status
-  const isFixed = /Status:\s*`?fixed`?/i.test(bugText) || /Status:\s*fixed/i.test(bugText);
-  const isOpen = /Status:\s*`?open`?/i.test(bugText);
+  // check status — bold (**Status:**) + backtick tolerant (bug 2026-09-19: regex cũ không khớp format template)
+  const isFixed = /Status:\*{0,2}\s*`?fixed`?/i.test(bugText);
+  const isOpen = /Status:\*{0,2}\s*`?open`?/i.test(bugText);
   return { hasFix, hasApproach, isFixed, isOpen };
 }
 
@@ -749,8 +749,9 @@ async function snapshotKnowleged(today, nextId, title) {
 async function markBugFixed(bugPath) {
   try {
     let bugT = await fs.readFile(bugPath, 'utf8');
-    if (bugT.includes('Status:** `open`') || bugT.includes('Status: `open`')) {
-      bugT = bugT.replace(/Status:\s*`?open`?/i, 'Status: `fixed`');
+    if (/Status:\*{0,2}\s*`?open`?/i.test(bugT)) {
+      // giữ nguyên wrapper bold/backtick khi thay (bug 2026-09-19: regex cũ no-op ngầm với **Status:**)
+      bugT = bugT.replace(/(Status:)(\*{0,2}\s*)`?open`?/i, (_, label, gap) => `${label}${gap}\`fixed\``);
       await fs.writeFile(bugPath, bugT, 'utf8');
     }
   } catch {}
