@@ -1,10 +1,10 @@
 {
-  "generatedAt": "2026-09-18T13:49:12.462Z",
+  "generatedAt": "2026-09-22T17:26:50.828Z",
   "generatedBy": "entangle.mjs --graph",
   "scanned": {
-    "files": 1606,
-    "edges": 1762,
-    "commits": 223
+    "files": 1646,
+    "edges": 1846,
+    "commits": 238
   },
   "thresholds": {
     "hubMinRefs": 10,
@@ -13,23 +13,23 @@
   "hubs": [
     {
       "file": "docs/knowleged.md",
-      "refs": 111
+      "refs": 123
     },
     {
       "file": "www/status.json",
-      "refs": 68
-    },
-    {
-      "file": "www/index.html",
-      "refs": 56
+      "refs": 70
     },
     {
       "file": "www/cosmos/index.html",
-      "refs": 50
+      "refs": 59
+    },
+    {
+      "file": "www/index.html",
+      "refs": 59
     },
     {
       "file": "package.json",
-      "refs": 38
+      "refs": 41
     },
     {
       "file": "www/styles.css",
@@ -41,7 +41,7 @@
     },
     {
       "file": "www/cosmos/scale.html",
-      "refs": 24
+      "refs": 26
     },
     {
       "file": "www/library/mcp-server.mjs",
@@ -60,16 +60,20 @@
       "refs": 18
     },
     {
-      "file": "scripts/slop-check.mjs",
-      "refs": 17
+      "file": "www/cosmos/scale.json",
+      "refs": 18
     },
     {
-      "file": "www/cosmos/scale.json",
+      "file": "scripts/slop-check.mjs",
       "refs": 17
     },
     {
       "file": "www/library/export.json",
       "refs": 17
+    },
+    {
+      "file": "tests/e2e/auto-learn-guard.spec.ts",
+      "refs": 16
     },
     {
       "file": "docs/harness-2.1-upgrade.md",
@@ -80,16 +84,12 @@
       "refs": 14
     },
     {
-      "file": "tests/e2e/auto-learn-guard.spec.ts",
-      "refs": 13
-    },
-    {
       "file": "www/ai-news/curated.json",
       "refs": 13
     },
     {
       "file": "www/cosmos/audit.json",
-      "refs": 12
+      "refs": 13
     }
   ],
   "clusters": [
@@ -747,6 +747,30 @@
       "www/ai-news/curated.json"
     ],
     [
+      ".agent/bugs/2026-09-18-guards-fixture-refs-luoi-ao/bug.md",
+      "docs/knowleged.md"
+    ],
+    [
+      ".agent/bugs/2026-09-18-guards-fixture-refs-luoi-ao/bug.md",
+      "tests/e2e/auto-learn-guard.spec.ts"
+    ],
+    [
+      ".agent/bugs/2026-09-18-guards-fixture-refs-luoi-ao/bug.md",
+      "tests/e2e/dream.spec.ts"
+    ],
+    [
+      ".agent/bugs/2026-09-18-guards-fixture-refs-luoi-ao/bug.md",
+      "tests/e2e/responsive.spec.ts"
+    ],
+    [
+      ".agent/bugs/2026-09-18-guards-fixture-refs-luoi-ao/bug.md",
+      "tests/e2e/web-thuat-toan.spec.ts"
+    ],
+    [
+      ".agent/bugs/2026-09-18-guards-fixture-refs-luoi-ao/bug.md",
+      "tests/e2e/yt-summary.spec.ts"
+    ],
+    [
       ".agent/bugs/2026-09-18-instruction-budget-gate-fail-open-voi-arg-khong-ph/bug.md",
       "docs/knowleged.md"
     ],
@@ -759,6 +783,42 @@
       "tests/e2e/instruction-budget.spec.ts"
     ],
     [
+      ".agent/bugs/2026-09-19-evaluate-isfixed-khong-doc-duoc-status-bold/bug.md",
+      "docs/knowleged.md"
+    ],
+    [
+      ".agent/bugs/2026-09-19-evaluate-isfixed-khong-doc-duoc-status-bold/bug.md",
+      "tests/e2e/auto-learn-guard.spec.ts"
+    ],
+    [
+      ".agent/bugs/2026-09-19-scroll-dot-active-sai-do-thu-tu-mang-lech-dom/bug.md",
+      "docs/knowleged.md"
+    ],
+    [
+      ".agent/bugs/2026-09-19-scroll-dot-active-sai-do-thu-tu-mang-lech-dom/bug.md",
+      "tests/e2e/cosmos-lab12-qec.spec.ts"
+    ],
+    [
+      ".agent/bugs/2026-09-19-scroll-dot-active-sai-do-thu-tu-mang-lech-dom/bug.md",
+      "www/cosmos/index.html"
+    ],
+    [
+      ".agent/bugs/2026-09-19-scroll-dot-active-sai-do-thu-tu-mang-lech-dom/kn-draft.md",
+      "docs/knowleged.md"
+    ],
+    [
+      ".agent/bugs/2026-09-19-scroll-dot-active-sai-do-thu-tu-mang-lech-dom/kn-draft.md",
+      "tests/e2e/cosmos-lab12-qec.spec.ts"
+    ],
+    [
+      ".agent/bugs/2026-09-22-eval-gate-fail-silent-tren-windows-ismain-backslas/bug.md",
+      "docs/knowleged.md"
+    ],
+    [
+      ".agent/bugs/2026-09-22-eval-gate-fail-silent-tren-windows-ismain-backslas/bug.md",
+      "tests/e2e/eval-gate-components.spec.ts"
+    ],
+    [
       ".agent/bugs/README.md",
       "docs/knowleged.md"
     ],
@@ -767,12 +827,48 @@
       "docs/knowleged.md"
     ],
     [
-      ".agent/kn-review/check-result.json",
+      ".agent/kn-review/anchors-check.mjs",
+      "docs/knowleged.md"
+    ],
+    [
+      ".agent/kn-review/anchors2.mjs",
+      "docs/knowleged.md"
+    ],
+    [
+      ".agent/kn-review/anchors3.mjs",
+      "docs/knowleged.md"
+    ],
+    [
+      ".agent/kn-review/anchors3.mjs",
+      "tests/e2e/auto-learn-guard.spec.ts"
+    ],
+    [
+      ".agent/kn-review/check-after.json",
       "www/cosmos/index.html"
     ],
     [
       ".agent/kn-review/check.mjs",
       ".github/harness/scripts/kn-parse.mjs"
+    ],
+    [
+      ".agent/kn-review/dup-calibrate.mjs",
+      ".github/harness/scripts/kn-parse.mjs"
+    ],
+    [
+      ".agent/kn-review/dup-calibrate.mjs",
+      "docs/knowleged.md"
+    ],
+    [
+      ".agent/kn-review/fixture-score.mjs",
+      ".github/harness/scripts/kn-parse.mjs"
+    ],
+    [
+      ".agent/kn-review/fixture-score.mjs",
+      "docs/knowleged.md"
+    ],
+    [
+      ".agent/kn-review/verify-after.mjs",
+      "docs/knowleged.md"
     ],
     [
       ".agent/mutation-report.json",
@@ -1045,6 +1141,42 @@
     [
       ".agent/plans/auto-learn-split/prd.md",
       "tests/e2e/cosmos-hawking.spec.ts"
+    ],
+    [
+      ".agent/plans/cosmos-3d/design.md",
+      "www/cosmos/index.html"
+    ],
+    [
+      ".agent/plans/cosmos-3d/plan.md",
+      "tests/e2e/cosmos-3d.spec.ts"
+    ],
+    [
+      ".agent/plans/cosmos-3d/plan.md",
+      "www/cosmos-3d/README.md"
+    ],
+    [
+      ".agent/plans/cosmos-3d/plan.md",
+      "www/cosmos-3d/scene-data.js"
+    ],
+    [
+      ".agent/plans/cosmos-3d/plan.md",
+      "www/cosmos-3d/scene.js"
+    ],
+    [
+      ".agent/plans/cosmos-3d/plan.md",
+      "www/cosmos.html"
+    ],
+    [
+      ".agent/plans/cosmos-3d/plan.md",
+      "www/cosmos/index.html"
+    ],
+    [
+      ".agent/plans/cosmos-3d/prd.md",
+      "www/cosmos/index.html"
+    ],
+    [
+      ".agent/plans/cosmos-3d/prd.md",
+      "www/vendor/three/LICENSE"
     ],
     [
       ".agent/plans/cosmos-cmb-anisotropy/design.md",
@@ -1591,6 +1723,26 @@
       "tests/e2e/auto-learn-guard.spec.ts"
     ],
     [
+      ".agent/plans/evals-component-grounding/design.md",
+      "package.json"
+    ],
+    [
+      ".agent/plans/evals-component-grounding/design.md",
+      "tests/e2e/eval-gate-components.spec.ts"
+    ],
+    [
+      ".agent/plans/evals-component-grounding/plan.md",
+      "package.json"
+    ],
+    [
+      ".agent/plans/evals-component-grounding/plan.md",
+      "tests/e2e/eval-gate-components.spec.ts"
+    ],
+    [
+      ".agent/plans/evals-component-grounding/plan.md",
+      "www/status.json"
+    ],
+    [
       ".agent/plans/evolib-adopt/proposal.md",
       "docs/knowleged.md"
     ],
@@ -2108,6 +2260,22 @@
     ],
     [
       ".agent/plans/instruction-budget/prd.md",
+      "tests/e2e/instruction-budget.spec.ts"
+    ],
+    [
+      ".agent/plans/instruction-budget-trim/plan.md",
+      "package.json"
+    ],
+    [
+      ".agent/plans/instruction-budget-trim/plan.md",
+      "scripts/instruction-budget.mjs"
+    ],
+    [
+      ".agent/plans/instruction-budget-trim/plan.md",
+      "tests/e2e/harness-manager-export.spec.ts"
+    ],
+    [
+      ".agent/plans/instruction-budget-trim/plan.md",
       "tests/e2e/instruction-budget.spec.ts"
     ],
     [
@@ -4787,6 +4955,10 @@
       "books/Andrew-Ng-Agentic-AI-Playbook-2026-Distilled.md"
     ],
     [
+      ".github/skills/evals-gate/SKILL.md",
+      "tests/e2e/eval-gate-components.spec.ts"
+    ],
+    [
       ".github/skills/harness-build-config/references/evidence.md",
       "docs/knowleged.md"
     ],
@@ -5508,6 +5680,10 @@
     ],
     [
       "docs/knowleged.md",
+      "playwright.config.ts"
+    ],
+    [
+      "docs/knowleged.md",
       "README.md"
     ],
     [
@@ -5532,7 +5708,15 @@
     ],
     [
       "docs/knowleged.md",
+      "tests/e2e/cosmos-lab12-qec.spec.ts"
+    ],
+    [
+      "docs/knowleged.md",
       "tests/e2e/dream.spec.ts"
+    ],
+    [
+      "docs/knowleged.md",
+      "tests/e2e/eval-gate-components.spec.ts"
     ],
     [
       "docs/knowleged.md",
@@ -5560,11 +5744,23 @@
     ],
     [
       "docs/knowleged.md",
+      "tests/e2e/self-evolving-tools.spec.ts"
+    ],
+    [
+      "docs/knowleged.md",
       "tests/e2e/slop-check.spec.ts"
     ],
     [
       "docs/knowleged.md",
       "tests/e2e/status-audit.spec.ts"
+    ],
+    [
+      "docs/knowleged.md",
+      "tests/e2e/web-thuat-toan.spec.ts"
+    ],
+    [
+      "docs/knowleged.md",
+      "tests/e2e/workflows-guard.spec.ts"
     ],
     [
       "docs/knowleged.md",
@@ -5588,6 +5784,10 @@
     ],
     [
       "docs/knowleged.md",
+      "www/index.html"
+    ],
+    [
+      "docs/knowleged.md",
       "www/library/app.js"
     ],
     [
@@ -5601,6 +5801,10 @@
     [
       "docs/knowleged.md",
       "www/styles.css"
+    ],
+    [
+      "docs/knowleged.md",
+      "www/web-thuat-toan/app.js"
     ],
     [
       "docs/learning-path/timetable.md",
@@ -5669,6 +5873,10 @@
     [
       "README.md",
       ".github/copilot-instructions.md"
+    ],
+    [
+      "README.md",
+      ".github/harness/evals/components.json"
     ],
     [
       "README.md",
@@ -5784,11 +5992,31 @@
     ],
     [
       "tests/e2e/auto-learn-guard.spec.ts",
+      "tests/e2e/angle.spec.ts"
+    ],
+    [
+      "tests/e2e/auto-learn-guard.spec.ts",
+      "tests/e2e/dream.spec.ts"
+    ],
+    [
+      "tests/e2e/auto-learn-guard.spec.ts",
       "tests/e2e/slop-check.spec.ts"
     ],
     [
       "tests/e2e/auto-learn-guard.spec.ts",
       "www/styles.css"
+    ],
+    [
+      "tests/e2e/cosmos-3d.spec.ts",
+      "www/cosmos-3d/index.html"
+    ],
+    [
+      "tests/e2e/cosmos-3d.spec.ts",
+      "www/cosmos-3d/scene-data.js"
+    ],
+    [
+      "tests/e2e/cosmos-3d.spec.ts",
+      "www/cosmos/index.html"
     ],
     [
       "tests/e2e/cosmos-audit-probe.spec.ts",
@@ -6140,6 +6368,10 @@
     ],
     [
       "www/cosmos/index.html",
+      "www/cosmos-3d/index.html"
+    ],
+    [
+      "www/cosmos/index.html",
       "www/cosmos.html"
     ],
     [
@@ -6197,6 +6429,94 @@
     [
       "www/cosmos/slides.html",
       "www/cosmos/scale.html"
+    ],
+    [
+      "www/cosmos-3d/index.html",
+      "www/cosmos-3d/scene.js"
+    ],
+    [
+      "www/cosmos-3d/index.html",
+      "www/cosmos-3d/style.css"
+    ],
+    [
+      "www/cosmos-3d/index.html",
+      "www/cosmos/index.html"
+    ],
+    [
+      "www/cosmos-3d/index.html",
+      "www/cosmos/scale.html"
+    ],
+    [
+      "www/cosmos-3d/index.html",
+      "www/index.html"
+    ],
+    [
+      "www/cosmos-3d/index.html",
+      "www/vendor/three/LICENSE"
+    ],
+    [
+      "www/cosmos-3d/index.html",
+      "www/vendor/three/three.module.min.js"
+    ],
+    [
+      "www/cosmos-3d/README.md",
+      "tests/e2e/cosmos-3d.spec.ts"
+    ],
+    [
+      "www/cosmos-3d/README.md",
+      "www/cosmos-3d/scene-data.js"
+    ],
+    [
+      "www/cosmos-3d/README.md",
+      "www/cosmos-3d/scene.js"
+    ],
+    [
+      "www/cosmos-3d/README.md",
+      "www/cosmos-3d/style.css"
+    ],
+    [
+      "www/cosmos-3d/README.md",
+      "www/cosmos/index.html"
+    ],
+    [
+      "www/cosmos-3d/README.md",
+      "www/serve.json"
+    ],
+    [
+      "www/cosmos-3d/README.md",
+      "www/vendor/three/VERSION.txt"
+    ],
+    [
+      "www/cosmos-3d/scene-data.js",
+      "docs/knowleged.md"
+    ],
+    [
+      "www/cosmos-3d/scene-data.js",
+      "www/cosmos/audit.json"
+    ],
+    [
+      "www/cosmos-3d/scene-data.js",
+      "www/cosmos/index.html"
+    ],
+    [
+      "www/cosmos-3d/scene-data.js",
+      "www/cosmos/scale.html"
+    ],
+    [
+      "www/cosmos-3d/scene-data.js",
+      "www/index.html"
+    ],
+    [
+      "www/cosmos-3d/scene-data.js",
+      "www/status.json"
+    ],
+    [
+      "www/cosmos-3d/scene.js",
+      "www/cosmos-3d/scene-data.js"
+    ],
+    [
+      "www/cosmos-3d/scene.js",
+      "www/cosmos/scale.json"
     ],
     [
       "www/cosmos.html",
@@ -6968,6 +7288,14 @@
     ],
     [
       "www/serve.json",
+      "www/cosmos-3d/index.html"
+    ],
+    [
+      "www/serve.json",
+      "www/cosmos/index.html"
+    ],
+    [
+      "www/serve.json",
       "www/glassui/index.html"
     ],
     [
@@ -6997,6 +7325,14 @@
     [
       "www/todo-manager/index.html",
       "www/todo-manager/tasks.json"
+    ],
+    [
+      "www/vendor/three/three.module.min.js",
+      "www/vendor/three/three.core.min.js"
+    ],
+    [
+      "www/vendor/three/VERSION.txt",
+      "www/vendor/three/three.core.min.js"
     ],
     [
       "www/waymo-effect/index.html",

@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-18T13:49:12.907Z",
+  "generatedAt": "2026-09-22T17:26:51.350Z",
   "generatedBy": "auto-learn.mjs stats --heatmap",
   "policy": {
     "cold": "bugCount − knCount ≥ 1",
@@ -11,16 +11,16 @@
     "bucket": "YYYY-MM"
   },
   "counts": {
-    "knTotal": 68,
-    "bugTotal": 51,
-    "tags": 141,
+    "knTotal": 73,
+    "bugTotal": 55,
+    "tags": 131,
     "months": [
       "2026-08",
       "2026-09"
     ],
     "coldSpots": 14,
-    "zeroRef": 0,
-    "refFiles": 317
+    "zeroRef": 3,
+    "refFiles": 329
   },
   "grid": {
     "months": [
@@ -30,18 +30,18 @@
     "rows": [
       {
         "tag": "process",
-        "total": 43,
+        "total": 45,
         "cells": [
           4,
-          39
+          41
         ]
       },
       {
         "tag": "ui",
-        "total": 19,
+        "total": 20,
         "cells": [
           6,
-          13
+          14
         ]
       },
       {
@@ -69,11 +69,27 @@
         ]
       },
       {
+        "tag": "governance",
+        "total": 9,
+        "cells": [
+          0,
+          9
+        ]
+      },
+      {
         "tag": "knowledge",
         "total": 8,
         "cells": [
           1,
           7
+        ]
+      },
+      {
+        "tag": "verification",
+        "total": 8,
+        "cells": [
+          0,
+          8
         ]
       },
       {
@@ -85,15 +101,7 @@
         ]
       },
       {
-        "tag": "governance",
-        "total": 7,
-        "cells": [
-          0,
-          7
-        ]
-      },
-      {
-        "tag": "verification",
+        "tag": "safety",
         "total": 7,
         "cells": [
           0,
@@ -117,6 +125,14 @@
         ]
       },
       {
+        "tag": "evals",
+        "total": 5,
+        "cells": [
+          0,
+          5
+        ]
+      },
+      {
         "tag": "responsive",
         "total": 5,
         "cells": [
@@ -133,14 +149,6 @@
         ]
       },
       {
-        "tag": "safety",
-        "total": 5,
-        "cells": [
-          0,
-          5
-        ]
-      },
-      {
         "tag": "self-improving",
         "total": 5,
         "cells": [
@@ -149,7 +157,15 @@
         ]
       },
       {
-        "tag": "evals",
+        "tag": "build",
+        "total": 4,
+        "cells": [
+          2,
+          2
+        ]
+      },
+      {
+        "tag": "guard",
         "total": 4,
         "cells": [
           0,
@@ -157,7 +173,15 @@
         ]
       },
       {
-        "tag": "guard",
+        "tag": "harness",
+        "total": 4,
+        "cells": [
+          0,
+          4
+        ]
+      },
+      {
+        "tag": "minimal",
         "total": 4,
         "cells": [
           0,
@@ -213,22 +237,6 @@
         ]
       },
       {
-        "tag": "build",
-        "total": 3,
-        "cells": [
-          2,
-          1
-        ]
-      },
-      {
-        "tag": "harness",
-        "total": 3,
-        "cells": [
-          0,
-          3
-        ]
-      },
-      {
         "tag": "metrics",
         "total": 3,
         "cells": [
@@ -237,7 +245,7 @@
         ]
       },
       {
-        "tag": "minimal",
+        "tag": "research",
         "total": 3,
         "cells": [
           0,
@@ -245,7 +253,7 @@
         ]
       },
       {
-        "tag": "research",
+        "tag": "windows",
         "total": 3,
         "cells": [
           0,
@@ -285,6 +293,22 @@
         ]
       },
       {
+        "tag": "context",
+        "total": 2,
+        "cells": [
+          0,
+          2
+        ]
+      },
+      {
+        "tag": "context-engineering",
+        "total": 2,
+        "cells": [
+          0,
+          2
+        ]
+      },
+      {
         "tag": "docs",
         "total": 2,
         "cells": [
@@ -294,6 +318,14 @@
       },
       {
         "tag": "evidence",
+        "total": 2,
+        "cells": [
+          0,
+          2
+        ]
+      },
+      {
+        "tag": "gate",
         "total": 2,
         "cells": [
           0,
@@ -317,6 +349,14 @@
         ]
       },
       {
+        "tag": "nav",
+        "total": 2,
+        "cells": [
+          0,
+          2
+        ]
+      },
+      {
         "tag": "perf",
         "total": 2,
         "cells": [
@@ -326,6 +366,14 @@
       },
       {
         "tag": "pilot-in-command",
+        "total": 2,
+        "cells": [
+          0,
+          2
+        ]
+      },
+      {
+        "tag": "prompt-injection",
         "total": 2,
         "cells": [
           0,
@@ -365,131 +413,19 @@
         ]
       },
       {
+        "tag": "state",
+        "total": 2,
+        "cells": [
+          1,
+          1
+        ]
+      },
+      {
         "tag": "url",
         "total": 2,
         "cells": [
           0,
           2
-        ]
-      },
-      {
-        "tag": "windows",
-        "total": 2,
-        "cells": [
-          0,
-          2
-        ]
-      },
-      {
-        "tag": "-Command",
-        "total": 1,
-        "cells": [
-          0,
-          1
-        ]
-      },
-      {
-        "tag": "-File",
-        "total": 1,
-        "cells": [
-          0,
-          1
-        ]
-      },
-      {
-        "tag": "?",
-        "total": 1,
-        "cells": [
-          0,
-          1
-        ]
-      },
-      {
-        "tag": "??",
-        "total": 1,
-        "cells": [
-          0,
-          1
-        ]
-      },
-      {
-        "tag": "?.",
-        "total": 1,
-        "cells": [
-          0,
-          1
-        ]
-      },
-      {
-        "tag": ".Count",
-        "total": 1,
-        "cells": [
-          0,
-          1
-        ]
-      },
-      {
-        "tag": ".Length",
-        "total": 1,
-        "cells": [
-          0,
-          1
-        ]
-      },
-      {
-        "tag": "\"",
-        "total": 1,
-        "cells": [
-          0,
-          1
-        ]
-      },
-      {
-        "tag": "&&",
-        "total": 1,
-        "cells": [
-          0,
-          1
-        ]
-      },
-      {
-        "tag": "%LOCALAPPDATA%\\Programs\\PowerShell\\7.6.6",
-        "total": 1,
-        "cells": [
-          0,
-          1
-        ]
-      },
-      {
-        "tag": "${var}?.prop",
-        "total": 1,
-        "cells": [
-          0,
-          1
-        ]
-      },
-      {
-        "tag": "$null",
-        "total": 1,
-        "cells": [
-          0,
-          1
-        ]
-      },
-      {
-        "tag": "$s='abc'; $s?.Length",
-        "total": 1,
-        "cells": [
-          0,
-          1
-        ]
-      },
-      {
-        "tag": "$var?.prop",
-        "total": 1,
-        "cells": [
-          0,
-          1
         ]
       },
       {
@@ -518,14 +454,6 @@
       },
       {
         "tag": "archify",
-        "total": 1,
-        "cells": [
-          0,
-          1
-        ]
-      },
-      {
-        "tag": "automationProfile.windows",
         "total": 1,
         "cells": [
           0,
@@ -613,27 +541,27 @@
         ]
       },
       {
-        "tag": "context",
-        "total": 1,
-        "cells": [
-          0,
-          1
-        ]
-      },
-      {
-        "tag": "context-engineering",
-        "total": 1,
-        "cells": [
-          0,
-          1
-        ]
-      },
-      {
         "tag": "contrast",
         "total": 1,
         "cells": [
           1,
           0
+        ]
+      },
+      {
+        "tag": "cosmos",
+        "total": 1,
+        "cells": [
+          0,
+          1
+        ]
+      },
+      {
+        "tag": "credentials",
+        "total": 1,
+        "cells": [
+          0,
+          1
         ]
       },
       {
@@ -781,14 +709,6 @@
         ]
       },
       {
-        "tag": "gate",
-        "total": 1,
-        "cells": [
-          0,
-          1
-        ]
-      },
-      {
         "tag": "git",
         "total": 1,
         "cells": [
@@ -821,6 +741,14 @@
         ]
       },
       {
+        "tag": "handoff",
+        "total": 1,
+        "cells": [
+          0,
+          1
+        ]
+      },
+      {
         "tag": "hooks",
         "total": 1,
         "cells": [
@@ -846,14 +774,6 @@
       },
       {
         "tag": "mermaid",
-        "total": 1,
-        "cells": [
-          0,
-          1
-        ]
-      },
-      {
-        "tag": "nav",
         "total": 1,
         "cells": [
           0,
@@ -901,7 +821,7 @@
         ]
       },
       {
-        "tag": "procedural-graph",
+        "tag": "privacy",
         "total": 1,
         "cells": [
           0,
@@ -909,7 +829,7 @@
         ]
       },
       {
-        "tag": "prompt-injection",
+        "tag": "procedural-graph",
         "total": 1,
         "cells": [
           0,
@@ -1013,6 +933,14 @@
         ]
       },
       {
+        "tag": "runtime",
+        "total": 1,
+        "cells": [
+          0,
+          1
+        ]
+      },
+      {
         "tag": "scaffold",
         "total": 1,
         "cells": [
@@ -1069,11 +997,11 @@
         ]
       },
       {
-        "tag": "state",
+        "tag": "supply-chain",
         "total": 1,
         "cells": [
-          1,
-          0
+          0,
+          1
         ]
       },
       {
@@ -1086,14 +1014,6 @@
       },
       {
         "tag": "tdd",
-        "total": 1,
-        "cells": [
-          0,
-          1
-        ]
-      },
-      {
-        "tag": "terminal.integrated.defaultProfile.windows",
         "total": 1,
         "cells": [
           0,
@@ -1162,8 +1082,8 @@
     {
       "tag": "metrics",
       "kn": 3,
-      "bug": 5,
-      "coldness": 2
+      "bug": 6,
+      "coldness": 3
     },
     {
       "tag": "dx",
@@ -1178,7 +1098,25 @@
       "coldness": 1
     },
     {
+      "tag": "guard",
+      "kn": 4,
+      "bug": 5,
+      "coldness": 1
+    },
+    {
+      "tag": "windows",
+      "kn": 3,
+      "bug": 4,
+      "coldness": 1
+    },
+    {
       "tag": "docs",
+      "kn": 2,
+      "bug": 3,
+      "coldness": 1
+    },
+    {
+      "tag": "gate",
       "kn": 2,
       "bug": 3,
       "coldness": 1
@@ -1190,31 +1128,13 @@
       "coldness": 1
     },
     {
-      "tag": "windows",
+      "tag": "state",
       "kn": 2,
       "bug": 3,
       "coldness": 1
     },
     {
-      "tag": "context",
-      "kn": 1,
-      "bug": 2,
-      "coldness": 1
-    },
-    {
       "tag": "powershell",
-      "kn": 1,
-      "bug": 2,
-      "coldness": 1
-    },
-    {
-      "tag": "prompt-injection",
-      "kn": 1,
-      "bug": 2,
-      "coldness": 1
-    },
-    {
-      "tag": "state",
       "kn": 1,
       "bug": 2,
       "coldness": 1
@@ -1244,5 +1164,27 @@
       "coldness": 1
     }
   ],
-  "zeroRef": []
+  "zeroRef": [
+    {
+      "id": "KN-070",
+      "title": "Handoff content là kênh instruction trái phép: compaction summaries / successor notes (OpenAI 17/09) — data channel ≠ chain of command",
+      "date": "2026-09-18",
+      "ageDays": 4,
+      "action": "fresh"
+    },
+    {
+      "id": "KN-071",
+      "title": "Trust surface ngoài model: runtime vendor + third-party deps (ZCode + Hacktron 18/09) — weights mở ≠ runtime tin được; fix không CVE = vô hình",
+      "date": "2026-09-18",
+      "ageDays": 4,
+      "action": "fresh"
+    },
+    {
+      "id": "KN-074",
+      "title": "Gate im lặng = gate chết: eval-gate fail-silent trên Windows (isMain backslash) + verifier đọc Status sai format template (2026-09-22)",
+      "date": "2026-09-22",
+      "ageDays": 0,
+      "action": "fresh"
+    }
+  ]
 }
