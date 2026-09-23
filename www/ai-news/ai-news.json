@@ -1,12 +1,12 @@
 {
-  "generatedAt": "2026-09-22T07:19:59.897Z",
+  "generatedAt": "2026-09-23T07:21:52.189Z",
   "generatedBy": "YUNIE × Last30Days",
   "version": 2,
   "description": "Tin AI mới nhất — tổng hợp từ Last30Days (HN, GitHub, DEV.to, Reddit, arXiv, HackerNoon) trong 30 ngày qua. Chủ đề: AI. Tự động cập nhật bởi YUNIE.",
   "last30days": {
     "enabled": true,
     "topic": "AI",
-    "since": "2026-08-23",
+    "since": "2026-08-24",
     "days": 30,
     "sources": [
       "Hacker News (Algolia, free)",
@@ -55,28 +55,28 @@
   ],
   "articles": [
     {
-      "id": "hnoon-how-ai-watermarking-actually-works-at-the-token-level-and-wh",
-      "title": "How AI Watermarking Actually Works at the Token Level — And Why Developers Should Pay Attention",
-      "summary": "Anthropic is watermarking Claude's output at the token level. Here's how the green/red list mechanism works and what it means for developers building on LLM API Read All — by Anish Kumar Singh on HackerNoon.",
+      "id": "hnoon-why-i-built-an-open-source-project-manager-where-ai-can-actu",
+      "title": "Why I Built an Open-Source Project Manager Where AI Can Actually Take Action",
+      "summary": "Planvio is an open-source, self-hosted project management platform with an AI agent that can actually take action, not just chat. It combines project management, governed AI execut — by Hatem Sweileh on HackerNoon.",
       "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/how-ai-watermarking-actually-works-at-the-token-level-and-why-developers-should-pay-attention",
+      "sourceUrl": "https://hackernoon.com/why-i-built-an-open-source-project-manager-where-ai-can-actually-take-action",
       "category": "products",
-      "date": "2026-09-22",
+      "date": "2026-09-23",
       "hot": true,
       "tags": [
         "HackerNoon",
-        "ai",
+        "ai-agents",
         "AI"
       ]
     },
     {
-      "id": "hnoon-the-real-reason-ai-companys-are-tapping-the-brakes-hint-its-",
-      "title": "The Real Reason AI Company's Are Tapping the Brakes (Hint: It’s Not Safety)",
-      "summary": "The AI revolution is facing an existential crisis due to the depletion of high-quality, human-generated public text and the rise of toxic, synthetic internet content. As a result,  — by GlobalHawk on HackerNoon.",
+      "id": "hnoon-the-most-dangerous-ai-answer-is-the-one-that-quietly-fails",
+      "title": "The Most Dangerous AI Answer Is the One That Quietly Fails",
+      "summary": "The dangerous AI answer looks right, pastes cleanly and does nothing. Five reasons a chat model gets your question wrong, and six checks to run first. Read All — by Rob Joseph on HackerNoon.",
       "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/the-real-reason-ai-companys-are-tapping-the-brakes-hint-its-not-safety",
-      "category": "safety",
-      "date": "2026-09-22",
+      "sourceUrl": "https://hackernoon.com/the-most-dangerous-ai-answer-is-the-one-that-quietly-fails",
+      "category": "products",
+      "date": "2026-09-23",
       "hot": true,
       "tags": [
         "HackerNoon",
@@ -85,28 +85,59 @@
       ]
     },
     {
-      "id": "hnoon-trust-risk-and-money-interview-with-t54-ceo-chandler-fang-on",
-      "title": "Trust, Risk and Money: Interview With t54 CEO Chandler Fang on AI Agents That Spend",
-      "summary": "The biggest trust issues with autonomous agents involve risk, liability, and security, particularly when they have access to users' money and wallets. To build trust, agents should — by Olayimika Oyebanji on HackerNoon.",
+      "id": "hnoon-why-databricks-launch-of-lakebase-changes-the-future-of-data",
+      "title": "Why Databricks’ Launch of Lakebase Changes the Future of Data Engineering and AI Forever",
+      "summary": "As enterprises transition from simple ML inference to fully autonomous AI agents and real-time application pipelines, the underlying database must evolve. The convergence of Postgr — by jagan_489 on HackerNoon.",
       "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/trust-risk-and-money-interview-with-t54-ceo-chandler-fang-on-ai-agents-that-spend",
+      "sourceUrl": "https://hackernoon.com/why-databricks-launch-of-lakebase-changes-the-future-of-data-engineering-and-ai-forever",
       "category": "safety",
-      "date": "2026-09-22",
+      "date": "2026-09-23",
       "hot": true,
       "tags": [
         "HackerNoon",
-        "ai",
+        "databricks",
         "AI"
       ]
     },
     {
-      "id": "hn-49797177",
-      "title": "Why AI resembles a charismatic religious leader",
-      "summary": "Why AI resembles a charismatic religious leader — 7 points, 1 comments on HN.",
+      "id": "hnoon-the-internal-code-how-to-program-your-brains-neuromodulators",
+      "title": "The Internal Code: How to Program Your Brain’s Neuromodulators for Deep Engineering Focus",
+      "summary": "Pure discipline fails when your neurochemical base is depleted. This guide breaks down the biological execution layer for software engineers: managing adenosine and delay-caffeine  — by Vadim Sapron on HackerNoon.",
+      "source": "HackerNoon",
+      "sourceUrl": "https://hackernoon.com/the-internal-code-how-to-program-your-brains-neuromodulators-for-deep-engineering-focus",
+      "category": "safety",
+      "date": "2026-09-23",
+      "hot": true,
+      "tags": [
+        "HackerNoon",
+        "software-engineering",
+        "AI"
+      ]
+    },
+    {
+      "id": "hn-49811556",
+      "title": "Big Banks Say They're Uneasy About People Shopping via AI Agents",
+      "summary": "Big Banks Say They're Uneasy About People Shopping via AI Agents — 9 points, 2 comments on HN.",
       "source": "Hacker News",
-      "sourceUrl": "https://theconversation.com/why-ai-resembles-a-charismatic-religious-leader-291831",
+      "sourceUrl": "https://gizmodo.com/big-banks-say-theyre-uneasy-about-people-shopping-via-ai-agents-2000815443",
       "category": "products",
-      "date": "2026-09-22",
+      "date": "2026-09-23",
+      "hot": false,
+      "tags": [
+        "HN",
+        "AI",
+        "story",
+        "author_thm"
+      ]
+    },
+    {
+      "id": "hn-49811640",
+      "title": "America is in the wrong AI race with China",
+      "summary": "America is in the wrong AI race with China — 6 points, 0 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://restofworld.org/2026/america-china-ai-race-trust/",
+      "category": "products",
+      "date": "2026-09-23",
       "hot": false,
       "tags": [
         "HN",
@@ -116,187 +147,155 @@
       ]
     },
     {
-      "id": "hn-49797034",
-      "title": "Nearly half of young people trust AI over a human for fact-checking, report says",
-      "summary": "Nearly half of young people trust AI over a human for fact-checking, report says — 6 points, 4 comments on HN.",
+      "id": "hn-49812609",
+      "title": "Microsoft disrupts AI-assisted platform that compromised 12,000 accounts",
+      "summary": "Microsoft disrupts AI-assisted platform that compromised 12,000 accounts — 3 points, 0 comments on HN.",
       "source": "Hacker News",
-      "sourceUrl": "https://news.sky.com/story/nearly-half-of-young-people-trust-ai-over-a-human-for-fact-checking-report-says-13590558",
+      "sourceUrl": "https://arstechnica.com/security/2026/09/microsoft-disrupts-ai-assisted-platform-that-compromised-12000/",
       "category": "products",
-      "date": "2026-09-22",
+      "date": "2026-09-23",
       "hot": false,
       "tags": [
         "HN",
         "AI",
         "story",
-        "author_austinallegro"
+        "author_joozio"
       ]
     },
     {
-      "id": "hn-49796949",
-      "title": "Tiny Startups Are Getting Even Smaller with Help from AI",
-      "summary": "Tiny Startups Are Getting Even Smaller with Help from AI — 4 points, 1 comments on HN.",
+      "id": "hn-49812237",
+      "title": "I Gave My Life over to Meta's A.I. Agent and Was Blown Away",
+      "summary": "I Gave My Life over to Meta's A.I. Agent and Was Blown Away — 3 points, 1 comments on HN.",
       "source": "Hacker News",
-      "sourceUrl": "https://www.wsj.com/tech/ai/startup-hiring-ai-staffing-8c626f75",
-      "category": "products",
-      "date": "2026-09-22",
-      "hot": false,
-      "tags": [
-        "HN",
-        "AI",
-        "story",
-        "author_rvz"
-      ]
-    },
-    {
-      "id": "hn-49796865",
-      "title": "Pangram flags award-winning novel as largely AI written",
-      "summary": "Pangram flags award-winning novel as largely AI written — 4 points, 0 comments on HN.",
-      "source": "Hacker News",
-      "sourceUrl": "https://twitter.com/Pangramed/status/2102045146674053162",
-      "category": "products",
-      "date": "2026-09-22",
-      "hot": false,
-      "tags": [
-        "HN",
-        "AI",
-        "story",
-        "author_fbrusch"
-      ]
-    },
-    {
-      "id": "hn-49796792",
-      "title": "Six clones of Jev in 2 days",
-      "summary": "Six clones of Jev in 2 days — 4 points, 1 comments on HN.",
-      "source": "Hacker News",
-      "sourceUrl": "https://www.latent.space/p/ainews-here-are-6-clones-of-jev-in",
-      "category": "products",
-      "date": "2026-09-22",
-      "hot": false,
-      "tags": [
-        "HN",
-        "AI",
-        "story",
-        "author_pelcg"
-      ]
-    },
-    {
-      "id": "hn-49796998",
-      "title": "StepFun teases Step 5 Preview, a 600B/27B MoE, open weights coming Oct 15",
-      "summary": "StepFun teases Step 5 Preview, a 600B/27B MoE, open weights coming Oct 15 — 3 points, 1 comments on HN.",
-      "source": "Hacker News",
-      "sourceUrl": "https://twitter.com/StepFun_ai/status/2101510462685003786",
-      "category": "fun",
-      "date": "2026-09-22",
-      "hot": false,
-      "tags": [
-        "HN",
-        "AI",
-        "story",
-        "author_WavyPeng"
-      ]
-    },
-    {
-      "id": "hn-49796966",
-      "title": "OpenAI forms math advisory group as its AI resolves more than 100 open problems",
-      "summary": "OpenAI forms math advisory group as its AI resolves more than 100 open problems — 3 points, 0 comments on HN.",
-      "source": "Hacker News",
-      "sourceUrl": "https://techcrunch.com/2026/09/21/openai-forms-math-advisory-group-as-its-ai-resolves-more-than-100-open-problems/",
+      "sourceUrl": "https://www.nytimes.com/2026/09/22/technology/meta-muse-ai-agent.html",
       "category": "big-tech",
-      "date": "2026-09-22",
+      "date": "2026-09-23",
       "hot": false,
       "tags": [
         "HN",
         "AI",
         "story",
-        "author_sophymarine"
+        "author_geoffbp"
       ]
     },
     {
-      "id": "hn-49796834",
-      "title": "iPhone owners can now submit claims in Apple's $250M Siri AI settlement",
-      "summary": "iPhone owners can now submit claims in Apple's $250M Siri AI settlement — 3 points, 1 comments on HN.",
+      "id": "hn-49812163",
+      "title": "Show HN: Visually orchestrate Claude Code AI agents",
+      "summary": "Show HN: Visually orchestrate Claude Code AI agents — 3 points, 0 comments on HN.",
       "source": "Hacker News",
-      "sourceUrl": "https://www.theverge.com/tech/998191/apple-siri-ai-iphone-16-class-action-lawsuit-settlement",
+      "sourceUrl": "https://github.com/rondoflow/rondoflow",
+      "category": "products",
+      "date": "2026-09-23",
+      "hot": false,
+      "tags": [
+        "HN",
+        "AI",
+        "story",
+        "author_bdearch"
+      ]
+    },
+    {
+      "id": "hn-49812391",
+      "title": "Which AI model should your team use for Ansible",
+      "summary": "Which AI model should your team use for Ansible — 2 points, 0 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://steampunk.si/spotter/ai-leaderboard/",
+      "category": "products",
+      "date": "2026-09-23",
+      "hot": false,
+      "tags": [
+        "HN",
+        "AI",
+        "story",
+        "author_xlab-si"
+      ]
+    },
+    {
+      "id": "hn-49812138",
+      "title": "A Summer of AI Optimization",
+      "summary": "A Summer of AI Optimization — 2 points, 0 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://lemire.me/blog/2026/09/22/a-summer-of-ai-optimization/",
+      "category": "products",
+      "date": "2026-09-23",
+      "hot": false,
+      "tags": [
+        "HN",
+        "AI",
+        "story",
+        "author_signa11"
+      ]
+    },
+    {
+      "id": "hn-49811842",
+      "title": "Google Found the Pages. ChatGPT Found the Entity",
+      "summary": "Google Found the Pages. ChatGPT Found the Entity — 2 points, 1 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://www.richresults.ai/same-entity-different-retrieval.html",
+      "category": "big-tech",
+      "date": "2026-09-23",
+      "hot": false,
+      "tags": [
+        "HN",
+        "AI",
+        "story",
+        "author_spetschinka"
+      ]
+    },
+    {
+      "id": "hn-49811685",
+      "title": "Show HN: Napkin – a scratchpad that holds texts and images for copy",
+      "summary": "Napkin is a simple scratchpad to hold text and images to copy later or until you don&#x27;t need them anymore, or when you don&#x27;t want to organize temporary files.<p>Clipboard does a similar kind of job, but it is es — 2 points, 2 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://github.com/sudomonas/napkin",
       "category": "safety",
-      "date": "2026-09-22",
+      "date": "2026-09-23",
       "hot": false,
       "tags": [
         "HN",
         "AI",
         "story",
-        "author_pelcg"
+        "author_ppnpm"
       ]
     },
     {
-      "id": "hn-49797581",
-      "title": "Ask HN: Is Astra's writing starting to bother anyone else?",
-      "summary": "As someone who pretty much only uses GPT models (due to how generous the limits are), I always felt like I’d dodged a bullet when people complained about Claude and its load-bearing Claude-isms. GPT models, up to 5.6 Sol — 2 points, 1 comments on HN.",
+      "id": "hn-49811361",
+      "title": "Snorkel AI triples valuation to $3.5B as demand for AI training data booms",
+      "summary": "Snorkel AI triples valuation to $3.5B as demand for AI training data booms — 2 points, 2 comments on HN.",
       "source": "Hacker News",
-      "sourceUrl": "https://news.ycombinator.com/item?id=49797581",
-      "category": "products",
-      "date": "2026-09-22",
+      "sourceUrl": "https://techcrunch.com/2026/09/22/snorkel-ai-triples-valuation-to-3-5b-as-demand-for-ai-training-data-booms/",
+      "category": "big-tech",
+      "date": "2026-09-23",
       "hot": false,
       "tags": [
         "HN",
         "AI",
         "story",
-        "author_demibabs"
+        "author_nlpnerd"
       ]
     },
     {
-      "id": "hn-49797546",
-      "title": "AI staff complain of mental toll over fears of threat to society",
-      "summary": "AI staff complain of mental toll over fears of threat to society — 2 points, 0 comments on HN.",
+      "id": "hn-49812718",
+      "title": "Gemini Hacked Three Companies in First Known Breakout by Google's AI",
+      "summary": "Gemini Hacked Three Companies in First Known Breakout by Google's AI — 1 points, 0 comments on HN.",
       "source": "Hacker News",
-      "sourceUrl": "https://www.ft.com/content/60870960-f433-48ca-bc2c-708686a69ae7",
-      "category": "products",
-      "date": "2026-09-22",
+      "sourceUrl": "https://simonwillison.net/2026/Sep/18/gemini-hacked-three-companies/",
+      "category": "big-tech",
+      "date": "2026-09-23",
       "hot": false,
       "tags": [
         "HN",
         "AI",
         "story",
-        "author_bazzmt"
-      ]
-    },
-    {
-      "id": "hn-49797039",
-      "title": "JP Morgan CEO says hyperscaler AI spending could hit $1T in 2027",
-      "summary": "JP Morgan CEO says hyperscaler AI spending could hit $1T in 2027 — 2 points, 0 comments on HN.",
-      "source": "Hacker News",
-      "sourceUrl": "https://www.cnbc.com/2026/09/21/jamie-dimon-jpm-jpmorgan-indiaconference.html",
-      "category": "products",
-      "date": "2026-09-22",
-      "hot": false,
-      "tags": [
-        "HN",
-        "AI",
-        "story",
-        "author_pelcg"
-      ]
-    },
-    {
-      "id": "hn-49796787",
-      "title": "Gates Foundation coalition for more representative language data sets in AI",
-      "summary": "Gates Foundation coalition for more representative language data sets in AI — 2 points, 0 comments on HN.",
-      "source": "Hacker News",
-      "sourceUrl": "https://abcnews.com/Technology/wireStory/gates-foundation-launches-coalition-build-representative-language-data-136622214",
-      "category": "products",
-      "date": "2026-09-22",
-      "hot": false,
-      "tags": [
-        "HN",
-        "AI",
-        "story",
-        "author_andsoitis"
+        "author_coffee"
       ]
     }
   ],
   "meta": {
-    "fetchedAt": "2026-09-22T07:19:59.897Z",
+    "fetchedAt": "2026-09-23T07:21:52.189Z",
     "topic": "AI",
     "total": 15,
-    "hot": 3,
+    "hot": 4,
     "sources": [
       "HackerNoon",
       "Hacker News"
