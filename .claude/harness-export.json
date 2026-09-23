@@ -22,20 +22,12 @@
     ".claude/rules/harness-workflow.md": "8523fb614abae47bd41f4eacd57e5a0af867dae57b891a1c5a932457f736ea51",
     ".claude/rules/knowleged.md": "e7fd66efcec313a9105e624d8c2461d80644a5a3e776ee9d65f65442f9be58d8",
     ".claude/rules/locale-i18n.md": "c3273bd0725ae2066269708d4817534f89657639ee48a6bfaf6ac47313afba29",
-    ".claude/rules/plugin-seam.md": "9c7a0bf7bfb57b90c9be2eee2f9f83127a6acbd70d817dab34e701a95d1c3857",
     ".claude/rules/product-quality.md": "9a70921e1420b41e05a45e57c0a25ce20b0ef53b1a869db96dce1fa855bb71fc",
-    ".claude/rules/skill-usage.md": "e9c9107d79c150b95a5df382b889366b64086844f9c0b2186def83df47c8f9bd",
-    ".claude/rules/library-rag.md": "3e3b2f5465674453555699c1ae126ea438fe2de7e72f7f2a638888e78f556102",
+    ".claude/rules/skill-usage.md": "490feb13cc4d6587917fde614458b5154aa442771a856cb3b04da2cad65637cb",
     ".claude/rules/yunie-personality.md": "4a29fd27bf59f5858224e3b702f6c743d4691a9fbe6e74f0f7f73d1d15e7c7aa",
     ".claude/rules/auto-learn.md": "c26bdfd0a00328c5de2f0eed02feb7eff180a250b996ebdd14f5033e6051e589",
-    ".claude/rules/agent-governance.md": "d1dd0bd4456144fee4cf3f974ceb8259c71ee147ae7f90d02ccc05f4fe72071e",
-    ".claude/rules/platform-seam.md": "67a3e79b8c08c8335bd954c3b04fac8aca35657eb784d5e13c5a065f893a5624",
     ".claude/rules/minimal-ladder.md": "4a8b49eee56cfa6f216dff3b625a9e501365507e3cceed9925039af21f0b1fb8",
     ".claude/rules/context-engineering.md": "0d6380fc8c852f43d59fc850d23badfc34763ca127c776055411a07aeb851bff",
-    ".claude/rules/cua-safety.md": "20656b84b2436bdfb83d63fd3484ff92c39ad482309f7964180072070a0a4e5d",
-    ".claude/rules/awesome-design.md": "fae43f3fe500c648d21696b1f635b1e7153b3dfbebaa4e5fb0e776e27c4dc544",
-    ".claude/rules/cosmic-quantum.md": "25d0fdead2ea44cc30614d5b225c84835b751f1bbcb06501ac29712c38817d24",
-    ".claude/rules/fund-the-friction.md": "f76b9666077ed1ae952bbe1fd9c900564813256e4993a96f783b7de1455f7184",
     ".claude/rules/executive-function.md": "426ee6320c8aa10160fcc9436b916cce79a61e3c580ba0e046b40448aa505d95",
     "CLAUDE.md": "97ec5f938e84334a34122e3278d2fbc8dc35710e93daa75823cb245ea7a3ee41",
     ".claude/skills/claude-harness": {
@@ -112,7 +104,7 @@
     },
     ".claude/skills/evals-gate": {
       "dir": true,
-      "digest": "44ae28783fb49474e3dd609a5ae923ab4016189f76aba3b30c91668ae00cd09e"
+      "digest": "b9bbd18821113ec3980a8ebb168ec95dc975ee94ee6f08be8e3890878ad0a257"
     },
     ".claude/skills/ocr-review": {
       "dir": true,

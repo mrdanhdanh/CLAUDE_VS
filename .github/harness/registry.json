@@ -217,7 +217,7 @@
     "plugin-seam": {
       "source": "local",
       "file": "plugin-seam.instructions.md",
-      "enabled": true,
+      "enabled": false,
       "description": "Everything is a Plugin — capability seam (Service Definition / Provider / Consumer), ctx.effect, patch layers, events. Use when adding new capability, tool, service, extending harness, need plugin architecture, seam, Cordis.",
       "applyTo": "**",
       "installedAt": "2026-08-29T15:13:36.600Z"
@@ -241,7 +241,7 @@
     "library-rag": {
       "source": "local",
       "file": "library-rag.instructions.md",
-      "enabled": true,
+      "enabled": false,
       "description": "Thư viện RAG Local — cho /harness trích xuất thông tin từ sách (PDF/DOCX/TXT/MD) qua BM25. Use when harness needs to extract knowledge from library books, need to search library, need citation from documents, or task mentions sách/thư viện/tài liệu.",
       "applyTo": "**",
       "installedAt": "2026-08-29T16:16:30.393Z"
@@ -265,7 +265,7 @@
     "agent-governance": {
       "source": "local",
       "file": "agent-governance.instructions.md",
-      "enabled": true,
+      "enabled": false,
       "description": "Governance — audit + policy + credentials (học OpenBot). Mọi tool call phải qua policy gate (deny trước allow, fail-closed) và ghi audit; credentials mã hóa at-rest, never logged. Use when any tool call, shell, file, MCP, or credentials.",
       "applyTo": "**",
       "installedAt": "2026-09-02T14:38:56.064Z"
@@ -273,7 +273,7 @@
     "platform-seam": {
       "source": "local",
       "file": "platform-seam.instructions.md",
-      "enabled": true,
+      "enabled": false,
       "description": "Platform seam — AG-UI + MCP + Components + Routines (học OpenBot). Bring your own agent, governed MCP, generative UI, scheduled routines. Use when adding agent, MCP, component, routine, or platform capability.",
       "applyTo": "**",
       "installedAt": "2026-09-02T15:15:45.072Z"
@@ -297,7 +297,7 @@
     "cua-safety": {
       "source": "local",
       "file": "cua-safety.instructions.md",
-      "enabled": true,
+      "enabled": false,
       "description": "CUA safety — browser-use guardrails (scope, observe/action, secrets, untrusted, checks, budgets, evidence) + agent-vs-actor. Use when browser automation, visual check, UI testing, or risky web actions.",
       "applyTo": "**",
       "installedAt": "2026-09-04T03:35:56.864Z"
@@ -305,7 +305,7 @@
     "awesome-design": {
       "source": "local",
       "file": "awesome-design.instructions.md",
-      "enabled": true,
+      "enabled": false,
       "description": "Awesome DESIGN.md — 74 design systems local (VoltAgent/awesome-design-md). Use when user wants UI design, needs design inspiration, mentions vibe/style like linear/stripe/vercel/apple, or needs DESIGN.md for AI agent.",
       "applyTo": "**",
       "installedAt": "2026-09-04T12:47:59.598Z"
@@ -313,7 +313,7 @@
     "cosmic-quantum": {
       "source": "local",
       "file": "cosmic-quantum.instructions.md",
-      "enabled": true,
+      "enabled": false,
       "description": "Cosmic-Quantum Thinking — triết lý vũ trụ + lượng tử cho Harness. Use when designing system philosophy, harness theory, product vision, need cosmic/quantum metaphors, scale thinking, entanglement, superposition, uncertainty, or user says vũ trụ/lượng tử/cosmos/quantum/triết lý/lý thuyết/hệ thống/sca",
       "applyTo": "**",
       "installedAt": "2026-09-04T15:39:16.344Z"
@@ -321,7 +321,7 @@
     "fund-the-friction": {
       "source": "local",
       "file": "fund-the-friction.instructions.md",
-      "enabled": true,
+      "enabled": false,
       "description": "Fund the friction — collaboration là infrastructure, không phải nice-to-have (học KN-018 Waymo effect). Use when cân nhắc cắt workshop/review/pari khi gấp, đánh giá contribution vs velocity, cần giữ thinking together, hoặc task liên quan diversity/serendipity.",
       "applyTo": "**",
       "installedAt": "2026-09-07T16:26:55.240Z"

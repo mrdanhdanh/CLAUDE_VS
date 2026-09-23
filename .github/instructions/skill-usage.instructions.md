@@ -10,10 +10,15 @@ applyTo: "**"
 1. **Progressive loading:** Chỉ đọc `SKILL.md` khi `description` của skill match với task hiện tại. Đừng load tất cả skill vào context.
 2. **Discovery:** Dựa vào `name` + `description` trong `SKILL.md` frontmatter để quyết định có load không. Nếu không match → không load.
 3. **Tháo lắp:** Tôn trọng `registry.json` và folder `.disabled/`:
-   - Skill ở `.github/skills/.disabled/` là **disabled** — không được load, không gợi ý.
-   - Skill ở `.github/skills/<name>/` với `enabled: true` mới được cân nhắc.
-4. **Gợi ý:** Nếu task có thể hưởng lợi từ skill đã disable, hãy gợi ý `enable` thay vì tự enable.
-5. **Không nhồi:** Đừng bật 20 skill cùng lúc. Nếu user chưa cài skill cần thiết, gợi ý `install` thay vì tự đoán.
+   - Skill/Instruction ở `.disabled/` là **disabled** — không load mặc định.
+   - Chỉ `enabled: true` mới được load vào context.
+4. **Auto-enable gate (BẮT BUỘC trước mỗi task):** Agent PHẢI tự phán đoán trước khi làm việc:
+   - Bước 0: map task → keywords (vd: "design UI" → design/vibe; "browser" → browser/cua; "sách" → library/RAG).
+   - Đối chiếu keywords với `description` của các file trong `**/.disabled/` (đã nhớ catalog, không cần đọc hết).
+   - **Match → tự chạy `harness-manager enable <type> <name>` TRƯỚC khi bắt đầu task**, xong task one-off thì `disable` lại.
+   - Không match → không mở, không hỏi (tránh nhồi context).
+   - Catalog instruction đang tắt (2026-09-23): `agent-governance` (audit/policy/credentials) · `cosmic-quantum` (triết lý vũ trụ) · `library-rag` (search sách qua MCP) · `cua-safety` (browser automation) · `fund-the-friction` (collaboration critique) · `platform-seam` (AG-UI/MCP/routine) · `plugin-seam` (capability/plugin) · `awesome-design` (design vibe/DESIGN.md).
+5. **Không nhồi:** Đừng bật 20 thứ cùng lúc. Nếu user chưa cài skill cần thiết, gợi ý `install` thay vì tự đoán.
 
 ## Quy tắc cho dev
 
