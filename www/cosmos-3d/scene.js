@@ -13,13 +13,16 @@ import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import { CSS2DRenderer, CSS2DObject } from 'three/addons/renderers/CSS2DRenderer.js';
 import { SCENE_DATA } from './scene-data.js';
+import { UI_COPY } from './i18n.js';
+import { TOUR_DATA } from './tour-data.js';
+import { createTour, createTourUI } from './tour.js';
 
 /* ============================== CONFIG ============================== */
 const CONFIG = {
   pixelRatioCap: 2,
   core:    { radius: 2.1, glowScale: 14, spin: 0.05 },
   planet:  { radius: 0.55, radiusStep: 0.02, orbit: 6.5, orbitStep: 2.4, speed: 0.16, speedStep: 0.012 },
-  entropy: { orbit: 27, speed: 0.05, holeRadius: 1.15, ringRadius: 2.1 },
+  entropy: { orbit: 27, speed: 0.05, holeRadius: 1.15, ringRadius: 2.1, glowScale: 14 },
   beacon:  { radius: 16, size: 0.62 },
   stars: [
     { count: 900,  size: 1.6, rMin: 130, rMax: 210, opacity: 0.85 },
@@ -27,12 +30,15 @@ const CONFIG = {
     { count: 2200, size: 3.4, rMin: 310, rMax: 430, opacity: 0.45 },
   ],
   flyMs: 900,
+  warpMs: 900,
   dragClickThreshold: 6,
 };
 
 const LEVEL_COLOR = { low: '#10b981', medium: '#f59e0b', high: '#ef4444', unknown: '#64748b' };
 const REDUCED = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+const LOCALE = document.documentElement.lang === 'en' ? 'en' : 'vi';
 const $ = (s) => document.querySelector(s);
+const t = (key) => UI_COPY[LOCALE]?.[key] || UI_COPY.vi[key] || key;
 const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 const dirBase = (p) => (p.endsWith('/') ? p : p.replace(/[^/]*$/, ''));
 
@@ -62,10 +68,11 @@ function makeGlow(color, scale, opacity = 0.42) {
   return s;
 }
 
-function makeLabel(html, cls, y) {
+function makeLabel(html, cls, y, text = '') {
   const el = document.createElement('div');
   el.className = 'c3d-label ' + cls;
   el.innerHTML = html;
+  el.setAttribute('aria-label', text);
   const obj = new CSS2DObject(el);
   obj.position.set(0, y, 0);
   return obj;
@@ -84,18 +91,18 @@ function orbitLine(radius) {
 /* ============================== ITEM BUILDERS (panel/drawer) ============================== */
 function coreItem() {
   const c = SCENE_DATA.core;
-  return { id: 'core', zone: 'core', num: c.num, ico: c.ico, title: c.title, meta: c.meta, desc: c.desc, link: c.link, linkLabel: c.linkLabel };
+  return { id: 'core', zone: 'core', num: c.num, ico: c.ico, title: c.title, meta: c.meta, desc: c.desc, lore: c.lore, link: c.link, linkLabel: c.linkLabel };
 }
 function phaseItem(p) {
-  return { id: 'phase-' + p.num, zone: 'core', num: p.num, ico: '🪐', title: `${p.name} — ${p.era}`, meta: `Phase ${Number(p.num)}/${SCENE_DATA.phases.length} · ${p.cosmic}`, desc: p.desc, link: '', linkLabel: '' };
+  return { id: 'phase-' + p.num, zone: 'core', num: p.num, ico: '◉', title: `${p.name} — ${p.era}`, meta: `Phase ${Number(p.num)}/${SCENE_DATA.phases.length} · ${p.cosmic}`, desc: p.desc, lore: p.lore || p.cosmic, link: '', linkLabel: '' };
 }
 function nodeItem(n, i) {
-  return { id: 'node-' + n.id, zone: 'map', num: `NODE ${String(i + 1).padStart(2, '0')}`, ico: n.ico, title: n.name, meta: n.file, desc: n.desc, link: n.link, linkLabel: n.link ? '→ mở nguồn' : '' };
+  return { id: 'node-' + n.id, zone: 'map', num: `NODE ${String(i + 1).padStart(2, '0')}`, ico: n.ico, title: n.name, meta: n.file, desc: n.desc, lore: n.lore || SCENE_DATA.nodeLore?.[n.id] || '', link: n.link, linkLabel: n.link ? t('panel.openSource') : '' };
 }
 function entropyItem(state) {
   const e = SCENE_DATA.entropy;
-  const sTxt = state.s === null ? 'chưa đọc được (dùng —)' : `S = ${state.s} (${state.level})`;
-  return { id: 'entropy', zone: 'core', num: e.num, ico: e.ico, title: e.title, meta: `${e.meta} · ${sTxt}`, desc: e.desc, link: e.link, linkLabel: e.linkLabel };
+  const sTxt = state.s === null ? t('common.unavailable') : `S = ${state.s} (${state.level})`;
+  return { id: 'entropy', zone: 'core', num: e.num, ico: e.ico, title: e.title, meta: `${e.meta} · ${sTxt}`, desc: e.desc, lore: e.lore, link: e.link, linkLabel: e.linkLabel };
 }
 
 /* ============================== SCENE BUILDERS ============================== */
@@ -140,7 +147,7 @@ function buildCore(scene, reg) {
     new THREE.MeshStandardMaterial({ color, emissive: color, emissiveIntensity: 0.8, roughness: 0.3, metalness: 0.15, flatShading: true }),
   );
   mesh.add(makeGlow(color, CONFIG.core.glowScale, 0.5));
-  mesh.add(makeLabel(`${c.ico} ${c.title}`, 'c3d-label--planet', CONFIG.core.radius + 1.2));
+  mesh.add(makeLabel(`${c.ico} ${c.title}`, 'c3d-label--planet', CONFIG.core.radius + 1.2, c.title));
   scene.add(mesh);
   const entry = { mesh, base: CONFIG.core.radius, label: mesh.children.find((o) => o.isCSS2DObject) };
   reg.core = entry;
@@ -167,7 +174,7 @@ function buildPlanets(scene, reg) {
       new THREE.MeshStandardMaterial({ color, emissive: color, emissiveIntensity: 0.85, roughness: 0.4, metalness: 0.1 }),
     );
     mesh.add(makeGlow(color, rad * 4.8, 0.36));
-    mesh.add(makeLabel(`${p.num} · ${p.name}`, 'c3d-label--planet', rad + 0.8));
+    mesh.add(makeLabel(`${p.num} · ${p.name}`, 'c3d-label--planet', rad + 0.8, `${p.name} — ${p.era}`));
     tilt.add(mesh);
 
     const entry = { mesh, orbitR: R, speed: CONFIG.planet.speed - i * CONFIG.planet.speedStep, angle: (i / L) * Math.PI * 2, label: mesh.children.find((o) => o.isCSS2DObject) };
@@ -189,20 +196,27 @@ function buildEntropy(scene, reg, state) {
   tilt.add(orbitLine(R));
 
   const holder = new THREE.Group();
+  const color = new THREE.Color(0xef4444);
   const hole = new THREE.Mesh(
     new THREE.SphereGeometry(CONFIG.entropy.holeRadius, 24, 18),
     new THREE.MeshBasicMaterial({ color: 0x020409 }),
   );
   const ring = new THREE.Mesh(
     new THREE.TorusGeometry(CONFIG.entropy.ringRadius, 0.16, 12, 64),
-    new THREE.MeshStandardMaterial({ color: 0xef4444, emissive: 0xef4444, emissiveIntensity: 1.4, roughness: 0.4 }),
+    new THREE.MeshStandardMaterial({ color, emissive: color, emissiveIntensity: 1.4, roughness: 0.4 }),
   );
   ring.rotation.x = Math.PI / 2;
-  holder.add(hole, ring, makeGlow(0xef4444, 9, 0.3));
-  holder.add(makeLabel(`${e.ico} ${e.title}`, 'c3d-label--planet', CONFIG.entropy.ringRadius + 0.9));
+  const ring2 = new THREE.Mesh(
+    new THREE.TorusGeometry(CONFIG.entropy.ringRadius * 1.22, 0.045, 8, 64),
+    new THREE.MeshBasicMaterial({ color, transparent: true, opacity: 0.5, blending: THREE.AdditiveBlending }),
+  );
+  ring2.rotation.x = Math.PI / 2;
+  const halo = makeGlow(color, CONFIG.entropy.glowScale, 0.24);
+  holder.add(hole, ring, ring2, halo);
+  holder.add(makeLabel(`${e.ico} ${e.title}`, 'c3d-label--planet', CONFIG.entropy.ringRadius + 0.9, e.title));
   tilt.add(holder);
 
-  const entry = { mesh: holder, ring, orbitR: R, speed: CONFIG.entropy.speed, angle: 2.4, label: holder.children.find((o) => o.isCSS2DObject), state };
+  const entry = { mesh: holder, ring, ring2, halo, orbitR: R, speed: CONFIG.entropy.speed, angle: 2.4, label: holder.children.find((o) => o.isCSS2DObject), state };
   placeOnOrbit(holder, entry.angle, R);
   applyEntropyState(entry, state);
   reg.entropy = entry;
@@ -214,9 +228,13 @@ function buildEntropy(scene, reg, state) {
 
 function applyEntropyState(entry, state) {
   const color = new THREE.Color(LEVEL_COLOR[state.level] || LEVEL_COLOR.unknown);
-  entry.ring.material.color.copy(color);
-  entry.ring.material.emissive.copy(color);
-  entry.ring.material.emissiveIntensity = state.s === null ? 0.5 : 1.4;
+  [entry.ring, entry.ring2].forEach((mesh) => {
+    if (!mesh) return;
+    mesh.material.color.copy(color);
+    if (mesh.material.emissive) mesh.material.emissive.copy(color);
+    mesh.material.emissiveIntensity = state.s === null ? 0.5 : 1.4;
+  });
+  if (entry.halo) entry.halo.material.color.copy(color);
 }
 
 function buildBeacons(scene, reg) {
@@ -234,7 +252,7 @@ function buildBeacons(scene, reg) {
     );
     mesh.position.copy(new THREE.Vector3(Math.cos(th) * r, y, Math.sin(th) * r).multiplyScalar(CONFIG.beacon.radius).add(center));
     mesh.add(makeGlow(color, CONFIG.beacon.size * 4.2, 0.34));
-    const label = makeLabel(`<span class="ico">${n.ico}</span>${esc(n.name)}`, 'c3d-label--beacon', CONFIG.beacon.size + 0.6);
+    const label = makeLabel(`<span class="ico">${n.ico}</span>${esc(n.name)}`, 'c3d-label--beacon', CONFIG.beacon.size + 0.6, n.name);
     label.visible = false;
     mesh.add(label);
     scene.add(mesh);
@@ -250,6 +268,32 @@ function buildBeacons(scene, reg) {
 
 function placeOnOrbit(mesh, angle, radius) {
   mesh.position.set(Math.cos(angle) * radius, 0, Math.sin(angle) * radius);
+}
+
+function buildConstellation(scene, reg) {
+  const byId = new Map(reg.beacons.map((entry) => [entry.mesh.userData.item.id.replace('node-', ''), entry.mesh]));
+  const positions = [];
+  const colors = [];
+  const center = new THREE.Vector3(...SCENE_DATA.zones.map.target);
+  const lineColor = new THREE.Color(0x67e8f9);
+  for (const [fromId, toId] of SCENE_DATA.links) {
+    const from = byId.get(fromId);
+    const to = byId.get(toId);
+    if (!from || !to) continue;
+    const a = from.position.clone().sub(center);
+    const b = to.position.clone().sub(center);
+    positions.push(...a.toArray(), ...b.toArray());
+    colors.push(...lineColor.toArray(), ...lineColor.toArray());
+  }
+  const geometry = new THREE.BufferGeometry();
+  geometry.setAttribute('position', new THREE.Float32BufferAttribute(positions, 3));
+  geometry.setAttribute('color', new THREE.Float32BufferAttribute(colors, 3));
+  const material = new THREE.LineBasicMaterial({ vertexColors: true, transparent: true, opacity: 0.28, blending: THREE.AdditiveBlending, depthWrite: false });
+  const lines = new THREE.LineSegments(geometry, material);
+  lines.visible = false;
+  scene.add(lines);
+  reg.constellation = { lines, segments: positions.length / 6 };
+  return reg.constellation;
 }
 
 /* ============================== HOVER ============================== */
@@ -290,15 +334,20 @@ function makeFly(camera, controls) {
 function makePanel(controls) {
   const panel = $('#panel');
   let open = false;
+  let restoreFocus = null;
   function openItem(item, opts = {}) {
     if (!item) return;
     open = true;
+    if (!opts.restore) restoreFocus = opts.trigger || document.activeElement;
     controls.autoRotate = false;                       // đang đọc → không tự quay
     $('#panelNum').textContent = item.num;
     $('#panelIco').textContent = item.ico;
     $('#panelTitle').textContent = item.title;
     $('#panelMeta').textContent = item.meta;
     $('#panelDesc').textContent = item.desc;
+    const lore = $('#panelLore');
+    lore.textContent = item.lore || '';
+    lore.hidden = !item.lore;
     const link = $('#panelLink');
     if (item.link) { link.href = item.link; link.textContent = item.linkLabel || '→ mở'; link.hidden = false; }
     else { link.hidden = true; }
@@ -310,6 +359,8 @@ function makePanel(controls) {
     open = false;
     panel.classList.remove('open');
     controls.autoRotate = !REDUCED;
+    if (restoreFocus && typeof restoreFocus.focus === 'function') restoreFocus.focus({ preventScroll: true });
+    restoreFocus = null;
   }
   return { openItem, closePanel, isOpen: () => open };
 }
@@ -323,8 +374,30 @@ function paintEntropyHud(st) {
   hudS.className = st.s === null ? '' : st.level === 'high' ? 'hot' : st.level === 'medium' ? 'warn' : 'ok';
 }
 
+function formatFreshness(value) {
+  const date = new Date(value);
+  if (Number.isNaN(date.getTime())) return t('common.unavailable');
+  return new Intl.DateTimeFormat(LOCALE, { hour: '2-digit', minute: '2-digit', day: '2-digit', month: 'short' }).format(date);
+}
+
+function paintTelemetry(data) {
+  const signal = $('#telemetryState');
+  const source = $('#telemetrySource');
+  const generated = $('#telemetryGenerated');
+  source.textContent = data.source;
+  generated.textContent = `${t('telemetry.generated')} · ${formatFreshness(data.generatedAt)}`;
+  signal.className = `signal-dot ${data.stale ? 'stale' : ''}`;
+  signal.title = data.stale ? t('telemetry.stale') : t('telemetry.fresh');
+  $('#hudS').textContent = data.signals.entropy;
+  $('#hudPolicy').textContent = data.signals.policy ? 'OK' : 'BLOCK';
+  $('#hudDissent').textContent = data.signals.dissent;
+  $('#hudGravity').textContent = data.signals.gravity;
+  $('#hudKn').textContent = data.signals.kn;
+}
+
 function makeZones({ camera, reg, flyTo, closePanel }) {
   let current = 'core';
+  let lastZone = '';
   /** Vị trí camera cho zone — tự lùi xa hơn khi aspect hẹp (mobile/tablet) để không cắt nhãn ở rìa. */
   function viewFor(name) {
     const z = SCENE_DATA.zones[name];
@@ -335,6 +408,16 @@ function makeZones({ camera, reg, flyTo, closePanel }) {
   }
   function switchZone(name, opts = {}) {
     if (!SCENE_DATA.zones[name]) return;
+    const warp = $('#warp');
+    if (warp) {
+      warp.dataset.warp = name;
+      if (lastZone !== name) {
+        lastZone = name;
+        warp.classList.remove('active');
+        // Keep active as the state marker until the next zone change; CSS owns the visual fade.
+        warp.classList.add('active');
+      }
+    }
     current = name;
     const v = viewFor(name);
     flyTo(v.pos, v.tgt, opts.instant);
@@ -344,6 +427,7 @@ function makeZones({ camera, reg, flyTo, closePanel }) {
     reg.planets.forEach((e) => setLabel(e, name === 'core'));
     setLabel(reg.entropy, name === 'core');
     reg.beacons.forEach((e) => setLabel(e, name === 'map'));
+    if (reg.constellation) reg.constellation.lines.visible = name === 'map';
     if (!opts.silent) closePanel();
   }
   return { switchZone, viewFor, current: () => current };
@@ -382,13 +466,33 @@ function buildDrawer({ reg, onPick }) {
   SCENE_DATA.nodes.forEach((n) => add(n.ico, n.name, n.file.split(/[/ ]/)[0], reg.items.get('node-' + n.id)));
 }
 
-function wireUI({ camera, controls, reg, entropyState }) {
+function makeTourController({ reg, zones, panel, hero }) {
+  let ui;
+  const tour = createTour({
+    stops: TOUR_DATA.stops,
+    intervalMs: TOUR_DATA.intervalMs,
+    reduced: REDUCED,
+    onStep: (step) => {
+      zones.switchZone(step.zone || 'core', { silent: true });
+      if (step.target) panel.openItem(reg.items.get(step.target), { focus: false, restore: true });
+      const mark = $('#tourMark');
+      if (mark) mark.textContent = step.ico || '✦';
+    },
+    onState: (state) => ui?.sync(state),
+  });
+  ui = createTourUI({ tour, reduced: REDUCED });
+  return { tour, open: () => { hero.hideHero(); tour.start(0); } };
+}
+
+function wireUI({ camera, controls, reg, entropyState, telemetry }) {
   const drawer = $('#drawer');
-  const state = { booted: false, entropy: entropyState };
+  const state = { booted: false, entropy: entropyState, telemetry };
   const { flyTo, stepFly } = makeFly(camera, controls);
   const panel = makePanel(controls);
   const zones = makeZones({ camera, reg, flyTo, closePanel: panel.closePanel });
   const hero = makeHero({ flyTo, viewFor: zones.viewFor, getZone: zones.current });
+  const tourController = makeTourController({ reg, zones, panel, hero });
+  const tour = tourController.tour;
 
   function toggleDrawer(on) {
     const show = typeof on === 'boolean' ? on : drawer.hidden;
@@ -407,10 +511,14 @@ function wireUI({ camera, controls, reg, entropyState }) {
     state.booted = true;
     $('#boot').classList.add('hide');
     $('#hudCount').textContent = String(reg.pickables.length);
+    paintTelemetry(state.telemetry);
   }
 
   function wireEvents() {
     document.querySelectorAll('.switcher .btn').forEach((b) => b.addEventListener('click', () => zones.switchZone(b.dataset.zone)));
+    const openTour = () => { tourController.open(); $('#btnTour').setAttribute('aria-expanded', 'true'); };
+    $('#btnTour').addEventListener('click', openTour);
+    $('#btnTourHero').addEventListener('click', openTour);
     $('#panelClose').addEventListener('click', panel.closePanel);
     $('#btnDrawer').addEventListener('click', () => toggleDrawer());
     $('#btnDrawerClose').addEventListener('click', () => toggleDrawer(false));
@@ -432,6 +540,10 @@ function wireUI({ camera, controls, reg, entropyState }) {
   return {
     openItem: panel.openItem, closePanel: panel.closePanel, switchZone: zones.switchZone,
     stepFly, firstFrame, applyEntropy, hideHero: hero.hideHero, toggleDrawer,
+    startTour: () => tour.start(0), stopTour: tour.stop, nextTour: tour.next, prevTour: tour.prev,
+    tourState: tour.state,
+    telemetry: () => state.telemetry,
+    constellation: () => reg.constellation,
     stats: () => ({ zone: zones.current(), panelOpen: panel.isOpen(), booted: state.booted, entropy: state.entropy }),
   };
 }
@@ -523,6 +635,8 @@ function advanceBodies(reg, dt, t) {
   reg.entropy.angle += dt * reg.entropy.speed;
   placeOnOrbit(reg.entropy.mesh, reg.entropy.angle, reg.entropy.orbitR);
   reg.entropy.ring.rotation.z += dt * 0.6;
+  reg.entropy.ring2.rotation.z -= dt * 0.32;
+  reg.entropy.ring2.scale.setScalar(1 + Math.sin(t * 1.4) * 0.025);
   reg.core.mesh.rotation.y += dt * CONFIG.core.spin;
   reg.core.mesh.scale.setScalar(1 + Math.sin(t * 1.6) * 0.02);
   reg.starLayers.forEach((s, i) => { s.rotation.y += dt * (0.004 + i * 0.0015); });
@@ -577,10 +691,12 @@ async function main() {
   buildCore(scene, reg);
   buildPlanets(scene, reg);
   const entropyState = await loadEntropyState();
+  const telemetry = await loadTelemetry();
   const entropyEntry = buildEntropy(scene, reg, entropyState);
   buildBeacons(scene, reg);
+  buildConstellation(scene, reg);
 
-  const ui = wireUI({ camera, controls, reg, entropyState });
+  const ui = wireUI({ camera, controls, reg, entropyState, telemetry });
   const pointer = wirePointer(renderer, camera, reg, ui);
   exposeApi({ reg, ui, pointer, camera });
 
@@ -602,6 +718,39 @@ async function loadEntropyState() {
     if (!Number.isFinite(S)) throw new Error('S missing');
     return { s: S, level: j?.entropy?.level || (S >= 25 ? 'high' : S >= 10 ? 'medium' : 'low') };
   } catch { return { s: null, level: 'unknown' }; }
+}
+
+function telemetrySignals(j) {
+  const read = (value) => {
+    const number = Number(value);
+    return Number.isFinite(number) ? number : '—';
+  };
+  return {
+    entropy: read(j?.entropy?.S),
+    policy: j?.policy?.ok === true,
+    dissent: read(j?.darkEnergy?.D),
+    gravity: read(j?.gravity?.G),
+    kn: read(j?.counts?.knTotal),
+  };
+}
+
+function telemetryFreshness(generatedAt) {
+  const time = new Date(generatedAt).getTime();
+  const ageHours = (Date.now() - time) / 3600000;
+  return !Number.isFinite(ageHours) || ageHours > SCENE_DATA.telemetry.staleAfterHours;
+}
+
+async function loadTelemetry() {
+  const source = SCENE_DATA.telemetry.source;
+  try {
+    const res = await fetch(dirBase(location.pathname) + source, { cache: 'no-store' });
+    if (!res.ok) throw new Error('scale.json ' + res.status);
+    const j = await res.json();
+    const generatedAt = j.generatedAt || '';
+    return { source, generatedAt, stale: telemetryFreshness(generatedAt), signals: telemetrySignals(j) };
+  } catch {
+    return { source, generatedAt: '', stale: true, signals: telemetrySignals({}) };
+  }
 }
 
 function showFallback() {
@@ -628,6 +777,16 @@ function exposeApi({ reg, ui, pointer, camera }) {
     }),
     open: (id) => { const it = reg.items.get(id); if (it) { ui.switchZone(it.zone); ui.openItem(it); } return !!it; },
     zone: (z) => ui.switchZone(z),
+    startTour: ui.startTour,
+    stopTour: ui.stopTour,
+    nextTour: ui.nextTour,
+    prevTour: ui.prevTour,
+    tourState: ui.tourState,
+    telemetry: () => ui.telemetry(),
+    constellation: () => {
+      const c = ui.constellation();
+      return c ? { segments: c.segments, visible: c.lines.visible } : { segments: 0, visible: false };
+    },
     hovered: () => pointer.hovered(),
     cameraPos: () => ({ x: camera.position.x, y: camera.position.y, z: camera.position.z }),
   };

@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>COSMOS · 3D — Vũ trụ Harness v2 (three.js)</title>
-<meta name="description" content="Trang 3D tương tác của COSMOS — triết lý Harness v2: lõi hệ thống, 8 hành tinh pipeline, chòm sao 15 vùng hệ thống, lỗ đen entropy. Kéo để bay, click để khám phá.">
+<title>COSMOS · 3D — Deep Space Observatory (three.js)</title>
+<meta name="description" content="Đài quan sát vũ trụ 3D của COSMOS: telemetry thật, 8 phase pipeline, 15 tín hiệu hệ thống, chòm sao liên kết và lỗ đen entropy. Kéo để bay, click để khám phá.">
 <meta name="color-scheme" content="dark">
 <link rel="canonical" href="./index.html">
 
@@ -14,6 +14,7 @@
 <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700;800&display=swap"></noscript>
 
 <link rel="stylesheet" href="./style.css">
+<link rel="stylesheet" href="./tour-ui.css">
 
 <!-- three.js self-host (www/vendor/three — xem VERSION.txt để nâng cấp) -->
 <script type="importmap">
@@ -28,6 +29,7 @@
 <body>
 
 <a class="skip-link" href="#stage">Bỏ qua → nội dung 3D</a>
+<div class="warp" id="warp" data-warp="core" aria-hidden="true"><span></span></div>
 
 <header class="hdr">
   <div class="brand" aria-label="COSMOS 3D">
@@ -36,7 +38,7 @@
   </div>
   <div class="spacer"></div>
   <button type="button" class="btn" id="btnDrawer" aria-expanded="false" aria-controls="drawer">☰ Chỉ mục</button>
-  <a class="btn" href="../cosmos/index.html">📄 Bản 2D</a>
+  <a class="btn" href="../cosmos/index.html">◫ Bản 2D</a>
 </header>
 
 <main class="stage" id="stage" tabindex="-1">
@@ -45,10 +47,16 @@
   <canvas id="c3d-canvas" role="img"
           aria-label="Vũ trụ 3D: lõi Harness ở giữa, 8 hành tinh pipeline quay quỹ đạo, lỗ đen entropy. Dùng nút Chỉ mục để duyệt nội dung bằng bàn phím."></canvas>
 
-  <div class="hud" id="hud" aria-live="polite">
+  <div class="hud" id="hud" aria-live="off">
+    <div class="hud-head"><span class="eyebrow">TELEMETRY</span><span class="signal-dot" id="telemetryState" title="Trạng thái telemetry">●</span></div>
     <div class="hud-row"><span>Entropy S</span><b id="hudS">—</b></div>
+    <div class="hud-row"><span>Policy</span><b id="hudPolicy">—</b></div>
+    <div class="hud-row"><span>Dissent</span><b id="hudDissent">—</b></div>
+    <div class="hud-row"><span>Gravity</span><b id="hudGravity">—</b></div>
+    <div class="hud-row"><span>KN</span><b id="hudKn">—</b></div>
     <div class="hud-row"><span>Vật thể</span><b id="hudCount">—</b></div>
     <div class="hud-row"><span>Vùng</span><b id="hudZone">Lõi</b></div>
+    <div class="hud-source"><span id="telemetrySource">../cosmos/scale.json</span><span id="telemetryGenerated">—</span></div>
   </div>
 
   <div class="switcher" role="group" aria-label="Chọn vùng để khám phá">
@@ -56,7 +64,30 @@
     <button type="button" class="btn" data-zone="map" aria-pressed="false"><span class="dot" aria-hidden="true"></span>✦ Bản đồ sao</button>
   </div>
 
-  <aside class="panel" id="panel" role="dialog" aria-labelledby="panelTitle" aria-describedby="panelDesc">
+  <button type="button" class="tour-launch" id="btnTour" aria-controls="tour" aria-expanded="false">▶ Buổi trình bày tự động</button>
+
+  <section class="tour" id="tour" aria-labelledby="tourTitle" aria-describedby="tourText" hidden>
+    <div class="tour-head">
+      <span class="tour-mark" id="tourMark" aria-hidden="true">✦</span>
+      <div class="tour-head-copy">
+        <span class="tour-kicker" id="tourKicker">GUIDED TOUR · TỰ ĐỘNG</span>
+        <strong class="tour-title" id="tourTitle">—</strong>
+        <span class="tour-meta" id="tourMeta">—</span>
+      </div>
+      <span class="tour-index" id="tourIndex">00 / 00</span>
+    </div>
+    <p class="tour-text" id="tourText">—</p>
+    <div class="tour-progress" aria-hidden="true"><i id="tourProgress"></i></div>
+    <div class="tour-actions">
+      <button type="button" class="btn" id="tourPrev" aria-label="Nội dung trước">← Trước</button>
+      <button type="button" class="btn" id="tourPlay" aria-label="Tạm dừng">Ⅱ Tạm dừng</button>
+      <button type="button" class="btn" id="tourNext" aria-label="Nội dung tiếp theo">Tiếp →</button>
+      <button type="button" class="btn tour-close" id="tourFinish" aria-label="Kết thúc tour">✕</button>
+    </div>
+    <span class="tour-status" id="tourStatus">Đang trình bày tự động</span>
+  </section>
+
+  <aside class="panel" id="panel" role="dialog" aria-modal="false" aria-labelledby="panelTitle" aria-describedby="panelDesc">
     <div class="panel-head">
       <span class="panel-ico" id="panelIco" aria-hidden="true">◈</span>
       <div>
@@ -68,6 +99,7 @@
     <div class="panel-body">
       <span class="panel-meta" id="panelMeta">—</span>
       <p id="panelDesc">—</p>
+      <p class="panel-lore" id="panelLore">—</p>
       <a class="panel-link" id="panelLink" href="#" hidden target="_blank" rel="noopener">→ mở</a>
     </div>
   </aside>
@@ -83,13 +115,15 @@
   <div class="hero" id="hero">
     <div class="hero-inner">
       <h2 class="sr-only">Giới thiệu</h2>
-      <p id="heroTitle" style="font-size:12px;letter-spacing:.3em;color:var(--c3d-cyan);margin:0 0 8px;font-weight:700">COSMOS · 3D</p>
-      <p id="heroText">Vũ trụ Harness v2 — bay giữa hệ thống. Kéo để xoay · cuộn để zoom · click để mở.</p>
+      <p id="heroTitle" style="font-size:12px;letter-spacing:.3em;color:var(--c3d-cyan);margin:0 0 8px;font-weight:700">DEEP SPACE OBSERVATORY · LIVE TELEMETRY</p>
+      <h2 class="hero-title" id="heroHeading">Bay giữa vũ trụ Harness.</h2>
+      <p id="heroText">Một đài quan sát sống cho quy trình, tri thức và entropy. Kéo để đổi góc nhìn · cuộn để hạ cánh · chạm một vật thể để giải mã.</p>
       <div class="hero-cta">
-        <button type="button" class="btn primary" id="btnExplore">🚀 Khám phá</button>
+        <button type="button" class="btn primary" id="btnExplore">▲ Khám phá</button>
         <a class="btn" href="../cosmos/index.html" id="hero2d">← Bản 2D đầy đủ</a>
+        <button type="button" class="btn" id="btnTourHero">▶ Xem buổi trình bày</button>
       </div>
-      <p class="hero-hint">Ba vùng: ◉ lõi + 8 hành tinh pipeline · 🕳️ lỗ đen entropy · ✦ 15 vùng hệ thống</p>
+      <p class="hero-hint">8 phase quanh lõi · 15 tín hiệu trong chòm sao · lỗ đen entropy đọc trực tiếp từ scale.json</p>
     </div>
   </div>
 
