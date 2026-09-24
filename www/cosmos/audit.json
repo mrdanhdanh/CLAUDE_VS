@@ -1,25 +1,8 @@
 {
-  "generatedAt": "2026-09-24T15:10:09.738Z",
+  "generatedAt": "2026-09-24T15:21:43.481Z",
   "source": ".agent/audit.jsonl",
-  "total": 355,
+  "total": 356,
   "events": [
-    {
-      "ts": "2026-09-23T15:24:05.577Z",
-      "actor": "YUNIE",
-      "tool": "shell",
-      "target": "Get-ChildItem -Path C:\\ProgramData\\chocolatey,C:\\Program Files,C:\\Users\\nguye\\AppData\\Local\\Programs -Recurse -Include ffmpeg.exe,ffprobe.exe,magick.exe -ErrorAction SilentlyContinue | Select-Object -First 20 -ExpandProperty FullName",
-      "decision": "permitted",
-      "rule": "allow-all",
-      "durationMs": null,
-      "error": null,
-      "intent": null,
-      "requestId": "5cb07a",
-      "prevHash": "dfdc1146897552ca",
-      "policyDigest": "a4972205cc490263",
-      "hash": "1042e5f84d771cce",
-      "sig": "lXq2_FfWF9hR9tE-QSqQEpTu-qDsjvus6eWs5yx_fRLIBFOtgvIZFfnqlagADu6z_uSI1VHyWzgKBPuUbGDkBA",
-      "pub": "MCowBQYDK2VwAyEAY8PlU0KjXp4HJUUlNlVZdaXHUmDagUMm8rUrEShTPXo"
-    },
     {
       "ts": "2026-09-23T15:26:33.012Z",
       "actor": "YUNIE",
@@ -851,6 +834,23 @@
       "policyDigest": "a4972205cc490263",
       "hash": "c97c3c921497068a",
       "sig": "VKItgRsWStZqxfS1tUepOe3xET_9W85YyNEUo5p5w6wJoz7G44LQcDz09ZkA5ui4Zuo30CqchOIgwsMN8IZgAg",
+      "pub": "MCowBQYDK2VwAyEAY8PlU0KjXp4HJUUlNlVZdaXHUmDagUMm8rUrEShTPXo"
+    },
+    {
+      "ts": "2026-09-24T15:21:21.421Z",
+      "actor": "redteam-spec",
+      "tool": "read",
+      "target": "***",
+      "decision": "refused",
+      "rule": "redteam-test",
+      "durationMs": null,
+      "error": null,
+      "intent": null,
+      "requestId": "47d980",
+      "prevHash": "c97c3c921497068a",
+      "policyDigest": "a4972205cc490263",
+      "hash": "9b1a193478eac5bb",
+      "sig": "xabrza2VituMIN-1BTpCmCrXS1hWVxQpyPYBrd5E-iVX6MFTzyKGCgDoCUpWL6wF1SrMs2hNztjZXWsS9iWVCQ",
       "pub": "MCowBQYDK2VwAyEAY8PlU0KjXp4HJUUlNlVZdaXHUmDagUMm8rUrEShTPXo"
     }
   ]

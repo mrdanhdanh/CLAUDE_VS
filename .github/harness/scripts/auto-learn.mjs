@@ -33,6 +33,15 @@ const RECURRENCE_KN_MIN = 25; // calibrate 2026-09-13: liên quan thật ≥ 31,
 const RECURRENCE_BUG_MIN = 18;
 const GUARD_SCAN_DIRS = ['tests'];
 const GUARD_FILE_RE = /\.(spec|test)\.(js|ts|mjs|cs)$/i;
+const DETECTION_MODES = new Set(['GATE', 'THREW', 'HUMAN', 'OPERATOR', 'LATER']);
+
+function resolveDetection(raw) {
+  if (raw === undefined) return 'unknown';
+  if (typeof raw !== 'string' || (raw !== 'unknown' && !DETECTION_MODES.has(raw))) {
+    throw new Error(`invalid --detection "${raw}" (allowed: ${[...DETECTION_MODES].join(', ')} or unknown)`);
+  }
+  return raw;
+}
 
 // ---------- helpers ----------
 // tokenize/computeIDF/parseKNs/scoreKN — shared module kn-parse.mjs (trước là duplicate)
@@ -260,10 +269,10 @@ function resolveBugDir(title, slug, baseDir = BUGS_DIR) {
   return { date, dirName, dir };
 }
 
-async function fillBugTemplate(title, dirName, date, error, file, radarBlock = '') {
+async function fillBugTemplate(title, dirName, date, error, file, radarBlock = '', detection = 'unknown') {
   let template = '';
   try { template = await fs.readFile(TEMPLATE, 'utf8'); } catch {
-    template = `# Bug: ${title}\n\n## Meta\n- **Slug:** ${dirName}\n- **Ngày:** ${date}\n- **Severity:** minor\n- **Tags:** \n\n## 1. Reproduce\n\n## 2. Root Cause\n\n## 3. Fix\n\n## 4. Verification\n\n## 5. Lesson\n\n## 6. Prevention\n`;
+    template = `# Bug: ${title}\n\n## Meta\n- **Slug:** ${dirName}\n- **Ngày:** ${date}\n- **Severity:** minor\n- **Detection:** ${detection}\n- **Tags:** \n\n## 1. Reproduce\n\n## 2. Root Cause\n\n## 3. Fix\n\n## 4. Verification\n\n## 5. Lesson\n\n## 6. Prevention\n`;
   }
   // fill template
   const now = new Date().toISOString();
@@ -271,6 +280,7 @@ async function fillBugTemplate(title, dirName, date, error, file, radarBlock = '
     .replace('<Tiêu đề ngắn gọn>', title)
     .replace('YYYY-MM-DD-<slug>', dirName)
     .replace('YYYY-MM-DD', date);
+  content = content.replace(/^- \*\*Detection:\*\*.*$/mi, `- **Detection:** \`${detection}\``);
   // inject error info at top if not already
   const header = `> 🤖 Auto-log bởi auto-learn.mjs — ${now}\n> **Error:** \`${error.replace(/`/g,"'")}\`${file ? `\n> **File:** \`${file}\`` : ''}\n> **Title:** ${title}\n\n`;
   if (!content.includes('Auto-log')) content = header + radarBlock + content;
@@ -281,15 +291,25 @@ async function fillBugTemplate(title, dirName, date, error, file, radarBlock = '
   return content;
 }
 
+const LOG_OPTIONS = new Set(['error', 'msg', 'file', 'title', 'slug', 'dir', 'detection', 'no-scan', 'dry-run', 'json']);
+
+function validateLogOptions(opts) {
+  if (opts.__duplicates?.has('detection')) throw new Error('duplicate --detection option is not allowed');
+  const unknown = Object.keys(opts).find(key => !LOG_OPTIONS.has(key));
+  if (unknown) throw new Error(`unknown option --${unknown} — allowed: ${[...LOG_OPTIONS].map(k => `--${k}`).join(', ')}`);
+}
+
 async function logBug(opts) {
+  validateLogOptions(opts);
   const error = opts.error || opts.msg || 'unknown error';
   const file = opts.file || '';
   const title = opts.title || error.slice(0, 60);
   const slug = opts.slug || normalizeSlug(title);
+  const detection = resolveDetection(opts.detection);
   const baseDir = opts.dir ? path.resolve(ROOT, opts.dir) : BUGS_DIR;
   const { date, dirName, dir } = resolveBugDir(title, slug, baseDir);
   const radar = opts['no-scan'] ? { kns: [], bugs: [] } : await scanRecurrence({ title, error, file, excludeSlug: dirName, baseDir });
-  const content = await fillBugTemplate(title, dirName, date, error, file, buildRadarBlock(radar));
+  const content = await fillBugTemplate(title, dirName, date, error, file, buildRadarBlock(radar), detection);
   printRadar(radar);
   const outPath = path.join(dir, 'bug.md');
   if (opts['dry-run']) {
@@ -301,6 +321,7 @@ async function logBug(opts) {
   console.log(`✅ Đã tạo draft bug: ${path.relative(ROOT, outPath)}`);
   console.log(`   Slug: ${dirName}`);
   console.log(`   Error: ${error.slice(0,80)}`);
+  console.log(`   Detection: ${detection}`);
   if (file) console.log(`   File: ${file}`);
   console.log(`\n📝 Tiếp theo:`);
   console.log(`   1. Mở ${path.relative(ROOT, outPath)} điền Reproduce + Root Cause`);
@@ -1322,16 +1343,53 @@ async function listBugSlugs(dir = BUGS_DIR) {
   } catch { return []; }
 }
 
-async function countOpenDrafts(bugs) {
+async function countOpenDrafts(bugs, baseDir = BUGS_DIR) {
   let drafts = 0;
   for (const b of bugs) {
     try {
-      const t = await fs.readFile(path.join(BUGS_DIR, b, 'bug.md'), 'utf8');
+      const t = await fs.readFile(path.join(baseDir, b, 'bug.md'), 'utf8');
       const isOpen = t.includes('Status:** `open`') || t.includes('Status: `open`') || t.includes('**Status:** open') || /-\s*\*\*Status:\*\*\s*open/i.test(t);
       if (isOpen) drafts++;
     } catch {}
   }
   return drafts;
+}
+
+function readDetectionMode(text) {
+  const lines = String(text || '').split(/\r?\n/).filter(line => /^\s*-\s*(?:\*\*Detection:\*\*|Detection:)/i.test(line));
+  if (lines.length === 0) return { kind: 'unknown' };
+  if (lines.length !== 1) return { kind: 'invalid' };
+  const value = lines[0].replace(/^\s*-\s*(?:\*\*Detection:\*\*|Detection:)\s*/i, '').trim();
+  const match = value.match(/^`?([A-Za-z]+)`?$/);
+  if (!match) return { kind: 'invalid' };
+  const mode = match[1];
+  if (mode === 'unknown') return { kind: 'unknown' };
+  return DETECTION_MODES.has(mode) ? { kind: 'valid', mode } : { kind: 'invalid' };
+}
+
+async function countDetectionModes(bugs, baseDir = BUGS_DIR) {
+  const modes = { GATE: 0, THREW: 0, HUMAN: 0, OPERATOR: 0, LATER: 0 };
+  let unknown = 0;
+  let invalid = 0;
+  for (const bug of bugs) {
+    let text = '';
+    try { text = await fs.readFile(path.join(baseDir, bug, 'bug.md'), 'utf8'); } catch {}
+    const parsed = readDetectionMode(text);
+    if (parsed.kind === 'valid') modes[parsed.mode]++;
+    else if (parsed.kind === 'unknown') unknown++;
+    else invalid++;
+  }
+  const classified = Object.values(modes).reduce((sum, count) => sum + count, 0);
+  const automated = modes.GATE + modes.THREW;
+  return {
+    total: bugs.length,
+    classified,
+    unknown,
+    invalid,
+    modes,
+    automated,
+    automatedShare: classified ? automated / classified : null,
+  };
 }
 
 async function readLastUpdated() {
@@ -1357,6 +1415,11 @@ async function countReefLite() {
   return { records: recordsCount, reports: reportsCount, versions: versionsCount };
 }
 
+function printDetectionStatus(detection) {
+  const share = detection.automatedShare === null ? 'n/a' : `${(detection.automatedShare * 100).toFixed(1)}%`;
+  console.log(`   Detection: ${detection.classified}/${detection.total} classified · automated ${detection.automated}/${detection.classified} (${share}) · unknown ${detection.unknown} · invalid ${detection.invalid}`);
+}
+
 function printStatusCommands() {
   console.log(`\n💡 Lệnh:`);
   console.log(`   suggest "từ khóa"  → gợi ý KN liên quan`);
@@ -1371,13 +1434,14 @@ function printStatusCommands() {
   console.log(`   watchdog --apply --sign "<tên người>" → mutation BẮT BUỘC human sign-off (agent tự ký = refused, exit 2)`);
 }
 
-function printStatusHuman({ kns, bugs, drafts, lastUpdated, topTags, reefLite, idIntegrity }) {
+function printStatusHuman({ kns, bugs, drafts, lastUpdated, topTags, reefLite, idIntegrity, detection }) {
   console.log(`📊 Auto-Learn Status — ${new Date().toISOString()}`);
   console.log(`   KN: ${kns.length} bài học trong docs/knowleged.md ${lastUpdated ? `(UpdatedAt: ${lastUpdated})` : ''}`);
   if (kns.length) console.log(`      → ${kns.map(k=>k.id).join(', ')}`);
   if (topTags.length) console.log(`      top tags: ${topTags.map(([t,c])=>`${t}(${c})`).join(', ')}`);
   console.log(`   Bugs: ${bugs.length} trong .agent/bugs/ (${drafts} drafts auto-log)`);
   if (bugs.length) console.log(`      → ${bugs.slice(0,5).join(', ')}${bugs.length>5?' ...':''}`);
+  printDetectionStatus(detection);
   console.log(`   Reef-lite: records=${reefLite.records} reports=${reefLite.reports} versions=${reefLite.versions} (.agent/records/ + reports.jsonl + versions/)`);
   console.log(`   Health: ${kns.length>=5 ? '✅' : '⚠️'} ${kns.length>=5 ? 'đủ bài học' : 'cần thêm KN'} | ${drafts>0 ? `⚠️ ${drafts} draft chưa propose` : '✅ không có draft tồn'}`);
   // KN ID integrity (KN-066): dup/orphan/order — double-yield đa phiên
@@ -1389,17 +1453,19 @@ function printStatusHuman({ kns, bugs, drafts, lastUpdated, topTags, reefLite, i
   printStatusCommands();
 }
 
-async function status(json=false) {
+async function status(json=false, opts={}) {
   const { kns, raw } = await parseKNs(KNOWLEGED);
-  const bugs = await listBugSlugs();
-  const drafts = await countOpenDrafts(bugs);
+  const baseDir = opts.dir ? path.resolve(ROOT, opts.dir) : BUGS_DIR;
+  const bugs = await listBugSlugs(baseDir);
+  const drafts = await countOpenDrafts(bugs, baseDir);
   const lastUpdated = await readLastUpdated();
   const topTags = computeTopTags(kns);
   const reefLite = await countReefLite();
   const idIssues = checkKnIntegrity(raw || '');
-  const out = { knTotal: kns.length, bugsTotal: bugs.length, drafts, lastUpdated, topTags, bugs: bugs.slice(0,10), kns: kns.map(k=>({id:k.id, title:k.title, tags:k.tags, severity:k.severity})), reefLite, idIntegrity: { ok: idIssues.length === 0, issues: idIssues } };
+  const detection = await countDetectionModes(bugs, baseDir);
+  const out = { knTotal: kns.length, bugsTotal: bugs.length, drafts, lastUpdated, topTags, bugs: bugs.slice(0,10), kns: kns.map(k=>({id:k.id, title:k.title, tags:k.tags, severity:k.severity})), reefLite, idIntegrity: { ok: idIssues.length === 0, issues: idIssues }, detection };
   if (json) { console.log(JSON.stringify(out, null, 2)); return; }
-  printStatusHuman({ kns, bugs, drafts, lastUpdated, topTags, reefLite, idIntegrity: idIssues });
+  printStatusHuman({ kns, bugs, drafts, lastUpdated, topTags, reefLite, idIntegrity: idIssues, detection });
 }
 
 // ---------- CLI ----------
@@ -1417,18 +1483,26 @@ function parseSuggestArgs(rest) {
 }
 
 function parseGenericArgs(args) {
-  // generic --key value
   const opts = {};
-  for (let i=1;i<args.length;i++) {
-    const a = args[i];
-    if (a.startsWith('--')) {
-      const k = a.slice(2);
-      const v = args[i+1] && !args[i+1].startsWith('--') ? args[i+1] : 'true';
-      if (v!=='true') i++;
-      opts[k]=v;
-      if (k==='json') opts.json=true;
+  const duplicates = new Set();
+  for (let i = 1; i < args.length; i++) {
+    const token = args[i];
+    if (!token.startsWith('--')) continue;
+    const eq = token.indexOf('=');
+    const key = eq >= 0 ? token.slice(2, eq) : token.slice(2);
+    let value;
+    if (eq >= 0) {
+      value = token.slice(eq + 1);
+    } else {
+      const next = args[i + 1];
+      value = next && !next.startsWith('--') ? next : true;
+      if (value !== true) i++;
     }
+    if (Object.prototype.hasOwnProperty.call(opts, key)) duplicates.add(key);
+    opts[key] = value;
+    if (key === 'json') opts.json = value === true || value === 'true';
   }
+  Object.defineProperty(opts, '__duplicates', { value: duplicates, enumerable: false });
   return opts;
 }
 
@@ -1448,11 +1522,11 @@ function printHelp() {
 
 Usage:
   node .github/harness/scripts/auto-learn.mjs suggest "từ khóa" [--top 3] [--json]  (alias: search)
-  node .github/harness/scripts/auto-learn.mjs log --error "msg" --file "path" --title "tên" [--slug slug] [--dir dir] [--dry-run] [--no-scan]  (tự RADAR tái lập)
+  node .github/harness/scripts/auto-learn.mjs log --error "msg" --file "path" --title "tên" [--detection unknown|GATE|THREW|HUMAN|OPERATOR|LATER] [--slug slug] [--dir dir] [--dry-run] [--no-scan]  (tự RADAR tái lập)
   node .github/harness/scripts/auto-learn.mjs propose --bug <slug> [--json] [--dir dir] [--strict]  (alias: get --bug <slug>)  (GUARD GATE: major/critical thiếu Guard → --strict exit 1)
   node .github/harness/scripts/auto-learn.mjs guards [--json] [--out <file>]  (Guard coverage — KN nào có lưới chống tái lập)
   node .github/harness/scripts/auto-learn.mjs attest --kn KN-003 --result pass|fail [--score 0..1] [--note "..."]  (Engram-lite Wilson)
-  node .github/harness/scripts/auto-learn.mjs status [--json]
+  node .github/harness/scripts/auto-learn.mjs status [--json] [--dir dir]
   node .github/harness/scripts/auto-learn.mjs stats --heatmap [--json] [--out <file>] [--now ISO]  (CMB anisotropy — grid tag×tháng · điểm lạnh · KN 0 tham chiếu)
   node .github/harness/scripts/auto-learn.mjs watchdog [--json] [--out <file>] [--dir <bugsDir>] [--now ISO] [--apply --sign "<tên người>"]  (Hawking — nợ bay hơi)
   # Reef-lite (Serve → Observe → Grow → Commit):
@@ -1505,7 +1579,7 @@ function makeHandlers(opts, json) {
     propose: () => propose(opts.bug || opts.slug, json, opts),
     guards: () => guardsAudit(opts),
     attest: () => attest(opts, json),
-    status: () => status(json),
+    status: () => status(json, opts),
     watchdog: () => watchdog(opts),
     stats: () => statsHeatmap(opts),
     record: () => recordInteraction(opts, json),

@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-24T15:10:16.688Z",
+  "generatedAt": "2026-09-24T15:21:51.115Z",
   "generatedBy": "YUNIE",
   "version": 1,
   "counts": {
@@ -499,7 +499,7 @@
   "health": {
     "errors": 0,
     "status": "ok",
-    "lastCheck": "2026-09-24T15:10:16.688Z",
+    "lastCheck": "2026-09-24T15:21:51.115Z",
     "checks": [
       "get_errors: pass (0 errors)",
       "registry: 11 instructions (19 total) - 21 skills - 9 agents - 7 prompts - 1 hook — all enabled",
@@ -510,8 +510,8 @@
       "www: polished — responsive 375/768/1280, a11y, states, animation 150-300ms",
       "workflow: www/** -> Pages (upload-artifact path: www) — exists: true + eval job gate",
       "library: www/library/ MCP v1.2.0 (5 tools: search + iterative + list/get/status, router+cache, redacted) + library-rag instruction",
-      "auto-learn: 75 KN, 63 bugs, 0 drafts — suggest/log/propose/status (<50ms, IDF, tiếng Việt)",
-      "governance: audit 355 (Ed25519 receipt P0-4) · policy 12 deny/2 allow (ok) · credentials 0 keys plain",
+      "auto-learn: 75 KN, 64 bugs, 0 drafts — suggest/log/propose/status (<50ms, IDF, tiếng Việt)",
+      "governance: audit 356 (Ed25519 receipt P0-4) · policy 12 deny/2 allow (ok) · credentials 0 keys plain",
       "platform: agents 3 (3 built-in, 0 remote) · mcp 3 vendors/3 grants (library 1.2.0 read-only) · components 3/3 pub · routines 3/3 enabled",
       "collaboration: KN-018 — dissentGate ✅ · whoDidYouThinkWith ✅ · critic ✅ · fund-the-friction ❌ (partial)",
       "n5-blazor: www/n5-blazor/ 7 trang static + app.css + data.js + site.js — 100% Pages"
@@ -772,34 +772,17 @@
   },
   "learn": {
     "knTotal": 75,
-    "bugsTotal": 63,
+    "bugsTotal": 64,
     "drafts": 0
   },
   "governance": {
     "audit": {
-      "total": 355,
+      "total": 356,
       "permitted": 303,
-      "refused": 51,
+      "refused": 52,
       "failed": 1,
-      "lastTs": "2026-09-24T14:56:45.022Z",
+      "lastTs": "2026-09-24T15:21:21.421Z",
       "tail": [
-        {
-          "ts": "2026-09-24T14:01:45.566Z",
-          "actor": "verify",
-          "tool": "edit",
-          "target": "2 guard spec aligned to reality: instruction-budget (anti-deletion enabled+disabled, disabled excluded from budget) + harness-manager-export (registry-derived expectations) — 275/275 pass",
-          "decision": "permitted",
-          "rule": "allow-all",
-          "durationMs": null,
-          "error": null,
-          "intent": null,
-          "requestId": "c0ab88",
-          "prevHash": "b19bb67b9370fd76",
-          "policyDigest": "a4972205cc490263",
-          "hash": "55133283c12455b4",
-          "sig": "UBumnOuZIhY9VFQ6UlpjC22Qg51XoHY774D7brmOeFPbhILvh6afFQYmerZoRs5Xm0gly2puyUuc3AvKP5Q1Aw",
-          "pub": "MCowBQYDK2VwAyEAY8PlU0KjXp4HJUUlNlVZdaXHUmDagUMm8rUrEShTPXo"
-        },
         {
           "ts": "2026-09-24T14:19:19.002Z",
           "actor": "redteam-spec",
@@ -867,6 +850,23 @@
           "hash": "c97c3c921497068a",
           "sig": "VKItgRsWStZqxfS1tUepOe3xET_9W85YyNEUo5p5w6wJoz7G44LQcDz09ZkA5ui4Zuo30CqchOIgwsMN8IZgAg",
           "pub": "MCowBQYDK2VwAyEAY8PlU0KjXp4HJUUlNlVZdaXHUmDagUMm8rUrEShTPXo"
+        },
+        {
+          "ts": "2026-09-24T15:21:21.421Z",
+          "actor": "redteam-spec",
+          "tool": "read",
+          "target": "***",
+          "decision": "refused",
+          "rule": "redteam-test",
+          "durationMs": null,
+          "error": null,
+          "intent": null,
+          "requestId": "47d980",
+          "prevHash": "c97c3c921497068a",
+          "policyDigest": "a4972205cc490263",
+          "hash": "9b1a193478eac5bb",
+          "sig": "xabrza2VituMIN-1BTpCmCrXS1hWVxQpyPYBrd5E-iVX6MFTzyKGCgDoCUpWL6wF1SrMs2hNztjZXWsS9iWVCQ",
+          "pub": "MCowBQYDK2VwAyEAY8PlU0KjXp4HJUUlNlVZdaXHUmDagUMm8rUrEShTPXo"
         }
       ]
     },
@@ -875,7 +875,7 @@
       "deny": 12,
       "allow": 2,
       "status": "ok",
-      "lastCheck": "2026-09-24T15:10:09.747Z"
+      "lastCheck": "2026-09-24T15:21:43.484Z"
     },
     "credentials": {
       "count": 0,

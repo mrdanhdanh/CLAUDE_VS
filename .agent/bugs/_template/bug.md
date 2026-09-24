@@ -7,6 +7,8 @@
 - **Slug:** `YYYY-MM-DD-<slug>` (vd: `2026-08-29-modal-esc`)
 - **Ngày:** YYYY-MM-DD
 - **Severity:** `critical` | `major` | `minor`
+- **Detection:** `unknown` | `GATE` | `THREW` | `HUMAN` | `OPERATOR` | `LATER` — cách lỗi thực sự bị phát hiện; chỉ `GATE` + `THREW` mới tính automated.
+- **Detection rule:** Một dòng metadata duy nhất, chỉ đúng một enum; không thêm suffix hoặc duplicate field.
 - **Layer:** `—` (điền: `code` | `test-spec` | `env-fixture` | `measure-verifier` | `task-spec` | `process`) — tầng chứa defect (suspicion order, không phải luật). Check đỏ đọc 2 lần: defect ở test/env/đo → **sửa world TRƯỚC**; chỉ failure sống sót qua cả stack mới thành bài học.
 - **Reporter:** @user / YUNIE
 - **Related KN:** `KN-XXX` (điền sau khi cập nhật `docs/knowleged.md`, hoặc `—` nếu chưa có)

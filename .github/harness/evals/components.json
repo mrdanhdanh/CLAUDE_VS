@@ -44,6 +44,14 @@
       "expect": { "exit": 1, "stdout": "requires --approve" }
     },
     {
+      "id": "cua-unattended-identity",
+      "name": "cua-guard — unattended identity action cần human",
+      "ref": "P0-2026-09-23",
+      "claim": "unattended submit → CUA refused, exit 1",
+      "cmd": "node .github/harness/scripts/cua-guard.mjs check --action submit --url \"https://shop.example.com/buy\" --identity agent:test --unattended --approve --verify-url \"https://shop.example.com/buy\" --verify-detail sku=42",
+      "expect": { "exit": 1, "stdout": "human takeover required" }
+    },
+    {
       "id": "slop-check-fail-closed",
       "name": "slop-check — fail-closed 0 file",
       "ref": "KN-047",
