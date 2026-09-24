@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-24T14:58:16.402Z",
+  "generatedAt": "2026-09-24T15:10:16.688Z",
   "generatedBy": "YUNIE",
   "version": 1,
   "counts": {
@@ -355,6 +355,7 @@
     "library-rag",
     "liquid-glass-status",
     "mai-code-of-conduct-adopt",
+    "meta-charm-tiktok",
     "mo-hold-delegation",
     "n5-blazor",
     "n5-blazor-ladder",
@@ -445,6 +446,11 @@
       "status": "ok"
     },
     {
+      "name": "meta-charm",
+      "path": "meta-charm/index.html",
+      "status": "ok"
+    },
+    {
       "name": "n5-blazor",
       "path": "n5-blazor/index.html",
       "status": "ok"
@@ -493,7 +499,7 @@
   "health": {
     "errors": 0,
     "status": "ok",
-    "lastCheck": "2026-09-24T14:58:16.402Z",
+    "lastCheck": "2026-09-24T15:10:16.688Z",
     "checks": [
       "get_errors: pass (0 errors)",
       "registry: 11 instructions (19 total) - 21 skills - 9 agents - 7 prompts - 1 hook — all enabled",
@@ -568,6 +574,11 @@
       {
         "path": "library/index.html",
         "title": "Thư Viện",
+        "type": "demo"
+      },
+      {
+        "path": "meta-charm/index.html",
+        "title": "meta-charm",
         "type": "demo"
       },
       {
@@ -864,7 +875,7 @@
       "deny": 12,
       "allow": 2,
       "status": "ok",
-      "lastCheck": "2026-09-24T14:58:11.630Z"
+      "lastCheck": "2026-09-24T15:10:09.747Z"
     },
     "credentials": {
       "count": 0,

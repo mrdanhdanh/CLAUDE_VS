@@ -1,0 +1,342 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Meta Muse Charm — storyboard (đồ chơi/pixel)</title>
+<style>
+  :root { color-scheme: light; font-family: "Trebuchet MS", "Segoe UI", sans-serif; background:#ffe3f1; color:#46254b; }
+  * { box-sizing: border-box; }
+  body { margin:0; min-height:100vh; display:grid; place-items:center; background:#f3dff0; }
+  .stage { width:min(100vw, 562.5px); aspect-ratio:9/16; position:relative; overflow:hidden; background:#ffe3f1; }
+  canvas { display:block; width:100%; height:100%; }
+  .sr { position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap; }
+</style>
+</head>
+<body>
+  <main class="stage" aria-label="Kịch bản clip: Meta Muse Charm — bùa AI kiểu Tamagotchi">
+    <canvas id="canvas" width="1080" height="1920" role="img" aria-label="Storyboard đồ chơi 5 beat: Meta ra mắt Muse Charm, thú pixel trong màn LCD, chip thông tin, cảnh báo chưa bán"></canvas>
+    <h1 class="sr">Meta vừa làm một chiếc bùa AI kiểu Tamagotchi</h1>
+  </main>
+<script>
+(() => {
+  const canvas = document.querySelector('#canvas');
+  const ctx = canvas.getContext('2d');
+  const W = canvas.width;
+  const H = canvas.height;
+
+  // ── TOKENS ────────────────────────────────────────────────────────────────
+  // Một object DUY NHẤT. Thiếu key ở đây = ctx.fillStyle = undefined = KHÔNG throw,
+  // chữ giữ màu cũ ⇒ tàng hình. verify-frames.mjs quét đúng chỗ này.
+  const C = {
+    bg1: '#ffe3f1', bg2: '#e3d9ff', soft1: '#ffd1e6', soft2: '#cdeedd',
+    plum: '#46254b', plumSoft: '#6b4a70', pink: '#ff6fb5', pinkDeep: '#d63a8c',
+    mint: '#57c9b0', yellow: '#ffd166', lcd: '#b9c9a8', lcdMid: '#94a886',
+    lcdDark: '#2f3a26', shellA: '#f7b8d0', shellB: '#d98ab0', silver: '#c9c4d8',
+    white: '#ffffff', ink: '#1f1a24'
+  };
+
+  const DISPLAY = 'Trebuchet MS';
+  const MONO = 'Consolas';
+
+  // ── BEATS ─────────────────────────────────────────────────────────────────
+  // `at`/`end` phải khớp `segments` trong voiceover-segments.json (guard timing so 2 bên).
+  const DURATION = 50;
+  const beats = [
+    { at: 0,  end: 5,  eyebrow: 'ĐỒ CHƠI MỚI · META', title: "Meta vừa làm 'bùa AI'\nkiểu Tamagotchi.", sub: 'Muse Charm — thiết bị AI đeo móc khóa của Meta.', chips: [] },
+    { at: 5,  end: 14, eyebrow: '01 · THIẾT BỊ', title: 'Muse Charm\nlà cái gì?', sub: 'Cầm vừa lòng bàn tay — có màn hình nhỏ và cảm biến vân tay.', chips: [
+      'Màn hình nhỏ — avatar AI tên "Jolly"',
+      'Chạm vân tay là nói — khỏi mở app',
+      'Cầm vừa tay · đeo móc khóa'
+    ] },
+    { at: 14, end: 28, eyebrow: '02 · VÌ SAO', title: 'Meta muốn AI\nluôn bên bạn.', sub: 'Zuckerberg: "cách nhanh nhất để nói với Muse".', chips: [
+      'Avatar + giọng nói real-time',
+      "Zuck: 'nhét cả Muse vào móc khóa'",
+      'Muse vượt ChatGPT thời kỳ đầu (TechCrunch)'
+    ] },
+    { at: 28, end: 39, eyebrow: '03 · NÓI RÕ', title: 'Nhưng khoan —\nchưa mua được.', sub: 'Mới chỉ là demo — hẹn "kịp dịp lễ tháng 12", chưa công bố giá.', chips: [
+      'CHƯA BÁN — mới demo, hẹn tháng 12',
+      'CHƯA CÔNG BỐ GIÁ',
+      "'Bùa AI' đã thành cliché (Friend…)"
+    ] },
+    { at: 39, end: 50, eyebrow: 'CÂU HỎI', title: 'Bạn có đeo\nbùa AI không?', sub: 'Meta hẹn bán tháng 12 — lúc đó trả lời cũng chưa muộn.', chips: [] }
+  ];
+  const CHIP_BG = ['#a8e6cf', '#ffe3a3', '#ffc2dd'];
+  const CHIP_TX = ['#1f3a2e', '#4a3a14', '#5c1f3c'];
+
+  // ── HELPERS ───────────────────────────────────────────────────────────────
+  const ease = t => t < .5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2;
+  const clamp = (v, a = 0, b = 1) => Math.max(a, Math.min(b, v));
+  const grow = (t, start, dur) => ease(clamp((t - start) / dur));
+  function beatAt(t) { return beats.findIndex(b => t >= b.at && t < b.end); }
+
+  function text(str, x, y, size, color, weight = 700, align = 'left', font = DISPLAY) {
+    ctx.font = `${weight} ${size}px "${font}", "Segoe UI", sans-serif`;
+    ctx.fillStyle = color; ctx.textAlign = align; ctx.textBaseline = 'middle'; ctx.fillText(str, x, y);
+  }
+  function wrap(str, x, y, maxW, size, color, weight = 700, line = 1.08, align = 'left', font = DISPLAY) {
+    ctx.font = `${weight} ${size}px "${font}", "Segoe UI", sans-serif`;
+    ctx.fillStyle = color; ctx.textAlign = align; ctx.textBaseline = 'middle';
+    str.split('\n').forEach((part, pi) => {
+      const words = part.split(' '); let lineText = ''; let ly = y + pi * size * line;
+      words.forEach(word => {
+        const test = lineText ? `${lineText} ${word}` : word;
+        if (ctx.measureText(test).width > maxW && lineText) { ctx.fillText(lineText, x, ly); lineText = word; ly += size * line; }
+        else lineText = test;
+      });
+      ctx.fillText(lineText, x, ly);
+    });
+  }
+  function spaced(str, x, y, size, color, spacing = 3, align = 'left', weight = 700) {
+    try { ctx.letterSpacing = `${spacing}px`; } catch {}
+    text(str, x, y, size, color, weight, align, MONO);
+    try { ctx.letterSpacing = '0px'; } catch {}
+  }
+  function roundRect(x, y, w, h, r, fill, stroke, lw = 0) {
+    ctx.beginPath(); ctx.roundRect(x, y, w, h, r);
+    if (fill) { ctx.fillStyle = fill; ctx.fill(); }
+    if (stroke) { ctx.strokeStyle = stroke; ctx.lineWidth = lw || 4; ctx.stroke(); }
+  }
+
+  // ── THÚ PIXEL "JOLLY" ─────────────────────────────────────────────────────
+  // Mọi toạ độ snap theo UNIT (pixel art). S = hệ số phóng.
+  function jolly(cx, cy, S, t, opts = {}) {
+    const u = 18 * S;
+    const bx = cx - 3.5 * u, by = cy - 2.5 * u - (opts.dy || 0);
+    const p = (gx, gy, gw, gh, color) => { ctx.fillStyle = color; ctx.fillRect(bx + gx * u, by + gy * u, gw * u, gh * u); };
+    const blink = (t % 3.2) < 0.15;
+    // ăng-ten
+    p(1.2, -0.9, 0.8, 0.9, C.lcdDark);
+    p(5.0, -0.9, 0.8, 0.9, C.lcdDark);
+    // thân blob
+    p(1, 0, 5, 1, C.lcdDark);
+    p(0, 1, 7, 3, C.lcdDark);
+    p(1, 4, 5, 1, C.lcdDark);
+    // mắt (blink) — màu LCD để "khoét" mắt
+    if (blink) {
+      p(1.3, 2.05, 1, 0.35, C.lcd); p(4.7, 2.05, 1, 0.35, C.lcd);
+    } else {
+      p(1.3, 1.6, 1, 1, C.lcd); p(4.7, 1.6, 1, 1, C.lcd);
+      p(1.55, 1.85, 0.4, 0.4, C.lcdDark); p(4.95, 1.85, 0.4, 0.4, C.lcdDark);
+    }
+    // má
+    p(0.35, 2.9, 1, 0.6, C.lcdMid); p(5.65, 2.9, 1, 0.6, C.lcdMid);
+    // miệng
+    p(2.7, 3.3, 1.6, 0.5, C.lcd);
+    // chân
+    p(1.5, 5.1, 1, 0.7, C.lcdDark);
+    p(4.5, 5.1, 1, 0.7, C.lcdDark);
+    // tay vẫy (beat kết)
+    if (opts.wave) {
+      const wob = Math.sin(t * 6) * 0.25;
+      p(6.7, 1.1 + wob, 0.8, 1.6, C.lcdDark);
+      p(6.7, 0.5 + wob, 0.8, 0.6, C.lcdDark);
+    }
+  }
+  function heartPixel(x, y, s, alpha, color = C.lcdDark) {
+    const u = 18 * s;
+    ctx.globalAlpha *= alpha;
+    ctx.fillStyle = color;
+    ctx.fillRect(x, y, 0.8 * u, 0.8 * u);
+    ctx.fillRect(x + 0.8 * u, y, 0.8 * u, 0.8 * u);
+    ctx.fillRect(x, y + 0.8 * u, 1.6 * u, 0.8 * u);
+    ctx.fillRect(x + 0.4 * u, y + 1.6 * u, 0.8 * u, 0.8 * u);
+    ctx.globalAlpha /= alpha;
+  }
+  function sparkle(x, y, s, phase, t) {
+    const a = 0.35 + 0.65 * Math.abs(Math.sin(t * 2.2 + phase));
+    ctx.globalAlpha *= a;
+    ctx.fillStyle = C.lcdDark;
+    const u = 18 * s;
+    ctx.fillRect(x - u / 2, y, u, u * 0.35);
+    ctx.fillRect(x, y - u / 2, u * 0.35, u);
+    ctx.globalAlpha /= a;
+  }
+
+  // ── LCD CONTENT ───────────────────────────────────────────────────────────
+  function drawLCD(idx, t, b, alpha) {
+    const lx = 200, ly = 700, lw = 680, lh = 500;
+    ctx.save();
+    ctx.beginPath(); ctx.roundRect(lx, ly, lw, lh, 56); ctx.clip();
+    // chrome: signal + battery (mờ, luôn có)
+    ctx.globalAlpha = alpha * 0.55;
+    ctx.fillStyle = C.lcdDark;
+    for (let i = 0; i < 3; i++) ctx.fillRect(760 + i * 22, 748 - i * 8, 14, 24 + i * 8);
+    ctx.strokeStyle = C.lcdDark; ctx.lineWidth = 4;
+    ctx.strokeRect(856, 744, 52, 28);
+    ctx.fillRect(862, 750, 30, 16);
+    ctx.fillRect(908, 752, 8, 12);
+    ctx.globalAlpha = alpha;
+    // glare
+    ctx.globalAlpha = alpha * 0.10; ctx.fillStyle = C.white;
+    ctx.beginPath(); ctx.moveTo(lx + 60, ly + lh); ctx.lineTo(lx + 260, ly); ctx.lineTo(lx + 380, ly); ctx.lineTo(lx + 180, ly + lh); ctx.closePath(); ctx.fill();
+    ctx.globalAlpha = alpha;
+    const bIdx = idx;
+
+    if (bIdx === 0) {
+      spaced('MUSE CHARM', 240, 748, 32, C.lcdDark, 4);
+      sparkle(260, 900, 0.9, 0, t); sparkle(820, 850, 0.7, 1.6, t); sparkle(300, 1080, 0.7, 3.1, t); sparkle(760, 1090, 0.9, 4.2, t);
+      jolly(540, 970, 1.5, t, { dy: Math.sin(t * 3) * 7 });
+      for (let i = 0; i < 3; i++) {
+        const prog = (t * 0.3 + i * 0.33) % 1;
+        heartPixel(300 + i * 190, 1060 - prog * 140, 0.5, (1 - prog) * 0.8);
+      }
+    }
+    if (bIdx === 1) {
+      jolly(390, 960, 1.0, t, { dy: Math.sin(t * 3) * 5 });
+      ctx.strokeStyle = C.lcdDark; ctx.lineWidth = 6;
+      // icon màn hình
+      ctx.strokeRect(640, 800, 64, 46); ctx.fillStyle = C.lcdDark; ctx.fillRect(652, 812, 16, 16);
+      // icon vân tay
+      ctx.beginPath(); ctx.arc(672, 930, 26, 0, Math.PI * 2); ctx.stroke();
+      ctx.beginPath(); ctx.arc(672, 930, 14, 0, Math.PI * 2); ctx.stroke();
+      ctx.fillStyle = C.lcdDark; ctx.fillRect(666, 924, 12, 12);
+      // icon móc khóa
+      ctx.beginPath(); ctx.arc(672, 1050, 22, 0, Math.PI * 2); ctx.stroke();
+      ctx.fillRect(660, 1064, 24, 14);
+      ctx.fillStyle = C.lcdDark; ctx.fillRect(656, 1078, 32, 8);
+    }
+    if (bIdx === 2) {
+      jolly(430, 985, 1.1, t, { dy: Math.sin(t * 3) * 5 });
+      // bong bóng "Chào!"
+      roundRect(600, 780, 200, 110, 28, null, C.lcdDark, 6);
+      ctx.fillStyle = C.lcdDark;
+      ctx.beginPath(); ctx.moveTo(640, 890); ctx.lineTo(620, 930); ctx.lineTo(664, 890); ctx.closePath(); ctx.fill();
+      text('Chào!', 700, 836, 44, C.lcdDark, 700, 'center', MONO);
+      for (let i = 0; i < 4; i++) {
+        const prog = (t * 0.28 + i * 0.27) % 1;
+        heartPixel(560 + (i % 2) * 180, 1090 - prog * 150, 0.55, (1 - prog) * 0.85);
+      }
+    }
+    if (bIdx === 3) {
+      spaced('THÁNG 12?', 540, 850, 62, C.lcdDark, 3, 'center');
+      ctx.setLineDash([12, 10]); ctx.strokeStyle = C.lcdMid; ctx.lineWidth = 4;
+      ctx.strokeRect(300, 780, 480, 140);
+      ctx.setLineDash([]);
+      jolly(500, 1040, 0.8, t, { dy: Math.sin(t * 3) * 4 });
+      text('!', 620, 1010, 64, C.lcdDark, 800, 'center', MONO);
+    }
+    if (bIdx === 4) {
+      spaced('ĐEO KHÔNG?', 540, 810, 54, C.lcdDark, 3, 'center');
+      jolly(500, 1010, 1.2, t, { wave: true, dy: Math.sin(t * 3) * 6 });
+      for (let i = 0; i < 4; i++) {
+        const prog = (t * 0.32 + i * 0.25) % 1;
+        heartPixel(280 + i * 160, 1080 - prog * 160, 0.55, (1 - prog) * 0.85);
+      }
+    }
+    ctx.restore();
+  }
+
+  // ── DRAW ──────────────────────────────────────────────────────────────────
+  // Mọi thứ suy ra từ `t` — KHÔNG state tích lũy.
+  function draw(t) {
+    const grad = ctx.createLinearGradient(0, 0, 0, H);
+    grad.addColorStop(0, C.bg1); grad.addColorStop(1, C.bg2);
+    ctx.fillStyle = grad; ctx.fillRect(0, 0, W, H);
+    ctx.globalAlpha = 0.5;
+    ctx.fillStyle = C.soft1; ctx.beginPath(); ctx.arc(180, 320, 270, 0, Math.PI * 2); ctx.fill();
+    ctx.fillStyle = C.soft2; ctx.beginPath(); ctx.arc(930, 1650, 300, 0, Math.PI * 2); ctx.fill();
+    ctx.globalAlpha = 1;
+
+    // confetti pixel
+    const CONF = [C.pink, C.mint, C.yellow];
+    for (let i = 0; i < 64; i++) {
+      const x = (i * 149) % W, y = (i * 331) % H;
+      const sz = 7 + (i * 7) % 9;
+      ctx.save(); ctx.translate(x, y); ctx.rotate(t * 0.4 + i * 0.7);
+      ctx.globalAlpha = 0.30 + ((i * 13) % 30) / 100;
+      ctx.fillStyle = CONF[i % 3];
+      ctx.fillRect(-sz / 2, -sz / 2, sz, sz);
+      ctx.restore();
+    }
+    ctx.globalAlpha = 1;
+
+    // progress: 10 ô pixel
+    for (let i = 0; i < 10; i++) {
+      const filled = clamp(t / DURATION * 10 - i, 0, 1);
+      roundRect(84 + i * 34, 64, 26, 26, 6, filled > 0 ? (filled >= 1 ? C.pink : C.pink + 'aa') : '#f3d7e9');
+    }
+
+    const idx = Math.max(0, beatAt(t));
+    const b = beats[idx];
+    const inT = ease(clamp((t - b.at) / .6));
+    const outT = 1 - ease(clamp((t - (b.end - .45)) / .45));
+
+    ctx.save();
+    ctx.globalAlpha = inT * outT;
+    ctx.translate(0, (1 - inT) * 16);
+    // eyebrow chip
+    ctx.font = `700 26px ${MONO}, monospace`;
+    const ebW = ctx.measureText(b.eyebrow).width + 52;
+    roundRect(84, 140, ebW, 56, 28, C.plum);
+    spaced(b.eyebrow, 110, 169, 26, C.white, 2);
+    // title (pixel drop-shadow)
+    wrap(b.title, 89, 306, 912, 80, C.pink, 900, 1.08);
+    wrap(b.title, 84, 300, 912, 80, C.plum, 900, 1.08);
+    wrap(b.sub, 84, 540, 912, 30, C.plumSoft, 500, 1.2);
+    ctx.restore();
+
+    // ── THIẾT BỊ ─────────────────────────────────────────────────────────────
+    // khoen móc khóa — tâm đúng mép vỏ để nửa dưới được vỏ "gắn" lại (không đè chữ)
+    ctx.strokeStyle = C.silver; ctx.lineWidth = 18;
+    ctx.beginPath(); ctx.arc(540, 620, 56, 0, Math.PI * 2); ctx.stroke();
+    ctx.strokeStyle = C.white; ctx.globalAlpha = 0.5; ctx.lineWidth = 5;
+    ctx.beginPath(); ctx.arc(540, 620, 56, Math.PI * 1.15, Math.PI * 1.7); ctx.stroke();
+    ctx.globalAlpha = 1;
+    // vỏ
+    const shellGrad = ctx.createLinearGradient(0, 620, 0, 1660);
+    shellGrad.addColorStop(0, '#fbc6da'); shellGrad.addColorStop(1, '#efa6c4');
+    roundRect(130, 620, 820, 1040, 120, shellGrad, C.shellB, 8);
+    roundRect(152, 642, 776, 996, 102, null, '#ffffff', 4);
+    ctx.globalAlpha = 0.5; roundRect(152, 642, 776, 996, 102, null, C.white, 4); ctx.globalAlpha = 1;
+    // LED
+    ctx.fillStyle = C.pinkDeep; ctx.beginPath(); ctx.arc(206, 668, 9, 0, Math.PI * 2); ctx.fill();
+    ctx.globalAlpha = 0.35; ctx.beginPath(); ctx.arc(206, 668, 16, 0, Math.PI * 2); ctx.fill(); ctx.globalAlpha = 1;
+    // LCD
+    roundRect(200, 700, 680, 500, 56, C.lcd, C.lcdMid, 8);
+    drawLCD(idx, t, b, inT * outT);
+
+    // ── CHIP ─────────────────────────────────────────────────────────────────
+    if (b.chips && b.chips.length) {
+      b.chips.forEach((txt, i) => {
+        const cy = 1240 + i * 125;
+        const a = grow(t, b.at + 0.35 + i * 0.3, 0.5);
+        ctx.globalAlpha = inT * outT * a;
+        roundRect(200, cy, 680, 100, 32, CHIP_BG[i % 3], C.plum, 5);
+        ctx.fillStyle = C.plum; ctx.fillRect(228, cy + 37, 26, 26);
+        ctx.fillStyle = CHIP_BG[i % 3]; ctx.fillRect(234, cy + 43, 14, 14);
+        let fs = 30;
+        ctx.font = `700 ${fs}px ${MONO}, monospace`;
+        while (ctx.measureText(txt).width > 680 - 130 && fs > 21) { fs -= 1; ctx.font = `700 ${fs}px ${MONO}, monospace`; }
+        text(txt, 280, cy + 52, fs, CHIP_TX[i % 3], 700, 'left', MONO);
+        ctx.globalAlpha = inT * outT;
+      });
+    } else {
+      // beat không có chip → decor trên vỏ: tim pixel + chữ "khắc"
+      const a2 = grow(t, b.at + 0.4, 0.6);
+      ctx.globalAlpha = inT * outT * a2;
+      for (let i = 0; i < 3; i++) {
+        const prog = (t * 0.25 + i * 0.3) % 1;
+        heartPixel(430 + i * 110, 1310 - prog * 70, 0.75, (1 - prog) * 0.9, C.pinkDeep);
+      }
+      spaced('· MUSE CHARM ·', 540, 1450, 30, C.shellB, 6, 'center');
+      ctx.globalAlpha = inT * outT;
+    }
+
+    // footer
+    spaced('TIN AI · YUNIE', 84, 1852, 20, C.plumSoft, 1);
+    text('NGUỒN: TECHRUNCH · META CONNECT — 23.09.2026', 996, 1852, 19, C.plumSoft, 500, 'right', MONO);
+  }
+
+  // ── CONTRACT + LOOP ───────────────────────────────────────────────────────
+  window.__clip = { duration: DURATION, width: W, height: H, draw, beats, freeze: false };
+  let start = performance.now();
+  function frame(now) {
+    if (!window.__clip.freeze) draw((now - start) / 1000);
+    requestAnimationFrame(frame);
+  }
+  requestAnimationFrame(frame);
+})();
+</script>
+</body>
+</html>
