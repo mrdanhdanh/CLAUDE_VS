@@ -28,7 +28,15 @@
       "KN-054",
       "KN-056",
       "KN-057",
-      "KN-060"
+      "KN-060",
+      "KN-062",
+      "KN-064",
+      "KN-065",
+      "KN-066",
+      "KN-067",
+      "KN-068",
+      "KN-069",
+      "KN-075"
     ],
     "bugs": [
       ".agent/bugs/2026-08-30-bug-blindness/bug.md",
@@ -51,7 +59,14 @@
       ".agent/plans/harness-slop-gate/gap-analysis.md",
       ".agent/bugs/2026-09-13-git-checkout-head-revert-nham-refactor-chua-commit/bug.md",
       ".agent/plans/executive-function/",
-      ".agent/bugs/2026-09-13-kn-recurrence-no-guard/bug.md"
+      ".agent/bugs/2026-09-13-kn-recurrence-no-guard/bug.md",
+      ".agent/bugs/2026-09-14-echoverse-co-evolution-check-do-doc-2-lan-world-fi/bug.md",
+      ".agent/bugs/2026-09-14-orchard-verify-train-trong-harness-that-stand-in-m/bug.md",
+      ".agent/bugs/2026-09-14-kn-id-double-yield-da-phien-cung-1-id/bug.md",
+      ".agent/bugs/2026-09-15-dream-rsi-history-la-simulator-dream-policy-zero-c/bug.md",
+      ".agent/bugs/2026-09-16-instruction-budget-always-on-phinh-khong-nguong/bug.md",
+      ".agent/bugs/2026-09-18-instruction-budget-gate-fail-open-voi-arg-khong-ph/bug.md",
+      ".agent/bugs/2026-09-23-space-bunny-mo-ta-sai/bug.md"
     ]
   },
   "capabilities": [
@@ -104,22 +119,6 @@
     "powershell",
     "scripts",
     "hooks",
-    "%LOCALAPPDATA%\\Programs\\PowerShell\\7.6.6",
-    "terminal.integrated.defaultProfile.windows",
-    "automationProfile.windows",
-    "??",
-    "&&",
-    "?.",
-    "$var?.prop",
-    "?",
-    "$s='abc'; $s?.Length",
-    "${var}?.prop",
-    ".Length",
-    ".Count",
-    "$null",
-    "-Command",
-    "\"",
-    "-File",
     "content",
     "docs",
     "verify",
@@ -134,7 +133,17 @@
     "guard",
     "review",
     "skills",
-    "eval"
+    "eval",
+    "context-engineering",
+    "env",
+    "concurrency",
+    "exploration",
+    "replay",
+    "wise-loading",
+    "token-budget",
+    "fail-closed",
+    "gate",
+    "data"
   ],
   "evidence": [
     ".agent/bugs/2026-08-30-bug-blindness/bug.md",
@@ -157,7 +166,14 @@
     ".agent/plans/harness-slop-gate/gap-analysis.md",
     ".agent/bugs/2026-09-13-git-checkout-head-revert-nham-refactor-chua-commit/bug.md",
     ".agent/plans/executive-function/",
-    ".agent/bugs/2026-09-13-kn-recurrence-no-guard/bug.md"
+    ".agent/bugs/2026-09-13-kn-recurrence-no-guard/bug.md",
+    ".agent/bugs/2026-09-14-echoverse-co-evolution-check-do-doc-2-lan-world-fi/bug.md",
+    ".agent/bugs/2026-09-14-orchard-verify-train-trong-harness-that-stand-in-m/bug.md",
+    ".agent/bugs/2026-09-14-kn-id-double-yield-da-phien-cung-1-id/bug.md",
+    ".agent/bugs/2026-09-15-dream-rsi-history-la-simulator-dream-policy-zero-c/bug.md",
+    ".agent/bugs/2026-09-16-instruction-budget-always-on-phinh-khong-nguong/bug.md",
+    ".agent/bugs/2026-09-18-instruction-budget-gate-fail-open-voi-arg-khong-ph/bug.md",
+    ".agent/bugs/2026-09-23-space-bunny-mo-ta-sai/bug.md"
   ],
   "checks": [
     {
@@ -179,6 +195,6 @@
   ],
   "gaps": [],
   "verdict": "G-accepted",
-  "generatedAt": "2026-09-14T16:07:22.018Z",
+  "generatedAt": "2026-09-24T14:44:32.476Z",
   "paper": "DisCo arXiv:2609.02749v1 §3.2 (task-agnostic)"
 }

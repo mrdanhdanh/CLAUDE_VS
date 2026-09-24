@@ -9,13 +9,17 @@
       "KN-049",
       "KN-051",
       "KN-052",
-      "KN-059"
+      "KN-059",
+      "KN-070",
+      "KN-071"
     ],
     "bugs": [
       ".agent/bugs/2026-09-03-agent-test-mutate-reward-hacking/bug.md",
       ".agent/plans/rsi-singularity-lessons/gap-analysis.md",
       ".agent/bugs/2026-09-12-entropy-probe-inflation/bug.md",
-      ".agent/bugs/2026-09-14-compresshits-bo-sot-marker-cho-prompt-injection-hi/bug.md"
+      ".agent/bugs/2026-09-14-compresshits-bo-sot-marker-cho-prompt-injection-hi/bug.md",
+      "www/ai-news/curated.json",
+      "www/ai-news/curated.json"
     ]
   },
   "capabilities": [
@@ -32,13 +36,20 @@
     "verification",
     "context",
     "prompt-injection",
-    "verify"
+    "verify",
+    "handoff",
+    "supply-chain",
+    "credentials",
+    "runtime",
+    "privacy"
   ],
   "evidence": [
     ".agent/bugs/2026-09-03-agent-test-mutate-reward-hacking/bug.md",
     ".agent/plans/rsi-singularity-lessons/gap-analysis.md",
     ".agent/bugs/2026-09-12-entropy-probe-inflation/bug.md",
-    ".agent/bugs/2026-09-14-compresshits-bo-sot-marker-cho-prompt-injection-hi/bug.md"
+    ".agent/bugs/2026-09-14-compresshits-bo-sot-marker-cho-prompt-injection-hi/bug.md",
+    "www/ai-news/curated.json",
+    "www/ai-news/curated.json"
   ],
   "checks": [
     {
@@ -60,6 +71,6 @@
   ],
   "gaps": [],
   "verdict": "G-accepted",
-  "generatedAt": "2026-09-14T16:07:21.983Z",
+  "generatedAt": "2026-09-24T14:44:32.442Z",
   "paper": "DisCo arXiv:2609.02749v1 §3.2 (task-agnostic)"
 }

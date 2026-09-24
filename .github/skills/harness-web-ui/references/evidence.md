@@ -1,8 +1,8 @@
 # Evidence — harness-web-ui (DisCo arXiv:2609.02749v1 §3.2 (task-agnostic))
 
-> Substrate layer của skill — full text từ docs/knowleged.md. Sinh tự động 2026-09-14T16:07:22.021Z.
+> Substrate layer của skill — full text từ docs/knowleged.md. Sinh tự động 2026-09-24T14:44:32.478Z.
 
-## Bug reports liên quan (18/43 bugs)
+## Bug reports liên quan (19/63 bugs)
 
 - `.agent/bugs/2026-08-29-rainbow-animated/bug.md` — Bug: Rainbow border không xoay (animated)
 - `.agent/bugs/2026-08-29-status-ui/bug.md` — Bug: Trang STATUS www/ giao diện chưa hợp lý — layout, responsive, registry render sai
@@ -22,6 +22,7 @@
 - `.agent/bugs/2026-09-12-yt-summary-css-global-collision/bug.md` — Bug: YT Summary — CSS toàn cục đè trang mới (bảng bị ẩn/cắt, [hidden] vô hiệu, card nấp dưới header)
 - `.agent/bugs/2026-09-13-github-viewscreen-race-readme-mermaid-khong-render/bug.md` — Bug: GitHub viewscreen race - README mermaid khong render
 - `.agent/bugs/2026-09-13-status-375-overflow-grid-1fr-min-content-blowout-k/bug.md` — Bug: STATUS 375 overflow — grid 1fr min-content blowout khi title dai
+- `.agent/bugs/2026-09-19-scroll-dot-active-sai-do-thu-tu-mang-lech-dom/bug.md` — Bug: scroll-dot active sai do thứ tự mảng lệch DOM
 
 ## Full KN details
 
@@ -68,12 +69,13 @@
 - **Severity:** major
 - **Triệu chứng:** Viền cầu vồng (`conic-gradient`) đứng yên, không xoay, dù nội dung mô tả "xoay 3s (HOT)". Một số browser/môi trường thấy tĩnh hoàn toàn.
 - **Nguyên nhân gốc:** (1) Detection `@property` sai — `CSS.supports('syntax: "<angle>"')` luôn `false` → code luôn ép JS fallback, tắt animation CSS gốc; (2) `::before` đọc `--angle` qua biến `--rainbow` định nghĩa tại `:root` (`var(--angle)` lồng) → một số engine không re-resolve → tĩnh 0deg; (3) fallback gắn `.js-fallback` per-element bị `updatePlayground()` reset `className` → mất driver ở playground.
-- **Cách sửa:** `::before` dùng `conic-gradient(from var(--angle,0deg), ...)` trực tiếp; detect `@property` bằng `CSS.registerProperty`; fallback gắn `.js-rainbow` ở `<html>` + rAF set `--angle`. Verify bằng Playwright (chromium/firefox/webkit, cả native + fallback mode) → `--angle` thay đổi rõ ràng.
+- **Cách sửa:** `::before` dùng `conic-gradient(from var(--angle,0deg), ...)` trực tiếp; detect `@property` bằng `CSS.registerProperty`; fallback gắn `.js-rainbow` ở `<html>` + rAF set `--angle`. Verify bằng Playwright (**chromium** — project mặc định `playwright.config.ts`; chạy thêm firefox/webkit khi nghi engine-specific) → spec `angle.spec.ts` poll ≤3s rồi **hard-assert** `--angle` PHẢI thay đổi (không soft-pass; animation khai báo mà `--angle` đứng = regression).
 - **Cách phòng tránh:**
   - Detect `@property` = `typeof CSS.registerProperty === 'function'`, không `CSS.supports('syntax: ...')`.
   - Animate custom property: dùng giá trị trực tiếp tại property đích, không qua biến lồng `var()` chứa `var()`.
   - Fallback class ở `<html>` (root), không per-element (tránh bị UI reset `className`).
   - Verify animation bằng headless browser đo `--angle` trước/sau, không chỉ mắt thường.
+  - Instance đã gặp: **KN-004** (rainbow hover `www/index.html`) — cùng root cause, đọc kèm.
 - **Tags:** `ui` `css` `animation`
 - **Người ghi:** YUNIE / fixbug
 
@@ -86,11 +88,12 @@
 - **Severity:** minor
 - **Triệu chứng:** (1) Hai khối `<div class="grid-2">` (Presets+Plans, Health+Pages) cách phần trên ~48px thay vì 24px → lệch nhịp. (2) Viền cầu vồng hiện khi hover nhưng đứng yên, không xoay.
 - **Nguyên nhân gốc:** (1) `.grid-2` không có `margin`, trong khi `.section` con có `margin:24px 0`; vì grid item không collapse margin → cộng dồn 24+24=48px. (2) `::before`/`::after` dùng `background:var(--rainbow)` mà `--rainbow` là `conic-gradient(from var(--angle), ...)` định nghĩa tại `:root` → lặp lại anti-pattern KN-003, `--angle` thay đổi không re-resolve ở một số engine → tĩnh 0deg.
-- **Cách sửa:** `.grid-2{margin:24px 0}` + `.grid-2 > .section{margin:0}` (nhịp 24px đồng nhất); thay `background:var(--rainbow)` → `background:conic-gradient(from var(--angle,0deg), #ff3b30, #ff9500, #ffcc02, #34c759, #007aff, #af52de, #ff3b30)` trực tiếp tại `::before`/`::after` trong `www/styles.css`.
+- **Cách sửa:** `.grid-2{margin:24px 0}` + `.grid-2 > .section{margin:0}` (nhịp đồng nhất; số trong code nay là `margin:20px 0` — pattern không đổi); thay `background:var(--rainbow)` → `background:conic-gradient(from var(--angle,0deg), #ff3b30, #ff9500, #ffcc02, #34c759, #007aff, #af52de, #ff3b30)` trực tiếp tại `::before`/`::after` trong `www/styles.css`.
 - **Cách phòng tránh:**
   - Wrapper grid (`.grid-2`, `.grid-3`) luôn tự mang `margin`, con `.section` đặt `margin:0` để tránh doubling.
   - Animate custom property: luôn dùng giá trị trực tiếp tại property đích, không qua biến lồng `var()` chứa `var()` (KN-003).
   - Khi copy pattern rainbow từ `glassui` sang `www`, nhớ bê cả cách dùng gradient trực tiếp, không copy `--rainbow`.
+- **Quan hệ (review 2026-09-18):** phần rainbow là **instance thứ 2 của KN-003** (cùng root cause `var()` lồng) — sửa rainbow đọc KN-003 trước; grid-spacing là lesson riêng.
 - **Tags:** `ui` `css` `animation` `spacing`
 - **Người ghi:** YUNIE / fixbug
 
@@ -131,6 +134,7 @@
   - Checklist: Mọi hàm `hideAll`/`reset` phải review xem có disable button không — chỉ disable khi thực sự cần
   - Tạo helper `setStepEnabled(bool)` nếu có nhiều nơi đụng
   - Test manual: sau mỗi action (Random, Reset, Start) check tất cả button states
+- **Cập nhật 2026-09-18 (review):** code hiện tại `www/web-thuat-toan/app.js` **không còn gán `.disabled`** cho stepBtn (grep = 0 hit — hướng gọn hơn: bỏ hẳn disable trong luồng reset thay vì re-enable từng chỗ); lesson giữ nguyên: không set button state rải rác trong hàm reset chung. **Guard mới:** `tests/e2e/web-thuat-toan.spec.ts` — Random → stepBtn enabled + step chạy.
 - **Tags:** `ui` `state` `ux` `button`
 - **Người ghi:** YUNIE / fixbug
 
@@ -195,11 +199,11 @@
   - Why3: `<link>` Google Fonts là stylesheet blocking thường (không async) → mạng chậm VN giữ toàn bộ JS của trang làm con tin.
   - Why4: Gate `intro-on` (script trong head, chạy được) che nội dung ngay → user thấy màn đen đứng hình thay vì fallback bình thường → tệ hơn không có intro.
   - Why5 (Root): Third-party CSS nhúng kiểu blocking + overlay che nội dung không fail-safe — đường loading bị khóa vào 1 CDN ngoài.
-- **Cách sửa:** (1) Fonts async `media="print" onload="this.media='all'"` + `<noscript>`; (2) fail-safe 9s ở head gate (engine không chạy → tự mở nội dung); (3) grace period 600ms cho click-anywhere; (4) dấu "·" vẽ bằng CSS circle (fallback font render ô vuông); (5) `window.__introOn=true` đặt cuối IIFE.
+- **Cách sửa:** (1) Fonts async `media="print" onload="this.media='all'"` + `<noscript>`; (2) fail-safe 9s ở head gate (engine không chạy → tự mở nội dung); (3) grace period 1000ms cho click-anywhere (nâng từ 600ms — xem KN-031); (4) dấu "·" vẽ bằng CSS circle (fallback font render ô vuông); (5) `window.__introOn=true` đặt cuối IIFE.
 - **Cách phòng tránh:**
   - Third-party CSS (fonts/CDN) **luôn async** hoặc self-host — không bao giờ để chặn first script của trang.
   - Overlay che nội dung phải có **fail-safe timer độc lập với engine** (engine fail → tự mở nội dung, không bao giờ kẹt màn đen).
-  - Skip kiểu click-anywhere phải có **grace period (~600ms)** chống click nhầm khi vừa mở.
+  - Skip kiểu click-anywhere phải có **grace period (~1000ms — nâng từ 600ms sau KN-031)** chống click nhầm khi vừa mở.
   - Chi tiết thiết kế (dot, divider) không phụ thuộc glyph font — vẽ bằng CSS để deterministic.
   - Regression test: route treo fonts CDN → assert engine vẫn chạy ngay (`cosmos-intro.spec.ts`).
 - **Tags:** `ui` `perf` `font` `script-blocking` `verify`
@@ -294,6 +298,7 @@
   - Re-define metric → grep sweep `www/` + `docs/` + `.github/` tìm mọi tham chiếu cũ TRƯỚC khi Done.
   - Claim dễ gây hiểu nhầm ("tức thì", "truyền tin", "nhân quả") → ghi rõ "ẩn dụ vs vật lý thật" (no-signaling).
   - Đối chiếu chéo các bề mặt cùng chủ đề (`scale.html` đúng v2 vs `index.html`/`slides.html` lệch) → phát hiện drift sớm.
+- **Disclosure (review 2026-09-18):** net nội dung (cấm "scope creep" gắn dark energy / bắt buộc label no-signaling cạnh claim entanglement) **chưa wire** — defer có chủ đích (text-assertion brittle; chọn spec khi chạm lại trang); fix hiện verify bằng đọc source + slide.
 - **Tags:** `ui` `data` `verify` `docs` `physics` `content-drift`
 - **Người ghi:** YUNIE / /fixbug
 
@@ -358,6 +363,7 @@
   - Nguồn hiển thị (registry/status) là **hợp đồng với user** — placeholder `${type} ${name}` không bao giờ được render ra UI; frontmatter đổi → refresh registry description + regenerate (test L2 chặn pattern).
   - Mọi ARIA ref (`aria-labelledby/controls/describedby`) phải trỏ ID tồn tại — test scan toàn DOM (L3); tab dùng pattern button `id` + `aria-controls` ↔ panel `aria-labelledby`.
   - Audit page định kỳ gồm 4 invariant: link resolve · data quality · ARIA refs · console errors.
+  - **Amend 2026-09-24 (TÁI LẬP — bug `.agent/bugs/2026-09-23-registry-description-stale-sau-create-skill/`):** lưới L2 ban đầu chỉ khớp **một** mẫu placeholder `^(type)\s+<name>$`; nhưng `harness-manager create` lưu description **từ template**, và template skill dùng placeholder dạng **prose** (`Mô tả skill — Use when ... (keyword-rich để agent tự tìm)`) không chứa type/name ⇒ regex mù ⇒ `www/status.json` hiện câu template như mô tả thật. `disable`/`enable`/`sync` đều **không** refresh (chỉ `install <type> --local <path> --force` mới đọc lại frontmatter). **Bài học:** lưới phải nhận diện **họ** placeholder (type+name · prose `^Mô tả (skill|agent|instruction|prompt|hook|ngắn)` · biến `{{NAME}}` chưa resolve), không phải một mẫu chuỗi — đổi văn phong template là mẫu cũ mù ngay. L2 đã mở rộng thành mảng `patterns[]`; RED (1 failed) → GREEN (5 passed).
 - **Tags:** `ui` `a11y` `data` `pages` `verify`
 - **Người ghi:** YUNIE / fixbug
 
@@ -438,3 +444,24 @@
   - Error message JS generic (`Cannot read properties of undefined (reading 'X')`) từ app bên thứ ba: grep bundle của họ tìm call site `.X` để khoanh vùng, đừng đoán theo nguyên nhân "hợp lý".
 - **Tags:** `ui` `render` `github` `mermaid` `race` `verify`
 - **Người ghi:** YUNIE / user request (2026-09-13)
+
+---
+
+### KN-073 — scroll-dot active sai do thứ tự mảng lệch DOM
+
+- **Ngày:** 2026-09-19
+- **Bug report:** `.agent/bugs/2026-09-19-scroll-dot-active-sai-do-thu-tu-mang-lech-dom/bug.md`
+- **Severity:** minor
+- **Guard:** `tests/e2e/cosmos-lab12-qec.spec.ts` — test "scroll-dot active-state" (scroll giữa cả 9 section → dot active phải khớp; mutation-proof: chạy trên code bug FAIL đúng `Expected "map" Received "lab"`, sau fix PASS). Vì sao lưới cũ không bắt được: test KN-046 chỉ assert target-resolve + click — không assert active-state.
+- **Layer:** code
+- **Liên quan:** KN-046 — biến thể (cùng component scroll-dots, khác failure mode: KN-046 = dot chết do section thiếu `id`; KN-073 = target resolve đủ nhưng highlight active sai).
+- **Triệu chứng:** Đang đọc section `#map`/`#calendar` → dot sáng là `#lab` (2/9 section đo sai bằng browser thật, scroll instant giữa section) — điều hướng fail-misleading.
+- **Nguyên nhân gốc (5 Whys):** Why1: `activeId` last-wins giữ `#lab` khi đang ở `#map`/`#calendar`. Why2: loop duyệt mảng `sections` theo thứ tự mảng `[..., map, calendar, lab, ...]` — phần tử sau `offsetTop ≤ mid` ghi đè; `lab.offsetTop (1965) ≤ mid` luôn đúng khi đã qua lab. Why3: logic ngầm giả định "mảng = thứ tự DOM" nhưng mảng xếp `map, calendar` TRƯỚC `lab`, DOM xếp `lab` TRƯỚC. Why4: 2 nguồn danh sách song song (dots DOM vs array hardcode JS) — `lab` rework nhưng chỉ dots cập nhật thứ tự (anti-pattern KN-046 cảnh báo). Why5 (Root): logic order-dependent (last-wins) + 2 nguồn không nhất quán → fix gốc: argmax `offsetTop ≤ mid` (bất biến thứ tự) + derive từ DOM (1 nguồn) + reorder dots theo trang.
+- **Cách sửa:** `www/cosmos/index.html`: (1) reorder dots DOM `lab → map → calendar` khớp thứ tự section; (2) `sections = dots.map(d => getElementById(d.dataset.target)).filter(Boolean)`; (3) active logic = `max offsetTop ≤ mid`. Bounded — 1 file, không đổi click/CSS/aria. Đo sau fix: 0/9 sai (trước: 2/9).
+- **Cách phòng tránh:**
+  - Không chọn phần tử active kiểu last-wins theo thứ tự duyệt — dùng tiêu chí so sánh tường minh (argmax/min theo vị trí).
+  - Danh sách đích nav/observer derive từ DOM (1 nguồn — KN-046), không hardcode 2 danh sách song song.
+  - Test điều hướng phải assert active-state, không chỉ target-resolve + click — 77 test xanh từng lọt lỗi này.
+  - Chạy `node .github/harness/scripts/auto-learn.mjs suggest "<từ khóa>"` trước khi code tương tự.
+- **Tags:** `ui` `cosmos` `nav` `state`
+- **Người ghi:** YUNIE — bug tự phát hiện khi review cosmos theo yêu cầu user; fix + mutation-proof 2026-09-19; sếp duyệt paste (evaluate PASS; dup-advisory KN-046 score 50.8 — adjudicated giữ riêng: khác failure mode + lesson generalize ngoài scroll-dots)

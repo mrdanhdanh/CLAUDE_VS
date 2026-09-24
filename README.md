@@ -9,10 +9,12 @@
 > **Mới 2.4 (2026-09-18):** **OCR Review** — skill `ocr-review` chạy cuối pipeline (alibaba/open-code-review, delegate mode $0 token, qua subagent, user quyết) · Governance **policy v5** (12 deny + 2 allow — delegation attenuation: `deny-subagent-no-parent/chain/escalation`) · **Instruction budget ratchet** 1399/1400 — `npm run budget:check` (KN-068) · Gate **fail-closed với arg rác** — NaN-pass fixed (KN-069) · KN ID allocation **claims-aware** (chống double-yield).
 >
 > **Mới 2.5 (2026-09-22):** **Component-level evals** — registry `.github/harness/evals/components.json` + `eval-gate --scope components` / `npm run evals:components` (KN-037/KN-072 — đo từng mắt xích bằng số đo thật) · **Grounding fact-grader** — `eval-gate --scope grounding` chặn số/quote bịa trong output (Opus 5.5 pattern 22/09) · **Fail-silent fix** — `isMain` Windows-safe cho 10 harness scripts + MCP smoke cross-platform: eval-gate thật sự chạy lại trên Windows (trước đó exit 0 không chạy gì).
+>
+> **Mới (2026-09-24):** **Clip studio** — skill `video-clip` (canvas + Playwright MediaRecorder + TTS local VieNeu + 3 guard; `www/space-bunny-free/`, `www/claude-art/`) · **Feed ranking fix** (KN-076 — nguồn HN top-by-points + cap 5 tin/ngày; guard `ai-news-feed-ranking.spec.ts`) · AI-news curated 3 tin lớn (Claude ART enzyme 718pts, OpenAI agent–chính phủ Úc, Transluce rogue agents).
 
 Harness biến VS Code Copilot Chat thành **Claude Code Extension**: tự động, todo-driven, explore trước khi code, plan trước khi implement, polish trước khi done. Mọi customization (skill / rule / agent / prompt / hook) đều **tháo lắp như plugin** — bật/tắt không xóa, preset theo dự án, scaffold 1 lệnh.
 
-> **Trạng thái hiện tại (Harness 2.5 — 2026-09-22):** 20 skills (+ocr-review, evals-gate, cosmic-quantum, cosmic-scale, archify, 5 harness-* lesson skills) · 19 instructions · 9 agents · 7 prompts · 1 hook — tất cả enabled · 4 presets · **68 KN** · 51 bugs · 91 plans · 12 lab COSMOS + Cosmic Web graph + Hawking watchdog + Escape Velocity gate (`www/cosmos/`) · 16 demos `www/` · 25 scripts harness + 7 `.agent/scripts` · instruction budget ratchet 1399/1400 (`npm run budget:check`) · 3 routines · MCP library 1.2.0 · governance policy v5 (12 deny + 2 allow, Ed25519) · `www/status.json` do YUNIE generate.
+> **Trạng thái hiện tại (Harness 2.5 — 2026-09-24):** 21 skills (+ocr-review, evals-gate, cosmic-quantum, cosmic-scale, archify, video-clip, 5 harness-* lesson skills) · 19 instructions (11 bật / 8 tắt theo wise-loading) · 9 agents · 7 prompts · 1 hook · 4 presets · **75 KN** · 63 bugs · 98 plans · 12 lab COSMOS + Cosmic Web graph + Hawking watchdog + Escape Velocity gate (`www/cosmos/`) · 19 demos `www/` · 25 scripts harness + 7 `.agent/scripts` · instruction budget ratchet 1399/1400 (`npm run budget:check`) · 3 routines · MCP library 1.2.0 · governance policy v5 (12 deny + 2 allow, Ed25519) · `www/status.json` do YUNIE generate.
 
 ---
 
@@ -222,11 +224,11 @@ Templates: `.github/harness/templates/` (instruction.md, agent.md, prompt.md, sk
 
 Bộ nhớ dài hạn + tự học — không lặp bug cũ.
 
-- **Knowledge:** `docs/knowleged.md` — **BẮT BUỘC đọc trước mọi task** (68 KN: KN-001 → KN-069, gap 061, tags `process` `ui` `dx` `a11y` `css` `governance` `minimal` `self-evolving` `rsi` `failure-diagnosis` `guard` `token-budget` `fail-closed`...). Mỗi KN: Triệu chứng → Nguyên nhân gốc → Cách sửa → Cách phòng tránh.
+- **Knowledge:** `docs/knowleged.md` — **BẮT BUỘC đọc trước mọi task** (75 KN: KN-001 → KN-076, gap 061, tags `process` `ui` `dx` `a11y` `css` `governance` `minimal` `self-evolving` `rsi` `failure-diagnosis` `guard` `token-budget` `fail-closed`...). Mỗi KN: Triệu chứng → Nguyên nhân gốc → Cách sửa → Cách phòng tránh.
 - **Auto-Learn:** `node .github/harness/scripts/auto-learn.mjs <suggest|log|propose|status|guards|watchdog>` — suggest KN liên quan (BM25-lite + IDF, <50ms), log bug draft vào `.agent/bugs/`, propose KN mới sau fix. Hooks `PostToolUse`/`Stop` nhắc tự động.
 - **Chống tái lập (KN-056):** `log` tự RADAR đối chiếu KN/bug cũ (BM25) → cảnh báo tái lập; `propose` có **Guard gate** (`--strict` → exit 1) — fix major/critical phải để lại lưới (test/invariant); `guards` audit coverage.
 - **Hawking watchdog:** draft ≥30d → escalate (journal `.agent/hawking.jsonl`), ≥90d → evaporate — chỉ human `--apply --sign "<tên>"` mới ghi (agent chỉ đề xuất).
-- **Bugs:** `.agent/bugs/<slug>/bug.md` (51 bugs đã lưu + `_template/bug.md`). Sau `/fixbug` phải cập nhật cả `bug.md` + `knowleged.md`.
+- **Bugs:** `.agent/bugs/<slug>/bug.md` (63 bugs đã lưu + `_template/bug.md`). Sau `/fixbug` phải cập nhật cả `bug.md` + `knowleged.md`.
 - **Agent `learn`:** delegate suggest/log/propose khi cần.
 
 ```bash

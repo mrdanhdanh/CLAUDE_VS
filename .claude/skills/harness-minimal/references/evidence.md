@@ -1,8 +1,8 @@
 # Evidence — harness-minimal (DisCo arXiv:2609.02749v1 §3.2 (task-agnostic))
 
-> Substrate layer của skill — full text từ docs/knowleged.md. Sinh tự động 2026-09-14T16:07:21.983Z.
+> Substrate layer của skill — full text từ docs/knowleged.md. Sinh tự động 2026-09-24T14:44:32.443Z.
 
-## Bug reports liên quan (1/43 bugs)
+## Bug reports liên quan (1/63 bugs)
 
 - `.agent/bugs/2026-09-03-n5blazor-ladder-trial-dead-code/bug.md` — Bug: N5Blazor ladder trial dead code
 
@@ -74,3 +74,23 @@
   - Boring pipeline là senior move: hệ thống sống qua Wednesday gần như luôn boring hơn hệ thống thắng demo.
 - **Tags:** `process` `architecture` `agent` `minimal`
 - **Người ghi:** YUNIE / auto-learn
+
+---
+
+### KN-072 — Harness design cần bằng chứng component-level (arXiv 2609.20804, 17/09): elision trước summarization · recoverable machinery = model hiếm dùng · planning = cost saver cho model mạnh
+
+- **Ngày:** 2026-09-18
+- **Bug report:** N/A — bài học từ "An Empirical Study of Harness Design for Coding Agents" (arXiv:2609.20804, 17/09/2026; Run-Ze Fan et al., 43 trang — 4 models × SWE-Bench Verified + Terminal-Bench 2.1 × 176 matched settings). Mirror: `www/ai-news/curated.json` (curated-arxiv-harness-design-coding-agents).
+- **Severity:** major
+- **Guard:** disclosure — bài học thiết kế (component choice), lưới hiện có áp đúng chỗ: `instruction-budget.spec.ts` (budget hóa always-on — lực kéo giảm context) + `guard-redteam.spec.ts` G1/G2 (quarantine/compressHits). Không thêm invariant mới: paper không chỉ defect cụ thể trong code mình — áp dụng = nguyên tắc chọn component; khi thêm context strategy mới → eval component-level theo KN-037.
+- **Layer:** process/architecture — cách đánh giá + chọn thành phần harness.
+- **Triệu chứng:** Đánh giá harness như "monolithic system" (chỉ end-to-end score) không cho biết component nào đáng tiền → đầu tư sai chỗ (thêm machinery đắt trong khi thứ rẻ hơn hiệu quả hơn). Findings đo được: (1) context management có giá trị **tăng khi budget hẹp** — phần lớn lợi ích đến từ **chặn context-overflow failures** (không phải làm agent thông minh hơn); (2) **rule-based elision TRƯỚC LLM summarization** = efficiency mạnh nhất; biến elided content thành **recoverable** = thêm machinery model **hiếm khi dùng** + 0 accuracy gain; (3) planning: scaffold accuracy cho model yếu → **cost saver** cho model mạnh (accuracy ~không đổi); (4) predefined tools giúp model bash-yếu; model bash-giỏi chạy **bash-only** tốt tương đương + cost thấp hơn hẳn. Cơ chế (trajectory-level): context management **kéo dài** trajectory · planning đổi **chỗ dừng** · action space đổi **độ chi tiết** viết code.
+- **Nguyên nhân gốc (5 Whys):** Why1: harness được thiết kế theo intuition/hype từng component (thêm planner, thêm tool, thêm recovery layer) không theo đo lường từng component. Why2: end-to-end benchmark trộn mọi biến → không ai tách được đóng góp. Why3: cần **component-level comparison** (execution loop cố định, vary 1 thứ) — cách đánh giá chưa chuẩn hoá (nối KN-034). Why4: context budget là biến điều khiển then chốt — thiết kế bỏ qua budget awareness → trả tiền cho machinery ở chỗ không cần. Why5 (Root): thiếu văn hoá "harness như hệ thống có component đo được" — mỗi thành phần phải justify bằng lợi ích đo được ở đúng vùng budget/model của nó (KN-047 spec-vs-wish + KN-037 evals).
+- **Cách sửa:** Áp nguyên tắc: (1) `context.mjs` hiện tại đúng hướng — rule-based truncate/keep-top-score trước, **không xây** "recoverable elision" machinery (kết quả đo: model hiếm dùng + 0 gain); (2) pipeline phases (planning) giữ nguyên — có cơ sở định lượng: cost saver cho model mạnh; (3) context strategy mới → eval component-level (tách khỏi end-to-end); (4) tool surface: giữ nhỏ + model-aware — ủng hộ minimal-ladder + wise loading (KN-013/068).
+- **Cách phòng tránh:**
+  - Thêm/sửa context strategy: rule-based elision/truncate TRƯỚC, chỉ cân nhắc LLM summarization khi có nhu cầu thật; machinery "recoverable" chỉ xây khi có bằng chứng dùng (mặc định: không).
+  - Đánh giá component mới: giữ phần còn lại cố định, vary 1 component, đo ở ≥2 context budget (budget hẹp là nơi giá trị lộ ra).
+  - Không suy "model giỏi → cần nhiều tool hơn" — chiều ngược đúng với bash-capable models (bash-only đủ + rẻ hơn).
+  - Con số từ paper là của setup paper (4 models, 2 benchmarks) — adopt cơ chế/nguyên tắc, re-verify trên harness mình trước khi dùng số làm quyết định (KN-065).
+- **Tags:** `process` `harness` `evals` `context-engineering` `minimal`
+- **Người ghi:** YUNIE / integrate 18/09 (human lệnh "tích hợp toàn bộ kiến thức" — dup-gate: top hits 43.5/28/22.1 (KN-034 failure-diagnosis / KN-037 evals / KN-023) liên đới khái niệm nhưng góc khác (design components vs diagnose failures) — adjudicated không trùng, cross-link)

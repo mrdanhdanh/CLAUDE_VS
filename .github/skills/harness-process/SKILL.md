@@ -1,6 +1,6 @@
 ---
 name: harness-process
-description: "Task-agnostic lessons 'Process & Self-Improvement' chưng cất từ docs/knowleged.md (26 KN: KN-005, KN-007, KN-010, KN-014, KN-016, KN-018, KN-019, KN-023, KN-024, KN-025, KN-026, KN-027, KN-033, KN-034, KN-035, KN-036, KN-037, KN-039, KN-043, KN-044, KN-047, KN-053, KN-054, KN-056, KN-057, KN-060) + .agent/bugs/. Use when task chạm process, quality, ux, perf, a11y, knowledge, automation, dx, self-improving, benchmark — áp Cách phòng tránh trước khi code, tránh lặp bug cũ. DisCo-lite, regenerate bằng distill-agnostic.mjs."
+description: "Task-agnostic lessons 'Process & Self-Improvement' chưng cất từ docs/knowleged.md (34 KN: KN-005, KN-007, KN-010, KN-014, KN-016, KN-018, KN-019, KN-023, KN-024, KN-025, KN-026, KN-027, KN-033, KN-034, KN-035, KN-036, KN-037, KN-039, KN-043, KN-044, KN-047, KN-053, KN-054, KN-056, KN-057, KN-060, KN-062, KN-064, KN-065, KN-066, KN-067, KN-068, KN-069, KN-075) + .agent/bugs/. Use when task chạm process, quality, ux, perf, a11y, knowledge, automation, dx, self-improving, benchmark — áp Cách phòng tránh trước khi code, tránh lặp bug cũ. DisCo-lite, regenerate bằng distill-agnostic.mjs."
 user-invocable: false
 ---
 
@@ -10,11 +10,11 @@ user-invocable: false
 
 ## When to Use
 
-- Task chạm theme **Process & Self-Improvement** (tags: process, quality, ux, perf, a11y, knowledge, automation, dx, self-improving, benchmark, aar, mcp, testing, regex, windows, fs, collaboration, diversity, pilot-in-command, metrics, evidence, research, verification, calibration, psychology, taste, human-judgment, agent, self-evolving, procedural-graph, a-jit, memory, funnel, rl, consistency, self-distillation, scaffold, rsi, harness, failure-diagnosis, reasoning, uncertainty, architecture, playbook, evals, agentic-patterns, powershell, scripts, hooks, %LOCALAPPDATA%\Programs\PowerShell\7.6.6, terminal.integrated.defaultProfile.windows, automationProfile.windows, ??, &&, ?., $var?.prop, ?, $s='abc'; $s?.Length, ${var}?.prop, .Length, .Count, $null, -Command, ", -File, content, docs, verify, fresh-eyes, rag, grounding, slop, complexity, git, recovery, recurrence, guard, review, skills, eval)
+- Task chạm theme **Process & Self-Improvement** (tags: process, quality, ux, perf, a11y, knowledge, automation, dx, self-improving, benchmark, aar, mcp, testing, regex, windows, fs, collaboration, diversity, pilot-in-command, metrics, evidence, research, verification, calibration, psychology, taste, human-judgment, agent, self-evolving, procedural-graph, a-jit, memory, funnel, rl, consistency, self-distillation, scaffold, rsi, harness, failure-diagnosis, reasoning, uncertainty, architecture, playbook, evals, agentic-patterns, powershell, scripts, hooks, content, docs, verify, fresh-eyes, rag, grounding, slop, complexity, git, recovery, recurrence, guard, review, skills, eval, context-engineering, env, concurrency, exploration, replay, wise-loading, token-budget, fail-closed, gate, data)
 - Trước khi code/fix — áp **Cách phòng tránh** ngay để không lặp bug cũ
 - Review/plan — check anti-patterns bên dưới
 
-## Bài học (26 KN)
+## Bài học (34 KN)
 
 ### KN-005 — Bug Blindness — mù bug do workaround vô thức + fan bias (major)
 - **Bài học:** Chữa mù bug: fresh eyes, test như user mới, chỉ ra bug liên tục, không workaround vô thức, dogfooding có ý thức
@@ -90,6 +90,7 @@ user-invocable: false
   - Không để model tự review/chấm bài của chính nó làm bằng chứng Done (bài 1, 4: self-correction fail + self-preference).
   - Không tin benchmark vendor — benchmark trên codebase thật (bài 3, 6: benchmark chính là vùng pattern quen).
   - Chi tiết 6 papers + trích dẫn nguyên văn: `docs/llm-weakness-research.md`.
+  - **Bổ sung (Science persuasion, 2026-08-20):** bằng chứng thực nghiệm cho Why3 (RLHF ưu tiên câu thuyết phục hơn câu đúng): post-training để thuyết phục → persuasion **+51%** nhưng **giảm trung thực có hệ thống** (accuracy giảm ở đúng chỗ persuasion tăng); cơ chế thắng của chatbot = **fact-density** (claims kiểm chứng được / conversation — R²≈0.89) + tốc độ viết; ép về tốc độ+dài bằng người → lợi thế 0.0pp; Claude bịa chi tiết luật (Đức/Scotland) khi thuyết phục. → Luật YUNIE: **inform ≠ manipulate** — không dùng mật độ facts/nịnh để "thắng" user (mirror `yunie-personality` §15); model thuyết phục giỏi càng phải verify chặt (KN-019: tin vào fluency = bug). Nguồn: Science 20/08/2026 — mirror `www/ai-news/curated.json` (curated-science-persuasion-fact-density).
 
 ### KN-024 — Prolific AI Psychosis — output rẻ làm mù khả năng đánh giá (major)
 - **Bài học:** Nút thắt chuyển từ sản xuất sang đánh giá: giữ human judgment + verification ngoài model; đo value không đo LOC; taste là ceiling không tự động hóa được
@@ -181,12 +182,14 @@ user-invocable: false
   - Error analysis: failures cùng loại ≥2 → aggregate TRƯỚC khi fix (KN-034); fix pattern không fix instance.
   - Chọn pattern có chủ đích theo task, không mặc định thêm agentic loop (KN-022).
   - Claim "nhanh hơn/tốt hơn" phải kèm số đo — không vibes (KN-019).
+  - **Trạng thái wire (review 2026-09-18):** Evals Gate hiện **prompt-enforced** (verify.prompt + skill `evals-gate`) — `eval-gate.mjs` trong generate-status là **smoke syntax/MCP**, KHÔNG phải rubric/component/E2E evals → gate máy cho evals còn yếu (disclosure chủ đích — tránh tên gate tạo cảm giác "đã gated").
+  - **Update 2026-09-22 (Harness 2.5 — update disclosure):** gate máy đã mạnh lên: `eval-gate --scope components` chạy registry `.github/harness/evals/components.json` (7 mắt xích, expectations đo thật) + `--scope grounding` (fact-grader: số/quote phải có trong sources — invented = fail, học Opus 5.5 22/09); `--scope all` gồm components (generate-status). Guard: `tests/e2e/eval-gate-components.spec.ts`. Lưu ý phát hiện cùng ngày: eval-gate **fail-silent trên Windows** (isMain `split('/')` — exit 0 không chạy gì; đã fix class 10 script + guard "phải in output") — xem bug `.agent/bugs/2026-09-22-eval-gate-fail-silent-tren-windows-ismain-backslas/`.
 
 ### KN-039 — PS 5.1 không hỗ trợ `??` — lệnh PowerShell fail parse "Unexpected token" (major)
 - **Bài học:** Cấm cú pháp PS 7+ trong lệnh/script PS: `??` → `if (-not $x) { $x = 'default' }`, ternary → if/else; gặp `Unexpected token` → viết lại toàn lệnh rồi mới re-run · **2026-09-12:** local nâng pwsh **7.6.6** (user-space, no admin) + VS Code default terminal "PowerShell 7"; đo trên 7.6.6: `??`/`&&` OK, `$var?.prop` không brace **sai lặng** (dùng `${var}?.prop`) · **2026-09-13:** hook command phải metachar-free — cấm ngoặc/chấm phẩy/`&`/pipe/backtick trong echo (subexpression); lưới máy `hooks-integrity.spec.ts`
 - **Bug report:** .agent/bugs/2026-09-11-ps-5-1-khong-ho-tro-trong-lenh-powershell/bug.md
 - **Cách phòng tránh:**
-  - Sinh lệnh PowerShell: chỉ cú pháp 5.1 — `??` → `if (-not ...)`, `?.` → `if ($a -and $a.b)`, ternary → if/else, `&&` → `;`.
+  - Sinh lệnh PowerShell: **ad-hoc** — kiểm `$PSVersionTable` trước (Major ≥7: cú pháp hiện đại OK; session 5.1 → viết 5.1); **artifact commit repo** (.ps1/workflow/snippet docs) — giữ 5.1 floor: `??` → `if (-not ...)`, `?.` → `if ($a -and $a.b)`, ternary → if/else, `&&` → `;`.
   - `??` trong `.mjs`/Node vẫn hợp lệ — chỉ cấm trong LỆNH PowerShell / `.ps1`.
   - Gặp `Unexpected token '??'` → viết lại TOÀN lệnh rồi mới re-run, không lặp y nguyên (KN-023).
   - Trước Done: grep sweep lệnh mới sinh (plan/docs/session) xem còn cú pháp PS 7.
@@ -251,6 +254,8 @@ user-invocable: false
   - RADAR báo nghi tái lập → đọc Cách phòng tránh TRƯỚC; xác nhận tái lập thật → ghi "tái lập của KN-XXX — vì sao lưới cũ không bắt được" → **nâng lưới TRƯỚC, fix SAU** (fix lại y nguyên = sửa lần 3 chắc chắn xảy ra).
   - Định kỳ chạy `guards` — trả nợ lưới cho major/critical dần.
   - Phép đo là hạ tầng: metric/priority build trên parser hỏng = sai âm thầm — test cả phép đo (priority ≥10), không chỉ đo data.
+  - **Amend 2026-09-18 (OCR review — guard ảo):** `guards` bỏ ref dạng **chuỗi trần** `'KN-XXX'` (fixture DATA — dream.spec row/block, kn-id-integrity id-arithmetic) — đếm là lưới = guard ảo (KN-049 class: đo nhầm tín hiệu; bug `.agent/bugs/2026-09-18-guards-fixture-refs-luoi-ao/`). Thêm **negative control** trong spec; sau khi đo sạch bồi 6 net thật (KN-002 parity · KN-011 · KN-042 · KN-043 · KN-045 · KN-055).
+  - **Amend 2026-09-18 (integrate — phương bắc Bend):** "LAWS.bend = AGENTS.md backed by proof" — law khai báo + proof checker nhanh cho agent (0.38s cho 3,200 instantiations vs Lean 6s / Rocq 19s) → merge bug = theorem bất khả thi (mirror `curated-bend-proof-agent-language`). Chưa adopt (young, backend-only — dissent giữ nguyên) nhưng là đích của "rule máy giữ được": law file được máy enforce, không phải văn xuôi.
 
 ### KN-057 — Ranh giới vibe coding vs engineering ở review/verify chain, không ở label — "keep holding the wheel" (minor)
 - **Bài học:** Neo ranh giới vào review/verify chain, không vào label: vibe-only OK cho prototype/demo; hệ thống nhạy cảm bắt buộc review + verify; "hiểu mới merge"; "AI viết" không phải thẻ miễn trách nhiệm — keep holding the wheel
@@ -273,101 +278,99 @@ user-invocable: false
   - Định kỳ gộp/vệ sinh tri thức (CMB heatmap + Hawking) thay vì chỉ thêm (KN-060 + KN-024).
   - Guard line của KN mới phải nằm trong **2500 ký tự đầu** của detail (`kn-parse.mjs` cap `detail = block.slice(0,2500)` cho scoring) — đặt ngay sau Severity; nếu không, `guards` không detect dù lưới tồn tại (gặp thật 14/09: index 2857 → "missing").
 
+### KN-062 — Memora: tách "lưu gì" khỏi "lấy thế nào" — gộp thay vì phân mảnh, retrieval có stop condition (major)
+- **Bài học:** Giữ hình dạng Memora: row tóm tắt = abstraction scan-được, Chi tiết = value, tags = cue anchors (suggest cộng ×2); GỘP hiểu biết mới vào KN cũ (dup-gate `evaluate --dir` + hint GỘP, bypass có disclosure); defer qua Hawking; MemLoop = CMB cold spots
+- **Bug report:** —
+- **Cách phòng tránh:**
+  - Trước khi tạo KN mới: kiểm dup-gate (`evaluate`/RADAR) — trùng ≥ threshold → GỘP (amend) KN cũ thay vì fragment; bypass false-positive phải disclosure (KN-062).
+  - Row "Bài học (1 câu)" giữ vai primary abstraction — không nhồi detail; tags chọn theo *đường truy cập* (cue anchors) không viết cho có (KN-062).
+  - Draft non → defer (Hawking) thay vì commit sớm; KN 0 tham chiếu lâu = cold spot → gộp/viết lại (CMB heatmap) (KN-062 + KN-049).
+  - Detector cố tình bắt rộng (substring matching) — false-positive là chuyện thường: người quyết định gộp/tách + ghi disclosure (KN-062 + KN-052 class).
+
+### KN-064 — Echoverse co-evolution: check đỏ đọc 2 lần theo tầng (world-first) — defect không thành bài học; guard tiến hoá (held-out · diversity > volume) (major)
+- **Bài học:** Check đỏ đọc 2 lần (quy tầng → sửa world trước → chỉ failure sống sót mới thành lesson); guard tiến hoá cùng capability
+- **Bug report:** .agent/bugs/2026-09-14-echoverse-co-evolution-check-do-doc-2-lan-world-fi/bug.md
+- **Cách phòng tránh:**
+  - Trước khi fix check đỏ → trả lời tầng lỗi (code · test-spec · env-fixture · measure-verifier · task-spec); không trả lời được → điều tra, không fix (Root Cause Gate).
+  - Nghi fixture/spec/đo hỏng → sửa world TRƯỚC + re-run; chỉ failure sống sót cả stack mới viết KN/anti-pattern/bug lesson.
+  - **Ranh giới KN-012:** world-first KHÔNG được dùng để nới spec/xoá assertion — spec/test vẫn immutable (deny-test-mutate; amend chỉ bởi verify actor). Cấm hạ expectation để đỏ thành xanh.
+  - Guard mới: assert outcome/state (không appearance) + held-out form hoặc negative control (KN-049) — shallow guard phản tác dụng, không phải "an toàn hơn".
+  - `Layer:` là gợi ý nghi vấn, không phải luật — attribution cuối = judgment người.
+  - Số liệu nguồn self-measured → chỉ corroboration; evidence chính = bug corpus local.
+
+### KN-065 — Orchard: verify/train phải chạy TRONG harness thật — stand-in đơn giản hoá tạo mismatch vô hình (major)
+- **Bài học:** Check/học chạy trong harness thật khi có thể (shell/browser/serve/IDE thật); stand-in = smoke dán nhãn "not proof"; đổi env → re-run; portability xuyên runtime là tài sản
+- **Bug report:** .agent/bugs/2026-09-14-orchard-verify-train-trong-harness-that-stand-in-m/bug.md
+- **Cách phòng tránh:**
+  - Verify trong môi trường đích khi có thể: shell thật (KN-039) · browser thật kể cả channel hiếm (KN-031) · serve/deploy thật (KN-030/KN-045) · IDE/folder thật (KN-043) · viewscreen/iframe thật (KN-058).
+  - Stand-in buộc dùng → dán nhãn "not proof" (như `mutation.mjs` "lite — đừng tin survived", KN-047).
+  - Đổi môi trường/dependency/model-router → "đáng một lần eval" dù code không đổi (KN-047 yesterday's green; Foundry curated: router đổi pool).
+  - Không port hạ tầng training vào harness file-based — adopt rule (vocabulary), không adopt framework (minimal ladder).
+  - Portability xuyên harness/runtime là tài sản (KN-060) — check chạy trên chromium + msedge, local + CI.
+
+### KN-066 — KN ID double-yield: đa phiên song song cùng nhận 1 ID — re-check trước paste + detector integrity sau paste (major)
+- **Bài học:** Spec `kn-id-integrity.spec.ts`: dup 2 danh sách + orphan + order + negative control (assert động); protocol re-check ID trước/sau paste; gap 061 không cấp lại; **đã wire:** `status` cảnh báo trùng ID (`idIntegrity` — `checkKnIntegrity` shared `kn-parse.mjs`)
+- **Bug report:** .agent/bugs/2026-09-14-kn-id-double-yield-da-phien-cung-1-id/bug.md
+- **Cách phòng tránh:**
+  - **Trước paste:** `findNextKnId` + grep `### KN-0XX` + `| KN-0XX |` — ngay trước khi ghi (cửa sổ race chính là propose→paste).
+  - **Sau paste (trước commit):** chạy `npx playwright test tests/e2e/kn-id-integrity.spec.ts` — đỏ → renumber + update toàn bộ self-refs rồi mới commit.
+  - **Phát hiện muộn:** bên phát hiện sau LÀ bên yield (14/09 yield 2 vòng + 1 vòng live) + ghi disclosure trong commit/note; update note điều phối của phiên khác nếu họ đã "dự kiến" số đó.
+  - **Gap không tái sử dụng:** 061 bỏ trống có chủ đích — tránh ambiguity "061 là bài nào"; ID tiếp theo luôn max+1.
+  - **Multi-session:** coi mọi file giữa các phiên là concurrent — trước mutate kiểm `git status`/diff (KN-053); commit pathspec-limited khi index chung bẩn (đừng `git add` tràn — sweep 99ca722).
+
+### KN-067 — Dream-RSI: replay history = simulator zero-cost — dream policy thay vì chạy lại; π₀-in-set + đừng nhồi semantic priors (major)
+- **Bài học:** Replay history trước khi trả giá re-run (dream/evaluate/fixtures/audit); π₀ luôn trong candidate set (winner never worse — AAR là instance); không nhồi semantic priors vào exploration; history phải replayable (KN-066); dogfood `dream.mjs` v0 recall@3 100% (34/34)
+- **Bug report:** .agent/bugs/2026-09-15-dream-rsi-history-la-simulator-dream-policy-zero-c/bug.md
+- **Cách phòng tránh:**
+  - Thay đổi process/skill/guard → replay history trước (dream/evaluate/fixtures/audit verify), rollout thật chỉ cho winner.
+  - Mọi vòng improvement: π₀ (bản hiện tại) PHẢI nằm trong candidate set — winner never worse; thiếu baseline = thiết kế sai.
+  - Cấm nhồi "insight cấp cao" vào prompt của long-horizon/parallel exploration như prior cứng — strong priors over-constrain; đo trước khi tin (KN-018 + KN-035).
+  - History muốn replay được phải GHI ĐÚNG: audit hash-chain · versions snapshot · bug.md đầy đủ · integrity spec (KN-066) — replay chỉ exact trên history nguyên vẹn.
+  - Compute adaptive: tiến bộ → siết budget (bounded/3-fix), plateau → escalate/bung — mirror policy học được của Dream-RSI (110→50 attempts, widening khớp cú nhảy score kế tiếp).
+  - Kích hoạt thủ công: `node .github/harness/scripts/dream.mjs score --file <candidate>` hoặc `run --candidate a --candidate b` — deploy winner = MANUAL (dream không ghi file nào).
+
+### KN-068 — Instruction pool always-on phình không ngưỡng: kế toán + ratchet + gate (budget:check) (major)
+- **Bài học:** Kế toán `instruction-budget.mjs` theo applyTo (dòng/~token); ratchet 1400 + gate `budget:check`; §7 quy ước 🤖 = máy giữ (trỏ check, không restate); thêm always-on → path-scope hoặc gộp trước
+- **Bug report:** .agent/bugs/2026-09-16-instruction-budget-always-on-phinh-khong-nguong/bug.md
+- **Cách phòng tránh:**
+  - Thêm file/dòng always-on mới → chạy `npm run budget:check` trước Done; vượt ratchet hiện hành (1100 từ 18/09) → path-scope (`applyTo` hẹp hơn) hoặc gộp.
+  - Anti-pattern mới: nếu máy giữ được → thêm guard + trỏ check; không thì ghi rõ lý do không-guard-được (§7 quy ước 🤖).
+
+### KN-069 — Gate fail-open với arg rác: NaN-pass ẩn (exit 0) — gate phải validate MỌI input tại boundary (major)
+- **Bài học:** Validator `Number()`+`Number.isFinite` → exit 2; flag có mặt ⇒ phải có giá trị hữu hạn; whitelist arg lạ → exit 2; guard 5 assert test cả đường ARG
+- **Bug report:** .agent/bugs/2026-09-18-instruction-budget-gate-fail-open-voi-arg-khong-ph/bug.md
+- **Cách phòng tránh:**
+  - Gate/script numeric arg: `Number()` + `Number.isFinite` + flag-có-mặt-phải-có-giá-trị + whitelist arg lạ — mọi input rác → exit 2.
+  - Thêm gate mới: test cả đường ARG (không chỉ dir/file) ở chế độ fail-closed — coverage gap của guard asset chính là lỗ fail-open lần này.
+  - Coi tool fail-closed như trust boundary: validate mọi input trước khi dùng, không tin "user luôn đúng".
+
+### KN-075 — Viết nội dung về thực thể có tên mà không xác minh danh tính trước (Space Bunny bị mô tả thành "sản phẩm AI tự nghĩ") (major)
+- **Bài học:** Research phase bắt buộc + `research.md` evidence ledger nhãn A/B/C/D; mỗi claim phải truy được về 1 dòng ledger (không truy được → cắt hoặc ghi “chưa xác minh”); thông số cần ≥2 nguồn độc lập; nguồn mâu thuẫn → nêu mâu thuẫn, không chọn phe
+- **Bug report:** .agent/bugs/2026-09-23-space-bunny-mo-ta-sai/bug.md
+- **Cách phòng tránh:**
+  - Viết nội dung về **thực thể có tên** → tra nguồn gốc TRƯỚC, lập evidence ledger; **một câu mô tả ngắn của user không phải là grounding**.
+  - Phân biệt 2 loại “Explore”: đọc **codebase** (repo) vs xác minh **thực thể ngoài repo** (sản phẩm/model/công ty/người) — cái sau cần nguồn ngoài, không suy từ tên.
+  - Claim về thông số (context/size/benchmark) phải có **≥2 nguồn độc lập** hoặc ghi rõ “chưa xác minh”; thấy nguồn mâu thuẫn → giữ cả hai, không chọn phe có lợi cho kịch bản.
+  - Nếu user đã cung cấp danh tính trong câu lệnh, vẫn phải kiểm: tên đúng nhưng **bản chất** (model? sản phẩm? dịch vụ? công ty?) có thể vẫn sai.
+
 ## Anti-patterns (đừng lặp lại)
 
-- - ❌ Sửa skill/KN bằng one-shot không có phép đo trước/sau — "trông hợp lý hơn" không phải evidence; edit là hypothesis: ghi kỳ vọng đo được, không đo được thì edit nhỏ hơn nữa (KN-060 + KN-037 + KN-023).
-- - ❌ Xoá dấu vết edit bị loại/backtrack — rejected edits là negative feedback; ghi vào Anti-patterns để cùng một edit lỗi không quay lại (KN-060).
-- - ❌ Rewrite toàn bộ skill/KN trong một lần — trộn good+bad, không truy vết phần nào gây hại; tách bounded add/delete/replace (KN-060 + KN-047).
-- - ❌ Chỉ thêm KN/skill mà không bao giờ gộp/vệ sinh — "uncontrolled skill evolution" là drift; slow/meta update định kỳ theo CMB heatmap + Hawking (KN-060 + KN-024).
-- - ❌ Adopt doctrine/narrative từ nguồn ngoài khi phần check được chưa tồn tại — "content ≠ authority" viết dạng rule prose không phải enforcement (AgentDojo: agent vẫn thực thi injection dù được lệnh không); adopt mechanism-half (provenance mark) trước, rule sau (KN-059 + KN-052 + KN-047).
-- - ❌ Guard asset chỉ check `fs.existsSync` — "tồn tại" ≠ "render được": SVG lọt foreignObject + `<br>` không đóng → XML gãy → `<img>` không decode (ảnh vỡ im lặng); verify bằng DOMParser + `img.decode()`, có negative control trên bản cũ (KN-058 + KN-047 + KN-049).
-- - ❌ Thấy `naturalWidth:0`/decode FAIL trong verify mà gán cho "cache/artifact" khi chưa có control image trên cùng page — avatar load OK + asset mình fail = asset lỗi thật (KN-058 + KN-019).
-- - ❌ Sửa syntax/format khi lỗi render nằm ở renderer bên thứ ba (race/lifecycle) — repro bằng chính bundle của họ trước; front page quan trọng dùng asset tĩnh `<picture>` light/dark thay vì iframe rich-display (KN-058 + KN-019).
-- - ❌ Gọi prompt-and-ship là "engineering" để mượn uy tín — label không mang theo review/verify; hỏi "verify chain ở đâu?" (review + reproduce + test + audit) trước khi tin, thiếu = prototype (KN-057).
-- - ❌ Ship hệ thống chạm tiền/y tế/dữ liệu cá nhân bằng vibe end-to-end không review — "AI viết" không phải thẻ miễn trách nhiệm; accountability trace về người/process cho ship (KN-057 + KN-051).
-- - ❌ Viết lệnh trong `hooks.json`/`.claude/settings.json` như text tài liệu — đây là code chạy qua PowerShell: ngoặc, chấm phẩy, `&`, pipe, backtick bị parse thành cú pháp (subexpression) → hook lỗi mỗi lần chạy; lưới máy `hooks-integrity.spec.ts` (KN-039 tái lập 2026-09-13 + KN-056).
-- - ❌ Có KN rồi mà bug vẫn tái lập — KN văn xuôi không tự FAIL khi bị vi phạm; KN major/critical phải có lưới (test/invariant) hoặc nó chỉ là wishlist (KN-056 + KN-047).
-- - ❌ Log bug xong không đối chiếu KN/bug cũ — tái lập bị phát hiện muộn (lần 3-4); `log` giờ tự RADAR, RADAR báo thì đọc Cách phòng tránh TRƯỚC khi fix (KN-056).
-- - ❌ Bug tái lập mà fix lại y nguyên lần đầu — thiếu câu "vì sao lưới cũ không bắt được"; trình tự đúng: nâng lưới TRƯỚC, fix SAU (KN-056).
-- - ❌ Close bug major/critical không có Guard — reproduce fixed ≠ Done; Done = fixed + regression + Guard + KN (KN-056).
-- - ❌ Build metric/priority trên parser chưa test — severity regex không khớp `**Severity:**` → 0/55 major parse ra minor, mọi ưu tiên sai âm thầm; test cả phép đo (KN-056 + KN-049).
-- - ❌ Trông vào "nhớ" và "cố gắng hơn" cho việc dài/đứt quãng (agent lẫn người) — externalize ra todo/plan/checklist/limit là cơ chế thiết kế, không phải crutch (KN-054).
-- - ❌ Retry nguyên strategy khi "vẫn lỗi" rồi tự gọi đó là persistence — đó là hyperfocus loop; đổi hypothesis/đổi tool rồi đo lại (KN-054 + KN-023).
-- - ❌ Dội wall-of-text / hỏi dồn nhiều câu một turn — overload working memory người đọc; kết luận trước + 1 next step + chunk (KN-054 + yunie §7).
-- - ❌ Chạy `git checkout HEAD -- <file>` / `git reset --hard` khi file có refactor chưa commit — revert âm thầm, exit 0, không warning; pre-check `git status`/`git diff` trước (KN-053).
-- - ❌ Dồn commit cuối session cho refactor nhiều file — commit từng file khi xong; file chưa commit là vùng nguy hiểm của mọi thao tác phá hoại (KN-053).
-- - ❌ Restore file bằng PowerShell string-piping (`git show | Out-File`) — mangle encoding/EOL → test ra kết quả SAI giả; dùng byte-level copy (KN-053 + KN-049).
-- - ❌ Tưởng mất bài khi file bị revert — check VS Code Local History TRƯỚC khi viết lại từ đầu; verify markers entry trước khi restore (KN-053).
-- - ❌ Tin thao tác "quen tay" khi session dài — thao tác phá hoại phải đọc args kỹ + pre-check invariant, không muscle memory (KN-053 + KN-039).
-- - ❌ Đổi hành vi/deadline nội bộ theo alarm frame chưa verify độc lập — hỏi trước: cơ chế nào + đo bằng gì + ai thưởng cho claim (KN-052 + KN-023).
-- - ❌ Đánh giá UI bằng mắt thay vì task success + đo load — AI raw 63% vs human 100%; clutter là fail E2E eval (KN-050 + KN-037).
-- - ❌ Detector ref (`zeroRef`) so khớp full-token mà bỏ shorthand `KN-033/034/035` + range `KN-001..004` — plan/bug tham chiếu thật vẫn bị tố 0 ref → nguy cơ gộp/xoá knowledge sống oan (KN-049).
-- - ❌ Checklist feature item không chạy/check được ("Supports CSV") — wishlist, không phải spec; wish không đếm là Done (KN-047).
-- - ❌ Nhận "agent nói done" làm exit condition — model-graded done = vibe (self-preference); checks phải là command fail-loudly ngoài workspace (KN-047 + KN-023).
-- - ❌ Đo slop bằng mắt — duplication/complexity chỉ phát hiện khi quá muộn; chạy `slop-check` trên changed files (KN-047).
-- - ❌ Để diff phình > ~200 LOC trước mắt reviewer — chia bounded task (KN-047).
-- - ❌ Checks pass rồi sửa tiếp mà không rerun — "yesterday's green không áp dụng" (KN-047).
-- - ❌ Tin mutation "survived" từ proxy `node --check` — chưa chạy test thật thì kết quả vô nghĩa (KN-047).
-- - ❌ Test chỉ assert **nội dung đích** (card/text/count) mà không assert **điều hướng tới đích** — 36 test xanh vẫn lọt dot chết (KN-046 + KN-037).
-- - ❌ Sửa từng failure riêng lẻ mà không aggregate cross-task → model-specific accommodation mù, overfit, degrade generalization (KN-034).
-- - ❌ Bắt chước trace "confidently wrong" khi self-improve/dạy → suppress uncertainty + exploratory behavior; phải học từ flaws có gate (KN-035).
-- - ❌ Trộn reasoning (LLM tự do) với operational correctness trong cùng 1 path → fail lặng; tách skill file NL + deterministic script (KN-036).
-- - ❌ Đo "đã học được" bằng performance quen thuộc — recover familiar ≠ generalize unseen inputs (KN-033).
-- - ❌ Chọn fix ngẫu hiên khi có nhiều cách → áp dụng AAR pattern: propose 3 → benchmark → keep best (KN-010).
-- - ❌ Check WHETHER (pass/fail) mà không check HOW (cách làm) → reward hacking (KN-010).
-- - ❌ Tự workaround bug thành thói quen vô thức rồi quên đó là bug — habitual mitigations (KN-005).
-- - ❌ Fan bias: yêu sản phẩm nên auto mù nhược điểm, bảo "xịn mà" dù user không dùng được (KN-005).
-- - ❌ Chỉ dev tự dogfooding (giỏi workaround) thay vì test như user mới / fresh eyes (KN-005).
-- - ❌ Nghĩ "dễ mà, chỉ cần làm [chuỗi 7 bước phức tạp]" — user thường bó tay (KN-005).
-- - ❌ Code mà không `suggest` KN liên quan trước — dễ lặp bug cũ (KN-007).
-- - ❌ Gặp lỗi mà không `log` ngay — để trôi, mất context (KN-007).
-- - ❌ Fix xong mà không `propose` KN mới — bài học không được lưu (KN-007).
-- - ❌ Tự ghi `knowleged.md` tay không qua propose — sai format, thiếu ID (KN-007).
-- - ❌ Import module khởi động server (stdio/HTTP) trong smoke test one-liner — server chờ stdin vĩnh viễn, terminal treo (KN-014).
-- - ❌ Self-verify chạy trước khi file cần check được ghi — check phụ thuộc file sinh sau phải ghi tạm (pre-checks) rồi verify final (KN-014).
-- - ❌ Regex `^`/`$` trên nội dung multi-line thiếu flag `m` — chỉ match đầu/cuối string, không match đầu dòng (KN-014).
-- - ❌ Gọi `fs.rename` folder trần trên Windows — watcher giữ handle → EPERM; dùng wrapper có fallback cp+rm (KN-016).
-- - ❌ Gặp EPERM rename mà kết luận "permission sai" — test PowerShell `Move-Item` trước để phân biệt watcher-lock vs ACL (KN-016).
-- - ❌ Redirect mọi conversation sang chatbot vì tiện — decollaboration diễn ra "never by decision, always by convenience" (KN-018).
-- - ❌ Để AI viết PRD/design 1 phát xong, không có framing đối lập — outsource writing = skip thinking (KN-018).
-- - ❌ Thưởng velocity mà không đo diversity — individual productivity tăng nhưng ideas thu hẹp (KN-018).
-- - ❌ Cắt workshop/travel/co-location khi budget căng — đó chính là hạ tầng của serendipity (KN-018).
-- - ❌ Đánh giá AI productivity bằng cảm nhận ("nhanh hơn hẳn!") không có metrics — METR: kỳ vọng +24%, thực tế −19% (KN-019).
-- - ❌ Claim "setup này xịn" mà không đo — trải nghiệm trôi chảy ≠ tiến độ thật (KN-019).
-- - ❌ Tin self-report "mình đã check rồi" làm bằng chứng Done — intrinsic self-correction làm accuracy GIẢM, không tăng (KN-023, Huang ICLR 2024).
-- - ❌ Hỏi model "chắc chưa?" thay vì đo bằng tool — self-knowledge thua xa human, calibration không generalize sang task mới (KN-023, Yin ACL 2023 + Kadavath 2022).
-- - ❌ Để model tự chấm/review output của chính nó — self-preference có hệ thống, tương quan tuyến tính với self-recognition (KN-023, Panickssery 2024).
-- - ❌ Lặp nguyên output cũ khi user nói "vẫn lỗi" để chiều lòng — sycophancy do RLHF, phải đổi strategy + đo lại (KN-023, Sharma 2023).
-- - ❌ Tin benchmark vendor làm bằng chứng năng lực — benchmark chính là vùng pattern quen; đổi số/thêm mệnh đề nhiễu là sụt tới 65% (KN-023, GSM-Symbolic ICLR 2025).
-- - ❌ Chấm năng suất theo output đếm được (LOC, số file, số task) — prolific AI psychosis: hàng nghìn dòng code không utility, metrics thưởng output không thưởng value (KN-024, Jeff Clark MD).
-- - ❌ Tin "loss nhìn y win" — slot-machine reinforcement: output tự tin + rẻ khiến counterfeit wins không bị reject (KN-024).
-- - ❌ Merge code mà không hiểu nó hoạt động — "couldn't understand my own project" là dấu hiệu psychosis, phải STOP đọc lại/viết lại (KN-024).
-- - ❌ Outsource taste/craft cho AI — "taste is felt, not learned"; AI tiết kiệm $400k/năm nhưng phá brand visual (KN-024, Emily Oberg).
-- - ❌ Cắt sleep/life outside work để chạy theo AI hype — hyperfocus là triệu chứng psychosis, không phải feature (KN-024).
-- - ❌ Agent long-horizon không có procedural structure explicit — unconstrained generation tự quyết thứ tự → lạc, lặp vô ích (KN-025).
-- - ❌ Guidance dictate thay vì bias — graph ép solver làm theo, mất khả năng quyết của solver (KN-025).
-- - ❌ Self-evolution commit bừa không qua held-out validation + không giữ rejected edits → lặp lại lỗi cũ (KN-025).
-- - ❌ Chỉ dùng 1 tốc độ (chỉ state hoặc chỉ policy) — không có alternating loop fast state + slow policy (KN-026).
-- - ❌ Consolidate trực tiếp từ raw trajectory vào policy — không distill qua explicit textual state trước (KN-026).
-- - ❌ Hypothesis không falsifiable, không test qua interventions, không carry supported/rejected/inconclusive → overfit internal validation (KN-026).
-- - ❌ RL long-horizon chỉ nhồi agent-side SFT — không thử environment-side adaptation (FEEs) trước (KN-027).
-- - ❌ Chỉ đo per-run pass rate, không đo consistency gap all-5 vs per-run → tưởng reliable nhưng production flip (KN-027).
-- - ❌ Self-improvement phụ thuộc verified answers/external evaluator — không dùng SOLID majority pseudo-reference (KN-027).
-- - ❌ Bỏ qua intra-group feedback consistency — feedback trong group không consistent mà vẫn optimize → unstable (KN-027).
-- - ❌ Verify xong build/test/lint là claim Done cho output open-ended — "chạy được" ≠ "tốt đến đâu"; phải có evals: rubric + component/E2E + bằng chứng đo (KN-037).
-- - ❌ Đánh giá output agent bằng "trông ổn" không rubric — critique thiếu tiêu chí = model tự khen mình (KN-037 + KN-023).
-- - ❌ Chạy cả agentic loop / multi-agent cho task pipeline vẽ được flowchart — agency là cost phải justify (KN-037 + KN-022).
-- - ❌ Sinh lệnh PowerShell bằng cú pháp PS 7+ (`??`, `?.`, `??=`, ternary `? :`) — Windows PowerShell 5.1 fail parse `Unexpected token '??'`, lệnh không chạy (KN-039).
-- - ❌ Gặp lỗi parse PS mà re-run y nguyên hoặc vá nửa vời — viết lại TOÀN lệnh theo cú pháp 5.1 rồi mới chạy (KN-039 + KN-023).
-- - ❌ Hướng dẫn path/nơi lưu thiếu prefix theo IDE (`skills/…` thay vì `.github/skills/…`) — copy đúng chữ vẫn không chạy; path trong docs phải copy-chạy được + grep lại sau khi viết (KN-043).
-- - ❌ Dạy quy trình dùng thuật ngữ chỉ xuất hiện ở tiêu chí/outcome (component/E2E evals, "PRD mini") mà chưa từng định nghĩa — người đọc không tự chấm được (KN-043).
-- - ❌ Yêu cầu xuyên bài không nhất quán (bài 2 đòi 1 IDE, bài 3 đòi 2 IDE) hoặc marketing copy mâu thuẫn thực tế ("vào bài nào cũng được" khi các bài có phụ thuộc) (KN-043).
-- - ❌ Tiêu chí hoàn thành "rỗng nghĩa" — đương nhiên đạt nếu làm đúng bước trước, không phân biệt được người đã làm với người chưa (KN-043).
-- - ❌ RAG/grounding phụ thuộc file gitignore (`export.json`) mà không có seed/fallback — fresh clone là grounding chết, chatbot bịa (KN-044).
-- - ❌ Tên file export lệch tên consumer đọc (`library-export-*.json` vs `export.json`) — xuất xong vẫn không ai đọc được (KN-044).
+- - ❌ Gate/script tự nhận pass mà không chứng minh ĐÃ CHẠY — isMain sai platform (argv[1] backslash Windows) → exit 0 không output, verifier đọc exit code → “PASS” rỗng nhiều tháng; verifier đọc trạng thái bằng regex giả định format khác template thật (`Status:` vs `**Status:**`) → isFixed/isOpen luôn false. Gate phải fail-loud + lưới “phải in output”; `isMain` dùng `split(/[\\/]/)`; regex test với chính format template sinh ra (KN-074 + KN-069 + KN-015 + KN-047).
+- - ❌ Xây machinery "thêm" vì nghe hợp lý (recoverable elision, planner đắt, tool surface lớn) mà không đo component-level — arXiv 2609.20804: recoverable content model hiếm dùng + 0 gain; bash-only đủ cho model bash-giỏi; elision rule-based trước summarization (KN-072 + KN-037 + KN-047).
+- - ❌ Thêm file/dòng instruction `applyTo: "**"` mà không chạy `npm run budget:check` — pool always-on là thuế token thường trú; thêm rẻ, xóa không ai nhớ; anti-pattern mới phải phân loại "máy giữ được không" (máy giữ → guard + trỏ check, không restate) (KN-068).
+- - ❌ Gate/script validate input lỏng: `parseInt` arg rồi so sánh (NaN luôn false → "pass" oan + exit 0), flag thiếu giá trị nuốt im lặng, arg lạ/dạng `=` không chặn — gate fail-closed phải exit 2 với MỌI input rác; test cả đường ARG chứ không chỉ dir/file (KN-069).
+- - ❌ Chạy lại từ đầu để đánh giá thay đổi process/KN/guard khi history đã ghi sẵn outcome — replay trước (dream/evaluate/fixtures/audit verify — 0 execution), rollout thật chỉ cho winner; vòng improvement thiếu π₀ (bản hiện tại) trong candidate set = không có bảo chứng "winner never worse" (KN-067 + KN-060).
+- - ❌ Đọc mọi check đỏ là "code sai" — quy tầng trước (code · test-spec · env-fixture · measure-verifier · task-spec); defect ở world sửa TRƯỚC, chỉ failure sống sót mới thành bài học (KN-064 + KN-034 + KN-049).
+- - ❌ Viết KN/anti-pattern/bug lesson từ failure do fixture/spec/đo hỏng — "world-first" KHÔNG được hạ expectation để đỏ thành xanh (deny-test-mutate giữ nguyên) (KN-064 + KN-012).
+- - ❌ Thấy hiểu biết mới về chủ đề đã có KN mà tạo KN mới ngay — fragment thành chuỗi partial duplicates, summary phình, `suggest` trả mảnh lệch cho cùng câu hỏi; kiểm dup-gate (`evaluate`) trước, GỘP (amend) khi trùng (KN-062).
+- - ❌ Tự động hoá "merge candidate" giữa các KN bằng similarity thuần (BM25 tên+tags) rồi gộp/xoá theo điểm — đo thật 14/09 (EvoLib adopt): cặp khác chủ đề vẫn 70–96 điểm (KN-054↔KN-037 86.6 · KN-040↔KN-030 96.1), không phân tách được khỏi cặp liên quan thật (KN-026↔KN-036 80.6) → không dùng làm căn cứ; consolidation giữ human-in-loop: dup-gate lúc nạp + 0-ref policy + git trace (KN-062 + KN-049 + KN-026; chi tiết `.agent/plans/evolib-adopt/proposal.md`).
+- - ❌ Nhồi detail vào dòng Bảng tóm tắt / viết tags cho có — abstraction phải scan-được; tags là cue anchors (đường truy cập phụ cho cùng một entry, `suggest` cộng ×2) (KN-062).
+- - ❌ Commit tri thức non ngay khi mới log thay vì để chín — Deferred Memory: Hawking escalate/evaporate trước khi vào Bảng tóm tắt (KN-062).
+- - ❌ Xây chain failover trong lúc chữa cháy rồi để nguyên dạng implementation detail — không externalize invariants + không lưới = fault-tolerance mất âm thầm qua refactor, suite vẫn xanh (KN-063 + KN-056).
+- - ❌ Paste KN mà không re-check ID ngay trước khi ghi — 14/09: 3 phiên cùng nhận KN-061 → double-yield KN-062 → renumber 061→062→063; tái diễn live khi build guard (KN-064/065 bị lấy trong lúc viết — số cuối nhảy tới KN-066); protocol: trước paste `findNextKnId` + grep `#
 
 ## Nguồn
 
-- `docs/knowleged.md` — KN-005, KN-007, KN-010, KN-014, KN-016, KN-018, KN-019, KN-023, KN-024, KN-025, KN-026, KN-027, KN-033, KN-034, KN-035, KN-036, KN-037, KN-039, KN-043, KN-044, KN-047, KN-053, KN-054, KN-056, KN-057, KN-060
+- `docs/knowleged.md` — KN-005, KN-007, KN-010, KN-014, KN-016, KN-018, KN-019, KN-023, KN-024, KN-025, KN-026, KN-027, KN-033, KN-034, KN-035, KN-036, KN-037, KN-039, KN-043, KN-044, KN-047, KN-053, KN-054, KN-056, KN-057, KN-060, KN-062, KN-064, KN-065, KN-066, KN-067, KN-068, KN-069, KN-075
 - Chi tiết đầy đủ: `references/evidence.md` (progressive disclosure)
 - Regenerate: `node .github/harness/scripts/distill-agnostic.mjs`

@@ -5,10 +5,12 @@
     "knowleged": [
       "KN-013",
       "KN-020",
-      "KN-022"
+      "KN-022",
+      "KN-072"
     ],
     "bugs": [
-      ".agent/bugs/2026-09-03-n5blazor-ladder-trial-dead-code/bug.md"
+      ".agent/bugs/2026-09-03-n5blazor-ladder-trial-dead-code/bug.md",
+      "www/ai-news/curated.json"
     ]
   },
   "capabilities": [
@@ -20,10 +22,14 @@
     "verification",
     "review",
     "architecture",
-    "agent"
+    "agent",
+    "harness",
+    "evals",
+    "context-engineering"
   ],
   "evidence": [
-    ".agent/bugs/2026-09-03-n5blazor-ladder-trial-dead-code/bug.md"
+    ".agent/bugs/2026-09-03-n5blazor-ladder-trial-dead-code/bug.md",
+    "www/ai-news/curated.json"
   ],
   "checks": [
     {
@@ -45,6 +51,6 @@
   ],
   "gaps": [],
   "verdict": "G-accepted",
-  "generatedAt": "2026-09-14T16:07:21.991Z",
+  "generatedAt": "2026-09-24T14:44:32.452Z",
   "paper": "DisCo arXiv:2609.02749v1 §3.2 (task-agnostic)"
 }

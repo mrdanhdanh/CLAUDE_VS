@@ -1,0 +1,50 @@
+{
+  "id": "KN-076",
+  "bug": "2026-09-24-ai-news-lot-tin-lon-do-recency-only-ranking",
+  "title": "ai-news lọt tin lớn do recency-only ranking",
+  "committedAt": "2026-09-24T14:43:21.436Z",
+  "snapshot": ".agent\\versions\\2026-09-24-KN-076-ai-news-lot-tin-lon-.md",
+  "eval": {
+    "bug": "2026-09-24-ai-news-lot-tin-lon-do-recency-only-ranking",
+    "title": "ai-news lọt tin lớn do recency-only ranking",
+    "decision": "PASS",
+    "reasons": [
+      "(advisory) Nghi trùng: KN-063 score 33.7 ≥ 15 — cân nhắc GỘP/amend vào KN-063 thay vì tạo KN mới (consolidation — Memora KN-062). KHÔNG chặn: calibration 18/09 — screening 100% (score không phân tách) → adjudicate bởi người + ghi disclosure khi bỏ qua"
+    ],
+    "checks": {
+      "hasFix": true,
+      "hasApproach": false,
+      "isFixed": true,
+      "isOpen": false,
+      "topDuplicate": {
+        "id": "KN-063",
+        "title": "Routing & Failover: select trước khi gọi · output đã commit = terminal · sticky > re-route mỗi turn — chuẩn hoá pattern + lưới cho chuỗi gtx→gtx2→mymemory",
+        "score": 33.7
+      },
+      "isDuplicate": true,
+      "reports": 0,
+      "avgScore": null,
+      "hasPositiveReport": false
+    },
+    "scored": [
+      {
+        "id": "KN-063",
+        "title": "Routing & Failover: select trước khi gọi · output đã commit = terminal · sticky > re-route mỗi turn — chuẩn hoá pattern + lưới cho chuỗi gtx→gtx2→mymemory",
+        "score": 33.7
+      },
+      {
+        "id": "KN-057",
+        "title": "Ranh giới vibe coding vs engineering ở review/verify chain, không ở label — \"keep holding the wheel\"",
+        "score": 22
+      },
+      {
+        "id": "KN-070",
+        "title": "Handoff content là kênh instruction trái phép: compaction summaries / successor notes (OpenAI 17/09) — data channel ≠ chain of command",
+        "score": 19.1
+      }
+    ],
+    "nextId": "KN-076"
+  },
+  "tableRow": "| KN-076 | 2026-09-24 | ai-news lọt tin lớn do recency | ** Feed không có (a) nguồn top | ai-news lọt tin lớn do recency-only rank | `data api verification` |",
+  "detail": "### KN-076 — ai-news lọt tin lớn do recency-only ranking\n\n- **Ngày:** 2026-09-24\n- **Bug report:** `.agent/bugs/2026-09-24-ai-news-lot-tin-lon-do-recency-only-ranking/bug.md`\n- **Severity:** major\n- **Guard:** —\n- **Layer:** —\n- **Triệu chứng:** ai-news lọt tin lớn do recency-only ranking — xem bug.md Reproduce\n- **Nguyên nhân gốc:** ** Feed không có (a) nguồn top-by-points độc lập với keyword, và (b) không có cơ chế chống \"một ngày lũ tin đè hết slot\" — recency-only ranking + single keyword sou"
+}

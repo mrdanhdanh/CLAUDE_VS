@@ -6,13 +6,19 @@
       "KN-008",
       "KN-009",
       "KN-015",
-      "KN-041"
+      "KN-041",
+      "KN-063",
+      "KN-074",
+      "KN-076"
     ],
     "bugs": [
       ".agent/bugs/2026-08-30-dotnet-build-fail-do-file-lock-n5blazor-exe-ang-ch/bug.md",
       ".agent/bugs/2026-08-30-ai-server-slot-hardcode-tunnel/bug.md",
       ".agent/bugs/2026-09-04-pages-deploy-conflict-2-workflows/bug.md",
-      ".agent/bugs/2026-09-12-yt-summary-youtube-block-va-dich-no-key/bug.md"
+      ".agent/bugs/2026-09-12-yt-summary-youtube-block-va-dich-no-key/bug.md",
+      ".agent/bugs/2026-09-14-routing-failover-chuan-hoa-pattern-khoa-luoi/bug.md",
+      ".agent/bugs/2026-09-22-eval-gate-fail-silent-tren-windows-ismain-backslas/bug.md",
+      ".agent/bugs/2026-09-24-ai-news-lot-tin-lon-do-recency-only-ranking/bug.md"
     ]
   },
   "capabilities": [
@@ -28,13 +34,22 @@
     "pages",
     "data",
     "network",
-    "i18n"
+    "i18n",
+    "architecture",
+    "failover",
+    "verify",
+    "verification",
+    "windows",
+    "gate"
   ],
   "evidence": [
     ".agent/bugs/2026-08-30-dotnet-build-fail-do-file-lock-n5blazor-exe-ang-ch/bug.md",
     ".agent/bugs/2026-08-30-ai-server-slot-hardcode-tunnel/bug.md",
     ".agent/bugs/2026-09-04-pages-deploy-conflict-2-workflows/bug.md",
-    ".agent/bugs/2026-09-12-yt-summary-youtube-block-va-dich-no-key/bug.md"
+    ".agent/bugs/2026-09-12-yt-summary-youtube-block-va-dich-no-key/bug.md",
+    ".agent/bugs/2026-09-14-routing-failover-chuan-hoa-pattern-khoa-luoi/bug.md",
+    ".agent/bugs/2026-09-22-eval-gate-fail-silent-tren-windows-ismain-backslas/bug.md",
+    ".agent/bugs/2026-09-24-ai-news-lot-tin-lon-do-recency-only-ranking/bug.md"
   ],
   "checks": [
     {
@@ -56,6 +71,6 @@
   ],
   "gaps": [],
   "verdict": "G-accepted",
-  "generatedAt": "2026-09-14T16:07:22.001Z",
+  "generatedAt": "2026-09-24T14:44:32.464Z",
   "paper": "DisCo arXiv:2609.02749v1 §3.2 (task-agnostic)"
 }

@@ -93,6 +93,7 @@ Skills là workflow on-demand, agent chỉ load khi `description` match task (pr
 | `systematic-debugging` | **Systematic debugging 4-phase** — root cause first, evidence gathering, single hypothesis, TDD fix, 3-fix limit (inspired by `obra/superpowers`) | Bug, test failure, build failure, unexpected behavior — before proposing fixes | `/systematic-debugging` |
 | `evals-gate` | **Evals gate** — rubric + component/E2E evals + error analysis cho output open-ended, không chỉ "chạy được" (inspired by Andrew Ng — Agentic AI Playbook 2026, KN-037) | Output open-ended (UI/plan/report/agent), trước claim Done | `/evals-gate` |
 | `ocr-review` | **Code review cuối pipeline** — ocr (alibaba/open-code-review) delegate mode **$0 token**: chọn file deterministic + rule resolution; chạy qua subagent trước Done | Trước Done (diff ≥100 LOC / ≥5 file / sensitive), user asks review | `/ocr-review` |
+| `video-clip` | **Dựng clip dọc 9:16** — canvas + Playwright MediaRecorder (không cần ffmpeg) + voiceover tiếng Việt local (VieNeu-TTS) cắt theo beat + 3 guard (token/layout, âm thanh, timing) + template copy-paste được | Làm clip TikTok/Reels/Shorts, storyboard, voiceover, render mp4 | `/video-clip` |
 | `skill-registry` | Tháo lắp skill như plugin | Cài/gỡ/bật/tắt skill từ GitHub | `/skill-registry` |
 | `custom-registry` | Tháo lắp toàn bộ (skill/instruction/agent/prompt/hook) + preset + scaffold | Quản lý rule, preset, tạo mới customization | `/custom-registry` |
 | `glass-rainbow-effects` | Liquid glass + rainbow border effects | Cần glassmorphism, rainbow border, animated gradient | — |
@@ -103,6 +104,8 @@ Skills là workflow on-demand, agent chỉ load khi `description` match task (pr
 - **Tháo lắp:** `harness-manager disable skill <name>` → move sang `.github/skills/.disabled/<name>`
 - **Cài từ GitHub:** `harness-manager install skill owner/repo --path skills/foo --ref main`
 - **Tạo mới:** `harness-manager create skill my-skill` (từ template)
+  - ⚠️ **Bẫy:** `create` lưu `description` **từ template** vào `registry.json`, không đọc lại file sau khi bạn sửa — `disable`/`enable`/`sync` cũng không refresh. Sửa xong phải chạy:
+    `harness-manager install skill --local .github/skills/<name> --force` (đọc frontmatter thật → ghi lại registry)
 
 ---
 

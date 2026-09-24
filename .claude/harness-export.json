@@ -52,7 +52,7 @@
     },
     ".claude/skills/ui-ux-pro-max": {
       "dir": true,
-      "digest": "7c4591734a6aae6aed589c4f32f4c153134a8a1a9a7bf11fa022d4b5d1c14f2e"
+      "digest": "fa31772b3b0362389e999b6398983a76bdb419a1cf5d00ad28b2a84708f27741"
     },
     ".claude/skills/tdd-gate": {
       "dir": true,
@@ -68,27 +68,27 @@
     },
     ".claude/skills/last30days": {
       "dir": true,
-      "digest": "e4e364a0453046ad7e26d015e1d324b6bf38e7ff7f8f95f0786187ca39727817"
+      "digest": "218b07b3e370f21d13119bccbe396de8a4b041fe607bf4a1f42d102d1c4b5f37"
     },
     ".claude/skills/harness-build-config": {
       "dir": true,
-      "digest": "c8f3943f22b6cf883a70d0b5a2d9131bf27dc95067d1211fc06469131882ef07"
+      "digest": "a30f41511b66ededbc10a49fc9668c7258313ab4dcd809e29a8b804d650b3704"
     },
     ".claude/skills/harness-governance": {
       "dir": true,
-      "digest": "e31de1d64dfd7a66deb55462fbad8eb7c2277afa8e4c9c7d463fb703b2809966"
+      "digest": "b94ffde64321718d01a84517c9c2846216541b7e0da73cb6b1b0647c2ea89608"
     },
     ".claude/skills/harness-minimal": {
       "dir": true,
-      "digest": "3644b79eedf3595d69295cce47fb2868834b269f3fb6253dcf9bb6dcd8f81dcc"
+      "digest": "797d66cea8bf4152b8dce4fb42ceadc3fc7bd466b52fc9cfb3f3e044c2488f64"
     },
     ".claude/skills/harness-process": {
       "dir": true,
-      "digest": "f31aca5c3c955d9b2ae52da2356c034d4765bb403ee1244a65bc82255b681a00"
+      "digest": "92f92a69459c1efb6db5059f559abf0dfbd26da94f2339c281f3190a4dab1771"
     },
     ".claude/skills/harness-web-ui": {
       "dir": true,
-      "digest": "b8f71651104050c420aeedb6ab0b16350052ddd885f70c674228f712193456cb"
+      "digest": "5a655911a86eef0644d58bfb975224c6aed50197ace48db602368640ec95e5f9"
     },
     ".claude/skills/cosmic-quantum": {
       "dir": true,
@@ -109,6 +109,10 @@
     ".claude/skills/ocr-review": {
       "dir": true,
       "digest": "813bbf62a5b499edbb0c5c37b6a34d46a341f54f64685988ed5b0b99018c05ed"
+    },
+    ".claude/skills/video-clip": {
+      "dir": true,
+      "digest": "be9c693e0b9851532b97e8498e250846b43fea911a8f171017890fabaabbd431"
     }
   },
   "hookCommands": [

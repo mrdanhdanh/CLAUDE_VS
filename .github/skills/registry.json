@@ -44,7 +44,7 @@
       "enabled": true,
       "description": "UI design system toolkit for Senior UI Designer including design token generation, component documentation, responsive design calculations, and developer handoff tools. Use for creating design systems, maintaining visual consistency, and facilitating design-dev collaboration.",
       "file": "ui-design-system/SKILL.md",
-      "installedAt": "2026-09-11T15:42:51.730Z"
+      "installedAt": "2026-09-23T17:25:25.366Z"
     },
     "ui-ux-pro-max": {
       "source": "nextlevelbuilder/ui-ux-pro-max-skill",
@@ -53,7 +53,7 @@
       "enabled": true,
       "description": "UI/UX design intelligence for web, mobile, and desktop. This skill should be used when designing, building, reviewing, or fixing interfaces, including pages, components, design systems, accessibility, interaction, responsive layout, typography, color, charts, and stack-specific UI implementation. Se",
       "file": "ui-ux-pro-max/SKILL.md",
-      "installedAt": "2026-09-11T15:43:30.060Z"
+      "installedAt": "2026-09-23T17:26:02.565Z"
     },
     "tdd-gate": {
       "source": "local",
@@ -88,7 +88,7 @@
       "enabled": true,
       "description": "Research what people actually say about any topic in the last 30 days. Pulls posts and engagement from Reddit, X, YouTube, TikTok, Hacker News, Polymarket, GitHub, and the web. Includes a doctor health check to diagnose broken or missing sources.",
       "file": "last30days/SKILL.md",
-      "installedAt": "2026-09-11T15:44:34.975Z"
+      "installedAt": "2026-09-23T17:27:12.342Z"
     },
     "harness-build-config": {
       "source": "local",
@@ -179,6 +179,15 @@
       "description": "Manual code review cuối pipeline bằng ocr (alibaba/open-code-review) — delegate mode $0 token, deterministic file selection + rules. Use when about to finish a coding task before Done, review diff/changes, kiểm tra code trước push/merge, user asks for code review, or says ocr/review cuối/final revie",
       "file": "ocr-review/SKILL.md",
       "installedAt": "2026-09-18T13:08:26.033Z"
+    },
+    "video-clip": {
+      "source": "local:D:\\CLAUDE_VS\\.github\\skills\\video-clip",
+      "path": "D:\\CLAUDE_VS\\.github\\skills\\video-clip",
+      "ref": "local",
+      "enabled": true,
+      "description": "Dựng clip dọc 9:16 (TikTok/Reels/Shorts) bằng canvas + Playwright MediaRecorder, voiceover tiếng Việt local (VieNeu-TTS) cắt theo beat, kèm 3 guard bắt buộc (layout/token, âm thanh, timing). Use when làm clip, dựng video, video dọc, TikTok, Reels, Shorts, storyboard, voiceover, lồng tiếng, render mp",
+      "file": "video-clip/SKILL.md",
+      "installedAt": "2026-09-23T17:27:55.553Z"
     }
   }
 }

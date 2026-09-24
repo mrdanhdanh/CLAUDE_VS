@@ -1,6 +1,6 @@
 ---
 name: harness-minimal
-description: "Task-agnostic lessons 'Minimal Code & YAGNI' chưng cất từ docs/knowleged.md (3 KN: KN-013, KN-020, KN-022) + .agent/bugs/. Use when task chạm process, minimal, ponytail, yagni, dx, verification, review, architecture, agent — áp Cách phòng tránh trước khi code, tránh lặp bug cũ. DisCo-lite, regenerate bằng distill-agnostic.mjs."
+description: "Task-agnostic lessons 'Minimal Code & YAGNI' chưng cất từ docs/knowleged.md (4 KN: KN-013, KN-020, KN-022, KN-072) + .agent/bugs/. Use when task chạm process, minimal, ponytail, yagni, dx, verification, review, architecture, agent, harness — áp Cách phòng tránh trước khi code, tránh lặp bug cũ. DisCo-lite, regenerate bằng distill-agnostic.mjs."
 user-invocable: false
 ---
 
@@ -10,11 +10,11 @@ user-invocable: false
 
 ## When to Use
 
-- Task chạm theme **Minimal Code & YAGNI** (tags: process, minimal, ponytail, yagni, dx, verification, review, architecture, agent)
+- Task chạm theme **Minimal Code & YAGNI** (tags: process, minimal, ponytail, yagni, dx, verification, review, architecture, agent, harness, evals, context-engineering)
 - Trước khi code/fix — áp **Cách phòng tránh** ngay để không lặp bug cũ
 - Review/plan — check anti-patterns bên dưới
 
-## Bài học (3 KN)
+## Bài học (4 KN)
 
 ### KN-013 — Tích hợp Ponytail ladder vào Harness v2 (minimal-ladder + lean-product) (minor)
 - **Bài học:** Thêm instruction `minimal-ladder` (7 nấc + YAGNI + native-first + dead-code grep) + preset `lean-product` + bật ladder ở full/web-product/api-minimal; trial artifacts giữ ở `.agent/bugs/` + `.agent/plans/n5-blazor-ladder/`
@@ -43,23 +43,21 @@ user-invocable: false
   - Multi-agent reconciliation phải deterministic (rule mình sở hữu), không "whoever spoke last wins" — conflict để lại thành record cho human, không ép consensus giả.
   - Boring pipeline là senior move: hệ thống sống qua Wednesday gần như luôn boring hơn hệ thống thắng demo.
 
+### KN-072 — Harness design cần bằng chứng component-level (arXiv 2609.20804, 17/09): elision trước summarization · recoverable machinery = model hiếm dùng · planning = cost saver cho model mạnh (major)
+- **Bài học:** Eval component-level (vary 1 thành phần, ≥2 budget); không xây recoverable machinery khi chưa có bằng chứng dùng; tool surface model-aware
+- **Bug report:** www/ai-news/curated.json
+- **Cách phòng tránh:**
+  - Thêm/sửa context strategy: rule-based elision/truncate TRƯỚC, chỉ cân nhắc LLM summarization khi có nhu cầu thật; machinery "recoverable" chỉ xây khi có bằng chứng dùng (mặc định: không).
+  - Đánh giá component mới: giữ phần còn lại cố định, vary 1 component, đo ở ≥2 context budget (budget hẹp là nơi giá trị lộ ra).
+  - Không suy "model giỏi → cần nhiều tool hơn" — chiều ngược đúng với bash-capable models (bash-only đủ + rẻ hơn).
+  - Con số từ paper là của setup paper (4 models, 2 benchmarks) — adopt cơ chế/nguyên tắc, re-verify trên harness mình trước khi dùng số làm quyết định (KN-065).
+
 ## Anti-patterns (đừng lặp lại)
 
-- - ❌ PRD không có YAGNI gate → dead code/component/css sống sót (KN-013).
-- - ❌ Verify không grep dead-code + không ghi scoreboard → over-build lọt (KN-013).
-- - ❌ Cắt validation/security/a11y/test để giảm LOC — lazy sai chỗ (KN-013).
-- - ❌ Sửa instruction xong không refresh registry → description stale cache template cũ (KN-013).
-- - ❌ Trust agent output vì "trông đúng" — không setup nào cho code đáng tin thiếu review (KN-020).
-- - ❌ Theo hype setup mới (model/skill/MCP) mà không benchmark trên codebase thật (KN-020).
-- - ❌ Nhồi phức tạp vì "AI giỏi mà" — AI loves overcomplicating things, job của mình là radically simplify (KN-020).
-- - ❌ Gọi hệ thống là "agent" khi vẽ được flowchart trước khi chạy — pipeline giả danh, đắt và khó debug vô ích (KN-022).
-- - ❌ Trao model quyền chọn control flow cho path vốn đã biết — trả token để model deliberates về route mình đã biết (KN-022).
-- - ❌ Agency không có cheap check per-step — freedom không kiểm tra = nondeterminism không debug được (KN-022).
-- - ❌ Multi-agent reconciliation kiểu "whoever spoke last wins" — phải deterministic rule + conflict để lại thành record (KN-022).
-- - ❌ Chạy cả agentic loop / multi-agent cho task pipeline vẽ được flowchart — agency là cost phải justify (KN-037 + KN-022).
+- - ❌ Xây machinery "thêm" vì nghe hợp lý (recoverable elision, planner đắt, tool surface lớn) mà không đo component-level — arXiv 2609.20804: recoverable content model hiếm dùng + 0 gain; bash-only đủ cho model bash-giỏi; elision rule-based trước summarization (KN-072 + KN-037 + KN-047).
 
 ## Nguồn
 
-- `docs/knowleged.md` — KN-013, KN-020, KN-022
+- `docs/knowleged.md` — KN-013, KN-020, KN-022, KN-072
 - Chi tiết đầy đủ: `references/evidence.md` (progressive disclosure)
 - Regenerate: `node .github/harness/scripts/distill-agnostic.mjs`

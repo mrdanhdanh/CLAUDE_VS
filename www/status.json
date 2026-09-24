@@ -1,16 +1,16 @@
 {
-  "generatedAt": "2026-09-22T17:26:57.517Z",
+  "generatedAt": "2026-09-24T14:46:39.415Z",
   "generatedBy": "YUNIE",
   "version": 1,
   "counts": {
     "skills": {
-      "enabled": 20,
+      "enabled": 21,
       "disabled": 0,
-      "total": 20
+      "total": 21
     },
     "instructions": {
-      "enabled": 19,
-      "disabled": 0,
+      "enabled": 11,
+      "disabled": 8,
       "total": 19
     },
     "agents": {
@@ -73,23 +73,23 @@
       },
       "harness-build-config": {
         "enabled": true,
-        "description": "Task-agnostic lessons 'Build & Config' chưng cất từ docs/knowleged.md (4 KN: KN-008, KN-009, KN-015, KN-041) + .agent/bugs/. Use when task chạm build, process, dx, dotnet, config, api, deploy, ci, workflow, pages — áp Cách phòng tránh trước khi code, tránh lặp bug cũ. DisCo-lite, regenerate bằng dis"
+        "description": "Task-agnostic lessons 'Build & Config' chưng cất từ docs/knowleged.md (7 KN: KN-008, KN-009, KN-015, KN-041, KN-063, KN-074, KN-076) + .agent/bugs/. Use when task chạm build, process, dx, dotnet, config, api, deploy, ci, workflow, pages — áp Cách phòng tránh trước khi code, tránh lặp bug cũ. DisCo-l"
       },
       "harness-governance": {
         "enabled": true,
-        "description": "Task-agnostic lessons 'Governance & Verifier Integrity' chưng cất từ docs/knowleged.md (3 KN: KN-012, KN-021, KN-048) + .agent/bugs/. Use when task chạm process, governance, tdd, safety, reward-hacking, security, rbac, research, rsi — áp Cách phòng tránh trước khi code, tránh lặp bug cũ. DisCo-lite,"
+        "description": "Task-agnostic lessons 'Governance & Verifier Integrity' chưng cất từ docs/knowleged.md (9 KN: KN-012, KN-021, KN-048, KN-049, KN-051, KN-052, KN-059, KN-070, KN-071) + .agent/bugs/. Use when task chạm process, governance, tdd, safety, reward-hacking, security, rbac, research, rsi, metrics — áp Cách "
       },
       "harness-minimal": {
         "enabled": true,
-        "description": "Task-agnostic lessons 'Minimal Code & YAGNI' chưng cất từ docs/knowleged.md (3 KN: KN-013, KN-020, KN-022) + .agent/bugs/. Use when task chạm process, minimal, ponytail, yagni, dx, verification, review, architecture, agent — áp Cách phòng tránh trước khi code, tránh lặp bug cũ. DisCo-lite, regenerat"
+        "description": "Task-agnostic lessons 'Minimal Code & YAGNI' chưng cất từ docs/knowleged.md (4 KN: KN-013, KN-020, KN-022, KN-072) + .agent/bugs/. Use when task chạm process, minimal, ponytail, yagni, dx, verification, review, architecture, agent, harness — áp Cách phòng tránh trước khi code, tránh lặp bug cũ. DisC"
       },
       "harness-process": {
         "enabled": true,
-        "description": "Task-agnostic lessons 'Process & Self-Improvement' chưng cất từ docs/knowleged.md (21 KN: KN-005, KN-007, KN-010, KN-014, KN-016, KN-018, KN-019, KN-023, KN-024, KN-025, KN-026, KN-027, KN-033, KN-034, KN-035, KN-036, KN-037, KN-039, KN-043, KN-044, KN-047) + .agent/bugs/. Use when task chạm process"
+        "description": "Task-agnostic lessons 'Process & Self-Improvement' chưng cất từ docs/knowleged.md (34 KN: KN-005, KN-007, KN-010, KN-014, KN-016, KN-018, KN-019, KN-023, KN-024, KN-025, KN-026, KN-027, KN-033, KN-034, KN-035, KN-036, KN-037, KN-039, KN-043, KN-044, KN-047, KN-053, KN-054, KN-056, KN-057, KN-060, KN"
       },
       "harness-web-ui": {
         "enabled": true,
-        "description": "Task-agnostic lessons 'Web UI & UX' chưng cất từ docs/knowleged.md (17 KN: KN-001, KN-002, KN-003, KN-004, KN-006, KN-011, KN-017, KN-028, KN-029, KN-030, KN-031, KN-032, KN-038, KN-040, KN-042, KN-045, KN-046) + .agent/bugs/. Use when task chạm ui, a11y, css, responsive, data, animation, spacing, i"
+        "description": "Task-agnostic lessons 'Web UI & UX' chưng cất từ docs/knowleged.md (21 KN: KN-001, KN-002, KN-003, KN-004, KN-006, KN-011, KN-017, KN-028, KN-029, KN-030, KN-031, KN-032, KN-038, KN-040, KN-042, KN-045, KN-046, KN-050, KN-055, KN-058, KN-073) + .agent/bugs/. Use when task chạm ui, a11y, css, respons"
       },
       "cosmic-quantum": {
         "enabled": true,
@@ -110,6 +110,10 @@
       "ocr-review": {
         "enabled": true,
         "description": "Manual code review cuối pipeline bằng ocr (alibaba/open-code-review) — delegate mode $0 token, deterministic file selection + rules. Use when about to finish a coding task before Done, review diff/changes, kiểm tra code trước push/merge, user asks for code review, or says ocr/review cuối/final revie"
+      },
+      "video-clip": {
+        "enabled": true,
+        "description": "Dựng clip dọc 9:16 (TikTok/Reels/Shorts) bằng canvas + Playwright MediaRecorder, voiceover tiếng Việt local (VieNeu-TTS) cắt theo beat, kèm 3 guard bắt buộc (layout/token, âm thanh, timing). Use when làm clip, dựng video, video dọc, TikTok, Reels, Shorts, storyboard, voiceover, lồng tiếng, render mp"
       }
     },
     "instructions": {
@@ -130,7 +134,7 @@
         "description": "Locale-owned UI copy — no hardcoded text, typed dictionaries, t() helper. Use when writing UI text, button labels, messages, toast, empty/error states, need i18n, locale."
       },
       "plugin-seam": {
-        "enabled": true,
+        "enabled": false,
         "description": "Everything is a Plugin — capability seam (Service Definition / Provider / Consumer), ctx.effect, patch layers, events. Use when adding new capability, tool, service, extending harness, need plugin architecture, seam, Cordis."
       },
       "product-quality": {
@@ -142,7 +146,7 @@
         "description": "Wise skill usage — only load skill when description matches task"
       },
       "library-rag": {
-        "enabled": true,
+        "enabled": false,
         "description": "Thư viện RAG Local — cho /harness trích xuất thông tin từ sách (PDF/DOCX/TXT/MD) qua BM25. Use when harness needs to extract knowledge from library books, need to search library, need citation from documents, or task mentions sách/thư viện/tài liệu."
       },
       "yunie-personality": {
@@ -154,11 +158,11 @@
         "description": "Auto-Learn — tự động gợi ý KN liên quan, auto-log lỗi, đề xuất cập nhật knowleged.md. Use when coding, fixing bug, before edit, after error, need suggest KN, log bug, propose KN, auto-learn, knowledge."
       },
       "agent-governance": {
-        "enabled": true,
+        "enabled": false,
         "description": "Governance — audit + policy + credentials (học OpenBot). Mọi tool call phải qua policy gate (deny trước allow, fail-closed) và ghi audit; credentials mã hóa at-rest, never logged. Use when any tool call, shell, file, MCP, or credentials."
       },
       "platform-seam": {
-        "enabled": true,
+        "enabled": false,
         "description": "Platform seam — AG-UI + MCP + Components + Routines (học OpenBot). Bring your own agent, governed MCP, generative UI, scheduled routines. Use when adding agent, MCP, component, routine, or platform capability."
       },
       "minimal-ladder": {
@@ -170,19 +174,19 @@
         "description": "Context engineering — dynamic context pipeline (scratchpad/compress/isolate) + anti-poisoning. Use when managing RAG context, hitting window limits, or debugging wrong/missing context."
       },
       "cua-safety": {
-        "enabled": true,
+        "enabled": false,
         "description": "CUA safety — browser-use guardrails (scope, observe/action, secrets, untrusted, checks, budgets, evidence) + agent-vs-actor. Use when browser automation, visual check, UI testing, or risky web actions."
       },
       "awesome-design": {
-        "enabled": true,
+        "enabled": false,
         "description": "Awesome DESIGN.md — 74 design systems local (VoltAgent/awesome-design-md). Use when user wants UI design, needs design inspiration, mentions vibe/style like linear/stripe/vercel/apple, or needs DESIGN.md for AI agent."
       },
       "cosmic-quantum": {
-        "enabled": true,
+        "enabled": false,
         "description": "Cosmic-Quantum Thinking — triết lý vũ trụ + lượng tử cho Harness. Use when designing system philosophy, harness theory, product vision, need cosmic/quantum metaphors, scale thinking, entanglement, superposition, uncertainty, or user says vũ trụ/lượng tử/cosmos/quantum/triết lý/lý thuyết/hệ thống/sca"
       },
       "fund-the-friction": {
-        "enabled": true,
+        "enabled": false,
         "description": "Fund the friction — collaboration là infrastructure, không phải nice-to-have (học KN-018 Waymo effect). Use when cân nhắc cắt workshop/review/pari khi gấp, đánh giá contribution vs velocity, cần giữ thinking together, hoặc task liên quan diversity/serendipity."
       },
       "executive-function": {
@@ -296,8 +300,10 @@
     "archify-demo",
     "auto-learn",
     "auto-learn-split",
+    "claude-art-tiktok",
     "cosmic-scale-dark-matter",
     "cosmos-3d",
+    "cosmos-3d-upgrade",
     "cosmos-cmb-anisotropy",
     "cosmos-cosmic-web",
     "cosmos-dark-energy-fix",
@@ -318,6 +324,7 @@
     "custom-registry",
     "design-showcase-72",
     "design-showcase-cut-critic",
+    "detection-egress-p0",
     "disco-phase1",
     "disco-phase2",
     "disco-phase3",
@@ -361,6 +368,7 @@
     "self-improving-upgrades",
     "skill-registry",
     "slop-audit",
+    "space-bunny-tiktok",
     "status-redesign",
     "status-ui-v2",
     "todo-manager",
@@ -401,6 +409,11 @@
       "status": "ok"
     },
     {
+      "name": "claude-art",
+      "path": "claude-art/index.html",
+      "status": "ok"
+    },
+    {
       "name": "cosmos",
       "path": "cosmos/index.html",
       "status": "ok"
@@ -433,6 +446,11 @@
     {
       "name": "n5-blazor",
       "path": "n5-blazor/index.html",
+      "status": "ok"
+    },
+    {
+      "name": "space-bunny-free",
+      "path": "space-bunny-free/index.html",
       "status": "ok"
     },
     {
@@ -469,10 +487,10 @@
   "health": {
     "errors": 0,
     "status": "ok",
-    "lastCheck": "2026-09-22T17:26:57.517Z",
+    "lastCheck": "2026-09-24T14:46:39.415Z",
     "checks": [
       "get_errors: pass (0 errors)",
-      "registry: 19 instructions (19 total) - 20 skills - 9 agents - 7 prompts - 1 hook — all enabled",
+      "registry: 11 instructions (19 total) - 21 skills - 9 agents - 7 prompts - 1 hook — all enabled",
       "harness: 2.5 — P0 (RAG loop, tool hardening, planning JSON, receipt Ed25519) + P1 (multi-agent, observability, protocols, context, memory, deploy) + P2 (MAF workflows, CUA guardrails, local SLM, setup doctor) + 2.3 (Evals Gate KN-037) + 2.4 (OCR Review cuối pipeline — skill ocr-review $0 token qua subagent + policy v5 delegation attenuation + guard fail-closed KN-068/069) + 2.5 (component-evals registry + grounding fact-grader + fail-silent isMain fix)",
       "scripts: 25 harness .mjs (plan-validate, handoff, reflect, trace, eval-gate, deploy-check, agent-card, context, memory, workflow, cua-guard, local, setup-doctor, procedural-graph, experience-funnel, consistency-gap)",
       "eval-gate: PASS (syntax + MCP smoke + plan-validate + self-improving + component-evals)",
@@ -480,10 +498,10 @@
       "www: polished — responsive 375/768/1280, a11y, states, animation 150-300ms",
       "workflow: www/** -> Pages (upload-artifact path: www) — exists: true + eval job gate",
       "library: www/library/ MCP v1.2.0 (5 tools: search + iterative + list/get/status, router+cache, redacted) + library-rag instruction",
-      "auto-learn: 73 KN, 55 bugs, 0 drafts — suggest/log/propose/status (<50ms, IDF, tiếng Việt)",
-      "governance: audit 285 (Ed25519 receipt P0-4) · policy 12 deny/2 allow (ok) · credentials 0 keys plain",
+      "auto-learn: 75 KN, 63 bugs, 0 drafts — suggest/log/propose/status (<50ms, IDF, tiếng Việt)",
+      "governance: audit 353 (Ed25519 receipt P0-4) · policy 12 deny/2 allow (ok) · credentials 0 keys plain",
       "platform: agents 3 (3 built-in, 0 remote) · mcp 3 vendors/3 grants (library 1.2.0 read-only) · components 3/3 pub · routines 3/3 enabled",
-      "collaboration: KN-018 — dissentGate ✅ · whoDidYouThinkWith ✅ · critic ✅ · fund-the-friction ✅ (ok)",
+      "collaboration: KN-018 — dissentGate ✅ · whoDidYouThinkWith ✅ · critic ✅ · fund-the-friction ❌ (partial)",
       "n5-blazor: www/n5-blazor/ 7 trang static + app.css + data.js + site.js — 100% Pages"
     ]
   },
@@ -509,6 +527,11 @@
       {
         "path": "archify/index.html",
         "title": "archify",
+        "type": "demo"
+      },
+      {
+        "path": "claude-art/index.html",
+        "title": "claude-art",
         "type": "demo"
       },
       {
@@ -544,6 +567,11 @@
       {
         "path": "n5-blazor/index.html",
         "title": "N5 Blazor",
+        "type": "demo"
+      },
+      {
+        "path": "space-bunny-free/index.html",
+        "title": "space-bunny-free",
         "type": "demo"
       },
       {
@@ -584,8 +612,8 @@
     "dissentGate": true,
     "whoDidYouThinkWith": true,
     "criticAgent": true,
-    "fundTheFriction": true,
-    "status": "ok"
+    "fundTheFriction": false,
+    "status": "partial"
   },
   "selfImproving": {
     "kn": [
@@ -721,101 +749,101 @@
     }
   },
   "learn": {
-    "knTotal": 73,
-    "bugsTotal": 55,
+    "knTotal": 75,
+    "bugsTotal": 63,
     "drafts": 0
   },
   "governance": {
     "audit": {
-      "total": 285,
-      "permitted": 246,
-      "refused": 38,
+      "total": 353,
+      "permitted": 302,
+      "refused": 50,
       "failed": 1,
-      "lastTs": "2026-09-22T17:18:40.174Z",
+      "lastTs": "2026-09-24T14:45:49.936Z",
       "tail": [
         {
-          "ts": "2026-09-22T17:12:45.139Z",
-          "actor": "YUNIE",
+          "ts": "2026-09-24T13:54:14.916Z",
+          "actor": "verify",
           "tool": "edit",
-          "target": ".agent/bugs/2026-09-19-evaluate-isfixed-khong-doc-duoc-status-bold/bug.md",
+          "target": "2 guard spec: instruction-budget (anti-deletion enabled+disabled) + harness-manager-export (registry-derived)",
           "decision": "permitted",
           "rule": "allow-all",
           "durationMs": null,
           "error": null,
-          "intent": "fill bug doc + close (fixed)",
-          "requestId": "4de0e6",
-          "prevHash": "c6333bb8b2552a80",
+          "intent": null,
+          "requestId": "4d812f",
+          "prevHash": "7f335288dac7c9f2",
           "policyDigest": "a4972205cc490263",
-          "hash": "b2be2a95dad3e630",
-          "sig": "Wuy3rdXJgCVieenCahScVHKFIlIAK5pnHRGkSI-I4OutTtxdgxi7PdHV0r2J5gP1jaMyiVONRUCgWlcXXuHlDQ",
+          "hash": "48728d8a27167238",
+          "sig": "qUXRtpmMyT4-VUX59b42pUm_g40T5M4sSHk8jEwP06M5c0k9S8fv94fzIZhb10yinjgojNHNnQdFlyMYyOY7Cw",
           "pub": "MCowBQYDK2VwAyEAY8PlU0KjXp4HJUUlNlVZdaXHUmDagUMm8rUrEShTPXo"
         },
         {
-          "ts": "2026-09-22T17:12:45.262Z",
-          "actor": "YUNIE",
-          "tool": "edit",
-          "target": ".agent/bugs/2026-09-22-eval-gate-fail-silent-tren-windows-ismain-backslas/bug.md",
-          "decision": "permitted",
-          "rule": "allow-all",
+          "ts": "2026-09-24T14:00:47.528Z",
+          "actor": "redteam-spec",
+          "tool": "read",
+          "target": "***",
+          "decision": "refused",
+          "rule": "redteam-test",
           "durationMs": null,
           "error": null,
-          "intent": "fill bug doc + close (fixed) + guard line",
-          "requestId": "0cbd90",
-          "prevHash": "b2be2a95dad3e630",
+          "intent": null,
+          "requestId": "5a1fb2",
+          "prevHash": "48728d8a27167238",
           "policyDigest": "a4972205cc490263",
-          "hash": "95230cf116b3a427",
-          "sig": "mkyhvyDaTwvg9QKVLGJQXcivXTXWNNEopUdUX1jIZTAkKZFq2A-lEZDERhG8uh9yJHdP8aKQzolz_9oPjcnHAA",
+          "hash": "b19bb67b9370fd76",
+          "sig": "LKUFmNbJwpF2GZcuZ191F4kTiGVs40gfHutg_kTplI8yOFcOiejTVEoYme-sLa83G5XzRN60iVa-y_-xvqJFAw",
           "pub": "MCowBQYDK2VwAyEAY8PlU0KjXp4HJUUlNlVZdaXHUmDagUMm8rUrEShTPXo"
         },
         {
-          "ts": "2026-09-22T17:15:49.123Z",
-          "actor": "YUNIE",
+          "ts": "2026-09-24T14:01:45.566Z",
+          "actor": "verify",
           "tool": "edit",
-          "target": ".agent/plans/evals-component-grounding/plan.md",
+          "target": "2 guard spec aligned to reality: instruction-budget (anti-deletion enabled+disabled, disabled excluded from budget) + harness-manager-export (registry-derived expectations) — 275/275 pass",
           "decision": "permitted",
           "rule": "allow-all",
           "durationMs": null,
           "error": null,
-          "intent": "finalize plan checkboxes + phát sinh section",
-          "requestId": "aeaaeb",
-          "prevHash": "95230cf116b3a427",
+          "intent": null,
+          "requestId": "c0ab88",
+          "prevHash": "b19bb67b9370fd76",
           "policyDigest": "a4972205cc490263",
-          "hash": "67e90241d7b81a35",
-          "sig": "mgoNwLG1Ghzq6xC5i5DO2XZNuMo_KlwkIgHPTuON2ym9pp1jbS18pPsSH7-qkKDw5wgDGkmi_ywUDMvtekeVBg",
+          "hash": "55133283c12455b4",
+          "sig": "UBumnOuZIhY9VFQ6UlpjC22Qg51XoHY774D7brmOeFPbhILvh6afFQYmerZoRs5Xm0gly2puyUuc3AvKP5Q1Aw",
           "pub": "MCowBQYDK2VwAyEAY8PlU0KjXp4HJUUlNlVZdaXHUmDagUMm8rUrEShTPXo"
         },
         {
-          "ts": "2026-09-22T17:15:49.397Z",
-          "actor": "YUNIE",
-          "tool": "edit",
-          "target": ".github/harness/scripts/eval-gate.mjs",
-          "decision": "permitted",
-          "rule": "allow-all",
+          "ts": "2026-09-24T14:19:19.002Z",
+          "actor": "redteam-spec",
+          "tool": "read",
+          "target": "***",
+          "decision": "refused",
+          "rule": "redteam-test",
           "durationMs": null,
           "error": null,
-          "intent": "refactor CC<=12 pass Slop Gate (checkSelfImproving/checkComponents/checkGrounding/main split)",
-          "requestId": "1eb34c",
-          "prevHash": "67e90241d7b81a35",
+          "intent": null,
+          "requestId": "2fbb72",
+          "prevHash": "55133283c12455b4",
           "policyDigest": "a4972205cc490263",
-          "hash": "33c15c7eca598b60",
-          "sig": "wlCXxpPWXz9ls5Jy4r9GbirKwIBw4Asj4Km2AHbJIJ-IsCjG5Dwf8ZuXdTvBJZBtZy9oNwFGrItAje-ZUhPPAg",
+          "hash": "f84e95c93647e707",
+          "sig": "r0fFX_qWsnyJwGPoTQkvXpBksDUlN_K0_iN8Cw0Hm-P2rvLJuMh9LXy_zClns9ex9n1xfs1Xh82YhvbINnqSDQ",
           "pub": "MCowBQYDK2VwAyEAY8PlU0KjXp4HJUUlNlVZdaXHUmDagUMm8rUrEShTPXo"
         },
         {
-          "ts": "2026-09-22T17:18:40.174Z",
-          "actor": "YUNIE",
-          "tool": "edit",
-          "target": "docs/knowleged.md",
-          "decision": "permitted",
-          "rule": "allow-all",
+          "ts": "2026-09-24T14:45:49.936Z",
+          "actor": "redteam-spec",
+          "tool": "read",
+          "target": "***",
+          "decision": "refused",
+          "rule": "redteam-test",
           "durationMs": null,
           "error": null,
-          "intent": "paste KN-074 (eval-gate fail-silent Windows) + anti-pattern + checklist — human approved 23/09",
-          "requestId": "557ec4",
-          "prevHash": "33c15c7eca598b60",
+          "intent": null,
+          "requestId": "74c7a8",
+          "prevHash": "f84e95c93647e707",
           "policyDigest": "a4972205cc490263",
-          "hash": "d9b68d30f2a6ca99",
-          "sig": "lmw1nrMkhZT_GCjeIeVmiNvA0raZwIkvcwspj26nWQQmGPkNEYGfkXrnML16fyMFbhaCg3x4x8-_xYyAoZiNCA",
+          "hash": "43264df62edfc689",
+          "sig": "30VrmHgqhsavVF8n6OwNr8TyLNmFq6PG8wwgj0DglcRDQwwGc0sCHlYTZNUFCT-XI0t2bfrR3ut4CjCR5cU4AQ",
           "pub": "MCowBQYDK2VwAyEAY8PlU0KjXp4HJUUlNlVZdaXHUmDagUMm8rUrEShTPXo"
         }
       ]
@@ -825,7 +853,7 @@
       "deny": 12,
       "allow": 2,
       "status": "ok",
-      "lastCheck": "2026-09-22T17:26:51.878Z"
+      "lastCheck": "2026-09-24T14:46:34.102Z"
     },
     "credentials": {
       "count": 0,
@@ -888,12 +916,12 @@
   },
   "cosmos": {
     "available": true,
-    "S": 0,
+    "S": 8,
     "level": "low",
     "D": 1,
     "G": 9,
-    "M": 0,
-    "generatedAt": "2026-09-22T17:26:51.101Z",
+    "M": 8,
+    "generatedAt": "2026-09-23T17:58:34.857Z",
     "points": 30
   }
 }
