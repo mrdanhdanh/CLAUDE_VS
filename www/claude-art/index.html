@@ -1,0 +1,234 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Claude tự tìm ra enzyme mới — storyboard</title>
+<style>
+  :root { color-scheme: dark; font-family: "Segoe UI", Arial, sans-serif; background:#060b14; color:#f2f7ff; }
+  * { box-sizing: border-box; }
+  body { margin:0; min-height:100vh; display:grid; place-items:center; background:#060b14; }
+  .stage { width:min(100vw, 562.5px); aspect-ratio:9/16; position:relative; overflow:hidden; background:#060b14; }
+  canvas { display:block; width:100%; height:100%; }
+  .sr { position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap; }
+</style>
+</head>
+<body>
+  <main class="stage" aria-label="Kịch bản clip: Claude tìm ra hệ enzyme ART">
+    <canvas id="canvas" width="1080" height="1920" role="img" aria-label="Storyboard 5 beat — Claude agents quét kho DNA, tìm ra hệ enzyme ART, kèm caveat"></canvas>
+    <h1 class="sr">Claude tự tìm ra một hệ enzyme mới kiểu CRISPR</h1>
+  </main>
+<script>
+(() => {
+  const canvas = document.querySelector('#canvas');
+  const ctx = canvas.getContext('2d');
+  const W = canvas.width;
+  const H = canvas.height;
+
+  // ── TOKENS ────────────────────────────────────────────────────────────────
+  // Một object DUY NHẤT. Thiếu key ở đây = ctx.fillStyle = undefined = KHÔNG throw,
+  // chữ giữ màu cũ ⇒ tàng hình. verify-frames.mjs quét đúng chỗ này.
+  const C = {
+    bg: '#060b14', panel: '#0e1a2a', panel2: '#142336', ink: '#f2f7ff',
+    muted: '#9fb0c8', teal: '#5eead4', green: '#4ade80', purple: '#a78bfa',
+    orange: '#fb923c', blue: '#60a5fa', yellow: '#fbbf24', pink: '#f472b6',
+    line: '#24364f', white: '#ffffff'
+  };
+
+  // ── BEATS ─────────────────────────────────────────────────────────────────
+  // `at`/`end` phải khớp `segments` trong voiceover-segments.json (guard timing so 2 bên).
+  const DURATION = 50;
+  const beats = [
+    { at: 0,  end: 5,  eyebrow: 'SINH HỌC × AI',  title: 'AI tự tìm ra\nmột hệ enzyme mới.', sub: 'Kiểu CRISPR — trong virus của vi khuẩn.' },
+    { at: 5,  end: 14, eyebrow: '01 · CUỘC SĂN',  title: '950 agent.\n21 giờ.',             sub: '210 triệu token — chỉ để quét kho DNA.' },
+    { at: 14, end: 28, eyebrow: '02 · PHÁT HIỆN', title: '200.000 vào.\n20 ra.',            sub: 'Nón lọc 3.500 ứng viên ở giữa.' },
+    { at: 28, end: 39, eyebrow: '03 · NÓI RÕ',    title: 'Chưa biết\nnó làm gì.',            sub: 'Preprint đã mở — khoa học cần thời gian.', size: 88 },
+    { at: 39, end: 50, eyebrow: 'KẾT',            title: 'Cha đẻ CRISPR\nđã đọc.',           sub: 'Feng Zhang · MIT/Broad — đồng phát minh CRISPR.' }
+  ];
+  const TONES = [C.teal, C.green, C.purple, C.orange, C.yellow];
+
+  // ── HELPERS ───────────────────────────────────────────────────────────────
+  const dust = Array.from({ length: 90 }, (_, i) => ({ x: (i * 97) % W, y: (i * 211) % H, r: 1 + (i % 3), a: .08 + (i % 5) * .06, p: (i % 7) / 7 }));
+  const ease = t => t < .5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2;
+  const clamp = (v, a = 0, b = 1) => Math.max(a, Math.min(b, v));
+  const grow = (t, start, dur) => ease(clamp((t - start) / dur));
+  function beatAt(t) { return beats.findIndex(b => t >= b.at && t < b.end); }
+
+  function roundRect(x, y, w, h, r, fill, stroke) {
+    ctx.beginPath(); ctx.roundRect(x, y, w, h, r);
+    if (fill) { ctx.fillStyle = fill; ctx.fill(); }
+    if (stroke) { ctx.strokeStyle = stroke; ctx.lineWidth = 2; ctx.stroke(); }
+  }
+  function text(str, x, y, size, color, weight = 700, align = 'left', font = 'Arial') {
+    ctx.font = `${weight} ${size}px "${font}", "Segoe UI", sans-serif`;
+    ctx.fillStyle = color; ctx.textAlign = align; ctx.textBaseline = 'middle'; ctx.fillText(str, x, y);
+  }
+  function wrap(str, x, y, maxW, size, color, weight = 700, line = 1.12, align = 'left') {
+    ctx.font = `${weight} ${size}px Arial, "Segoe UI", sans-serif`;
+    ctx.fillStyle = color; ctx.textAlign = align; ctx.textBaseline = 'middle';
+    str.split('\n').forEach((part, pi) => {
+      const words = part.split(' '); let lineText = ''; let ly = y + pi * size * line;
+      words.forEach(word => {
+        const test = lineText ? `${lineText} ${word}` : word;
+        if (ctx.measureText(test).width > maxW && lineText) { ctx.fillText(lineText, x, ly); lineText = word; ly += size * line; }
+        else lineText = test;
+      });
+      ctx.fillText(lineText, x, ly);
+    });
+  }
+
+  // Vẽ chuỗi xoắn DNA — suy ra hoàn toàn từ t (không state tích lũy).
+  function helix(t) {
+    const cx = 540, cy = 1130, h = 560, amp = 132, turns = 1.9, N = 44;
+    const phase = t * 1.5;
+    const sink = p => Math.sin(p * Math.PI * 2 * turns + phase);
+    for (let i = 2; i < N; i += 2) {
+      const p = i / N, s = sink(p), k = Math.abs(Math.cos(p * Math.PI * 2 * turns + phase));
+      ctx.globalAlpha = .14 + k * .42;
+      ctx.strokeStyle = C.teal; ctx.lineWidth = 4;
+      const y = cy - h / 2 + p * h;
+      ctx.beginPath(); ctx.moveTo(cx + s * amp, y); ctx.lineTo(cx - s * amp, y); ctx.stroke();
+    }
+    ctx.globalAlpha = 1;
+    for (const sign of [1, -1]) {
+      ctx.beginPath();
+      for (let i = 0; i <= N; i++) {
+        const p = i / N, y = cy - h / 2 + p * h, x = cx + sign * sink(p) * amp;
+        i ? ctx.lineTo(x, y) : ctx.moveTo(x, y);
+      }
+      ctx.strokeStyle = sign > 0 ? C.teal : C.purple;
+      ctx.lineWidth = 9; ctx.lineCap = 'round';
+      ctx.shadowColor = sign > 0 ? C.teal : C.purple; ctx.shadowBlur = 16;
+      ctx.stroke(); ctx.shadowBlur = 0;
+    }
+  }
+
+  function statCell(x, y, w, h, target, label, color, p) {
+    roundRect(x, y, w, h, 28, C.panel, C.line);
+    roundRect(x + 28, y + 34, 60, 8, 4, color);
+    text(String(Math.round(target * p)), x + w / 2, y + h * .45, 74, color, 800, 'center', 'Consolas');
+    text(label, x + w / 2, y + h * .74, 23, C.muted, 600, 'center');
+  }
+
+  function funnelRow(y, label, frac, color, p) {
+    text(label, 84, y + 38, 43, C.ink, 800, 'left', 'Consolas');
+    const x0 = 368, maxW = 628;
+    roundRect(x0, y, maxW, 76, 20, C.panel2, C.line);
+    const w = Math.max(56, maxW * frac) * p;
+    if (w > 6) roundRect(x0 + 2, y + 2, w - 4, 72, 18, color);
+  }
+
+  function artDiagram(p, t) {
+    const y = 1215, h = 116;
+    ctx.globalAlpha = p;
+    roundRect(172, y, 200, h, 18, C.panel, C.purple);
+    text('RT', 272, y + h / 2, 44, C.purple, 800, 'center', 'Consolas');
+    roundRect(396, y, 150, h, 18, C.panel, C.blue);
+    text('gene', 471, y + h / 2, 32, C.blue, 800, 'center', 'Consolas');
+    for (let i = 0; i < 8; i++) {
+      ctx.globalAlpha = p * (.5 + .5 * (0.5 + 0.5 * Math.sin(t * 3 + i * .8)));
+      roundRect(570 + i * 42, y, 30, h, 7, C.orange);
+    }
+    ctx.globalAlpha = p;
+    text('RT = reverse transcriptase', 272, y - 34, 24, C.muted, 600, 'center', 'Consolas');
+    text('mảng repeat · kiểu CRISPR', 672, y - 34, 24, C.orange, 700, 'center', 'Consolas');
+    text('→ hệ ART · trong virus của vi khuẩn', 540, y + h + 54, 30, C.ink, 700, 'center');
+    ctx.globalAlpha = 1;
+  }
+
+  function caveatRow(y, title, note, color, alpha) {
+    ctx.globalAlpha = alpha;
+    roundRect(84, y, 912, 118, 24, C.panel, C.line);
+    roundRect(84, y, 10, 118, 5, color);
+    text(title, 130, y + 44, 36, C.ink, 700);
+    text(note, 130, y + 84, 23, C.muted, 500);
+    ctx.globalAlpha = 1;
+  }
+
+  // ── DRAW ──────────────────────────────────────────────────────────────────
+  // Mọi thứ suy ra từ `t` — KHÔNG state tích lũy (guard chụp khung ở giây bất kỳ phải ra đúng hình).
+  function draw(t) {
+    ctx.clearRect(0, 0, W, H); ctx.fillStyle = C.bg; ctx.fillRect(0, 0, W, H);
+    for (const s of dust) {
+      ctx.globalAlpha = s.a * (.65 + .35 * Math.sin(t * 2 + s.p * 6));
+      ctx.fillStyle = s.r > 1 ? C.teal : C.white;
+      ctx.beginPath(); ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2); ctx.fill();
+    }
+    ctx.globalAlpha = 1;
+
+    const idx = Math.max(0, beatAt(t));
+    const b = beats[idx];
+    const inT = ease(clamp((t - b.at) / .65));
+    const outT = 1 - ease(clamp((t - (b.end - .5)) / .5));
+
+    ctx.save();
+    ctx.globalAlpha = inT * outT;
+    ctx.translate(0, (1 - inT) * 24);
+    text(b.eyebrow, 84, 142, 25, TONES[idx], 700, 'left', 'Consolas');
+    wrap(b.title, 84, 300, 880, b.size || 96, C.ink, 800, 1.02);
+    wrap(b.sub, 84, 560, 880, 30, C.muted, 500, 1.2);
+
+    // Vùng nội dung: y 690 → 1630. Chừa 84 px hai bên. Đừng vẽ tràn ra ngoài.
+    if (idx === 0) {
+      helix(t);
+      text('Không phải người tìm — là Claude.', 540, 1580, 30, C.ink, 700, 'center');
+      text('một lab sinh học ở Bay Area đã kiểm chứng', 540, 1630, 22, C.muted, 500, 'center');
+    }
+    if (idx === 1) {
+      const p = grow(t, b.at + 0.4, 1.2);
+      const cw = 280, gap = 36;
+      statCell(84, 700, cw, 300, 950, 'agent Claude', C.green, p);
+      statCell(84 + cw + gap, 700, cw, 300, 21, 'giờ chạy', C.teal, p);
+      statCell(84 + (cw + gap) * 2, 700, cw, 300, 210, 'triệu token', C.yellow, p);
+      roundRect(84, 1060, 912, 300, 28, C.panel, C.line);
+      text('LAB LOG', 130, 1112, 22, C.green, 700, 'left', 'Consolas');
+      roundRect(130, 1140, 820, 2, 1, C.line);
+      text('> 950 session chạy song song', 130, 1190, 27, C.ink, 600, 'left', 'Consolas');
+      text('> công cụ: Claude Science + Claude Code', 130, 1240, 27, C.ink, 600, 'left', 'Consolas');
+      text('> quét kho dữ liệu DNA — không nghỉ', 130, 1290, 27, C.ink, 600, 'left', 'Consolas');
+      const blink = .35 + .65 * (0.5 + 0.5 * Math.sin(t * 5));
+      ctx.globalAlpha = (inT * outT) * blink;
+      roundRect(796, 1278, 20, 26, 3, C.green);
+      ctx.globalAlpha = inT * outT;
+    }
+    if (idx === 2) {
+      funnelRow(700, '200.000', 1, C.blue, grow(t, b.at + 0.4, 0.9));
+      funnelRow(846, '3.500', 0.32, C.purple, grow(t, b.at + 0.9, 0.9));
+      funnelRow(992, '20', 0.1, C.yellow, grow(t, b.at + 1.4, 0.9));
+      artDiagram(grow(t, b.at + 2.2, 0.8), t);
+    }
+    if (idx === 3) {
+      const ts = b.at + 0.4;
+      caveatRow(760, 'Chức năng ART: chưa rõ', 'Thí nghiệm đang tiếp tục — chưa có ứng dụng nào.', C.orange, grow(t, ts, 0.6));
+      caveatRow(906, 'Lab: do con người chạy', 'Anthropic BSL-1/2 — không xử lý pathogen lây người.', C.blue, grow(t, ts + 0.6, 0.6));
+      caveatRow(1052, 'Nguồn: Anthropic tự công bố', 'Chưa có replication độc lập. Preprint đã mở.', C.pink, grow(t, ts + 1.2, 0.6));
+    }
+    if (idx === 4) {
+      roundRect(84, 730, 912, 340, 34, C.panel, C.yellow + '66');
+      text('“', 130, 810, 110, C.yellow, 800, 'left', 'Georgia');
+      wrap('Đáng điều tra thêm.', 140, 930, 800, 64, C.ink, 700, 1.1);
+      text('— Feng Zhang · đọc bản preprint', 140, 1032, 26, C.muted, 600);
+      roundRect(84, 1330, 912, 300, 34, C.panel, C.teal + '77');
+      text('CÒN BẠN?', 130, 1390, 22, C.teal, 700, 'left', 'Consolas');
+      wrap('AI tự làm khoa học — bạn tin không?', 130, 1470, 800, 46, C.ink, 700, 1.15);
+    }
+    ctx.restore();
+
+    ctx.fillStyle = C.teal;
+    ctx.fillRect(0, 0, W * clamp(t / DURATION), 6);
+    text('YUNIE · HARNESS', 84, 1850, 20, C.muted, 700, 'left', 'Consolas');
+    text('NGUỒN: ANTHROPIC · 23/09/2026', 996, 1850, 18, C.muted, 700, 'right', 'Consolas');
+  }
+
+  // ── CONTRACT + LOOP ───────────────────────────────────────────────────────
+  window.__clip = { duration: DURATION, width: W, height: H, draw, beats, freeze: false };
+  let start = performance.now();
+  function frame(now) {
+    if (!window.__clip.freeze) draw((now - start) / 1000);
+    requestAnimationFrame(frame);
+  }
+  requestAnimationFrame(frame);
+})();
+</script>
+</body>
+</html>
