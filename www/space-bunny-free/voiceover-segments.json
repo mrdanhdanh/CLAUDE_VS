@@ -1,0 +1,37 @@
+{
+  "voice": "Hải Đăng",
+  "total": 50,
+  "note": "Mỗi beat một đoạn lời; `at` = giây bắt đầu, `end` = hết beat (guard chống tràn). Beats: 0-5 / 5-14 / 14-28 / 28-39 / 39-50.",
+  "segments": [
+    {
+      "at": 0.4,
+      "end": 5,
+      "beat": "01 · hook",
+      "text": "Space Bunny vừa xuất hiện trên OpenCode. Một model ẩn danh."
+    },
+    {
+      "at": 5.4,
+      "end": 14,
+      "beat": "02 · official",
+      "text": "Model id là space-bunny-free. Đang cho dùng miễn phí, trong thời gian giới hạn. Endpoint tương thích OpenAI, không giới hạn lượt dùng."
+    },
+    {
+      "at": 14.4,
+      "end": 28,
+      "beat": "03 · claims",
+      "text": "OpenCode và OpenRouter đều ghi một triệu token context, hỗ trợ multimodal. Nhưng retention thì hai nguồn nói khác nhau: OpenCode ghi zero ngày, còn OpenRouter nói prompt có thể được lưu lại."
+    },
+    {
+      "at": 28.4,
+      "end": 39,
+      "beat": "04 · research",
+      "text": "Chưa có paper, model card, weights, hay tên provider chính thức. Nên chỉ tin phần mình tự test được. Hãy tự đo trên task của bạn."
+    },
+    {
+      "at": 39.4,
+      "end": 50,
+      "beat": "05 · cta",
+      "text": "Sửa bug, đọc repo, hoặc xây một tính năng nhỏ. Kết quả thế nào thì chia sẻ cho mình biết nhé. Bạn sẽ thử Space Bunny với task nào?"
+    }
+  ]
+}

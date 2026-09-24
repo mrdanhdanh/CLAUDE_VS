@@ -1,0 +1,37 @@
+{
+  "voice": "Hải Đăng",
+  "total": 50,
+  "note": "Mỗi beat một đoạn lời. `at` = giây bắt đầu (đặt sau mốc beat ~0.4s), `end` = hết beat (guard chống tràn). Sửa `segments` + `total` cho clip mới; giữ `end` khớp mảng beats trong index.html.",
+  "segments": [
+    {
+      "at": 0.4,
+      "end": 5,
+      "beat": "01 · hook",
+      "text": "Câu mở đầu — nêu chủ thể trong 3 giây đầu."
+    },
+    {
+      "at": 5.4,
+      "end": 14,
+      "beat": "02 · fact",
+      "text": "Dữ kiện chính, kèm nguồn nếu là claim."
+    },
+    {
+      "at": 14.4,
+      "end": 28,
+      "beat": "03 · detail",
+      "text": "Chi tiết dài nhất — beat này thường chiếm nhiều thời gian nhất."
+    },
+    {
+      "at": 28.4,
+      "end": 39,
+      "beat": "04 · caveat",
+      "text": "Phần chưa chắc chắn / giới hạn — nói rõ để giữ uy tín."
+    },
+    {
+      "at": 39.4,
+      "end": 50,
+      "beat": "05 · cta",
+      "text": "Câu hỏi cho người xem."
+    }
+  ]
+}

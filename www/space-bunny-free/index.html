@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Space Bunny Free — TikTok storyboard</title>
+<style>
+  :root { color-scheme: dark; font-family: "Segoe UI", Arial, sans-serif; background:#070a12; color:#f5f7fb; }
+  * { box-sizing: border-box; }
+  body { margin:0; min-height:100vh; display:grid; place-items:center; background:#070a12; }
+  .stage { width:min(100vw, 562.5px); aspect-ratio:9/16; position:relative; overflow:hidden; background:#070a12; }
+  canvas { display:block; width:100%; height:100%; }
+  .sr { position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap; }
+</style>
+</head>
+<body>
+  <main class="stage" aria-label="Kịch bản clip TikTok giới thiệu Space Bunny">
+    <canvas id="canvas" width="1080" height="1920" role="img" aria-label="Space Bunny là model mới trên OpenCode và đang cho dùng free"></canvas>
+    <h1 class="sr">Space Bunny — model mới trên OpenCode, đang cho dùng free</h1>
+  </main>
+<script>
+(() => {
+  const canvas = document.querySelector('#canvas');
+  const ctx = canvas.getContext('2d');
+  const W = canvas.width;
+  const H = canvas.height;
+  const C = {
+    bg: '#070a12', panel: '#101827', panel2: '#162235', ink: '#f5f7fb',
+    muted: '#a9b6ca', mint: '#c8f6f9', green: '#55e6a5', orange: '#ff9b54',
+    pink: '#ef6bba', blue: '#7aa2ff', yellow: '#ffcc66', line: '#293850', white: '#ffffff'
+  };
+  const beats = [
+    { at: 0, end: 5, eyebrow: 'OPENCODE · ANONYMOUS MODEL', title: 'Space Bunny\nvừa xuất hiện.', sub: 'model ẩn danh mới trên OpenCode' },
+    { at: 5, end: 14, eyebrow: '01 · OFFICIAL FACTS', title: 'Đang cho\ndùng free.', sub: 'space-bunny-free · thời gian giới hạn' },
+    { at: 14, end: 28, eyebrow: '02 · CLAIMS ĐÃ CHECK', title: '1M context.\nMultimodal.', sub: 'retention: 2 nguồn nói khác nhau' },
+    { at: 28, end: 39, eyebrow: '03 · RESEARCH CHECK', title: 'Không có\npaper chính thức.', sub: 'model card · weights · provider đều chưa công khai', size: 84 },
+    { at: 39, end: 50, eyebrow: 'REAL RESULTS ONLY', title: 'Bạn thử\nSpace Bunny?', sub: 'Chọn một task nhỏ và tự đo kết quả.' }
+  ];
+  const TONES = ['#7aa2ff', '#55e6a5', '#ffcc66', '#7aa2ff', '#ff9b54'];
+  const stars = Array.from({length: 100}, (_, i) => ({x:(i*83)%W, y:(i*197)%H, r:1+(i%3), a:.15+(i%5)*.08, p:(i%7)/7}));
+  const ease = t => t<.5 ? 2*t*t : 1-Math.pow(-2*t+2,2)/2;
+  const clamp = (v,a=0,b=1) => Math.max(a,Math.min(b,v));
+  function beatAt(t) { return beats.findIndex(b => t >= b.at && t < b.end); }
+  function roundRect(x,y,w,h,r,fill,stroke) {
+    ctx.beginPath(); ctx.roundRect(x,y,w,h,r);
+    if(fill){ctx.fillStyle=fill;ctx.fill();}
+    if(stroke){ctx.strokeStyle=stroke;ctx.lineWidth=2;ctx.stroke();}
+  }
+  function text(str,x,y,size,color,weight=700,align='left',font='Arial') {
+    ctx.font=`${weight} ${size}px "${font}", "Segoe UI", sans-serif`;
+    ctx.fillStyle=color;ctx.textAlign=align;ctx.textBaseline='middle';ctx.fillText(str,x,y);
+  }
+  function wrap(str,x,y,maxW,size,color,weight=700,line=1.12,align='left') {
+    ctx.font=`${weight} ${size}px Arial, "Segoe UI", sans-serif`;ctx.fillStyle=color;ctx.textAlign=align;ctx.textBaseline='middle';
+    str.split('\n').forEach((part,pi)=>{
+      const words=part.split(' ');let lineText='';let ly=y+pi*size*line;
+      words.forEach((word,wi)=>{const test=lineText?`${lineText} ${word}`:word;if(ctx.measureText(test).width>maxW&&lineText){ctx.fillText(lineText,x,ly);lineText=word;ly+=size*line;}else lineText=test;});
+      ctx.fillText(lineText,x,ly);
+    });
+  }
+  function pill(label,x,y,color=C.mint) { ctx.font='600 22px ui-monospace, Consolas, monospace';const w=ctx.measureText(label).width+36;roundRect(x,y,w,42,21,color,'#ffffff22');text(label,x+18,y+22,22,C.bg,700,'left','Consolas');return w; }
+  function bunny(x,y,s,t) {
+    ctx.save();ctx.translate(x,y);ctx.scale(s,s);ctx.rotate(Math.sin(t*1.4)*.08);
+    ctx.fillStyle=C.mint;ctx.beginPath();ctx.ellipse(-38,-42,17,45,-.22,0,Math.PI*2);ctx.fill();ctx.beginPath();ctx.ellipse(38,-42,17,45,.22,0,Math.PI*2);ctx.fill();
+    ctx.fillStyle=C.white;ctx.beginPath();ctx.arc(0,10,78,0,Math.PI*2);ctx.fill();
+    ctx.fillStyle=C.bg;ctx.beginPath();ctx.arc(-25,0,9,0,Math.PI*2);ctx.fill();ctx.beginPath();ctx.arc(25,0,9,0,Math.PI*2);ctx.fill();
+    ctx.strokeStyle=C.pink;ctx.lineWidth=7;ctx.beginPath();ctx.arc(0,23,15,0,Math.PI);ctx.stroke();
+    ctx.strokeStyle=C.green;ctx.lineWidth=4;ctx.beginPath();ctx.arc(0,14,96,t*1.4,t*1.4+1.25);ctx.stroke();ctx.restore();
+  }
+  function testMenu(t) {
+    const items=[['01','FIX A BUG','một lỗi cụ thể'],['02','READ A REPO','hiểu codebase'],['03','SHIP A FEATURE','tính năng nhỏ']];
+    items.forEach((item,i)=>{
+      const y=760+i*180;
+      const on=clamp((t-39)/2.5-i*.35);
+      roundRect(130,y,820,140,24,on>.2?C.panel2:C.panel,on>.2?C.orange+'99':C.line);
+      text(item[0],175,y+70,25,on>.2?C.orange:C.muted,700,'left','Consolas');
+      text(item[1],300,y+55,31,on>.2?C.ink:C.muted,700,'left','Consolas');
+      text(item[2],300,y+100,23,C.muted,500,'left','Consolas');
+      if(on>.2) text('›',870,y+70,38,C.green,700);
+    });
+  }
+  function draw(t) {
+    ctx.clearRect(0,0,W,H);ctx.fillStyle=C.bg;ctx.fillRect(0,0,W,H);
+    for(const s of stars){ctx.globalAlpha=s.a*(.65+.35*Math.sin(t*2+s.p*6));ctx.fillStyle=s.r>1?C.mint:C.white;ctx.beginPath();ctx.arc(s.x,s.y,s.r,0,Math.PI*2);ctx.fill();}
+    ctx.globalAlpha=1;
+    const idx=Math.max(0,beatAt(t));const b=beats[idx];
+    const inT=ease(clamp((t-b.at)/.65));const outT=1-ease(clamp((t-(b.end-.5))/.5));
+    ctx.save();ctx.globalAlpha=inT*outT;ctx.translate(0,(1-inT)*24);
+    text(b.eyebrow,84,142,25,TONES[idx],700,'left','Consolas');
+    wrap(b.title,84,290,880,b.size||96,C.ink,800,1.02);
+    text(b.sub,84,545,30,C.muted,500,'left');
+    ctx.restore();
+    if(idx===0){
+      bunny(540,1080,2.6,t);
+      const chips=[['1M CONTEXT',C.blue],['MULTIMODAL',C.mint],['FREE (LIMITED)',C.orange]];
+      ctx.font='600 22px ui-monospace, Consolas, monospace';
+      const cw=chips.map(c=>ctx.measureText(c[0]).width+36);
+      let cx=(1080-(cw.reduce((a,b)=>a+b,0)+24*(chips.length-1)))/2;
+      chips.forEach((c,i)=>{pill(c[0],cx,1470,c[1]);cx+=cw[i]+24;});
+      text('provider ẩn danh · chưa có model card',540,1560,22,C.muted,500,'center','Arial');
+    }
+    if(idx===1){
+      roundRect(84,690,912,560,34,C.panel,'#55e6a588');
+      text('OFFICIAL · OPENCODE',130,750,22,C.green,700,'left','Consolas');
+      text('FREE',130,880,100,C.green,800,'left','Consolas');
+      text('đang cho dùng free',130,995,32,C.ink,700,'left');
+      roundRect(130,1050,820,2,1,C.line);
+      text('MODEL ID',130,1105,20,C.muted,700,'left','Consolas');
+      text('space-bunny-free',380,1105,24,C.ink,700,'left','Consolas');
+      text('ENDPOINT',130,1155,20,C.muted,700,'left','Consolas');
+      text('OpenAI-compatible',380,1155,24,C.ink,700,'left','Consolas');
+      text('GO LIMIT',130,1205,20,C.muted,700,'left','Consolas');
+      text('Unlimited · limited time',380,1205,24,C.ink,700,'left','Consolas');
+    }
+    if(idx===2){
+      roundRect(84,690,912,600,34,C.panel,'#ffcc6688');
+      text('CLAIMS · ĐỐI CHIẾU 4 NGUỒN',130,750,22,C.yellow,700,'left','Consolas');
+      text('1M CONTEXT',130,880,58,C.yellow,800,'left','Consolas');
+      text('MULTIMODAL',130,985,40,C.ink,700,'left','Consolas');
+      text('RETENTION: 2 NGUỒN NÓI KHÁC NHAU',130,1060,26,C.orange,700,'left','Consolas');
+      roundRect(130,1105,820,2,1,C.line);
+      text('Nguồn 1M: OpenCode (X) · OpenRouter (1.0M)',130,1150,22,C.muted,500,'left');
+      text('OpenCode: 0 ngày · OpenRouter: có thể lưu prompt',130,1192,22,C.muted,500,'left');
+      text('Chưa có benchmark độc lập / số liệu raw',130,1234,22,C.muted,500,'left');
+      bunny(900,1420,0.9,t);
+    }
+    if(idx===3){
+      roundRect(84,690,912,560,34,C.panel,'#7aa2ff88');
+      text('RESEARCH LEDGER',130,750,22,C.blue,700,'left','Consolas');
+      roundRect(130,790,820,2,1,C.line);
+      text('PAPER',130,880,20,C.muted,700,'left','Consolas');
+      text('chưa thấy',130,932,38,C.orange,700,'left');
+      text('MODEL CARD',570,880,20,C.muted,700,'left','Consolas');
+      text('chưa thấy',570,932,38,C.orange,700,'left');
+      text('PROVIDER',130,1060,20,C.muted,700,'left','Consolas');
+      text('ẩn danh',130,1112,38,C.pink,700,'left');
+      text('WEIGHTS',570,1060,20,C.muted,700,'left','Consolas');
+      text('chưa thấy',570,1112,38,C.orange,700,'left');
+      roundRect(130,1160,820,2,1,C.line);
+      text('Kết luận: chỉ tin phần tự test được.',130,1200,22,C.muted,500,'left');
+    }
+    if(idx===4){
+      testMenu(t);
+      bunny(900,620,1.0,t);
+      roundRect(84,1330,912,300,34,C.panel,'#c8f6f977');
+      text('CHIA SẺ KẾT QUẢ THẬT',130,1390,22,C.orange,700,'left','Consolas');
+      wrap('Bạn thử task nào?\nMình muốn xem kết quả.',130,1465,800,44,C.ink,700,1.15);
+      text('SPACE BUNNY · OPENCODE',130,1590,22,C.mint,700,'left','Consolas');
+    }
+    ctx.fillStyle='#ffffff10';for(let y=0;y<H;y+=8)ctx.fillRect(0,y,W,1);
+    roundRect(84,1800,912,6,3,C.line);roundRect(84,1800,912*clamp(t/50),6,3,C.green);
+    text(`${String(Math.floor(t)).padStart(2,'0')}s`,84,1850,20,C.muted,700,'left','Consolas');text('SPACE BUNNY · OPENCODE · SOURCES CHECKED',996,1850,17,C.muted,700,'right','Consolas');
+  }
+  window.__spaceBunny = { duration:50, width:W, height:H, draw, beats, freeze:false };
+  let start=performance.now();
+  function frame(now){if(!window.__spaceBunny.freeze)draw((now-start)/1000);requestAnimationFrame(frame);}requestAnimationFrame(frame);
+})();
+</script>
+</body>
+</html>

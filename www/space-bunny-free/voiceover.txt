@@ -1,0 +1,7 @@
+Space Bunny vừa xuất hiện trên OpenCode. Một model ẩn danh. Model id là space-bunny-free. Đang cho dùng miễn phí, trong thời gian giới hạn. Endpoint tương thích OpenAI, không giới hạn lượt dùng. OpenCode và OpenRouter đều ghi một triệu token context, hỗ trợ multimodal. Nhưng retention thì hai nguồn nói khác nhau: OpenCode ghi zero ngày, còn OpenRouter nói prompt có thể được lưu lại. Chưa có paper, model card, weights, hay tên provider chính thức. Nên chỉ tin phần mình tự test được. Hãy tự đo trên task của bạn. Sửa bug, đọc repo, hoặc xây một tính năng nhỏ. Kết quả thế nào thì chia sẻ cho mình biết nhé. Bạn sẽ thử Space Bunny với task nào?
+
+---
+Giọng: Hải Đăng (VieNeu-TTS v3 Turbo, 48 kHz) · engine: www/space-bunny-free/tts-vieneu.py
+Lời cắt theo beat + chèn khoảng nghỉ: www/space-bunny-free/voiceover-segments.json
+File đã ghép: www/space-bunny-free/voiceover-hai-dang-50s.wav (50.0 s, 35.2 s có tiếng)
+Lệnh: D:\CLAUDE_VS\.venv-tts\Scripts\python.exe www\space-bunny-free\tts-vieneu.py --segments www\space-bunny-free\voiceover-segments.json --out www\space-bunny-free\voiceover-hai-dang-50s.wav
