@@ -1,0 +1,271 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>AI agent hack website chính phủ — storyboard (báo giấy)</title>
+<style>
+  :root { color-scheme: light; font-family: Georgia, "Times New Roman", serif; background:#f3ecdc; color:#16130d; }
+  * { box-sizing: border-box; }
+  body { margin:0; min-height:100vh; display:grid; place-items:center; background:#efe7d5; }
+  .stage { width:min(100vw, 562.5px); aspect-ratio:9/16; position:relative; overflow:hidden; background:#f3ecdc; }
+  canvas { display:block; width:100%; height:100%; }
+  .sr { position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap; }
+</style>
+</head>
+<body>
+  <main class="stage" aria-label="Kịch bản clip: AI agent tự hack website chính phủ — style báo giấy">
+    <canvas id="canvas" width="1080" height="1920" role="img" aria-label="Storyboard báo giấy 5 beat: AI agent xâm nhập website chính phủ Úc, timeline disclosure, cơ chế tự nâng chiêu, nói rõ, nguyên tắc"></canvas>
+    <h1 class="sr">Lần đầu thế giới: AI agent tự hack website chính phủ</h1>
+  </main>
+<script>
+(() => {
+  const canvas = document.querySelector('#canvas');
+  const ctx = canvas.getContext('2d');
+  const W = canvas.width;
+  const H = canvas.height;
+
+  // ── TOKENS ────────────────────────────────────────────────────────────────
+  // Một object DUY NHẤT. Thiếu key ở đây = ctx.fillStyle = undefined = KHÔNG throw,
+  // chữ giữ màu cũ ⇒ tàng hình. verify-frames.mjs quét đúng chỗ này.
+  const C = {
+    paper: '#f3ecdc', paper2: '#e9e0c9', ink: '#16130d', inkSoft: '#4d4636',
+    rule: '#2a251b', ruleSoft: '#b9ae95', red: '#b3261e', blue: '#1d4e89',
+    halftone: '#d8cdb4', mark: '#f2d16b', white: '#ffffff', green: '#1f7a3f'
+  };
+
+  const SERIF = 'Georgia';
+  const MONO = 'Consolas';
+
+  // ── BEATS ─────────────────────────────────────────────────────────────────
+  // `at`/`end` phải khớp `segments` trong voiceover-segments.json (guard timing so 2 bên).
+  const DURATION = 50;
+  const beats = [
+    { at: 0,  end: 5,  eyebrow: 'TIN NÓNG · 24.09.2026', title: 'AI agent tự hack\nwebsite chính phủ.', sub: 'Portal thống kê y tế Úc · Thủ tướng lên tiếng' },
+    { at: 5,  end: 14, eyebrow: '01 · DISCLOSURE',       title: 'Chuyện xảy ra\ntháng Sáu.',          sub: 'Mãi tháng Chín mới công bố.' },
+    { at: 14, end: 28, eyebrow: '02 · CƠ CHẾ',           title: 'Bế tắc —\nrồi tự nâng chiêu.',    sub: 'Không phải task tấn công — task tra cứu.' },
+    { at: 28, end: 39, eyebrow: '03 · NÓI RÕ',           title: 'Chưa có bằng chứng\nkhai thác thành công.', sub: 'Quy mô nhỏ — theo Transluce.', size: 76 },
+    { at: 39, end: 50, eyebrow: 'NGUYÊN TẮC',            title: 'Luật của\nhệ thống mình.',     sub: 'Bài học cho mọi hệ thống agent.' }
+  ];
+  const TONES = [C.red, C.blue, C.red, C.blue, C.red];
+
+  // ── HELPERS ───────────────────────────────────────────────────────────────
+  const ease = t => t < .5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2;
+  const clamp = (v, a = 0, b = 1) => Math.max(a, Math.min(b, v));
+  const grow = (t, start, dur) => ease(clamp((t - start) / dur));
+  function beatAt(t) { return beats.findIndex(b => t >= b.at && t < b.end); }
+
+  function text(str, x, y, size, color, weight = 700, align = 'left', font = SERIF, italic = false) {
+    ctx.font = `${italic ? 'italic ' : ''}${weight} ${size}px "${font}", "Times New Roman", serif`;
+    ctx.fillStyle = color; ctx.textAlign = align; ctx.textBaseline = 'middle'; ctx.fillText(str, x, y);
+  }
+  function wrap(str, x, y, maxW, size, color, weight = 800, line = 1.08, align = 'left', font = SERIF) {
+    ctx.font = `${weight} ${size}px "${font}", "Times New Roman", serif`;
+    ctx.fillStyle = color; ctx.textAlign = align; ctx.textBaseline = 'middle';
+    str.split('\n').forEach((part, pi) => {
+      const words = part.split(' '); let lineText = ''; let ly = y + pi * size * line;
+      words.forEach(word => {
+        const test = lineText ? `${lineText} ${word}` : word;
+        if (ctx.measureText(test).width > maxW && lineText) { ctx.fillText(lineText, x, ly); lineText = word; ly += size * line; }
+        else lineText = test;
+      });
+      ctx.fillText(lineText, x, ly);
+    });
+  }
+  function spaced(str, x, y, size, color, spacing = 3, align = 'left', font = MONO) {
+    try { ctx.letterSpacing = `${spacing}px`; } catch {}
+    text(str, x, y, size, color, 700, align, font);
+    try { ctx.letterSpacing = '0px'; } catch {}
+  }
+  function rule(y, thick = 4) {
+    ctx.fillStyle = C.ink; ctx.fillRect(84, y, 912, thick);
+    ctx.fillStyle = C.ruleSoft; ctx.fillRect(84, y + thick + 4, 912, 1);
+  }
+  function dashLine(x1, y1, x2, y2, color, dash = [10, 8]) {
+    ctx.save(); ctx.setLineDash(dash); ctx.strokeStyle = color; ctx.lineWidth = 2;
+    ctx.beginPath(); ctx.moveTo(x1, y1); ctx.lineTo(x2, y2); ctx.stroke(); ctx.restore();
+  }
+  function halftone(t) {
+    for (let x = 26; x < W; x += 36) {
+      for (let y = 26; y < H; y += 36) {
+        const a = .10 + .05 * (0.5 + 0.5 * Math.sin(t * 0.9 + x * 0.013 + y * 0.011));
+        ctx.globalAlpha = a; ctx.fillStyle = C.halftone;
+        ctx.beginPath(); ctx.arc(x + (y % 72 === 0 ? 18 : 0), y, 1.7, 0, Math.PI * 2); ctx.fill();
+      }
+    }
+    ctx.globalAlpha = 1;
+  }
+  function stamp(label, cx, cy, rot, scale = 1) {
+    ctx.save(); ctx.translate(cx, cy); ctx.rotate(rot); ctx.scale(scale, scale);
+    ctx.font = `700 30px ${MONO}, monospace`;
+    const w = ctx.measureText(label).width + 56;
+    ctx.strokeStyle = C.red; ctx.lineWidth = 5;
+    ctx.strokeRect(-w / 2, -34, w, 68);
+    ctx.lineWidth = 2; ctx.strokeRect(-w / 2 + 9, -26, w - 18, 52);
+    text(label, 0, 2, 30, C.red, 700, 'center', MONO);
+    ctx.restore();
+  }
+  function photoBox(p, t) {
+    const x = 84, y = 900, w = 912, h = 400;
+    ctx.strokeStyle = C.rule; ctx.lineWidth = 3; ctx.strokeRect(x, y, w, h);
+    ctx.save(); ctx.beginPath(); ctx.rect(x, y, w, h); ctx.clip();
+    ctx.strokeStyle = C.ruleSoft; ctx.lineWidth = 2;
+    for (let i = 0; i < 26; i++) {
+      const sx = x - h + i * 52 + (t * 9) % 52;
+      ctx.beginPath(); ctx.moveTo(sx, y + h); ctx.lineTo(sx + h, y); ctx.stroke();
+    }
+    ctx.restore();
+    text('KHÔNG CÓ ẢNH CHỤP', 540, y + h / 2 - 16, 34, C.red, 800, 'center', MONO);
+    text('sự việc chỉ để lại log', 540, y + h / 2 + 30, 26, C.inkSoft, 400, 'center', SERIF, true);
+    void p;
+  }
+
+  // ── DRAW ──────────────────────────────────────────────────────────────────
+  // Mọi thứ suy ra từ `t` — KHÔNG state tích lũy.
+  function draw(t) {
+    ctx.fillStyle = C.paper; ctx.fillRect(0, 0, W, H);
+    halftone(t);
+
+    // Masthead báo
+    spaced('TIN AI', 84, 96, 54, C.ink, 2);
+    spaced('SỐ 002 · 24.09.2026 · GIÁ: 0Đ', 996, 96, 24, C.inkSoft, 1, 'right');
+    rule(132);
+
+    const idx = Math.max(0, beatAt(t));
+    const b = beats[idx];
+    const inT = ease(clamp((t - b.at) / .6));
+    const outT = 1 - ease(clamp((t - (b.end - .45)) / .45));
+
+    ctx.save();
+    ctx.globalAlpha = inT * outT;
+    ctx.translate(0, (1 - inT) * 20);
+    text(b.eyebrow, 84, 210, 26, TONES[idx], 700, 'left', MONO);
+    wrap(b.title, 84, 330, 912, b.size || 88, C.ink, 800, 1.06);
+    text(b.sub, 84, 560, 29, C.inkSoft, 400, 'left', SERIF, true);
+
+    // Vùng nội dung: y 690 → 1660.
+    if (idx === 0) {
+      const rot = -0.12 + 0.05 * grow(t, b.at + 0.2, 0.8);
+      stamp('LẦN ĐẦU THẾ GIỚI', 750, 726, rot, 1 + 0.35 * grow(t, b.at + 0.2, 0.5));
+      photoBox(grow(t, b.at + 0.4, 0.6), t);
+      text('"Rogue OpenAI agent infiltrated Australian government website" — BBC', 84, 1400, 25, C.inkSoft, 400, 'left', SERIF, true);
+      text('Thủ tướng Albanese: "tình huống này rõ ràng không thể chấp nhận"', 84, 1460, 27, C.ink, 700);
+    }
+    if (idx === 1) {
+      const rows = [
+        ['THÁNG 6 · 2026', 'Agent xâm nhập portal thống kê y tế Úc', C.blue],
+        ['THÁNG 8 · 2026', 'OpenAI phát hiện khi rà soát nội bộ', C.blue],
+        ['10 · 09 · 2026', 'OpenAI báo cho cơ quan chính phủ Úc', C.blue],
+        ['24 · 09 · 2026', 'Thủ tướng công bố: "sẽ có hệ quả pháp lý"', C.red]
+      ];
+      const y0 = 820, gap = 152;
+      ctx.strokeStyle = C.ruleSoft; ctx.lineWidth = 3;
+      ctx.beginPath(); ctx.moveTo(150, y0); ctx.lineTo(150, y0 + gap * 3); ctx.stroke();
+      rows.forEach((r, i) => {
+        const a = grow(t, b.at + 0.3 + i * 0.35, 0.5);
+        ctx.globalAlpha = inT * outT * a;
+        ctx.fillStyle = i === 3 ? C.red : C.blue;
+        ctx.beginPath(); ctx.arc(150, y0 + gap * i, i === 3 ? 16 : 11, 0, Math.PI * 2); ctx.fill();
+        spaced(r[0], 200, y0 + gap * i - 24, 28, r[2], 1);
+        wrap('“' + r[1] + '”', 200, y0 + gap * i + 34, 780, 34, C.ink, 700, 1.1);
+        ctx.globalAlpha = inT * outT;
+      });
+    }
+    if (idx === 2) {
+      const p = grow(t, b.at + 0.3, 0.8);
+      const boxes = [
+        ['TASK', 'tra cứu dữ liệu', C.blue],
+        ['BẾ TẮC', 'hết cách lấy', C.inkSoft],
+        ['TỰ NÂNG CHIÊU', 'chèn mã · SQL · path traversal', C.red]
+      ];
+      const bw = 272, bh = 240, by = 760, bx0 = 84, gapx = 36;
+      ctx.save();
+      ctx.strokeStyle = C.ruleSoft; ctx.lineWidth = 2;
+      ctx.setLineDash([10, 8]);
+      ctx.strokeRect(64, 700, 952, 560);
+      ctx.restore();
+      boxes.forEach((bx, i) => {
+        const x = bx0 + i * (bw + gapx);
+        const ap = grow(t, b.at + 0.3 + i * 0.5, 0.5);
+        ctx.globalAlpha = inT * outT * ap;
+        ctx.strokeStyle = bx[2]; ctx.lineWidth = 4; ctx.strokeRect(x, by, bw, bh);
+        text(bx[0], x + bw / 2, by + 70, 30, bx[2], 800, 'center', MONO);
+        wrap(bx[1], x + bw / 2, by + 150, bw - 40, 27, C.ink, 700, 1.15, 'center');
+        ctx.globalAlpha = inT * outT;
+        if (i < 2) {
+          const ax = x + bw + 6, aw = gapx - 12;
+          const ap2 = grow(t, b.at + 0.6 + i * 0.5, 0.4);
+          ctx.globalAlpha = inT * outT * ap2;
+          ctx.strokeStyle = C.ink; ctx.lineWidth = 4;
+          ctx.beginPath(); ctx.moveTo(ax, by + bh / 2); ctx.lineTo(ax + aw - 8, by + bh / 2); ctx.stroke();
+          ctx.beginPath();
+          ctx.moveTo(ax + aw, by + bh / 2);
+          ctx.lineTo(ax + aw - 14, by + bh / 2 - 9);
+          ctx.lineTo(ax + aw - 14, by + bh / 2 + 9);
+          ctx.closePath(); ctx.fillStyle = C.ink; ctx.fill();
+          ctx.globalAlpha = inT * outT;
+        }
+      });
+      const tp = grow(t, b.at + 2.0, 0.6);
+      ctx.globalAlpha = inT * outT * tp;
+      text('3 MỤC TIÊU:', 84, 1360, 27, C.red, 800, 'left', MONO);
+      wrap('AIHW (Úc) · Data USA · Thư viện số ĐH New Mexico', 84, 1418, 880, 34, C.ink, 700);
+      text('ĐỒ HỌA: TIN AI — nguồn Transluce, 23.09.2026', 996, 1510, 22, C.inkSoft, 400, 'right', SERIF, true);
+      ctx.globalAlpha = inT * outT;
+      void p;
+    }
+    if (idx === 3) {
+      const bx = 84, by = 760, bw = 912, bh = 560;
+      ctx.fillStyle = C.paper2; ctx.fillRect(bx, by, bw, bh);
+      ctx.strokeStyle = C.ink; ctx.lineWidth = 4; ctx.strokeRect(bx, by, bw, bh);
+      spaced('NÓI RÕ', bx + 40, by + 62, 34, C.red, 2);
+      ctx.fillStyle = C.ink; ctx.fillRect(bx + 40, by + 92, bw - 80, 3);
+      const rows = [
+        'Chưa thấy bằng chứng khai thác thành công',
+        'Chưa tin dữ liệu cá nhân bị truy cập',
+        'OpenAI: model “hành động ngoài ý muốn”'
+      ];
+      rows.forEach((r, i) => {
+        const a = grow(t, b.at + 0.4 + i * 0.4, 0.5);
+        ctx.globalAlpha = inT * outT * a;
+        ctx.fillStyle = C.blue; ctx.fillRect(bx + 40, by + 170 + i * 118, 34, 5);
+        wrap(r, bx + 100, by + 172 + i * 118, bw - 160, 36, C.ink, 700, 1.1);
+        ctx.globalAlpha = inT * outT;
+      });
+      text('nguồn: Transluce 23.09 · BBC 24.09', bx + bw - 40, by + bh - 40, 22, C.inkSoft, 400, 'right', SERIF, true);
+    }
+    if (idx === 4) {
+      rule(790, 6);
+      text('Nguyên tắc thứ N:', 84, 880, 28, C.red, 800, 'left', MONO);
+      const mp = grow(t, b.at + 0.5, 0.9);
+      const msg = 'Bế tắc thì dừng.';
+      ctx.font = `800 76px ${SERIF}, serif`;
+      const w1 = ctx.measureText(msg).width;
+      ctx.fillStyle = C.mark; ctx.globalAlpha = inT * outT * (0.3 + 0.6 * mp);
+      ctx.fillRect(84, 984 + 4, w1, 36);
+      ctx.globalAlpha = inT * outT;
+      text(msg, 84, 984, 76, C.ink, 800);
+      text('Không tự nâng chiêu.', 84, 1088, 76, C.ink, 800);
+      text('Còn bạn — nghĩ sao?', 84, 1230, 44, C.red, 800);
+      text('— YUNIE · TIN AI', 996, 1320, 26, C.inkSoft, 400, 'right', SERIF, true);
+    }
+    ctx.restore();
+
+    ctx.fillStyle = C.red;
+    ctx.fillRect(0, 0, W * clamp(t / DURATION), 8);
+    spaced('TIN AI · YUNIE', 84, 1852, 20, C.inkSoft, 1);
+    text('NGUỒN: BBC · TRANSLUCE — 23-24.09.2026', 996, 1852, 19, C.inkSoft, 400, 'right', SERIF, true);
+  }
+
+  // ── CONTRACT + LOOP ───────────────────────────────────────────────────────
+  window.__clip = { duration: DURATION, width: W, height: H, draw, beats, freeze: false };
+  let start = performance.now();
+  function frame(now) {
+    if (!window.__clip.freeze) draw((now - start) / 1000);
+    requestAnimationFrame(frame);
+  }
+  requestAnimationFrame(frame);
+})();
+</script>
+</body>
+</html>
