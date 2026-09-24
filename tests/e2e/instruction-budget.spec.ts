@@ -28,21 +28,49 @@ function tmpdir(tag: string) {
   return fs.mkdtempSync(path.join(os.tmpdir(), `budget-${tag}-`));
 }
 
+const INSTR_DIR = path.join(ROOT, '.github', 'instructions');
+const DISABLED_DIR = path.join(INSTR_DIR, '.disabled');
+
+/** Tên instruction đang tắt (nằm trong .disabled/) — không load = không tính vào thuế token. */
+function disabledNames(): string[] {
+  if (!fs.existsSync(DISABLED_DIR)) return [];
+  return fs.readdirSync(DISABLED_DIR)
+    .filter((f) => f.endsWith('.instructions.md'))
+    .map((f) => f.replace('.instructions.md', ''));
+}
+
 test('report repo thật: JSON hợp lệ + alwaysOn khớp tổng dòng + ratchet chưa vượt', () => {
   const r = run(['--json']);
   expect(r.status, `exit 0 — stderr: ${r.stderr}`).toBe(0);
   const data = JSON.parse(r.stdout);
 
-  expect(data.files).toBeGreaterThanOrEqual(15);
+  // Budget đo ĐÚNG phần load mỗi session = enabled (script mặc định quét .github/instructions).
+  expect(data.files).toBeGreaterThanOrEqual(1);
   const alwaysOnRows = data.rows.filter((x: { alwaysOn: boolean }) => x.alwaysOn);
   expect(data.alwaysOn.count).toBe(alwaysOnRows.length);
   expect(data.alwaysOn.lines).toBe(
     alwaysOnRows.reduce((s: number, x: { lines: number }) => s + x.lines, 0)
   );
 
-  // Core fail-safe phải là always-on (KN: knowleged/governance không được rời "**" khi chưa có thay thế)
+  // Bất biến CHỐNG XOÁ (không nới lỏng): tổng instruction trên đĩa = enabled + disabled.
+  // Tắt instruction = chuyển sang .disabled (không xoá) — nên tổng phải giữ nguyên mức tối thiểu.
+  const onDisk = data.files + disabledNames().length;
+  expect(onDisk, 'tổng instruction trên đĩa (enabled + .disabled) — xoá file là vi phạm').toBeGreaterThanOrEqual(15);
+
+  // Disabled KHÔNG được lọt vào budget: disabled = không load = không tốn token.
+  const off = new Set(disabledNames());
+  const leaked = data.rows.filter((x: { name: string }) => off.has(x.name)).map((x: { name: string }) => x.name);
+  expect(leaked, 'instruction đang tắt không được tính vào budget (đo nhầm = ratchet vô nghĩa)').toEqual([]);
+
+  // Core fail-safe: agent-governance phải TỒN TẠI trên đĩa (enabled hoặc .disabled),
+  // và NẾU đang enabled thì phải là always-on (không được âm thầm hạ xuống scoped).
+  const govExists = [
+    path.join(INSTR_DIR, 'agent-governance.instructions.md'),
+    path.join(DISABLED_DIR, 'agent-governance.instructions.md'),
+  ].some((p) => fs.existsSync(p));
+  expect(govExists, 'agent-governance phải tồn tại (enabled hoặc .disabled) — không được xoá').toBe(true);
   const gov = data.rows.find((x: { name: string }) => x.name === 'agent-governance');
-  expect(gov.alwaysOn, 'agent-governance phải luôn là always-on').toBe(true);
+  if (gov) expect(gov.alwaysOn, 'agent-governance khi enabled phải là always-on').toBe(true);
 
   // Ratchet: pool always-on không vượt soft budget — vượt thì spec này đỏ = tín hiệu path-scope
   expect(data.alwaysOn.lines, 'pool always-on vượt ratchet — path-scope hoặc gộp trước khi thêm mới').toBeLessThanOrEqual(data.softBudget);

@@ -10,12 +10,62 @@ import { pathToFileURL } from 'node:url';
  * Regression bắt được: comma đôi sinh phần tử rỗng (`- ""` trong paths) + không lưới nào
  * phủ `splitGlobs`. Spec khoá 3 mắt xích:
  *  1. splitGlobs unit (qua node con — module có main-guard, import không chạy CLI)
- *  2. output thật `.claude/rules/`: scoped → paths list đúng · always-on → không frontmatter
+ *  2. output thật `.claude/rules/` suy từ registry (enabled) + applyTo trong file nguồn
+ *     — bật/tắt instruction không còn làm đỏ oan (amend 2026-09-24)
  *  3. CLI vẫn sống sau main-guard (import-guard không được làm chết entrypoint)
  */
 
 const ROOT = process.cwd();
 const MOD = path.join(ROOT, '.github', 'harness', 'scripts', 'harness-manager.mjs');
+const INSTR_DIR = path.join(ROOT, '.github', 'instructions');
+
+function read(f: string): string {
+  return fs.readFileSync(path.join(ROOT, '.claude', 'rules', f), 'utf8');
+}
+
+/** applyTo khai trong FILE NGUỒN (không dùng registry.applyTo — field đó còn cũ, xem KN-045). */
+function sourceApplyTo(name: string): string {
+  const p = path.join(INSTR_DIR, `${name}.instructions.md`);
+  if (!fs.existsSync(p)) return '';
+  const fm = (fs.readFileSync(p, 'utf8').match(/^---\r?\n([\s\S]*?)\r?\n---/) || [])[1] || '';
+  return (fm.match(/^applyTo:\s*"?(.*?)"?\s*$/m) || [])[1] || '**';
+}
+
+/** So 1 rule đã xuất với kỳ vọng suy từ applyTo nguồn; trả '' nếu khớp. */
+function ruleProblem(name: string, content: string): string {
+  const applyTo = sourceApplyTo(name);
+  if (applyTo === '**') {
+    return content.startsWith('---') ? `always-on lại có frontmatter: ${name}.md` : '';
+  }
+  // paths list phải bằng đúng splitGlobs(applyTo) — cùng hàm exporter dùng
+  const expected = runSplitGlobs([applyTo])[0];
+  const actual = [...content.matchAll(/^\s*-\s*"(.*)"$/gm)].map((m) => m[1]);
+  if (JSON.stringify(actual) === JSON.stringify(expected)) return '';
+  return `${name}.md paths lệch: nhận ${JSON.stringify(actual)} ≠ ${JSON.stringify(expected)}`;
+}
+
+/** Thu mọi lệch giữa .claude/rules/ và registry (enabled) + applyTo trong file nguồn. */
+function collectRuleProblems(): string[] {
+  const rulesDir = path.join(ROOT, '.claude', 'rules');
+  const registry = JSON.parse(fs.readFileSync(path.join(ROOT, '.github/harness/registry.json'), 'utf8'));
+  const entries = Object.entries<{ enabled?: boolean }>(registry.instructions || {});
+  const problems: string[] = [];
+  for (const [name, entry] of entries) {
+    const rulePath = path.join(rulesDir, `${name}.md`);
+    const exists = fs.existsSync(rulePath);
+    if (entry.enabled === false) {
+      if (exists) problems.push(`disabled nhưng vẫn xuất: ${name}.md`);
+      continue;
+    }
+    if (!exists) {
+      problems.push(`enabled nhưng thiếu rule: ${name}.md`);
+      continue;
+    }
+    const problem = ruleProblem(name, fs.readFileSync(rulePath, 'utf8'));
+    if (problem) problems.push(problem);
+  }
+  return problems;
+}
 
 function runSplitGlobs(cases: string[]): string[][] {
   const code = [
@@ -39,12 +89,14 @@ test('splitGlobs: tách comma top-level, giữ {} nguyên khối, bỏ phần t�
   expect(out[6]).toEqual(['{a,b']); // { không đóng → không tách (an toàn, không crash)
 });
 
-test('export thật: rule scoped có paths list đúng, always-on không frontmatter', () => {
-  const read = (f: string) => fs.readFileSync(path.join(ROOT, '.claude', 'rules', f), 'utf8');
+test('export thật: mọi instruction ENABLED có rule khớp applyTo nguồn, DISABLED không xuất', () => {
+  // Guard KN-056 (bản 2026-09-24): trước đây test hardcode tên 4 file → đỏ oan mỗi lần
+  // bật/tắt instruction. Bản này suy ra kỳ vọng từ registry (enabled) + applyTo trong
+  // FILE NGUỒN (không dùng registry.applyTo — field đó còn cũ, xem KN-045).
+  expect(collectRuleProblems(), 'export .claude/rules lệch registry/nguồn').toEqual([]);
+
+  // Ca hồi quy cụ thể của guard gốc 18/09: applyTo comma top-level → paths list 2 dòng.
   expect(read('yunie-personality.md')).toContain('paths:\n  - "www/yunie-chat/**"\n  - ".github/agents/**"');
-  expect(read('platform-seam.md')).toContain('paths:\n  - ".agent/**"\n  - "www/components/**"');
-  expect(read('cosmic-quantum.md')).toContain('paths:\n  - ".agent/plans/**"\n  - "www/cosmos/**"\n  - "www/cosmos.html"');
-  expect(read('agent-governance.md').startsWith('<!--'), 'always-on ("**") không được có frontmatter paths').toBe(true);
 });
 
 test('main-guard: CLI vẫn chạy khi gọi trực tiếp (status exit 0 + có output)', () => {

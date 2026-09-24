@@ -1,54 +1,54 @@
 {
-  "generatedAt": "2026-09-22T17:26:51.101Z",
+  "generatedAt": "2026-09-23T17:58:34.857Z",
   "generatedBy": "cosmic-scale.mjs",
   "entropy": {
-    "S": 0,
+    "S": 8,
     "level": "low",
     "advice": "Vũ trụ ổn định — giữ nhịp audit + generate-status đều.",
     "parts": {
       "mismatch": 0,
       "drafts": 0,
       "refused": 0,
-      "disabled": 0,
+      "disabled": 8,
       "failed": 0,
-      "refusedProbes": 31
+      "refusedProbes": 20
     }
   },
   "darkEnergy": {
     "D": 1,
-    "dissentRatio": 0.94,
-    "plansTotal": 35,
-    "plansWithDissent": 33,
+    "dissentRatio": 0.95,
+    "plansTotal": 38,
+    "plansWithDissent": 36,
     "plansLegacy": 49,
     "advice": "Dark energy vừa phải — các plan mới thêm Dissent Review gate (KN-018) để chống decollaboration."
   },
   "gravity": {
     "G": 9,
     "level": "high",
-    "cutRatio": 0.89,
-    "plansTotal": 35,
-    "plansWithCut": 31,
+    "cutRatio": 0.87,
+    "plansTotal": 38,
+    "plansWithCut": 33,
     "plansLegacy": 49,
     "advice": "Gravity mạnh — đa số PRD có dòng CẮT/YAGNI: scope được kiểm soát tốt."
   },
   "darkMatter": {
-    "M": 0,
-    "level": "low",
-    "advice": "Vật chất tối thấp — registry nhìn thấy gần hết vũ trụ.",
+    "M": 8,
+    "level": "medium",
+    "advice": "Vật chất tối vừa phải — có file/hành tinh registry không nhìn thấy: chạy harness-manager sync hoặc gỡ orphan.",
     "orphans": [],
     "orphanCount": 0,
-    "disabledGalaxies": 0
+    "disabledGalaxies": 8
   },
   "counts": {
-    "knTotal": 73,
-    "bugsTotal": 55,
-    "auditTotal": 285
+    "knTotal": 74,
+    "bugsTotal": 61,
+    "auditTotal": 347
   },
   "capability": {
-    "kn": 73,
-    "skills": 20,
-    "e2eSpecs": 45,
-    "e2eTests": 244,
+    "kn": 74,
+    "skills": 21,
+    "e2eSpecs": 48,
+    "e2eTests": 268,
     "guards": 14
   },
   "mismatches": [],
@@ -71,12 +71,6 @@
     "ok": true
   },
   "history": [
-    {
-      "t": "2026-09-08T16:58:37.379Z",
-      "S": 0,
-      "level": "low",
-      "M": 0
-    },
     {
       "t": "2026-09-10T17:35:03.799Z",
       "S": 0,
@@ -427,22 +421,34 @@
         "e2eTests": 244,
         "guards": 14
       }
+    },
+    {
+      "t": "2026-09-23T17:58:34.857Z",
+      "S": 8,
+      "level": "low",
+      "M": 8,
+      "D": 1,
+      "G": 9,
+      "C": {
+        "kn": 74,
+        "skills": 21,
+        "e2eSpecs": 48,
+        "e2eTests": 268,
+        "guards": 14
+      }
     }
   ],
   "capabilityDelta": {
-    "kn": 5,
-    "e2eSpecs": 5,
-    "e2eTests": 33
+    "kn": 1,
+    "skills": 1,
+    "e2eSpecs": 3,
+    "e2eTests": 24
   },
   "trend": {
-    "increases": 0,
+    "increases": 1,
     "needed": 3,
     "gate": false,
     "window": [
-      {
-        "t": "2026-09-14T16:31:24.470Z",
-        "S": 14
-      },
       {
         "t": "2026-09-15T16:26:39.442Z",
         "S": 9
@@ -454,6 +460,10 @@
       {
         "t": "2026-09-22T17:26:51.101Z",
         "S": 0
+      },
+      {
+        "t": "2026-09-23T17:58:34.857Z",
+        "S": 8
       }
     ]
   }
