@@ -87,6 +87,52 @@ async function fetchHN(topic = 'AI', days = DAYS) {
   }
 }
 
+// HN top-by-points (Algolia) — bắt các story LỚN mà title không chứa từ khóa topic,
+// vd 2026-09-24: "Claude discovers a novel enzyme system with CRISPR-like repeats" (718 pts)
+// KHÔNG khớp query text "AI" → lọt feed. Lọc bằng AI keyword list với word-boundary.
+const HN_TOP_MIN_POINTS = 150;
+const HN_AI_RE = /\b(ai|llm|llms|gpt|chatgpt|claude|gemini|openai|anthropic|deepmind|agent|agents|neural|robot|robotics|nvidia|copilot|grok|llama|mistral|qwen|deepseek|diffusion|transformer|transformers|superintelligence|alignment|inference|machine learning)\b/i;
+function isAIRelated(h) {
+  return HN_AI_RE.test(`${h.title || ''} ${h.story_text || ''} ${h.url || ''}`);
+}
+function mapHNTopStory(h) {
+  const title = h.title || h.story_title || 'Untitled';
+  const body = h.story_text || h.title || '';
+  const suffix = h.points ? ` — ${h.points} points, ${h.num_comments || 0} comments on HN.` : '';
+  return {
+    id: `hntop-${h.objectID}`,
+    title,
+    summary: body.slice(0, 220) + suffix,
+    source: 'Hacker News',
+    sourceUrl: h.url || `https://news.ycombinator.com/item?id=${h.objectID}`,
+    category: categorize(title, body),
+    date: fmtDate(h.created_at),
+    hot: true,
+    tags: ['HN', 'top'],
+    score: h.points || 0,
+    comments: h.num_comments || 0,
+  };
+}
+
+async function fetchHNTop(days = DAYS) {
+  const filters = [`points>${HN_TOP_MIN_POINTS}`];
+  if (days > 0) filters.push(`created_at_i>${Math.floor(Date.now()/1000) - days*24*60*60}`);
+  const url = `https://hn.algolia.com/api/v1/search?tags=story&numericFilters=${filters.join(',')}&hitsPerPage=60`;
+  console.log(`[HN-top] fetching ${url}`);
+  try {
+    const res = await fetch(url, { headers: { 'User-Agent': 'YUNIE-last30days/1.0' } });
+    if (!res.ok) throw new Error(`HN-top ${res.status}`);
+    const data = await res.json();
+    const all = data.hits || [];
+    const hits = all.filter(isAIRelated);
+    console.log(`[HN-top] got ${hits.length}/${all.length} AI-relevant stories (>= ${HN_TOP_MIN_POINTS} pts)`);
+    return hits.map(mapHNTopStory);
+  } catch (e) {
+    console.warn('[HN-top] failed:', e.message);
+    return [];
+  }
+}
+
 async function fetchGitHubTrendingAI(topic = TOPIC, days = DAYS) {
   let q = encodeURIComponent(topic);
   if (days > 0) {
@@ -314,8 +360,9 @@ async function fetchArxiv(topic = TOPIC, days = DAYS) {
 
 async function main() {
   console.log(`🌐 YUNIE × Last30Days — fetching "${TOPIC}" (${SINCE_LABEL})`);
-  const [hn, gh, dev, rd, ax, hnoon] = await Promise.all([
+  const [hn, hntop, gh, dev, rd, ax, hnoon] = await Promise.all([
     fetchHN(TOPIC, DAYS),
+    fetchHNTop(DAYS),
     fetchGitHubTrendingAI(TOPIC, DAYS),
     fetchDevTo(TOPIC, DAYS),
     fetchReddit(TOPIC, DAYS),
@@ -325,7 +372,7 @@ async function main() {
 
   // Merge and dedupe by title
   const seen = new Set();
-  const merged = [...hn, ...gh, ...dev, ...rd, ...ax, ...hnoon].filter(a => {
+  const merged = [...hntop, ...hn, ...gh, ...dev, ...rd, ...ax, ...hnoon].filter(a => {
     const key = a.title.toLowerCase().slice(0,40);
     if (seen.has(key)) return false;
     seen.add(key);
@@ -346,8 +393,19 @@ async function main() {
     merged.sort((a,b) => (new Date(b.date) - new Date(a.date)) || (b.hot - a.hot) || (b.score - a.score));
   }
 
-  // Keep top 15 — but for self-improving, ensure at least 5 arXiv/self-improving in top 15
-  let fresh = merged.slice(0, 15);
+  // Top 15 theo ngày NHƯNG tối đa 5 tin/ngày — mọi ngày gần đây đều có đại diện.
+  // Fix 2026-09-24: date-desc thuần để ~18 tin 09-24 (cả tin 2-4 điểm) đè hết slot,
+  // "Claude discovers a novel enzyme..." (718 pts, top story 09-23) lọt feed.
+  // Trong ngày, sort sẵn (hot → score) nên tin lớn nhất của mỗi ngày vẫn nổi lên.
+  const CAP_PER_DAY = 5;
+  const dayCount = {};
+  const fresh = [];
+  for (const a of merged) {
+    dayCount[a.date] = (dayCount[a.date] || 0) + 1;
+    if (dayCount[a.date] > CAP_PER_DAY) continue;
+    fresh.push(a);
+    if (fresh.length >= 15) break;
+  }
   if (isSelfImprovingTopic) {
     const arxivInTop = fresh.filter(a => a.source === 'arXiv' || a.category === 'self-improving').length;
     if (arxivInTop < 5) {
@@ -401,7 +459,7 @@ async function main() {
       since: DAYS===0 ? 'không giới hạn' : fmtDate(Date.now() - DAYS*24*60*60*1000),
       days: DAYS,
       sources: ['Hacker News (Algolia, free)', 'GitHub Search (free)', 'DEV.to (free)', 'Reddit r/MachineLearning (free)', 'arXiv (free)', 'HackerNoon RSS (free)', 'Web (Brave/Perplexity when key)'],
-      engine: 'Node.js bridge (no Python 3.12 needed) — HN Algolia + GitHub API + DEV.to + Reddit + arXiv + HackerNoon RSS, scored by upvotes/stars/reactions/likes',
+      engine: 'Node.js bridge (no Python 3.12 needed) — HN Algolia (query + top-by-points) + GitHub API + DEV.to + Reddit + arXiv + HackerNoon RSS, scored by upvotes/stars/reactions/likes',
       skill: 'mvanhorn/last30days-skill v3.23.0 (61k ⭐)',
       note: 'Full Last30Days engine (X/YouTube/TikTok/Polymarket) cần Python 3.12 + API keys. Bridge này dùng 6 nguồn free (HN, GitHub, DEV.to, Reddit, arXiv, HackerNoon), đủ cho ai-news. Cài Python 3.12 để chạy full: python3.12 .github/skills/last30days/scripts/last30days.py "AI" --emit=json',
     },

@@ -1,13 +1,13 @@
 {
-  "generatedAt": "2026-09-24T07:13:02.932Z",
+  "generatedAt": "2026-09-24T14:35:24.509Z",
   "generatedBy": "YUNIE × Last30Days",
   "version": 2,
-  "description": "Tin AI mới nhất — tổng hợp từ Last30Days (HN, GitHub, DEV.to, Reddit, arXiv, HackerNoon) trong 30 ngày qua. Chủ đề: AI. Tự động cập nhật bởi YUNIE.",
+  "description": "Tin AI mới nhất — tổng hợp từ Last30Days (HN, GitHub, DEV.to, Reddit, arXiv, HackerNoon) trong 7 ngày qua. Chủ đề: AI. Tự động cập nhật bởi YUNIE.",
   "last30days": {
     "enabled": true,
     "topic": "AI",
-    "since": "2026-08-25",
-    "days": 30,
+    "since": "2026-09-17",
+    "days": 7,
     "sources": [
       "Hacker News (Algolia, free)",
       "GitHub Search (free)",
@@ -17,7 +17,7 @@
       "HackerNoon RSS (free)",
       "Web (Brave/Perplexity when key)"
     ],
-    "engine": "Node.js bridge (no Python 3.12 needed) — HN Algolia + GitHub API + DEV.to + Reddit + arXiv + HackerNoon RSS, scored by upvotes/stars/reactions/likes",
+    "engine": "Node.js bridge (no Python 3.12 needed) — HN Algolia (query + top-by-points) + GitHub API + DEV.to + Reddit + arXiv + HackerNoon RSS, scored by upvotes/stars/reactions/likes",
     "skill": "mvanhorn/last30days-skill v3.23.0 (61k ⭐)",
     "note": "Full Last30Days engine (X/YouTube/TikTok/Polymarket) cần Python 3.12 + API keys. Bridge này dùng 6 nguồn free (HN, GitHub, DEV.to, Reddit, arXiv, HackerNoon), đủ cho ai-news. Cài Python 3.12 để chạy full: python3.12 .github/skills/last30days/scripts/last30days.py \"AI\" --emit=json"
   },
@@ -55,253 +55,234 @@
   ],
   "articles": [
     {
-      "id": "hn-49826565",
-      "title": "Early rogue AI agent activity and attempts to hack found on urlquery.net",
-      "summary": "Early rogue AI agent activity and attempts to hack found on urlquery.net — 30 points, 13 comments on HN.",
+      "id": "hntop-49827794",
+      "title": "Meta takes down a critical video about meta AI Glasses after filming at Meta",
+      "summary": "Meta takes down a critical video about meta AI Glasses after filming at Meta — 440 points, 253 comments on HN.",
       "source": "Hacker News",
-      "sourceUrl": "https://transluce.org/agent-activity",
-      "category": "safety",
+      "sourceUrl": "https://www.reddit.com/r/facebook/comments/1wotwrk/meta_takes_down_a_critical_video_about_meta_ai/",
+      "category": "big-tech",
       "date": "2026-09-24",
       "hot": true,
       "tags": [
         "HN",
-        "AI",
-        "story",
-        "author_snikolaev"
+        "top"
       ]
     },
     {
-      "id": "hn-49827002",
-      "title": "AI Passport Photo",
-      "summary": "AI Passport Photo — 10 points, 4 comments on HN.",
-      "source": "Hacker News",
-      "sourceUrl": "https://www.aipassportphoto.org/",
+      "id": "hnoon-build-time-syntax-highlighting-with-shiki-and-rehype",
+      "title": "Build-Time Syntax Highlighting With Shiki and Rehype",
+      "summary": "Use Shiki and rehype to highlight Markdown, HTML, and inline code at build time without shipping a syntax-highlighting library to the browser. — by Lucas Tonelli on HackerNoon.",
+      "source": "HackerNoon",
+      "sourceUrl": "https://hackernoon.com/build-time-syntax-highlighting-with-shiki-and-rehype",
+      "category": "safety",
+      "date": "2026-09-24",
+      "hot": true,
+      "tags": [
+        "HackerNoon",
+        "markdown-processing",
+        "AI"
+      ]
+    },
+    {
+      "id": "hnoon-installing-tailscale-on-the-steam-deck",
+      "title": "Installing Tailscale on the Steam Deck",
+      "summary": "Learn how to run Tailscale on Steam Deck without modifying SteamOS partitions, using systemd and system extensions for reliable remote networking. — by ameliepangolin on HackerNoon.",
+      "source": "HackerNoon",
+      "sourceUrl": "https://hackernoon.com/installing-tailscale-on-the-steam-deck",
       "category": "products",
       "date": "2026-09-24",
       "hot": true,
       "tags": [
-        "HN",
-        "AI",
-        "story",
-        "author_wsm123456"
+        "HackerNoon",
+        "tailscale-steam-deck",
+        "AI"
       ]
     },
     {
-      "id": "hn-49826989",
-      "title": "Inferact's Kimi K3 Megakernel hits 700 tok/s on TPU, Beating GPU",
-      "summary": "Inferact's Kimi K3 Megakernel hits 700 tok/s on TPU, Beating GPU — 5 points, 1 comments on HN.",
-      "source": "Hacker News",
-      "sourceUrl": "https://inferact.ai/blog/tpu-megakernels",
+      "id": "hnoon-ai-agents-dont-have-a-timeout-problem-they-have-a-waiting-pr",
+      "title": "AI Agents Don't Have a Timeout Problem. They Have a Waiting Problem.",
+      "summary": "AI agents need more than faster responses. Learn how async execution, queues, callbacks, and durable workflows make long-running agents reliable. — by Atul Kumar on HackerNoon.",
+      "source": "HackerNoon",
+      "sourceUrl": "https://hackernoon.com/ai-agents-dont-have-a-timeout-problem-they-have-a-waiting-problem",
       "category": "products",
       "date": "2026-09-24",
-      "hot": false,
+      "hot": true,
       "tags": [
-        "HN",
-        "AI",
-        "story",
-        "author_xutingl"
+        "HackerNoon",
+        "ai-agents",
+        "AI"
       ]
     },
     {
-      "id": "hn-49826029",
-      "title": "Ask HN: I just talked to an AI-obsessed client, and I need a shower afterwards",
-      "summary": "Just to preface, this isn&#x27;t the typical &quot;Am I being replaced by vibe coding&quot; post.<p>I just had a talk with one of my first ongoing clients, who sort of helped me kickstart my freelancing &quot;career&quot — 5 points, 4 comments on HN.",
-      "source": "Hacker News",
-      "sourceUrl": "https://news.ycombinator.com/item?id=49826029",
-      "category": "products",
-      "date": "2026-09-24",
-      "hot": false,
-      "tags": [
-        "HN",
-        "AI",
-        "story",
-        "author_platevoltage"
-      ]
-    },
-    {
-      "id": "hn-49825855",
-      "title": "The AI Build-Out Is Becoming the Biggest Economic Bet in U.S. History",
-      "summary": "The AI Build-Out Is Becoming the Biggest Economic Bet in U.S. History — 4 points, 3 comments on HN.",
-      "source": "Hacker News",
-      "sourceUrl": "https://www.wsj.com/economy/the-ai-build-out-is-becoming-the-biggest-economic-bet-in-u-s-history-c60716dd",
-      "category": "products",
-      "date": "2026-09-24",
-      "hot": false,
-      "tags": [
-        "HN",
-        "AI",
-        "story",
-        "author_AnodicElegy"
-      ]
-    },
-    {
-      "id": "hn-49827140",
-      "title": "It took 20 yrs to start regulating social media – will AI controls come sooner?",
-      "summary": "It took 20 yrs to start regulating social media – will AI controls come sooner? — 3 points, 2 comments on HN.",
-      "source": "Hacker News",
-      "sourceUrl": "https://www.rnz.co.nz/news/business/1557652/it-took-20-years-to-start-regulating-social-media-will-ai-controls-come-sooner",
-      "category": "products",
-      "date": "2026-09-24",
-      "hot": false,
-      "tags": [
-        "HN",
-        "AI",
-        "story",
-        "author_billybuckwheat"
-      ]
-    },
-    {
-      "id": "hn-49827019",
-      "title": "Can open-source prompt-injection detectors catch realistic AI agent attacks?",
-      "summary": "Can open-source prompt-injection detectors catch realistic AI agent attacks? — 3 points, 1 comments on HN.",
-      "source": "Hacker News",
-      "sourceUrl": "https://github.com/rudratoshs/buried-injections",
-      "category": "products",
-      "date": "2026-09-24",
-      "hot": false,
-      "tags": [
-        "HN",
-        "AI",
-        "story",
-        "author_northbridgedev"
-      ]
-    },
-    {
-      "id": "hn-49826102",
-      "title": "China's Approach to AI",
-      "summary": "China's Approach to AI — 3 points, 0 comments on HN.",
-      "source": "Hacker News",
-      "sourceUrl": "https://madeinchinajournal.com/2026/09/23/chinas-approach-to-ai-infrastructural-statecraft-managed-pluralism/",
-      "category": "products",
-      "date": "2026-09-24",
-      "hot": false,
-      "tags": [
-        "HN",
-        "AI",
-        "story",
-        "author_paimapi"
-      ]
-    },
-    {
-      "id": "hn-49826834",
-      "title": "Lysios – LLM red teaming org",
-      "summary": "Lysios – LLM red teaming org — 2 points, 0 comments on HN.",
-      "source": "Hacker News",
-      "sourceUrl": "https://lysios.ai/",
-      "category": "products",
-      "date": "2026-09-24",
-      "hot": false,
-      "tags": [
-        "HN",
-        "AI",
-        "story",
-        "author_davedx"
-      ]
-    },
-    {
-      "id": "hn-49827294",
-      "title": "Google Private AI Compute with server-side memory",
-      "summary": "Google Private AI Compute with server-side memory — 1 points, 0 comments on HN.",
-      "source": "Hacker News",
-      "sourceUrl": "https://deepmind.google/blog/advancing-private-ai-compute-with-secure-server-side-memory/",
-      "category": "big-tech",
-      "date": "2026-09-24",
-      "hot": false,
-      "tags": [
-        "HN",
-        "AI",
-        "story",
-        "author_cagz"
-      ]
-    },
-    {
-      "id": "hn-49827032",
-      "title": "Understanding Runtime Governance for Enterprise AI Deployment",
-      "summary": "There are a lot of incumbents and start-ups building AI runtime governance layer. Was wondering if anyone actually sees adoption of runtime governance layers despite the chatter around the need for it?<p>I can&#x27;t see — 1 points, 0 comments on HN.",
-      "source": "Hacker News",
-      "sourceUrl": "https://news.ycombinator.com/item?id=49827032",
+      "id": "hnoon-fleet-safety-camera-systems-engineering-series-customer-tele",
+      "title": "Fleet Safety Camera Systems Engineering Series - Customer Telemetry & Closed-loop Optimization",
+      "summary": "Laboratory testing and production verification establish a product's initial quality baseline, but the complexity of the real world cannot be fully represented. — by Yogurt Chiang on HackerNoon.",
+      "source": "HackerNoon",
+      "sourceUrl": "https://hackernoon.com/fleet-safety-camera-systems-engineering-series-customer-telemetry-and-closed-loop-optimization",
       "category": "safety",
       "date": "2026-09-24",
-      "hot": false,
+      "hot": true,
       "tags": [
-        "HN",
-        "AI",
-        "story",
-        "author_thespotlessmind"
+        "HackerNoon",
+        "fleet-management-technologies",
+        "AI"
       ]
     },
     {
-      "id": "hn-49827031",
-      "title": "Investigate top humanity questions with your own AI agent",
-      "summary": "Investigate top humanity questions with your own AI agent — 1 points, 1 comments on HN.",
+      "id": "ax-2609.28274v1",
+      "title": "Shutdown Sabotage Propensities in Multi-Agent Systems",
+      "summary": "The final safeguard against rogue AI behavior is the human ability to shut systems down. It has been theorized that when an AI is instructed to perform a task, self-preservation can emerge as an instrumental subgoal. Her",
+      "source": "arXiv",
+      "sourceUrl": "http://arxiv.org/abs/2609.28274v1",
+      "category": "safety",
+      "date": "2026-09-23",
+      "hot": true,
+      "tags": [
+        "arXiv",
+        "paper",
+        "AI"
+      ]
+    },
+    {
+      "id": "ax-2609.28247v1",
+      "title": "Controlling Collectives of AI Agents in Reasoning Space with Spatial Transformers",
+      "summary": "Large Language Models (LLMs) introduce an exciting new paradigm for planning and navigation in robotics, but fail on even simple multi-robot tasks as team sizes grow. We propose COMPASS, a scalable, decentralized multi-r",
+      "source": "arXiv",
+      "sourceUrl": "http://arxiv.org/abs/2609.28247v1",
+      "category": "safety",
+      "date": "2026-09-23",
+      "hot": true,
+      "tags": [
+        "arXiv",
+        "paper",
+        "AI"
+      ]
+    },
+    {
+      "id": "hntop-49820134",
+      "title": "Claude discovers a novel enzyme system with CRISPR-like repeats",
+      "summary": "Claude discovers a novel enzyme system with CRISPR-like repeats — 718 points, 725 comments on HN.",
       "source": "Hacker News",
-      "sourceUrl": "https://interworky.com/",
+      "sourceUrl": "https://www.anthropic.com/news/claude-discovers-novel-enzyme-system",
       "category": "products",
-      "date": "2026-09-24",
-      "hot": false,
+      "date": "2026-09-23",
+      "hot": true,
       "tags": [
         "HN",
-        "AI",
-        "story",
-        "author_ahmedhussam1053"
+        "top"
       ]
     },
     {
-      "id": "hn-49827000",
-      "title": "How to Audit an AI Agent:Time-Travel Debugging and Drift Measurement",
-      "summary": "How to Audit an AI Agent:Time-Travel Debugging and Drift Measurement — 1 points, 0 comments on HN.",
+      "id": "hntop-49812769",
+      "title": "Jev in 25 Lines of Python",
+      "summary": "Jev in 25 Lines of Python — 657 points, 204 comments on HN.",
       "source": "Hacker News",
-      "sourceUrl": "https://medium.com/@MirArshadTalpur/how-to-audit-not-observe-an-ai-agent-time-travel-debugging-and-drift-measurement-f755a6f4732e",
+      "sourceUrl": "https://www.nobodywho.ai/posts/jev-in-25-lines/",
       "category": "products",
-      "date": "2026-09-24",
-      "hot": false,
+      "date": "2026-09-23",
+      "hot": true,
       "tags": [
         "HN",
-        "AI",
-        "story",
-        "author_Arshad-Talpur"
+        "top"
       ]
     },
     {
-      "id": "hn-49826998",
-      "title": "The cost and quality frontier across 29 AI coding models",
-      "summary": "The cost and quality frontier across 29 AI coding models — 1 points, 0 comments on HN.",
+      "id": "hntop-49823582",
+      "title": "Linux support is coming to Snapdragon X2 Series",
+      "summary": "Linux support is coming to Snapdragon X2 Series — 529 points, 215 comments on HN.",
       "source": "Hacker News",
-      "sourceUrl": "https://bito.ai/benchmarks/ai-coding-model-cost/",
+      "sourceUrl": "https://www.qualcomm.com/news/onq/2026/09/snapdragon-summit-agentic-ai-pcs-linux",
       "category": "products",
-      "date": "2026-09-24",
-      "hot": false,
+      "date": "2026-09-23",
+      "hot": true,
       "tags": [
         "HN",
-        "AI",
-        "story",
-        "author_kirti_soni171"
+        "top"
       ]
     },
     {
-      "id": "hn-49826839",
-      "title": "Meta is making a standalone Muse AI gadget",
-      "summary": "Meta is making a standalone Muse AI gadget — 1 points, 0 comments on HN.",
+      "id": "hntop-49803892",
+      "title": "Claude Opus 5.5",
+      "summary": "Claude Opus 5.5 — 1783 points, 1110 comments on HN.",
       "source": "Hacker News",
-      "sourceUrl": "https://www.theverge.com/tech/999750/muse-charm-meta-ai-hardware",
+      "sourceUrl": "https://www.anthropic.com/claude-opus-5-5",
+      "category": "products",
+      "date": "2026-09-22",
+      "hot": true,
+      "tags": [
+        "HN",
+        "top"
+      ]
+    },
+    {
+      "id": "hntop-49805509",
+      "title": "GPT-6 Sol and Luna",
+      "summary": "GPT-6 Sol and Luna — 1754 points, 832 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://openai.com/index/introducing-gpt-6-sol-and-luna/",
+      "category": "products",
+      "date": "2026-09-22",
+      "hot": true,
+      "tags": [
+        "HN",
+        "top"
+      ]
+    },
+    {
+      "id": "hntop-49806430",
+      "title": "Pentagon says overreliance on AI contributed to missile strike on Iran school",
+      "summary": "<a href=\"https:&#x2F;&#x2F;archive.ph&#x2F;0V37g\" rel=\"nofollow\">https:&#x2F;&#x2F;archive.ph&#x2F;0V37g</a> — 929 points, 523 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://www.bloomberg.com/graphics/2026-iran-school-attack/",
+      "category": "products",
+      "date": "2026-09-22",
+      "hot": true,
+      "tags": [
+        "HN",
+        "top"
+      ]
+    },
+    {
+      "id": "hntop-49801324",
+      "title": "OpenAI GPT–6 Astra breaks Enigma message that has resisted solution since 2005",
+      "summary": "OpenAI GPT–6 Astra breaks Enigma message that has resisted solution since 2005 — 731 points, 440 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://www.cryptocellar.org/bgac/the-mvueh-break.html",
       "category": "big-tech",
-      "date": "2026-09-24",
-      "hot": false,
+      "date": "2026-09-22",
+      "hot": true,
       "tags": [
         "HN",
-        "AI",
-        "story",
-        "author_arbayi"
+        "top"
+      ]
+    },
+    {
+      "id": "dev-4713279",
+      "title": "Two Weeks In: A 15-Year QA Veteran, Back to Being the New Guy",
+      "summary": "I started last Monday. Today it's been exactly two weeks.  Here's the funny part. I've spent 15... — 95 reactions, 71 comments on DEV.to.",
+      "source": "DEV.to",
+      "sourceUrl": "https://dev.to/xulingfeng/two-weeks-in-a-15-year-qa-veteran-back-to-being-the-new-guy-39g3",
+      "category": "fun",
+      "date": "2026-09-22",
+      "hot": true,
+      "tags": [
+        "DEV.to",
+        "ai",
+        "discuss",
+        "career"
       ]
     }
   ],
   "meta": {
-    "fetchedAt": "2026-09-24T07:13:02.932Z",
+    "fetchedAt": "2026-09-24T14:35:24.509Z",
     "topic": "AI",
     "total": 15,
-    "hot": 2,
+    "hot": 15,
     "sources": [
-      "Hacker News"
+      "Hacker News",
+      "HackerNoon",
+      "arXiv",
+      "DEV.to"
     ]
   }
 }
