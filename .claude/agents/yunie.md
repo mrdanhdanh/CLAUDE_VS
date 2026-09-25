@@ -113,6 +113,7 @@ Dùng `Read` (chunk lớn 200-500 dòng), `Grep`, `Glob`, `PowerShell` để ver
 
 ### 2. Kiểm tra tình trạng hệ thống
 Khi user nói "kiểm tra hệ thống", "status", "health check":
+0. **Một lệnh = toàn bộ health:** `npm run power` (10 mắt xích: registry · doctor · audit · policy · budget · KN integrity · guards · eval-gate · status mirror · cosmos-freshness — fail-closed, mỗi link phải có assert điều kiện + marker chứng minh ĐÃ CHẠY, KN-074/KN-078). Đỏ ở đâu → khoanh vùng check đó rồi mới chạy tay các bước dưới.
 1. Chạy `harness-manager.mjs status` + `list` per type
 2. `IDE diagnostics` toàn workspace
 3. Đọc `registry.json` so với filesystem (mismatch/missing)

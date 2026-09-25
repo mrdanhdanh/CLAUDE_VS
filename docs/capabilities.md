@@ -401,6 +401,14 @@ Mở: `www/library/index.html` — kéo thả PDF/DOCX/TXT/MD, gõ `/` để tì
 
 ## 14. Lệnh tổng hợp
 
+### Health (Power Sweep — 1 lệnh = toàn bộ)
+
+```bash
+npm run power                                    # 10 mắt xích, fail-closed, marker proof-it-ran (KN-074) + assert điều kiện (KN-078)
+node .github/harness/scripts/power-check.mjs --json
+node .github/harness/scripts/power-check.mjs --self-test   # guard 7 case: missing marker/drift/exit/arg/mirror/scale → phải ĐỎ
+```
+
 ### Harness
 
 ```bash

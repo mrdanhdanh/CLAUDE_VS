@@ -1,7 +1,7 @@
 {
   "version": 1,
   "description": "Component-level evals (KN-037/KN-072) — mỗi entry = 1 mắt xích harness được đo RIÊNG bằng command deterministic (execution loop cố định, 1 biến / entry). Expectations = số đo thật 2026-09-22 (exit code + stdout marker), không đoán. Runner: eval-gate.mjs --scope components | --scope all. Fail-closed: registry thiếu/hỏng → FAIL.",
-  "measuredAt": "2026-09-22",
+  "measuredAt": "2026-09-25",
   "components": [
     {
       "id": "policy-deny-first",
@@ -66,6 +66,22 @@
       "claim": "always-on ≤ budget 1100 dòng → exit 0",
       "cmd": "node scripts/instruction-budget.mjs --budget 1100",
       "expect": { "exit": 0, "stdout": "Trong budget 1100" }
+    },
+    {
+      "id": "setup-doctor-self-test",
+      "name": "setup-doctor — free/listener/probe-failure states",
+      "ref": "KN-077",
+      "claim": "native probe distinguishes free, listening, and unknown",
+      "cmd": "node .github/harness/scripts/setup-doctor.mjs --self-test",
+      "expect": { "exit": 0, "stdout": "setup-doctor self-test: 3 cases passed" }
+    },
+    {
+      "id": "power-check-self-test",
+      "name": "power-check — aggregator fail-closed (no silent pass)",
+      "ref": "KN-074",
+      "claim": "missing marker / drift / exit lệch / arg rác / mirror + scale stale đều phải ĐỎ",
+      "cmd": "node .github/harness/scripts/power-check.mjs --self-test",
+      "expect": { "exit": 0, "stdout": "power-check self-test: 7 cases passed" }
     }
   ]
 }

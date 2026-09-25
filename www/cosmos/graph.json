@@ -1,10 +1,10 @@
 {
-  "generatedAt": "2026-09-22T17:26:50.828Z",
+  "generatedAt": "2026-09-25T13:55:42.540Z",
   "generatedBy": "entangle.mjs --graph",
   "scanned": {
-    "files": 1646,
-    "edges": 1846,
-    "commits": 238
+    "files": 1721,
+    "edges": 1995,
+    "commits": 253
   },
   "thresholds": {
     "hubMinRefs": 10,
@@ -13,27 +13,27 @@
   "hubs": [
     {
       "file": "docs/knowleged.md",
-      "refs": 123
+      "refs": 131
     },
     {
       "file": "www/status.json",
-      "refs": 70
-    },
-    {
-      "file": "www/cosmos/index.html",
-      "refs": 59
+      "refs": 72
     },
     {
       "file": "www/index.html",
-      "refs": 59
+      "refs": 63
+    },
+    {
+      "file": "www/cosmos/index.html",
+      "refs": 62
     },
     {
       "file": "package.json",
-      "refs": 41
+      "refs": 43
     },
     {
       "file": "www/styles.css",
-      "refs": 34
+      "refs": 35
     },
     {
       "file": "README.md",
@@ -45,7 +45,11 @@
     },
     {
       "file": "www/library/mcp-server.mjs",
-      "refs": 24
+      "refs": 23
+    },
+    {
+      "file": "www/ai-news/curated.json",
+      "refs": 21
     },
     {
       "file": "www/app.js",
@@ -53,6 +57,14 @@
     },
     {
       "file": "www/library/app.js",
+      "refs": 20
+    },
+    {
+      "file": "scripts/slop-check.mjs",
+      "refs": 19
+    },
+    {
+      "file": "www/cosmos/scale.json",
       "refs": 19
     },
     {
@@ -60,36 +72,24 @@
       "refs": 18
     },
     {
-      "file": "www/cosmos/scale.json",
+      "file": "tests/e2e/auto-learn-guard.spec.ts",
       "refs": 18
-    },
-    {
-      "file": "scripts/slop-check.mjs",
-      "refs": 17
     },
     {
       "file": "www/library/export.json",
       "refs": 17
     },
     {
-      "file": "tests/e2e/auto-learn-guard.spec.ts",
-      "refs": 16
-    },
-    {
       "file": "docs/harness-2.1-upgrade.md",
       "refs": 15
     },
     {
-      "file": "tests/e2e/guard-redteam.spec.ts",
+      "file": "docs/capabilities.md",
       "refs": 14
     },
     {
-      "file": "www/ai-news/curated.json",
-      "refs": 13
-    },
-    {
-      "file": "www/cosmos/audit.json",
-      "refs": 13
+      "file": "tests/e2e/guard-redteam.spec.ts",
+      "refs": 14
     }
   ],
   "clusters": [
@@ -819,6 +819,134 @@
       "tests/e2e/eval-gate-components.spec.ts"
     ],
     [
+      ".agent/bugs/2026-09-22-local-serve-404-cho-thu-muc-moi-can-rewrite-trong-/bug.md",
+      "docs/knowleged.md"
+    ],
+    [
+      ".agent/bugs/2026-09-22-local-serve-404-cho-thu-muc-moi-can-rewrite-trong-/bug.md",
+      "tests/e2e/cosmos-3d.spec.ts"
+    ],
+    [
+      ".agent/bugs/2026-09-22-local-serve-404-cho-thu-muc-moi-can-rewrite-trong-/bug.md",
+      "www/cosmos-3d/index.html"
+    ],
+    [
+      ".agent/bugs/2026-09-22-local-serve-404-cho-thu-muc-moi-can-rewrite-trong-/bug.md",
+      "www/cosmos/index.html"
+    ],
+    [
+      ".agent/bugs/2026-09-22-local-serve-404-cho-thu-muc-moi-can-rewrite-trong-/bug.md",
+      "www/cosmos/scale.html"
+    ],
+    [
+      ".agent/bugs/2026-09-22-local-serve-404-cho-thu-muc-moi-can-rewrite-trong-/bug.md",
+      "www/index.html"
+    ],
+    [
+      ".agent/bugs/2026-09-22-local-serve-404-cho-thu-muc-moi-can-rewrite-trong-/bug.md",
+      "www/serve.json"
+    ],
+    [
+      ".agent/bugs/2026-09-23-clip-im-tieng-du-co-audio-track/bug.md",
+      "docs/knowleged.md"
+    ],
+    [
+      ".agent/bugs/2026-09-23-clip-im-tieng-du-co-audio-track/bug.md",
+      "www/space-bunny-free/render.mjs"
+    ],
+    [
+      ".agent/bugs/2026-09-23-clip-im-tieng-du-co-audio-track/bug.md",
+      "www/space-bunny-free/verify-audio.mjs"
+    ],
+    [
+      ".agent/bugs/2026-09-23-mau-thieu-lam-chu-tang-hinh/bug.md",
+      "docs/knowleged.md"
+    ],
+    [
+      ".agent/bugs/2026-09-23-mau-thieu-lam-chu-tang-hinh/bug.md",
+      "www/space-bunny-free/index.html"
+    ],
+    [
+      ".agent/bugs/2026-09-23-mau-thieu-lam-chu-tang-hinh/bug.md",
+      "www/space-bunny-free/render.mjs"
+    ],
+    [
+      ".agent/bugs/2026-09-23-mau-thieu-lam-chu-tang-hinh/bug.md",
+      "www/space-bunny-free/verify-frames.mjs"
+    ],
+    [
+      ".agent/bugs/2026-09-23-p0-detection-egress-slop-gate-regression/bug.md",
+      "docs/knowleged.md"
+    ],
+    [
+      ".agent/bugs/2026-09-23-p0-detection-egress-slop-gate-regression/bug.md",
+      "scripts/slop-check.mjs"
+    ],
+    [
+      ".agent/bugs/2026-09-23-p0-detection-egress-slop-gate-regression/bug.md",
+      "tests/e2e/detection-egress-p0.spec.ts"
+    ],
+    [
+      ".agent/bugs/2026-09-23-registry-description-stale-sau-create-skill/bug.md",
+      "docs/capabilities.md"
+    ],
+    [
+      ".agent/bugs/2026-09-23-registry-description-stale-sau-create-skill/bug.md",
+      "docs/knowleged.md"
+    ],
+    [
+      ".agent/bugs/2026-09-23-registry-description-stale-sau-create-skill/bug.md",
+      "tests/e2e/status-audit.spec.ts"
+    ],
+    [
+      ".agent/bugs/2026-09-23-registry-description-stale-sau-create-skill/bug.md",
+      "www/status.json"
+    ],
+    [
+      ".agent/bugs/2026-09-23-space-bunny-mo-ta-sai/bug.md",
+      "docs/knowleged.md"
+    ],
+    [
+      ".agent/bugs/2026-09-23-space-bunny-mo-ta-sai/bug.md",
+      "www/space-bunny-free/index.html"
+    ],
+    [
+      ".agent/bugs/2026-09-24-ai-news-lot-tin-lon-do-recency-only-ranking/bug.md",
+      "docs/knowleged.md"
+    ],
+    [
+      ".agent/bugs/2026-09-24-ai-news-lot-tin-lon-do-recency-only-ranking/bug.md",
+      "tests/e2e/ai-news-feed-ranking.spec.ts"
+    ],
+    [
+      ".agent/bugs/2026-09-24-ai-news-lot-tin-lon-do-recency-only-ranking/bug.md",
+      "www/ai-news/fetch.mjs"
+    ],
+    [
+      ".agent/bugs/2026-09-24-chip-sources-dai-lam-tran-375px/bug.md",
+      "tests/e2e/ai-news.spec.ts"
+    ],
+    [
+      ".agent/bugs/2026-09-24-chip-sources-dai-lam-tran-375px/bug.md",
+      "www/ai-news/ai-news.js"
+    ],
+    [
+      ".agent/bugs/2026-09-24-chip-sources-dai-lam-tran-375px/bug.md",
+      "www/ai-news/fetch.mjs"
+    ],
+    [
+      ".agent/bugs/2026-09-24-cua-budget-fail-open-khi-evidence-rong-hoac-trunca/bug.md",
+      "docs/knowleged.md"
+    ],
+    [
+      ".agent/bugs/2026-09-24-cua-budget-fail-open-khi-evidence-rong-hoac-trunca/bug.md",
+      "tests/e2e/detection-egress-p0.spec.ts"
+    ],
+    [
+      ".agent/bugs/2026-09-25-setup-doctor-windows-port-probe-noise/bug.md",
+      "docs/knowleged.md"
+    ],
+    [
       ".agent/bugs/README.md",
       "docs/knowleged.md"
     ],
@@ -1143,6 +1271,46 @@
       "tests/e2e/cosmos-hawking.spec.ts"
     ],
     [
+      ".agent/plans/claude-art-tiktok/plan.md",
+      ".agent/plans/claude-art-tiktok/design.md"
+    ],
+    [
+      ".agent/plans/claude-art-tiktok/plan.md",
+      ".agent/plans/claude-art-tiktok/prd.md"
+    ],
+    [
+      ".agent/plans/claude-art-tiktok/plan.md",
+      ".agent/plans/claude-art-tiktok/publish.md"
+    ],
+    [
+      ".agent/plans/claude-art-tiktok/plan.md",
+      ".agent/plans/claude-art-tiktok/research.md"
+    ],
+    [
+      ".agent/plans/claude-art-tiktok/plan.md",
+      "www/claude-art/index.html"
+    ],
+    [
+      ".agent/plans/claude-art-tiktok/prd.md",
+      ".agent/plans/claude-art-tiktok/plan.md"
+    ],
+    [
+      ".agent/plans/claude-art-tiktok/prd.md",
+      ".agent/plans/claude-art-tiktok/publish.md"
+    ],
+    [
+      ".agent/plans/claude-art-tiktok/prd.md",
+      "www/claude-art/claude-art-50s.mp4"
+    ],
+    [
+      ".agent/plans/claude-art-tiktok/publish.md",
+      ".agent/plans/claude-art-tiktok/research.md"
+    ],
+    [
+      ".agent/plans/claude-art-tiktok/publish.md",
+      "www/claude-art/claude-art-50s.mp4"
+    ],
+    [
       ".agent/plans/cosmos-3d/design.md",
       "www/cosmos/index.html"
     ],
@@ -1177,6 +1345,50 @@
     [
       ".agent/plans/cosmos-3d/prd.md",
       "www/vendor/three/LICENSE"
+    ],
+    [
+      ".agent/plans/cosmos-3d/verify/report.md",
+      "www/cosmos-3d/index.html"
+    ],
+    [
+      ".agent/plans/cosmos-3d/verify/report.md",
+      "www/serve.json"
+    ],
+    [
+      ".agent/plans/cosmos-3d/verify/report.md",
+      "www/vendor/three/VERSION.txt"
+    ],
+    [
+      ".agent/plans/cosmos-3d-upgrade/plan.md",
+      "tests/e2e/cosmos-3d.spec.ts"
+    ],
+    [
+      ".agent/plans/cosmos-3d-upgrade/plan.md",
+      "www/cosmos-3d/index.html"
+    ],
+    [
+      ".agent/plans/cosmos-3d-upgrade/plan.md",
+      "www/cosmos-3d/README.md"
+    ],
+    [
+      ".agent/plans/cosmos-3d-upgrade/plan.md",
+      "www/cosmos-3d/scene-data.js"
+    ],
+    [
+      ".agent/plans/cosmos-3d-upgrade/plan.md",
+      "www/cosmos-3d/scene.js"
+    ],
+    [
+      ".agent/plans/cosmos-3d-upgrade/plan.md",
+      "www/cosmos-3d/style.css"
+    ],
+    [
+      ".agent/plans/cosmos-3d-upgrade/plan.md",
+      "www/cosmos/index.html"
+    ],
+    [
+      ".agent/plans/cosmos-3d-upgrade/prd.md",
+      "tests/e2e/cosmos-3d.spec.ts"
     ],
     [
       ".agent/plans/cosmos-cmb-anisotropy/design.md",
@@ -1661,6 +1873,10 @@
     [
       ".agent/plans/design-showcase-cut-critic/plan.md",
       "www/styles.css"
+    ],
+    [
+      ".agent/plans/detection-egress-p0/plan.md",
+      "tests/e2e/detection-egress-p0.spec.ts"
     ],
     [
       ".agent/plans/disco-phase2/design.md",
@@ -2343,6 +2559,18 @@
       "tests/e2e/guard-redteam.spec.ts"
     ],
     [
+      ".agent/plans/meta-charm-tiktok/prd.md",
+      "www/meta-charm/meta-charm-50s.mp4"
+    ],
+    [
+      ".agent/plans/meta-charm-tiktok/publish.md",
+      ".agent/plans/meta-charm-tiktok/research.md"
+    ],
+    [
+      ".agent/plans/meta-charm-tiktok/publish.md",
+      "www/meta-charm/meta-charm-50s.mp4"
+    ],
+    [
       ".agent/plans/mo-hold-delegation/plan.md",
       "docs/knowleged.md"
     ],
@@ -2575,6 +2803,22 @@
       "playwright.config.ts"
     ],
     [
+      ".agent/plans/rogue-agent-tiktok/plan.md",
+      ".agent/plans/rogue-agent-tiktok/research.md"
+    ],
+    [
+      ".agent/plans/rogue-agent-tiktok/prd.md",
+      "www/rogue-agent/rogue-agent-50s.mp4"
+    ],
+    [
+      ".agent/plans/rogue-agent-tiktok/publish.md",
+      ".agent/plans/rogue-agent-tiktok/research.md"
+    ],
+    [
+      ".agent/plans/rogue-agent-tiktok/publish.md",
+      "www/rogue-agent/rogue-agent-50s.mp4"
+    ],
+    [
       ".agent/plans/rsi-singularity-lessons/plan.md",
       ".agent/plans/rsi-singularity-lessons/gap-analysis.md"
     ],
@@ -2713,6 +2957,26 @@
     [
       ".agent/plans/slop-audit/report.md",
       "www/yt-summary/pipeline.mjs"
+    ],
+    [
+      ".agent/plans/space-bunny-tiktok/plan.md",
+      "www/space-bunny-free/verify-audio.mjs"
+    ],
+    [
+      ".agent/plans/space-bunny-tiktok/plan.md",
+      "www/space-bunny-free/verify-frames.mjs"
+    ],
+    [
+      ".agent/plans/space-bunny-tiktok/plan.md",
+      "www/space-bunny-free/voice-compare.html"
+    ],
+    [
+      ".agent/plans/space-bunny-tiktok/publish.md",
+      ".agent/plans/space-bunny-tiktok/plan.md"
+    ],
+    [
+      ".agent/plans/space-bunny-tiktok/publish.md",
+      "www/space-bunny-free/space-bunny-free-50s.mp4"
     ],
     [
       ".agent/plans/status-redesign/design.md",
@@ -3195,6 +3459,22 @@
       "www/yunie-chat/index.html"
     ],
     [
+      ".agent/plans/yunie-power-sweep/plan.md",
+      "docs/capabilities.md"
+    ],
+    [
+      ".agent/plans/yunie-power-sweep/plan.md",
+      "package.json"
+    ],
+    [
+      ".agent/plans/yunie-power-sweep/plan.md",
+      "www/status.json"
+    ],
+    [
+      ".agent/plans/yunie-power-sweep/prd.md",
+      "package.json"
+    ],
+    [
       ".agent/scripts/audit.mjs",
       "www/status.json"
     ],
@@ -3491,6 +3771,158 @@
       "www/styles.css"
     ],
     [
+      ".agent/versions/2026-09-24-KN-076-ai-news-lot-tin-lon-.md",
+      ".agent/audit.jsonl"
+    ],
+    [
+      ".agent/versions/2026-09-24-KN-076-ai-news-lot-tin-lon-.md",
+      "books/Andrew-Ng-Agentic-AI-Playbook-2026-Distilled.md"
+    ],
+    [
+      ".agent/versions/2026-09-24-KN-076-ai-news-lot-tin-lon-.md",
+      "docs/capabilities.md"
+    ],
+    [
+      ".agent/versions/2026-09-24-KN-076-ai-news-lot-tin-lon-.md",
+      "docs/harness-flow.md"
+    ],
+    [
+      ".agent/versions/2026-09-24-KN-076-ai-news-lot-tin-lon-.md",
+      "docs/knowleged.md"
+    ],
+    [
+      ".agent/versions/2026-09-24-KN-076-ai-news-lot-tin-lon-.md",
+      "docs/llm-weakness-research.md"
+    ],
+    [
+      ".agent/versions/2026-09-24-KN-076-ai-news-lot-tin-lon-.md",
+      "docs/meta-research-deep-dive.md"
+    ],
+    [
+      ".agent/versions/2026-09-24-KN-076-ai-news-lot-tin-lon-.md",
+      "playwright.config.ts"
+    ],
+    [
+      ".agent/versions/2026-09-24-KN-076-ai-news-lot-tin-lon-.md",
+      "scripts/instruction-budget.mjs"
+    ],
+    [
+      ".agent/versions/2026-09-24-KN-076-ai-news-lot-tin-lon-.md",
+      "scripts/mutation.mjs"
+    ],
+    [
+      ".agent/versions/2026-09-24-KN-076-ai-news-lot-tin-lon-.md",
+      "scripts/slop-check.mjs"
+    ],
+    [
+      ".agent/versions/2026-09-24-KN-076-ai-news-lot-tin-lon-.md",
+      "tests/e2e/auto-learn-guard.spec.ts"
+    ],
+    [
+      ".agent/versions/2026-09-24-KN-076-ai-news-lot-tin-lon-.md",
+      "tests/e2e/cosmos-audit-probe.spec.ts"
+    ],
+    [
+      ".agent/versions/2026-09-24-KN-076-ai-news-lot-tin-lon-.md",
+      "tests/e2e/cosmos-lab12-qec.spec.ts"
+    ],
+    [
+      ".agent/versions/2026-09-24-KN-076-ai-news-lot-tin-lon-.md",
+      "tests/e2e/dream.spec.ts"
+    ],
+    [
+      ".agent/versions/2026-09-24-KN-076-ai-news-lot-tin-lon-.md",
+      "tests/e2e/eval-gate-components.spec.ts"
+    ],
+    [
+      ".agent/versions/2026-09-24-KN-076-ai-news-lot-tin-lon-.md",
+      "tests/e2e/guard-redteam.spec.ts"
+    ],
+    [
+      ".agent/versions/2026-09-24-KN-076-ai-news-lot-tin-lon-.md",
+      "tests/e2e/hooks-integrity.spec.ts"
+    ],
+    [
+      ".agent/versions/2026-09-24-KN-076-ai-news-lot-tin-lon-.md",
+      "tests/e2e/instruction-budget.spec.ts"
+    ],
+    [
+      ".agent/versions/2026-09-24-KN-076-ai-news-lot-tin-lon-.md",
+      "tests/e2e/kn-id-integrity.spec.ts"
+    ],
+    [
+      ".agent/versions/2026-09-24-KN-076-ai-news-lot-tin-lon-.md",
+      "tests/e2e/mutation-guard.spec.ts"
+    ],
+    [
+      ".agent/versions/2026-09-24-KN-076-ai-news-lot-tin-lon-.md",
+      "tests/e2e/readme-guard.spec.ts"
+    ],
+    [
+      ".agent/versions/2026-09-24-KN-076-ai-news-lot-tin-lon-.md",
+      "tests/e2e/self-evolving-tools.spec.ts"
+    ],
+    [
+      ".agent/versions/2026-09-24-KN-076-ai-news-lot-tin-lon-.md",
+      "tests/e2e/slop-check.spec.ts"
+    ],
+    [
+      ".agent/versions/2026-09-24-KN-076-ai-news-lot-tin-lon-.md",
+      "tests/e2e/status-audit.spec.ts"
+    ],
+    [
+      ".agent/versions/2026-09-24-KN-076-ai-news-lot-tin-lon-.md",
+      "tests/e2e/web-thuat-toan.spec.ts"
+    ],
+    [
+      ".agent/versions/2026-09-24-KN-076-ai-news-lot-tin-lon-.md",
+      "tests/e2e/workflows-guard.spec.ts"
+    ],
+    [
+      ".agent/versions/2026-09-24-KN-076-ai-news-lot-tin-lon-.md",
+      "tests/e2e/yt-summary-chain.spec.ts"
+    ],
+    [
+      ".agent/versions/2026-09-24-KN-076-ai-news-lot-tin-lon-.md",
+      "www/aar/index.html"
+    ],
+    [
+      ".agent/versions/2026-09-24-KN-076-ai-news-lot-tin-lon-.md",
+      "www/ai-news/curated.json"
+    ],
+    [
+      ".agent/versions/2026-09-24-KN-076-ai-news-lot-tin-lon-.md",
+      "www/cosmos/audit.json"
+    ],
+    [
+      ".agent/versions/2026-09-24-KN-076-ai-news-lot-tin-lon-.md",
+      "www/cosmos/index.html"
+    ],
+    [
+      ".agent/versions/2026-09-24-KN-076-ai-news-lot-tin-lon-.md",
+      "www/index.html"
+    ],
+    [
+      ".agent/versions/2026-09-24-KN-076-ai-news-lot-tin-lon-.md",
+      "www/library/app.js"
+    ],
+    [
+      ".agent/versions/2026-09-24-KN-076-ai-news-lot-tin-lon-.md",
+      "www/library/export.json"
+    ],
+    [
+      ".agent/versions/2026-09-24-KN-076-ai-news-lot-tin-lon-.md",
+      "www/status.json"
+    ],
+    [
+      ".agent/versions/2026-09-24-KN-076-ai-news-lot-tin-lon-.md",
+      "www/styles.css"
+    ],
+    [
+      ".agent/versions/2026-09-24-KN-076-ai-news-lot-tin-lon-.md",
+      "www/web-thuat-toan/app.js"
+    ],
+    [
       ".github/agents/critic.agent.md",
       "docs/knowleged.md"
     ],
@@ -3631,8 +4063,16 @@
       "www/library/rag-loop.mjs"
     ],
     [
+      ".github/harness/scripts/power-check.mjs",
+      "scripts/instruction-budget.mjs"
+    ],
+    [
       ".github/harness/scripts/procedural-graph.mjs",
       ".github/harness/scripts/workflow.mjs"
+    ],
+    [
+      ".github/harness/scripts/refresh-descriptions.mjs",
+      ".github/harness/scripts/distill-agnostic.mjs"
     ],
     [
       ".github/harness/scripts/setup-doctor.mjs",
@@ -3659,26 +4099,6 @@
       "www/library/tool-registry.mjs"
     ],
     [
-      ".github/instructions/agent-governance.instructions.md",
-      "docs/llm-weakness-research.md"
-    ],
-    [
-      ".github/instructions/agent-governance.instructions.md",
-      "N5Blazor.Tests/ServiceTests.cs"
-    ],
-    [
-      ".github/instructions/agent-governance.instructions.md",
-      "tests/e2e/guard-redteam.spec.ts"
-    ],
-    [
-      ".github/instructions/agent-governance.instructions.md",
-      "www/index.html"
-    ],
-    [
-      ".github/instructions/agent-governance.instructions.md",
-      "www/status.json"
-    ],
-    [
       ".github/instructions/auto-learn.instructions.md",
       "docs/knowleged.md"
     ],
@@ -3695,43 +4115,7 @@
       "www/cosmos/hawking.json"
     ],
     [
-      ".github/instructions/awesome-design.instructions.md",
-      "awesome-design-md/index.json"
-    ],
-    [
-      ".github/instructions/awesome-design.instructions.md",
-      "awesome-design-md/search.mjs"
-    ],
-    [
       ".github/instructions/context-engineering.instructions.md",
-      "docs/knowleged.md"
-    ],
-    [
-      ".github/instructions/cosmic-quantum.instructions.md",
-      "awesome-design-md/search.mjs"
-    ],
-    [
-      ".github/instructions/cosmic-quantum.instructions.md",
-      "docs/harness-flow.md"
-    ],
-    [
-      ".github/instructions/cosmic-quantum.instructions.md",
-      "www/cosmos.html"
-    ],
-    [
-      ".github/instructions/cosmic-quantum.instructions.md",
-      "www/cosmos/graph.json"
-    ],
-    [
-      ".github/instructions/cosmic-quantum.instructions.md",
-      "www/cosmos/heatmap.json"
-    ],
-    [
-      ".github/instructions/cosmic-quantum.instructions.md",
-      "www/cosmos/scale.html"
-    ],
-    [
-      ".github/instructions/cua-safety.instructions.md",
       "docs/knowleged.md"
     ],
     [
@@ -3740,10 +4124,6 @@
     ],
     [
       ".github/instructions/executive-function.instructions.md",
-      "docs/knowleged.md"
-    ],
-    [
-      ".github/instructions/fund-the-friction.instructions.md",
       "docs/knowleged.md"
     ],
     [
@@ -3769,34 +4149,6 @@
     [
       ".github/instructions/knowleged.instructions.md",
       "docs/knowleged.md"
-    ],
-    [
-      ".github/instructions/library-rag.instructions.md",
-      "www/library/export.json"
-    ],
-    [
-      ".github/instructions/library-rag.instructions.md",
-      "www/library/index.html"
-    ],
-    [
-      ".github/instructions/library-rag.instructions.md",
-      "www/library/mcp-server.mjs"
-    ],
-    [
-      ".github/instructions/library-rag.instructions.md",
-      "www/library/README.md"
-    ],
-    [
-      ".github/instructions/library-rag.instructions.md",
-      "www/library/search.mjs"
-    ],
-    [
-      ".github/instructions/platform-seam.instructions.md",
-      "www/components/playground.html"
-    ],
-    [
-      ".github/instructions/platform-seam.instructions.md",
-      "www/status.json"
     ],
     [
       ".github/instructions/product-quality.instructions.md",
@@ -4963,8 +5315,52 @@
       "docs/knowleged.md"
     ],
     [
+      ".github/skills/harness-build-config/references/evidence.md",
+      "tests/e2e/ai-news-feed-ranking.spec.ts"
+    ],
+    [
+      ".github/skills/harness-build-config/references/evidence.md",
+      "tests/e2e/auto-learn-guard.spec.ts"
+    ],
+    [
+      ".github/skills/harness-build-config/references/evidence.md",
+      "tests/e2e/eval-gate-components.spec.ts"
+    ],
+    [
+      ".github/skills/harness-build-config/references/evidence.md",
+      "tests/e2e/workflows-guard.spec.ts"
+    ],
+    [
+      ".github/skills/harness-build-config/references/evidence.md",
+      "tests/e2e/yt-summary-chain.spec.ts"
+    ],
+    [
+      ".github/skills/harness-build-config/references/evidence.md",
+      "www/ai-news/curated.json"
+    ],
+    [
+      ".github/skills/harness-build-config/references/evidence.md",
+      "www/ai-news/fetch.mjs"
+    ],
+    [
       ".github/skills/harness-build-config/SKILL.md",
       "docs/knowleged.md"
+    ],
+    [
+      ".github/skills/harness-build-config/SKILL.md",
+      "tests/e2e/yt-summary-chain.spec.ts"
+    ],
+    [
+      ".github/skills/harness-governance/record.json",
+      "www/ai-news/curated.json"
+    ],
+    [
+      ".github/skills/harness-governance/references/evidence.md",
+      "docs/meta-research-deep-dive.md"
+    ],
+    [
+      ".github/skills/harness-governance/references/evidence.md",
+      "scripts/mutation.mjs"
     ],
     [
       ".github/skills/harness-governance/references/evidence.md",
@@ -4979,8 +5375,28 @@
       "tests/e2e/slop-check.spec.ts"
     ],
     [
+      ".github/skills/harness-governance/references/evidence.md",
+      "www/ai-news/curated.json"
+    ],
+    [
       ".github/skills/harness-governance/SKILL.md",
       "docs/knowleged.md"
+    ],
+    [
+      ".github/skills/harness-governance/SKILL.md",
+      "scripts/mutation.mjs"
+    ],
+    [
+      ".github/skills/harness-governance/SKILL.md",
+      "www/ai-news/curated.json"
+    ],
+    [
+      ".github/skills/harness-minimal/record.json",
+      "www/ai-news/curated.json"
+    ],
+    [
+      ".github/skills/harness-minimal/references/evidence.md",
+      "www/ai-news/curated.json"
     ],
     [
       ".github/skills/harness-minimal/SKILL.md",
@@ -5008,6 +5424,10 @@
     ],
     [
       ".github/skills/harness-process/references/evidence.md",
+      "scripts/instruction-budget.mjs"
+    ],
+    [
+      ".github/skills/harness-process/references/evidence.md",
       "scripts/mutation.mjs"
     ],
     [
@@ -5020,7 +5440,35 @@
     ],
     [
       ".github/skills/harness-process/references/evidence.md",
+      "tests/e2e/dream.spec.ts"
+    ],
+    [
+      ".github/skills/harness-process/references/evidence.md",
+      "tests/e2e/eval-gate-components.spec.ts"
+    ],
+    [
+      ".github/skills/harness-process/references/evidence.md",
       "tests/e2e/hooks-integrity.spec.ts"
+    ],
+    [
+      ".github/skills/harness-process/references/evidence.md",
+      "tests/e2e/instruction-budget.spec.ts"
+    ],
+    [
+      ".github/skills/harness-process/references/evidence.md",
+      "tests/e2e/kn-id-integrity.spec.ts"
+    ],
+    [
+      ".github/skills/harness-process/references/evidence.md",
+      "tests/e2e/readme-guard.spec.ts"
+    ],
+    [
+      ".github/skills/harness-process/references/evidence.md",
+      "tests/e2e/self-evolving-tools.spec.ts"
+    ],
+    [
+      ".github/skills/harness-process/references/evidence.md",
+      "tests/e2e/status-audit.spec.ts"
     ],
     [
       ".github/skills/harness-process/references/evidence.md",
@@ -5051,6 +5499,14 @@
       "scripts/slop-check.mjs"
     ],
     [
+      ".github/skills/harness-process/SKILL.md",
+      "tests/e2e/eval-gate-components.spec.ts"
+    ],
+    [
+      ".github/skills/harness-process/SKILL.md",
+      "www/ai-news/curated.json"
+    ],
+    [
       ".github/skills/harness-web-ui/references/evidence.md",
       ".agent/audit.jsonl"
     ],
@@ -5064,7 +5520,19 @@
     ],
     [
       ".github/skills/harness-web-ui/references/evidence.md",
+      "playwright.config.ts"
+    ],
+    [
+      ".github/skills/harness-web-ui/references/evidence.md",
+      "tests/e2e/cosmos-lab12-qec.spec.ts"
+    ],
+    [
+      ".github/skills/harness-web-ui/references/evidence.md",
       "tests/e2e/readme-guard.spec.ts"
+    ],
+    [
+      ".github/skills/harness-web-ui/references/evidence.md",
+      "tests/e2e/web-thuat-toan.spec.ts"
     ],
     [
       ".github/skills/harness-web-ui/references/evidence.md",
@@ -5076,11 +5544,19 @@
     ],
     [
       ".github/skills/harness-web-ui/references/evidence.md",
+      "www/index.html"
+    ],
+    [
+      ".github/skills/harness-web-ui/references/evidence.md",
       "www/status.json"
     ],
     [
       ".github/skills/harness-web-ui/references/evidence.md",
       "www/styles.css"
+    ],
+    [
+      ".github/skills/harness-web-ui/references/evidence.md",
+      "www/web-thuat-toan/app.js"
     ],
     [
       ".github/skills/harness-web-ui/SKILL.md",
@@ -5093,6 +5569,14 @@
     [
       ".github/skills/harness-web-ui/SKILL.md",
       "tests/e2e/status-audit.spec.ts"
+    ],
+    [
+      ".github/skills/harness-web-ui/SKILL.md",
+      "www/index.html"
+    ],
+    [
+      ".github/skills/harness-web-ui/SKILL.md",
+      "www/status.json"
     ],
     [
       ".github/skills/harness-web-ui/SKILL.md",
@@ -5205,6 +5689,18 @@
     [
       ".github/skills/ui-ux-pro-max/SKILL.md",
       "package.json"
+    ],
+    [
+      ".github/skills/video-clip/templates/render.mjs",
+      ".github/skills/video-clip/templates/index.html"
+    ],
+    [
+      ".github/skills/video-clip/templates/render.mjs",
+      ".github/skills/video-clip/templates/verify-audio.mjs"
+    ],
+    [
+      ".github/skills/video-clip/templates/verify-frames.mjs",
+      ".github/skills/video-clip/templates/index.html"
     ],
     [
       "awesome-design-md/index.json",
@@ -5700,6 +6196,10 @@
     ],
     [
       "docs/knowleged.md",
+      "tests/e2e/ai-news-feed-ranking.spec.ts"
+    ],
+    [
+      "docs/knowleged.md",
       "tests/e2e/auto-learn-guard.spec.ts"
     ],
     [
@@ -5773,6 +6273,10 @@
     [
       "docs/knowleged.md",
       "www/ai-news/curated.json"
+    ],
+    [
+      "docs/knowleged.md",
+      "www/ai-news/fetch.mjs"
     ],
     [
       "docs/knowleged.md",
@@ -6007,6 +6511,14 @@
       "www/styles.css"
     ],
     [
+      "tests/e2e/cosmos-3d-tour.spec.ts",
+      "www/cosmos-3d/index.html"
+    ],
+    [
+      "tests/e2e/cosmos-3d-upgrade.spec.ts",
+      "www/cosmos-3d/index.html"
+    ],
+    [
       "tests/e2e/cosmos-3d.spec.ts",
       "www/cosmos-3d/index.html"
     ],
@@ -6117,6 +6629,10 @@
     [
       "tests/e2e/cosmos-web.spec.ts",
       "www/cosmos/scale.html"
+    ],
+    [
+      "tests/e2e/detection-egress-p0.spec.ts",
+      "www/index.html"
     ],
     [
       "tests/e2e/entangle-lensing.spec.ts",
@@ -6355,6 +6871,18 @@
       "www/index.html"
     ],
     [
+      "www/claude-art/render.mjs",
+      "www/claude-art/index.html"
+    ],
+    [
+      "www/claude-art/render.mjs",
+      "www/claude-art/verify-audio.mjs"
+    ],
+    [
+      "www/claude-art/verify-frames.mjs",
+      "www/claude-art/index.html"
+    ],
+    [
       "www/components/playground.html",
       "www/index.html"
     ],
@@ -6440,6 +6968,10 @@
     ],
     [
       "www/cosmos-3d/index.html",
+      "www/cosmos-3d/tour-ui.css"
+    ],
+    [
+      "www/cosmos-3d/index.html",
       "www/cosmos/index.html"
     ],
     [
@@ -6504,6 +7036,10 @@
     ],
     [
       "www/cosmos-3d/scene-data.js",
+      "www/cosmos/scale.json"
+    ],
+    [
+      "www/cosmos-3d/scene-data.js",
       "www/index.html"
     ],
     [
@@ -6512,7 +7048,19 @@
     ],
     [
       "www/cosmos-3d/scene.js",
+      "www/cosmos-3d/i18n.js"
+    ],
+    [
+      "www/cosmos-3d/scene.js",
       "www/cosmos-3d/scene-data.js"
+    ],
+    [
+      "www/cosmos-3d/scene.js",
+      "www/cosmos-3d/tour-data.js"
+    ],
+    [
+      "www/cosmos-3d/scene.js",
+      "www/cosmos-3d/tour.js"
     ],
     [
       "www/cosmos-3d/scene.js",
@@ -6967,6 +7515,18 @@
       "www/yt-summary/index.html"
     ],
     [
+      "www/meta-charm/render.mjs",
+      "www/meta-charm/index.html"
+    ],
+    [
+      "www/meta-charm/render.mjs",
+      "www/meta-charm/verify-audio.mjs"
+    ],
+    [
+      "www/meta-charm/verify-frames.mjs",
+      "www/meta-charm/index.html"
+    ],
+    [
       "www/n5-blazor/grammar.html",
       "www/index.html"
     ],
@@ -7279,6 +7839,18 @@
       "www/n5-blazor/site.js"
     ],
     [
+      "www/rogue-agent/render.mjs",
+      "www/rogue-agent/index.html"
+    ],
+    [
+      "www/rogue-agent/render.mjs",
+      "www/rogue-agent/verify-audio.mjs"
+    ],
+    [
+      "www/rogue-agent/verify-frames.mjs",
+      "www/rogue-agent/index.html"
+    ],
+    [
       "www/serve.json",
       "www/agentic-academy/index.html"
     ],
@@ -7301,6 +7873,30 @@
     [
       "www/serve.json",
       "www/index.html"
+    ],
+    [
+      "www/space-bunny-free/render.mjs",
+      "www/space-bunny-free/verify-audio.mjs"
+    ],
+    [
+      "www/space-bunny-free/verify-frames.mjs",
+      "www/space-bunny-free/index.html"
+    ],
+    [
+      "www/space-bunny-free/voice-compare.html",
+      "www/space-bunny-free/voiceover-vieneu-hai-dang.wav"
+    ],
+    [
+      "www/space-bunny-free/voice-compare.html",
+      "www/space-bunny-free/voiceover-vieneu-mai-anh.wav"
+    ],
+    [
+      "www/space-bunny-free/voice-compare.html",
+      "www/space-bunny-free/voiceover-vieneu-thuy-dung.wav"
+    ],
+    [
+      "www/space-bunny-free/voice-compare.html",
+      "www/space-bunny-free/voiceover.wav"
     ],
     [
       "www/todo-manager/app.js",

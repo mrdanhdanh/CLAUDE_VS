@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-23T17:58:34.857Z",
+  "generatedAt": "2026-09-25T13:55:42.859Z",
   "generatedBy": "cosmic-scale.mjs",
   "entropy": {
     "S": 8,
@@ -11,23 +11,23 @@
       "refused": 0,
       "disabled": 8,
       "failed": 0,
-      "refusedProbes": 20
+      "refusedProbes": 23
     }
   },
   "darkEnergy": {
     "D": 1,
-    "dissentRatio": 0.95,
-    "plansTotal": 38,
-    "plansWithDissent": 36,
+    "dissentRatio": 0.93,
+    "plansTotal": 42,
+    "plansWithDissent": 39,
     "plansLegacy": 49,
     "advice": "Dark energy vừa phải — các plan mới thêm Dissent Review gate (KN-018) để chống decollaboration."
   },
   "gravity": {
     "G": 9,
     "level": "high",
-    "cutRatio": 0.87,
-    "plansTotal": 38,
-    "plansWithCut": 33,
+    "cutRatio": 0.88,
+    "plansTotal": 42,
+    "plansWithCut": 37,
     "plansLegacy": 49,
     "advice": "Gravity mạnh — đa số PRD có dòng CẮT/YAGNI: scope được kiểm soát tốt."
   },
@@ -40,15 +40,15 @@
     "disabledGalaxies": 8
   },
   "counts": {
-    "knTotal": 74,
-    "bugsTotal": 61,
-    "auditTotal": 347
+    "knTotal": 76,
+    "bugsTotal": 65,
+    "auditTotal": 360
   },
   "capability": {
-    "kn": 74,
+    "kn": 76,
     "skills": 21,
-    "e2eSpecs": 48,
-    "e2eTests": 268,
+    "e2eSpecs": 49,
+    "e2eTests": 281,
     "guards": 14
   },
   "mismatches": [],
@@ -71,14 +71,6 @@
     "ok": true
   },
   "history": [
-    {
-      "t": "2026-09-10T17:35:03.799Z",
-      "S": 0,
-      "level": "low",
-      "M": 0,
-      "D": 9,
-      "G": 3
-    },
     {
       "t": "2026-09-10T17:43:27.669Z",
       "S": 0,
@@ -436,23 +428,33 @@
         "e2eTests": 268,
         "guards": 14
       }
+    },
+    {
+      "t": "2026-09-25T13:55:42.859Z",
+      "S": 8,
+      "level": "low",
+      "M": 8,
+      "D": 1,
+      "G": 9,
+      "C": {
+        "kn": 76,
+        "skills": 21,
+        "e2eSpecs": 49,
+        "e2eTests": 281,
+        "guards": 14
+      }
     }
   ],
   "capabilityDelta": {
-    "kn": 1,
-    "skills": 1,
-    "e2eSpecs": 3,
-    "e2eTests": 24
+    "kn": 2,
+    "e2eSpecs": 1,
+    "e2eTests": 13
   },
   "trend": {
-    "increases": 1,
+    "increases": 0,
     "needed": 3,
     "gate": false,
     "window": [
-      {
-        "t": "2026-09-15T16:26:39.442Z",
-        "S": 9
-      },
       {
         "t": "2026-09-18T13:49:12.681Z",
         "S": 9
@@ -463,6 +465,10 @@
       },
       {
         "t": "2026-09-23T17:58:34.857Z",
+        "S": 8
+      },
+      {
+        "t": "2026-09-25T13:55:42.859Z",
         "S": 8
       }
     ]

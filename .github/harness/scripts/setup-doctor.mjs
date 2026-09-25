@@ -6,10 +6,11 @@
  * Usage:
  *   node setup-doctor.mjs
  *   node setup-doctor.mjs --json
+ *   node setup-doctor.mjs --self-test
  * Exit: 0 = pass (warns allowed), 1 = fail, 2 = error
  * No deps, Node 18+
  */
-import { execSync } from 'node:child_process';
+import { execFileSync, execSync } from 'node:child_process';
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -80,27 +81,90 @@ function checkEnv() {
   return { name: 'env', pass: true, detail: states.join(', '), warn: true };
 }
 
-function portListening(port) {
-  // best-effort: lsof → ss → fail open (unknown)
-  const cmds = [
-    `lsof -iTCP:${port} -sTCP:LISTEN -t 2>/dev/null`,
-    `ss -ltn 2>/dev/null | grep -q ':${port} ' && echo LISTEN`,
-  ];
-  for (const c of cmds) {
-    try {
-      const out = execSync(c, { encoding: 'utf8', timeout: 5000 }).trim();
-      if (out) return true;
-    } catch {}
+function nativeCommand(command) {
+  if (process.platform === 'win32' && command === 'netstat') {
+    const systemRoot = process.env.SystemRoot || process.env.WINDIR;
+    if (systemRoot) return path.join(systemRoot, 'System32', 'netstat.exe');
   }
-  return false;
+  return command;
+}
+
+function runProbe(command, args, { allowExitOne = false } = {}) {
+  try {
+    const out = String(execFileSync(command, args, {
+      cwd: ROOT,
+      encoding: 'utf8',
+      stdio: ['ignore', 'pipe', 'pipe'],
+      timeout: 5000,
+      maxBuffer: 2 * 1024 * 1024,
+      windowsHide: true,
+    }));
+    return { ok: true, out };
+  } catch (e) {
+    const status = typeof e.status === 'number' ? e.status : null;
+    const stderr = String(e.stderr || '').trim();
+    if (allowExitOne && status === 1 && !stderr) return { ok: true, out: String(e.stdout || '').trim() };
+    return { ok: false, error: (stderr || e.message || `${command} failed`).slice(0, 240) };
+  }
+}
+
+function parseListeningPorts(text, platform) {
+  const ports = new Set();
+  for (const line of String(text).split(/\r?\n/)) {
+    if (platform === 'win32') {
+      const match = line.match(/^\s*TCP\s+\S+:(\d+)\s+\S+\s+(?:LISTENING|LISTEN)\s+\d+\s*$/i);
+      if (match) ports.add(Number(match[1]));
+    } else if (/LISTEN/i.test(line)) {
+      for (const match of line.matchAll(/:(\d+)\s/g)) ports.add(Number(match[1]));
+    }
+  }
+  return ports;
+}
+
+function probePorts(ports, { platform = process.platform, runner = runProbe } = {}) {
+  if (platform === 'win32') {
+    const result = runner(nativeCommand('netstat'), ['-ano', '-p', 'tcp']);
+    if (!result.ok || !result.out.trim()) return { ok: false, states: {}, error: result.error || 'netstat returned no TCP table' };
+    const listening = parseListeningPorts(result.out, platform);
+    return { ok: true, states: Object.fromEntries(ports.map(port => [port, listening.has(port)])) };
+  }
+  const ss = runner('ss', ['-ltn']);
+  if (ss.ok && ss.out.trim()) {
+    const listening = parseListeningPorts(ss.out, platform);
+    return { ok: true, states: Object.fromEntries(ports.map(port => [port, listening.has(port)])) };
+  }
+  const states = {};
+  for (const port of ports) {
+    const result = runner('lsof', ['-nP', `-iTCP:${port}`, '-sTCP:LISTEN', '-t'], { allowExitOne: true });
+    if (!result.ok) return { ok: false, states, error: `${ss.error || 'ss unavailable'}; ${result.error}` };
+    states[port] = Boolean(result.out.trim());
+  }
+  return { ok: true, states };
 }
 
 function checkPorts() {
-  const notes = [];
-  if (portListening(5251)) notes.push('5251 LISTENING (dotnet? stop before build — KN-008)');
-  if (portListening(12434)) notes.push('12434 LISTENING (foundry local running ✅)');
+  const ports = [5251, 12434];
+  const probe = probePorts(ports);
+  if (!probe.ok) return { name: 'ports', pass: false, detail: `probe unavailable — ${probe.error}`, warn: false, states: probe.states };
+  const listening = ports.filter(port => probe.states[port]);
+  const notes = listening.map(port => `${port} LISTENING`);
   const detail = notes.length ? notes.join('; ') : '5251 free, 12434 free';
-  return { name: 'ports', pass: true, detail, warn: notes.length > 0 };
+  return { name: 'ports', pass: true, detail, warn: notes.length > 0, states: probe.states };
+}
+
+function selfTest() {
+  const ports = [5251];
+  const cases = [
+    { name: 'windows-free', result: () => probePorts(ports, { platform: 'win32', runner: () => ({ ok: true, out: 'Active Connections\n' }) }), check: r => r.ok && r.states[5251] === false },
+    { name: 'windows-listening', result: () => probePorts(ports, { platform: 'win32', runner: () => ({ ok: true, out: 'TCP    127.0.0.1:5251         0.0.0.0:0              LISTENING       42\n' }) }), check: r => r.ok && r.states[5251] === true },
+    { name: 'probe-failure', result: () => probePorts(ports, { platform: 'win32', runner: () => ({ ok: false, error: 'fixture probe failure' }) }), check: r => !r.ok && r.error === 'fixture probe failure' },
+  ];
+  const failed = cases.filter(item => !item.check(item.result()));
+  if (failed.length) {
+    console.error(`setup-doctor self-test failed: ${failed.map(item => item.name).join(', ')}`);
+    process.exit(1);
+  }
+  console.log('setup-doctor self-test: 3 cases passed');
 }
 
 function checkGit() {
@@ -115,6 +179,10 @@ function checkGit() {
 }
 
 function main() {
+  if (process.argv.includes('--self-test')) {
+    selfTest();
+    return;
+  }
   const json = process.argv.includes('--json');
   const checks = [checkNode(), checkFiles(), checkMcp(), checkEnv(), checkPorts(), checkGit()];
   const fail = checks.filter(c => !c.pass);

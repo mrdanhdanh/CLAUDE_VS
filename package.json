@@ -11,6 +11,7 @@
     "hawking": "node .github/harness/scripts/auto-learn.mjs watchdog",
     "guards": "node .github/harness/scripts/auto-learn.mjs guards",
     "evals:components": "node .github/harness/scripts/eval-gate.mjs --scope components",
+    "power": "node .github/harness/scripts/power-check.mjs",
     "cosmos:check": "node .github/harness/scripts/cosmic-scale.mjs --budget 10",
     "cosmos:gate": "node .github/harness/scripts/cosmic-scale.mjs --trend 3 --budget 10",
     "entangle": "node .github/harness/scripts/entangle.mjs",
