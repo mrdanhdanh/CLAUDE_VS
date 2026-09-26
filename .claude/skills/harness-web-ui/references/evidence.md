@@ -1,8 +1,8 @@
 # Evidence — harness-web-ui (DisCo arXiv:2609.02749v1 §3.2 (task-agnostic))
 
-> Substrate layer của skill — full text từ docs/knowleged.md. Sinh tự động 2026-09-24T14:44:32.478Z.
+> Substrate layer của skill — full text từ docs/knowleged.md. Sinh tự động 2026-09-26T10:56:29.834Z.
 
-## Bug reports liên quan (19/63 bugs)
+## Bug reports liên quan (20/68 bugs)
 
 - `.agent/bugs/2026-08-29-rainbow-animated/bug.md` — Bug: Rainbow border không xoay (animated)
 - `.agent/bugs/2026-08-29-status-ui/bug.md` — Bug: Trang STATUS www/ giao diện chưa hợp lý — layout, responsive, registry render sai
@@ -23,6 +23,7 @@
 - `.agent/bugs/2026-09-13-github-viewscreen-race-readme-mermaid-khong-render/bug.md` — Bug: GitHub viewscreen race - README mermaid khong render
 - `.agent/bugs/2026-09-13-status-375-overflow-grid-1fr-min-content-blowout-k/bug.md` — Bug: STATUS 375 overflow — grid 1fr min-content blowout khi title dai
 - `.agent/bugs/2026-09-19-scroll-dot-active-sai-do-thu-tu-mang-lech-dom/bug.md` — Bug: scroll-dot active sai do thứ tự mảng lệch DOM
+- `.agent/bugs/2026-09-26-font-georgia-vo-dau-tieng-viet-trong-canvas-clip/bug.md` — Bug: Font Georgia vỡ dấu tiếng Việt trong canvas clip (TIN AI)
 
 ## Full KN details
 
@@ -465,3 +466,32 @@
   - Chạy `node .github/harness/scripts/auto-learn.mjs suggest "<từ khóa>"` trước khi code tương tự.
 - **Tags:** `ui` `cosmos` `nav` `state`
 - **Người ghi:** YUNIE — bug tự phát hiện khi review cosmos theo yêu cầu user; fix + mutation-proof 2026-09-19; sếp duyệt paste (evaluate PASS; dup-advisory KN-046 score 50.8 — adjudicated giữ riêng: khác failure mode + lesson generalize ngoài scroll-dots)
+
+---
+
+### KN-082 — Font thiếu coverage tiếng Việt vỡ dấu im lặng trong canvas clip (Georgia)
+
+- **Ngày:** 2026-09-26
+- **Bug report:** `.agent/bugs/2026-09-26-font-georgia-vo-dau-tieng-viet-trong-canvas-clip/bug.md`
+- **Severity:** major
+- **Guard:** `tests/e2e/clip-font-guard.spec.ts` (blacklist font cho mọi clip page + negative control, marker ≥6 pages) + template `verify-frames.mjs` quét font const fail-closed + `references/font-test.mjs` (đo coverage trên máy render thật)
+- **Layer:** `measure-verifier` — guard chỉ quét token `C` + chụp ảnh cho NGƯỜI xem; không assert glyph rendering; font chọn theo thói quen.
+- **Liên quan:** KN-006 (tiếng Việt mất dấu) · KN-028 (bug canvas mà behavior test không thấy — lưới phải bắt invariants, không chỉ chụp ảnh) · KN-056 (KN không lưới = wishlist).
+- **Triệu chứng:** Clip #2 (`rogue-agent`, đã commit) hiển thị "thô ng kê", "Sớ m", "bằ ng", "bố ˙" — glyph ằ/ấ/ớ/ố/ố (Georgia thiếu) rơi fallback, advance lệch; KHÔNG throw, KHÔNG console error; codepoints file chuẩn NFC (loại trừ lỗi encoding). Phát hiện khi build clip #3 ở bước xem ảnh khung (verify-frames chỉ chụp, không tự bắt).
+- **Nguyên nhân gốc (5 Whys):**
+  - Why1: Chuỗi hiển thị "thô ng kê" → vì glyph VN vẽ qua font fallback với metrics khác font chính.
+  - Why2: Vì sao fallback → Georgia (bản trên máy này) thiếu glyph VN họ ằ/ấ/ớ/ố (đo bằng `references/font-test.mjs`) — nhưng CÓ glyph khác (ệ/ậ/ợ) nên lỗi rải rác, dễ đọc lướt bỏ qua.
+  - Why3: Vì sao ship được → guard `verify-frames` chỉ (a) quét token `C`, (b) chụp ảnh **để người xem** — không assert điều kiện nào cho chất lượng chữ.
+  - Why4: Vì sao không assert → pipeline coi "chữ đúng" là mắt-người-only; tin ảnh evidence mà không có tiêu chí máy (cùng lớp KN-028/KN-058).
+  - Why5 (Root): **Chọn font theo thói quen mà không verify glyph coverage của ngôn ngữ đích trên môi trường render thật** — asset pipeline thiếu bước "đo coverage glyph set".
+- **Cách sửa:** Đo 5 serif + 4 mono trên chính máy render → Georgia loại (vỡ), Times New Roman / Cambria / Palatino / Segoe UI + Consolas / Courier New / Cascadia Mono sạch; đổi `SERIF` → Times New Roman ở clip #3 **và** clip #2 (canvas + CSS); re-verify frames (so ảnh trước/sau), re-render cả 2 MP4 (voiceover giữ nguyên); di chuyển font-test vào skill references (không ship lên Pages); viết lưới máy `clip-font-guard.spec.ts` + template verify-frames quét blacklist.
+- **Cách phòng tránh:**
+  - Trước khi build clip dùng font mới: chạy `node .github/skills/video-clip/references/font-test.mjs` — không tin font nào chưa đo.
+  - Font cho text tiếng Việt trong canvas: **blacklist Georgia** (thiếu glyph); thêm font mới phải kèm phép đo trước khi whitelist.
+  - Ảnh khung phải XEM bằng mắt ở zoom đủ lớn (bug này không throw — chỉ mắt hoặc lưới máy bắt được — KN-028 class).
+- **Tags:** `ui` `canvas` `font` `clip` `verify` `i18n`
+- **Người ghi:** YUNIE / build clip #3 + hậu kiểm clip #2 (26/09) — guard `clip-font-guard.spec.ts` pass (2/2), clip #2 re-render
+
+<!-- Thêm bài học mới theo template dưới — copy block này -->
+
+<!--

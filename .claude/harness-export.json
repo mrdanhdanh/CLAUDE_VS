@@ -11,6 +11,7 @@
     ".claude/agents/yunie.md": "c2632364b50d8324c6b31792654efe157c364b7a6e49ab24e365426feed13bfc",
     ".claude/agents/learn.md": "9b5143ec798f41e9792873cd5b28c9b1a0ab3781e2925034007f1dc0dc1a6e0c",
     ".claude/agents/critic.md": "f5ccbffd49ae00d132206b406b91871546bcc3425e85305976a65d985a641ae5",
+    ".claude/agents/clip-director.md": "f8d149f4d14c7a24c640973d7e6e446a46dd91f5bbee914530c0adf9a68ed72d",
     ".claude/commands/fixbug.md": "bbe4a0f88a2bc5501af52311a9e9a7950cf61df5cf5ee52bd63a96808c5b56aa",
     ".claude/commands/harness.md": "2e2ea61594510b5cad8c4c9234a501b6322658e0a42d58133cff7ba19d905f7d",
     ".claude/commands/implement.md": "981c68ecda5144355a5b2a4a3632cbc5ce976c50540a02c162cc1cf15107648d",
@@ -64,31 +65,31 @@
     },
     ".claude/skills/auto-researcher": {
       "dir": true,
-      "digest": "a74e592e5ebbabeb38231c072fd4bee2e75038794b69dd8c7efef3114d25642c"
+      "digest": "8a71ff51f2dd758ada2dd89245c8ee466dcbb3be74640df0f705c08d4047fdef"
     },
     ".claude/skills/last30days": {
       "dir": true,
-      "digest": "218b07b3e370f21d13119bccbe396de8a4b041fe607bf4a1f42d102d1c4b5f37"
+      "digest": "d2e3775bbb203a81f85c118066818e460a1a6952aee4dba381484bbe98c8d3a2"
     },
     ".claude/skills/harness-build-config": {
       "dir": true,
-      "digest": "a30f41511b66ededbc10a49fc9668c7258313ab4dcd809e29a8b804d650b3704"
+      "digest": "4bd1a4f462de5e92cff8fb50cf4304dc8481cf4a0967adce871e5e3f82a8090d"
     },
     ".claude/skills/harness-governance": {
       "dir": true,
-      "digest": "b94ffde64321718d01a84517c9c2846216541b7e0da73cb6b1b0647c2ea89608"
+      "digest": "2e8c514fc97a5684b51a3935364b7083b3dfd821c6da7f810fd7769f96f164af"
     },
     ".claude/skills/harness-minimal": {
       "dir": true,
-      "digest": "797d66cea8bf4152b8dce4fb42ceadc3fc7bd466b52fc9cfb3f3e044c2488f64"
+      "digest": "6c485d622c5ef275feb851e3c67ee965855d3a7c6f380e88d6f55b0b3bfb4e75"
     },
     ".claude/skills/harness-process": {
       "dir": true,
-      "digest": "92f92a69459c1efb6db5059f559abf0dfbd26da94f2339c281f3190a4dab1771"
+      "digest": "e6ad4d2515758b75f501cf4a5967e07f9afa0781e426feb632e594d2fd89aad4"
     },
     ".claude/skills/harness-web-ui": {
       "dir": true,
-      "digest": "5a655911a86eef0644d58bfb975224c6aed50197ace48db602368640ec95e5f9"
+      "digest": "dbc0b785415ec6aa01d4f8df60aa94dffac60bb8c3739e6975fed70edf861c6f"
     },
     ".claude/skills/cosmic-quantum": {
       "dir": true,
@@ -104,7 +105,7 @@
     },
     ".claude/skills/evals-gate": {
       "dir": true,
-      "digest": "b9bbd18821113ec3980a8ebb168ec95dc975ee94ee6f08be8e3890878ad0a257"
+      "digest": "9f7eacceaf52965700ea5f649ae3193e193f800fd77e33c90449159b956b9388"
     },
     ".claude/skills/ocr-review": {
       "dir": true,
@@ -112,7 +113,11 @@
     },
     ".claude/skills/video-clip": {
       "dir": true,
-      "digest": "be9c693e0b9851532b97e8498e250846b43fea911a8f171017890fabaabbd431"
+      "digest": "06a5864180eac664bb19b4a59ee6cabd42c5c6079c4f5e1911dd845822aa939a"
+    },
+    ".claude/skills/clip-craft": {
+      "dir": true,
+      "digest": "102954623baa7768cfe12f1f31175ab44edee9b8b1a7152a9c7f4989ef2053e3"
     }
   },
   "hookCommands": [

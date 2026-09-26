@@ -74,6 +74,18 @@ Output có số liệu/trích dẫn nguồn ngoài (report, plan, summary, PRD, 
 - Fail-closed: thiếu content/sources hoặc claims < min → exit 2 · advisory → `--warn` · file thật sự không số/quote → `--allow-empty`.
 - Bằng chứng gốc: Anthropic grader tách 16/18 report đạt chuẩn vs **0** với model không grounded — "invented figure or quote would have failed".
 
+### 6. Eval hygiene — kết luận chỉ mạnh bằng evidence (KN-080, học arXiv:2609.30074 — 24/09/2026)
+
+> Self-audit 8 model × 5 families (293 raw reps, caching off): identical calls KHÔNG tái lập (72% cell không node-set-perfect); joint bootstrap chỉ **đáy bảng** vững (99%/86%), middle 27–48%, top 68% — "identifies the worst reliably, not the best"; 2 quy tắc merge hợp lý đổi 4/8 hàng + headline 7pp; reproducible ≠ accurate; 4/8 endpoint bị thu hồi trong 10 tuần.
+
+Khi benchmark/so sánh/rank (AAR 3 methods, model comparison, component evals):
+
+- **Rank stability trước "best":** top-2 nằm trong noise → KHÔNG tuyên "best" — chọn bản đơn giản hơn (minimal-ladder tiebreak) hoặc giữ π₀ (KN-067), ghi rõ "trong noise".
+- **Sensitivity executed:** chạy ≥2 quy tắc tổng hợp hợp lý (mean/median/majority); kết luận đổi theo quy tắc → ghi thẳng "phụ thuộc quy tắc", không trưng 1 bảng như chân lý.
+- **Provenance + raw per-run:** mỗi ô truy về raw run đã lưu (`.agent/benchmarks/<task>-<method>.md` + raw) — aggregate một mình không đủ.
+- **Ngày đo + shelf-life:** mọi báo cáo eval ghi `Measured: YYYY-MM-DD`; model/endpoint/API deprecate → kết quả hết hạn, re-run trước khi tái dùng (4/8 endpoint chết trong 10 tuần).
+- **Reproducible ≠ correct:** tái lập được vẫn phải đối chiếu ground truth (rubric + `--scope grounding`) — consistent ≠ đúng.
+
 ## Slop dimension — đừng chỉ check bugs (KN-047)
 > "Code can pass every behavior test and still be miserable to maintain" — SlopCodeBench: 3/4 agent runs phình complexity + redundant khi extend.
 - `node scripts/slop-check.mjs <files>` — duplication ≥8 dòng · function >80 dòng · CC >12 (0-dep, local; gate exit 1, fail-closed exit 2 khi 0 file).
@@ -110,6 +122,7 @@ Không dùng (các) pattern nào task không cần — agency là cost phải ju
 - [ ] Output có số/quote nguồn ngoài → đã chạy grounding fact-grader (`--scope grounding` — invented = fail)?
 - [ ] E2E — scenario thật, goal achieved, không chỉ build xanh?
 - [ ] Error analysis — failures cùng loại ≥2 đã aggregate trước khi fix?
+- [ ] Nếu rank/so sánh ≥2 phương án: đã report rank stability + ≥2 aggregation (sensitivity) + ngày đo + raw runs? (KN-080)
 - [ ] Critique có nguồn ngoài model (tool đo / framing đối lập)?
 - [ ] Số đo kèm claim (nếu claim nhanh/tốt hơn)?
 - [ ] Slop check (duplication/complexity) đã chạy trên changed files? (KN-047)

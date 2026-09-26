@@ -83,6 +83,8 @@ user-invocable: "false"
 
 ## Anti-patterns (đừng lặp lại)
 
+- - ❌ Gọi một aggregator/health-check là “fail-closed” khi link của nó chỉ assert liveness (exit 0 + in header) — phải có assert điều kiện (forbid drift/floor/freshness) + negative control chạy thật cho TỪNG link; marker “đã chạy” không chứng minh “khỏe” (KN-078 + KN-074).
+- - ❌ Diagnostic CLI cross-platform hard-code `lsof`/`ss`/`grep`, biến probe failure thành `free`, rồi coi exit 0 là health thật — phải branch native probe, trả `unknown` fail-closed, test free + listener + probe-failure (KN-077 + KN-074).
 - - ❌ Gate/script tự nhận pass mà không chứng minh ĐÃ CHẠY — isMain sai platform (argv[1] backslash Windows) → exit 0 không output, verifier đọc exit code → “PASS” rỗng nhiều tháng; verifier đọc trạng thái bằng regex giả định format khác template thật (`Status:` vs `**Status:**`) → isFixed/isOpen luôn false. Gate phải fail-loud + lưới “phải in output”; `isMain` dùng `split(/[\\/]/)`; regex test với chính format template sinh ra (KN-074 + KN-069 + KN-015 + KN-047).
 - - ❌ Xây chain failover trong lúc chữa cháy rồi để nguyên dạng implementation detail — không externalize invariants + không lưới = fault-tolerance mất âm thầm qua refactor, suite vẫn xanh (KN-063 + KN-056).
 - - ❌ Re-route model/provider mỗi turn trong phiên multi-turn — mất prompt cache + reasoning/continuation state bị strand giữa provider; chốt route 1 lần (sticky) + pin sau response thành công (KN-063).

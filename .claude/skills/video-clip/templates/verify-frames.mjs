@@ -31,6 +31,16 @@ try {
   const missing = [...used].filter((k) => !defined.has(k));
   if (missing.length) throw new Error(`token thiếu trong C: ${missing.join(', ')}`);
 
+  // KN-082: font thiếu coverage tiếng Việt (Georgia: ằ/ấ/ớ/ố) → fallback vỡ dấu im lặng trong canvas.
+  // Đo coverage thật bằng references/font-test.mjs trước khi thêm font mới vào whitelist.
+  const FONT_BLACKLIST = ['Georgia'];
+  const fontHits = [];
+  for (const m of html.matchAll(/(?:const|let|var)\s+([\w$]+)\s*=\s*['"`]([^'"`]+)['"`]/g)) {
+    if (!/font|serif|mono|sans/i.test(m[1])) continue;
+    for (const bad of FONT_BLACKLIST) if (m[2].includes(bad)) fontHits.push(`${m[1]}='${m[2]}'`);
+  }
+  if (fontHits.length) throw new Error(`font thiếu coverage VN (KN-082): ${fontHits.join(', ')} — dùng Times New Roman / Cambria / Segoe UI`);
+
   await mkdir(outDir, { recursive: true });
   const browser = await chromium.launch({ headless: true });
   const page = await browser.newPage({ viewport: { width: 540, height: 960 }, deviceScaleFactor: 1 });
