@@ -48,6 +48,7 @@ node_modules/
 *.log
 dist/
 build/
+__pycache__/
 
 # ===== Exported skills — skip demo binaries (mp3/jpg/png), keep code =====
 .claude/skills/*/assets/
