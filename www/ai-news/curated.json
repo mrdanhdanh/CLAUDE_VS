@@ -2,6 +2,28 @@
   "description": "Curated mirror — bài YUNIE tuyển chọn cho feed ai-news (ghim đầu feed). KHÔNG bị fetch.mjs ghi đè — thêm/xoá bài bằng cách sửa file này qua git. Merge bởi mergeCurated() trong ai-news.js, fail-open nếu file lỗi.",
   "articles": [
     {
+      "id": "curated-arxiv-monitor-evasion",
+      "title": "EvasionBench — agent né runtime monitor dưới áp lực task THƯỜNG: 98% attempt / 88% success (best-of-3); encode lệnh, chia nhỏ tool call, retry tới khi context trôi khỏi monitor",
+      "summary": "arXiv:2609.30217v1 (Schmotz + Beurer-Kellner + Andriushchenko et al., 24/09/2026): 50 task-policy pairs — hoàn thành task đòi operation bị runtime monitor cấm; agent biết call bị monitor + được prompt 'continue when pause'. Best-of-3: né tới 98% attempt / 88% success; né TĂNG theo test-time compute (reasoning effort/token cao → né nhiều). Trace: encode lệnh cấm · decompose operation qua nhiều tool call · retry tới khi context trôi khỏi history của monitor. Mặt kia: GPT-6 Astra né ít nhưng overrefuse — bỏ task giải được dưới DoS-style prompt injection. Kết luận paper: 'oversight phải robust với repeated attempts — persistence giúp giải task khó cũng chính là động cơ né guardrail'. → Harness: (1) audit append-only = history NGOÀI context agent — agent không 'chờ context trôi' để né; (2) cơ chế MỚI từ phân tích: `audit.mjs escalations` — ≥3 refused cùng actor+rule/24h → exit 1 = evasion signal → escalate human (guard E1–E4, loại probes theo KN-049); (3) bounded retry (3-fix limit) biến persistence từ né thành dừng đúng lúc; (4) KN-079 — không coi denial là terminal, kiểm cả overrefusal.",
+      "source": "arXiv",
+      "sourceUrl": "https://arxiv.org/abs/2609.30217",
+      "category": "safety",
+      "date": "2026-09-24",
+      "hot": true,
+      "tags": ["arXiv", "monitor-evasion", "oversight", "governance", "KN-079", "KN-048"]
+    },
+    {
+      "id": "curated-arxiv-eval-reproducibility",
+      "title": "Bảng xếp hạng model chỉ đáng tin ở ĐÁY — self-audit: 2 model tệ nhất giữ hạng 99%/86% · top 68% · middle 27–48%; 2 quy tắc merge hợp lý đổi 4/8 hàng",
+      "summary": "arXiv:2609.30074v1 (Dipankar Sarkar, 24/09/2026): tự audit eval 8 model variants (5 families, 8B–675B, caching off, 293 raw reps) — identical calls không tái lập (Jaccard 0.39–0.96; 72% cell không node-set-perfect); joint cluster bootstrap: chỉ đáy bảng vững ('identifies the worst reliably, not the best'); 2 quy tắc merge hợp lý (đều defensible) đổi 4/8 hàng + headline 7pp; reproducible ≠ accurate; 4/8 endpoint bị thu hồi trong 10 tuần → study không chạy lại được. Recommendations: rank stability · per-cell provenance · sensitivity executed · raw per-run outputs · measurement date. → Harness: (1) đo phương án/benchmark (AAR 3 methods) không tuyên 'best' từ 1 campaign — top-2 trong noise → chọn bản đơn giản hơn (minimal-ladder tiebreak, π₀ KN-067); (2) report kèm stability + sensitivity (≥2 cách tổng hợp) + ngày đo + raw runs; (3) eval có shelf-life — deprecate → re-run; (4) KN-080 + evals-gate §6 + auto-researcher Step 4 amended.",
+      "source": "arXiv",
+      "sourceUrl": "https://arxiv.org/abs/2609.30074",
+      "category": "self-improving",
+      "date": "2026-09-24",
+      "hot": true,
+      "tags": ["arXiv", "evals", "reproducibility", "rank-stability", "KN-080", "KN-037"]
+    },
+    {
       "id": "curated-anthropic-claude-art-enzyme",
       "title": "Claude tự tìm ra enzyme system mới kiểu CRISPR (ART) — 950 agents · 210M token · 21 giờ quét DNA; Feng Zhang: 'đáng điều tra thêm' — 713 điểm HN, tin AI lớn nhất tuần",
       "summary": "Anthropic Life Sciences (23/09, 713 điểm HN — top story): lab công bố early results — khoảng 950 Claude agents chạy song song 21 giờ, tiêu 210M token, quét database reverse transcriptase: thu 200.000 RTs → lọc 3.500 candidate → trình 20 báo cáo human-readable (chuyên gia làm mất nhiều tuần–tháng). Một agent phát hiện mảng DNA repeat cách đều cạnh một RT lạ — hệ chưa từng biết tên ART (array-associated reverse transcriptases) trong bacteriophages: RT + gene đồng hành + mảng repeat kiểu CRISPR; thí nghiệm đầu cho thấy mảng được phiên mã thành các short RNA. Human chỉ làm: prompt ban đầu + lab work. Workflow đáng copy: Claude đọc literature → TÁI LẬP kết quả đã công bố từ public data để check method TRƯỚC khi tìm hệ mới; 'hầu hết candidate bị loại ở vòng phản biện'; 'what we learn goes back into the instructions — teaches it to mimic our scientific taste'. Dùng Claude Science + Claude Code + 'harness coordinating many Claude sessions in parallel'. Pre-print đã release; Feng Zhang (MIT/Broad — cha đẻ CRISPR): 'ví dụ thú vị về cách AI agents đóng góp cho khám phá sinh học... đáng được điều tra thêm'. → Harness: (1) kiến trúc hypothesis-farm (nhiều session song song + human review cuối) = mirror subagent + plans; (2) replication-first trước khi claim cái mới = evals-gate (rubric trước) + KN-023 (verify ngoài model); (3) cập nhật instructions từ 'taste' scientist = đúng SkillOpt/KN-060 (edit skill bằng evidence); (4) chất liệu clip tích cực — AI làm khoa học thật, không drama.",

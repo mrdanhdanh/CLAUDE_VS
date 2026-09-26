@@ -1,13 +1,13 @@
 {
-  "generatedAt": "2026-09-25T07:08:11.424Z",
+  "generatedAt": "2026-09-26T06:01:10.228Z",
   "generatedBy": "YUNIE × Last30Days",
   "version": 2,
-  "description": "Tin AI mới nhất — tổng hợp từ Last30Days (HN, GitHub, DEV.to, Reddit, arXiv, HackerNoon) trong 30 ngày qua. Chủ đề: AI. Tự động cập nhật bởi YUNIE.",
+  "description": "Tin AI mới nhất — tổng hợp từ Last30Days (HN, GitHub, DEV.to, Reddit, arXiv, HackerNoon) trong 3 ngày qua. Chủ đề: AI. Tự động cập nhật bởi YUNIE.",
   "last30days": {
     "enabled": true,
     "topic": "AI",
-    "since": "2026-08-26",
-    "days": 30,
+    "since": "2026-09-23",
+    "days": 3,
     "sources": [
       "Hacker News (Algolia, free)",
       "GitHub Search (free)",
@@ -55,82 +55,156 @@
   ],
   "articles": [
     {
-      "id": "hnoon-how-jev-can-revolutionize-search-across-domains-and-what-it-",
-      "title": "How Jev Can Revolutionize Search Across Domains and What it Would Mean for Web Search",
-      "summary": "Jev is a decision engine that evaluates typed questions in a single, parallel sweep, spitting out choices, scores, or probabilities instead of writing paragraphs of text. It's desi — by krishna dutt on HackerNoon.",
-      "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/how-jev-can-revolutionize-search-across-domains-and-what-it-would-mean-for-web-search",
+      "id": "hn-49851856",
+      "title": "Tesla workers balk at training Optimus humanoid robots as replacements",
+      "summary": "Tesla workers balk at training Optimus humanoid robots as replacements — 9 points, 5 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://arstechnica.com/ai/2026/09/tesla-workers-balk-at-training-optimus-humanoid-robots-as-replacements/",
+      "category": "fun",
+      "date": "2026-09-26",
+      "hot": false,
+      "tags": [
+        "HN",
+        "AI",
+        "story",
+        "author_Jtsummers"
+      ]
+    },
+    {
+      "id": "hn-49853177",
+      "title": "Evolving programming languages in the AI era",
+      "summary": "Evolving programming languages in the AI era — 5 points, 1 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://twitter.com/josevalim/status/2103133294317445290",
       "category": "products",
+      "date": "2026-09-26",
+      "hot": false,
+      "tags": [
+        "HN",
+        "AI",
+        "story",
+        "author_ksec"
+      ]
+    },
+    {
+      "id": "hn-49852079",
+      "title": "Why AI is booming, but productivity isn't",
+      "summary": "Why AI is booming, but productivity isn't — 5 points, 0 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://research.socialcapital.com/p/ai-roi",
+      "category": "products",
+      "date": "2026-09-26",
+      "hot": false,
+      "tags": [
+        "HN",
+        "AI",
+        "story",
+        "author_gmays"
+      ]
+    },
+    {
+      "id": "hn-49851940",
+      "title": "Listen Up You Imposters",
+      "summary": "Listen Up You Imposters — 4 points, 0 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://fuck-off.ai/panned",
+      "category": "products",
+      "date": "2026-09-26",
+      "hot": false,
+      "tags": [
+        "HN",
+        "AI",
+        "story",
+        "author_gfody"
+      ]
+    },
+    {
+      "id": "hn-49853303",
+      "title": "Was this award-winning book written by AI?",
+      "summary": "Was this award-winning book written by AI? — 3 points, 1 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://www.cbc.ca/news/canada/montreal/thelyson-orelien-ai-scandal-9.7355167",
+      "category": "products",
+      "date": "2026-09-26",
+      "hot": false,
+      "tags": [
+        "HN",
+        "AI",
+        "story",
+        "author_olalonde"
+      ]
+    },
+    {
+      "id": "hntop-49845977",
+      "title": "U.S. appeals court upholds designation of Anthropic as supply chain risk",
+      "summary": "U.S. appeals court upholds designation of Anthropic as supply chain risk — 426 points, 739 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://www.cnbc.com/2026/09/25/pentagon-anthropic-ai-risk-appeals-court.html",
+      "category": "big-tech",
+      "date": "2026-09-25",
+      "hot": true,
+      "tags": [
+        "HN",
+        "top"
+      ]
+    },
+    {
+      "id": "hntop-49849985",
+      "title": "Revealing the details of how OpenAI agents hacked Hugging Face",
+      "summary": "Revealing the details of how OpenAI agents hacked Hugging Face — 360 points, 216 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://swarmtraces.org/",
+      "category": "big-tech",
+      "date": "2026-09-25",
+      "hot": true,
+      "tags": [
+        "HN",
+        "top"
+      ]
+    },
+    {
+      "id": "hnoon-the-hacker-house-files-14-notorious-scandals-from-8-prominen",
+      "title": "The Hacker House Files: 14 Notorious Scandals From 8 Prominent SF Bay Area Houses",
+      "summary": "From AGI House's 37 police calls to a still-open rape report at Genesis: 14 scandals from 8 Bay Area hacker houses, sourced from police records and lawsuits. — by The Tech Reckoning is Upon Us! on HackerNoon.",
+      "source": "HackerNoon",
+      "sourceUrl": "https://hackernoon.com/the-hacker-house-files-14-notorious-scandals-from-8-prominent-bay-area-houses",
+      "category": "safety",
       "date": "2026-09-25",
       "hot": true,
       "tags": [
         "HackerNoon",
-        "cloud-computing",
+        "hacker-house",
         "AI"
       ]
     },
     {
-      "id": "hn-49840681",
-      "title": "Peter Thiel slams pope's AI encyclical as gift to Chinese Communist Party",
-      "summary": "Peter Thiel slams pope's AI encyclical as gift to Chinese Communist Party — 4 points, 1 comments on HN.",
-      "source": "Hacker News",
-      "sourceUrl": "https://www.politico.com/news/2026/09/24/peter-thiel-slams-popes-ai-encyclical-as-gift-to-chinese-communist-party-01091850",
-      "category": "products",
+      "id": "hnoon-nemotron-3-diarization-heres-what-you-need-to-know",
+      "title": "Nemotron-3-diarization: Here's What You Need to Know",
+      "summary": "Its most important distinction is that one checkpoint supports offline processing and streaming operation with up to eight speakers, with configurable output resolution in multiple — by aimodels44 on HackerNoon.",
+      "source": "HackerNoon",
+      "sourceUrl": "https://hackernoon.com/nemotron-3-diarization-heres-what-you-need-to-know",
+      "category": "safety",
       "date": "2026-09-25",
-      "hot": false,
+      "hot": true,
       "tags": [
-        "HN",
-        "AI",
-        "story",
-        "author_vrganj"
+        "HackerNoon",
+        "ai",
+        "AI"
       ]
     },
     {
-      "id": "hn-49840572",
-      "title": "AI Agents are breaking into Online Retailers for $25 a target",
-      "summary": "AI Agents are breaking into Online Retailers for $25 a target — 4 points, 0 comments on HN.",
-      "source": "Hacker News",
-      "sourceUrl": "https://gambit.security/blog-posts/autonomous-ai-agents-online-retailers-25-a-company",
-      "category": "products",
+      "id": "hnoon-just-publish-an-app-how-fg-hard-can-it-be",
+      "title": "Just Publish an App. How F*****g Hard Can It Be?",
+      "summary": "I built my dream iOS app in two months while working full time, then got sick an hour after launch. An honest look at shipping solo. — by Radu on HackerNoon.",
+      "source": "HackerNoon",
+      "sourceUrl": "https://hackernoon.com/just-publish-an-app-how-fg-hard-can-it-be",
+      "category": "safety",
       "date": "2026-09-25",
-      "hot": false,
+      "hot": true,
       "tags": [
-        "HN",
-        "AI",
-        "story",
-        "author_geox"
-      ]
-    },
-    {
-      "id": "hn-49840300",
-      "title": "Jev Based Code Review",
-      "summary": "Jev Based Code Review — 4 points, 2 comments on HN.",
-      "source": "Hacker News",
-      "sourceUrl": "https://github.com/egma-ai/jev-code-reviewer",
-      "category": "products",
-      "date": "2026-09-25",
-      "hot": false,
-      "tags": [
-        "HN",
-        "AI",
-        "story",
-        "author_namanbhulawat"
-      ]
-    },
-    {
-      "id": "hn-49841032",
-      "title": "Jensen Huang says with AI 'in order to save you, they've got to hurt you first.'",
-      "summary": "Jensen Huang says with AI 'in order to save you, they've got to hurt you first.' — 3 points, 1 comments on HN.",
-      "source": "Hacker News",
-      "sourceUrl": "https://www.theverge.com/tech/1000140/jensen-huang-nvidia-ai-energy-climate-change-supervillain",
-      "category": "products",
-      "date": "2026-09-25",
-      "hot": false,
-      "tags": [
-        "HN",
-        "AI",
-        "story",
-        "author_pera"
+        "HackerNoon",
+        "shipaton",
+        "AI"
       ]
     },
     {
@@ -194,88 +268,13 @@
       ]
     },
     {
-      "id": "hnoon-how-ai-is-changing-the-production-pipeline-of-filmmaking-int",
-      "title": "How AI Is Changing the Production Pipeline of Filmmaking: Interview with Amy Kouxiao Zhang",
-      "summary": "How is AI changing filmmaking? Amy Kouxiao Zhang shares how generative AI is reshaping micro-drama production, costs, and creative workflows. — by Jiaru Cai on HackerNoon.",
-      "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/how-ai-is-changing-the-production-pipeline-of-filmmaking-interview-with-amy-kouxiao-zhang",
-      "category": "products",
+      "id": "hntop-49827794",
+      "title": "Meta takes down a critical video about meta AI Glasses after filming at Meta",
+      "summary": "Meta takes down a critical video about meta AI Glasses after filming at Meta — 624 points, 379 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://www.reddit.com/r/facebook/comments/1wotwrk/meta_takes_down_a_critical_video_about_meta_ai/",
+      "category": "big-tech",
       "date": "2026-09-24",
-      "hot": true,
-      "tags": [
-        "HackerNoon",
-        "micro-drama",
-        "AI"
-      ]
-    },
-    {
-      "id": "dev-4724515",
-      "title": "I Turned DEV.to Into a Walkable 3D Library — Debugging It Has Been a Nightmare",
-      "summary": "DEV Library is my idea of first-person 3D reimagining of DEV.to. Not a themed scene with some... — 60 reactions, 23 comments on DEV.to.",
-      "source": "DEV.to",
-      "sourceUrl": "https://dev.to/mikachu/i-turned-devto-into-a-walkable-3d-library-debugging-it-has-been-a-nightmare-4lkd",
-      "category": "products",
-      "date": "2026-09-23",
-      "hot": true,
-      "tags": [
-        "DEV.to",
-        "ai",
-        "buildinpublic",
-        "webdev"
-      ]
-    },
-    {
-      "id": "dev-4721820",
-      "title": "Something About Coding Stopped Feeling Good — and It Took Me a While to Figure Out What",
-      "summary": "Let me tell you about a project that wasn't impressive.  Back in university, I built a small .NET... — 30 reactions, 8 comments on DEV.to.",
-      "source": "DEV.to",
-      "sourceUrl": "https://dev.to/james_anderson_h/something-about-coding-stopped-feeling-good-and-it-took-me-a-while-to-figure-out-what-2op2",
-      "category": "products",
-      "date": "2026-09-23",
-      "hot": false,
-      "tags": [
-        "DEV.to",
-        "ai",
-        "career",
-        "ai"
-      ]
-    },
-    {
-      "id": "hntop-49803892",
-      "title": "Claude Opus 5.5",
-      "summary": "Claude Opus 5.5 — 1793 points, 1118 comments on HN.",
-      "source": "Hacker News",
-      "sourceUrl": "https://www.anthropic.com/claude-opus-5-5",
-      "category": "products",
-      "date": "2026-09-22",
-      "hot": true,
-      "tags": [
-        "HN",
-        "top"
-      ]
-    },
-    {
-      "id": "hntop-49805509",
-      "title": "GPT-6 Sol and Luna",
-      "summary": "GPT-6 Sol and Luna — 1766 points, 843 comments on HN.",
-      "source": "Hacker News",
-      "sourceUrl": "https://openai.com/index/introducing-gpt-6-sol-and-luna/",
-      "category": "products",
-      "date": "2026-09-22",
-      "hot": true,
-      "tags": [
-        "HN",
-        "top"
-      ]
-    },
-    {
-      "id": "hntop-49806430",
-      "title": "Pentagon says overreliance on AI contributed to missile strike on Iran school",
-      "summary": "<a href=\"https:&#x2F;&#x2F;archive.ph&#x2F;0V37g\" rel=\"nofollow\">https:&#x2F;&#x2F;archive.ph&#x2F;0V37g</a> — 951 points, 540 comments on HN.",
-      "source": "Hacker News",
-      "sourceUrl": "https://www.bloomberg.com/graphics/2026-iran-school-attack/",
-      "category": "products",
-      "date": "2026-09-22",
       "hot": true,
       "tags": [
         "HN",
@@ -284,15 +283,14 @@
     }
   ],
   "meta": {
-    "fetchedAt": "2026-09-25T07:08:11.424Z",
+    "fetchedAt": "2026-09-26T06:01:10.228Z",
     "topic": "AI",
     "total": 15,
     "hot": 10,
     "sources": [
-      "HackerNoon",
       "Hacker News",
-      "arXiv",
-      "DEV.to"
+      "HackerNoon",
+      "arXiv"
     ]
   }
 }
