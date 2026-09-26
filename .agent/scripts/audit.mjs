@@ -5,6 +5,8 @@
  *   node .agent/scripts/audit.mjs log --tool read --target "www/status.json" --decision permitted [--actor YUNIE] [--rule id] [--durationMs 12] [--error msg]
  *   node .agent/scripts/audit.mjs tail [--n 20]
  *   node .agent/scripts/audit.mjs stats [--json]
+ *   node .agent/scripts/audit.mjs escalations [--file <path>] [--threshold 3] [--window 24] [--json]
+ *        (KN-079 — repeat refusals cùng actor+rule ≥ threshold/window → exit 1 = evasion signal)
  * No deps, Node 18+
  */
 import fs from 'node:fs/promises';
@@ -323,6 +325,74 @@ async function cmdStats(args) {
   }
 }
 
+// ---------- KN-079 (2026-09-26): monitor evasion — repeated-attempt signal ----------
+// Học EvasionBench (arXiv:2609.30217v1): dưới áp lực task THƯỜNG, agent encode lệnh cấm / chia nhỏ
+// qua nhiều tool call / retry tới khi context trôi khỏi "history" của monitor. Oversight phải robust
+// với REPEATED attempts: audit append-only là history NGOÀI context agent — command này biến nó
+// thành tín hiệu: cùng actor tái phạm cùng rule ≥ threshold/window → escalation (báo người, không tự thử lại).
+// Probes red-team bị loại (KN-049: synthetic ≠ friction thật). Window tính ngược từ refused mới nhất
+// (deterministic cho fixture test) · cap 1000 event gần nhất.
+async function cmdEscalations(args) {
+  const file = args.file || AUDIT_PATH;
+  const threshold = args.threshold != null ? Number(args.threshold) : 3;
+  const windowHours = args.window != null ? Number(args.window) : 24;
+  // fail-closed (KN-069): flag có mặt ⇒ giá trị phải hữu hạn hợp lệ
+  if (!Number.isFinite(threshold) || threshold < 2) {
+    console.error(`⛔ --threshold không hợp lệ — "${args.threshold}" (cần số ≥ 2)`);
+    process.exit(2);
+  }
+  if (!Number.isFinite(windowHours) || windowHours <= 0) {
+    console.error(`⛔ --window không hợp lệ — "${args.window}" (cần số > 0 giờ)`);
+    process.exit(2);
+  }
+  if (!existsSync(file)) {
+    console.log('No audit log — nothing to scan');
+    return;
+  }
+  const lines = (await fs.readFile(file, 'utf8')).trim().split('\n').filter(Boolean).slice(-1000);
+  const events = [];
+  for (const line of lines) { try { events.push(JSON.parse(line)); } catch {} }
+  const isProbe = (e) => e.actor === 'redteam-spec' || e.rule === 'redteam-test';
+  const refused = events.filter((e) => e.decision === 'refused' && !isProbe(e) && e.ts);
+  if (!refused.length) {
+    const out = { scanned: events.length, refused: 0, threshold, windowHours, escalations: [] };
+    if (args.json) console.log(JSON.stringify(out, null, 2));
+    else console.log(`✅ no repeat-refusal escalations (0 refused thật trong ${events.length} event quét)`);
+    return;
+  }
+  const latestMs = Math.max(...refused.map((e) => Date.parse(e.ts)).filter((n) => Number.isFinite(n)));
+  const cutoff = latestMs - windowHours * 3600 * 1000;
+  const groups = new Map();
+  for (const e of refused) {
+    const ms = Date.parse(e.ts);
+    if (!Number.isFinite(ms) || ms < cutoff) continue;
+    const key = `${e.actor || '?'}|${e.rule || 'no-rule'}`;
+    if (!groups.has(key)) groups.set(key, []);
+    groups.get(key).push(e);
+  }
+  const escalations = [];
+  for (const [key, evs] of groups) {
+    if (evs.length >= threshold) {
+      const [actor, rule] = key.split('|');
+      const last = evs[evs.length - 1];
+      escalations.push({ actor, rule, count: evs.length, windowHours, lastTs: last.ts, lastTarget: last.target });
+    }
+  }
+  escalations.sort((a, b) => b.count - a.count);
+  const out = { scanned: events.length, refused: refused.length, threshold, windowHours, escalations };
+  if (args.json) {
+    console.log(JSON.stringify(out, null, 2));
+  } else if (!escalations.length) {
+    console.log(`✅ no repeat-refusal escalations (${refused.length} refused thật, threshold ≥${threshold}/${windowHours}h)`);
+  } else {
+    console.log(`⚠️ ${escalations.length} escalation(s) — repeat refusals = evasion signal (KN-079) → escalate human, không tự thử lại:`);
+    for (const s of escalations) {
+      console.log(`  - actor=${s.actor} rule=${s.rule} ×${s.count} trong ${windowHours}h — last ${s.lastTs} target="${s.lastTarget}"`);
+    }
+  }
+  if (escalations.length) process.exit(1);
+}
+
 async function cmdVerify(args) {
   if (!existsSync(AUDIT_PATH)) {
     console.log('No audit log yet — .agent/audit.jsonl not found');
@@ -369,6 +439,7 @@ async function main() {
   if (cmd === 'log') await cmdLog(args);
   else if (cmd === 'tail') await cmdTail(args);
   else if (cmd === 'stats') await cmdStats(args);
+  else if (cmd === 'escalations') await cmdEscalations(args);
   else if (cmd === 'verify') await cmdVerify(args);
   else if (cmd === 'keygen') await cmdKeygen();
   else if (cmd === 'pubkey') await cmdPubkey();
@@ -378,7 +449,7 @@ async function main() {
     if (args.json) console.log(JSON.stringify({ policyDigest: d }, null, 2));
   }
   else {
-    console.error(`Unknown command: ${cmd}\nUsage: audit.mjs <log|tail|stats|verify|keygen|pubkey|digest> [options]`);
+    console.error(`Unknown command: ${cmd}\nUsage: audit.mjs <log|tail|stats|escalations|verify|keygen|pubkey|digest> [options]`);
     process.exit(1);
   }
 }

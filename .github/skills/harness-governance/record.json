@@ -11,7 +11,8 @@
       "KN-052",
       "KN-059",
       "KN-070",
-      "KN-071"
+      "KN-071",
+      "KN-079"
     ],
     "bugs": [
       ".agent/bugs/2026-09-03-agent-test-mutate-reward-hacking/bug.md",
@@ -41,7 +42,10 @@
     "supply-chain",
     "credentials",
     "runtime",
-    "privacy"
+    "privacy",
+    "monitor",
+    "evasion",
+    "agent"
   ],
   "evidence": [
     ".agent/bugs/2026-09-03-agent-test-mutate-reward-hacking/bug.md",
@@ -71,6 +75,6 @@
   ],
   "gaps": [],
   "verdict": "G-accepted",
-  "generatedAt": "2026-09-24T14:44:32.442Z",
+  "generatedAt": "2026-09-26T06:10:28.952Z",
   "paper": "DisCo arXiv:2609.02749v1 §3.2 (task-agnostic)"
 }

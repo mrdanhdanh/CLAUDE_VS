@@ -48,6 +48,8 @@ FOR each method A, B, C:
   4. Log result vào .agent/benchmarks/<task>-<method>.md
 
 COMPARE scores → Keep best method, discard rest
+NHƯNG (KN-080): top-2 nằm trong noise → chọn bản ĐƠN GIẢN hơn (minimal-ladder tiebreak), ghi "trong noise" —
+không tuyên "best" từ 1 campaign; report kèm rank stability + `Measured:` ngày + raw runs (.agent/benchmarks/)
 Nếu tất cả fail → escalate, không force (học từ systematic-debugging 3-fix limit)
 ```
 
@@ -59,6 +61,7 @@ Nếu tất cả fail → escalate, không force (học từ systematic-debuggin
 - [ ] Nếu UI: contrast ≥4.5:1, keyboard, aria-label (KN-006)
 - [ ] Nếu animation: đo `--angle` bằng Playwright trước/sau 500ms (KN-003/KN-004)
 - [ ] Không reward hacking — grader check **HOW** (cách làm) không chỉ **WHETHER** (có pass không)
+- [ ] Nếu chọn "best": đã report rank stability + sensitivity (≥2 tổng hợp) + ngày đo + raw runs chưa? (KN-080)
 
 ### Step 5: Report + Learn
 - Sinh markdown tại `.agent/plans/aar-harness/report-<slug>.md`

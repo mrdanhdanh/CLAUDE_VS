@@ -1,8 +1,8 @@
 # Evidence — harness-web-ui (DisCo arXiv:2609.02749v1 §3.2 (task-agnostic))
 
-> Substrate layer của skill — full text từ docs/knowleged.md. Sinh tự động 2026-09-24T14:44:32.478Z.
+> Substrate layer của skill — full text từ docs/knowleged.md. Sinh tự động 2026-09-26T06:10:28.994Z.
 
-## Bug reports liên quan (19/63 bugs)
+## Bug reports liên quan (19/66 bugs)
 
 - `.agent/bugs/2026-08-29-rainbow-animated/bug.md` — Bug: Rainbow border không xoay (animated)
 - `.agent/bugs/2026-08-29-status-ui/bug.md` — Bug: Trang STATUS www/ giao diện chưa hợp lý — layout, responsive, registry render sai

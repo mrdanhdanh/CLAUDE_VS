@@ -1,6 +1,6 @@
 ---
 name: harness-process
-description: "Task-agnostic lessons 'Process & Self-Improvement' chưng cất từ docs/knowleged.md (34 KN: KN-005, KN-007, KN-010, KN-014, KN-016, KN-018, KN-019, KN-023, KN-024, KN-025, KN-026, KN-027, KN-033, KN-034, KN-035, KN-036, KN-037, KN-039, KN-043, KN-044, KN-047, KN-053, KN-054, KN-056, KN-057, KN-060, KN-062, KN-064, KN-065, KN-066, KN-067, KN-068, KN-069, KN-075) + .agent/bugs/. Use when task chạm process, quality, ux, perf, a11y, knowledge, automation, dx, self-improving, benchmark — áp Cách phòng tránh trước khi code, tránh lặp bug cũ. DisCo-lite, regenerate bằng distill-agnostic.mjs."
+description: "Task-agnostic lessons 'Process & Self-Improvement' chưng cất từ docs/knowleged.md (37 KN: KN-005, KN-007, KN-010, KN-014, KN-016, KN-018, KN-019, KN-023, KN-024, KN-025, KN-026, KN-027, KN-033, KN-034, KN-035, KN-036, KN-037, KN-039, KN-043, KN-044, KN-047, KN-053, KN-054, KN-056, KN-057, KN-060, KN-062, KN-064, KN-065, KN-066, KN-067, KN-068, KN-069, KN-075, KN-077, KN-078, KN-080) + .agent/bugs/. Use when task chạm process, quality, ux, perf, a11y, knowledge, automation, dx, self-improving, benchmark — áp Cách phòng tránh trước khi code, tránh lặp bug cũ. DisCo-lite, regenerate bằng distill-agnostic.mjs."
 user-invocable: false
 ---
 
@@ -10,11 +10,11 @@ user-invocable: false
 
 ## When to Use
 
-- Task chạm theme **Process & Self-Improvement** (tags: process, quality, ux, perf, a11y, knowledge, automation, dx, self-improving, benchmark, aar, mcp, testing, regex, windows, fs, collaboration, diversity, pilot-in-command, metrics, evidence, research, verification, calibration, psychology, taste, human-judgment, agent, self-evolving, procedural-graph, a-jit, memory, funnel, rl, consistency, self-distillation, scaffold, rsi, harness, failure-diagnosis, reasoning, uncertainty, architecture, playbook, evals, agentic-patterns, powershell, scripts, hooks, content, docs, verify, fresh-eyes, rag, grounding, slop, complexity, git, recovery, recurrence, guard, review, skills, eval, context-engineering, env, concurrency, exploration, replay, wise-loading, token-budget, fail-closed, gate, data)
+- Task chạm theme **Process & Self-Improvement** (tags: process, quality, ux, perf, a11y, knowledge, automation, dx, self-improving, benchmark, aar, mcp, testing, regex, windows, fs, collaboration, diversity, pilot-in-command, metrics, evidence, research, verification, calibration, psychology, taste, human-judgment, agent, self-evolving, procedural-graph, a-jit, memory, funnel, rl, consistency, self-distillation, scaffold, rsi, harness, failure-diagnosis, reasoning, uncertainty, architecture, playbook, evals, agentic-patterns, powershell, scripts, hooks, content, docs, verify, fresh-eyes, rag, grounding, slop, complexity, git, recovery, recurrence, guard, review, skills, eval, context-engineering, env, concurrency, exploration, replay, wise-loading, token-budget, fail-closed, gate, data, false-green, reproducibility)
 - Trước khi code/fix — áp **Cách phòng tránh** ngay để không lặp bug cũ
 - Review/plan — check anti-patterns bên dưới
 
-## Bài học (34 KN)
+## Bài học (37 KN)
 
 ### KN-005 — Bug Blindness — mù bug do workaround vô thức + fan bias (major)
 - **Bài học:** Chữa mù bug: fresh eyes, test như user mới, chỉ ra bug liên tục, không workaround vô thức, dogfooding có ý thức
@@ -353,8 +353,41 @@ user-invocable: false
   - Claim về thông số (context/size/benchmark) phải có **≥2 nguồn độc lập** hoặc ghi rõ “chưa xác minh”; thấy nguồn mâu thuẫn → giữ cả hai, không chọn phe có lợi cho kịch bản.
   - Nếu user đã cung cấp danh tính trong câu lệnh, vẫn phải kiểm: tên đúng nhưng **bản chất** (model? sản phẩm? dịch vụ? công ty?) có thể vẫn sai.
 
+### KN-077 — Setup doctor Windows port probe bị nhiễu và đo sai (minor)
+- **Bài học:** Structured native probe (`netstat`/`lsof`/`ss`) + `listening
+- **Bug report:** .agent/bugs/2026-09-25-setup-doctor-windows-port-probe-noise/bug.md
+- **Cách phòng tránh:**
+  - Mọi CLI cross-platform phải chọn probe native theo OS; không hard-code Unix-only commands.
+  - Dùng `execFileSync` + `stdio` để command không tồn tại không rò stderr; không nuốt lỗi mà mất tín hiệu.
+  - Phân biệt `listening`, `free`, `unknown`; probe failure phải fail-closed, không được báo free.
+  - Test **free port** (negative), **listener thật** (positive), và **probe failure** (unknown) trước khi tin `PASS`; wire self-test vào component eval.
+  - Đây là recurrence của portability/fail-silent pattern; guard cũ chưa bao phủ `setup-doctor` nên phải thêm probe vào checklist.
+
+### KN-078 — Power sweep false green — liveness không phải health (major)
+- **Bài học:** Mọi link health phải có assert điều kiện (forbid drift/threshold/freshness) + negative control chạy thật; aggregator mới phải tự chạy full-suite trước khi tin
+- **Bug report:** .agent/bugs/2026-09-25-power-sweep-false-green-liveness-khong-phai-health/bug.md
+- **Cách phòng tránh:**
+  - Mỗi link health phải có **assert điều kiện** (forbid/threshold/freshness), không chỉ marker-in-output.
+  - Trước khi gọi một gate là “fail-closed”, chạy **negative control thật** cho từng link (giả lập trạng thái xấu → phải ĐỎ).
+  - Aggregator/gate mới phải tự chạy **full-suite + runtime thật** một lần trước khi tin (KN-065) — và phải có 1 link tự bảo vệ (self-test nằm trong component evals).
+  - Marker văn bản dùng để chứng minh “đã chạy”; điều kiện dùng để chứng minh “khỏe” — không trộn hai loại.
+  - Chạy `node .github/harness/scripts/auto-learn.mjs suggest "gate fail-closed marker false green"` trước khi viết gate/aggregator mới.
+
+### KN-080 — Eval/benchmark kết luận quá tự tin so với evidence (self-audit rank stability) (major)
+- **Bài học:** Benchmark/so sánh phải report rank stability + sensitivity (≥2 cách tổng hợp) + provenance raw per-run + ngày đo (shelf-life: deprecate → re-run); top-2 trong noise → chọn bản đơn giản hơn, không tuyên "best" từ 1 campaign
+- **Bug report:** —
+- **Cách phòng tránh:**
+  - Trước khi tuyên "best/better": hỏi "delta có lớn hơn noise không?" — top-2 xấp xỉ → chọn bản đơn giản hơn (minimal-ladder tiebreak) hoặc giữ π₀ (KN-067), không tuyên best từ 1 campaign.
+  - Mọi báo cáo eval/benchmark ghi `Measured: YYYY-MM-DD` + raw runs + độ bất định; kết luận vững ở vùng nào của bảng (đáy > top).
+  - Chạy sensitivity (mean/median/majority) — kết luận đổi theo quy tắc thì ghi rõ phụ thuộc, không trưng bảng như chân lý.
+  - Eval có shelf-life: model/endpoint/API deprecate → kết quả hết hạn, re-run trước khi tái dùng (10 tuần giết 4/8 endpoint).
+  - Reproducible ≠ correct: tái lập + ground truth độc lập (rubric/grounding) là 2 lớp khác nhau.
+
 ## Anti-patterns (đừng lặp lại)
 
+- - ❌ Tuyên "best/better" từ 1 campaign small-sample mà không report rank stability + sensitivity + ngày đo — self-audit 2609.30074: chỉ đáy bảng vững (top 68%, middle 27–48%), 2 quy tắc merge hợp lý đổi 4/8 hàng; top-2 trong noise → chọn bản đơn giản hơn, không tuyên best (KN-080 + KN-037 + KN-019).
+- - ❌ Gọi một aggregator/health-check là “fail-closed” khi link của nó chỉ assert liveness (exit 0 + in header) — phải có assert điều kiện (forbid drift/floor/freshness) + negative control chạy thật cho TỪNG link; marker “đã chạy” không chứng minh “khỏe” (KN-078 + KN-074).
+- - ❌ Diagnostic CLI cross-platform hard-code `lsof`/`ss`/`grep`, biến probe failure thành `free`, rồi coi exit 0 là health thật — phải branch native probe, trả `unknown` fail-closed, test free + listener + probe-failure (KN-077 + KN-074).
 - - ❌ Gate/script tự nhận pass mà không chứng minh ĐÃ CHẠY — isMain sai platform (argv[1] backslash Windows) → exit 0 không output, verifier đọc exit code → “PASS” rỗng nhiều tháng; verifier đọc trạng thái bằng regex giả định format khác template thật (`Status:` vs `**Status:**`) → isFixed/isOpen luôn false. Gate phải fail-loud + lưới “phải in output”; `isMain` dùng `split(/[\\/]/)`; regex test với chính format template sinh ra (KN-074 + KN-069 + KN-015 + KN-047).
 - - ❌ Xây machinery "thêm" vì nghe hợp lý (recoverable elision, planner đắt, tool surface lớn) mà không đo component-level — arXiv 2609.20804: recoverable content model hiếm dùng + 0 gain; bash-only đủ cho model bash-giỏi; elision rule-based trước summarization (KN-072 + KN-037 + KN-047).
 - - ❌ Thêm file/dòng instruction `applyTo: "**"` mà không chạy `npm run budget:check` — pool always-on là thuế token thường trú; thêm rẻ, xóa không ai nhớ; anti-pattern mới phải phân loại "máy giữ được không" (máy giữ → guard + trỏ check, không restate) (KN-068).
@@ -371,6 +404,6 @@ user-invocable: false
 
 ## Nguồn
 
-- `docs/knowleged.md` — KN-005, KN-007, KN-010, KN-014, KN-016, KN-018, KN-019, KN-023, KN-024, KN-025, KN-026, KN-027, KN-033, KN-034, KN-035, KN-036, KN-037, KN-039, KN-043, KN-044, KN-047, KN-053, KN-054, KN-056, KN-057, KN-060, KN-062, KN-064, KN-065, KN-066, KN-067, KN-068, KN-069, KN-075
+- `docs/knowleged.md` — KN-005, KN-007, KN-010, KN-014, KN-016, KN-018, KN-019, KN-023, KN-024, KN-025, KN-026, KN-027, KN-033, KN-034, KN-035, KN-036, KN-037, KN-039, KN-043, KN-044, KN-047, KN-053, KN-054, KN-056, KN-057, KN-060, KN-062, KN-064, KN-065, KN-066, KN-067, KN-068, KN-069, KN-075, KN-077, KN-078, KN-080
 - Chi tiết đầy đủ: `references/evidence.md` (progressive disclosure)
 - Regenerate: `node .github/harness/scripts/distill-agnostic.mjs`

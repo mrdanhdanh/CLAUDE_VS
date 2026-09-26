@@ -1,8 +1,8 @@
 # Evidence — harness-process (DisCo arXiv:2609.02749v1 §3.2 (task-agnostic))
 
-> Substrate layer của skill — full text từ docs/knowleged.md. Sinh tự động 2026-09-24T14:44:32.466Z.
+> Substrate layer của skill — full text từ docs/knowleged.md. Sinh tự động 2026-09-26T06:10:28.975Z.
 
-## Bug reports liên quan (15/63 bugs)
+## Bug reports liên quan (17/66 bugs)
 
 - `.agent/bugs/2026-08-30-bug-blindness/bug.md` — Bug: Bug Blindness — mù bug do workaround vô thức + fan bias
 - `.agent/bugs/2026-09-03-rag-export-missing-grounding-chet/bug.md` — Bug: RAG export missing grounding chet
@@ -19,6 +19,8 @@
 - `.agent/bugs/2026-09-16-instruction-budget-always-on-phinh-khong-nguong/bug.md` — Bug/Lesson: instruction budget always-on phình không ngưỡng
 - `.agent/bugs/2026-09-18-instruction-budget-gate-fail-open-voi-arg-khong-ph/bug.md` — Bug: instruction-budget gate fail-open voi arg khong phai so
 - `.agent/bugs/2026-09-23-space-bunny-mo-ta-sai/bug.md` — Bug: space-bunny-mo-ta-sai
+- `.agent/bugs/2026-09-25-power-sweep-false-green-liveness-khong-phai-health/bug.md` — Bug: power sweep false green — liveness không phải health
+- `.agent/bugs/2026-09-25-setup-doctor-windows-port-probe-noise/bug.md` — Bug: setup-doctor Windows port probe noise
 
 ## Full KN details
 
@@ -820,3 +822,88 @@
   - Nếu user đã cung cấp danh tính trong câu lệnh, vẫn phải kiểm: tên đúng nhưng **bản chất** (model? sản phẩm? dịch vụ? công ty?) có thể vẫn sai.
 - **Tags:** `process` `content` `verify` `data`
 - **Người ghi:** YUNIE / /fixbug (bug auto-log 23/09 từ user correction; đóng hồ sơ 24/09 — draft treo làm `health=warn` đúng như KN-074 đã cảnh báo)
+
+---
+
+### KN-077 — Setup doctor Windows port probe bị nhiễu và đo sai
+
+- **Ngày:** 2026-09-25
+- **Bug report:** `.agent/bugs/2026-09-25-setup-doctor-windows-port-probe-noise/bug.md`
+- **Severity:** minor
+- **Guard:** `.github/harness/scripts/setup-doctor.mjs:83` + `--self-test` (free/listener/probe-failure) + component eval `setup-doctor-self-test`
+- **Layer:** `code` — implementation Unix-only dùng trong một CLI cross-platform.
+- **Liên quan:** KN-074 (verifier/diagnostic phải fail-loud trên Windows) · KN-016 (Windows portability) · KN-039 (cú pháp/probe theo platform).
+- **Triệu chứng:** `node .github/harness/scripts/setup-doctor.mjs --json` trên Windows in 4 lần `The system cannot find the path specified`, vẫn trả `pass: true`, và `ports` không có bằng chứng đáng tin.
+- **Nguyên nhân gốc (5 Whys):**
+  - Why1: Windows không tìm thấy executable probe → vì `lsof`/`ss` là công cụ kiểu Unix.
+  - Why2: `portListening()` hard-code command Unix → vì không branch theo `process.platform`.
+  - Why3: Không có platform contract cho diagnostic CLI → vì giả định môi trường dev giống nhau.
+  - Why4: `execSync` + shell pipe (`2>/dev/null`, `grep`) phát stderr/catch lỗi → vì probe thiếu ranh giới argv và stderr.
+  - Why5 (Root): Thiếu invariant “native probe + output sạch + positive/negative evidence”; exit 0 bị nhầm là health thật (KN-074).
+- **Cách sửa:** Dùng `execFileSync` với argv array; Windows chạy System32 `netstat.exe` (khi có) + timeout/buffer, Unix giữ `ss`/`lsof`; parse `<address>:<port> ... LISTENING ... PID`; trả structured `ok + states` và `unknown + error` khi probe thất bại; `checkPorts` fail-closed. Thêm `--self-test` 3 case (free/listener/probe-failure) và wire `setup-doctor-self-test` vào component eval. Pass 1 loại noise, positive probe lộ matcher cũ giả định whitespace trước port, pass 2 dùng `:<port>`.
+- **Cách phòng tránh:**
+  - Mọi CLI cross-platform phải chọn probe native theo OS; không hard-code Unix-only commands.
+  - Dùng `execFileSync` + `stdio` để command không tồn tại không rò stderr; không nuốt lỗi mà mất tín hiệu.
+  - Phân biệt `listening`, `free`, `unknown`; probe failure phải fail-closed, không được báo free.
+  - Test **free port** (negative), **listener thật** (positive), và **probe failure** (unknown) trước khi tin `PASS`; wire self-test vào component eval.
+  - Đây là recurrence của portability/fail-silent pattern; guard cũ chưa bao phủ `setup-doctor` nên phải thêm probe vào checklist.
+- **Tags:** `process` `dx` `windows` `verify`
+- **Người ghi:** YUNIE / /fixbug (self-upgrade 2026-09-25; `eval-gate --scope all`, `get_errors`, `slop-check`, free/listener probes đều pass)
+
+---
+
+### KN-078 — Power sweep false green — liveness không phải health
+
+- **Ngày:** 2026-09-25
+- **Bug report:** `.agent/bugs/2026-09-25-power-sweep-false-green-liveness-khong-phai-health/bug.md`
+- **Severity:** major
+- **Guard:** `power-check --self-test` 7 case (missing marker / drift / exit lệch / arg exit 2 / mirror hỏng / scale missing + stale) + component eval `power-check-self-test` (chạy trong `eval-gate --scope all`)
+- **Layer:** `code` — assertion của aggregator chỉ xác nhận liveness, không xác nhận health.
+- **Liên quan:** KN-074 (gốc — gate phải chứng minh ĐÃ CHẠY; KN-078 là tầng kế tiếp: đã chạy ≠ khỏe) · KN-002 (mirror single-source) · KN-064 (đọc đỏ 2 lần) · KN-065 (đo trong runtime thật).
+- **Triệu chứng:** `npm run power` báo `⚡ 9/9 ALL GREEN` cùng lúc full suite đỏ ở `cosmos-freshness.spec.ts` (badge `🟡 hơi cũ · 44h`). Critic đọc từng exit path: link `registry` chỉ in header (`Harness Status`), link `guards` chỉ in `GUARD COVERAGE` — cả hai in vô điều kiện, không bao giờ exit ≠ 0 → green dù registry drift hoặc guard coverage = 0.
+- **Nguyên nhân gốc (5 Whys):**
+  - Why1: Sweep báo green sai → vì 2 link chỉ assert “lệnh chạy xong”.
+  - Why2: Chọn marker = header văn bản in vô điều kiện, không phải điều kiện sức khỏe.
+  - Why3: Ngộ nhận “chạy được = khỏe”: copy pattern proof-it-ran (KN-074) mà quên nửa sau của nó.
+  - Why4: Không có negative control theo từng link — self-test chỉ test `runCheck` hygiene.
+  - Why5 (Root): **Aggregator tái lập đúng lớp bug nó sinh ra để chặn** — thiếu rule: mọi link health phải có 1 điều kiện ĐỎ được chứng minh.
+- **Cách sửa:** `registry` → forbid `⚠️ mismatch`/`❌ missing` (dùng detector sẵn có); `guards` → parse `guards --json` + floor `withGuard ≥ 50`; `status-mirror` → freshness (mtime `registry.json` > `generatedAt` → đỏ) + đủ 5 counts; thêm link 10 `cosmos-freshness` (`scale.json` < 24h, khớp threshold badge `🟢 tươi`); `evals` mở rộng `--scope all`; self-test 6 → 7 case + 2 negative probe thực thi. Kết quả: sweep 10/10 · full suite 288/288 · mirror refresh <1h.
+- **Cách phòng tránh:**
+  - Mỗi link health phải có **assert điều kiện** (forbid/threshold/freshness), không chỉ marker-in-output.
+  - Trước khi gọi một gate là “fail-closed”, chạy **negative control thật** cho từng link (giả lập trạng thái xấu → phải ĐỎ).
+  - Aggregator/gate mới phải tự chạy **full-suite + runtime thật** một lần trước khi tin (KN-065) — và phải có 1 link tự bảo vệ (self-test nằm trong component evals).
+  - Marker văn bản dùng để chứng minh “đã chạy”; điều kiện dùng để chứng minh “khỏe” — không trộn hai loại.
+  - Chạy `node .github/harness/scripts/auto-learn.mjs suggest "gate fail-closed marker false green"` trước khi viết gate/aggregator mới.
+- **Tags:** `process` `verification` `gate` `false-green`
+- **Người ghi:** YUNIE / /fixbug (self-upgrade round 2 — full suite bắt được 1 real + Critic bắt 2 false-green; sau fix: sweep 10/10 · self-test 7 case · 288/288)
+
+---
+
+### KN-080 — Eval/benchmark kết luận quá tự tin so với evidence (self-audit rank stability)
+
+- **Ngày:** 2026-09-26
+- **Bug report:** N/A — bài học từ arXiv:2609.30074v1 (Dipankar Sarkar — 24/09/2026, self-audit LLM-inferred prompt structure)
+- **Severity:** major
+- **Guard:** Advisory (disclosure): discipline báo cáo trong skill `evals-gate` §6 + `auto-researcher` Step 4; phần máy-check được = grounding fact-grader (`eval-gate --scope grounding` chặn số/quote bịa). Rank-stability chưa có máy chấm — checklist-level.
+- **Layer:** `process` — cách rút kết luận từ đo lường, không phải lỗi đo.
+- **Liên quan:** KN-037 (Evals Gate) · KN-010 (AAR keep-best) · KN-019 (measured > perceived) · KN-023 (self-prefer bias) · KN-067 (π₀-in-set — top-2 noise → giữ bản đơn giản/hiện tại).
+- **Triệu chứng:** Audit nội bộ 8 model variants (5 families, 8B–675B, caching disabled, 293 raw intermediate reps): identical calls KHÔNG reliably recover identical structure — mean node-set Jaccard 0.39–0.96, **72% prompt-model cells không bao giờ node-set-perfect**. Joint cluster bootstrap: chỉ **đáy** bảng vững (2 model kém ổn định nhất giữ hạng 99%/86%), middle 27–48%, top chỉ 68% — "identifies the worst model reliably but does NOT reliably identify the best". Hai quy tắc merge hợp lý (đều defensible) đổi **4/8 hàng + headline 7pp**. Reproducibility ≠ accuracy. **4/8 endpoint bị thu hồi trong 10 tuần** — study as specified không chạy lại được nữa.
+- **Nguyên nhân gốc (5 Whys):**
+  - Why1: Bảng xếp hạng trông chắc hơn evidence → vì small-sample (ít prompt, 1 campaign) + stochasticity LLM không được coi là noise floor.
+  - Why2: Không thấy mức bất định → vì report rank order trần, không report stability/uncertainty.
+  - Why3: Không thấy độ nhạy quy tắc → vì aggregation chọn ngầm (1 cách), không chạy sensitivity comparisons.
+  - Why4: Không truy được về raw → vì chỉ giữ aggregates, raw per-run không persist.
+  - Why5 (Root): **Kết luận eval được đối xử như output của phép đo deterministic, trong khi nó là ước lượng thống kê từ n samples + 1 quy tắc được chọn** — thiếu ngày đo + shelf-life thì hỏng thêm: endpoint chết là bảng thành artifact không tái lập.
+- **Cách sửa:** Adopt trực tiếp 5 recommendations của paper vào discipline hiện có: (a) **rank stability** — báo cáo độ giữ hạng, không chỉ thứ hạng; (b) **sensitivity executed** — chạy ≥2 quy tắc tổng hợp hợp lý trước khi chốt kết luận; (c) **per-cell provenance + raw per-run** persist; (d) **measurement date + shelf-life** (deprecate → re-run); (e) **reproducible ≠ accurate** — vẫn đối chiếu ground truth. Wire: `evals-gate` SKILL §6 (report discipline) + `auto-researcher` Step 4 (top-2 trong noise → chọn bản đơn giản hơn, ghi "trong noise"; report kèm stability + ngày + raw).
+- **Cách phòng tránh:**
+  - Trước khi tuyên "best/better": hỏi "delta có lớn hơn noise không?" — top-2 xấp xỉ → chọn bản đơn giản hơn (minimal-ladder tiebreak) hoặc giữ π₀ (KN-067), không tuyên best từ 1 campaign.
+  - Mọi báo cáo eval/benchmark ghi `Measured: YYYY-MM-DD` + raw runs + độ bất định; kết luận vững ở vùng nào của bảng (đáy > top).
+  - Chạy sensitivity (mean/median/majority) — kết luận đổi theo quy tắc thì ghi rõ phụ thuộc, không trưng bảng như chân lý.
+  - Eval có shelf-life: model/endpoint/API deprecate → kết quả hết hạn, re-run trước khi tái dùng (10 tuần giết 4/8 endpoint).
+  - Reproducible ≠ correct: tái lập + ground truth độc lập (rubric/grounding) là 2 lớp khác nhau.
+- **Tags:** `process` `evals` `benchmark` `verification` `reproducibility`
+- **Người ghi:** YUNIE / phân tích paper + tích hợp (user yêu cầu 26/09)
+
+<!-- Thêm bài học mới theo template dưới — copy block này -->
+
+<!--

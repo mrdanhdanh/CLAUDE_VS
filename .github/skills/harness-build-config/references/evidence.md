@@ -1,8 +1,8 @@
 # Evidence — harness-build-config (DisCo arXiv:2609.02749v1 §3.2 (task-agnostic))
 
-> Substrate layer của skill — full text từ docs/knowleged.md. Sinh tự động 2026-09-24T14:44:32.453Z.
+> Substrate layer của skill — full text từ docs/knowleged.md. Sinh tự động 2026-09-26T06:10:28.963Z.
 
-## Bug reports liên quan (7/63 bugs)
+## Bug reports liên quan (7/66 bugs)
 
 - `.agent/bugs/2026-08-30-ai-server-slot-hardcode-tunnel/bug.md` — Bug: Slot máy chủ AI không hoạt động — hardcode localhost dev tunnel trong app released
 - `.agent/bugs/2026-08-30-dotnet-build-fail-do-file-lock-n5blazor-exe-ang-ch/bug.md` — Bug: dotnet build fail do file lock N5Blazor.exe đang chạy
@@ -178,7 +178,3 @@
   - Feed/UI render từ dữ liệu chọn sẵn (top-N) — nhãn hiển thị (`sources[]`) phải ngắn (chip không wrap vỡ 375px: bug cùng ngày `2026-09-24-chip-sources-dai-lam-tran-375px`).
 - **Tags:** `data` `api` `verification`
 - **Người ghi:** YUNIE / /fixbug + reef-lite commit (user duyệt 24/09; evaluate PASS — advisory trùng KN-063 33.7 đã adjudicate: khác class routing/failover vs feed-ranking)
-
-<!-- Thêm bài học mới theo template dưới — copy block này -->
-
-<!--
