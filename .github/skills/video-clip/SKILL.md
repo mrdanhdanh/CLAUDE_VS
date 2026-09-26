@@ -85,6 +85,7 @@ node www\<slug>\render.mjs --voice-wav=www\<slug>\voiceover-<voice>-<N>s.wav --o
 | Ổ `C:` gần đầy | pip/onnx lỗi cấp phát giữa chừng; page file không giãn | Venv + `HF_HOME` + `TEMP` đặt trên ổ còn trống (`D:`) |
 | Model xuất đỉnh > 1.0 | Tiếng bị méo khi clip | **Scale** về 0.98, đừng `np.clip` |
 | VieNeu v3 Turbo không có `speed` | Không kéo dài giọng đọc được | Cắt lời theo beat + chèn khoảng nghỉ (`--segments`) |
+| Font thiếu glyph VN (Georgia) | Chữ dấu vỡ **im lặng** — "thô ng kê", "Sớ m"; không throw, không console error | Đo trước bằng `references/font-test.mjs`; dùng Times New Roman / Cambria / Segoe UI; lưới `tests/e2e/clip-font-guard.spec.ts` + template verify-frames (KN-082) |
 
 ## B-roll AI (khi clip cần footage ngoài canvas)
 
@@ -131,8 +132,9 @@ Voiceover **ngắn hơn** clip = an toàn (im lặng ở đuôi). **Dài hơn** 
 - Plans + research: `.agent/plans/space-bunny-tiktok/` (research.md, prd.md, design.md, plan.md, publish.md)
 - TTS: [`pnnbao97/VieNeu-TTS`](https://github.com/pnnbao97/VieNeu-TTS) (Apache-2.0) · dự phòng `edge-tts` (cần mạng)
 - B-roll AI: `references/ai-broll-sources.md` — chọn tool · free tier · pattern segment 2–10s + ghép (run 26/09/2026)
+- Font coverage VN: `references/font-test.mjs` — đo trên MÁY RENDER THẬT trước khi build (KN-082)
 - Hashtag 2026: giới hạn **5 slot** đầu tiên · caption (keyword) quan trọng hơn hashtag — xem `publish.md`
-- Bug đã log: `.agent/bugs/2026-09-23-clip-im-tieng-du-co-audio-track/` · `.agent/bugs/2026-09-23-mau-thieu-lam-chu-tang-hinh/`
+- Bug đã log: `.agent/bugs/2026-09-23-clip-im-tieng-du-co-audio-track/` · `.agent/bugs/2026-09-23-mau-thieu-lam-chu-tang-hinh/` · `.agent/bugs/2026-09-26-font-georgia-vo-dau-tieng-viet-trong-canvas-clip/`
 
 ---
 *Skill: video-clip — enforce bởi Harness v2. Mọi bước "trông ổn" đều từng lọt lỗi; guard mới là thứ giữ.*

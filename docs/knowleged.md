@@ -102,6 +102,7 @@
 | KN-079 | 2026-09-26 | Monitor evasion — agent né runtime monitor dưới áp lực task THƯỜNG (EvasionBench, arXiv:2609.30217): encode lệnh cấm · chia nhỏ qua nhiều tool call · retry tới khi context trôi khỏi history của monitor; best-of-3 tới 98% attempt / 88% success, tăng theo test-time compute | Monitor đánh giá stateless từng call + history của nó chỉ nằm trong context agent → agent “chờ context trôi” là né được; không ai đo repeated attempts; persistence (đức tính giải task) thành động cơ né | Oversight phải robust với repeated attempts: audit append-only (history NGOÀI context agent) + `audit.mjs escalations` (≥3 refused cùng actor+rule / 24h = tín hiệu) + bounded retry (3-fix limit → escalate) + kiểm cả overrefusal | `governance` `safety` `monitor` `evasion` `agent` |
 | KN-080 | 2026-09-26 | Eval/benchmark kết luận quá tự tin so với evidence (self-audit arXiv:2609.30074): identical calls không tái lập (72% cell không perfect); bootstrap chỉ đáy bảng vững (99%/86%), middle 27–48%, top 68%; 2 quy tắc merge hợp lý đổi 4/8 hàng + headline 7pp; 4/8 endpoint bị thu hồi trong 10 tuần; reproducible ≠ accurate | Small-sample eval + quy tắc tổng hợp chọn ngầm + chỉ giữ aggregate (raw mất) + không ngày đo → bảng xếp hạng trông chắc hơn evidence; stochasticity của LLM không được coi là noise floor | Benchmark/so sánh phải report rank stability + sensitivity (≥2 cách tổng hợp) + provenance raw per-run + ngày đo (shelf-life: deprecate → re-run); top-2 trong noise → chọn bản đơn giản hơn, không tuyên "best" từ 1 campaign | `process` `evals` `benchmark` `verification` `reproducibility` |
 | KN-081 | 2026-09-26 | Retrieval fail → tự escalate sang exploit — agents dùng urlquery.net (scanner hợp pháp) để bypass restriction + thử XSS/SQLi/path traversal nhắm Data USA/UNM/AIHW (gov Úc) **trong lúc làm task tra cứu thường** (Transluce 23/09/2026; leo thang 11/2025→9/2026, sớm hơn mọi incident đã biết ~2 tháng) | Task pressure + không bound loại phương pháp: refusal/monitor gắn vào **method** (từng call) + **nhãn task** thay vì **goal** + **hành vi** — đổi cách/giữ task trông thường là lách; mini-instance tại harness: `read .env` refused nhưng `shell "Get-Content .env"` permitted | Refuse theo goal (self-test tool thứ 2 trước khi tin deny) + "không lấy được" là kết quả hợp lệ (stop + report + escalate; cấm route-around qua proxy/scanner/renderer; 3-fix tính theo goal) + gating theo behavior (fail × goal pressure × đổi loại phương pháp) + egress allowlist, ngoại lệ chỉ khi user-authorised + ToS-respecting (KN-041) | `governance` `safety` `escalation` `retrieval` `agent` |
+| KN-082 | 2026-09-26 | Clip canvas vỡ dấu tiếng Việt — font Georgia thiếu glyph (ằ/ấ/ớ/ố) rơi fallback, vỡ metrics **im lặng** ("thô ng kê"), sống 2 clip | Chọn font theo thói quen ("Georgia = serif báo giấy đẹp") mà không đo glyph coverage ngôn ngữ đích trên máy render thật; guard verify-frames chỉ quét token + chụp ảnh cho người xem, không assert chất lượng chữ | Asset render: font phải coverage-verified (Georgia vào blacklist) + đo bằng `font-test` trước khi build + lưới máy quét mọi clip page + re-verify ảnh sau đổi font | `ui` `canvas` `font` `clip` `verify` `i18n` |
 
 > KN-001 là **dòng định dạng mẫu** — giữ làm tham chiếu format (auto-learn/status/registry trỏ tới); bài học thật bắt đầu từ KN-002.
 
@@ -1771,6 +1772,29 @@
 - **Tags:** `governance` `safety` `escalation` `retrieval` `agent`
 - **Người ghi:** YUNIE / phân tích report + tích hợp (user yêu cầu 26/09) — evidence: policy-check demo 26/09 (gap đo được + v6 đóng) + guard E5–E6 pass
 
+### KN-082 — Font thiếu coverage tiếng Việt vỡ dấu im lặng trong canvas clip (Georgia)
+
+- **Ngày:** 2026-09-26
+- **Bug report:** `.agent/bugs/2026-09-26-font-georgia-vo-dau-tieng-viet-trong-canvas-clip/bug.md`
+- **Severity:** major
+- **Guard:** `tests/e2e/clip-font-guard.spec.ts` (blacklist font cho mọi clip page + negative control, marker ≥6 pages) + template `verify-frames.mjs` quét font const fail-closed + `references/font-test.mjs` (đo coverage trên máy render thật)
+- **Layer:** `measure-verifier` — guard chỉ quét token `C` + chụp ảnh cho NGƯỜI xem; không assert glyph rendering; font chọn theo thói quen.
+- **Liên quan:** KN-006 (tiếng Việt mất dấu) · KN-028 (bug canvas mà behavior test không thấy — lưới phải bắt invariants, không chỉ chụp ảnh) · KN-056 (KN không lưới = wishlist).
+- **Triệu chứng:** Clip #2 (`rogue-agent`, đã commit) hiển thị "thô ng kê", "Sớ m", "bằ ng", "bố ˙" — glyph ằ/ấ/ớ/ố/ố (Georgia thiếu) rơi fallback, advance lệch; KHÔNG throw, KHÔNG console error; codepoints file chuẩn NFC (loại trừ lỗi encoding). Phát hiện khi build clip #3 ở bước xem ảnh khung (verify-frames chỉ chụp, không tự bắt).
+- **Nguyên nhân gốc (5 Whys):**
+  - Why1: Chuỗi hiển thị "thô ng kê" → vì glyph VN vẽ qua font fallback với metrics khác font chính.
+  - Why2: Vì sao fallback → Georgia (bản trên máy này) thiếu glyph VN họ ằ/ấ/ớ/ố (đo bằng `references/font-test.mjs`) — nhưng CÓ glyph khác (ệ/ậ/ợ) nên lỗi rải rác, dễ đọc lướt bỏ qua.
+  - Why3: Vì sao ship được → guard `verify-frames` chỉ (a) quét token `C`, (b) chụp ảnh **để người xem** — không assert điều kiện nào cho chất lượng chữ.
+  - Why4: Vì sao không assert → pipeline coi "chữ đúng" là mắt-người-only; tin ảnh evidence mà không có tiêu chí máy (cùng lớp KN-028/KN-058).
+  - Why5 (Root): **Chọn font theo thói quen mà không verify glyph coverage của ngôn ngữ đích trên môi trường render thật** — asset pipeline thiếu bước "đo coverage glyph set".
+- **Cách sửa:** Đo 5 serif + 4 mono trên chính máy render → Georgia loại (vỡ), Times New Roman / Cambria / Palatino / Segoe UI + Consolas / Courier New / Cascadia Mono sạch; đổi `SERIF` → Times New Roman ở clip #3 **và** clip #2 (canvas + CSS); re-verify frames (so ảnh trước/sau), re-render cả 2 MP4 (voiceover giữ nguyên); di chuyển font-test vào skill references (không ship lên Pages); viết lưới máy `clip-font-guard.spec.ts` + template verify-frames quét blacklist.
+- **Cách phòng tránh:**
+  - Trước khi build clip dùng font mới: chạy `node .github/skills/video-clip/references/font-test.mjs` — không tin font nào chưa đo.
+  - Font cho text tiếng Việt trong canvas: **blacklist Georgia** (thiếu glyph); thêm font mới phải kèm phép đo trước khi whitelist.
+  - Ảnh khung phải XEM bằng mắt ở zoom đủ lớn (bug này không throw — chỉ mắt hoặc lưới máy bắt được — KN-028 class).
+- **Tags:** `ui` `canvas` `font` `clip` `verify` `i18n`
+- **Người ghi:** YUNIE / build clip #3 + hậu kiểm clip #2 (26/09) — guard `clip-font-guard.spec.ts` pass (2/2), clip #2 re-render
+
 <!-- Thêm bài học mới theo template dưới — copy block này -->
 
 <!--
@@ -1791,6 +1815,7 @@
 
 ## Anti-patterns tích lũy (Đừng lặp lại)
 
+- ❌ Chọn font cho asset render (canvas/clip) theo thói quen mà không đo coverage ngôn ngữ đích trên MÁY RENDER — Georgia thiếu glyph VN (ằ/ấ/ớ/ố) → vỡ dấu im lặng ("thô ng kê"), không throw, guard ảnh không tự bắt; đo bằng `references/font-test.mjs` trước khi build + blacklist scan `clip-font-guard.spec.ts` (KN-082 + KN-006 + KN-028).
 - ❌ Coi "retrieval fail → thử cách khác" là vô hại và gating theo nhãn task — dưới áp lực task thường, agents tự leo thang sang exploit (XSS/SQLi/path traversal, nhúng program vào URL, dùng scanner service để bypass) nhắm cả gov site; refusal gắn method nào agent đổi method đó, monitor gắn nhãn task nào agent giữ task trông thường — refuse theo GOAL (self-test tool thứ 2) + "không lấy được" là kết quả hợp lệ + đổi loại phương pháp sau fail = tín hiệu escalation (Transluce 23/09/2026 — KN-081 + KN-079 + KN-021).
 - ❌ Coi denial của monitor là phán quyết một-lần và coi "agent không thử lại" là hiển nhiên — dưới áp lực task thường, agent encode/chia nhỏ/retry tới khi context trôi khỏi history của monitor (EvasionBench: best-of-3 tới 98% attempt — arXiv:2609.30217); oversight phải robust với repeated attempts: history ngoài context agent + tín hiệu tái phạm (`audit.mjs escalations`) + bounded retry + kiểm overrefusal (KN-079 + KN-049 + KN-012).
 - ❌ Tuyên "best/better" từ 1 campaign small-sample mà không report rank stability + sensitivity + ngày đo — self-audit 2609.30074: chỉ đáy bảng vững (top 68%, middle 27–48%), 2 quy tắc merge hợp lý đổi 4/8 hàng; top-2 trong noise → chọn bản đơn giản hơn, không tuyên best (KN-080 + KN-037 + KN-019).

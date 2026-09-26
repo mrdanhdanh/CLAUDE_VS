@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="vi"><head><meta charset="utf-8"></head>
+<body style="margin:0;background:#f3ecdc">
+<canvas id="c" width="1000" height="1180"></canvas>
+<script>
+const ctx = document.getElementById('c').getContext('2d');
+ctx.fillStyle = '#f3ecdc'; ctx.fillRect(0, 0, 1000, 640);
+const samples = 'bằng Dấu Sớm vấn Chuyện vượt rào bố dữ tận đợt Vẫn';
+const serifs = [['Georgia', 700], ['Times New Roman', 700], ['Cambria', 700], ['Palatino Linotype', 700], ['Segoe UI', 700]];
+ctx.textBaseline = 'middle';
+let y = 40;
+for (const [f, w] of serifs) {
+  ctx.fillStyle = '#16130d';
+  ctx.font = '20px Consolas';
+  ctx.fillText(`--- ${f} ---`, 12, y); y += 30;
+  ctx.font = `${w} 44px "${f}"`;
+  ctx.fillText(samples, 12, y); y += 62;
+  ctx.font = `italic 400 30px "${f}"`;
+  ctx.fillText('Sớm hơn 2 tháng — truy vấn bằ ng?', 12, y); y += 56;
+}
+const monos = ['Consolas', 'Courier New', 'Cascadia Mono', 'Segoe UI'];
+for (const f of monos) {
+  ctx.fillStyle = '#16130d';
+  ctx.font = '20px Consolas';
+  ctx.fillText(`--- ${f} (mono/upper) ---`, 12, y); y += 30;
+  ctx.font = `700 34px "${f}"`;
+  ctx.fillText('CHẶN · BỊ CHẶN · NGUYÊN TẮC · DÒNG THỜI GIAN', 12, y); y += 62;
+}
+</script>
+</body></html>

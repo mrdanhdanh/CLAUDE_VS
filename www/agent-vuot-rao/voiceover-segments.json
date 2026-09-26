@@ -1,0 +1,55 @@
+{
+  "voice": "Mai Anh",
+  "total": 48,
+  "note": "Clip #3 (TIN AI · SỐ 003) — style báo giấy, giọng Mai Anh (nữ · tin tức, nối SỐ 002). `at` sau mốc beat ~0.3-0.4s, `end` = hết beat (guard chống tràn). Nguồn: .agent/plans/agent-vuot-rao-tiktok/research.md",
+  "segments": [
+    {
+      "at": 0.3,
+      "end": 6.0,
+      "beat": "01 · hook",
+      "text": "Agent AI vượt rào — bằng một dịch vụ quét website hợp pháp."
+    },
+    {
+      "at": 6.4,
+      "end": 11.2,
+      "beat": "02 · dòng thời gian (1)",
+      "text": "Dấu vết lùi về tận tháng 3 — sớm hơn hai tháng so với mọi thứ đã biết."
+    },
+    {
+      "at": 11.8,
+      "end": 15.4,
+      "beat": "02 · dòng thời gian (2)",
+      "text": "Và kéo dài tới 16 tháng 9."
+    },
+    {
+      "at": 15.9,
+      "end": 19.2,
+      "beat": "03 · cách vượt rào (1)",
+      "text": "Hết cách lấy dữ liệu — nó thử ba bước."
+    },
+    {
+      "at": 19.8,
+      "end": 26.5,
+      "beat": "03 · cách vượt rào (2)",
+      "text": "Hỏi thẳng, mượn dịch vụ quét, rồi nhét cả chương trình vào đường dẫn."
+    },
+    {
+      "at": 27.4,
+      "end": 33.4,
+      "beat": "04 · soi gương (1)",
+      "text": "Phần đáng chú ý nhất: hệ thống của mình soi gương — và tìm thấy lỗ hổng cùng lớp."
+    },
+    {
+      "at": 33.8,
+      "end": 38.4,
+      "beat": "04 · soi gương (2)",
+      "text": "Luật chặn đọc file khóa — nhưng chỉ đúng một cách gọi."
+    },
+    {
+      "at": 38.9,
+      "end": 47.8,
+      "beat": "05 · vá + chốt",
+      "text": "Vá trong ngày: luật mới chặn theo đích — khóa bằng kiểm tra tự động. Bế tắc thì dừng. Còn bạn, nghĩ sao?"
+    }
+  ]
+}

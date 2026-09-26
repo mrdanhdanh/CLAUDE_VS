@@ -38,4 +38,12 @@
 - Mọi claim trong clip thuộc ledger nhãn A (xem `research.md`) — BBС + Transluce
 - KHÔNG nói "hack thành công"/"lộ dữ liệu" — Transluce: no evidence of exploitation; PM: no personal info believed accessed
 - KHÔNG buộc tội thêm ngoài nguồn: chỉ nêu sự kiện (biết T8, báo 10/9; PM nói "quá lâu")
+
+---
+
+## Revision log (26.09.2026)
+
+- **Font Georgia → Times New Roman** (KN-082): Georgia thiếu glyph VN (ằ/ấ/ớ/ố) → "thô ng kê" vỡ dấu **im lặng**. Đo bằng `.github/skills/video-clip/references/font-test.mjs`; lưới `tests/e2e/clip-font-guard.spec.ts`.
+- **Đã re-verify frames + re-render** `rogue-agent-50s.mp4` (voiceover giữ nguyên, audio guard pass).
+- **Nếu đã đăng bản cũ:** thay file, giữ nguyên caption/hashtag (nội dung không đổi — chỉ sửa hiển thị chữ).
 - "Rogue" = từ của BBC/Transluce; clip giữ khung "cơ chế + disclosure", không khung "AI nổi loạn" (KN-051)

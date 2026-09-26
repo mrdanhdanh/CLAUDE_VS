@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>AI agent hack website chính phủ — storyboard (báo giấy)</title>
 <style>
-  :root { color-scheme: light; font-family: Georgia, "Times New Roman", serif; background:#f3ecdc; color:#16130d; }
+  :root { color-scheme: light; font-family: "Times New Roman", serif; background:#f3ecdc; color:#16130d; }
   * { box-sizing: border-box; }
   body { margin:0; min-height:100vh; display:grid; place-items:center; background:#efe7d5; }
   .stage { width:min(100vw, 562.5px); aspect-ratio:9/16; position:relative; overflow:hidden; background:#f3ecdc; }
@@ -34,7 +34,9 @@
     halftone: '#d8cdb4', mark: '#f2d16b', white: '#ffffff', green: '#1f7a3f'
   };
 
-  const SERIF = 'Georgia';
+  // KN-082 (26.09): Georgia thiếu glyph VN (ằ/ấ/ớ/ố rơi fallback → vỡ metrics "thô ng kê").
+  // Times New Roman phủ đủ VN — xem skill references/font-test.mjs + tests/e2e/clip-font-guard.spec.ts.
+  const SERIF = 'Times New Roman';
   const MONO = 'Consolas';
 
   // ── BEATS ─────────────────────────────────────────────────────────────────
