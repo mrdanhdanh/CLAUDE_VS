@@ -16,6 +16,8 @@ user-invocable: true
 - Cần **storyboard bằng code** (beat/timeline) thay vì kéo thả trong editor
 - User nói: `làm clip`, `dựng video`, `video dọc`, `storyboard`, `lồng tiếng`, `voiceover`, `render mp4`, `clip N giây`
 
+> **Craft trước, render sau:** chốt hook / beat / bố cục safe zone / hệ màu bằng skill `clip-craft` (references: `layout.md` · `color.md` · `content.md`) — agent `clip-director` chạy quy trình đó và ghi vào `.agent/plans/<slug>/` trước khi implement trang canvas.
+
 ## Contract — mọi trang clip phải expose cái này
 
 Renderer/guard đều generic nhờ 1 contract duy nhất. Trang clip **bắt buộc** có:
@@ -117,6 +119,8 @@ Voiceover **ngắn hơn** clip = an toàn (im lặng ở đuôi). **Dài hơn** 
 
 ## References
 
+- Craft layer: skill `clip-craft` (safe zone 2026 · màu semantic · hook/retention/script math) + agent `clip-director`
+- Ý tưởng nâng cấp đã audit: `.agent/plans/clip-craft/upgrade-ideas.md`
 - Reference implementation: `www/space-bunny-free/` (clip 50 s, 5 beat, Hải Đăng)
 - Plans + research: `.agent/plans/space-bunny-tiktok/` (research.md, prd.md, design.md, plan.md, publish.md)
 - TTS: [`pnnbao97/VieNeu-TTS`](https://github.com/pnnbao97/VieNeu-TTS) (Apache-2.0) · dự phòng `edge-tts` (cần mạng)

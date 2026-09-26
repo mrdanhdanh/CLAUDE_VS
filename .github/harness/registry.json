@@ -188,6 +188,15 @@
       "description": "Dựng clip dọc 9:16 (TikTok/Reels/Shorts) bằng canvas + Playwright MediaRecorder, voiceover tiếng Việt local (VieNeu-TTS) cắt theo beat, kèm 3 guard bắt buộc (layout/token, âm thanh, timing). Use when làm clip, dựng video, video dọc, TikTok, Reels, Shorts, storyboard, voiceover, lồng tiếng, render mp",
       "file": "video-clip/SKILL.md",
       "installedAt": "2026-09-23T17:27:55.553Z"
+    },
+    "clip-craft": {
+      "source": "local:D:\\CLAUDE_VS\\.github\\skills\\clip-craft",
+      "path": "D:\\CLAUDE_VS\\.github\\skills\\clip-craft",
+      "ref": "local",
+      "enabled": true,
+      "description": "Craft làm clip dọc chuyên nghiệp (TikTok/Reels/Shorts) — safe zone 2026, lưới bố cục, type scale đọc trên mobile, hệ màu semantic, hook 3 giây, cấu trúc beat, retention, script math tiếng Việt, CTA/caption/hashtag. Use when làm clip, viết hook, storyboard, bố cục clip, màu sắc clip, nâng cấp clip, r",
+      "file": "clip-craft/SKILL.md",
+      "installedAt": "2026-09-26T06:20:54.949Z"
     }
   },
   "instructions": {
@@ -407,6 +416,15 @@
       "enabled": true,
       "description": "Critic — friction engineer: bẻ argument, tìm rival work, check assumptions, đảm bảo Dissent Review (KN-018). Use when cần critique độc lập cho PRD/Design/Plan, cần framing đối lập không prompt trước, cần check rival work/assumption sai trước khi Verify, hoặc user nói critic/dissent/challenge.",
       "installedAt": "2026-09-07T16:26:55.252Z"
+    },
+    "clip-director": {
+      "source": "local:D:\\CLAUDE_VS\\.github\\agents\\clip-director.agent.md",
+      "path": "D:\\CLAUDE_VS\\.github\\agents\\clip-director.agent.md",
+      "ref": "local",
+      "enabled": true,
+      "description": "Clip Director — content creator/đạo diễn chuyên nghiệp cho clip dọc 9:16: chốt promise, viết hook portfolio (3 phương án), beat sheet, bố cục safe zone, palette semantic, review frames như người lạ, publish pack (caption + 5 hashtag + cover). Use when làm clip, viết hook, kịch bản clip, storyboard, ",
+      "file": "clip-director.agent.md",
+      "installedAt": "2026-09-26T06:20:55.166Z"
     }
   },
   "prompts": {

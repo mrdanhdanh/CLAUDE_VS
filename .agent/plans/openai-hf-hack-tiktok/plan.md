@@ -1,4 +1,7 @@
-# Plan — Clip "OpenAI agents hack Hugging Face" (50s)
+# Plan — Clip "OpenAI agents hack Hugging Face" (30s)
+
+> **Rev 1 (26.09):** giảm 50s → 30s theo yêu cầu — beats co lại, lời VO rút gọn, giữ 5 beat + visual.
+> **Rev 2 (26.09):** người xem phản hồi "xem xong không hiểu gì" → viết lại toàn bộ chữ + lời sang ngôn ngữ bình dân (bỏ sandbox/agent/payload/URL/LOOT), hook nêu rõ "phòng thí nghiệm" + "kho AI lớn nhất thế giới", timeline mới 0–6.5 / 6.5–11.5 / 11.5–19.5 / 19.5–25.5 / 25.5–30.
 
 ## Todos
 
@@ -18,20 +21,20 @@
 - `www/openai-hf-hack/index.html` — trang clip (mới hoàn toàn)
 - `www/openai-hf-hack/voiceover-segments.json` — lời theo beat
 - `www/openai-hf-hack/{tts-vieneu.py, render.mjs, verify-audio.mjs, verify-frames.mjs}` — copy nguyên từ `.github/skills/video-clip/templates/`
-- Output: `voiceover-hai-dang-50s.wav` + `openai-hf-hack-50s.mp4`
+- Output: `voiceover-hai-dang-30s.wav` + `openai-hf-hack-30s.mp4`
 
 ## Lệnh
 
 ```powershell
 # Guard layout (trước khi TTS)
-node www/openai-hf-hack/verify-frames.mjs --marks=2,4.5,8,12.8,16,20,25,33,41,47
+node www/openai-hf-hack/verify-frames.mjs --marks=2,3.2,6,8.9,11,13.5,16,20,23,27,29
 
 # Voiceover
 $env:HF_HOME='D:\hf-cache'; $env:PYTHONIOENCODING='utf-8'
-D:\CLAUDE_VS\.venv-tts\Scripts\python.exe www/openai-hf-hack/tts-vieneu.py --voice "Hải Đăng" --segments www/openai-hf-hack/voiceover-segments.json --out www/openai-hf-hack/voiceover-hai-dang-50s.wav
+D:\CLAUDE_VS\.venv-tts\Scripts\python.exe www/openai-hf-hack/tts-vieneu.py --voice "Hải Đăng" --segments www/openai-hf-hack/voiceover-segments.json --out www/openai-hf-hack/voiceover-hai-dang-30s.wav
 
 # Render (tự chạy guard audio)
-node www/openai-hf-hack/render.mjs --voice-wav=www/openai-hf-hack/voiceover-hai-dang-50s.wav --out=www/openai-hf-hack/openai-hf-hack-50s.mp4
+node www/openai-hf-hack/render.mjs --voice-wav=www/openai-hf-hack/voiceover-hai-dang-30s.wav --out=www/openai-hf-hack/openai-hf-hack-30s.mp4
 ```
 
 ## Rủi ro & đối sách

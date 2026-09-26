@@ -95,7 +95,7 @@
       "path": "skills/harness-build-config",
       "ref": "local",
       "enabled": true,
-      "description": "Task-agnostic lessons 'Build & Config' chưng cất từ docs/knowleged.md (4 KN: KN-008, KN-009, KN-015, KN-041) + .agent/bugs/. Use when task chạm build, process, dx, dotnet, config, api, deploy, ci, workflow, pages — áp Cách phòng tránh trước khi code, tránh lặp bug cũ. DisCo-lite, regenerate bằng dis",
+      "description": "Task-agnostic lessons 'Build & Config' chưng cất từ docs/knowleged.md (7 KN: KN-008, KN-009, KN-015, KN-041, KN-063, KN-074, KN-076) + .agent/bugs/. Use when task chạm build, process, dx, dotnet, config, api, deploy, ci, workflow, pages — áp Cách phòng tránh trước khi code, tránh lặp bug cũ. DisCo-l",
       "file": "harness-build-config/SKILL.md",
       "installedAt": "2026-09-04T09:07:42.922Z"
     },
@@ -104,7 +104,7 @@
       "path": "skills/harness-governance",
       "ref": "local",
       "enabled": true,
-      "description": "Task-agnostic lessons 'Governance & Verifier Integrity' chưng cất từ docs/knowleged.md (3 KN: KN-012, KN-021, KN-048) + .agent/bugs/. Use when task chạm process, governance, tdd, safety, reward-hacking, security, rbac, research, rsi — áp Cách phòng tránh trước khi code, tránh lặp bug cũ. DisCo-lite,",
+      "description": "Task-agnostic lessons 'Governance & Verifier Integrity' chưng cất từ docs/knowleged.md (9 KN: KN-012, KN-021, KN-048, KN-049, KN-051, KN-052, KN-059, KN-070, KN-071) + .agent/bugs/. Use when task chạm process, governance, tdd, safety, reward-hacking, security, rbac, research, rsi, metrics — áp Cách ",
       "file": "harness-governance/SKILL.md",
       "installedAt": "2026-09-04T09:07:42.922Z"
     },
@@ -113,7 +113,7 @@
       "path": "skills/harness-minimal",
       "ref": "local",
       "enabled": true,
-      "description": "Task-agnostic lessons 'Minimal Code & YAGNI' chưng cất từ docs/knowleged.md (3 KN: KN-013, KN-020, KN-022) + .agent/bugs/. Use when task chạm process, minimal, ponytail, yagni, dx, verification, review, architecture, agent — áp Cách phòng tránh trước khi code, tránh lặp bug cũ. DisCo-lite, regenerat",
+      "description": "Task-agnostic lessons 'Minimal Code & YAGNI' chưng cất từ docs/knowleged.md (4 KN: KN-013, KN-020, KN-022, KN-072) + .agent/bugs/. Use when task chạm process, minimal, ponytail, yagni, dx, verification, review, architecture, agent, harness — áp Cách phòng tránh trước khi code, tránh lặp bug cũ. DisC",
       "file": "harness-minimal/SKILL.md",
       "installedAt": "2026-09-04T09:07:42.922Z"
     },
@@ -122,7 +122,7 @@
       "path": "skills/harness-process",
       "ref": "local",
       "enabled": true,
-      "description": "Task-agnostic lessons 'Process & Self-Improvement' chưng cất từ docs/knowleged.md (21 KN: KN-005, KN-007, KN-010, KN-014, KN-016, KN-018, KN-019, KN-023, KN-024, KN-025, KN-026, KN-027, KN-033, KN-034, KN-035, KN-036, KN-037, KN-039, KN-043, KN-044, KN-047) + .agent/bugs/. Use when task chạm process",
+      "description": "Task-agnostic lessons 'Process & Self-Improvement' chưng cất từ docs/knowleged.md (34 KN: KN-005, KN-007, KN-010, KN-014, KN-016, KN-018, KN-019, KN-023, KN-024, KN-025, KN-026, KN-027, KN-033, KN-034, KN-035, KN-036, KN-037, KN-039, KN-043, KN-044, KN-047, KN-053, KN-054, KN-056, KN-057, KN-060, KN",
       "file": "harness-process/SKILL.md",
       "installedAt": "2026-09-04T09:07:42.922Z"
     },
@@ -131,7 +131,7 @@
       "path": "skills/harness-web-ui",
       "ref": "local",
       "enabled": true,
-      "description": "Task-agnostic lessons 'Web UI & UX' chưng cất từ docs/knowleged.md (17 KN: KN-001, KN-002, KN-003, KN-004, KN-006, KN-011, KN-017, KN-028, KN-029, KN-030, KN-031, KN-032, KN-038, KN-040, KN-042, KN-045, KN-046) + .agent/bugs/. Use when task chạm ui, a11y, css, responsive, data, animation, spacing, i",
+      "description": "Task-agnostic lessons 'Web UI & UX' chưng cất từ docs/knowleged.md (21 KN: KN-001, KN-002, KN-003, KN-004, KN-006, KN-011, KN-017, KN-028, KN-029, KN-030, KN-031, KN-032, KN-038, KN-040, KN-042, KN-045, KN-046, KN-050, KN-055, KN-058, KN-073) + .agent/bugs/. Use when task chạm ui, a11y, css, respons",
       "file": "harness-web-ui/SKILL.md",
       "installedAt": "2026-09-04T09:07:42.922Z"
     },
@@ -188,6 +188,15 @@
       "description": "Dựng clip dọc 9:16 (TikTok/Reels/Shorts) bằng canvas + Playwright MediaRecorder, voiceover tiếng Việt local (VieNeu-TTS) cắt theo beat, kèm 3 guard bắt buộc (layout/token, âm thanh, timing). Use when làm clip, dựng video, video dọc, TikTok, Reels, Shorts, storyboard, voiceover, lồng tiếng, render mp",
       "file": "video-clip/SKILL.md",
       "installedAt": "2026-09-23T17:27:55.553Z"
+    },
+    "clip-craft": {
+      "source": "local:D:\\CLAUDE_VS\\.github\\skills\\clip-craft",
+      "path": "D:\\CLAUDE_VS\\.github\\skills\\clip-craft",
+      "ref": "local",
+      "enabled": true,
+      "description": "Craft làm clip dọc chuyên nghiệp (TikTok/Reels/Shorts) — safe zone 2026, lưới bố cục, type scale đọc trên mobile, hệ màu semantic, hook 3 giây, cấu trúc beat, retention, script math tiếng Việt, CTA/caption/hashtag. Use when làm clip, viết hook, storyboard, bố cục clip, màu sắc clip, nâng cấp clip, r",
+      "file": "clip-craft/SKILL.md",
+      "installedAt": "2026-09-26T06:20:54.949Z"
     }
   }
 }

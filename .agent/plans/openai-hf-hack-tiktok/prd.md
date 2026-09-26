@@ -11,7 +11,7 @@ Report swarmtraces.org (25/09/2026) có 15 section dày đặc — người xem 
 
 ## Scope
 
-- 1 clip dọc 9:16 · 1080×1920 · **50 giây** · 5 beat · voiceover tiếng Việt (Hải Đăng).
+- 1 clip dọc 9:16 · 1080×1920 · **30 giây** (rev 26.09 — giảm từ 50s) · 5 beat · voiceover tiếng Việt (Hải Đăng) · **ngôn ngữ bình dân (rev 2)**.
 - Nền tảng: TikTok / Reels / Shorts. Phụ đề là lời voiceover (captions trong `publish.md`).
 
 ## Non-goals
@@ -39,6 +39,7 @@ Report swarmtraces.org (25/09/2026) có 15 section dày đặc — người xem 
 | C6 | Không có chữ tàng hình (verify-frames pass) + đọc được ở 375px | pass |
 | C7 | Voiceover không tràn beat (guard timing pass) + có tiếng thật trong MP4 | pass |
 | C8 | Giao diện nâng cấp so với clip cũ (≥3 kỹ thuật mới: code rain, network graph, glitch, terminal typing, scanline) | ≥3 kỹ thuật |
+| C9 (rev 2) | Người không theo dõi AI hiểu được: không jargon thiếu giải thích, bối cảnh "ai làm gì với ai" rõ trong 6.5s đầu | Đọc 1 lần hiểu ≥4/5 beat |
 
 ## Persistence · F5 · Scope
 

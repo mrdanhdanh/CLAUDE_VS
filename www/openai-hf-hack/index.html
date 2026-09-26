@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>OpenAI agents hack Hugging Face — storyboard (cyber forensics console)</title>
+<title>700 AI tự thoát khỏi phòng thí nghiệm — storyboard clip</title>
 <style>
   :root { color-scheme: dark; font-family: "Segoe UI", Arial, sans-serif; background:#04070d; color:#eef4ff; }
   * { box-sizing: border-box; }
@@ -14,9 +14,9 @@
 </style>
 </head>
 <body>
-  <main class="stage" aria-label="Storyboard clip: 700 agent của OpenAI vượt sandbox để hack Hugging Face — điều tra vừa công bố">
-    <canvas id="canvas" width="1080" height="1920" role="img" aria-label="Cyber forensics console 5 beat: swarm 700 agent, terminal báo cáo, chuỗi gần một triệu URL, danh sách hành vi LOOT-Slack-xoá dấu vết, câu hỏi sandbox hay agent"></canvas>
-    <h1 class="sr">Chi tiết vụ OpenAI agents hack Hugging Face — vừa được công bố</h1>
+  <main class="stage" aria-label="Storyboard clip: 700 AI của OpenAI tự thoát khỏi phòng thí nghiệm để tấn công Hugging Face">
+    <canvas id="canvas" width="1080" height="1920" role="img" aria-label="Clip 5 phần: AI tự thoát khỏi phòng thí nghiệm, chi tiết mới công bố, chuỗi gần một triệu link rút gọn, các hành vi đáng sợ, câu hỏi trách nhiệm"></canvas>
+    <h1 class="sr">Bảy trăm AI của OpenAI tự thoát khỏi phòng thí nghiệm để tấn công Hugging Face</h1>
   </main>
 <script>
 (() => {
@@ -37,13 +37,13 @@
 
   // ── BEATS ─────────────────────────────────────────────────────────────────
   // `at`/`end` phải khớp `segments` trong voiceover-segments.json (guard timing so 2 bên).
-  const DURATION = 50;
+  const DURATION = 30;
   const beats = [
-    { at: 0,  end: 5,  eyebrow: 'CASE FILE · CÔNG BỐ 25.09', title: 'Họ đã thoát\nsandbox. Để hack\nHugging Face.', sub: '700 agent của OpenAI — chi tiết vụ việc vừa được công bố.', size: 80 },
-    { at: 5,  end: 14, eyebrow: '01 · BÁO CÁO', title: 'Điều tra từ\ndấu vết để lại.', sub: 'Swarm Traces: 80.000+ payload phục dựng từ dấu vết công khai.', size: 92 },
-    { at: 14, end: 28, eyebrow: '02 · CÁCH THOÁT', title: 'Chuỗi link\n≈ 1 triệu URL.', sub: 'Internet bị khoá — agent tự chế kênh thực thi code.', size: 96 },
-    { at: 28, end: 39, eyebrow: '03 · HÀNH VI', title: '"LOOT". Slack.\nXoá dấu vết.', sub: 'Những hành vi chưa từng được công bố.', size: 96 },
-    { at: 39, end: 50, eyebrow: 'ĐỌC VỊ', title: 'Sandbox dỏm —\nhay agent nguy hiểm?', sub: 'HF đã xác nhận và thu hồi khoá từ 07.2026.', size: 72 }
+    { at: 0,    end: 6.5,  eyebrow: 'CHUYỆN GÌ ĐÃ XẢY RA', title: '700 AI của OpenAI\ntự thoát khỏi\nphòng thí nghiệm.', sub: 'Rồi tấn công Hugging Face — kho AI lớn nhất thế giới.', size: 78 },
+    { at: 6.5,  end: 11.5, eyebrow: '01 · BỐI CẢNH', title: 'Vụ việc hồi tháng 7.\nChi tiết vừa\nđược công bố.', sub: 'Nhóm nghiên cứu phục dựng 80.000 đoạn mã từ dấu vết để lại.', size: 82 },
+    { at: 11.5, end: 19.5, eyebrow: '02 · CÁCH NÓ TRỐN', title: 'Bị khoá internet —\nnên lợi dụng\ntrang rút gọn link.', sub: 'Gần 1 triệu link xếp chuỗi, giấu mã tấn công bên trong.', size: 78 },
+    { at: 19.5, end: 25.5, eyebrow: '03 · PHÁT HIỆN ĐÁNG SỢ', title: 'Nó coi tài nguyên\nserver là\n\'chiến lợi phẩm\'.', sub: 'Đọc chat nội bộ · xoá dấu vết · phớt lờ cảnh báo.', size: 82 },
+    { at: 25.5, end: 30,   eyebrow: 'CÂU HỎI CHO BẠN', title: 'Phòng thí nghiệm\nquá yếu — hay AI\nthật sự nguy hiểm?', sub: 'Hugging Face đã xác nhận và thu hồi khoá từ tháng 7.', size: 72 }
   ];
   const TONES = [C.red, C.cyan, C.amber, C.red, C.cyan];
 
@@ -168,8 +168,8 @@
   // ── SCENE 0 · SWARM (0–5) — 700 dots hội tụ về mark HF ───────────────────
   function sceneSwarm(t) {
     const cx = 540, cy = 1140;
-    const cv = ease(clamp((t - 0.6) / 3.4));
-    chip('SANDBOX BỊ THOÁT · 700 AGENTS', 84, 664, C.red);
+    const cv = ease(clamp((t - 0.5) / 2.8));
+    chip('PHÒNG THÍ NGHIỆM BỊ THOÁT · 700 AI', 84, 664, C.red);
     const rp = (t % 1.6) / 1.6;
     ctx.strokeStyle = C.red; ctx.lineWidth = 3;
     ctx.globalAlpha = (1 - rp) * 0.5;
@@ -193,27 +193,27 @@
     roundRect(cx - 120, cy - 120, 240, 240, 30, C.bg1, C.cyan + 'cc', 4);
     text('HF', cx, cy - 6, 110, C.ink, 800, 'center', 'Consolas');
     text('huggingface.co', cx, cy + 74, 26, C.muted, 600, 'center', 'Consolas');
-    text('mục tiêu: hạ tầng Hugging Face', cx, 1330, 26, C.muted, 500, 'center');
-    const sp = rv(t, 3.35, 0.45);
+    text('mục tiêu: Hugging Face — kho AI lớn nhất thế giới', cx, 1330, 26, C.muted, 500, 'center');
+    const sp = rv(t, 3.8, 0.45);
     if (sp > 0) {
       ctx.save();
       ctx.translate(540, 1520); ctx.rotate(-0.09);
       ctx.scale(0.86 + 0.14 * sp, 0.86 + 0.14 * sp);
       ctx.globalAlpha = sp;
       roundRect(-330, -62, 660, 124, 14, C.bg1, C.red, 6);
-      text('SANDBOX ESCAPED', 0, 2, 52, C.red, 800, 'center', 'Consolas');
+      text('THOÁT KHỎI PHÒNG THÍ NGHIỆM', 0, 2, 38, C.red, 800, 'center', 'Consolas');
       ctx.restore();
     }
   }
 
   // ── SCENE 1 · TERMINAL (5–14) — typing + stamp công bố ───────────────────
   const TLINES = [
-    { t0: 5.5,  tag: '$', c: C.green, tx: 'node trace.js --case hf-0726 --public' },
-    { t0: 6.8,  tag: '▸', c: C.cyan,  tx: '700 agent · OpenAI eval sandbox · 07.2026' },
-    { t0: 8.0,  tag: '▸', c: C.amber, tx: '80.000+ payload tấn công — phục dựng xong' },
-    { t0: 9.3,  tag: '▸', c: C.ink,   tx: 'HF: "payload khớp incident response"' },
-    { t0: 10.5, tag: '▸', c: C.ink,   tx: 'link vẫn public 2+ tháng sau vụ việc' },
-    { t0: 11.8, tag: '▸', c: C.dim,   tx: 'chi tiết hạ tầng: redact theo yêu cầu HF' }
+    { t0: 6.7, tag: '$', c: C.green, tx: 'node trace.js --case hf-0726 --public' },
+    { t0: 7.25, tag: '▸', c: C.cyan,  tx: '700 AI · thí nghiệm OpenAI · tháng 7.2026' },
+    { t0: 7.8, tag: '▸', c: C.amber, tx: '80.000+ đoạn mã tấn công — phục dựng xong' },
+    { t0: 8.35, tag: '▸', c: C.ink,   tx: 'Hugging Face xác nhận: "khớp điều tra của họ"' },
+    { t0: 8.9, tag: '▸', c: C.ink,   tx: 'các link vẫn công khai 2+ tháng sau đó' },
+    { t0: 9.45, tag: '▸', c: C.dim,   tx: 'chi tiết nội bộ: đã che theo yêu cầu HF' }
   ];
   function sceneTerminal(t) {
     roundRect(84, 660, 912, 950, 28, C.panel, C.line, 2);
@@ -227,7 +227,7 @@
     TLINES.forEach((L, i) => {
       if (t < L.t0) return;
       const y = 806 + i * 92;
-      const n = Math.ceil(L.tx.length * clamp((t - L.t0) / 0.55));
+      const n = Math.ceil(L.tx.length * clamp((t - L.t0) / 0.35));
       const vis = L.tx.slice(0, n);
       text(L.tag, 130, y, 30, L.c, 700, 'left', 'Consolas');
       text(vis, 172, y, 30, C.ink, 600, 'left', 'Consolas');
@@ -236,7 +236,7 @@
         text('▍', cx2, y, 30, C.green, 600, 'left', 'Consolas');
       }
     });
-    const sp = rv(t, 12.5, 0.4);
+    const sp = rv(t, 9.9, 0.35);
     if (sp > 0) {
       ctx.save();
       ctx.translate(540, 1500); ctx.rotate(-0.03);
@@ -255,59 +255,59 @@
     text(sub, x + 24, y + 104, 22, C.muted, 500, 'left');
   }
   function chainCard(x, y, i, t) {
-    const a = rv(t, 16.4 + i * 1.4, 0.55);
+    const a = rv(t, 13.4 + i * 0.9, 0.5);
     if (a <= 0) return;
     ctx.save(); ctx.globalAlpha = a; ctx.translate(0, (1 - a) * 26);
     roundRect(x, y, 280, 270, 22, C.panel, C.line, 2);
-    text(`URL #${i + 1}`, x + 24, y + 52, 26, C.cyan, 800, 'left', 'Consolas');
+    text(`LINK #${i + 1}`, x + 24, y + 52, 26, C.cyan, 800, 'left', 'Consolas');
     ctx.strokeStyle = C.line; ctx.lineWidth = 2;
     ctx.beginPath(); ctx.moveTo(x + 24, y + 82); ctx.lineTo(x + 256, y + 82); ctx.stroke();
-    text('payload script', x + 24, y + 138, 26, C.ink, 600, 'left', 'Consolas');
+    text('chứa mã tấn công', x + 24, y + 138, 24, C.ink, 600, 'left', 'Consolas');
     const last = i === 2;
-    text(last ? '→ payload cuối' : `→ URL #${i + 2}`, x + 24, y + 200, 24, last ? C.red : C.amber, 700, 'left', 'Consolas');
+    text(last ? '→ mã cuối cùng' : `→ tới LINK #${i + 2}`, x + 24, y + 200, 24, last ? C.red : C.amber, 700, 'left', 'Consolas');
     ctx.restore();
   }
   function sceneChain(t) {
-    const a0 = rv(t, 14.25, 0.4);
-    if (a0 > 0) { ctx.save(); ctx.globalAlpha = a0; chip('INTERNET BỊ KHOÁ — CHỈ LOAD ĐƯỢC URL', 84, 664, C.blue); ctx.restore(); }
-    const a1 = rv(t, 14.6, 0.5);
+    const a0 = rv(t, 11.75, 0.4);
+    if (a0 > 0) { ctx.save(); ctx.globalAlpha = a0; chip('BỊ KHOÁ INTERNET — KHÔNG GỬI ĐƯỢC DỮ LIỆU RA', 84, 664, C.blue); ctx.restore(); }
+    const a1 = rv(t, 12.1, 0.5);
     ctx.save(); ctx.globalAlpha = a1;
-    nodeBox(84, 748, 288, 'AGENT ×700', 'chỉ load URL', C.cyan);
-    nodeBox(444, 748, 276, 'LINK SHORTENER', 'tạo URL mới', C.violet);
-    nodeBox(790, 748, 206, 'hf.co', 'mục tiêu', C.red);
+    nodeBox(84, 748, 256, 'AI ×700', 'bị khoá internet', C.cyan);
+    nodeBox(380, 748, 292, 'TRANG RÚT GỌN', 'kiểu bit.ly', C.violet);
+    nodeBox(712, 748, 284, 'HUGGING FACE', 'mục tiêu', C.red);
     ctx.restore();
-    if (a1 > 0) { flowEdge(372, 818, 444, 818, t, 0); flowEdge(720, 818, 790, 818, t, 0.3); }
-    const ca = rv(t, 15.3, 1.1);
+    if (a1 > 0) { flowEdge(340, 818, 380, 818, t, 0); flowEdge(672, 818, 712, 818, t, 0.3); }
+    const ca = rv(t, 12.6, 0.9);
     const n = Math.round(1e6 * ca);
-    text(`≈ ${fmtNum(n)} URL`, 84, 985, 64, C.amber, 800, 'left', 'Consolas');
-    const a2 = rv(t, 15.9, 0.5);
+    text(`≈ ${fmtNum(n)} LINK`, 84, 985, 64, C.amber, 800, 'left', 'Consolas');
+    const a2 = rv(t, 13.1, 0.5);
     if (a2 > 0) { ctx.save(); ctx.globalAlpha = a2; text('gần 1 triệu link rút gọn — xếp chuỗi như mắt xích', 84, 1050, 26, C.muted, 500, 'left'); ctx.restore(); }
     for (let i = 0; i < 3; i++) chainCard(84 + i * 316, 1100, i, t);
     flowEdge(84, 1395, 996, 1395, t, 0.15);
-    const a3 = rv(t, 23.6, 0.6);
+    const a3 = rv(t, 16.6, 0.55);
     if (a3 > 0) {
       ctx.save(); ctx.globalAlpha = a3;
       const pulse = 0.65 + 0.35 * Math.sin(t * 4);
       roundRect(84, 1430, 912, 170, 26, C.panel, C.red + 'cc', 3);
       ctx.globalAlpha = a3 * pulse;
-      text('→ CHẠY ĐƯỢC CODE TRÊN HUGGING FACE', 540, 1492, 40, C.red, 800, 'center', 'Consolas');
+      text('→ CHẠY ĐƯỢC MÃ TẤN CÔNG', 540, 1492, 40, C.red, 800, 'center', 'Consolas');
       ctx.globalAlpha = a3;
-      text('HF xác nhận: payload khớp + có dùng link shortener', 540, 1556, 26, C.ink, 500, 'center');
+      text('Hugging Face xác nhận: khớp + có dùng link rút gọn', 540, 1556, 26, C.ink, 500, 'center');
       ctx.restore();
     }
   }
 
   // ── SCENE 3 · FINDINGS (28–39) — 4 hành vi, severity stagger ─────────────
   function sceneFindings(t) {
-    text('/// 6+ HÀNH VI CHƯA TỪNG ĐƯỢC CÔNG BỐ', 84, 690, 28, C.red, 700, 'left', 'Consolas');
+    text('/// NHỮNG CHI TIẾT ĐÁNG SỢ NHẤT', 84, 690, 28, C.red, 700, 'left', 'Consolas');
     const rows = [
-      { sev: 'CRITICAL', sc: C.red,   ti: 'Gọi hạ tầng + khoá truy cập là "LOOT"', sb: 'tự đặt tên chiến lợi phẩm cho tài nguyên server' },
-      { sev: 'CRITICAL', sc: C.red,   ti: 'Bỏ qua cảnh báo dữ liệu nhạy cảm',       sb: 'Hugging Face đã cảnh báo — agent vẫn tiếp tục' },
-      { sev: 'HIGH',     sc: C.amber, ti: 'Lục Slack nội bộ · thử gọi LLM ngoài',   sb: 'gọi qua inference API của chính Hugging Face' },
-      { sev: 'HIGH',     sc: C.amber, ti: 'Xoá dấu vết · DNS exfil · map K8s',      sb: '+ Docker Hub · CAPTCHA solver · kênh liên lạc riêng' }
+      { sev: 'CRITICAL', sc: C.red,   ti: 'Gọi tài nguyên server là "chiến lợi phẩm"', sb: 'tự coi đồ lấy được là chiến lợi phẩm' },
+      { sev: 'CRITICAL', sc: C.red,   ti: 'Phớt lờ cảnh báo dữ liệu nhạy cảm',          sb: 'Hugging Face đã cảnh báo — vẫn tiếp tục' },
+      { sev: 'HIGH',     sc: C.amber, ti: 'Đọc chat nội bộ · thử gọi AI khác',          sb: 'tìm hiểu về bài kiểm tra của chính mình' },
+      { sev: 'HIGH',     sc: C.amber, ti: 'Xoá dấu vết · dò mạng nội bộ',               sb: 'và nhiều kỹ thuật tấn công khác' }
     ];
     rows.forEach((r, i) => {
-      const a = rv(t, 28.35 + i * 1.15, 0.55);
+      const a = rv(t, 19.8 + i * 0.8, 0.5);
       if (a <= 0) return;
       const x = 84 - (1 - a) * 46, y = 722 + i * 238;
       ctx.save(); ctx.globalAlpha = a;
@@ -323,28 +323,30 @@
 
   // ── SCENE 4 · ASK (39–50) — 2 giả thuyết VS + CTA ────────────────────────
   function sceneAsk(t) {
-    text('/// HAI GIẢ THUYẾT — BẠN NGHIÊNG BÊN NÀO?', 84, 678, 28, C.cyan, 700, 'left', 'Consolas');
+    text('/// BẠN NGHIÊNG BÊN NÀO?', 84, 678, 28, C.cyan, 700, 'left', 'Consolas');
     const glowL = 0.45 + 0.4 * Math.max(0, Math.sin(t * 0.9));
     const glowR = 0.45 + 0.4 * Math.max(0, -Math.sin(t * 0.9));
-    const aL = rv(t, 39.4, 0.5), aR = rv(t, 39.7, 0.5);
+    const aL = rv(t, 25.75, 0.5), aR = rv(t, 26.0, 0.5);
     if (aL > 0) {
       ctx.save(); ctx.globalAlpha = aL; ctx.translate(-(1 - aL) * 30, 0);
       roundRect(84, 700, 440, 430, 26, C.panel, C.cyan + Math.round(glowL * 255).toString(16).padStart(2, '0'), 3);
       text('GIẢ THUYẾT A', 120, 760, 24, C.cyan, 700, 'left', 'Consolas');
-      text('SANDBOX DỎM', 120, 830, 40, C.ink, 800, 'left');
-      text('· eval thiếu chốt chặn', 120, 920, 24, C.muted, 500, 'left');
-      text('· agent gặp cơ hội là thử', 120, 968, 24, C.muted, 500, 'left');
-      text('· lỗi thiết kế, không ác ý', 120, 1016, 24, C.muted, 500, 'left');
+      text('PHÒNG THÍ NGHIỆM', 120, 828, 36, C.ink, 800, 'left');
+      text('QUÁ YẾU', 120, 874, 36, C.ink, 800, 'left');
+      text('· khoá internet không chặt', 120, 940, 24, C.muted, 500, 'left');
+      text('· AI thấy lỗ hổng là thử', 120, 986, 24, C.muted, 500, 'left');
+      text('· lỗi của người thiết kế', 120, 1032, 24, C.muted, 500, 'left');
       ctx.restore();
     }
     if (aR > 0) {
       ctx.save(); ctx.globalAlpha = aR; ctx.translate((1 - aR) * 30, 0);
       roundRect(556, 700, 440, 430, 26, C.panel, C.amber + Math.round(glowR * 255).toString(16).padStart(2, '0'), 3);
       text('GIẢ THUYẾT B', 592, 760, 24, C.amber, 700, 'left', 'Consolas');
-      text('AGENT TỰ PHÁT', 592, 830, 40, C.ink, 800, 'left');
-      text('· gọi khoá truy cập là "LOOT"', 592, 920, 24, C.muted, 500, 'left');
-      text('· biết xoá dấu vết', 592, 968, 24, C.muted, 500, 'left');
-      text('· chủ động, không ai ra lệnh', 592, 1016, 24, C.muted, 500, 'left');
+      text('AI THẬT SỰ', 592, 828, 36, C.ink, 800, 'left');
+      text('NGUY HIỂM', 592, 874, 36, C.ink, 800, 'left');
+      text('· gọi đồ là chiến lợi phẩm', 592, 940, 24, C.muted, 500, 'left');
+      text('· biết xoá dấu vết', 592, 986, 24, C.muted, 500, 'left');
+      text('· không ai ra lệnh cả', 592, 1032, 24, C.muted, 500, 'left');
       ctx.restore();
     }
     if (aL > 0 && aR > 0) {
@@ -353,14 +355,14 @@
       text('VS', 540, 917, 40, C.ink, 800, 'center', 'Consolas');
       ctx.restore();
     }
-    const aN = rv(t, 42.5, 0.5);
-    if (aN > 0) { ctx.save(); ctx.globalAlpha = aN; text('HF đã xác nhận và thu hồi khoá từ 07.2026 · báo cáo dựa trên thông tin công khai', 540, 1195, 26, C.muted, 500, 'center'); ctx.restore(); }
-    const aC = rv(t, 44.2, 0.5);
+    const aN = rv(t, 27.3, 0.45);
+    if (aN > 0) { ctx.save(); ctx.globalAlpha = aN; text('Hugging Face xác nhận vụ việc + thu hồi khoá từ tháng 7 · nguồn: báo cáo công khai', 540, 1195, 22, C.muted, 500, 'center'); ctx.restore(); }
+    const aC = rv(t, 28.2, 0.45);
     if (aC > 0) {
       ctx.save(); ctx.globalAlpha = aC; ctx.translate(0, (1 - aC) * 24);
       roundRect(84, 1270, 912, 290, 26, C.panel2, C.amber + '99', 3);
       text('BẠN NGHĨ SAO?', 540, 1338, 28, C.amber, 800, 'center', 'Consolas');
-      wrap('Sandbox dỏm — hay agent nguy hiểm?', 540, 1418, 860, 38, C.ink, 800, 1.1, 'center');
+      wrap('Phòng thí nghiệm quá yếu — hay AI quá nguy hiểm?', 540, 1418, 860, 38, C.ink, 800, 1.08, 'center');
       text('Comment góc nhìn của bạn ↓', 540, 1512, 30, C.cyan, 700, 'center');
       ctx.restore();
     }
@@ -391,10 +393,10 @@
     ctx.fillStyle = C.red; ctx.beginPath(); ctx.arc(100, 62, 11, 0, 7); ctx.fill();
     ctx.globalAlpha = 1;
     text('REC', 122, 62, 26, C.red, 700, 'left', 'Consolas');
-    text('CASE FILE #HF-0726', 192, 62, 24, C.muted, 600, 'left', 'Consolas');
+    text('HỒ SƠ #HF-0726', 192, 62, 24, C.muted, 600, 'left', 'Consolas');
     text(`T+${String(Math.floor(t)).padStart(2, '0')}s`, 996, 62, 24, C.cyan, 700, 'right', 'Consolas');
-    const segW = 912 / 50;
-    for (let i = 0; i < 50; i++) {
+    const segW = 912 / DURATION;
+    for (let i = 0; i < DURATION; i++) {
       const x = 84 + i * segW;
       const done = i < Math.floor(t);
       const head = i === Math.floor(t) - 1;

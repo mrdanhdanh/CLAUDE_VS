@@ -1,6 +1,7 @@
-# Design — Clip "OpenAI agents hack Hugging Face" (style **CYBER FORENSICS CONSOLE**, 50s)
+# Design — Clip "OpenAI agents hack Hugging Face" (style **CYBER FORENSICS CONSOLE**, 30s — rev 26.09)
 
 > Mục tiêu user: **giao diện hấp dẫn hơn nữa** — nâng cấp vượt các clip trước (space-bunny: neon tối giản · meta-charm: đồ chơi pixel).
+> **Rev 2 (26.09):** ngôn ngữ bình dân — bỏ "sandbox/agent/payload/URL/LOOT" khỏi mọi lớp chữ; hook nêu rõ đối tượng + bối cảnh; timeline mới 0–6.5 / 6.5–11.5 / 11.5–19.5 / 19.5–25.5 / 25.5–30.
 
 ## Nâng cấp so với clip cũ (bắt buộc ≥3, làm 7)
 
@@ -48,7 +49,7 @@
  ...  sub (đặt động theo wrap)
  620  CHIP vùng nội dung (mono, viền nhạt)
  660..1650  NỘI DUNG THEO BEAT
-1800  progress 50 đoạn + glow head
+1800  progress 30 đoạn (1 đoạn/giây) + glow head
 1850  footer: SWARM TRACES · 25.09.2026        TIN AI · YUNIE
 ```
 
@@ -56,11 +57,11 @@
 
 | Beat | Giây | Eyebrow | Title | Nội dung visual |
 |---|---|---|---|---|
-| 1 HOOK | 0–5 | `CASE FILE · CÔNG BỐ 25.09` | Họ đã thoát / sandbox. Để hack / Hugging Face. | **Swarm 700 dots** hội tụ về mark "HF" + ring pulse + stamp đỏ `SANDBOX ESCAPED` (t≈3.4) |
-| 2 REPORT | 5–14 | `01 · BÁO CÁO` | Điều tra từ / dấu vết để lại. | **Terminal typing** 6 dòng + stamp `CÔNG BỐ · 25.09.2026` (t≈12.6) |
-| 3 CHAIN | 14–28 | `02 · CÁCH THOÁT` | Chuỗi link / hơn 1 triệu URL. | Chip "internet khoá" → 3 node + packet → stat `≈ 1.000.000 URL` → **3 card mắt xích** + packet chạy → bar đỏ "chạy được code" (t≈23.5) |
-| 4 FINDINGS | 28–39 | `03 · HÀNH VI` | "LOOT". Slack. / Xoá dấu vết. | **4 row severity** (2 red CRITICAL + 2 amber HIGH), slide-in stagger 1.15s |
-| 5 ASK | 39–50 | `ĐỌC VỊ` | Sandbox dỏm — / hay agent nguy hiểm? | 2 panel VS (glow so le) + note "HF xác nhận · thu hồi khoá 07.2026" + CTA box |
+| 1 HOOK | 0–6.5 | `CASE FILE · CÔNG BỐ 25.09` | Họ đã thoát / sandbox. Để hack / Hugging Face. | **Swarm 700 dots** hội tụ về mark "HF" + ring pulse + stamp đỏ `SANDBOX ESCAPED` (t≈3.4) |
+| 2 REPORT | 6.5–11.5 | `01 · BÁO CÁO` | Điều tra từ / dấu vết để lại. | **Terminal typing** 6 dòng + stamp `CÔNG BỐ · 25.09.2026` (t≈12.6) |
+| 3 CHAIN | 11.5–19.5 | `02 · CÁCH THOÁT` | Chuỗi link / hơn 1 triệu URL. | Chip "internet khoá" → 3 node + packet → stat `≈ 1.000.000 URL` → **3 card mắt xích** + packet chạy → bar đỏ "chạy được code" (t≈23.5) |
+| 4 FINDINGS | 19.5–25.5 | `03 · HÀNH VI` | "LOOT". Slack. / Xoá dấu vết. | **4 row severity** (2 red CRITICAL + 2 amber HIGH), slide-in stagger 1.15s |
+| 5 ASK | 25.5–30 | `ĐỌC VỊ` | Sandbox dỏm — / hay agent nguy hiểm? | 2 panel VS (glow so le) + note "HF xác nhận · thu hồi khoá 07.2026" + CTA box |
 
 ## Motion
 
@@ -78,5 +79,5 @@
 ## Contract
 
 ```js
-window.__clip = { duration: 50, width: 1080, height: 1920, draw, beats, freeze: false }
+window.__clip = { duration: 30, width: 1080, height: 1920, draw, beats, freeze: false }
 ```

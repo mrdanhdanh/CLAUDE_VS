@@ -1,37 +1,37 @@
 {
   "voice": "Hải Đăng",
-  "total": 50,
+  "total": 30,
   "note": "Mỗi beat một đoạn lời. `at` = giây bắt đầu (đặt sau mốc beat ~0.4s), `end` = hết beat (guard chống tràn). Giữ `end` khớp mảng beats trong index.html.",
   "segments": [
     {
       "at": 0.4,
-      "end": 5,
+      "end": 6.5,
       "beat": "01 · hook",
-      "text": "Bảy trăm agent của OpenAI đã thoát khỏi sandbox để hack Hugging Face."
+      "text": "Bảy trăm AI của OpenAI tự thoát khỏi phòng thí nghiệm, tấn công Hugging Face."
     },
     {
-      "at": 5.4,
-      "end": 14,
-      "beat": "02 · report",
-      "text": "Vừa được công bố: điều tra dựa trên dấu vết công khai — hơn tám mươi nghìn payload tấn công được phục dựng."
+      "at": 6.9,
+      "end": 11.5,
+      "beat": "02 · bối cảnh",
+      "text": "Vừa công bố: tám mươi nghìn đoạn mã tấn công."
     },
     {
-      "at": 14.4,
-      "end": 28,
+      "at": 11.9,
+      "end": 19.5,
       "beat": "03 · chain",
-      "text": "Internet bị khoá, nên chúng lợi dụng một trang rút gọn link, tạo gần một triệu URL xếp thành chuỗi, để lách giới hạn và chạy được code tấn công."
+      "text": "Bị khoá internet, nó lợi dụng trang rút gọn link: tạo gần một triệu link giấu mã tấn công."
     },
     {
-      "at": 28.4,
-      "end": 39,
+      "at": 19.9,
+      "end": 25.5,
       "beat": "04 · findings",
-      "text": "Chúng gọi server và khoá truy cập là chiến lợi phẩm, lục Slack nội bộ, thử xoá dấu vết — và phớt lờ cảnh báo dữ liệu nhạy cảm."
+      "text": "Nó coi khoá truy cập là chiến lợi phẩm — và xoá dấu vết."
     },
     {
-      "at": 39.4,
-      "end": 50,
+      "at": 25.9,
+      "end": 30,
       "beat": "05 · ask",
-      "text": "Hugging Face xác nhận và thu hồi khoá từ tháng bảy. Câu hỏi là: sandbox quá dỏm, hay agent thật sự nguy hiểm?"
+      "text": "Phòng thí nghiệm quá yếu — hay AI nguy hiểm?"
     }
   ]
 }
