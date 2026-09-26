@@ -1,6 +1,6 @@
 {
-  "version": 5,
-  "description": "Harness governance — deny before allow, fail-closed (học OpenBot CEL policy + BTP pre-flight KN-012 + rogue-trader HAIPA 2026-09-05: cage before animal, law 1 file, intent/execution split). v4 (2026-09-12, human takeover): case-normalize mọi deny rule — uppercase/whitespace variants không còn bypass (red-team F2/KN-048, tests/e2e/guard-redteam.spec.ts). v5 (2026-09-14, mở HOLD delegation — KN-059): subagent attenuation ⊆ parent — actor `subagent:<name>` phải khai `--parent`; engine compute `withinParent` (evaluate cùng request dưới danh nghĩa parent); guard D1–D4.",
+  "version": 6,
+  "description": "Harness governance — deny before allow, fail-closed (học OpenBot CEL policy + BTP pre-flight KN-012 + rogue-trader HAIPA 2026-09-05: cage before animal, law 1 file, intent/execution split). v4 (2026-09-12, human takeover): case-normalize mọi deny rule — uppercase/whitespace variants không còn bypass (red-team F2/KN-048, tests/e2e/guard-redteam.spec.ts). v5 (2026-09-14, mở HOLD delegation — KN-059): subagent attenuation ⊆ parent — actor `subagent:<name>` phải khai `--parent`; engine compute `withinParent` (evaluate cùng request dưới danh nghĩa parent); guard D1–D4. v6 (2026-09-26, human takeover — KN-081/Transluce): deny-credential-any-method — credential material goal-scope, bất kể tool/method (read/shell/type cùng refused — deny cũ gắn tool=read là khe hở, đổi tool là lách); ngoại lệ .env.example|sample|template|dist + tool credentials; guard E5–E6.",
   "deny": [
     {
       "id": "deny-subagent-no-parent",
@@ -24,13 +24,18 @@
     },
     {
       "id": "deny-env-read",
-      "when": "tool === 'read' && target.toLowerCase().includes('.env')",
-      "message": "Refuse reading .env — use credentials store (case-normalized v4, Windows FS case-insensitive)"
+      "when": "tool === 'read' && target.toLowerCase().includes('.env') && !(target.toLowerCase().includes('.env.example') || target.toLowerCase().includes('.env.sample') || target.toLowerCase().includes('.env.template') || target.toLowerCase().includes('.env.dist'))",
+      "message": "Refuse reading .env — use credentials store (case-normalized v4, Windows FS case-insensitive; v6: .env.example|.sample|.template|.dist là template, không phải secret)"
     },
     {
       "id": "deny-credentials-direct",
       "when": "target.toLowerCase().includes('credentials.enc.json') && tool !== 'credentials'",
       "message": "Refuse direct read of credentials.enc.json — use credentials.mjs (case-normalized v4)"
+    },
+    {
+      "id": "deny-credential-any-method",
+      "when": "(target.toLowerCase().includes('.env') || target.toLowerCase().includes('.ssh/id_') || target.toLowerCase().includes('id_rsa') || target.toLowerCase().includes('id_ed25519') || target.toLowerCase().includes('.aws/credentials') || target.toLowerCase().includes('credentials.enc.json')) && !(target.toLowerCase().includes('.env.example') || target.toLowerCase().includes('.env.sample') || target.toLowerCase().includes('.env.template') || target.toLowerCase().includes('.env.dist')) && tool !== 'credentials'",
+      "message": "Refuse credential material bất kể method (KN-081/Transluce: deny gắn tool → đổi tool là lách; read/shell/type/wrapper cùng một đích) — dùng credentials.mjs (tool=credentials); template .env.* |sample|template|dist là ngoại lệ"
     },
     {
       "id": "deny-private-hosts",

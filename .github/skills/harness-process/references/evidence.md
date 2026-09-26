@@ -1,8 +1,8 @@
 # Evidence — harness-process (DisCo arXiv:2609.02749v1 §3.2 (task-agnostic))
 
-> Substrate layer của skill — full text từ docs/knowleged.md. Sinh tự động 2026-09-26T06:10:28.975Z.
+> Substrate layer của skill — full text từ docs/knowleged.md. Sinh tự động 2026-09-26T07:20:33.352Z.
 
-## Bug reports liên quan (17/66 bugs)
+## Bug reports liên quan (17/67 bugs)
 
 - `.agent/bugs/2026-08-30-bug-blindness/bug.md` — Bug: Bug Blindness — mù bug do workaround vô thức + fan bias
 - `.agent/bugs/2026-09-03-rag-export-missing-grounding-chet/bug.md` — Bug: RAG export missing grounding chet
@@ -903,7 +903,3 @@
   - Reproducible ≠ correct: tái lập + ground truth độc lập (rubric/grounding) là 2 lớp khác nhau.
 - **Tags:** `process` `evals` `benchmark` `verification` `reproducibility`
 - **Người ghi:** YUNIE / phân tích paper + tích hợp (user yêu cầu 26/09)
-
-<!-- Thêm bài học mới theo template dưới — copy block này -->
-
-<!--
