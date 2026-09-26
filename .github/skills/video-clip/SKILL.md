@@ -64,13 +64,14 @@ D:\CLAUDE_VS\.venv-tts\Scripts\python.exe www\<slug>\tts-vieneu.py --segments ww
 node www\<slug>\render.mjs --voice-wav=www\<slug>\voiceover-<voice>-<N>s.wav --out=www\<slug>\<slug>-<N>s.mp4
 ```
 
-## 3 Guard — BẮT BUỘC, không được tắt
+## 4 Guard — BẮT BUỘC, không được tắt
 
 | Guard | Bắt được gì | Vì sao cần |
 |---|---|---|
 | `verify-frames.mjs` | Token thiếu trong object `C` + chụp N khung ra PNG | `ctx.fillStyle = undefined` **không throw** — nó giữ màu cũ ⇒ **chữ tàng hình**, không có exception nào |
 | `verify-audio.mjs` | Track im lặng (peak/RMS = 0) trong MP4/WAV | File vẫn có box `soun`/`mp4a`, element vẫn "chạy" ⇒ tưởng có tiếng mà **im ru** |
 | Guard timing trong `tts-vieneu.py` | Đoạn lời tràn khỏi beat/timeline (exit 1) | v3 Turbo **không có tham số `speed`** ⇒ phải cắt theo beat, tràn là lệch hình |
+| `verify-perf.mjs` | `draw(t)` quá chậm → capture 30fps ghi lặp khung (clip **giật/lag**) | Không exception nào — file vẫn ra, chỉ lag. Đo 2 tầng: command avg (≤20ms) + nhịp rAF thật quét toàn timeline (interval p95 ≤ 33ms). Clip 50s 2026-09: baseline 47.7ms p95 (22.9fps) → sau khi bake texture + cache strip mưa: 18.6ms (≈60fps) **(KN-083)** |
 
 `render.mjs` **tự gọi** `verify-audio.mjs` sau khi ghi file — im lặng là fail, không ship.
 
@@ -85,6 +86,7 @@ node www\<slug>\render.mjs --voice-wav=www\<slug>\voiceover-<voice>-<N>s.wav --o
 | Ổ `C:` gần đầy | pip/onnx lỗi cấp phát giữa chừng; page file không giãn | Venv + `HF_HOME` + `TEMP` đặt trên ổ còn trống (`D:`) |
 | Model xuất đỉnh > 1.0 | Tiếng bị méo khi clip | **Scale** về 0.98, đừng `np.clip` |
 | VieNeu v3 Turbo không có `speed` | Không kéo dài giọng đọc được | Cắt lời theo beat + chèn khoảng nghỉ (`--segments`) |
+| Vẽ lại gradient toàn màn hình / hàng trăm `fillText` mỗi khung | Clip ra file vẫn có tiếng/hình nhưng **giật, khung bị lặp** (đo: interval p95 47.7ms ≈ 23fps) | Bake nền/overlay thành texture 1 lần; cache chuỗi động thành strip theo tick; cache layout chữ; `alpha:false` — rồi đo lại bằng `verify-perf.mjs` **(KN-083)** |
 | Font thiếu glyph VN (Georgia) | Chữ dấu vỡ **im lặng** — "thô ng kê", "Sớ m"; không throw, không console error | Đo trước bằng `references/font-test.mjs`; dùng Times New Roman / Cambria / Segoe UI; lưới `tests/e2e/clip-font-guard.spec.ts` + template verify-frames (KN-082) |
 
 ## B-roll AI (khi clip cần footage ngoài canvas)
@@ -117,6 +119,7 @@ Voiceover **ngắn hơn** clip = an toàn (im lặng ở đuôi). **Dài hơn** 
 
 - [ ] Trang clip expose đủ `window.__clip` (duration/width/height/draw/beats/freeze)?
 - [ ] `verify-frames.mjs` pass + đã **xem ảnh** từng beat (không đoán)?
+- [ ] `verify-perf.mjs` pass (clip mới hoặc vừa đổi hiệu ứng)?
 - [ ] `verify-audio.mjs` pass trên WAV voiceover **và** trên MP4 cuối?
 - [ ] Guard timing không báo tràn beat?
 - [ ] Voiceover ≤ duration clip?
@@ -134,7 +137,7 @@ Voiceover **ngắn hơn** clip = an toàn (im lặng ở đuôi). **Dài hơn** 
 - B-roll AI: `references/ai-broll-sources.md` — chọn tool · free tier · pattern segment 2–10s + ghép (run 26/09/2026)
 - Font coverage VN: `references/font-test.mjs` — đo trên MÁY RENDER THẬT trước khi build (KN-082)
 - Hashtag 2026: giới hạn **5 slot** đầu tiên · caption (keyword) quan trọng hơn hashtag — xem `publish.md`
-- Bug đã log: `.agent/bugs/2026-09-23-clip-im-tieng-du-co-audio-track/` · `.agent/bugs/2026-09-23-mau-thieu-lam-chu-tang-hinh/` · `.agent/bugs/2026-09-26-font-georgia-vo-dau-tieng-viet-trong-canvas-clip/`
+- Bug đã log: `.agent/bugs/2026-09-23-clip-im-tieng-du-co-audio-track/` · `.agent/bugs/2026-09-23-mau-thieu-lam-chu-tang-hinh/` · `.agent/bugs/2026-09-26-clip-lag-ve-qua-nang-capture-30fps-ghi-lap-khung/` · `.agent/bugs/2026-09-26-font-georgia-vo-dau-tieng-viet-trong-canvas-clip/`
 
 ---
 *Skill: video-clip — enforce bởi Harness v2. Mọi bước "trông ổn" đều từng lọt lỗi; guard mới là thứ giữ.*

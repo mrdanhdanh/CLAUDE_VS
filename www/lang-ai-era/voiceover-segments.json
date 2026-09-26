@@ -1,0 +1,49 @@
+{
+  "voice": "Hải Đăng",
+  "total": 50,
+  "note": "Mỗi beat một đoạn lời (7 đoạn, bản 50s rev 2). `at` = giây bắt đầu, `end` = hết beat (guard chống tràn). Giữ khớp mảng beats + SUBS trong index.html.",
+  "segments": [
+    {
+      "at": 0.4,
+      "end": 7,
+      "beat": "01 · hook",
+      "text": "Khi AI viết phần lớn code — ngôn ngữ lập trình nên thiết kế cho ai?"
+    },
+    {
+      "at": 7.4,
+      "end": 16,
+      "beat": "02 · cộng đồng",
+      "text": "Hai mặt trái ngược: công nghệ thu hẹp khoảng cách — nhưng nếu tự build quá dễ, còn ai cùng xây chung?"
+    },
+    {
+      "at": 16.4,
+      "end": 24.5,
+      "beat": "03 · cú pháp",
+      "text": "Cú pháp đẹp — AI chỉ thấy mảnh ký hiệu. Và ngôn ngữ vẫn cần: không có ngôn ngữ nào giỏi mọi thứ."
+    },
+    {
+      "at": 24.9,
+      "end": 32,
+      "beat": "04 · đề xuất 1 · ràng buộc",
+      "text": "Ràng buộc thay vì tiện dụng: bốn lớp bảo đảm — từ thiết kế, kiểm tra tĩnh, chặn lúc chạy, đến test và fuzz."
+    },
+    {
+      "at": 32.4,
+      "end": 40,
+      "beat": "05 · đề xuất 2 · truy vấn code",
+      "text": "Coi code như cơ sở dữ liệu để agent tự truy vấn — thay vì chỉ nhảy từng dòng như editor."
+    },
+    {
+      "at": 40.4,
+      "end": 45,
+      "beat": "06 · đề xuất 3 · nhìn lúc chạy",
+      "text": "Và nhìn thẳng lúc chạy — agent tự đo, tự chẩn đoán thay vì debug."
+    },
+    {
+      "at": 45.4,
+      "end": 50,
+      "beat": "07 · hỏi lại",
+      "text": "Còn bạn: AI viết code — cộng đồng lập trình giữ được gì?"
+    }
+  ]
+}

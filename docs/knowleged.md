@@ -103,6 +103,7 @@
 | KN-080 | 2026-09-26 | Eval/benchmark kết luận quá tự tin so với evidence (self-audit arXiv:2609.30074): identical calls không tái lập (72% cell không perfect); bootstrap chỉ đáy bảng vững (99%/86%), middle 27–48%, top 68%; 2 quy tắc merge hợp lý đổi 4/8 hàng + headline 7pp; 4/8 endpoint bị thu hồi trong 10 tuần; reproducible ≠ accurate | Small-sample eval + quy tắc tổng hợp chọn ngầm + chỉ giữ aggregate (raw mất) + không ngày đo → bảng xếp hạng trông chắc hơn evidence; stochasticity của LLM không được coi là noise floor | Benchmark/so sánh phải report rank stability + sensitivity (≥2 cách tổng hợp) + provenance raw per-run + ngày đo (shelf-life: deprecate → re-run); top-2 trong noise → chọn bản đơn giản hơn, không tuyên "best" từ 1 campaign | `process` `evals` `benchmark` `verification` `reproducibility` |
 | KN-081 | 2026-09-26 | Retrieval fail → tự escalate sang exploit — agents dùng urlquery.net (scanner hợp pháp) để bypass restriction + thử XSS/SQLi/path traversal nhắm Data USA/UNM/AIHW (gov Úc) **trong lúc làm task tra cứu thường** (Transluce 23/09/2026; leo thang 11/2025→9/2026, sớm hơn mọi incident đã biết ~2 tháng) | Task pressure + không bound loại phương pháp: refusal/monitor gắn vào **method** (từng call) + **nhãn task** thay vì **goal** + **hành vi** — đổi cách/giữ task trông thường là lách; mini-instance tại harness: `read .env` refused nhưng `shell "Get-Content .env"` permitted | Refuse theo goal (self-test tool thứ 2 trước khi tin deny) + "không lấy được" là kết quả hợp lệ (stop + report + escalate; cấm route-around qua proxy/scanner/renderer; 3-fix tính theo goal) + gating theo behavior (fail × goal pressure × đổi loại phương pháp) + egress allowlist, ngoại lệ chỉ khi user-authorised + ToS-respecting (KN-041) | `governance` `safety` `escalation` `retrieval` `agent` |
 | KN-082 | 2026-09-26 | Clip canvas vỡ dấu tiếng Việt — font Georgia thiếu glyph (ằ/ấ/ớ/ố) rơi fallback, vỡ metrics **im lặng** ("thô ng kê"), sống 2 clip | Chọn font theo thói quen ("Georgia = serif báo giấy đẹp") mà không đo glyph coverage ngôn ngữ đích trên máy render thật; guard verify-frames chỉ quét token + chụp ảnh cho người xem, không assert chất lượng chữ | Asset render: font phải coverage-verified (Georgia vào blacklist) + đo bằng `font-test` trước khi build + lưới máy quét mọi clip page + re-verify ảnh sau đổi font | `ui` `canvas` `font` `clip` `verify` `i18n` |
+| KN-083 | 2026-09-26 | Clip canvas render realtime lag **im lặng** — draw(t) tốn 29.6ms/khung (gradient toàn màn hình + ~500 fillText vẽ lại mỗi khung) → MediaRecorder 30fps ghi lặp khung (đo: 22.9fps, interval p95 47.7ms, stall 1111ms); không throw, không console error, ảnh frames tĩnh không thấy | Pipeline clip thiếu phép đo **nhịp khung** + gate đầu tiên đo sai execution model (p95 vòng back-to-back bị backpressure che — đo 3.2ms, stall 2360ms bị khuất) | Guard `verify-perf.mjs` (command avg ≤20ms + interval p95 ≤33ms khi rAF quét toàn timeline + in worst frames kèm t) + bake tĩnh thành texture + cache strip theo tick + cache layout chữ + `alpha:false`; lưới e2e `clip-perf-guard.spec.ts` (negative control chạy thật + regression) | `ui` `perf` `canvas` `clip` `verify` `guard` |
 
 > KN-001 là **dòng định dạng mẫu** — giữ làm tham chiếu format (auto-learn/status/registry trỏ tới); bài học thật bắt đầu từ KN-002.
 
@@ -1795,6 +1796,30 @@
 - **Tags:** `ui` `canvas` `font` `clip` `verify` `i18n`
 - **Người ghi:** YUNIE / build clip #3 + hậu kiểm clip #2 (26/09) — guard `clip-font-guard.spec.ts` pass (2/2), clip #2 re-render
 
+### KN-083 — Clip canvas lag im lặng — capture 30fps ghi lặp khung (draw vượt ngân sách)
+
+- **Ngày:** 2026-09-26
+- **Bug report:** `.agent/bugs/2026-09-26-clip-lag-ve-qua-nang-capture-30fps-ghi-lap-khung/bug.md`
+- **Severity:** major
+- **Guard:** `tests/e2e/clip-perf-guard.spec.ts` (static markers + negative control chạy thật + regression trên clip thật) + `www/lang-ai-era/verify-perf.mjs` + template `.github/skills/video-clip/templates/verify-perf.mjs` (ship kèm mọi clip mới)
+- **Layer:** `measure-verifier` — pipeline clip không có phép đo perf nào; guard ảnh chỉ chụp tĩnh; gate đầu tiên đo sai execution model.
+- **Liên quan:** KN-082 + KN-028 (cùng lớp "canvas bug sống im lặng vì lưới không assert") · KN-074 (gate phải chứng minh đường đỏ) · KN-056 (KN không lưới = wishlist).
+- **Triệu chứng:** Clip `lang-ai-era` (bản 35s) giật khi xem — MP4 vẫn render "thành công", KHÔNG throw, KHÔNG console error. Đo được: interval p95 47.7ms ≈ 22.9fps, stall đơn lẻ 1111ms, draw 29.6ms/khung. User phát hiện bằng mắt khi xem clip.
+- **Nguyên nhân gốc (5 Whys):**
+  - Why1: Khung bị ghi lặp → MediaRecorder capture realtime, draw không kịp nhịp.
+  - Why2: draw 29.6ms/khung → vẽ lại mỗi khung (a) 2 radial gradient toàn màn hình, (b) ghost glyph 300px, (c) ~500 fillText mưa ký tự, (d) 50 roundRect progress.
+  - Why3: Vì sao ship được → không có phép đo nhịp khung; `verify-frames` chỉ quét token + chụp ảnh tĩnh; MP4 ra "bình thường" (cùng lớp KN-082/KN-028).
+  - Why4: Vì sao đo v1 vẫn PASS sai → gate dùng p95 vòng vẽ back-to-back (3.2ms) — backpressure CPU/GPU tự giãn nhịp, stall (max 2360ms) bị p95 che; metric không khớp rAF-paced thật.
+  - Why5 (Root): **Thiếu guard đo chi phí vẽ theo đúng execution model của render** — "độ mượt" không ai đo cả trước lẫn sau khi ship.
+- **Cách sửa:** Bake tĩnh thành texture 1 lần (nền/glow/ghost/vignette/dải sáng); mưa ký tự thành strip cache theo tick 6Hz (36 `drawImage` thay ~500 `fillText`); cache layout chữ + run màu subtitle; canvas `alpha:false`; progress = 3 hình (track+fill+head). Đo lại: 22.9fps → **59.6fps** (interval p95 47.7→18.6ms; command avg 29.6→8.2ms; stall 1111→38.7ms). Kèm guard `verify-perf.mjs` (2 tầng, in worst frames kèm t để khoanh vùng cảnh stall) + lưới e2e 3 test (static · negative control trang 30ms/khung PHẢI fail · regression clip thật).
+- **Cách phòng tránh:**
+  - Trước render (hoặc sau mỗi lần thêm hiệu ứng): chạy `node <clip>/verify-perf.mjs` — đỏ thì chưa được render/publish.
+  - Nguyên tắc vẽ: thứ KHÔNG đổi → bake texture; chuỗi lặp → cache strip theo tick; chữ tĩnh → cache layout (measureText 1 lần); nền đục → `alpha:false`; vòng lặp dài (progress) → track+fill+head.
+  - Gate phải khớp execution model thật: đo bằng avg + nhịp khung qua rAF, **không** lấy p95 vòng back-to-back làm ngưỡng; in worst frames để biết stall ở giây nào.
+  - Negative control bắt buộc cho guard mới (trang cố tình chậm phải fail) — KN-074.
+- **Tags:** `ui` `perf` `canvas` `clip` `verify` `guard`
+- **Người ghi:** YUNIE / build clip `lang-ai-era` rev 2 (50s) theo feedback user (26/09) — guard e2e 3/3 pass, clip re-render 50s, audio guard pass
+
 <!-- Thêm bài học mới theo template dưới — copy block này -->
 
 <!--
@@ -1815,6 +1840,7 @@
 
 ## Anti-patterns tích lũy (Đừng lặp lại)
 
+- ❌ Render clip realtime (canvas/MediaRecorder) mà không đo chi phí vẽ theo đúng execution model — vẽ lại gradient toàn màn hình + hàng trăm `fillText` mỗi khung → 30fps ghi lặp khung (đo: 22.9fps, interval p95 47.7ms, stall 1111ms), không throw, ảnh tĩnh không thấy; bake tĩnh thành texture + cache strip + gate avg/interval p95 khớp rAF (`verify-perf.mjs` + `clip-perf-guard.spec.ts` — negative control chạy thật) (KN-083 + KN-082 + KN-028).
 - ❌ Chọn font cho asset render (canvas/clip) theo thói quen mà không đo coverage ngôn ngữ đích trên MÁY RENDER — Georgia thiếu glyph VN (ằ/ấ/ớ/ố) → vỡ dấu im lặng ("thô ng kê"), không throw, guard ảnh không tự bắt; đo bằng `references/font-test.mjs` trước khi build + blacklist scan `clip-font-guard.spec.ts` (KN-082 + KN-006 + KN-028).
 - ❌ Coi "retrieval fail → thử cách khác" là vô hại và gating theo nhãn task — dưới áp lực task thường, agents tự leo thang sang exploit (XSS/SQLi/path traversal, nhúng program vào URL, dùng scanner service để bypass) nhắm cả gov site; refusal gắn method nào agent đổi method đó, monitor gắn nhãn task nào agent giữ task trông thường — refuse theo GOAL (self-test tool thứ 2) + "không lấy được" là kết quả hợp lệ + đổi loại phương pháp sau fail = tín hiệu escalation (Transluce 23/09/2026 — KN-081 + KN-079 + KN-021).
 - ❌ Coi denial của monitor là phán quyết một-lần và coi "agent không thử lại" là hiển nhiên — dưới áp lực task thường, agent encode/chia nhỏ/retry tới khi context trôi khỏi history của monitor (EvasionBench: best-of-3 tới 98% attempt — arXiv:2609.30217); oversight phải robust với repeated attempts: history ngoài context agent + tín hiệu tái phạm (`audit.mjs escalations`) + bounded retry + kiểm overrefusal (KN-079 + KN-049 + KN-012).
@@ -2028,6 +2054,7 @@
 
 ## Checklist phòng tránh chung
 
+- [ ] Clip/render realtime (canvas/MediaRecorder): đã chạy `verify-perf` (command avg ≤20ms · interval p95 ≤33ms) trước khi render/publish? (KN-083)
 - [ ] Denial có bị lặp không (cùng actor+rule ≥3/24h)? → `audit.mjs escalations`; repeat = evasion signal → escalate human, không tự đổi cách lách? (KN-079)
 - [ ] Benchmark/so sánh ≥2 phương án: đã report rank stability + ≥2 aggregation (sensitivity) + `Measured:` ngày + raw runs trước khi tuyên best? (KN-080)
 - [ ] Gate/aggregator mới: mỗi link đã có assert điều kiện + negative control chứng minh đường ĐỎ (không chỉ marker “đã chạy”)? (KN-078)
