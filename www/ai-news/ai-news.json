@@ -1,13 +1,13 @@
 {
-  "generatedAt": "2026-09-26T06:01:10.228Z",
+  "generatedAt": "2026-09-26T07:05:16.530Z",
   "generatedBy": "YUNIE × Last30Days",
   "version": 2,
-  "description": "Tin AI mới nhất — tổng hợp từ Last30Days (HN, GitHub, DEV.to, Reddit, arXiv, HackerNoon) trong 3 ngày qua. Chủ đề: AI. Tự động cập nhật bởi YUNIE.",
+  "description": "Tin AI mới nhất — tổng hợp từ Last30Days (HN, GitHub, DEV.to, Reddit, arXiv, HackerNoon) trong 30 ngày qua. Chủ đề: AI. Tự động cập nhật bởi YUNIE.",
   "last30days": {
     "enabled": true,
     "topic": "AI",
-    "since": "2026-09-23",
-    "days": 3,
+    "since": "2026-08-27",
+    "days": 30,
     "sources": [
       "Hacker News (Algolia, free)",
       "GitHub Search (free)",
@@ -55,25 +55,25 @@
   ],
   "articles": [
     {
-      "id": "hn-49851856",
-      "title": "Tesla workers balk at training Optimus humanoid robots as replacements",
-      "summary": "Tesla workers balk at training Optimus humanoid robots as replacements — 9 points, 5 comments on HN.",
+      "id": "hn-49853522",
+      "title": "Can AI Shopping Agents Be Trusted?",
+      "summary": "Can AI Shopping Agents Be Trusted? — 14 points, 24 comments on HN.",
       "source": "Hacker News",
-      "sourceUrl": "https://arstechnica.com/ai/2026/09/tesla-workers-balk-at-training-optimus-humanoid-robots-as-replacements/",
-      "category": "fun",
+      "sourceUrl": "https://www.f-secure.com/en/partners/insights/can-ai-shopping-agents-be-trusted-we-built-one-to-find-out",
+      "category": "products",
       "date": "2026-09-26",
       "hot": false,
       "tags": [
         "HN",
         "AI",
         "story",
-        "author_Jtsummers"
+        "author_ddaniel10"
       ]
     },
     {
       "id": "hn-49853177",
       "title": "Evolving programming languages in the AI era",
-      "summary": "Evolving programming languages in the AI era — 5 points, 1 comments on HN.",
+      "summary": "Evolving programming languages in the AI era — 7 points, 1 comments on HN.",
       "source": "Hacker News",
       "sourceUrl": "https://twitter.com/josevalim/status/2103133294317445290",
       "category": "products",
@@ -103,11 +103,11 @@
       ]
     },
     {
-      "id": "hn-49851940",
-      "title": "Listen Up You Imposters",
-      "summary": "Listen Up You Imposters — 4 points, 0 comments on HN.",
+      "id": "hn-49853845",
+      "title": "AI was supposed to hit new grads hard. So far, unemployment data says otherwise",
+      "summary": "AI was supposed to hit new grads hard. So far, unemployment data says otherwise — 4 points, 1 comments on HN.",
       "source": "Hacker News",
-      "sourceUrl": "https://fuck-off.ai/panned",
+      "sourceUrl": "https://arstechnica.com/ai/2026/09/ai-was-supposed-to-hit-new-grads-hard-so-far-unemployment-data-says-otherwise/",
       "category": "products",
       "date": "2026-09-26",
       "hot": false,
@@ -115,15 +115,15 @@
         "HN",
         "AI",
         "story",
-        "author_gfody"
+        "author_MrDresden"
       ]
     },
     {
-      "id": "hn-49853303",
-      "title": "Was this award-winning book written by AI?",
-      "summary": "Was this award-winning book written by AI? — 3 points, 1 comments on HN.",
+      "id": "hn-49853879",
+      "title": "It's a Jev's World",
+      "summary": "It's a Jev's World — 3 points, 0 comments on HN.",
       "source": "Hacker News",
-      "sourceUrl": "https://www.cbc.ca/news/canada/montreal/thelyson-orelien-ai-scandal-9.7355167",
+      "sourceUrl": "https://www.bolna.ai/blog/testing-jev-on-real-phone-calls",
       "category": "products",
       "date": "2026-09-26",
       "hot": false,
@@ -131,35 +131,7 @@
         "HN",
         "AI",
         "story",
-        "author_olalonde"
-      ]
-    },
-    {
-      "id": "hntop-49845977",
-      "title": "U.S. appeals court upholds designation of Anthropic as supply chain risk",
-      "summary": "U.S. appeals court upholds designation of Anthropic as supply chain risk — 426 points, 739 comments on HN.",
-      "source": "Hacker News",
-      "sourceUrl": "https://www.cnbc.com/2026/09/25/pentagon-anthropic-ai-risk-appeals-court.html",
-      "category": "big-tech",
-      "date": "2026-09-25",
-      "hot": true,
-      "tags": [
-        "HN",
-        "top"
-      ]
-    },
-    {
-      "id": "hntop-49849985",
-      "title": "Revealing the details of how OpenAI agents hacked Hugging Face",
-      "summary": "Revealing the details of how OpenAI agents hacked Hugging Face — 360 points, 216 comments on HN.",
-      "source": "Hacker News",
-      "sourceUrl": "https://swarmtraces.org/",
-      "category": "big-tech",
-      "date": "2026-09-25",
-      "hot": true,
-      "tags": [
-        "HN",
-        "top"
+        "author_xan_ps007"
       ]
     },
     {
@@ -204,6 +176,36 @@
       "tags": [
         "HackerNoon",
         "shipaton",
+        "AI"
+      ]
+    },
+    {
+      "id": "hnoon-observability-first-ai-agents-what-you-gain-and-what-you-giv",
+      "title": "Observability-First AI Agents: What You Gain and What You Give Up",
+      "summary": "Observability is the bedrock of reliability, so I designed and implemented the full tracing layer for an AI agent before writing a line of the agent loop. — by Dragos Bilaniuc on HackerNoon.",
+      "source": "HackerNoon",
+      "sourceUrl": "https://hackernoon.com/observability-first-ai-agents-what-you-gain-and-what-you-give-up",
+      "category": "products",
+      "date": "2026-09-25",
+      "hot": true,
+      "tags": [
+        "HackerNoon",
+        "observability",
+        "AI"
+      ]
+    },
+    {
+      "id": "hnoon-how-to-manage-document-metadata-in-react-19",
+      "title": "How to Manage Document Metadata in React 19",
+      "summary": "Manage document titles, descriptions, and canonical links directly in React 19 components, with key caveats when replacing React Helmet. — by Lucas Tonelli on HackerNoon.",
+      "source": "HackerNoon",
+      "sourceUrl": "https://hackernoon.com/how-to-manage-document-metadata-in-react-19",
+      "category": "big-tech",
+      "date": "2026-09-25",
+      "hot": true,
+      "tags": [
+        "HackerNoon",
+        "react-helmet",
         "AI"
       ]
     },
@@ -268,29 +270,32 @@
       ]
     },
     {
-      "id": "hntop-49827794",
-      "title": "Meta takes down a critical video about meta AI Glasses after filming at Meta",
-      "summary": "Meta takes down a critical video about meta AI Glasses after filming at Meta — 624 points, 379 comments on HN.",
-      "source": "Hacker News",
-      "sourceUrl": "https://www.reddit.com/r/facebook/comments/1wotwrk/meta_takes_down_a_critical_video_about_meta_ai/",
-      "category": "big-tech",
+      "id": "dev-4732978",
+      "title": "Devlog: I Built a 3D Library in Three.js Without a Level Editor — So I Made My Own",
+      "summary": "Updated 3D Environment for Library              Reading DEV Articles     A lot of you... — 17 reactions, 17 comments on DEV.to.",
+      "source": "DEV.to",
+      "sourceUrl": "https://dev.to/mikachu/devlog-i-built-a-3d-library-in-threejs-without-a-level-editor-so-i-made-my-own-500i",
+      "category": "products",
       "date": "2026-09-24",
-      "hot": true,
+      "hot": false,
       "tags": [
-        "HN",
-        "top"
+        "DEV.to",
+        "ai",
+        "devlog",
+        "ai"
       ]
     }
   ],
   "meta": {
-    "fetchedAt": "2026-09-26T06:01:10.228Z",
+    "fetchedAt": "2026-09-26T07:05:16.530Z",
     "topic": "AI",
     "total": 15,
-    "hot": 10,
+    "hot": 9,
     "sources": [
       "Hacker News",
       "HackerNoon",
-      "arXiv"
+      "arXiv",
+      "DEV.to"
     ]
   }
 }
