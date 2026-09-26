@@ -86,6 +86,11 @@ node www\<slug>\render.mjs --voice-wav=www\<slug>\voiceover-<voice>-<N>s.wav --o
 | Model xuất đỉnh > 1.0 | Tiếng bị méo khi clip | **Scale** về 0.98, đừng `np.clip` |
 | VieNeu v3 Turbo không có `speed` | Không kéo dài giọng đọc được | Cắt lời theo beat + chèn khoảng nghỉ (`--segments`) |
 
+## B-roll AI (khi clip cần footage ngoài canvas)
+
+- Canvas thuần cho chữ/số liệu; footage AI chỉ cho 1–2 beat "cảnh thật". Chọn tool + free tier + pattern segment 2–10s: xem `references/ai-broll-sources.md` (chụp 26/09/2026 — re-verify giá trước khi trả tiền).
+- Tích hợp `<video>` + `drawImage` vào `draw(t)` — mechanics còn là `[hypothesis]`, verify ở clip đầu tiên dùng (caveat guard trong reference).
+
 ## TTS — VieNeu-TTS (local, 48 kHz)
 
 ```powershell
@@ -115,6 +120,7 @@ Voiceover **ngắn hơn** clip = an toàn (im lặng ở đuôi). **Dài hơn** 
 - [ ] Guard timing không báo tràn beat?
 - [ ] Voiceover ≤ duration clip?
 - [ ] Nội dung claim có provenance (official vs community claim) nếu nói về sản phẩm?
+- [ ] Clip dùng footage AI → đã đọc `references/ai-broll-sources.md`? (test free tier trước, video `muted`, không dựng người thật chưa có phép, không né nhãn AI của nền tảng)
 - [ ] `publish.md` có caption + 3 set hashtag (mỗi set đúng 5 tag)?
 
 ## References
@@ -124,6 +130,7 @@ Voiceover **ngắn hơn** clip = an toàn (im lặng ở đuôi). **Dài hơn** 
 - Reference implementation: `www/space-bunny-free/` (clip 50 s, 5 beat, Hải Đăng)
 - Plans + research: `.agent/plans/space-bunny-tiktok/` (research.md, prd.md, design.md, plan.md, publish.md)
 - TTS: [`pnnbao97/VieNeu-TTS`](https://github.com/pnnbao97/VieNeu-TTS) (Apache-2.0) · dự phòng `edge-tts` (cần mạng)
+- B-roll AI: `references/ai-broll-sources.md` — chọn tool · free tier · pattern segment 2–10s + ghép (run 26/09/2026)
 - Hashtag 2026: giới hạn **5 slot** đầu tiên · caption (keyword) quan trọng hơn hashtag — xem `publish.md`
 - Bug đã log: `.agent/bugs/2026-09-23-clip-im-tieng-du-co-audio-track/` · `.agent/bugs/2026-09-23-mau-thieu-lam-chu-tang-hinh/`
 
