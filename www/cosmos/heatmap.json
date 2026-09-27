@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-27T13:22:18.291Z",
+  "generatedAt": "2026-09-27T14:43:15.038Z",
   "generatedBy": "auto-learn.mjs stats --heatmap",
   "policy": {
     "cold": "bugCount − knCount ≥ 1",
@@ -19,8 +19,8 @@
       "2026-09"
     ],
     "coldSpots": 28,
-    "zeroRef": 5,
-    "refFiles": 395
+    "zeroRef": 4,
+    "refFiles": 407
   },
   "grid": {
     "months": [
@@ -1322,13 +1322,6 @@
     {
       "id": "KN-079",
       "title": "Monitor evasion — né monitor dưới áp lực task thường (EvasionBench)",
-      "date": "2026-09-26",
-      "ageDays": 1,
-      "action": "fresh"
-    },
-    {
-      "id": "KN-080",
-      "title": "Eval/benchmark kết luận quá tự tin so với evidence (self-audit rank stability)",
       "date": "2026-09-26",
       "ageDays": 1,
       "action": "fresh"

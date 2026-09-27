@@ -1,6 +1,6 @@
 ---
 name: harness-web-ui
-description: "Task-agnostic lessons 'Web UI & UX' chưng cất từ docs/knowleged.md (22 KN: KN-001, KN-002, KN-003, KN-004, KN-006, KN-011, KN-017, KN-028, KN-029, KN-030, KN-031, KN-032, KN-038, KN-040, KN-042, KN-045, KN-046, KN-050, KN-055, KN-058, KN-073, KN-082) + .agent/bugs/. Use when task chạm ui, a11y, css, responsive, data, animation, spacing, i18n, theme, contrast — áp Cách phòng tránh trước khi code, tránh lặp bug cũ. DisCo-lite, regenerate bằng distill-agnostic.mjs."
+description: "Task-agnostic lessons 'Web UI & UX' chưng cất từ docs/knowleged.md (23 KN: KN-001, KN-002, KN-003, KN-004, KN-006, KN-011, KN-017, KN-028, KN-029, KN-030, KN-031, KN-032, KN-038, KN-040, KN-042, KN-045, KN-046, KN-050, KN-055, KN-058, KN-073, KN-082, KN-083) + .agent/bugs/. Use when task chạm ui, a11y, css, responsive, data, animation, spacing, i18n, theme, contrast — áp Cách phòng tránh trước khi code, tránh lặp bug cũ. DisCo-lite, regenerate bằng distill-agnostic.mjs."
 user-invocable: false
 ---
 
@@ -10,11 +10,11 @@ user-invocable: false
 
 ## When to Use
 
-- Task chạm theme **Web UI & UX** (tags: ui, a11y, css, responsive, data, animation, spacing, i18n, theme, contrast, state, ux, button, diagram, archify, verify, canvas, bug-blindness, perf, font, script-blocking, pages, fetch, url, reduced-motion, edge, error-handling, docs, physics, content-drift, nav, fail-silent, grid, render, github, mermaid, race, cosmos, clip)
+- Task chạm theme **Web UI & UX** (tags: ui, a11y, css, responsive, data, animation, spacing, i18n, theme, contrast, state, ux, button, diagram, archify, verify, canvas, bug-blindness, perf, font, script-blocking, pages, fetch, url, reduced-motion, edge, error-handling, docs, physics, content-drift, nav, fail-silent, grid, render, github, mermaid, race, cosmos, clip, guard)
 - Trước khi code/fix — áp **Cách phòng tránh** ngay để không lặp bug cũ
 - Review/plan — check anti-patterns bên dưới
 
-## Bài học (22 KN)
+## Bài học (23 KN)
 
 ### KN-001 — Định dạng mẫu: Modal không đóng khi bấm ESC (minor)
 - **Bài học:** Mọi overlay/modal phải có ESC + focus trap + aria
@@ -218,13 +218,23 @@ user-invocable: false
   - Font cho text tiếng Việt trong canvas: **blacklist Georgia** (thiếu glyph); thêm font mới phải kèm phép đo trước khi whitelist.
   - Ảnh khung phải XEM bằng mắt ở zoom đủ lớn (bug này không throw — chỉ mắt hoặc lưới máy bắt được — KN-028 class).
 
+### KN-083 — Clip canvas lag im lặng — capture 30fps ghi lặp khung (draw vượt ngân sách) (major)
+- **Bài học:** Guard `verify-perf.mjs` (command avg ≤20ms + interval p95 ≤33ms khi rAF quét toàn timeline + in worst frames kèm t) + bake tĩnh thành texture + cache strip theo tick + cache layout chữ + `alpha:false`; lưới e2e `clip-perf-guard.spec.ts` (negative control chạy thật + regression)
+- **Bug report:** .agent/bugs/2026-09-26-clip-lag-ve-qua-nang-capture-30fps-ghi-lap-khung/bug.md
+- **Cách phòng tránh:**
+  - Trước render (hoặc sau mỗi lần thêm hiệu ứng): chạy `node <clip>/verify-perf.mjs` — đỏ thì chưa được render/publish.
+  - Nguyên tắc vẽ: thứ KHÔNG đổi → bake texture; chuỗi lặp → cache strip theo tick; chữ tĩnh → cache layout (measureText 1 lần); nền đục → `alpha:false`; vòng lặp dài (progress) → track+fill+head.
+  - Gate phải khớp execution model thật: đo bằng avg + nhịp khung qua rAF, **không** lấy p95 vòng back-to-back làm ngưỡng; in worst frames để biết stall ở giây nào.
+  - Negative control bắt buộc cho guard mới (trang cố tình chậm phải fail) — KN-074.
+
 ## Anti-patterns (đừng lặp lại)
 
+- - ❌ Render clip realtime (canvas/MediaRecorder) mà không đo chi phí vẽ theo đúng execution model — vẽ lại gradient toàn màn hình + hàng trăm `fillText` mỗi khung → 30fps ghi lặp khung (đo: 22.9fps, interval p95 47.7ms, stall 1111ms), không throw, ảnh tĩnh không thấy; bake tĩnh thành texture + cache strip + gate avg/interval p95 khớp rAF (`verify-perf.mjs` + `clip-perf-guard.spec.ts` — negative control chạy thật) (KN-083 + KN-082 + KN-028).
 - - ❌ Chọn font cho asset render (canvas/clip) theo thói quen mà không đo coverage ngôn ngữ đích trên MÁY RENDER — Georgia thiếu glyph VN (ằ/ấ/ớ/ố) → vỡ dấu im lặng ("thô ng kê"), không throw, guard ảnh không tự bắt; đo bằng `references/font-test.mjs` trước khi build + blacklist scan `clip-font-guard.spec.ts` (KN-082 + KN-006 + KN-028).
 - - ❌ Tự động hoá "merge candidate" giữa các KN bằng similarity thuần (BM25 tên+tags) rồi gộp/xoá theo điểm — đo thật 14/09 (EvoLib adopt): cặp khác chủ đề vẫn 70–96 điểm (KN-054↔KN-037 86.6 · KN-040↔KN-030 96.1), không phân tách được khỏi cặp liên quan thật (KN-026↔KN-036 80.6) → không dùng làm căn cứ; consolidation giữ human-in-loop: dup-gate lúc nạp + 0-ref policy + git trace (KN-062 + KN-049 + KN-026; chi tiết `.agent/plans/evolib-adopt/proposal.md`).
 
 ## Nguồn
 
-- `docs/knowleged.md` — KN-001, KN-002, KN-003, KN-004, KN-006, KN-011, KN-017, KN-028, KN-029, KN-030, KN-031, KN-032, KN-038, KN-040, KN-042, KN-045, KN-046, KN-050, KN-055, KN-058, KN-073, KN-082
+- `docs/knowleged.md` — KN-001, KN-002, KN-003, KN-004, KN-006, KN-011, KN-017, KN-028, KN-029, KN-030, KN-031, KN-032, KN-038, KN-040, KN-042, KN-045, KN-046, KN-050, KN-055, KN-058, KN-073, KN-082, KN-083
 - Chi tiết đầy đủ: `references/evidence.md` (progressive disclosure)
 - Regenerate: `node .github/harness/scripts/distill-agnostic.mjs`

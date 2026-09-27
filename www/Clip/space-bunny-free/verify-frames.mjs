@@ -1,12 +1,12 @@
 // Guard: chụp từng beat ra PNG để tự kiểm layout trước khi render MP4.
-// Chạy: node www/space-bunny-free/verify-frames.mjs
+// Chạy: node www/Clip/space-bunny-free/verify-frames.mjs
 import { chromium } from 'playwright';
 import { mkdir, writeFile, readFile } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const here = path.dirname(fileURLToPath(import.meta.url));
-const outDir = path.resolve(here, '../../.agent/plans/space-bunny-tiktok/verify');
+const outDir = path.resolve(here, '../../../.agent/plans/space-bunny-tiktok/verify');
 const marks = [2, 8, 20, 33, 45];
 
 try {

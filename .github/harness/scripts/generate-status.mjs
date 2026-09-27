@@ -52,12 +52,21 @@ async function main() {
   } catch {}
 
   // demos: subdirs in www with index.html
+  // clips: www/Clip/<slug>/index.html — clip gom 1 thư mục (2026-09-27)
   let demos = [];
   try {
     const entries = await fs.readdir(WWW_DIR, { withFileTypes:true });
     for (const e of entries) if (e.isDirectory()) {
       const idx = path.join(WWW_DIR, e.name, 'index.html');
       if (existsSync(idx)) demos.push({ name: e.name, path: `${e.name}/index.html`, status: 'ok' });
+    }
+    const clipDir = path.join(WWW_DIR, 'Clip');
+    if (existsSync(clipDir)) {
+      const clips = await fs.readdir(clipDir, { withFileTypes:true });
+      for (const e of clips) if (e.isDirectory()) {
+        const idx = path.join(clipDir, e.name, 'index.html');
+        if (existsSync(idx)) demos.push({ name: e.name, path: `Clip/${e.name}/index.html`, status: 'ok', type: 'clip' });
+      }
     }
   } catch {}
 
@@ -316,7 +325,7 @@ async function main() {
     'yt-summary': { title: 'YT Summary', type: 'tiện ích' },
   };
   const pagesEntries = demos.map(d => {
-    const meta = pageMeta[d.name] || { title: d.name, type: 'demo' };
+    const meta = pageMeta[d.name] || { title: d.name, type: d.type || 'demo' };
     return { path: d.path, title: meta.title, type: meta.type };
   });
 

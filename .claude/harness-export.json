@@ -65,7 +65,7 @@
     },
     ".claude/skills/auto-researcher": {
       "dir": true,
-      "digest": "8a71ff51f2dd758ada2dd89245c8ee466dcbb3be74640df0f705c08d4047fdef"
+      "digest": "d5318b02162d216b609b3b1ddb930625e2d759e77830f2cd26e909e89095894e"
     },
     ".claude/skills/last30days": {
       "dir": true,
@@ -73,23 +73,23 @@
     },
     ".claude/skills/harness-build-config": {
       "dir": true,
-      "digest": "4bd1a4f462de5e92cff8fb50cf4304dc8481cf4a0967adce871e5e3f82a8090d"
+      "digest": "215941af12d0d537322cc0f70cbe5827345d0b69a74c7bef62cf2b9477c4e8ff"
     },
     ".claude/skills/harness-governance": {
       "dir": true,
-      "digest": "2e8c514fc97a5684b51a3935364b7083b3dfd821c6da7f810fd7769f96f164af"
+      "digest": "7f18bf8607ea23c7377a229a7934c0d8c47d5ec8821d94d0e6a6026d67ce4c4f"
     },
     ".claude/skills/harness-minimal": {
       "dir": true,
-      "digest": "6c485d622c5ef275feb851e3c67ee965855d3a7c6f380e88d6f55b0b3bfb4e75"
+      "digest": "434946e9dde0dd234ef3858f6ea94aa831032d3c32c3856034ff9a023769bad1"
     },
     ".claude/skills/harness-process": {
       "dir": true,
-      "digest": "e6ad4d2515758b75f501cf4a5967e07f9afa0781e426feb632e594d2fd89aad4"
+      "digest": "6bef890c555b470abbc4340bfca1e1ab320733cc12f59657bf94f248437e9522"
     },
     ".claude/skills/harness-web-ui": {
       "dir": true,
-      "digest": "dbc0b785415ec6aa01d4f8df60aa94dffac60bb8c3739e6975fed70edf861c6f"
+      "digest": "8c377d3af9c9e5544c91e02413f261190c593b03a045f05975c2638da50c7b0c"
     },
     ".claude/skills/cosmic-quantum": {
       "dir": true,
@@ -105,7 +105,7 @@
     },
     ".claude/skills/evals-gate": {
       "dir": true,
-      "digest": "9f7eacceaf52965700ea5f649ae3193e193f800fd77e33c90449159b956b9388"
+      "digest": "4fba915b777fbf39a4dd2cadbea6230ad710584988acdd0d2dd7c00aa77587d3"
     },
     ".claude/skills/ocr-review": {
       "dir": true,
@@ -113,7 +113,7 @@
     },
     ".claude/skills/video-clip": {
       "dir": true,
-      "digest": "06a5864180eac664bb19b4a59ee6cabd42c5c6079c4f5e1911dd845822aa939a"
+      "digest": "5561bb34c30298469b8bc081f177f53eed26d8de1d8a5f4463733754f21b1208"
     },
     ".claude/skills/clip-craft": {
       "dir": true,

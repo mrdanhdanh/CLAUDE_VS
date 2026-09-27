@@ -3,8 +3,8 @@
 Cài (đã làm):  python -m venv D:\\CLAUDE_VS\\.venv-tts
                 .venv-tts\\Scripts\\pip install vieneu
 Chạy:
-  D:\\CLAUDE_VS\\.venv-tts\\Scripts\\python.exe www\\space-bunny-free\\tts-vieneu.py --list
-  D:\\CLAUDE_VS\\.venv-tts\\Scripts\\python.exe www\\space-bunny-free\\tts-vieneu.py --voice "Hải Đăng" --text-file www\\space-bunny-free\\voiceover.txt --out www\\space-bunny-free\\voiceover.wav
+  D:\\CLAUDE_VS\\.venv-tts\\Scripts\\python.exe www\\Clip\\space-bunny-free\\tts-vieneu.py --list
+  D:\\CLAUDE_VS\\.venv-tts\\Scripts\\python.exe www\\Clip\\space-bunny-free\\tts-vieneu.py --voice "Hải Đăng" --text-file www\\Clip\\space-bunny-free\\voiceover.txt --out www\\Clip\\space-bunny-free\\voiceover.wav
 
 Ghi chú:
 - HF_HOME trỏ sang D: vì ổ C: gần đầy (model tải về nằm trên D:).

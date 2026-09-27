@@ -1,0 +1,49 @@
+{
+  "voice": "Hải Đăng",
+  "total": 42,
+  "note": "rev2 (27/09/2026) — sửa cảm giác 'lủng củng': đo bản cũ = 42% im lặng (voiced 29.1s/50s, 6 khoảng lặng ~2.2s giữa beat). Bản mới: các đoạn lời xếp LIÊN TỤC (gap 0.5s), tổng 42s. Beat hình suy từ mốc lời (visual lead 0.45s trước giọng). `end` = guard chống tràn (at + dur kỳ vọng + 0.4).",
+  "segments": [
+    {
+      "at": 0.4,
+      "end": 4.98,
+      "beat": "01 · hook",
+      "text": "Lửa từng biến con người thành khổng lồ. Giờ AI đang làm điều đó với trí óc của bạn."
+    },
+    {
+      "at": 5.3,
+      "end": 10.28,
+      "beat": "02 · cửa mở",
+      "text": "Việc trước kia cần cả một nhóm — giờ một người cũng làm được, không phải chờ ai. Cửa đang mở."
+    },
+    {
+      "at": 10.44,
+      "end": 16.06,
+      "beat": "03 · cửa hẹp lại",
+      "text": "Nhưng cửa sổ ấy hẹp lại nhanh lắm. Không phải ai hỏi AI giỏi — mà ai sắp việc quanh nó khéo hơn."
+    },
+    {
+      "at": 16.06,
+      "end": 21.76,
+      "beat": "04 · câu hỏi ngược",
+      "text": "Câu hỏi ngược lại: AI đang làm cho ta — hay ta đang dần làm cho nó? Nó không cần ý chí riêng."
+    },
+    {
+      "at": 21.68,
+      "end": 28.26,
+      "beat": "05 · không ai ra lệnh",
+      "text": "Ta dạy nó. Rồi quen dần với cách nó làm. Rồi sắp cả công việc quanh nó. Không ai ra lệnh cả — rất tự nhiên."
+    },
+    {
+      "at": 27.78,
+      "end": 34.52,
+      "beat": "06 · sức mạnh khuếch đại",
+      "text": "Sức mạnh không mang lại khôn ngoan. Nó khuếch đại cái đang có: thông minh, ngốc nghếch, hào phóng, tham lam. Người mạnh nhờ nó cũng vậy."
+    },
+    {
+      "at": 34.28,
+      "end": 40.62,
+      "beat": "07 · điều còn lại",
+      "text": "Việc còn lại của con người: chọn điều gì đáng để dồn sức. Thời của người khổng lồ — khổng lồ thế nào, là do bạn."
+    }
+  ]
+}

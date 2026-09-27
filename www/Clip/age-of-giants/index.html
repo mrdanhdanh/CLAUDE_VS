@@ -1,0 +1,700 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Thời của người khổng lồ — storyboard clip 42s</title>
+<style>
+  :root { color-scheme: dark; font-family: "Segoe UI", Arial, sans-serif; background:#04070d; color:#eef4ff; }
+  * { box-sizing: border-box; }
+  body { margin:0; min-height:100vh; display:grid; place-items:center; background:#04070d; }
+  .stage { width:min(100vw, 562.5px); aspect-ratio:9/16; position:relative; overflow:hidden; background:#04070d; }
+  canvas { display:block; width:100%; height:100%; }
+  .sr { position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap; }
+</style>
+</head>
+<body>
+  <main class="stage" aria-label="Storyboard clip 42 giây: bài The Age of Giants — AI khuếch đại sức mạnh của một người thành cả một đội, và câu hỏi ai đang phục vụ ai">
+    <canvas id="canvas" width="1080" height="1920" role="img" aria-label="Clip 7 phần: lửa từng biến con người thành khổng lồ; một người bằng cả một đội; cửa cơ hội hẹp lại; câu hỏi AI làm cho ta hay ta làm cho nó; không ai ra lệnh mà ta quen dần; sức mạnh khuếch đại cả tốt lẫn xấu; điều còn lại là lựa chọn của bạn"></canvas>
+    <h1 class="sr">Thời của người khổng lồ — từ bài "The Age of Giants" của Benoît Kulesza</h1>
+  </main>
+<script>
+(() => {
+  const canvas = document.querySelector('#canvas');
+  // alpha:false — canvas đục, rasterizer nhanh hơn (nền luôn được phủ kín mỗi khung).
+  const ctx = canvas.getContext('2d', { alpha: false });
+  const W = canvas.width;
+  const H = canvas.height;
+
+  // ── TOKENS ────────────────────────────────────────────────────────────────
+  // Một object DUY NHẤT. Thiếu key = ctx.fillStyle = undefined = KHÔNG throw,
+  // chữ giữ màu cũ ⇒ tàng hình. verify-frames.mjs quét đúng chỗ này.
+  const C = {
+    bg0: '#04070d', bg1: '#081120', panel: '#0d1830', panel2: '#122040',
+    line: '#24365c', ink: '#eef4ff', muted: '#93a7cc', dim: '#5f7396', white: '#ffffff',
+    cyan: '#4fe3e0', amber: '#ffc857', green: '#5dfc9b', red: '#ff5d73',
+    violet: '#b18cff', pink: '#ff9ecb'
+  };
+
+  // ── BEATS ─────────────────────────────────────────────────────────────────
+  // `at`/`end` khớp `segments` trong voiceover-segments.json (guard timing so 2 bên).
+  // rev2 (27/09): beat suy từ MỐC LỜI (gap 0.5s, tổng 42s — bản 50s cũ để 42% im lặng → lủng củng).
+  // scene() tự co giãn về khung gốc — không phải sửa số bên trong scene khi beat đổi độ dài.
+  const DURATION = 42;
+  const beats = [
+    { at: 0,     end: 4.85,  eyebrow: 'ĐỌC VỊ 27.09 · TỪ HACKERNOON',    size: 88, title: 'Lửa từng\nbiến ta thành\nkhổng lồ.', sub: 'Ý của bài: lửa tăng sức mạnh cơ bắp — AI tăng sức mạnh nhận thức.' },
+    { at: 4.85,  end: 9.99,  eyebrow: '01 · MỘT NGƯỜI BẰNG CẢ MỘT ĐỘI', size: 88, title: 'Một người\ngiờ bằng\ncả một đội.', sub: 'Tác giả gọi đây là thời của người khổng lồ.' },
+    { at: 9.99,  end: 15.61, eyebrow: '02 · CỬA SỔ ĐANG HẸP LẠI',       size: 88, title: 'Biết hỏi AI\nkhông còn là\nlợi thế.', sub: 'Điểm mấu chốt của bài: thiết kế lại cách làm việc quanh AI.' },
+    { at: 15.61, end: 21.23, eyebrow: '03 · CÂU HỎI NGƯỢC',             size: 80, title: 'AI làm cho ta —\nhay ta dần\nlàm cho nó?', sub: 'Tác giả: quan hệ đảo chiều — mà AI không cần "muốn" gì cả.' },
+    { at: 21.23, end: 27.33, eyebrow: '04 · KHÔNG AI RA LỆNH',          size: 84, title: 'Ta dạy nó.\nRồi nó dạy lại\ncách ta làm.', sub: 'Đảo chiều không cần ác ý hay ý chí — chỉ cần ta quen dần.' },
+    { at: 27.33, end: 33.83, eyebrow: '05 · SỨC MẠNH KHUẾCH ĐẠI',        size: 84, title: 'Sức mạnh\nkhông mang lại\nkhôn ngoan.', sub: 'Nên "giữ mình cho thẳng" khi đã mạnh — không chỉ là bài toán kỹ thuật.' },
+    { at: 33.83, end: 42.0,  eyebrow: '06 · ĐIỀU CÒN LẠI',               size: 84, title: 'Thời của\nngười khổng lồ —\ndo bạn chọn.', sub: 'Bạn đổi cách làm gì — vì AI? Kể 1 việc.' }
+  ];
+  const TONES = [C.amber, C.green, C.red, C.pink, C.violet, C.cyan, C.pink];
+
+  // ── SUBTITLE (burned-in) — ĐÚNG lời voiceover, đọc được khi tắt tiếng ─────
+  // rev2.1 (27/09): `at` khớp MỐC GIỌNG ĐO TỪ WAV (onset − 0.1s) — bản rev2 để sub
+  // câu 2 mỗi đoạn trễ 0.2–0.5s (sub #2 trễ 0.49s). Đo bằng RMS 10ms trên WAV 42s.
+  const SUBS = [
+    { at: 0.35,  end: 2.15, text: 'Lửa từng biến con người thành khổng lồ.', hi: ['Lửa'] },
+    { at: 2.20,  end: 4.63, text: 'Giờ AI đang làm điều đó với trí óc của bạn.', hi: ['trí óc của bạn'] },
+    { at: 5.25,  end: 6.81, text: 'Việc trước kia cần cả một nhóm —', hi: ['cả một nhóm'] },
+    { at: 6.86,  end: 9.93, text: 'giờ một người cũng làm được, không phải chờ ai. Cửa đang mở.', hi: ['Cửa đang mở'] },
+    { at: 10.39, end: 12.29, text: 'Nhưng cửa sổ ấy hẹp lại nhanh lắm.', hi: ['hẹp lại nhanh'] },
+    { at: 12.34, end: 15.66, text: 'Không phải ai hỏi AI giỏi — mà ai sắp việc quanh nó khéo hơn.', hi: ['sắp việc quanh nó'] },
+    { at: 16.01, end: 18.36, text: 'Câu hỏi ngược lại: AI đang làm cho ta —', hi: ['làm cho ta'] },
+    { at: 18.41, end: 21.21, text: 'hay ta đang dần làm cho nó? Nó không cần ý chí riêng.', hi: ['làm cho nó', 'ý chí riêng'] },
+    { at: 21.63, end: 24.30, text: 'Ta dạy nó. Rồi quen dần với cách nó làm.', hi: ['Ta dạy nó'] },
+    { at: 24.40, end: 27.60, text: 'Rồi sắp cả công việc quanh nó. Không ai ra lệnh cả — rất tự nhiên.', hi: ['Không ai ra lệnh'] },
+    { at: 27.73, end: 29.30, text: 'Sức mạnh không mang lại khôn ngoan.', hi: ['khôn ngoan'] },
+    { at: 29.35, end: 33.88, text: 'Nó khuếch đại cái đang có: thông minh, ngốc nghếch, hào phóng, tham lam. Người mạnh nhờ nó cũng vậy.', hi: ['khuếch đại', 'tham lam'] },
+    { at: 34.23, end: 37.40, text: 'Việc còn lại của con người: chọn điều gì đáng để dồn sức.', hi: ['dồn sức'] },
+    { at: 37.45, end: 40.27, text: 'Thời của người khổng lồ — khổng lồ thế nào, là do bạn.', hi: ['do bạn'] }
+  ];
+
+  // ── HELPERS ───────────────────────────────────────────────────────────────
+  const ease = t => t < .5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2;
+  const clamp = (v, a = 0, b = 1) => Math.max(a, Math.min(b, v));
+  const rv = (t, start, dur) => ease(clamp((t - start) / dur));       // reveal 0..1
+  const hexA = (hex, a) => hex + Math.round(clamp(a, 0, 1) * 255).toString(16).padStart(2, '0');
+  function beatAt(t) { return beats.findIndex(b => t >= b.at && t < b.end); }
+  function hash1(n) { const s = Math.sin(n * 127.1) * 43758.5453; return s - Math.floor(s); }
+  function mix2(h1, h2, k) {
+    const p = h => [parseInt(h.slice(1, 3), 16), parseInt(h.slice(3, 5), 16), parseInt(h.slice(5, 7), 16)];
+    const a = p(h1), b = p(h2), c = a.map((v, i) => Math.round(v + (b[i] - v) * clamp(k)));
+    return '#' + c.map(v => v.toString(16).padStart(2, '0')).join('');
+  }
+
+  function text(str, x, y, size, color, weight = 600, align = 'left', font = 'Arial') {
+    ctx.font = `${weight} ${size}px "${font}", "Segoe UI", sans-serif`;
+    ctx.fillStyle = color; ctx.textAlign = align; ctx.textBaseline = 'middle'; ctx.fillText(str, x, y);
+  }
+  // Đo + ngắt dòng 1 LẦN cho chuỗi tĩnh (cache) — không measureText mỗi khung.
+  function layoutLines(str, maxW, size, weight, font) {
+    ctx.font = `${weight} ${size}px "${font}", "Segoe UI", sans-serif`;
+    const lines = [];
+    for (const part of str.split('\n')) {
+      let lineText = '';
+      for (const word of part.split(' ')) {
+        const test = lineText ? `${lineText} ${word}` : word;
+        if (ctx.measureText(test).width > maxW && lineText) { lines.push(lineText); lineText = word; }
+        else lineText = test;
+      }
+      if (lineText) lines.push(lineText);
+    }
+    return lines;
+  }
+  function roundRect(x, y, w, h, r, fill, stroke, lw = 0) {
+    if (w <= 0 || h <= 0) return;
+    ctx.beginPath(); ctx.roundRect(x, y, w, h, r);
+    if (fill) { ctx.fillStyle = fill; ctx.fill(); }
+    if (stroke) { ctx.strokeStyle = stroke; ctx.lineWidth = lw || 3; ctx.stroke(); }
+  }
+  function chip(label, x, y, color, a = 1) {
+    ctx.save(); ctx.globalAlpha *= a;
+    ctx.font = '700 24px Consolas, monospace';
+    const w = ctx.measureText(label).width + 40;
+    roundRect(x, y, w, 48, 24, hexA(color, 0.12), hexA(color, 0.7), 2);
+    text(label, x + 20, y + 25, 24, color, 700, 'left', 'Consolas');
+    ctx.restore();
+    return w;
+  }
+  function chipC(label, cx, y, color, a = 1) {
+    ctx.font = '700 24px Consolas, monospace';
+    const w = ctx.measureText(label).width + 40;
+    chip(label, cx - w / 2, y, color, a);
+  }
+  function glow(img, x, y, w, a = 1) {
+    ctx.save(); ctx.globalAlpha *= a;
+    ctx.drawImage(img, x - w / 2, y - w / 2, w, w);
+    ctx.restore();
+  }
+
+  // ── BAKED TEXTURES — mọi gradient/thứ toàn màn hình vẽ 1 lần (KN-083) ────
+  const bgCache = document.createElement('canvas');
+  bgCache.width = W; bgCache.height = H;
+  {
+    const g = bgCache.getContext('2d');
+    g.fillStyle = C.bg0; g.fillRect(0, 0, W, H);
+    const rg = g.createRadialGradient(540, 560, 60, 540, 560, 900);
+    rg.addColorStop(0, 'rgba(79,227,224,0.05)');
+    rg.addColorStop(1, 'rgba(79,227,224,0)');
+    g.fillStyle = rg; g.fillRect(0, 0, W, H);
+    // ghost glyphs = path shape (KHÔNG dùng ký tự lạ — tránh thiếu glyph như KN-082)
+    g.save(); g.globalAlpha = 0.05; g.strokeStyle = C.amber; g.lineWidth = 9;
+    g.translate(150, 1640); g.rotate(-0.14);
+    g.beginPath(); g.moveTo(0, -130); g.lineTo(96, 0); g.lineTo(0, 130); g.lineTo(-96, 0); g.closePath(); g.stroke();
+    g.restore();
+    g.save(); g.globalAlpha = 0.04; g.strokeStyle = C.violet; g.lineWidth = 8;
+    g.translate(900, 220); g.rotate(0.1);
+    g.beginPath();
+    for (let i = 0; i < 6; i++) { const a = i * Math.PI / 3 - Math.PI / 2; const x = Math.cos(a) * 110, y = Math.sin(a) * 110; i ? g.lineTo(x, y) : g.moveTo(x, y); }
+    g.closePath(); g.stroke(); g.restore();
+  }
+  const fxCache = document.createElement('canvas');
+  fxCache.width = W; fxCache.height = H;
+  {
+    const g = fxCache.getContext('2d');
+    const vg = g.createRadialGradient(540, 960, 420, 540, 960, 1180);
+    vg.addColorStop(0, 'rgba(2,4,10,0)');
+    vg.addColorStop(1, 'rgba(2,4,10,0.55)');
+    g.fillStyle = vg; g.fillRect(0, 0, W, H);
+  }
+  const bandCache = document.createElement('canvas');
+  bandCache.width = W; bandCache.height = 284;
+  {
+    const g = bandCache.getContext('2d');
+    const bg = g.createLinearGradient(0, 2, 0, 282);
+    bg.addColorStop(0, 'rgba(79,227,224,0)');
+    bg.addColorStop(0.5, 'rgba(79,227,224,0.04)');
+    bg.addColorStop(1, 'rgba(79,227,224,0)');
+    g.fillStyle = bg; g.fillRect(0, 0, W, 284);
+  }
+  function makeGlow(hex, size = 256) {
+    const c = document.createElement('canvas'); c.width = c.height = size;
+    const g = c.getContext('2d');
+    const rg = g.createRadialGradient(size / 2, size / 2, 0, size / 2, size / 2, size / 2);
+    rg.addColorStop(0, hexA(hex, 0.8));
+    rg.addColorStop(0.45, hexA(hex, 0.24));
+    rg.addColorStop(1, hexA(hex, 0));
+    g.fillStyle = rg; g.fillRect(0, 0, size, size);
+    return c;
+  }
+  const GLOW = { amber: makeGlow(C.amber), cyan: makeGlow(C.cyan), green: makeGlow(C.green), pink: makeGlow(C.pink), violet: makeGlow(C.violet) };
+
+  // ── SILHOUETTE — 1 Path2D unit (feet=0, đầu ~-0.96) tái dùng mọi scene ────
+  const FIGURE = new Path2D();
+  FIGURE.moveTo(-0.055, -0.735);
+  FIGURE.lineTo(-0.17, -0.68);
+  FIGURE.quadraticCurveTo(-0.235, -0.62, -0.22, -0.38);
+  FIGURE.quadraticCurveTo(-0.19, -0.12, -0.14, -0.01);
+  FIGURE.lineTo(0.14, -0.01);
+  FIGURE.quadraticCurveTo(0.19, -0.12, 0.22, -0.38);
+  FIGURE.quadraticCurveTo(0.235, -0.62, 0.17, -0.68);
+  FIGURE.lineTo(0.055, -0.735);
+  FIGURE.lineTo(0.05, -0.76); FIGURE.lineTo(-0.05, -0.76);
+  FIGURE.closePath();
+  FIGURE.moveTo(0.115, -0.85);
+  FIGURE.arc(0, -0.85, 0.115, 0, Math.PI * 2);
+  function figure(x, y, h, fill, rim, rimA, a = 1) {
+    ctx.save(); ctx.globalAlpha *= a;
+    ctx.translate(x, y); ctx.scale(h, h);
+    ctx.fillStyle = fill; ctx.fill(FIGURE);
+    if (rimA > 0) { ctx.strokeStyle = hexA(rim, rimA); ctx.lineWidth = 3 / h; ctx.stroke(FIGURE); }
+    ctx.restore();
+  }
+
+  const BY0 = 320, BY1 = 740, CX = 495;   // hộp visual trong safe zone
+
+  // ── SCENE 0 · HOOK (0–4.85) — bóng người + lửa hình học → morph lưới nút ──
+  const SPARKS = Array.from({ length: 34 }, (_, i) => ({
+    x: CX + (hash1(i * 7.3) - 0.5) * 200,
+    sp: 0.30 + hash1(i * 3.1) * 0.45, ph: hash1(i * 11.7), r: 2 + hash1(i * 5.5) * 3.5
+  }));
+  const BURST = Array.from({ length: 12 }, (_, i) => {
+    const a = (i / 12) * Math.PI * 2;
+    return { dx: Math.cos(a), dy: Math.sin(a), sp: 90 + hash1(i * 9.1) * 120 };
+  });
+  const LATTICE = Array.from({ length: 8 }, (_, i) => {
+    const a = -2.55 + i * (2.0 / 7);
+    const r = 122 + (i % 2) * 34;
+    return { x: CX + Math.cos(a) * r, y: 430 + Math.sin(a) * r * 0.72 };
+  });
+  function flamePath(cx, baseY, s, wob) {
+    ctx.beginPath();
+    ctx.moveTo(cx - 66 * s, baseY);
+    ctx.quadraticCurveTo(cx - 78 * s, baseY - 92 * s, cx - 20 * s + wob, baseY - 152 * s);
+    ctx.quadraticCurveTo(cx - 34 * s, baseY - 96 * s, cx + 4 * s, baseY - 196 * s);
+    ctx.quadraticCurveTo(cx + 26 * s, baseY - 112 * s, cx + 54 * s, baseY - 74 * s);
+    ctx.quadraticCurveTo(cx + 70 * s, baseY - 30 * s, cx + 44 * s, baseY);
+    ctx.closePath();
+  }
+  function sceneFire(t) {
+    const grow = 0.94 + 0.06 * ease(clamp((t - 0.2) / 0.9));
+    const flare = Math.max(0, 1 - Math.abs(t - 2.8) / 0.35);       // interrupt 2.8s
+    const morph = ease(clamp((t - 5.0) / 1.3));                    // lửa → lưới
+    const fb = clamp((t - 2.8) / 0.7);
+
+    // lửa + sparks
+    if (morph < 0.99) {
+      const s = 0.8 * grow * (1 + 0.18 * flare);
+      glow(GLOW.amber, CX, 420, 430 + flare * 90, (0.34 + 0.3 * flare) * (1 - morph));
+      ctx.save(); ctx.globalAlpha *= (1 - morph);
+      const wob = Math.sin(t * 6.2) * 7;
+      ctx.fillStyle = hexA(C.amber, 0.16); flamePath(CX, 482, s * 1.16, wob); ctx.fill();
+      ctx.fillStyle = hexA(C.amber, 0.34); flamePath(CX, 480, s * 0.82, -wob * 0.7); ctx.fill();
+      ctx.fillStyle = hexA(C.amber, 0.72); flamePath(CX, 478, s * 0.46, wob * 0.5); ctx.fill();
+      ctx.restore();
+      for (let i = 0; i < SPARKS.length; i++) {
+        const k = SPARKS[i];
+        const cyc = ((t * k.sp + k.ph) % 1);
+        const sx = k.x + Math.sin(t * 1.7 + i) * 14;
+        const sy = 470 - cyc * 150;
+        if (sy < 330) continue;
+        ctx.globalAlpha = 0.5 * (1 - cyc) * (1 - morph);
+        ctx.fillStyle = i % 5 === 0 ? C.white : C.amber;
+        ctx.beginPath(); ctx.arc(sx, sy, k.r * (1 - cyc * 0.5), 0, 7); ctx.fill();
+      }
+      if (fb > 0 && fb < 1) {
+        for (const b of BURST) {
+          const px = CX + b.dx * b.sp * fb * 0.9, py = 420 + b.dy * b.sp * fb * 0.55 - fb * 40;
+          ctx.globalAlpha = (1 - fb) * 0.8 * (1 - morph); ctx.fillStyle = C.amber;
+          ctx.beginPath(); ctx.arc(px, py, 4 * (1 - fb) + 1, 0, 7); ctx.fill();
+        }
+      }
+      ctx.globalAlpha = 1;
+    }
+    // bóng người — nền tối + viền sáng (backlit bởi lửa)
+    figure(CX, 740, 285 * grow, '#050a16', C.amber, 0.30 + 0.25 * flare, 0.95);
+    // lưới nút (morph đích)
+    if (morph > 0.01) {
+      glow(GLOW.violet, CX, 430, 360, 0.22 * morph);
+      ctx.save(); ctx.globalAlpha *= morph;
+      ctx.strokeStyle = hexA(C.violet, 0.5); ctx.lineWidth = 2;
+      const show = Math.ceil(LATTICE.length * clamp((t - 5.4) / 0.9));
+      for (let i = 0; i < show; i++) {
+        for (const d of [1, 2]) {
+          const j = i + d; if (j >= show) continue;
+          ctx.beginPath(); ctx.moveTo(LATTICE[i].x, LATTICE[i].y); ctx.lineTo(LATTICE[j].x, LATTICE[j].y); ctx.stroke();
+        }
+      }
+      for (let i = 0; i < show; i++) {
+        const n = LATTICE[i], pulse = 1 + 0.2 * Math.sin(t * 4 + i);
+        ctx.fillStyle = C.violet;
+        ctx.beginPath(); ctx.arc(n.x, n.y, 7 * pulse, 0, 7); ctx.fill();
+      }
+      ctx.restore();
+    }
+  }
+
+  // ── SCENE 1 · ĐỘI (4.85–9.99) — người lớn dần + 6 khung việc + cửa sáng ───
+  const JOBS = [
+    ['viết', 90, 392], ['phân tích', 90, 484], ['code', 90, 576],
+    ['nghiên cứu', 710, 392], ['thiết kế', 710, 484], ['điều phối', 710, 576]
+  ];
+  function sceneGiant(t) {
+    const open = ease(clamp((t - 7.0) / 2.4)) * (t >= 9.4 ? 1.15 : 1);
+    const grow = ease(clamp((t - 7.2) / 2.2));
+    // cửa sáng + ánh hắt sàn
+    glow(GLOW.green, CX, 580, 460 * open, 0.22 * clamp(open));
+    ctx.save(); ctx.globalAlpha = clamp(open) * 0.5;
+    ctx.strokeStyle = C.green; ctx.lineWidth = 3;
+    ctx.beginPath(); ctx.ellipse(CX, 585, 130 + 30 * open, 195 + 40 * open, 0, 0, 7); ctx.stroke();
+    ctx.fillStyle = hexA(C.green, 0.06); ctx.fill();
+    ctx.restore();
+    glow(GLOW.green, CX, 728, 340, 0.14 * clamp(open));
+    // bóng người lớn dần
+    figure(CX, 740, 150 + 150 * grow, '#050a16', C.green, 0.4, 1);
+    // 6 khung việc — stagger, interrupt 9.4 bật sáng 4 khung cuối
+    for (let i = 0; i < JOBS.length; i++) {
+      const [label, x, y] = JOBS[i];
+      const a = rv(t, 7.4 + i * 0.3, 0.4);
+      if (a <= 0) continue;
+      const lit = t >= 9.4 && i >= 2;
+      ctx.save(); ctx.globalAlpha *= a; ctx.translate(0, (1 - a) * 16);
+      roundRect(x, y, 190, 68, 16, lit ? C.panel2 : C.panel, lit ? hexA(C.green, 0.75) : C.line, 2);
+      text(label, x + 95, y + 35, 24, lit ? C.ink : C.muted, 700, 'center', 'Consolas');
+      ctx.restore();
+    }
+  }
+
+  // ── SCENE 2 · CỬA HẸP (9.99–15.61) — tường đỏ khép, đám đông, 1 người qua ─
+  function sceneDoor(t) {
+    const p = ease(clamp((t - 13.0) / 2.5));
+    const snap = ease(clamp((t - 15.5) / 0.3));
+    const close = clamp(p * 0.78 + snap * 0.22);
+    const wallL = 90 + close * 250, wallR = 900 - 26 - close * 250;
+    const doorCx = (wallL + 26 + wallR) / 2;
+    // đám đông chờ (đồng dạng)
+    for (let i = 0; i < 6; i++) figure(172 + i * 130, 706, 86, '#060c18', C.muted, 0.35, 0.5);
+    // đường vẽ riêng + người hồng đi trước khi cửa khép
+    const walk = ease(clamp((t - 13.2) / 1.9));
+    ctx.save(); ctx.globalAlpha = 0.75;
+    ctx.strokeStyle = C.cyan; ctx.lineWidth = 3; ctx.setLineDash([12, 10]); ctx.lineDashOffset = -t * 40;
+    ctx.beginPath(); ctx.moveTo(200, 692); ctx.quadraticCurveTo(350, 634, 492, 664); ctx.stroke();
+    ctx.restore();
+    const wx = 200 + walk * 292, wy = 692 - (Math.sin(walk * Math.PI) * 50) + walk * -28 + walk * 0;
+    figure(wx, wy + 40, 96, '#0a0716', C.pink, 0.65, 1);
+    // tường đỏ + cửa (dải cyan = khe cửa đang hẹp lại)
+    glow(GLOW.cyan, doorCx, 515, Math.max(90, doorCx - wallL) * 1.6, 0.38);
+    ctx.save();
+    roundRect(doorCx - 2, 392, 4, 246, 2, hexA(C.cyan, 0.65));
+    roundRect(wallL, 380, 26, 270, 8, hexA(C.red, 0.8), hexA(C.red, 0.95), 2);
+    roundRect(wallR, 380, 26, 270, 8, hexA(C.red, 0.8), hexA(C.red, 0.95), 2);
+    roundRect(wallL - 12, 372, 50, 14, 5, hexA(C.red, 0.5));
+    roundRect(wallR - 12, 372, 50, 14, 5, hexA(C.red, 0.5));
+    ctx.restore();
+    // pulse đỏ khi snap
+    const pr = clamp((t - 15.5) / 0.5);
+    if (t >= 15.5 && pr < 1) {
+      ctx.save(); ctx.globalAlpha = (1 - pr) * 0.8;
+      ctx.strokeStyle = C.red; ctx.lineWidth = 5;
+      ctx.beginPath(); ctx.arc(doorCx, 515, 110 + pr * 90, 0, 7); ctx.stroke();
+      ctx.restore();
+    }
+    // nhãn trạng thái
+    if (t < 15.5) chipC('CƠ HỘI MỞ', CX, 336, C.cyan, 0.9);
+    else chipC('HẸP LẠI', CX, 336, C.red, (t % 0.6) < 0.4 ? 1 : 0.55);
+  }
+
+  // ── SCENE 3 · CÂU HỎI NGƯỢC (15.61–21.23) — 2 nút ⇄, mũi tên dày lên ──────
+  function sceneLoop(t) {
+    const prog = ease(clamp((t - 20.2) / 4.2));
+    const jump = Math.max(0, 1 - Math.abs(t - 23.2) / 0.35);       // interrupt 23.2s
+    const nAI = 54 + 10 * prog, nTA = 54 - 9 * prog;
+    const th = 5 + 14 * prog + 12 * jump;
+    const col = mix2(C.amber, C.red, prog * 1.15);
+    // nhỏ dần: bóng người
+    figure(CX, 706, 104 * (1 - 0.18 * prog), '#060c18', C.pink, 0.35, 0.42 * (1 - 0.5 * prog));
+    // mũi tên trên: ta dạy nó (ổn định)
+    ctx.save(); ctx.strokeStyle = hexA(C.violet, 0.85); ctx.lineWidth = 5; ctx.lineCap = 'round';
+    ctx.beginPath(); ctx.moveTo(304, 448); ctx.lineTo(676, 448); ctx.stroke();
+    ctx.fillStyle = hexA(C.violet, 0.85);
+    ctx.beginPath(); ctx.moveTo(686, 448); ctx.lineTo(660, 436); ctx.lineTo(660, 460); ctx.closePath(); ctx.fill();
+    ctx.restore();
+    text('ta dạy nó', CX, 405, 25, C.muted, 600, 'center');
+    // mũi tên dưới: dạy lại cách ta làm (dày lên + đổi màu)
+    ctx.save(); ctx.strokeStyle = hexA(col, 0.9); ctx.lineWidth = th; ctx.lineCap = 'round';
+    ctx.beginPath(); ctx.moveTo(676, 556); ctx.lineTo(314, 556); ctx.stroke();
+    ctx.fillStyle = hexA(col, 0.9);
+    ctx.beginPath(); ctx.moveTo(300, 556); ctx.lineTo(330, 556 - th * 0.9); ctx.lineTo(330, 556 + th * 0.9); ctx.closePath(); ctx.fill();
+    ctx.restore();
+    const la = rv(t, 21.5, 0.4);
+    if (la > 0) text('dạy lại cách ta làm', CX, 604, 25, mix2(C.muted, col, 0.6), 600, 'center');
+    // 2 nút
+    ctx.save();
+    roundRect(250 - nTA, 500 - nTA, nTA * 2, nTA * 2, nTA, C.bg1, hexA(C.pink, 0.85), 3);
+    text('TA', 250, 500, 38, C.pink, 800, 'center', 'Consolas');
+    roundRect(740 - nAI, 500 - nAI, nAI * 2, nAI * 2, nAI, C.bg1, hexA(C.violet, 0.85), 3);
+    text('AI', 740, 500, 38, C.violet, 800, 'center', 'Consolas');
+    if (jump > 0.02) { ctx.globalAlpha = jump * 0.9; ctx.strokeStyle = C.red; ctx.lineWidth = 5; ctx.beginPath(); ctx.arc(740, 500, nAI + 16, 0, 7); ctx.stroke(); }
+    ctx.restore();
+    text('người', 250, 588, 22, C.muted, 600, 'center');
+    text('máy', 740, 588, 22, C.muted, 600, 'center');
+  }
+
+  // ── SCENE 4 · LƯỚI UỐN (21.23–27.33) — lưới thẳng cong dần vào khuôn tròn ───
+  const GN = 12;
+  const GPOINTS = [];
+  for (let j = 0; j <= GN; j++) for (let i = 0; i <= GN; i++) GPOINTS.push([90 + i * (810 / GN), 340 + j * (360 / GN)]);
+  function sceneGrid(t) {
+    const prog = ease(clamp((t - 27.2) / 3.0));
+    const snap = ease(clamp((t - 30.6) / 0.35));                  // interrupt 30.6s
+    const k = Math.min(1, prog * 0.82 + snap * 0.18);
+    const c = { x: CX, y: 520 }, R = 170;
+    // Lens warp: bán kính biến đổi theo hàm mũ — lưới GIỮ cấu trúc (không dồn hết
+    // về chu vi), nhưng cong dần quanh khuôn tròn. k=0 → đẳng thức; k=1 → lưới bị uốn.
+    const dp = (x, y) => {
+      const dx = x - c.x, dy = y - c.y, d = Math.hypot(dx, dy) || 1;
+      const nd = R * Math.pow(d / R, 1 - 0.38 * k);
+      return [c.x + dx / d * nd, c.y + dy / d * nd];
+    };
+    ctx.save();
+    ctx.strokeStyle = hexA(C.dim, 0.42); ctx.lineWidth = 1.5;
+    for (let j = 0; j <= GN; j++) {
+      ctx.beginPath();
+      for (let i = 0; i <= GN; i++) { const [x, y] = dp(90 + i * (810 / GN), 340 + j * (360 / GN)); i ? ctx.lineTo(x, y) : ctx.moveTo(x, y); }
+      ctx.stroke();
+    }
+    for (let i = 0; i <= GN; i++) {
+      ctx.beginPath();
+      for (let j = 0; j <= GN; j++) { const [x, y] = dp(90 + i * (810 / GN), 340 + j * (360 / GN)); j ? ctx.lineTo(x, y) : ctx.moveTo(x, y); }
+      ctx.stroke();
+    }
+    // khuôn tròn do "AI" vẽ
+    ctx.strokeStyle = hexA(C.violet, 0.15 + 0.4 * prog); ctx.lineWidth = 3;
+    ctx.setLineDash([14, 11]); ctx.lineDashOffset = -t * 34;
+    ctx.beginPath(); ctx.arc(c.x, c.y, R, 0, 7); ctx.stroke();
+    ctx.setLineDash([]);
+    // con trỏ người đi theo lưới đã cong
+    const u = ((t - 26.6) * 0.42) % 1;
+    const j8 = 8;
+    const seg = Math.min(GN - 0.001, u * GN), i0 = Math.floor(seg);
+    const [x0, y0] = dp(90 + i0 * (810 / GN), 340 + j8 * (360 / GN));
+    const [x1, y1] = dp(90 + (i0 + 1) * (810 / GN), 340 + j8 * (360 / GN));
+    const fr = seg - i0, px = x0 + (x1 - x0) * fr, py = y0 + (y1 - y0) * fr;
+    glow(GLOW.pink, px, py, 92, 0.5);
+    ctx.fillStyle = C.pink; ctx.beginPath(); ctx.arc(px, py, 9, 0, 7); ctx.fill();
+    ctx.restore();
+    chip('KHÔNG AI RA LỆNH', 90, 336, C.pink, 0.95);
+  }
+
+  // ── SCENE 5 · KHUẾCH ĐẠI (27.33–33.83) — nguồn sáng + 2 cột cùng cao lên ──
+  function sceneAmp(t) {
+    const prog = ease(clamp((t - 34.8) / 3.2));
+    const shake = Math.max(0, 1 - (t - 38.3) / 0.6);               // interrupt 38.3s
+    // nguồn sáng + tia
+    const pulse = 1 + 0.07 * Math.sin(t * 3.1);
+    glow(GLOW.cyan, CX, 520, 330 * pulse, 0.5);
+    ctx.save();
+    ctx.translate(CX, 520);
+    for (let k2 = 0; k2 < 12; k2++) {
+      const ang = k2 * Math.PI / 6 + t * 0.05;
+      const r1 = 62, r2 = 320 + 30 * Math.sin(t * 2 + k2);
+      ctx.fillStyle = hexA(C.cyan, 0.05);
+      ctx.beginPath(); ctx.moveTo(0, 0);
+      ctx.lineTo(Math.cos(ang - 0.02) * r2, Math.sin(ang - 0.02) * r2);
+      ctx.lineTo(Math.cos(ang + 0.02) * r2, Math.sin(ang + 0.02) * r2);
+      ctx.closePath(); ctx.fill();
+      ctx.strokeStyle = hexA(C.cyan, 0.16); ctx.lineWidth = 2;
+      ctx.beginPath(); ctx.moveTo(Math.cos(ang) * r1, Math.sin(ang) * r1); ctx.lineTo(Math.cos(ang) * r2, Math.sin(ang) * r2); ctx.stroke();
+    }
+    ctx.restore();
+    ctx.fillStyle = C.white; ctx.beginPath(); ctx.arc(CX, 520, 20 * pulse, 0, 7); ctx.fill();
+    ctx.strokeStyle = hexA(C.cyan, 0.8); ctx.lineWidth = 3;
+    ctx.beginPath(); ctx.arc(CX, 520, 36 * pulse, 0, 7); ctx.stroke();
+    // 2 cột đối xứng — cùng cao lên (khuếch đại như nhau)
+    const barH = 320 * prog;
+    const jx = shake * 4 * Math.sin(t * 40);
+    roundRect(236 + jx, 700 - barH, 96, barH, 14, hexA(C.green, 0.2), hexA(C.green, 0.7), 2);
+    roundRect(658 + jx, 700 - barH, 96, barH, 14, hexA(C.red, 0.2), hexA(C.red, 0.7), 2);
+    text('hào phóng · thông minh', 284, 348, 22, C.green, 700, 'center', 'Consolas');
+    text('tham lam · ngốc nghếch', 706, 348, 22, C.red, 700, 'center', 'Consolas');
+    text('một nguồn — khuếch đại mọi thứ đang có', CX, 664, 22, C.muted, 600, 'center');
+    if (shake > 0.01) { ctx.fillStyle = hexA(C.white, 0.05 * shake); ctx.fillRect(0, 0, W, H); }
+  }
+
+  // ── SCENE 6 · LỰA CHỌN + END CARD (33.83–42) — 2 con đường, quote, loop ────
+  const sampleQuad = (x0, y0, cx2, cy2, x1, y1, n, wob) => {
+    const pts = [];
+    for (let i = 0; i <= n; i++) {
+      const u = i / n, mu = 1 - u;
+      const x = mu * mu * x0 + 2 * mu * u * cx2 + u * u * x1;
+      const y = mu * mu * y0 + 2 * mu * u * cy2 + u * u * y1;
+      pts.push([x + (wob ? Math.sin(i * 0.62) * wob : 0), y]);
+    }
+    return pts;
+  };
+  const PATH_L = sampleQuad(495, 662, 380, 560, 300, 382, 20, 0);
+  const PATH_R = sampleQuad(495, 662, 620, 548, 700, 382, 20, 11);
+  function drawSlice(pts, frac, color, lw, a) {
+    const n = Math.max(1, Math.ceil(pts.length * clamp(frac)));
+    ctx.save(); ctx.globalAlpha *= a;
+    ctx.strokeStyle = color; ctx.lineWidth = lw; ctx.lineCap = 'round'; ctx.lineJoin = 'round';
+    ctx.beginPath();
+    for (let i = 0; i < n; i++) { i ? ctx.lineTo(pts[i][0], pts[i][1]) : ctx.moveTo(pts[i][0], pts[i][1]); }
+    ctx.stroke();
+    const e = pts[n - 1];
+    ctx.fillStyle = color; ctx.beginPath(); ctx.arc(e[0], e[1], lw * 1.1, 0, 7); ctx.fill();
+    ctx.restore();
+  }
+  function sceneChoice(t) {
+    const cardA = ease(clamp((t - 45.5) / 0.5));
+    const visA = 1 - cardA;
+    if (visA > 0.01) {
+      ctx.save(); ctx.globalAlpha *= visA;
+      const prog = ease(clamp((t - 42.6) / 2.4));
+      const pick = ease(clamp((t - 44.3) / 0.5));                 // chọn đường pink
+      figure(CX, 706, 150, '#0a0716', C.amber, 0.5, 1);
+      drawSlice(PATH_L, prog, hexA(C.violet, 0.6), 5, 1);
+      drawSlice(PATH_R, Math.min(1, prog * 1.15), pick > 0.5 ? C.pink : hexA(C.pink, 0.6), 5 + 2 * pick, 1);
+      if (pick > 0.5) glow(GLOW.pink, 700, 382, 150, 0.4);
+      chipC('đường AI vẽ sẵn', 300, 336, C.violet, rv(t, 43.2, 0.4));
+      chipC('đường bạn tự vẽ', 700, 336, C.pink, rv(t, 44.6, 0.4));
+      ctx.restore();
+    }
+    if (cardA > 0.01) {
+      ctx.save(); ctx.globalAlpha *= cardA;
+      roundRect(110, 344, 770, 336, 26, 'rgba(13,24,48,0.65)', C.line, 2);
+      const Q = ['"Thiên niên kỷ thứ ba', 'sẽ là tâm linh — hoặc', 'sẽ không là gì cả."'];
+      Q.forEach((line, i) => {
+        const a = rv(t, 45.7 + i * 0.25, 0.4);
+        if (a > 0) text(line, CX, 388 + i * 46, 44, C.ink, 600, 'center', 'Segoe UI');
+      });
+      ctx.globalAlpha *= rv(t, 46.4, 0.4);
+      roundRect(345, 532, 300, 2, 1, hexA(C.amber, 0.6));
+      text('— André Malraux (câu được trích phổ biến)', CX, 568, 24, C.muted, 500, 'center', 'Segoe UI');
+      text('Ý tưởng: Benoît Kulesza · HackerNoon 27.09.2026 · quan điểm cá nhân', CX, 606, 22, C.dim, 600, 'center', 'Consolas');
+      ctx.restore();
+    }
+    // đốm lửa nhỏ tái xuất — loop về beat 1
+    const ember = rv(t, 48.7, 0.4);
+    if (ember > 0.01) {
+      glow(GLOW.amber, CX, 700, 120, 0.5 * ember);
+      ctx.fillStyle = hexA(C.amber, ember); ctx.beginPath(); ctx.arc(CX, 700, 9, 0, 7); ctx.fill();
+    }
+  }
+
+  // ── TITLE BLOCK — layout chữ cache 1 lần / beat (KN-083) ─────────────────
+  function ensureTitle(b) {
+    if (b._L) return;
+    const size = b.size || 84;
+    b._L = layoutLines(b.title, 810, size, 800, 'Arial');
+    b._sL = layoutLines(b.sub, 810, 30, 500, 'Segoe UI');
+  }
+  function drawTitle(t, b, idx, env) {
+    ensureTitle(b);
+    const size = b.size || 84;
+    const entry = idx === 0 ? 1 : rv(t, b.at - 0.05, 0.45);
+    ctx.save(); ctx.globalAlpha *= env;
+    ctx.save(); ctx.translate(0, (1 - entry) * 24);
+    b._L.forEach((line, i) => text(line, 90, 800 + i * size * 1.06, size, C.ink, 800));
+    ctx.restore();
+    roundRect(90, 250, 22, 6, 3, TONES[idx]);
+    text(b.eyebrow, 124, 260, 26, TONES[idx], 700, 'left', 'Consolas');
+    b._sL.forEach((line, i) => text(line, 90, 1100 + i * 33.6, 30, C.muted, 500));
+    ctx.restore();
+  }
+
+  // ── SUBTITLE burned-in — ngắt dòng + gộp run màu cache 1 lần / cửa sổ ───
+  function prepSub(s) {
+    if (s._lines) return;
+    ctx.font = '700 44px "Segoe UI", sans-serif';
+    const spaceW = ctx.measureText(' ').width;
+    const words = s.text.split(' ');
+    const raw = []; let cur = [], curW = 0;
+    for (const w of words) {
+      const wW = ctx.measureText(w).width;
+      const add = cur.length ? spaceW + wW : wW;
+      if (cur.length && curW + add > 786) { raw.push(cur); cur = [w]; curW = wW; }
+      else { cur.push(w); curW += add; }
+    }
+    if (cur.length) raw.push(cur);
+    const joined = s.text.toLowerCase();
+    const mark = new Array(words.length).fill(false);
+    for (const ph of s.hi || []) {
+      const p2 = ph.toLowerCase(); let from = 0;
+      while (true) {
+        const at = joined.indexOf(p2, from);
+        if (at < 0) break;
+        let pos = 0;
+        words.forEach((w, wi) => { const st = pos, en = pos + w.length; if (en > at && st < at + p2.length) mark[wi] = true; pos = en + 1; });
+        from = at + 1;
+      }
+    }
+    let wi = 0;
+    s._lines = raw.map((line) => {
+      const runs = [];
+      for (const w of line) {
+        const hi = mark[wi++];
+        const last = runs[runs.length - 1];
+        if (last && last.hi === hi) last.text += ' ' + w;
+        else runs.push({ hi, text: w, w: 0 });
+      }
+      runs.forEach(r2 => { r2.w = ctx.measureText(r2.text).width; });
+      const total = runs.reduce((a, r2) => a + r2.w, 0) + (runs.length - 1) * spaceW;
+      return { runs, total };
+    });
+    s._space = spaceW;
+    s._h = s._lines.length * 58 + 36;
+    s._top = 1420 - s._h;
+  }
+  function drawSubs(t) {
+    const s = SUBS.find(x => t >= x.at && t < x.end);
+    if (!s) return;
+    prepSub(s);
+    const a = ease(clamp((t - s.at) / 0.25)) * (1 - ease(clamp((t - (s.end - 0.2)) / 0.2)));
+    if (a <= 0.01) return;
+    const idx = Math.max(0, beatAt(s.at + 0.01));
+    ctx.save(); ctx.globalAlpha *= a;
+    roundRect(90, s._top, 810, s._h, 22, 'rgba(4,7,13,0.82)', C.line, 2);
+    ctx.font = '700 44px "Segoe UI", sans-serif';
+    ctx.textAlign = 'left'; ctx.textBaseline = 'middle';
+    s._lines.forEach((line, li) => {
+      let x = 495 - line.total / 2;
+      const y = s._top + 44 + li * 58;
+      for (const r2 of line.runs) {
+        ctx.fillStyle = r2.hi ? TONES[idx] : C.ink;
+        ctx.fillText(r2.text, x, y);
+        x += r2.w + s._space;
+      }
+    });
+    ctx.restore();
+  }
+
+  // ── HUD + progress + footer (hộp an toàn ≤1660) ──────────────────────────
+  function drawHud(t) {
+    const on = (t % 1.2) < 0.75;
+    ctx.globalAlpha = on ? 1 : 0.25;
+    ctx.fillStyle = C.red; ctx.beginPath(); ctx.arc(100, 62, 11, 0, 7); ctx.fill();
+    ctx.globalAlpha = 1;
+    text('REC', 122, 62, 26, C.red, 700, 'left', 'Consolas');
+    text('ĐỌC VỊ · AOG', 192, 62, 24, C.muted, 600, 'left', 'Consolas');
+    text(`T+${String(Math.floor(t)).padStart(2, '0')}s`, 900, 62, 24, C.cyan, 700, 'right', 'Consolas');
+    // progress: vạch giây động theo DURATION + vạch beat + fill
+    const TICKS = Math.round(DURATION);
+    for (let s = 0; s <= TICKS; s++) {
+      const x = 90 + (s / TICKS) * 810;
+      roundRect(x - 1, 1478, 2, s % 10 === 0 ? 13 : 8, 1, hexA(C.muted, s % 10 === 0 ? 0.55 : 0.28));
+    }
+    for (let i = 0; i < beats.length; i++) {
+      const x = 90 + (beats[i].at / DURATION) * 810;
+      roundRect(x - 1, 1474, 2, 21, 1, hexA(TONES[i], 0.85));
+    }
+    roundRect(90, 1498, 810, 8, 4, C.line);
+    const p = clamp(t / DURATION);
+    roundRect(90, 1498, 810 * p, 8, 4, C.violet);
+    const hx = 90 + 810 * p;
+    if (t > 0.05) {
+      roundRect(hx - 7, 1493, 14, 18, 4, hexA(C.green, 0.28));
+      roundRect(hx - 3, 1493, 6, 18, 3, C.green);
+    }
+    text('HACKERNOON · 27.09.2026 · QUAN ĐIỂM', 90, 1560, 22, C.muted, 600, 'left', 'Consolas');
+    text('CLIP · YUNIE', 900, 1560, 22, C.violet, 700, 'right', 'Consolas');
+  }
+  function overlays(t) {
+    const by = ((t * 130) % (H + 600)) - 300;
+    ctx.drawImage(bandCache, 0, Math.round(by - 142));
+    ctx.drawImage(fxCache, 0, 0);
+  }
+
+  // ── DRAW — mọi thứ suy từ `t`, KHÔNG state tích lũy (guard chụp giây bất kỳ) ─
+  function draw(rawT) {
+    const t = Math.min(Math.max(rawT, 0), DURATION - 0.001);
+    const idx = Math.max(0, beatAt(t));
+    const b = beats[idx];
+    ctx.drawImage(bgCache, 0, 0);
+    // Beat 0 KHÔNG fade-in (t=0 phải là cover hoàn chỉnh), chỉ fade khi thoát beat.
+    const env = idx === 0
+      ? (1 - ease(clamp((t - (b.end - 0.25)) / 0.5)))
+      : ease(clamp((t - (b.at - 0.3)) / 0.55)) * (1 - ease(clamp((t - (b.end - 0.25)) / 0.5)));
+    ctx.save(); ctx.globalAlpha *= env;
+    // Scene nhận thời gian CO GIÃN về khung gốc của nó — choreography bên trong giữ nguyên
+    // (đã tune theo khung cũ), beat dài/ngắn bao nhiêu cũng khớp, KHÔNG phải sửa số trong scene (rev2).
+    // u = oldAt + (t − newAt) × scale → map sang đúng timeline cũ (oldAt, oldLen đi kèm nhau).
+    const sc = (i, oldAt, oldLen) => oldAt + (t - beats[i].at) * (oldLen / (beats[i].end - beats[i].at));
+    if (idx === 0) sceneFire(sc(0, 0, 6.5));
+    else if (idx === 1) sceneGiant(sc(1, 6.5, 6.0));
+    else if (idx === 2) sceneDoor(sc(2, 12.5, 7.0));
+    else if (idx === 3) sceneLoop(sc(3, 19.5, 7.0));
+    else if (idx === 4) sceneGrid(sc(4, 26.5, 7.5));
+    else if (idx === 5) sceneAmp(sc(5, 34.0, 8.0));
+    else sceneChoice(sc(6, 42.0, 8.0));
+    ctx.restore();
+    drawTitle(t, b, idx, env);
+    overlays(t);
+    drawHud(t);
+    drawSubs(t);
+  }
+
+  window.__clip = { duration: DURATION, width: W, height: H, draw, beats, subs: SUBS, freeze: false };
+  const start = performance.now();
+  function frame(now) {
+    if (!window.__clip.freeze) draw((now - start) / 1000);
+    requestAnimationFrame(frame);
+  }
+  requestAnimationFrame(frame);
+})();
+</script>
+</body>
+</html>

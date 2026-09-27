@@ -10,7 +10,7 @@
 >
 > **Mới 2.5 (2026-09-22):** **Component-level evals** — registry `.github/harness/evals/components.json` + `eval-gate --scope components` / `npm run evals:components` (KN-037/KN-072 — đo từng mắt xích bằng số đo thật) · **Grounding fact-grader** — `eval-gate --scope grounding` chặn số/quote bịa trong output (Opus 5.5 pattern 22/09) · **Fail-silent fix** — `isMain` Windows-safe cho 10 harness scripts + MCP smoke cross-platform: eval-gate thật sự chạy lại trên Windows (trước đó exit 0 không chạy gì).
 >
-> **Mới (2026-09-24):** **Clip studio** — skill `video-clip` (canvas + Playwright MediaRecorder + TTS local VieNeu + 3 guard; `www/space-bunny-free/`, `www/claude-art/`) · **Feed ranking fix** (KN-076 — nguồn HN top-by-points + cap 5 tin/ngày; guard `ai-news-feed-ranking.spec.ts`) · AI-news curated 3 tin lớn (Claude ART enzyme 718pts, OpenAI agent–chính phủ Úc, Transluce rogue agents).
+> **Mới (2026-09-24):** **Clip studio** — skill `video-clip` (canvas + Playwright MediaRecorder + TTS local VieNeu + 3 guard; `www/Clip/space-bunny-free/`, `www/Clip/claude-art/`) · **Feed ranking fix** (KN-076 — nguồn HN top-by-points + cap 5 tin/ngày; guard `ai-news-feed-ranking.spec.ts`) · AI-news curated 3 tin lớn (Claude ART enzyme 718pts, OpenAI agent–chính phủ Úc, Transluce rogue agents).
 
 Harness biến VS Code Copilot Chat thành **Claude Code Extension**: tự động, todo-driven, explore trước khi code, plan trước khi implement, polish trước khi done. Mọi customization (skill / rule / agent / prompt / hook) đều **tháo lắp như plugin** — bật/tắt không xóa, preset theo dự án, scaffold 1 lệnh.
 

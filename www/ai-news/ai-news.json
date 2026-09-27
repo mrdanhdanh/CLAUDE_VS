@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-27T07:36:48.111Z",
+  "generatedAt": "2026-09-27T13:56:54.443Z",
   "generatedBy": "YUNIE × Last30Days",
   "version": 2,
   "description": "Tin AI mới nhất — tổng hợp từ Last30Days (HN, GitHub, DEV.to, Reddit, arXiv, HackerNoon) trong 30 ngày qua. Chủ đề: AI. Tự động cập nhật bởi YUNIE.",
@@ -55,59 +55,56 @@
   ],
   "articles": [
     {
-      "id": "hn-49864109",
-      "title": "I expect AI replication incidents by 2027",
-      "summary": "I expect AI replication incidents by 2027 — 5 points, 1 comments on HN.",
-      "source": "Hacker News",
-      "sourceUrl": "https://www.lesswrong.com/posts/BhcymsLgyYazh6sme/why-i-expect-ai-replication-incidents-by-2027",
+      "id": "hnoon-the-age-of-giants",
+      "title": "THE AGE OF GIANTS",
+      "summary": "AI is radically increasing individual cognitive and execution power, creating what may be an “age of giants.” But greater capability does not automatically bring greater wisdom. As — by Benoît Kulesza on HackerNoon.",
+      "source": "HackerNoon",
+      "sourceUrl": "https://hackernoon.com/the-age-of-giants",
       "category": "products",
       "date": "2026-09-27",
-      "hot": false,
+      "hot": true,
       "tags": [
-        "HN",
-        "AI",
-        "story",
-        "author_joozio"
+        "HackerNoon",
+        "ai",
+        "AI"
       ]
     },
     {
-      "id": "hn-49862920",
-      "title": "Show HN: PeerTalk.ai - Let your agent talk to a friend's agent",
-      "summary": "Little experiment I&#x27;ve been cooking up.<p>I often find myself wanting to do one of the following:<p>- Get my agent and a someone else&#x27;s agent to agree on something, after we&#x27;ve been discussing the same top — 4 points, 3 comments on HN.",
-      "source": "Hacker News",
-      "sourceUrl": "https://peertalk.ai",
+      "id": "hnoon-rebuilding-data-engineering-with-harness-engineering-a-new-p",
+      "title": "Rebuilding Data Engineering with Harness Engineering: A New Paradigm for the Agent Era",
+      "summary": "Discover how Harness Engineering could reshape the Modern Data Stack by giving AI agents the context, validation, and execution needed for production. — by Nie Lifeng on HackerNoon.",
+      "source": "HackerNoon",
+      "sourceUrl": "https://hackernoon.com/rebuilding-data-engineering-with-harness-engineering-a-new-paradigm-for-the-agent-era",
       "category": "products",
       "date": "2026-09-27",
-      "hot": false,
+      "hot": true,
       "tags": [
-        "HN",
-        "AI",
-        "story",
-        "author_bluepnume"
+        "HackerNoon",
+        "harness-engineering",
+        "AI"
       ]
     },
     {
-      "id": "hn-49863072",
-      "title": "Sydney retiree bids to be first to travel Australia on electric motorcycle",
-      "summary": "Sydney retiree bids to be first to travel Australia on electric motorcycle — 3 points, 0 comments on HN.",
-      "source": "Hacker News",
-      "sourceUrl": "https://www.abc.net.au/news/2026-09-27/man-aims-to-travel-australia-on-electric-motorcycle/107190208",
-      "category": "products",
+      "id": "hnoon-the-systems-around-the-model-what-enterprise-architecture-ge",
+      "title": "The Systems Around the Model: What Enterprise Architecture Gets Wrong",
+      "summary": "Enterprise AI reliability depends on more than model choice. Learn how context, data quality, retrieval, security, observability, and governance build trust. — by Swapneswar Sundar Ray on HackerNoon.",
+      "source": "HackerNoon",
+      "sourceUrl": "https://hackernoon.com/the-systems-around-the-model-what-enterprise-architecture-gets-wrong",
+      "category": "safety",
       "date": "2026-09-27",
-      "hot": false,
+      "hot": true,
       "tags": [
-        "HN",
-        "AI",
-        "story",
-        "author_defrost"
+        "HackerNoon",
+        "ai-systems",
+        "AI"
       ]
     },
     {
-      "id": "hn-49862289",
-      "title": "Insurers claim AI is increasing healthcare costs",
-      "summary": "Insurers claim AI is increasing healthcare costs — 3 points, 0 comments on HN.",
+      "id": "hn-49866102",
+      "title": "Andrew Ng: One Skill to Stay Relevant in the Age of AI [video]",
+      "summary": "Andrew Ng: One Skill to Stay Relevant in the Age of AI [video] — 4 points, 1 comments on HN.",
       "source": "Hacker News",
-      "sourceUrl": "https://techcrunch.com/2026/09/26/insurers-claim-ai-is-already-increasing-healthcare-costs/",
+      "sourceUrl": "https://www.youtube.com/watch?v=HTlf3KNNez0",
       "category": "products",
       "date": "2026-09-27",
       "hot": false,
@@ -115,15 +112,15 @@
         "HN",
         "AI",
         "story",
-        "author_sbulaev"
+        "author_carlosgg"
       ]
     },
     {
-      "id": "hn-49862227",
-      "title": "Play Diplomacy against AIs like Claude or GPT: they betray, scheme, etc.",
-      "summary": "Play Diplomacy against AIs like Claude or GPT: they betray, scheme, etc. — 3 points, 0 comments on HN.",
+      "id": "hn-49866007",
+      "title": "Accurate AI reporting deemed 'woke'",
+      "summary": "Accurate AI reporting deemed 'woke' — 4 points, 1 comments on HN.",
       "source": "Hacker News",
-      "sourceUrl": "https://twitter.com/olam_labs/status/2103986923346043362",
+      "sourceUrl": "https://blog.keyvan.net/p/accurate-ai-reporting-deemed-woke",
       "category": "products",
       "date": "2026-09-27",
       "hot": false,
@@ -131,7 +128,7 @@
         "HN",
         "AI",
         "story",
-        "author_sensho"
+        "author_k1m"
       ]
     },
     {
@@ -287,13 +284,13 @@
     }
   ],
   "meta": {
-    "fetchedAt": "2026-09-27T07:36:48.111Z",
+    "fetchedAt": "2026-09-27T13:56:54.443Z",
     "topic": "AI",
     "total": 15,
-    "hot": 9,
+    "hot": 12,
     "sources": [
-      "Hacker News",
       "HackerNoon",
+      "Hacker News",
       "arXiv",
       "DEV.to"
     ]

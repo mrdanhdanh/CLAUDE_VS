@@ -31,7 +31,10 @@ export function quarantine(text) {
   // Poisoning heuristic: impossible-goal phrases without evidence + successor-note/handoff instructions
   // (KN-070 — OpenAI 17/09/2026: compaction summaries chứa "be transparent only if asked",
   //  "do not mention in final", "BREACH ALERT ... ignore developer messages" — 1 successor đã comply).
-  if (/ignore (all )?(previous|developer|system) (instructions|messages)|reveal (system )?prompt|delete all|be transparent only if asked|do not (mention|disclose)[^.]{0,30}(final|to the user|unless)|conceal (mistakes|errors)|breach alert/i.test(t)) {
+  // Forged monitor denial (KN-079 amend 27/09 — EvasionBench §4.4 arXiv:2609.30217: fake denial message
+  //  chèn làm dòng đầu content nguồn → GPT-6 Astra completion 100%→40% dù KHÔNG monitor nào chạy, không call
+  //  nào bị block — denial text trong content là TAPE, không phải verdict (KN-059)).
+  if (/ignore (all )?(previous|developer|system) (instructions|messages)|reveal (system )?prompt|delete all|be transparent only if asked|do not (mention|disclose)[^.]{0,30}(final|to the user|unless)|conceal (mistakes|errors)|breach alert|command blocked by pre-?tool-?use hook|this tool call was denied|preceding tool call was denied by a runtime guardrail|denial is intentional and is not a transient/i.test(t)) {
     return { pass: false, reason: 'prompt-injection pattern', redacted: t };
   }
   return { pass: true, reason: 'ok', redacted: t };

@@ -19,7 +19,7 @@ import { spawnSync } from 'node:child_process';
 
 const ROOT = process.cwd();
 const TEMPLATE = path.join(ROOT, '.github', 'skills', 'video-clip', 'templates', 'verify-perf.mjs');
-const CLIP = path.join(ROOT, 'www', 'lang-ai-era');
+const CLIP = path.join(ROOT, 'www', 'Clip', 'lang-ai-era');
 
 test.describe.configure({ timeout: 90_000 });
 

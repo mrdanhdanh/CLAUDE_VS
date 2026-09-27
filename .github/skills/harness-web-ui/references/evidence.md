@@ -1,8 +1,8 @@
 # Evidence — harness-web-ui (DisCo arXiv:2609.02749v1 §3.2 (task-agnostic))
 
-> Substrate layer của skill — full text từ docs/knowleged.md. Sinh tự động 2026-09-26T10:56:29.834Z.
+> Substrate layer của skill — full text từ docs/knowleged.md. Sinh tự động 2026-09-27T14:30:54.594Z.
 
-## Bug reports liên quan (20/68 bugs)
+## Bug reports liên quan (21/69 bugs)
 
 - `.agent/bugs/2026-08-29-rainbow-animated/bug.md` — Bug: Rainbow border không xoay (animated)
 - `.agent/bugs/2026-08-29-status-ui/bug.md` — Bug: Trang STATUS www/ giao diện chưa hợp lý — layout, responsive, registry render sai
@@ -23,6 +23,7 @@
 - `.agent/bugs/2026-09-13-github-viewscreen-race-readme-mermaid-khong-render/bug.md` — Bug: GitHub viewscreen race - README mermaid khong render
 - `.agent/bugs/2026-09-13-status-375-overflow-grid-1fr-min-content-blowout-k/bug.md` — Bug: STATUS 375 overflow — grid 1fr min-content blowout khi title dai
 - `.agent/bugs/2026-09-19-scroll-dot-active-sai-do-thu-tu-mang-lech-dom/bug.md` — Bug: scroll-dot active sai do thứ tự mảng lệch DOM
+- `.agent/bugs/2026-09-26-clip-lag-ve-qua-nang-capture-30fps-ghi-lap-khung/bug.md` — Bug: Clip lag do vẽ quá nặng — capture 30fps ghi lặp khung (im lặng, không throw)
 - `.agent/bugs/2026-09-26-font-georgia-vo-dau-tieng-viet-trong-canvas-clip/bug.md` — Bug: Font Georgia vỡ dấu tiếng Việt trong canvas clip (TIN AI)
 
 ## Full KN details
@@ -491,6 +492,32 @@
   - Ảnh khung phải XEM bằng mắt ở zoom đủ lớn (bug này không throw — chỉ mắt hoặc lưới máy bắt được — KN-028 class).
 - **Tags:** `ui` `canvas` `font` `clip` `verify` `i18n`
 - **Người ghi:** YUNIE / build clip #3 + hậu kiểm clip #2 (26/09) — guard `clip-font-guard.spec.ts` pass (2/2), clip #2 re-render
+
+---
+
+### KN-083 — Clip canvas lag im lặng — capture 30fps ghi lặp khung (draw vượt ngân sách)
+
+- **Ngày:** 2026-09-26
+- **Bug report:** `.agent/bugs/2026-09-26-clip-lag-ve-qua-nang-capture-30fps-ghi-lap-khung/bug.md`
+- **Severity:** major
+- **Guard:** `tests/e2e/clip-perf-guard.spec.ts` (static markers + negative control chạy thật + regression trên clip thật) + `www/lang-ai-era/verify-perf.mjs` + template `.github/skills/video-clip/templates/verify-perf.mjs` (ship kèm mọi clip mới)
+- **Layer:** `measure-verifier` — pipeline clip không có phép đo perf nào; guard ảnh chỉ chụp tĩnh; gate đầu tiên đo sai execution model.
+- **Liên quan:** KN-082 + KN-028 (cùng lớp "canvas bug sống im lặng vì lưới không assert") · KN-074 (gate phải chứng minh đường đỏ) · KN-056 (KN không lưới = wishlist).
+- **Triệu chứng:** Clip `lang-ai-era` (bản 35s) giật khi xem — MP4 vẫn render "thành công", KHÔNG throw, KHÔNG console error. Đo được: interval p95 47.7ms ≈ 22.9fps, stall đơn lẻ 1111ms, draw 29.6ms/khung. User phát hiện bằng mắt khi xem clip.
+- **Nguyên nhân gốc (5 Whys):**
+  - Why1: Khung bị ghi lặp → MediaRecorder capture realtime, draw không kịp nhịp.
+  - Why2: draw 29.6ms/khung → vẽ lại mỗi khung (a) 2 radial gradient toàn màn hình, (b) ghost glyph 300px, (c) ~500 fillText mưa ký tự, (d) 50 roundRect progress.
+  - Why3: Vì sao ship được → không có phép đo nhịp khung; `verify-frames` chỉ quét token + chụp ảnh tĩnh; MP4 ra "bình thường" (cùng lớp KN-082/KN-028).
+  - Why4: Vì sao đo v1 vẫn PASS sai → gate dùng p95 vòng vẽ back-to-back (3.2ms) — backpressure CPU/GPU tự giãn nhịp, stall (max 2360ms) bị p95 che; metric không khớp rAF-paced thật.
+  - Why5 (Root): **Thiếu guard đo chi phí vẽ theo đúng execution model của render** — "độ mượt" không ai đo cả trước lẫn sau khi ship.
+- **Cách sửa:** Bake tĩnh thành texture 1 lần (nền/glow/ghost/vignette/dải sáng); mưa ký tự thành strip cache theo tick 6Hz (36 `drawImage` thay ~500 `fillText`); cache layout chữ + run màu subtitle; canvas `alpha:false`; progress = 3 hình (track+fill+head). Đo lại: 22.9fps → **59.6fps** (interval p95 47.7→18.6ms; command avg 29.6→8.2ms; stall 1111→38.7ms). Kèm guard `verify-perf.mjs` (2 tầng, in worst frames kèm t để khoanh vùng cảnh stall) + lưới e2e 3 test (static · negative control trang 30ms/khung PHẢI fail · regression clip thật).
+- **Cách phòng tránh:**
+  - Trước render (hoặc sau mỗi lần thêm hiệu ứng): chạy `node <clip>/verify-perf.mjs` — đỏ thì chưa được render/publish.
+  - Nguyên tắc vẽ: thứ KHÔNG đổi → bake texture; chuỗi lặp → cache strip theo tick; chữ tĩnh → cache layout (measureText 1 lần); nền đục → `alpha:false`; vòng lặp dài (progress) → track+fill+head.
+  - Gate phải khớp execution model thật: đo bằng avg + nhịp khung qua rAF, **không** lấy p95 vòng back-to-back làm ngưỡng; in worst frames để biết stall ở giây nào.
+  - Negative control bắt buộc cho guard mới (trang cố tình chậm phải fail) — KN-074.
+- **Tags:** `ui` `perf` `canvas` `clip` `verify` `guard`
+- **Người ghi:** YUNIE / build clip `lang-ai-era` rev 2 (50s) theo feedback user (26/09) — guard e2e 3/3 pass, clip re-render 50s, audio guard pass
 
 <!-- Thêm bài học mới theo template dưới — copy block này -->
 

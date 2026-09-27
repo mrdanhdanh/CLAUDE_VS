@@ -43,7 +43,7 @@ window.__clip = {
 |---|---|---|---|
 | 1 | **Research** | `.agent/plans/<slug>/research.md` — evidence ledger, label A/B/C/D | 15–30 phút |
 | 2 | **Script + beats** | `prd.md` (rubric C1–Cn) · `design.md` (tokens, beats) · `plan.md` | 20–30 phút |
-| 3 | **Canvas page** | `www/<slug>/index.html` — contract ở trên | 1–2 giờ |
+| 3 | **Canvas page** | `www/Clip/<slug>/index.html` — contract ở trên | 1–2 giờ |
 | 4 | **Layout guard** | `verify-frames.mjs` → N ảnh PNG từng beat | 5 phút |
 | 5 | **Voiceover** | `tts-vieneu.py --segments` → WAV khớp beat | 20–40 phút (CPU) |
 | 6 | **Render** | `render.mjs --voice-wav` → MP4 | ~1 phút |
@@ -54,15 +54,15 @@ window.__clip = {
 ## Scaffold clip mới (3 lệnh)
 
 ```powershell
-# 1. Tạo thư mục + copy template
-New-Item -ItemType Directory -Force www\<slug> | Out-Null
-Copy-Item .github\skills\video-clip\templates\* www\<slug>\ -Force
+# 1. Tạo thư mục + copy template (clips gom trong www\Clip\ — 2026-09-27)
+New-Item -ItemType Directory -Force www\Clip\<slug> | Out-Null
+Copy-Item .github\skills\video-clip\templates\* www\Clip\<slug>\ -Force
 
-# 2. Sửa nội dung: www\<slug>\index.html (beats + draw) và voiceover-segments.json
+# 2. Sửa nội dung: www\Clip\<slug>\index.html (beats + draw) và voiceover-segments.json
 
 # 3. Sinh voice → render (guard tự chạy)
-D:\CLAUDE_VS\.venv-tts\Scripts\python.exe www\<slug>\tts-vieneu.py --segments www\<slug>\voiceover-segments.json --out www\<slug>\voiceover-<voice>-<N>s.wav
-node www\<slug>\render.mjs --voice-wav=www\<slug>\voiceover-<voice>-<N>s.wav --out=www\<slug>\<slug>-<N>s.mp4
+D:\CLAUDE_VS\.venv-tts\Scripts\python.exe www\Clip\<slug>\tts-vieneu.py --segments www\Clip\<slug>\voiceover-segments.json --out www\Clip\<slug>\voiceover-<voice>-<N>s.wav
+node www\Clip\<slug>\render.mjs --voice-wav=www\Clip\<slug>\voiceover-<voice>-<N>s.wav --out=www\Clip\<slug>\<slug>-<N>s.mp4
 ```
 
 ## 4 Guard — BẮT BUỘC, không được tắt
@@ -99,7 +99,7 @@ node www\<slug>\render.mjs --voice-wav=www\<slug>\voiceover-<voice>-<N>s.wav --o
 
 ```powershell
 $env:HF_HOME='D:\hf-cache'; $env:PYTHONIOENCODING='utf-8'
-D:\CLAUDE_VS\.venv-tts\Scripts\python.exe www\<slug>\tts-vieneu.py --list                    # 25 giọng
+D:\CLAUDE_VS\.venv-tts\Scripts\python.exe www\Clip\<slug>\tts-vieneu.py --list                    # 25 giọng
 # ... --voice "Hải Đăng" --text-file voiceover.txt --out voiceover.wav                       # 1 giọng, cả bài
 # ... --voice "Hải Đăng,Mai Anh" --text-file ... --out voiceover.wav                          # so sánh nhiều giọng
 # ... --segments voiceover-segments.json --out voiceover-hai-dang-50s.wav                     # ghép theo beat (KHUYÊN DÙNG)
@@ -111,7 +111,7 @@ Cài lần đầu: `python -m venv D:\CLAUDE_VS\.venv-tts` → `.venv-tts\Script
 ## Kiểm tra độ dài trước khi render
 
 ```powershell
-node www\<slug>\verify-audio.mjs www\<slug>\voiceover-<voice>-<N>s.wav   # duration phải ≈ duration clip
+node www\Clip\<slug>\verify-audio.mjs www\Clip\<slug>\voiceover-<voice>-<N>s.wav   # duration phải ≈ duration clip
 ```
 
 Voiceover **ngắn hơn** clip = an toàn (im lặng ở đuôi). **Dài hơn** = bị cắt cụt giữa câu → sửa lời hoặc tăng duration.
@@ -132,7 +132,7 @@ Voiceover **ngắn hơn** clip = an toàn (im lặng ở đuôi). **Dài hơn** 
 
 - Craft layer: skill `clip-craft` (safe zone 2026 · màu semantic · hook/retention/script math) + agent `clip-director`
 - Ý tưởng nâng cấp đã audit: `.agent/plans/clip-craft/upgrade-ideas.md`
-- Reference implementation: `www/space-bunny-free/` (clip 50 s, 5 beat, Hải Đăng)
+- Reference implementation: `www/Clip/space-bunny-free/` (clip 50 s, 5 beat, Hải Đăng)
 - Plans + research: `.agent/plans/space-bunny-tiktok/` (research.md, prd.md, design.md, plan.md, publish.md)
 - TTS: [`pnnbao97/VieNeu-TTS`](https://github.com/pnnbao97/VieNeu-TTS) (Apache-2.0) · dự phòng `edge-tts` (cần mạng)
 - B-roll AI: `references/ai-broll-sources.md` — chọn tool · free tier · pattern segment 2–10s + ghép (run 26/09/2026)

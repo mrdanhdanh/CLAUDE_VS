@@ -1,9 +1,9 @@
 // Guard + chẩn đoán âm thanh cho clip: file MP4 có track audio và có TIẾNG thật không?
 // Dùng:
-//   node www/space-bunny-free/verify-audio.mjs             # kiểm file MP4 mặc định
-//   node www/space-bunny-free/verify-audio.mjs <file>      # kiểm file khác
-//   node www/space-bunny-free/verify-audio.mjs --codecs    # thêm: codec MediaRecorder hỗ trợ
-//   node www/space-bunny-free/verify-audio.mjs --diagnose  # thêm: đo pipeline file:// + media element y như render
+//   node www/Clip/space-bunny-free/verify-audio.mjs             # kiểm file MP4 mặc định
+//   node www/Clip/space-bunny-free/verify-audio.mjs <file>      # kiểm file khác
+//   node www/Clip/space-bunny-free/verify-audio.mjs --codecs    # thêm: codec MediaRecorder hỗ trợ
+//   node www/Clip/space-bunny-free/verify-audio.mjs --diagnose  # thêm: đo pipeline file:// + media element y như render
 import { chromium } from 'playwright';
 import { readFile } from 'node:fs/promises';
 import path from 'node:path';

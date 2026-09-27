@@ -1,0 +1,49 @@
+{
+  "voice": "Hải Đăng",
+  "total": 50,
+  "note": "NHÁP — 7 đoạn khớp 7 beat trong index.html. `at` = mốc beat + 0.4s, `end` = hết beat (guard chống tràn của tts-vieneu.py). Tổng ~157 âm tiết — trần lý thuyết ~174 cho cả clip. Muốn sửa lời thì đếm lại âm tiết, KHÔNG vượt trần. (Rev 2: trim 03 + 05 vì guard bắt tràn 19.64s > 19.5s)",
+  "segments": [
+    {
+      "at": 0.4,
+      "end": 6.5,
+      "beat": "01 · hook",
+      "text": "Cú lỗi nguy hiểm nhất không phải AI viết sai — mà là nó chạy sai, ngay trong production."
+    },
+    {
+      "at": 6.9,
+      "end": 13,
+      "beat": "02 · người dùng đổi",
+      "text": "Người dùng mới của data platform không còn là con người — mà là agent."
+    },
+    {
+      "at": 13.4,
+      "end": 19.5,
+      "beat": "03 · khan hiếm đổi",
+      "text": "AI viết SQL, DAG, config gần như miễn phí. Thứ khan hiếm đổi: context, kiểm chứng, trách nhiệm."
+    },
+    {
+      "at": 19.9,
+      "end": 27,
+      "beat": "04 · bẫy đúng nghiệp vụ",
+      "text": "SQL chạy được chưa chắc đúng nghiệp vụ. Doanh thu: tiền đơn, ghi nhận, hay tiền thật thu? Chỉ context doanh nghiệp trả lời được."
+    },
+    {
+      "at": 27.4,
+      "end": 34.5,
+      "beat": "05 · năm tầng",
+      "text": "Xếp lại năm tầng: ý định, điều khiển, ngữ nghĩa, harness, runtime. Agent không gọi thẳng công cụ — mọi thứ qua harness."
+    },
+    {
+      "at": 34.9,
+      "end": 42,
+      "beat": "06 · cổng + rủi ro",
+      "text": "Người không duyệt từng bước — chỉ chặn ở mức rủi ro cao. Người định goal — agent thực thi — harness kiểm soát."
+    },
+    {
+      "at": 42.4,
+      "end": 50,
+      "beat": "07 · đổi vai + loop",
+      "text": "Kỹ sư dữ liệu không mất việc — chỉ đổi vai: thiết kế context, skill, policy. Còn cú lỗi im lặng kia — chỉ harness chặn được."
+    }
+  ]
+}

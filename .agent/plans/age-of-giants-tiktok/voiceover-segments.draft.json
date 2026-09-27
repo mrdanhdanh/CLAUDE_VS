@@ -1,0 +1,49 @@
+{
+  "voice": "Hải Đăng",
+  "total": 50,
+  "note": "BẢN NHÁP (draft) — 7 đoạn khớp 7 beat trong design.md §1. `at` = mốc beat + 0.4s, `end` = hết beat (guard chống tràn của tts-vieneu.py). Tổng 163 âm tiết — mỗi đoạn margin ≥12% theo công thức 4.2 âm tiết/giây (chi tiết: design.md §2). Muốn sửa lời thì đếm lại âm tiết, KHÔNG vượt trần lý thuyết 174 cho cả clip.",
+  "segments": [
+    {
+      "at": 0.4,
+      "end": 6.5,
+      "beat": "01 · hook",
+      "text": "Lửa từng biến con người thành khổng lồ. Giờ AI đang làm điều đó với trí óc của bạn."
+    },
+    {
+      "at": 6.9,
+      "end": 12.5,
+      "beat": "02 · cửa mở",
+      "text": "Việc trước kia cần cả một nhóm — giờ một người cũng làm được, không phải chờ ai. Cửa đang mở."
+    },
+    {
+      "at": 12.9,
+      "end": 19.5,
+      "beat": "03 · cửa hẹp lại",
+      "text": "Nhưng cửa sổ ấy hẹp lại nhanh lắm. Không phải ai hỏi AI giỏi — mà ai sắp việc quanh nó khéo hơn."
+    },
+    {
+      "at": 19.9,
+      "end": 26.5,
+      "beat": "04 · câu hỏi ngược",
+      "text": "Câu hỏi ngược lại: AI đang làm cho ta — hay ta đang dần làm cho nó? Nó không cần ý chí riêng."
+    },
+    {
+      "at": 26.9,
+      "end": 34,
+      "beat": "05 · không ai ra lệnh",
+      "text": "Ta dạy nó. Rồi quen dần với cách nó làm. Rồi sắp cả công việc quanh nó. Không ai ra lệnh cả — rất tự nhiên."
+    },
+    {
+      "at": 34.4,
+      "end": 42,
+      "beat": "06 · sức mạnh khuếch đại",
+      "text": "Sức mạnh không mang lại khôn ngoan. Nó khuếch đại cái đang có: thông minh, ngốc nghếch, hào phóng, tham lam. Người mạnh nhờ nó cũng vậy."
+    },
+    {
+      "at": 42.4,
+      "end": 50,
+      "beat": "07 · điều còn lại",
+      "text": "Việc còn lại của con người: chọn điều gì đáng để dồn sức. Thời của người khổng lồ — khổng lồ thế nào, là do bạn."
+    }
+  ]
+}

@@ -1,10 +1,10 @@
 {
-  "generatedAt": "2026-09-27T13:22:17.670Z",
+  "generatedAt": "2026-09-27T14:43:14.616Z",
   "generatedBy": "entangle.mjs --graph",
   "scanned": {
-    "files": 1775,
-    "edges": 2071,
-    "commits": 267
+    "files": 1800,
+    "edges": 2058,
+    "commits": 269
   },
   "thresholds": {
     "hubMinRefs": 10,
@@ -17,11 +17,11 @@
     },
     {
       "file": "www/status.json",
-      "refs": 75
+      "refs": 74
     },
     {
       "file": "www/index.html",
-      "refs": 64
+      "refs": 63
     },
     {
       "file": "www/cosmos/index.html",
@@ -80,15 +80,15 @@
       "refs": 17
     },
     {
-      "file": "tests/e2e/guard-redteam.spec.ts",
-      "refs": 16
-    },
-    {
       "file": "docs/capabilities.md",
       "refs": 15
     },
     {
       "file": "docs/harness-2.1-upgrade.md",
+      "refs": 15
+    },
+    {
+      "file": "tests/e2e/guard-redteam.spec.ts",
       "refs": 15
     }
   ],
@@ -851,28 +851,8 @@
       "docs/knowleged.md"
     ],
     [
-      ".agent/bugs/2026-09-23-clip-im-tieng-du-co-audio-track/bug.md",
-      "www/space-bunny-free/render.mjs"
-    ],
-    [
-      ".agent/bugs/2026-09-23-clip-im-tieng-du-co-audio-track/bug.md",
-      "www/space-bunny-free/verify-audio.mjs"
-    ],
-    [
       ".agent/bugs/2026-09-23-mau-thieu-lam-chu-tang-hinh/bug.md",
       "docs/knowleged.md"
-    ],
-    [
-      ".agent/bugs/2026-09-23-mau-thieu-lam-chu-tang-hinh/bug.md",
-      "www/space-bunny-free/index.html"
-    ],
-    [
-      ".agent/bugs/2026-09-23-mau-thieu-lam-chu-tang-hinh/bug.md",
-      "www/space-bunny-free/render.mjs"
-    ],
-    [
-      ".agent/bugs/2026-09-23-mau-thieu-lam-chu-tang-hinh/bug.md",
-      "www/space-bunny-free/verify-frames.mjs"
     ],
     [
       ".agent/bugs/2026-09-23-p0-detection-egress-slop-gate-regression/bug.md",
@@ -905,10 +885,6 @@
     [
       ".agent/bugs/2026-09-23-space-bunny-mo-ta-sai/bug.md",
       "docs/knowleged.md"
-    ],
-    [
-      ".agent/bugs/2026-09-23-space-bunny-mo-ta-sai/bug.md",
-      "www/space-bunny-free/index.html"
     ],
     [
       ".agent/bugs/2026-09-24-ai-news-lot-tin-lon-do-recency-only-ranking/bug.md",
@@ -963,18 +939,6 @@
       "docs/knowleged.md"
     ],
     [
-      ".agent/bugs/2026-09-26-clip-jargon-noi-bo-khong-hieu/bug.md",
-      "www/openai-hf-hack/index.html"
-    ],
-    [
-      ".agent/bugs/2026-09-26-clip-jargon-noi-bo-khong-hieu/bug.md",
-      "www/openai-hf-hack/openai-hf-hack-30s.mp4"
-    ],
-    [
-      ".agent/bugs/2026-09-26-clip-jargon-noi-bo-khong-hieu/bug.md",
-      "www/openai-hf-hack/voiceover-segments.json"
-    ],
-    [
       ".agent/bugs/2026-09-26-clip-lag-ve-qua-nang-capture-30fps-ghi-lap-khung/bug.md",
       "docs/knowleged.md"
     ],
@@ -983,36 +947,12 @@
       "tests/e2e/clip-perf-guard.spec.ts"
     ],
     [
-      ".agent/bugs/2026-09-26-clip-lag-ve-qua-nang-capture-30fps-ghi-lap-khung/bug.md",
-      "www/lang-ai-era/index.html"
-    ],
-    [
-      ".agent/bugs/2026-09-26-clip-lag-ve-qua-nang-capture-30fps-ghi-lap-khung/bug.md",
-      "www/lang-ai-era/verify-perf.mjs"
-    ],
-    [
       ".agent/bugs/2026-09-26-font-georgia-vo-dau-tieng-viet-trong-canvas-clip/bug.md",
       "docs/knowleged.md"
     ],
     [
       ".agent/bugs/2026-09-26-font-georgia-vo-dau-tieng-viet-trong-canvas-clip/bug.md",
       "tests/e2e/clip-font-guard.spec.ts"
-    ],
-    [
-      ".agent/bugs/2026-09-26-font-georgia-vo-dau-tieng-viet-trong-canvas-clip/bug.md",
-      "www/agent-vuot-rao/index.html"
-    ],
-    [
-      ".agent/bugs/2026-09-26-font-georgia-vo-dau-tieng-viet-trong-canvas-clip/bug.md",
-      "www/agent-vuot-rao/verify/frame-09s.png"
-    ],
-    [
-      ".agent/bugs/2026-09-26-font-georgia-vo-dau-tieng-viet-trong-canvas-clip/bug.md",
-      "www/rogue-agent/index.html"
-    ],
-    [
-      ".agent/bugs/2026-09-26-font-georgia-vo-dau-tieng-viet-trong-canvas-clip/bug.md",
-      "www/rogue-agent/verify/frame-08s.png"
     ],
     [
       ".agent/bugs/README.md",
@@ -1099,12 +1039,52 @@
       "www/library/export.json"
     ],
     [
-      ".agent/plans/agent-vuot-rao-tiktok/plan.md",
-      ".agent/plans/agent-vuot-rao-tiktok/publish.md"
+      ".agent/plans/age-of-giants-tiktok/design.md",
+      ".agent/plans/age-of-giants-tiktok/voiceover-segments.draft.json"
+    ],
+    [
+      ".agent/plans/age-of-giants-tiktok/plan.md",
+      ".agent/plans/age-of-giants-tiktok/design.md"
+    ],
+    [
+      ".agent/plans/age-of-giants-tiktok/plan.md",
+      ".agent/plans/age-of-giants-tiktok/prd.md"
+    ],
+    [
+      ".agent/plans/age-of-giants-tiktok/plan.md",
+      ".agent/plans/age-of-giants-tiktok/publish.md"
+    ],
+    [
+      ".agent/plans/age-of-giants-tiktok/plan.md",
+      ".agent/plans/age-of-giants-tiktok/voiceover-segments.draft.json"
+    ],
+    [
+      ".agent/plans/age-of-giants-tiktok/plan.md",
+      "www/Clip/age-of-giants/age-of-giants-50s.mp4"
+    ],
+    [
+      ".agent/plans/age-of-giants-tiktok/plan.md",
+      "www/Clip/age-of-giants/index.html"
+    ],
+    [
+      ".agent/plans/age-of-giants-tiktok/plan.md",
+      "www/Clip/age-of-giants/voiceover-segments.json"
+    ],
+    [
+      ".agent/plans/age-of-giants-tiktok/plan.md",
+      "www/Clip/lang-ai-era/index.html"
+    ],
+    [
+      ".agent/plans/age-of-giants-tiktok/prd.md",
+      ".agent/plans/age-of-giants-tiktok/design.md"
+    ],
+    [
+      ".agent/plans/age-of-giants-tiktok/publish.md",
+      "www/Clip/age-of-giants/age-of-giants-50s.mp4"
     ],
     [
       ".agent/plans/agent-vuot-rao-tiktok/plan.md",
-      "www/agent-vuot-rao/agent-vuot-rao-48s.mp4"
+      ".agent/plans/agent-vuot-rao-tiktok/publish.md"
     ],
     [
       ".agent/plans/agent-vuot-rao-tiktok/publish.md",
@@ -1113,14 +1093,6 @@
     [
       ".agent/plans/agent-vuot-rao-tiktok/publish.md",
       "tests/e2e/clip-font-guard.spec.ts"
-    ],
-    [
-      ".agent/plans/agent-vuot-rao-tiktok/publish.md",
-      "www/agent-vuot-rao/agent-vuot-rao-48s.mp4"
-    ],
-    [
-      ".agent/plans/agent-vuot-rao-tiktok/publish.md",
-      "www/agent-vuot-rao/verify/frame-03s.png"
     ],
     [
       ".agent/plans/agent-vuot-rao-tiktok/research.md",
@@ -1189,6 +1161,22 @@
     [
       ".agent/plans/agentic-academy/verify/scoreboard.md",
       "www/serve.json"
+    ],
+    [
+      ".agent/plans/agentic-data-stack-tiktok/design.md",
+      ".agent/plans/agentic-data-stack-tiktok/prd.md"
+    ],
+    [
+      ".agent/plans/agentic-data-stack-tiktok/plan.md",
+      ".agent/plans/agentic-data-stack-tiktok/design.md"
+    ],
+    [
+      ".agent/plans/agentic-data-stack-tiktok/plan.md",
+      ".agent/plans/agentic-data-stack-tiktok/prd.md"
+    ],
+    [
+      ".agent/plans/agentic-data-stack-tiktok/plan.md",
+      ".agent/plans/agentic-data-stack-tiktok/research.md"
     ],
     [
       ".agent/plans/ai-engineering-learning-path/plan.md",
@@ -1383,10 +1371,6 @@
       ".agent/plans/claude-art-tiktok/research.md"
     ],
     [
-      ".agent/plans/claude-art-tiktok/plan.md",
-      "www/claude-art/index.html"
-    ],
-    [
       ".agent/plans/claude-art-tiktok/prd.md",
       ".agent/plans/claude-art-tiktok/plan.md"
     ],
@@ -1395,16 +1379,8 @@
       ".agent/plans/claude-art-tiktok/publish.md"
     ],
     [
-      ".agent/plans/claude-art-tiktok/prd.md",
-      "www/claude-art/claude-art-50s.mp4"
-    ],
-    [
       ".agent/plans/claude-art-tiktok/publish.md",
       ".agent/plans/claude-art-tiktok/research.md"
-    ],
-    [
-      ".agent/plans/claude-art-tiktok/publish.md",
-      "www/claude-art/claude-art-50s.mp4"
     ],
     [
       ".agent/plans/clip-craft/design.md",
@@ -1437,10 +1413,6 @@
     [
       ".agent/plans/clip-craft/prd.md",
       ".agent/plans/clip-craft/upgrade-ideas.md"
-    ],
-    [
-      ".agent/plans/clip-craft/upgrade-ideas.md",
-      "www/openai-hf-hack/index.html"
     ],
     [
       ".agent/plans/cosmos-3d/design.md",
@@ -2632,14 +2604,6 @@
     ],
     [
       ".agent/plans/lang-ai-era-tiktok/plan.md",
-      "www/lang-ai-era/index.html"
-    ],
-    [
-      ".agent/plans/lang-ai-era-tiktok/plan.md",
-      "www/lang-ai-era/lang-ai-era-50s.mp4"
-    ],
-    [
-      ".agent/plans/lang-ai-era-tiktok/plan.md",
       "www/status.json"
     ],
     [
@@ -2649,10 +2613,6 @@
     [
       ".agent/plans/lang-ai-era-tiktok/publish.md",
       "www/ai-news/ai-news.json"
-    ],
-    [
-      ".agent/plans/lang-ai-era-tiktok/publish.md",
-      "www/lang-ai-era/lang-ai-era-50s.mp4"
     ],
     [
       ".agent/plans/lang-ai-era-tiktok/research.md",
@@ -2723,16 +2683,8 @@
       "tests/e2e/guard-redteam.spec.ts"
     ],
     [
-      ".agent/plans/meta-charm-tiktok/prd.md",
-      "www/meta-charm/meta-charm-50s.mp4"
-    ],
-    [
       ".agent/plans/meta-charm-tiktok/publish.md",
       ".agent/plans/meta-charm-tiktok/research.md"
-    ],
-    [
-      ".agent/plans/meta-charm-tiktok/publish.md",
-      "www/meta-charm/meta-charm-50s.mp4"
     ],
     [
       ".agent/plans/mo-hold-delegation/plan.md",
@@ -2807,20 +2759,8 @@
       ".agent/plans/openai-hf-hack-tiktok/research.md"
     ],
     [
-      ".agent/plans/openai-hf-hack-tiktok/plan.md",
-      "www/openai-hf-hack/index.html"
-    ],
-    [
-      ".agent/plans/openai-hf-hack-tiktok/plan.md",
-      "www/openai-hf-hack/voiceover-segments.json"
-    ],
-    [
       ".agent/plans/openai-hf-hack-tiktok/prd.md",
       ".agent/plans/openai-hf-hack-tiktok/publish.md"
-    ],
-    [
-      ".agent/plans/openai-hf-hack-tiktok/publish.md",
-      "www/openai-hf-hack/openai-hf-hack-30s.mp4"
     ],
     [
       ".agent/plans/openai-hf-hack-tiktok/research.md",
@@ -3007,12 +2947,16 @@
       "playwright.config.ts"
     ],
     [
-      ".agent/plans/rogue-agent-tiktok/plan.md",
-      ".agent/plans/rogue-agent-tiktok/research.md"
+      ".agent/plans/rank-stability-gate/design.md",
+      "tests/e2e/rank-stability-guard.spec.ts"
     ],
     [
-      ".agent/plans/rogue-agent-tiktok/prd.md",
-      "www/rogue-agent/rogue-agent-50s.mp4"
+      ".agent/plans/rank-stability-gate/plan.md",
+      "tests/e2e/rank-stability-guard.spec.ts"
+    ],
+    [
+      ".agent/plans/rogue-agent-tiktok/plan.md",
+      ".agent/plans/rogue-agent-tiktok/research.md"
     ],
     [
       ".agent/plans/rogue-agent-tiktok/publish.md",
@@ -3021,10 +2965,6 @@
     [
       ".agent/plans/rogue-agent-tiktok/publish.md",
       "tests/e2e/clip-font-guard.spec.ts"
-    ],
-    [
-      ".agent/plans/rogue-agent-tiktok/publish.md",
-      "www/rogue-agent/rogue-agent-50s.mp4"
     ],
     [
       ".agent/plans/rsi-singularity-lessons/plan.md",
@@ -3167,24 +3107,8 @@
       "www/yt-summary/pipeline.mjs"
     ],
     [
-      ".agent/plans/space-bunny-tiktok/plan.md",
-      "www/space-bunny-free/verify-audio.mjs"
-    ],
-    [
-      ".agent/plans/space-bunny-tiktok/plan.md",
-      "www/space-bunny-free/verify-frames.mjs"
-    ],
-    [
-      ".agent/plans/space-bunny-tiktok/plan.md",
-      "www/space-bunny-free/voice-compare.html"
-    ],
-    [
       ".agent/plans/space-bunny-tiktok/publish.md",
       ".agent/plans/space-bunny-tiktok/plan.md"
-    ],
-    [
-      ".agent/plans/space-bunny-tiktok/publish.md",
-      "www/space-bunny-free/space-bunny-free-50s.mp4"
     ],
     [
       ".agent/plans/status-redesign/design.md",
@@ -4313,26 +4237,6 @@
     [
       ".github/harness/scripts/setup-doctor.mjs",
       "www/library/tool-registry.mjs"
-    ],
-    [
-      ".github/instructions/agent-governance.instructions.md",
-      "docs/llm-weakness-research.md"
-    ],
-    [
-      ".github/instructions/agent-governance.instructions.md",
-      "N5Blazor.Tests/ServiceTests.cs"
-    ],
-    [
-      ".github/instructions/agent-governance.instructions.md",
-      "tests/e2e/guard-redteam.spec.ts"
-    ],
-    [
-      ".github/instructions/agent-governance.instructions.md",
-      "www/index.html"
-    ],
-    [
-      ".github/instructions/agent-governance.instructions.md",
-      "www/status.json"
     ],
     [
       ".github/instructions/auto-learn.instructions.md",
@@ -5547,6 +5451,10 @@
       "tests/e2e/eval-gate-components.spec.ts"
     ],
     [
+      ".github/skills/evals-gate/SKILL.md",
+      "tests/e2e/rank-stability-guard.spec.ts"
+    ],
+    [
       ".github/skills/harness-build-config/references/evidence.md",
       "docs/knowleged.md"
     ],
@@ -5696,6 +5604,10 @@
     ],
     [
       ".github/skills/harness-process/references/evidence.md",
+      "tests/e2e/rank-stability-guard.spec.ts"
+    ],
+    [
+      ".github/skills/harness-process/references/evidence.md",
       "tests/e2e/readme-guard.spec.ts"
     ],
     [
@@ -5761,6 +5673,10 @@
     [
       ".github/skills/harness-web-ui/references/evidence.md",
       "tests/e2e/clip-font-guard.spec.ts"
+    ],
+    [
+      ".github/skills/harness-web-ui/references/evidence.md",
+      "tests/e2e/clip-perf-guard.spec.ts"
     ],
     [
       ".github/skills/harness-web-ui/references/evidence.md",
@@ -6500,6 +6416,10 @@
     ],
     [
       "docs/knowleged.md",
+      "tests/e2e/rank-stability-guard.spec.ts"
+    ],
+    [
+      "docs/knowleged.md",
       "tests/e2e/readme-guard.spec.ts"
     ],
     [
@@ -6549,10 +6469,6 @@
     [
       "docs/knowleged.md",
       "www/index.html"
-    ],
-    [
-      "docs/knowleged.md",
-      "www/lang-ai-era/verify-perf.mjs"
     ],
     [
       "docs/knowleged.md",
@@ -7003,18 +6919,6 @@
       "www/styles.css"
     ],
     [
-      "www/agent-vuot-rao/render.mjs",
-      "www/agent-vuot-rao/index.html"
-    ],
-    [
-      "www/agent-vuot-rao/render.mjs",
-      "www/agent-vuot-rao/verify-audio.mjs"
-    ],
-    [
-      "www/agent-vuot-rao/verify-frames.mjs",
-      "www/agent-vuot-rao/index.html"
-    ],
-    [
       "www/agentic-academy/app.js",
       "www/agentic-academy/slides.html"
     ],
@@ -7147,16 +7051,136 @@
       "www/index.html"
     ],
     [
-      "www/claude-art/render.mjs",
-      "www/claude-art/index.html"
+      "www/Clip/age-of-giants/render.mjs",
+      "www/Clip/age-of-giants/index.html"
     ],
     [
-      "www/claude-art/render.mjs",
-      "www/claude-art/verify-audio.mjs"
+      "www/Clip/age-of-giants/render.mjs",
+      "www/Clip/age-of-giants/verify-audio.mjs"
     ],
     [
-      "www/claude-art/verify-frames.mjs",
-      "www/claude-art/index.html"
+      "www/Clip/age-of-giants/verify-frames.mjs",
+      "www/Clip/age-of-giants/index.html"
+    ],
+    [
+      "www/Clip/age-of-giants/verify-perf.mjs",
+      "www/Clip/age-of-giants/index.html"
+    ],
+    [
+      "www/Clip/agent-vuot-rao/render.mjs",
+      "www/Clip/agent-vuot-rao/index.html"
+    ],
+    [
+      "www/Clip/agent-vuot-rao/render.mjs",
+      "www/Clip/agent-vuot-rao/verify-audio.mjs"
+    ],
+    [
+      "www/Clip/agent-vuot-rao/verify-frames.mjs",
+      "www/Clip/agent-vuot-rao/index.html"
+    ],
+    [
+      "www/Clip/agentic-data-stack/render.mjs",
+      "www/Clip/agentic-data-stack/index.html"
+    ],
+    [
+      "www/Clip/agentic-data-stack/render.mjs",
+      "www/Clip/agentic-data-stack/verify-audio.mjs"
+    ],
+    [
+      "www/Clip/agentic-data-stack/verify-frames.mjs",
+      "www/Clip/agentic-data-stack/index.html"
+    ],
+    [
+      "www/Clip/agentic-data-stack/verify-perf.mjs",
+      "www/Clip/agentic-data-stack/index.html"
+    ],
+    [
+      "www/Clip/claude-art/render.mjs",
+      "www/Clip/claude-art/index.html"
+    ],
+    [
+      "www/Clip/claude-art/render.mjs",
+      "www/Clip/claude-art/verify-audio.mjs"
+    ],
+    [
+      "www/Clip/claude-art/verify-frames.mjs",
+      "www/Clip/claude-art/index.html"
+    ],
+    [
+      "www/Clip/lang-ai-era/render.mjs",
+      "www/Clip/lang-ai-era/index.html"
+    ],
+    [
+      "www/Clip/lang-ai-era/render.mjs",
+      "www/Clip/lang-ai-era/verify-audio.mjs"
+    ],
+    [
+      "www/Clip/lang-ai-era/verify-frames.mjs",
+      "www/Clip/lang-ai-era/index.html"
+    ],
+    [
+      "www/Clip/lang-ai-era/verify-perf.mjs",
+      "www/Clip/lang-ai-era/index.html"
+    ],
+    [
+      "www/Clip/meta-charm/render.mjs",
+      "www/Clip/meta-charm/index.html"
+    ],
+    [
+      "www/Clip/meta-charm/render.mjs",
+      "www/Clip/meta-charm/verify-audio.mjs"
+    ],
+    [
+      "www/Clip/meta-charm/verify-frames.mjs",
+      "www/Clip/meta-charm/index.html"
+    ],
+    [
+      "www/Clip/openai-hf-hack/render.mjs",
+      "www/Clip/openai-hf-hack/index.html"
+    ],
+    [
+      "www/Clip/openai-hf-hack/render.mjs",
+      "www/Clip/openai-hf-hack/verify-audio.mjs"
+    ],
+    [
+      "www/Clip/openai-hf-hack/verify-frames.mjs",
+      "www/Clip/openai-hf-hack/index.html"
+    ],
+    [
+      "www/Clip/rogue-agent/render.mjs",
+      "www/Clip/rogue-agent/index.html"
+    ],
+    [
+      "www/Clip/rogue-agent/render.mjs",
+      "www/Clip/rogue-agent/verify-audio.mjs"
+    ],
+    [
+      "www/Clip/rogue-agent/verify-frames.mjs",
+      "www/Clip/rogue-agent/index.html"
+    ],
+    [
+      "www/Clip/space-bunny-free/render.mjs",
+      "www/Clip/space-bunny-free/verify-audio.mjs"
+    ],
+    [
+      "www/Clip/space-bunny-free/verify-frames.mjs",
+      "www/Clip/space-bunny-free/index.html"
+    ],
+    [
+      "www/Clip/space-bunny-free/voice-compare.html",
+      "www/Clip/space-bunny-free/voiceover-vieneu-hai-dang.wav"
+    ],
+    [
+      "www/Clip/space-bunny-free/voice-compare.html",
+      "www/Clip/space-bunny-free/voiceover-vieneu-mai-anh.wav"
+    ],
+    [
+      "www/Clip/space-bunny-free/voice-compare.html",
+      "www/Clip/space-bunny-free/voiceover-vieneu-thuy-dung.wav"
+    ],
+    [
+      "www/Clip/space-bunny-free/voice-compare.html",
+      "www/Clip/space-bunny-free/voiceover.wav"
     ],
     [
       "www/components/playground.html",
@@ -7791,34 +7815,6 @@
       "www/yt-summary/index.html"
     ],
     [
-      "www/lang-ai-era/render.mjs",
-      "www/lang-ai-era/index.html"
-    ],
-    [
-      "www/lang-ai-era/render.mjs",
-      "www/lang-ai-era/verify-audio.mjs"
-    ],
-    [
-      "www/lang-ai-era/verify-frames.mjs",
-      "www/lang-ai-era/index.html"
-    ],
-    [
-      "www/lang-ai-era/verify-perf.mjs",
-      "www/lang-ai-era/index.html"
-    ],
-    [
-      "www/meta-charm/render.mjs",
-      "www/meta-charm/index.html"
-    ],
-    [
-      "www/meta-charm/render.mjs",
-      "www/meta-charm/verify-audio.mjs"
-    ],
-    [
-      "www/meta-charm/verify-frames.mjs",
-      "www/meta-charm/index.html"
-    ],
-    [
       "www/n5-blazor/grammar.html",
       "www/index.html"
     ],
@@ -8131,30 +8127,6 @@
       "www/n5-blazor/site.js"
     ],
     [
-      "www/openai-hf-hack/render.mjs",
-      "www/openai-hf-hack/index.html"
-    ],
-    [
-      "www/openai-hf-hack/render.mjs",
-      "www/openai-hf-hack/verify-audio.mjs"
-    ],
-    [
-      "www/openai-hf-hack/verify-frames.mjs",
-      "www/openai-hf-hack/index.html"
-    ],
-    [
-      "www/rogue-agent/render.mjs",
-      "www/rogue-agent/index.html"
-    ],
-    [
-      "www/rogue-agent/render.mjs",
-      "www/rogue-agent/verify-audio.mjs"
-    ],
-    [
-      "www/rogue-agent/verify-frames.mjs",
-      "www/rogue-agent/index.html"
-    ],
-    [
       "www/serve.json",
       "www/agentic-academy/index.html"
     ],
@@ -8177,30 +8149,6 @@
     [
       "www/serve.json",
       "www/index.html"
-    ],
-    [
-      "www/space-bunny-free/render.mjs",
-      "www/space-bunny-free/verify-audio.mjs"
-    ],
-    [
-      "www/space-bunny-free/verify-frames.mjs",
-      "www/space-bunny-free/index.html"
-    ],
-    [
-      "www/space-bunny-free/voice-compare.html",
-      "www/space-bunny-free/voiceover-vieneu-hai-dang.wav"
-    ],
-    [
-      "www/space-bunny-free/voice-compare.html",
-      "www/space-bunny-free/voiceover-vieneu-mai-anh.wav"
-    ],
-    [
-      "www/space-bunny-free/voice-compare.html",
-      "www/space-bunny-free/voiceover-vieneu-thuy-dung.wav"
-    ],
-    [
-      "www/space-bunny-free/voice-compare.html",
-      "www/space-bunny-free/voiceover.wav"
     ],
     [
       "www/todo-manager/app.js",

@@ -1,0 +1,751 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ĐỌC VỊ · ADS — Agentic Data Stack — storyboard clip 50s</title>
+<style>
+  :root { color-scheme: dark; font-family: "Segoe UI", Arial, sans-serif; background:#04070d; color:#eef4ff; }
+  * { box-sizing: border-box; }
+  body { margin:0; min-height:100vh; display:grid; place-items:center; background:#04070d; }
+  .stage { width:min(100vw, 562.5px); aspect-ratio:9/16; position:relative; overflow:hidden; background:#04070d; }
+  canvas { display:block; width:100%; height:100%; }
+  .sr { position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap; }
+</style>
+</head>
+<body>
+  <main class="stage" aria-label="Storyboard clip 50 giây: bài Rebuilding Data Engineering with Harness Engineering — AI viết SQL rẻ gần như miễn phí, cái đắt là context và kiểm chứng; lỗi nguy hiểm nhất là chạy sai mà vẫn thành công; năm tầng agentic data stack; bảy cổng kiểm soát; kỹ sư dữ liệu đổi vai thành nhà thiết kế context, skill, policy">
+    <canvas id="canvas" width="1080" height="1920" role="img" aria-label="Clip 7 phần: câu SQL chạy qua runtime, tick xanh PASS trong khi một ô kết quả sai nháy đỏ; Snowflake và Databricks hội tụ về node AGENT; SQL DAG config rơi về 0 đồng trong khi context kiểm chứng governance trách nhiệm sáng lên; thang 4 mức đúng nghiệp vụ còn dấu hỏi với ba định nghĩa doanh thu; năm tầng ý định điều khiển ngữ nghĩa harness runtime; bảy cổng và bốn mức rủi ro auto notify approve block; kỹ sư dữ liệu chuyển từ viết SQL sang thiết kế context skill policy"></canvas>
+    <h1 class="sr">ĐỌC VỊ · ADS — từ bài "Rebuilding Data Engineering with Harness Engineering" của Nie Lifeng (HackerNoon 27.09.2026)</h1>
+  </main>
+<script>
+(() => {
+  const canvas = document.querySelector('#canvas');
+  // alpha:false — canvas đục, rasterizer nhanh hơn (nền luôn được phủ kín mỗi khung).
+  const ctx = canvas.getContext('2d', { alpha: false });
+  const W = canvas.width;
+  const H = canvas.height;
+  const MONO = 'Consolas';
+
+  // ── TOKENS ────────────────────────────────────────────────────────────────
+  // Một object DUY NHẤT. Thiếu key = ctx.fillStyle = undefined = KHÔNG throw,
+  // chữ giữ màu cũ ⇒ tàng hình. verify-frames.mjs quét đúng chỗ này.
+  // Semantic: green = "chạy được/thành công" (kể cả thành công GIẢ) · red = rủi ro/lỗi/cổng
+  //           cyan = dữ liệu · amber = giá trị/tiền · violet = agent/harness · pink = con người.
+  const C = {
+    bg0: '#04070d', bg1: '#081120', panel: '#0d1830', panel2: '#122040',
+    line: '#24365c', ink: '#eef4ff', muted: '#93a7cc', dim: '#5f7396', white: '#ffffff',
+    cyan: '#4fe3e0', amber: '#ffc857', green: '#5dfc9b', red: '#ff5d73',
+    violet: '#b18cff', pink: '#ff9ecb'
+  };
+
+  // ── BEATS ─────────────────────────────────────────────────────────────────
+  // `at`/`end` khớp `segments` trong voiceover-segments.json (guard timing so 2 bên).
+  const DURATION = 50;
+  const beats = [
+    { at: 0,    end: 6.5,  eyebrow: 'ĐỌC VỊ 27.09 · HACKERNOON',      size: 84, title: 'Lỗi tệ nhất:\nchạy sai —\nmà vẫn tick xanh.',   sub: 'Harness engineering cho data engineering — bài mới trên HackerNoon.' },
+    { at: 6.5,  end: 13,   eyebrow: '01 · NGƯỜI DÙNG ĐANG ĐỔI',       size: 84, title: 'Người dùng mới\ncủa data platform:\nkhông phải người.', sub: 'Tác giả: Snowflake và Databricks đang xoay quanh agent — context, governance, execution.' },
+    { at: 13,   end: 19.5, eyebrow: '02 · THỨ KHAN HIẾM ĐỔI',         size: 84, title: 'AI viết SQL\ngần như miễn phí.',              sub: 'Nên thứ đắt giờ là: context · kiểm chứng · governance · trách nhiệm.' },
+    { at: 19.5, end: 27,   eyebrow: '03 · BẪY LỚN NHẤT',              size: 84, title: 'SQL chạy được\n≠ đúng\nnghiệp vụ.',               sub: 'Doanh thu: tiền đơn? ghi nhận? Engine không biết — context doanh nghiệp mới biết.' },
+    { at: 27,   end: 34.5, eyebrow: '04 · XẾP LẠI NĂM TẦNG',          size: 72, title: 'Năm tầng\nAgentic Data Stack.',                sub: 'Ý định → điều khiển → ngữ nghĩa → harness → runtime.' },
+    { at: 34.5, end: 42,   eyebrow: '05 · BẢY CỔNG · BỐN MỨC RỦI RO', size: 72, title: 'Người định goal.\nAgent thực thi.\nHarness kiểm soát.', sub: 'Không duyệt từng bước — chỉ chặn ở mức rủi ro cao.' },
+    { at: 42,   end: 50,   eyebrow: 'CÒN BẠN THÌ SAO?',               size: 84, title: 'Không mất việc,\nchỉ đổi vai.',                   sub: 'Từ viết SQL → thiết kế context, skill, policy. Team bạn bắt đầu từ đâu?' }
+  ];
+  const TONES = [C.red, C.cyan, C.amber, C.green, C.violet, C.red, C.pink];
+
+  // ── SUBTITLE (burned-in) — ĐÚNG lời voiceover, đọc được khi tắt tiếng ─────
+  const SUBS = [
+    { at: 0.4,  end: 3.2,  text: 'Cú lỗi nguy hiểm nhất — không phải AI viết sai.', hi: ['nguy hiểm nhất'] },
+    { at: 3.3,  end: 6.5,  text: 'Mà là nó chạy sai — ngay trong production.', hi: ['chạy sai'] },
+    { at: 6.9,  end: 9.8,  text: 'Người dùng mới của data platform', hi: ['data platform'] },
+    { at: 9.9,  end: 13,   text: 'không còn là con người — mà là agent.', hi: ['agent'] },
+    { at: 13.4, end: 16.3, text: 'AI viết SQL, DAG, config gần như miễn phí.', hi: ['miễn phí'] },
+    { at: 16.4, end: 19.5, text: 'Thứ khan hiếm đổi: context, kiểm chứng, trách nhiệm.', hi: ['khan hiếm'] },
+    { at: 19.9, end: 22.6, text: 'SQL chạy được chưa chắc đúng nghiệp vụ.', hi: ['chưa chắc đúng'] },
+    { at: 22.7, end: 25.2, text: 'Doanh thu: tiền đơn, ghi nhận, hay tiền thật thu?', hi: ['tiền đơn', 'ghi nhận', 'thật thu'] },
+    { at: 25.3, end: 27,   text: 'Chỉ context doanh nghiệp trả lời được.', hi: ['context'] },
+    { at: 27.4, end: 30.1, text: 'Xếp lại năm tầng:', hi: ['năm tầng'] },
+    { at: 30.2, end: 32.1, text: 'ý định, điều khiển, ngữ nghĩa, harness, runtime.', hi: ['harness'] },
+    { at: 32.2, end: 34.5, text: 'Agent không gọi thẳng công cụ — mọi thứ qua harness.', hi: ['qua harness'] },
+    { at: 34.9, end: 37.5, text: 'Người không duyệt từng bước — chỉ chặn ở mức rủi ro cao.', hi: ['rủi ro cao'] },
+    { at: 37.6, end: 42,   text: 'Người định goal. Agent thực thi. Harness kiểm soát.', hi: ['goal', 'thực thi', 'kiểm soát'] },
+    { at: 42.4, end: 45.2, text: 'Kỹ sư dữ liệu không mất việc — chỉ đổi vai:', hi: ['không mất việc'] },
+    { at: 45.3, end: 47.3, text: 'thiết kế context, skill, policy.', hi: ['context', 'skill', 'policy'] },
+    { at: 47.4, end: 50,   text: 'Còn cú lỗi im lặng kia — chỉ harness chặn được.', hi: ['harness chặn được'] }
+  ];
+
+  // ── HELPERS ───────────────────────────────────────────────────────────────
+  const ease = t => t < .5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2;
+  const clamp = (v, a = 0, b = 1) => Math.max(a, Math.min(b, v));
+  const rv = (t, start, dur) => ease(clamp((t - start) / dur));       // reveal 0..1
+  const hexA = (hex, a) => hex + Math.round(clamp(a, 0, 1) * 255).toString(16).padStart(2, '0');
+  function beatAt(t) { return beats.findIndex(b => t >= b.at && t < b.end); }
+  function hash1(n) { const s = Math.sin(n * 127.1) * 43758.5453; return s - Math.floor(s); }
+
+  function text(str, x, y, size, color, weight = 600, align = 'left', font = 'Arial') {
+    ctx.font = `${weight} ${size}px "${font}", "Segoe UI", sans-serif`;
+    ctx.fillStyle = color; ctx.textAlign = align; ctx.textBaseline = 'middle'; ctx.fillText(str, x, y);
+  }
+  // Đo + ngắt dòng 1 LẦN cho chuỗi tĩnh (cache) — không measureText mỗi khung.
+  function layoutLines(str, maxW, size, weight, font) {
+    ctx.font = `${weight} ${size}px "${font}", "Segoe UI", sans-serif`;
+    const lines = [];
+    for (const part of str.split('\n')) {
+      let lineText = '';
+      for (const word of part.split(' ')) {
+        const test = lineText ? `${lineText} ${word}` : word;
+        if (ctx.measureText(test).width > maxW && lineText) { lines.push(lineText); lineText = word; }
+        else lineText = test;
+      }
+      if (lineText) lines.push(lineText);
+    }
+    return lines;
+  }
+  function roundRect(x, y, w, h, r, fill, stroke, lw = 0) {
+    if (w <= 0 || h <= 0) return;
+    ctx.beginPath(); ctx.roundRect(x, y, w, h, r);
+    if (fill) { ctx.fillStyle = fill; ctx.fill(); }
+    if (stroke) { ctx.strokeStyle = stroke; ctx.lineWidth = lw || 3; ctx.stroke(); }
+  }
+  function chip(label, x, y, color, a = 1) {
+    ctx.save(); ctx.globalAlpha *= a;
+    ctx.font = `700 24px ${MONO}, monospace`;
+    const w = ctx.measureText(label).width + 40;
+    roundRect(x, y, w, 48, 24, hexA(color, 0.12), hexA(color, 0.7), 2);
+    text(label, x + 20, y + 25, 24, color, 700, 'left', MONO);
+    ctx.restore();
+    return w;
+  }
+  function chipC(label, cx, y, color, a = 1) {
+    ctx.font = `700 24px ${MONO}, monospace`;
+    const w = ctx.measureText(label).width + 40;
+    chip(label, cx - w / 2, y, color, a);
+  }
+  function glow(img, x, y, w, a = 1) {
+    ctx.save(); ctx.globalAlpha *= a;
+    ctx.drawImage(img, x - w / 2, y - w / 2, w, w);
+    ctx.restore();
+  }
+
+  // ── BAKED TEXTURES — mọi gradient/thứ toàn màn hình vẽ 1 lần (KN-083) ────
+  const bgCache = document.createElement('canvas');
+  bgCache.width = W; bgCache.height = H;
+  {
+    const g = bgCache.getContext('2d');
+    g.fillStyle = C.bg0; g.fillRect(0, 0, W, H);
+    const rg = g.createRadialGradient(540, 460, 60, 540, 460, 920);
+    rg.addColorStop(0, 'rgba(79,227,224,0.055)');
+    rg.addColorStop(1, 'rgba(79,227,224,0)');
+    g.fillStyle = rg; g.fillRect(0, 0, W, H);
+    // lưới dữ liệu mờ — path shape, KHÔNG dùng ký tự lạ (tránh thiếu glyph như KN-082)
+    g.save(); g.globalAlpha = 0.045; g.strokeStyle = C.cyan; g.lineWidth = 1;
+    for (let x = 90; x <= 990; x += 90) { g.beginPath(); g.moveTo(x, 260); g.lineTo(x, 1660); g.stroke(); }
+    for (let y = 260; y <= 1660; y += 100) { g.beginPath(); g.moveTo(90, y); g.lineTo(990, y); g.stroke(); }
+    g.restore();
+    // ghost glyphs = path shape
+    g.save(); g.globalAlpha = 0.05; g.strokeStyle = C.violet; g.lineWidth = 8;
+    g.translate(905, 258); g.rotate(0.1);
+    g.beginPath(); g.moveTo(-84, 24); g.lineTo(0, 24); g.lineTo(0, -16); g.lineTo(56, 40); g.lineTo(0, 96); g.lineTo(0, 56); g.lineTo(-84, 56); g.closePath(); g.stroke();
+    g.restore();
+    g.save(); g.globalAlpha = 0.04; g.strokeStyle = C.amber; g.lineWidth = 7;
+    g.translate(150, 1620);
+    g.beginPath(); g.ellipse(0, -60, 70, 26, 0, 0, Math.PI * 2); g.stroke();
+    g.beginPath(); g.moveTo(-70, -60); g.lineTo(-70, 60); g.stroke();
+    g.beginPath(); g.moveTo(70, -60); g.lineTo(70, 60); g.stroke();
+    g.beginPath(); g.ellipse(0, 60, 70, 26, 0, 0, Math.PI * 2); g.stroke();
+    g.restore();
+  }
+  const fxCache = document.createElement('canvas');
+  fxCache.width = W; fxCache.height = H;
+  {
+    const g = fxCache.getContext('2d');
+    const vg = g.createRadialGradient(540, 960, 420, 540, 960, 1180);
+    vg.addColorStop(0, 'rgba(2,4,10,0)');
+    vg.addColorStop(1, 'rgba(2,4,10,0.55)');
+    g.fillStyle = vg; g.fillRect(0, 0, W, H);
+  }
+  const bandCache = document.createElement('canvas');
+  bandCache.width = W; bandCache.height = 284;
+  {
+    const g = bandCache.getContext('2d');
+    const bg = g.createLinearGradient(0, 2, 0, 282);
+    bg.addColorStop(0, 'rgba(79,227,224,0)');
+    bg.addColorStop(0.5, 'rgba(79,227,224,0.04)');
+    bg.addColorStop(1, 'rgba(79,227,224,0)');
+    g.fillStyle = bg; g.fillRect(0, 0, W, 284);
+  }
+  function makeGlow(hex, size = 256) {
+    const c = document.createElement('canvas'); c.width = c.height = size;
+    const g = c.getContext('2d');
+    const rg = g.createRadialGradient(size / 2, size / 2, 0, size / 2, size / 2, size / 2);
+    rg.addColorStop(0, hexA(hex, 0.8));
+    rg.addColorStop(0.45, hexA(hex, 0.24));
+    rg.addColorStop(1, hexA(hex, 0));
+    g.fillStyle = rg; g.fillRect(0, 0, size, size);
+    return c;
+  }
+  const GLOW = { red: makeGlow(C.red), cyan: makeGlow(C.cyan), amber: makeGlow(C.amber), green: makeGlow(C.green), violet: makeGlow(C.violet), pink: makeGlow(C.pink) };
+
+  // ── FIGURE — 1 Path2D unit (feet=0, đầu ~-0.96) cho người đi dọc path ────
+  const FIGURE = new Path2D();
+  FIGURE.moveTo(-0.055, -0.735);
+  FIGURE.lineTo(-0.17, -0.68);
+  FIGURE.quadraticCurveTo(-0.235, -0.62, -0.22, -0.38);
+  FIGURE.quadraticCurveTo(-0.19, -0.12, -0.14, -0.01);
+  FIGURE.lineTo(0.14, -0.01);
+  FIGURE.quadraticCurveTo(0.19, -0.12, 0.22, -0.38);
+  FIGURE.quadraticCurveTo(0.235, -0.62, 0.17, -0.68);
+  FIGURE.lineTo(0.055, -0.735);
+  FIGURE.lineTo(0.05, -0.76); FIGURE.lineTo(-0.05, -0.76);
+  FIGURE.closePath();
+  FIGURE.moveTo(0.115, -0.85);
+  FIGURE.arc(0, -0.85, 0.115, 0, Math.PI * 2);
+  function figure(x, y, h, fill, rim, rimA, a = 1) {
+    ctx.save(); ctx.globalAlpha *= a;
+    ctx.translate(x, y); ctx.scale(h, h);
+    ctx.fillStyle = fill; ctx.fill(FIGURE);
+    if (rimA > 0) { ctx.strokeStyle = hexA(rim, rimA); ctx.lineWidth = 3 / h; ctx.stroke(FIGURE); }
+    ctx.restore();
+  }
+
+  // ── SCENE 0 · NGHỊCH LÝ (0–6.5) — query chạy, tick xanh, ô đỏ nháy ──────
+  const SQL_LINES = [
+    'SELECT SUM(amount) AS doanh_thu',
+    'FROM orders',
+    "WHERE status = 'paid' AND ky = 'T9'"
+  ];
+  function scene0(t) {
+    const cardIn = rv(t, 0.2, 0.4);
+    ctx.save(); ctx.globalAlpha *= cardIn; ctx.translate(0, (1 - cardIn) * 20);
+    roundRect(150, 296, 780, 216, 24, C.panel, C.line, 2);
+    text('QUERY · AI VIẾT', 186, 332, 22, C.muted, 700, 'left', MONO);
+    SQL_LINES.forEach((line, i) => {
+      const p = clamp((t - (0.6 + i * 0.5)) / 0.55);
+      const shown = line.slice(0, Math.floor(p * line.length));
+      if (shown) text(shown, 186, 384 + i * 44, 28, i === 2 ? C.amber : C.ink, 600, 'left', MONO);
+      if (p > 0 && p < 1) {
+        const cx = 186 + ctx.measureText(line.slice(0, Math.floor(p * line.length))).width + 8;
+        if ((t % 0.6) < 0.35) roundRect(cx, 384 + i * 44 - 15, 14, 30, 3, hexA(C.cyan, 0.85));
+      }
+    });
+    const sy = 306 + ((t * 70) % 196);
+    roundRect(160, sy, 760, 3, 1.5, hexA(C.cyan, 0.10));
+    ctx.restore();
+
+    // mũi tên chảy xuống runtime
+    const chipA = rv(t, 2.0, 0.35);
+    for (let i = 0; i < 3; i++) {
+      const p = ((t * 0.9 + i / 3) % 1);
+      ctx.save(); ctx.globalAlpha *= 0.75 * Math.sin(p * Math.PI);
+      ctx.strokeStyle = C.cyan; ctx.lineWidth = 3; ctx.lineCap = 'round';
+      ctx.beginPath(); ctx.moveTo(526, 522 + p * 34); ctx.lineTo(540, 534 + p * 34); ctx.lineTo(554, 522 + p * 34); ctx.stroke();
+      ctx.restore();
+    }
+    chipC('RUNTIME', 540, 556, C.cyan, chipA);
+
+    // hàng kết quả
+    const rowA = rv(t, 2.4, 0.4);
+    if (rowA > 0.01) {
+      ctx.save(); ctx.globalAlpha *= rowA; ctx.translate(0, (1 - rowA) * 16);
+      roundRect(230, 648, 620, 92, 18, C.panel2, C.line, 2);
+      text('KỲ', 300, 676, 18, C.muted, 700, 'center', MONO);
+      text('T9·2026', 300, 710, 26, C.ink, 700, 'center', MONO);
+      text('DOANH THU', 540, 676, 18, C.muted, 700, 'center', MONO);
+      text('1,28 tỷ', 540, 710, 30, C.red, 800, 'center', MONO);
+      text('SỐ ĐƠN', 780, 676, 18, C.muted, 700, 'center', MONO);
+      text('42.718', 780, 710, 26, C.ink, 700, 'center', MONO);
+      ctx.restore();
+    }
+    const pulse = 0.5 + 0.5 * Math.sin(t * 6);
+    if (t > 2.6) roundRect(462, 668, 156, 62, 12, hexA(C.red, 0.05 + 0.09 * pulse), hexA(C.red, 0.45 + 0.5 * pulse), 2);
+
+    // con dấu xanh — "thành công" đóng lên trên
+    const stamp = ease(clamp((t - 2.8) / 0.35));
+    if (stamp > 0.01) {
+      ctx.save(); ctx.globalAlpha *= stamp;
+      ctx.translate(800, 620); ctx.rotate(-0.09); ctx.scale(0.6 + 0.4 * stamp, 0.6 + 0.4 * stamp);
+      glow(GLOW.green, 0, 0, 340, 0.25 * stamp);
+      roundRect(-170, -38, 340, 76, 14, 'rgba(4,7,13,0.72)', C.green, 4);
+      text('✓ CHẠY THÀNH CÔNG', 0, 0, 30, C.green, 800, 'center', MONO);
+      ctx.restore();
+    }
+  }
+
+  // ── SCENE 1 · NGƯỜI DÙNG ĐỔI (6.5–13) — 2 platform hội tụ về AGENT ──────
+  function platformCard(x, y, label, sub, color, a) {
+    if (a <= 0.01) return;
+    ctx.save(); ctx.globalAlpha *= a; ctx.translate(0, (1 - a) * 18);
+    roundRect(x, y, 360, 132, 20, C.panel, hexA(color, 0.55), 2);
+    text(label, x + 180, y + 50, 30, C.ink, 800, 'center', MONO);
+    text(sub, x + 180, y + 94, 18, C.muted, 600, 'center', MONO);
+    ctx.restore();
+  }
+  function drawArrowArc(p0, pc, p1, prog, color) {
+    if (prog <= 0.01) return;
+    ctx.save(); ctx.strokeStyle = hexA(color, 0.8); ctx.lineWidth = 3; ctx.lineCap = 'round';
+    ctx.beginPath();
+    for (let k = 0; k <= prog; k += 0.03) {
+      const x = (1 - k) * (1 - k) * p0.x + 2 * (1 - k) * k * pc.x + k * k * p1.x;
+      const y = (1 - k) * (1 - k) * p0.y + 2 * (1 - k) * k * pc.y + k * k * p1.y;
+      k ? ctx.lineTo(x, y) : ctx.moveTo(x, y);
+    }
+    ctx.stroke();
+    if (prog > 0.92) {
+      const k = prog, x = (1 - k) * (1 - k) * p0.x + 2 * (1 - k) * k * pc.x + k * k * p1.x;
+      const y = (1 - k) * (1 - k) * p0.y + 2 * (1 - k) * k * pc.y + k * k * p1.y;
+      ctx.fillStyle = color;
+      ctx.beginPath(); ctx.arc(x, y, 7, 0, 7); ctx.fill();
+    }
+    ctx.restore();
+  }
+  function scene1(t) {
+    platformCard(140, 296, 'SNOWFLAKE', 'DATA → AGENT PLATFORM', C.cyan, rv(t, 6.7, 0.4));
+    platformCard(580, 296, 'DATABRICKS', 'LAKEHOUSE → AGENT-READY', C.violet, rv(t, 6.95, 0.4));
+    const pg = rv(t, 7.4, 1.0);
+    drawArrowArc({ x: 320, y: 432 }, { x: 330, y: 530 }, { x: 484, y: 552 }, pg, C.cyan);
+    drawArrowArc({ x: 760, y: 432 }, { x: 750, y: 530 }, { x: 596, y: 552 }, pg, C.violet);
+
+    const pop = ease(clamp((t - 8.5) / 0.4));
+    if (pop > 0.01) {
+      const r = 60 * (0.6 + 0.4 * pop);
+      ctx.save(); ctx.globalAlpha *= pop;
+      glow(GLOW.violet, 540, 552, 240, 0.3 * pop);
+      ctx.fillStyle = C.panel2;
+      ctx.beginPath(); ctx.arc(540, 552, r, 0, 7); ctx.fill();
+      ctx.strokeStyle = C.violet; ctx.lineWidth = 4; ctx.stroke();
+      text('AGENT', 540, 554, 28, C.violet, 800, 'center', MONO);
+      ctx.restore();
+    }
+    if (t > 8.8) {
+      const ph = ((t - 8.8) % 1.3) / 1.3;
+      ctx.save(); ctx.globalAlpha *= (1 - ph) * 0.5;
+      ctx.strokeStyle = C.violet; ctx.lineWidth = 2.5;
+      ctx.beginPath(); ctx.arc(540, 552, 60 + 52 * ph, 0, 7); ctx.stroke();
+      ctx.restore();
+    }
+    const CHIPS = [['CONTEXT', 350, 680, C.cyan, 9.2], ['CAPABILITY', 730, 680, C.green, 9.6], ['GOVERNANCE', 350, 738, C.violet, 10.0], ['EXECUTION', 730, 738, C.amber, 10.4]];
+    for (const [label, x, y, color, at] of CHIPS) chipC(label, x, y, color, rv(t, at, 0.4));
+  }
+
+  // ── SCENE 2 · KHAN HIẾM ĐỔI (13–19.5) — 2 cột: rẻ đi / khan hiếm ────────
+  function scene2(t) {
+    roundRect(538, 300, 3, 460, 1.5, hexA(C.line, 0.9));
+    const hA = rv(t, 13.3, 0.4), hB = rv(t, 13.5, 0.4);
+    ctx.save(); ctx.globalAlpha *= hA; text('RẺ ĐI', 300, 322, 26, C.dim, 700, 'center', MONO); ctx.restore();
+    ctx.save(); ctx.globalAlpha *= hB; text('KHAN HIẾM', 780, 322, 26, C.amber, 700, 'center', MONO); ctx.restore();
+
+    const L = [['SQL', 390], ['DAG', 462], ['CONFIG', 534]];
+    L.forEach(([label, y], i) => {
+      const a = rv(t, 13.7 + i * 0.3, 0.4);
+      const fade = 1 - 0.62 * ease(clamp((t - (15.0 + i * 0.5)) / 0.7));
+      chipC(label, 300, y, C.dim, a * fade);
+      const pa = rv(t, 14.4 + i * 0.35, 0.35);
+      if (pa > 0.01) {
+        ctx.save(); ctx.globalAlpha *= pa * (1 - 0.35 * (1 - fade));
+        text('→ 0đ', 430, y + 24, 26, C.amber, 700, 'left', MONO);
+        ctx.restore();
+      }
+    });
+    const R2 = [['CONTEXT', 366, C.cyan], ['KIỂM CHỨNG', 438, C.green], ['GOVERNANCE', 510, C.violet], ['TRÁCH NHIỆM', 582, C.amber]];
+    R2.forEach(([label, y, color], i) => {
+      const a = rv(t, 15.2 + i * 0.4, 0.45);
+      if (a <= 0.01) return;
+      ctx.save(); ctx.globalAlpha *= a; ctx.translate(0, (1 - a) * 26);
+      chipC(label, 780, y, color, 1);
+      ctx.restore();
+    });
+    const boxA = rv(t, 16.6, 0.4);
+    if (boxA > 0.01) roundRect(556, 330, 408, 308, 26, 'rgba(255,200,87,0.03)', hexA(C.amber, 0.5 * boxA), 3);
+  }
+
+  // ── SCENE 3 · THANG ĐÚNG (19.5–27) — 4 mức, mức đỉnh còn "?" ────────────
+  const LADDER = [
+    ['NGHIỆP VỤ ĐÚNG', 296],
+    ['DỮ LIỆU ĐÚNG', 376],
+    ['CHẠY ĐƯỢC', 456],
+    ['CÚ PHÁP', 536]
+  ];
+  function scene3(t) {
+    LADDER.forEach(([label, y], i) => {
+      const a = rv(t, 19.7 + i * 0.25, 0.4);
+      if (a <= 0.01) return;
+      ctx.save(); ctx.globalAlpha *= a; ctx.translate(0, (1 - a) * 16);
+      roundRect(140, y, 800, 68, 16, C.panel, C.line, 2);
+      text(label, 178, y + 34, 28, C.ink, 700, 'left', MONO);
+      ctx.restore();
+      if (i > 0) {
+        const tick = rv(t, 20.4 + (3 - i) * 0.4, 0.3);
+        if (tick > 0.01) {
+          ctx.save(); ctx.globalAlpha *= tick;
+          ctx.fillStyle = hexA(C.green, 0.14); ctx.beginPath(); ctx.arc(896, y + 34, 20, 0, 7); ctx.fill();
+          ctx.strokeStyle = C.green; ctx.lineWidth = 2.5; ctx.stroke();
+          text('✓', 896, y + 35, 24, C.green, 800, 'center', MONO);
+          ctx.restore();
+        }
+      }
+    });
+    const pu = t > 22.2 ? (0.5 + 0.5 * Math.sin(t * 5)) : 0;
+    if (pu > 0) {
+      roundRect(140, 296, 800, 68, 16, null, hexA(C.amber, 0.35 + 0.4 * pu), 3);
+      ctx.save(); ctx.globalAlpha *= 0.6 + 0.4 * pu;
+      ctx.fillStyle = hexA(C.amber, 0.14); ctx.beginPath(); ctx.arc(896, 330, 20, 0, 7); ctx.fill();
+      ctx.strokeStyle = C.amber; ctx.lineWidth = 2.5; ctx.stroke();
+      text('?', 896, 331, 26, C.amber, 800, 'center', MONO);
+      ctx.restore();
+    }
+    const REV = [['TIỀN ĐƠN', 230, C.amber, 23.6], ['GHI NHẬN', 450, C.cyan, 24.1], ['THẬT THU', 670, C.green, 24.6]];
+    for (const [label, x, color, at] of REV) chipC(label, x, 664, color, rv(t, at, 0.4));
+    const cn = rv(t, 25.3, 0.5);
+    if (cn > 0.01) {
+      ctx.save(); ctx.globalAlpha *= cn * 0.7;
+      ctx.strokeStyle = C.red; ctx.lineWidth = 2.5; ctx.setLineDash([10, 9]);
+      for (const [px] of REV.map(r => [r[1]])) {
+        ctx.beginPath(); ctx.moveTo(px, 664); ctx.lineTo(540, 648); ctx.stroke();
+      }
+      ctx.setLineDash([]); ctx.restore();
+      const qa = rv(t, 25.7, 0.4);
+      if (qa > 0.01) {
+        ctx.save(); ctx.globalAlpha *= qa;
+        ctx.fillStyle = hexA(C.red, 0.14); ctx.beginPath(); ctx.arc(540, 636, 22, 0, 7); ctx.fill();
+        ctx.strokeStyle = C.red; ctx.lineWidth = 3; ctx.stroke();
+        text('?', 540, 637, 28, C.red, 800, 'center', MONO);
+        ctx.restore();
+      }
+    }
+  }
+
+  // ── SCENE 4 · NĂM TẦNG (27–34.5) — agent đi QUA harness, không gọi thẳng ─
+  const LAYERS = [
+    ['Ý ĐỊNH', 'L5'], ['ĐIỀU KHIỂN', 'L4'], ['NGỮ NGHĨA', 'L3'], ['HARNESS', 'L2'], ['RUNTIME', 'L1']
+  ];
+  function scene4(t) {
+    LAYERS.forEach(([label, tag], i) => {
+      const y = 296 + i * 84;
+      const a = rv(t, 27.6 + i * 0.28, 0.4);
+      if (a <= 0.01) return;
+      const isH = i === 3;
+      const gl = isH ? rv(t, 29.0, 0.5) : 0;
+      ctx.save(); ctx.globalAlpha *= a; ctx.translate(0, (1 - a) * 18);
+      if (isH && gl > 0.01) glow(GLOW.violet, 540, y + 36, 620, 0.22 * gl);
+      roundRect(150, y, 780, 72, 14, isH ? C.panel2 : C.panel, isH ? hexA(C.violet, 0.55 + 0.4 * gl) : C.line, isH ? 4 : 2);
+      text(label, 188, y + 36, 28, C.ink, 700, 'left', MONO);
+      text(tag, 894, y + 36, 22, C.muted, 700, 'right', MONO);
+      ctx.restore();
+    });
+    // đường "gọi thẳng" bị chặn
+    const lineA = rv(t, 29.2, 0.4);
+    if (lineA > 0.01) {
+      ctx.save(); ctx.globalAlpha *= lineA * 0.85;
+      ctx.strokeStyle = hexA(C.red, 0.65); ctx.lineWidth = 3; ctx.setLineDash([14, 12]); ctx.lineDashOffset = -t * 30;
+      ctx.beginPath(); ctx.moveTo(700, 300); ctx.lineTo(700, 632); ctx.stroke();
+      ctx.setLineDash([]);
+      text('gọi thẳng', 716, 320, 18, hexA(C.red, 0.85), 600, 'left', MONO);
+      ctx.restore();
+    }
+    const xA = rv(t, 30.3, 0.3);
+    if (xA > 0.01) {
+      ctx.save(); ctx.globalAlpha *= xA;
+      ctx.fillStyle = C.bg0; ctx.beginPath(); ctx.arc(700, 545, 24, 0, 7); ctx.fill();
+      ctx.strokeStyle = C.red; ctx.lineWidth = 3; ctx.stroke();
+      text('✗', 700, 546, 26, C.red, 800, 'center', MONO);
+      ctx.restore();
+    }
+    // chấm agent rơi: dừng ở HARNESS rồi mới xuống RUNTIME
+    const fall = ease(clamp((t - 29.6) / 1.8));
+    if (t > 29.6 && t < 31.6) {
+      const y = 288 + fall * 266;
+      glow(GLOW.violet, 540, y, 120, 0.5);
+      ctx.fillStyle = C.violet; ctx.beginPath(); ctx.arc(540, y, 13, 0, 7); ctx.fill();
+    }
+    if (t > 31.4) {
+      const ph = ((t - 31.4) % 0.9) / 0.9;
+      ctx.save(); ctx.globalAlpha *= (1 - ph) * 0.6;
+      ctx.strokeStyle = C.violet; ctx.lineWidth = 3;
+      ctx.beginPath(); ctx.arc(540, 584, 40 + 60 * ph, 0, 7); ctx.stroke();
+      ctx.restore();
+      chipC('policy ✓ · validate ✓ · audit ✓', 540, 730, C.violet, rv(t, 31.9, 0.4));
+    }
+    const fall2 = ease(clamp((t - 32.2) / 1.1));
+    if (t > 32.2 && t < 33.5) {
+      const y = 560 + fall2 * 108;
+      glow(GLOW.green, 540, y, 100, 0.4);
+      ctx.fillStyle = C.green; ctx.beginPath(); ctx.arc(540, y, 11, 0, 7); ctx.fill();
+    }
+    const fl2 = t > 33.3 ? (0.5 + 0.5 * Math.sin(t * 5)) : 0;
+    if (fl2 > 0) roundRect(150, 632, 780, 72, 14, null, hexA(C.cyan, 0.4 + 0.4 * fl2), 3);
+  }
+
+  // ── SCENE 5 · BẢY CỔNG + RỦI RO (34.5–42) ───────────────────────────────
+  function scene5(t) {
+    const gx = i => 150 + i * (740 / 6);
+    for (let i = 0; i < 7; i++) {
+      const a = rv(t, 34.7 + i * 0.12, 0.3);
+      if (a <= 0.01) continue;
+      const x = gx(i);
+      ctx.save(); ctx.globalAlpha *= a;
+      roundRect(x - 30, 352, 8, 62, 4, hexA(C.muted, 0.5));
+      roundRect(x + 22, 352, 8, 62, 4, hexA(C.muted, 0.5));
+      roundRect(x - 30, 344, 60, 8, 4, hexA(C.muted, 0.5));
+      ctx.restore();
+      const tick = rv(t, 35.3 + i * 0.32, 0.3);
+      if (tick > 0.01) {
+        ctx.save(); ctx.globalAlpha *= tick;
+        ctx.fillStyle = hexA(C.green, 0.14); ctx.beginPath(); ctx.arc(x, 392, 17, 0, 7); ctx.fill();
+        ctx.strokeStyle = C.green; ctx.lineWidth = 2.5; ctx.stroke();
+        text('✓', x, 393, 20, C.green, 800, 'center', MONO);
+        ctx.restore();
+      }
+    }
+    const lA = rv(t, 35.8, 0.4);
+    if (lA > 0.01) {
+      ctx.save(); ctx.globalAlpha *= lA;
+      text('Ý ĐỊNH', gx(0), 438, 18, C.muted, 600, 'center', MONO);
+      text('KIỂM CHỨNG', gx(3), 438, 18, C.muted, 600, 'center', MONO);
+      text('AUDIT', gx(6), 438, 18, C.muted, 600, 'center', MONO);
+      ctx.restore();
+    }
+    const RISK = [['AUTO', C.green], ['NOTIFY', C.cyan], ['APPROVE', C.amber], ['BLOCK', C.red]];
+    RISK.forEach(([label, color], i) => {
+      const a = rv(t, 36.4 + i * 0.28, 0.35);
+      if (a <= 0.01) return;
+      ctx.save(); ctx.globalAlpha *= a;
+      roundRect(150 + i * 200, 560, 180, 64, 14, hexA(color, 0.10), hexA(color, 0.55), 2);
+      text(label, 150 + i * 200 + 90, 592, 24, color, 700, 'center', MONO);
+      ctx.restore();
+    });
+    const dotA = rv(t, 37.2, 0.4);
+    if (dotA > 0.01) {
+      ctx.save(); ctx.globalAlpha *= dotA;
+      text('DÒNG TASK', 150, 480, 18, C.dim, 600, 'left', MONO);
+      for (let i = 0; i < 6; i++) {
+        let x = 150 + ((t * 110 + i * 140) % 790);
+        let color = C.violet;
+        if (i === 2 && x > 640) { x = 640; color = C.amber; }
+        if (i === 5 && x > 840) { x = 840; color = C.red; }
+        ctx.fillStyle = color;
+        ctx.beginPath(); ctx.arc(x, 496, 9, 0, 7); ctx.fill();
+      }
+      ctx.restore();
+    }
+    if (t > 39) {
+      const pu = 0.5 + 0.5 * Math.sin(t * 5);
+      roundRect(550, 560, 180, 64, 14, null, hexA(C.amber, 0.35 + 0.4 * pu), 3);
+      roundRect(750, 560, 180, 64, 14, null, hexA(C.red, 0.35 + 0.4 * pu), 3);
+    }
+  }
+
+  // ── SCENE 6 · ĐỔI VAI + LOOP (42–50) ─────────────────────────────────────
+  function scene6(t) {
+    const oldA = 1 - 0.62 * ease(clamp((t - 44.2) / 1.0));
+    chipC('SQL WRITER', 240, 360, C.dim, 0.9 * oldA);
+
+    const P0 = { x: 240, y: 408 }, Pc = { x: 540, y: 620 }, P1 = { x: 860, y: 408 };
+    const qp = k => ({
+      x: (1 - k) * (1 - k) * P0.x + 2 * (1 - k) * k * Pc.x + k * k * P1.x,
+      y: (1 - k) * (1 - k) * P0.y + 2 * (1 - k) * k * Pc.y + k * k * P1.y
+    });
+    const prog = ease(clamp((t - 43.2) / 3.0));
+    if (prog > 0.01) {
+      ctx.save(); ctx.globalAlpha *= 0.8;
+      ctx.strokeStyle = hexA(C.pink, 0.55); ctx.lineWidth = 4; ctx.setLineDash([16, 12]);
+      ctx.beginPath();
+      for (let k = 0; k <= prog; k += 0.025) { const p = qp(k); k ? ctx.lineTo(p.x, p.y) : ctx.moveTo(p.x, p.y); }
+      ctx.stroke(); ctx.setLineDash([]); ctx.restore();
+    }
+    const CARDS = [['CONTEXT', 0.25, C.cyan, 43.7], ['SKILL', 0.5, C.violet, 44.2], ['POLICY', 0.75, C.amber, 44.7]];
+    for (const [label, k, color, at] of CARDS) {
+      const a = rv(t, at, 0.4);
+      if (a <= 0.01) continue;
+      const p = qp(k);
+      ctx.save(); ctx.globalAlpha *= a; ctx.translate(0, (1 - a) * 18);
+      chipC(label, p.x, p.y - 78, color, 1);
+      ctx.restore();
+    }
+    const wk = ease(clamp((t - 43.4) / 3.6));
+    const wp = qp(wk);
+    figure(wp.x, wp.y + 8, 88, '#0a0716', C.pink, 0.65, 1);
+
+    const roleA = rv(t, 46.4, 0.4);
+    if (roleA > 0.01) {
+      ctx.save(); ctx.globalAlpha *= roleA; ctx.translate(0, (1 - roleA) * 16);
+      chipC('NHÀ THIẾT KẾ NĂNG LỰC AGENT', 540, 700, C.pink, 1);
+      ctx.restore();
+    }
+    const crA = rv(t, 46.8, 0.4);
+    if (crA > 0.01) {
+      ctx.save(); ctx.globalAlpha *= crA;
+      text('Ý TƯỞNG: NIE LIFENG · HACKERNOON · QUAN ĐIỂM CÁ NHÂN', 540, 1240, 18, C.dim, 600, 'center', MONO);
+      ctx.restore();
+    }
+    // loop ending — ô đỏ + tick xanh tái xuất
+    const loop = rv(t, 47.6, 0.5);
+    if (loop > 0.01) {
+      ctx.save(); ctx.globalAlpha *= loop;
+      const pu = 0.5 + 0.5 * Math.sin(t * 5);
+      roundRect(430, 296, 232, 62, 12, C.panel, hexA(C.red, 0.35 + 0.4 * pu), 2.5);
+      text('1,28 tỷ', 514, 327, 26, C.red, 800, 'center', MONO);
+      roundRect(608, 306, 42, 42, 21, hexA(C.green, 0.12), C.green, 3);
+      text('✓', 629, 328, 24, C.green, 800, 'center', MONO);
+      ctx.restore();
+    }
+  }
+
+  // ── TITLE BLOCK — layout chữ cache 1 lần / beat (KN-083) ─────────────────
+  function ensureTitle(b) {
+    if (b._L) return;
+    const size = b.size || 84;
+    b._L = layoutLines(b.title, 810, size, 800, 'Arial');
+    b._sL = layoutLines(b.sub, 810, 30, 500, 'Segoe UI');
+  }
+  function drawTitle(t, b, idx, env) {
+    ensureTitle(b);
+    const size = b.size || 84;
+    const entry = idx === 0 ? 1 : rv(t, b.at - 0.05, 0.45);
+    ctx.save(); ctx.globalAlpha *= env;
+    ctx.save(); ctx.translate(0, (1 - entry) * 24);
+    b._L.forEach((line, i) => text(line, 90, 800 + i * size * 1.06, size, C.ink, 800));
+    ctx.restore();
+    roundRect(90, 250, 22, 6, 3, TONES[idx]);
+    text(b.eyebrow, 124, 260, 26, TONES[idx], 700, 'left', MONO);
+    b._sL.forEach((line, i) => text(line, 90, 1100 + i * 33.6, 30, C.muted, 500));
+    ctx.restore();
+  }
+
+  // ── SUBTITLE burned-in — ngắt dòng + gộp run màu cache 1 lần / cửa sổ ───
+  function prepSub(s) {
+    if (s._lines) return;
+    ctx.font = '700 44px "Segoe UI", sans-serif';
+    const spaceW = ctx.measureText(' ').width;
+    const words = s.text.split(' ');
+    const raw = []; let cur = [], curW = 0;
+    for (const w of words) {
+      const wW = ctx.measureText(w).width;
+      const add = cur.length ? spaceW + wW : wW;
+      if (cur.length && curW + add > 786) { raw.push(cur); cur = [w]; curW = wW; }
+      else { cur.push(w); curW += add; }
+    }
+    if (cur.length) raw.push(cur);
+    const joined = s.text.toLowerCase();
+    const mark = new Array(words.length).fill(false);
+    for (const ph of s.hi || []) {
+      const p2 = ph.toLowerCase(); let from = 0;
+      while (true) {
+        const at = joined.indexOf(p2, from);
+        if (at < 0) break;
+        let pos = 0;
+        words.forEach((w, wi) => { const st = pos, en = pos + w.length; if (en > at && st < at + p2.length) mark[wi] = true; pos = en + 1; });
+        from = at + 1;
+      }
+    }
+    let wi = 0;
+    s._lines = raw.map((line) => {
+      const runs = [];
+      for (const w of line) {
+        const hi = mark[wi++];
+        const last = runs[runs.length - 1];
+        if (last && last.hi === hi) last.text += ' ' + w;
+        else runs.push({ hi, text: w, w: 0 });
+      }
+      runs.forEach(r2 => { r2.w = ctx.measureText(r2.text).width; });
+      const total = runs.reduce((a, r2) => a + r2.w, 0) + (runs.length - 1) * spaceW;
+      return { runs, total };
+    });
+    s._space = spaceW;
+    s._h = s._lines.length * 58 + 36;
+    s._top = 1420 - s._h;
+  }
+  function drawSubs(t) {
+    const s = SUBS.find(x => t >= x.at && t < x.end);
+    if (!s) return;
+    prepSub(s);
+    const a = ease(clamp((t - s.at) / 0.25)) * (1 - ease(clamp((t - (s.end - 0.2)) / 0.2)));
+    if (a <= 0.01) return;
+    const idx = Math.max(0, beatAt(s.at + 0.01));
+    ctx.save(); ctx.globalAlpha *= a;
+    roundRect(90, s._top, 810, s._h, 22, 'rgba(4,7,13,0.82)', C.line, 2);
+    ctx.font = '700 44px "Segoe UI", sans-serif';
+    ctx.textAlign = 'left'; ctx.textBaseline = 'middle';
+    s._lines.forEach((line, li) => {
+      let x = 495 - line.total / 2;
+      const y = s._top + 44 + li * 58;
+      for (const r2 of line.runs) {
+        ctx.fillStyle = r2.hi ? TONES[idx] : C.ink;
+        ctx.fillText(r2.text, x, y);
+        x += r2.w + s._space;
+      }
+    });
+    ctx.restore();
+  }
+
+  // ── HUD + progress + footer (hộp an toàn ≤1660) ──────────────────────────
+  function drawHud(t) {
+    const on = (t % 1.2) < 0.75;
+    ctx.globalAlpha = on ? 1 : 0.25;
+    ctx.fillStyle = C.red; ctx.beginPath(); ctx.arc(100, 62, 11, 0, 7); ctx.fill();
+    ctx.globalAlpha = 1;
+    text('REC', 122, 62, 26, C.red, 700, 'left', MONO);
+    text('ĐỌC VỊ · ADS', 192, 62, 24, C.muted, 600, 'left', MONO);
+    text(`T+${String(Math.floor(t)).padStart(2, '0')}s`, 900, 62, 24, C.cyan, 700, 'right', MONO);
+    // progress: 50 vạch giây + vạch beat + fill
+    for (let s = 0; s <= 50; s++) {
+      const x = 90 + (s / 50) * 810;
+      roundRect(x - 1, 1478, 2, s % 10 === 0 ? 13 : 8, 1, hexA(C.muted, s % 10 === 0 ? 0.55 : 0.28));
+    }
+    for (let i = 0; i < beats.length; i++) {
+      const x = 90 + (beats[i].at / DURATION) * 810;
+      roundRect(x - 1, 1474, 2, 21, 1, hexA(TONES[i], 0.85));
+    }
+    roundRect(90, 1498, 810, 8, 4, C.line);
+    const p = clamp(t / DURATION);
+    roundRect(90, 1498, 810 * p, 8, 4, C.violet);
+    const hx = 90 + 810 * p;
+    if (t > 0.05) {
+      roundRect(hx - 7, 1493, 14, 18, 4, hexA(C.green, 0.28));
+      roundRect(hx - 3, 1493, 6, 18, 3, C.green);
+    }
+    text('HACKERNOON · 27.09.2026 · QUAN ĐIỂM', 90, 1560, 22, C.muted, 600, 'left', MONO);
+    text('CLIP · YUNIE', 900, 1560, 22, C.violet, 700, 'right', MONO);
+  }
+  function overlays(t) {
+    const by = ((t * 130) % (H + 600)) - 300;
+    ctx.drawImage(bandCache, 0, Math.round(by - 142));
+    ctx.drawImage(fxCache, 0, 0);
+  }
+
+  // ── DRAW — mọi thứ suy từ `t`, KHÔNG state tích lũy (guard chụp giây bất kỳ) ─
+  function draw(rawT) {
+    const t = Math.min(Math.max(rawT, 0), DURATION - 0.001);
+    const idx = Math.max(0, beatAt(t));
+    const b = beats[idx];
+    ctx.drawImage(bgCache, 0, 0);
+    // Beat 0 KHÔNG fade-in (t=0 phải là cover hoàn chỉnh), chỉ fade khi thoát beat.
+    const env = idx === 0
+      ? (1 - ease(clamp((t - (b.end - 0.25)) / 0.5)))
+      : ease(clamp((t - (b.at - 0.3)) / 0.55)) * (1 - ease(clamp((t - (b.end - 0.25)) / 0.5)));
+    ctx.save(); ctx.globalAlpha *= env;
+    if (idx === 0) scene0(t);
+    else if (idx === 1) scene1(t);
+    else if (idx === 2) scene2(t);
+    else if (idx === 3) scene3(t);
+    else if (idx === 4) scene4(t);
+    else if (idx === 5) scene5(t);
+    else scene6(t);
+    ctx.restore();
+    drawTitle(t, b, idx, env);
+    drawSubs(t);
+    drawHud(t);
+    overlays(t);
+  }
+
+  // ── CONTRACT + LOOP ───────────────────────────────────────────────────────
+  window.__clip = { duration: DURATION, width: W, height: H, draw, beats, freeze: false };
+  const t0 = performance.now();
+  function loop() {
+    if (!window.__clip.freeze) draw(((performance.now() - t0) / 1000) % DURATION);
+    requestAnimationFrame(loop);
+  }
+  loop();
+})();
+</script>
+</body>
+</html>
