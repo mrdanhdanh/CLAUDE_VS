@@ -1,17 +1,17 @@
 {
-  "generatedAt": "2026-09-25T13:55:42.998Z",
+  "generatedAt": "2026-09-27T13:22:18.114Z",
   "generatedBy": "auto-learn.mjs watchdog",
   "policy": {
     "escalateDays": 30,
     "evaporateDays": 90
   },
   "counts": {
-    "bugsTotal": 65,
+    "bugsTotal": 69,
     "open": 0,
     "fresh": 0,
     "escalate": 0,
     "evaporate": 0,
-    "closed": 65
+    "closed": 69
   },
   "bugs": []
 }

@@ -1,10 +1,10 @@
 {
-  "generatedAt": "2026-09-25T13:55:42.540Z",
+  "generatedAt": "2026-09-27T13:22:17.670Z",
   "generatedBy": "entangle.mjs --graph",
   "scanned": {
-    "files": 1721,
-    "edges": 1995,
-    "commits": 253
+    "files": 1775,
+    "edges": 2071,
+    "commits": 267
   },
   "thresholds": {
     "hubMinRefs": 10,
@@ -13,15 +13,15 @@
   "hubs": [
     {
       "file": "docs/knowleged.md",
-      "refs": 131
+      "refs": 136
     },
     {
       "file": "www/status.json",
-      "refs": 72
+      "refs": 75
     },
     {
       "file": "www/index.html",
-      "refs": 63
+      "refs": 64
     },
     {
       "file": "www/cosmos/index.html",
@@ -49,10 +49,14 @@
     },
     {
       "file": "www/ai-news/curated.json",
-      "refs": 21
+      "refs": 22
     },
     {
       "file": "www/app.js",
+      "refs": 20
+    },
+    {
+      "file": "www/cosmos/scale.json",
       "refs": 20
     },
     {
@@ -61,10 +65,6 @@
     },
     {
       "file": "scripts/slop-check.mjs",
-      "refs": 19
-    },
-    {
-      "file": "www/cosmos/scale.json",
       "refs": 19
     },
     {
@@ -80,16 +80,16 @@
       "refs": 17
     },
     {
-      "file": "docs/harness-2.1-upgrade.md",
-      "refs": 15
+      "file": "tests/e2e/guard-redteam.spec.ts",
+      "refs": 16
     },
     {
       "file": "docs/capabilities.md",
-      "refs": 14
+      "refs": 15
     },
     {
-      "file": "tests/e2e/guard-redteam.spec.ts",
-      "refs": 14
+      "file": "docs/harness-2.1-upgrade.md",
+      "refs": 15
     }
   ],
   "clusters": [
@@ -943,8 +943,76 @@
       "tests/e2e/detection-egress-p0.spec.ts"
     ],
     [
+      ".agent/bugs/2026-09-25-power-sweep-false-green-liveness-khong-phai-health/bug.md",
+      "docs/capabilities.md"
+    ],
+    [
+      ".agent/bugs/2026-09-25-power-sweep-false-green-liveness-khong-phai-health/bug.md",
+      "docs/knowleged.md"
+    ],
+    [
+      ".agent/bugs/2026-09-25-power-sweep-false-green-liveness-khong-phai-health/bug.md",
+      "www/cosmos/scale.json"
+    ],
+    [
       ".agent/bugs/2026-09-25-setup-doctor-windows-port-probe-noise/bug.md",
       "docs/knowleged.md"
+    ],
+    [
+      ".agent/bugs/2026-09-26-clip-jargon-noi-bo-khong-hieu/bug.md",
+      "docs/knowleged.md"
+    ],
+    [
+      ".agent/bugs/2026-09-26-clip-jargon-noi-bo-khong-hieu/bug.md",
+      "www/openai-hf-hack/index.html"
+    ],
+    [
+      ".agent/bugs/2026-09-26-clip-jargon-noi-bo-khong-hieu/bug.md",
+      "www/openai-hf-hack/openai-hf-hack-30s.mp4"
+    ],
+    [
+      ".agent/bugs/2026-09-26-clip-jargon-noi-bo-khong-hieu/bug.md",
+      "www/openai-hf-hack/voiceover-segments.json"
+    ],
+    [
+      ".agent/bugs/2026-09-26-clip-lag-ve-qua-nang-capture-30fps-ghi-lap-khung/bug.md",
+      "docs/knowleged.md"
+    ],
+    [
+      ".agent/bugs/2026-09-26-clip-lag-ve-qua-nang-capture-30fps-ghi-lap-khung/bug.md",
+      "tests/e2e/clip-perf-guard.spec.ts"
+    ],
+    [
+      ".agent/bugs/2026-09-26-clip-lag-ve-qua-nang-capture-30fps-ghi-lap-khung/bug.md",
+      "www/lang-ai-era/index.html"
+    ],
+    [
+      ".agent/bugs/2026-09-26-clip-lag-ve-qua-nang-capture-30fps-ghi-lap-khung/bug.md",
+      "www/lang-ai-era/verify-perf.mjs"
+    ],
+    [
+      ".agent/bugs/2026-09-26-font-georgia-vo-dau-tieng-viet-trong-canvas-clip/bug.md",
+      "docs/knowleged.md"
+    ],
+    [
+      ".agent/bugs/2026-09-26-font-georgia-vo-dau-tieng-viet-trong-canvas-clip/bug.md",
+      "tests/e2e/clip-font-guard.spec.ts"
+    ],
+    [
+      ".agent/bugs/2026-09-26-font-georgia-vo-dau-tieng-viet-trong-canvas-clip/bug.md",
+      "www/agent-vuot-rao/index.html"
+    ],
+    [
+      ".agent/bugs/2026-09-26-font-georgia-vo-dau-tieng-viet-trong-canvas-clip/bug.md",
+      "www/agent-vuot-rao/verify/frame-09s.png"
+    ],
+    [
+      ".agent/bugs/2026-09-26-font-georgia-vo-dau-tieng-viet-trong-canvas-clip/bug.md",
+      "www/rogue-agent/index.html"
+    ],
+    [
+      ".agent/bugs/2026-09-26-font-georgia-vo-dau-tieng-viet-trong-canvas-clip/bug.md",
+      "www/rogue-agent/verify/frame-08s.png"
     ],
     [
       ".agent/bugs/README.md",
@@ -1029,6 +1097,34 @@
     [
       ".agent/plans/aar-harness/report-pairwise-report-check.md",
       "www/library/export.json"
+    ],
+    [
+      ".agent/plans/agent-vuot-rao-tiktok/plan.md",
+      ".agent/plans/agent-vuot-rao-tiktok/publish.md"
+    ],
+    [
+      ".agent/plans/agent-vuot-rao-tiktok/plan.md",
+      "www/agent-vuot-rao/agent-vuot-rao-48s.mp4"
+    ],
+    [
+      ".agent/plans/agent-vuot-rao-tiktok/publish.md",
+      ".agent/plans/agent-vuot-rao-tiktok/research.md"
+    ],
+    [
+      ".agent/plans/agent-vuot-rao-tiktok/publish.md",
+      "tests/e2e/clip-font-guard.spec.ts"
+    ],
+    [
+      ".agent/plans/agent-vuot-rao-tiktok/publish.md",
+      "www/agent-vuot-rao/agent-vuot-rao-48s.mp4"
+    ],
+    [
+      ".agent/plans/agent-vuot-rao-tiktok/publish.md",
+      "www/agent-vuot-rao/verify/frame-03s.png"
+    ],
+    [
+      ".agent/plans/agent-vuot-rao-tiktok/research.md",
+      "tests/e2e/guard-redteam.spec.ts"
     ],
     [
       ".agent/plans/agentic-academy/design.md",
@@ -1309,6 +1405,42 @@
     [
       ".agent/plans/claude-art-tiktok/publish.md",
       "www/claude-art/claude-art-50s.mp4"
+    ],
+    [
+      ".agent/plans/clip-craft/design.md",
+      ".agent/plans/clip-craft/prd.md"
+    ],
+    [
+      ".agent/plans/clip-craft/design.md",
+      ".agent/plans/clip-craft/upgrade-ideas.md"
+    ],
+    [
+      ".agent/plans/clip-craft/plan.md",
+      ".agent/plans/clip-craft/design.md"
+    ],
+    [
+      ".agent/plans/clip-craft/plan.md",
+      ".agent/plans/clip-craft/prd.md"
+    ],
+    [
+      ".agent/plans/clip-craft/plan.md",
+      ".agent/plans/clip-craft/upgrade-ideas.md"
+    ],
+    [
+      ".agent/plans/clip-craft/plan.md",
+      "www/status.json"
+    ],
+    [
+      ".agent/plans/clip-craft/prd.md",
+      ".agent/plans/clip-craft/design.md"
+    ],
+    [
+      ".agent/plans/clip-craft/prd.md",
+      ".agent/plans/clip-craft/upgrade-ideas.md"
+    ],
+    [
+      ".agent/plans/clip-craft/upgrade-ideas.md",
+      "www/openai-hf-hack/index.html"
     ],
     [
       ".agent/plans/cosmos-3d/design.md",
@@ -2495,6 +2627,38 @@
       "tests/e2e/instruction-budget.spec.ts"
     ],
     [
+      ".agent/plans/lang-ai-era-tiktok/plan.md",
+      ".agent/plans/lang-ai-era-tiktok/publish.md"
+    ],
+    [
+      ".agent/plans/lang-ai-era-tiktok/plan.md",
+      "www/lang-ai-era/index.html"
+    ],
+    [
+      ".agent/plans/lang-ai-era-tiktok/plan.md",
+      "www/lang-ai-era/lang-ai-era-50s.mp4"
+    ],
+    [
+      ".agent/plans/lang-ai-era-tiktok/plan.md",
+      "www/status.json"
+    ],
+    [
+      ".agent/plans/lang-ai-era-tiktok/prd.md",
+      ".agent/plans/lang-ai-era-tiktok/research.md"
+    ],
+    [
+      ".agent/plans/lang-ai-era-tiktok/publish.md",
+      "www/ai-news/ai-news.json"
+    ],
+    [
+      ".agent/plans/lang-ai-era-tiktok/publish.md",
+      "www/lang-ai-era/lang-ai-era-50s.mp4"
+    ],
+    [
+      ".agent/plans/lang-ai-era-tiktok/research.md",
+      "www/ai-news/ai-news.json"
+    ],
+    [
       ".agent/plans/library-rag/plan.md",
       "docs/capabilities.md"
     ],
@@ -2625,6 +2789,46 @@
     [
       ".agent/plans/n5-blazor-ladder/prd.md",
       "www/ai-news/ai-news.json"
+    ],
+    [
+      ".agent/plans/openai-hf-hack-tiktok/plan.md",
+      ".agent/plans/openai-hf-hack-tiktok/design.md"
+    ],
+    [
+      ".agent/plans/openai-hf-hack-tiktok/plan.md",
+      ".agent/plans/openai-hf-hack-tiktok/prd.md"
+    ],
+    [
+      ".agent/plans/openai-hf-hack-tiktok/plan.md",
+      ".agent/plans/openai-hf-hack-tiktok/publish.md"
+    ],
+    [
+      ".agent/plans/openai-hf-hack-tiktok/plan.md",
+      ".agent/plans/openai-hf-hack-tiktok/research.md"
+    ],
+    [
+      ".agent/plans/openai-hf-hack-tiktok/plan.md",
+      "www/openai-hf-hack/index.html"
+    ],
+    [
+      ".agent/plans/openai-hf-hack-tiktok/plan.md",
+      "www/openai-hf-hack/voiceover-segments.json"
+    ],
+    [
+      ".agent/plans/openai-hf-hack-tiktok/prd.md",
+      ".agent/plans/openai-hf-hack-tiktok/publish.md"
+    ],
+    [
+      ".agent/plans/openai-hf-hack-tiktok/publish.md",
+      "www/openai-hf-hack/openai-hf-hack-30s.mp4"
+    ],
+    [
+      ".agent/plans/openai-hf-hack-tiktok/research.md",
+      "www/ai-news/ai-news.json"
+    ],
+    [
+      ".agent/plans/openai-hf-hack-tiktok/research.md",
+      "www/ai-news/curated.json"
     ],
     [
       ".agent/plans/openbot-governance/design.md",
@@ -2813,6 +3017,10 @@
     [
       ".agent/plans/rogue-agent-tiktok/publish.md",
       ".agent/plans/rogue-agent-tiktok/research.md"
+    ],
+    [
+      ".agent/plans/rogue-agent-tiktok/publish.md",
+      "tests/e2e/clip-font-guard.spec.ts"
     ],
     [
       ".agent/plans/rogue-agent-tiktok/publish.md",
@@ -3923,6 +4131,10 @@
       "www/web-thuat-toan/app.js"
     ],
     [
+      ".github/agents/clip-director.agent.md",
+      "docs/knowleged.md"
+    ],
+    [
       ".github/agents/critic.agent.md",
       "docs/knowleged.md"
     ],
@@ -3973,6 +4185,10 @@
     [
       ".github/copilot-instructions.md",
       "www/status.json"
+    ],
+    [
+      ".github/harness/registry.json",
+      ".github/agents/clip-director.agent.md"
     ],
     [
       ".github/harness/scripts/auto-learn.mjs",
@@ -4097,6 +4313,26 @@
     [
       ".github/harness/scripts/setup-doctor.mjs",
       "www/library/tool-registry.mjs"
+    ],
+    [
+      ".github/instructions/agent-governance.instructions.md",
+      "docs/llm-weakness-research.md"
+    ],
+    [
+      ".github/instructions/agent-governance.instructions.md",
+      "N5Blazor.Tests/ServiceTests.cs"
+    ],
+    [
+      ".github/instructions/agent-governance.instructions.md",
+      "tests/e2e/guard-redteam.spec.ts"
+    ],
+    [
+      ".github/instructions/agent-governance.instructions.md",
+      "www/index.html"
+    ],
+    [
+      ".github/instructions/agent-governance.instructions.md",
+      "www/status.json"
     ],
     [
       ".github/instructions/auto-learn.instructions.md",
@@ -5524,6 +5760,10 @@
     ],
     [
       ".github/skills/harness-web-ui/references/evidence.md",
+      "tests/e2e/clip-font-guard.spec.ts"
+    ],
+    [
+      ".github/skills/harness-web-ui/references/evidence.md",
       "tests/e2e/cosmos-lab12-qec.spec.ts"
     ],
     [
@@ -5691,6 +5931,14 @@
       "package.json"
     ],
     [
+      ".github/skills/video-clip/references/font-test.mjs",
+      ".github/skills/video-clip/references/font-test.html"
+    ],
+    [
+      ".github/skills/video-clip/SKILL.md",
+      "tests/e2e/clip-font-guard.spec.ts"
+    ],
+    [
       ".github/skills/video-clip/templates/render.mjs",
       ".github/skills/video-clip/templates/index.html"
     ],
@@ -5700,6 +5948,10 @@
     ],
     [
       ".github/skills/video-clip/templates/verify-frames.mjs",
+      ".github/skills/video-clip/templates/index.html"
+    ],
+    [
+      ".github/skills/video-clip/templates/verify-perf.mjs",
       ".github/skills/video-clip/templates/index.html"
     ],
     [
@@ -6204,6 +6456,14 @@
     ],
     [
       "docs/knowleged.md",
+      "tests/e2e/clip-font-guard.spec.ts"
+    ],
+    [
+      "docs/knowleged.md",
+      "tests/e2e/clip-perf-guard.spec.ts"
+    ],
+    [
+      "docs/knowleged.md",
       "tests/e2e/cosmos-audit-probe.spec.ts"
     ],
     [
@@ -6289,6 +6549,10 @@
     [
       "docs/knowleged.md",
       "www/index.html"
+    ],
+    [
+      "docs/knowleged.md",
+      "www/lang-ai-era/verify-perf.mjs"
     ],
     [
       "docs/knowleged.md",
@@ -6737,6 +7001,18 @@
     [
       "www/aar/index.html",
       "www/styles.css"
+    ],
+    [
+      "www/agent-vuot-rao/render.mjs",
+      "www/agent-vuot-rao/index.html"
+    ],
+    [
+      "www/agent-vuot-rao/render.mjs",
+      "www/agent-vuot-rao/verify-audio.mjs"
+    ],
+    [
+      "www/agent-vuot-rao/verify-frames.mjs",
+      "www/agent-vuot-rao/index.html"
     ],
     [
       "www/agentic-academy/app.js",
@@ -7515,6 +7791,22 @@
       "www/yt-summary/index.html"
     ],
     [
+      "www/lang-ai-era/render.mjs",
+      "www/lang-ai-era/index.html"
+    ],
+    [
+      "www/lang-ai-era/render.mjs",
+      "www/lang-ai-era/verify-audio.mjs"
+    ],
+    [
+      "www/lang-ai-era/verify-frames.mjs",
+      "www/lang-ai-era/index.html"
+    ],
+    [
+      "www/lang-ai-era/verify-perf.mjs",
+      "www/lang-ai-era/index.html"
+    ],
+    [
       "www/meta-charm/render.mjs",
       "www/meta-charm/index.html"
     ],
@@ -7837,6 +8129,18 @@
     [
       "www/n5-blazor/vocab.html",
       "www/n5-blazor/site.js"
+    ],
+    [
+      "www/openai-hf-hack/render.mjs",
+      "www/openai-hf-hack/index.html"
+    ],
+    [
+      "www/openai-hf-hack/render.mjs",
+      "www/openai-hf-hack/verify-audio.mjs"
+    ],
+    [
+      "www/openai-hf-hack/verify-frames.mjs",
+      "www/openai-hf-hack/index.html"
     ],
     [
       "www/rogue-agent/render.mjs",
