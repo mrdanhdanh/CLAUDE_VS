@@ -1,7 +1,7 @@
 {
   "version": 1,
   "description": "Component-level evals (KN-037/KN-072) — mỗi entry = 1 mắt xích harness được đo RIÊNG bằng command deterministic (execution loop cố định, 1 biến / entry). Expectations = số đo thật 2026-09-22 (exit code + stdout marker), không đoán. Runner: eval-gate.mjs --scope components | --scope all. Fail-closed: registry thiếu/hỏng → FAIL.",
-  "measuredAt": "2026-09-25",
+  "measuredAt": "2026-09-27",
   "components": [
     {
       "id": "policy-deny-first",
@@ -82,6 +82,14 @@
       "claim": "missing marker / drift / exit lệch / arg rác / mirror + scale stale đều phải ĐỎ",
       "cmd": "node .github/harness/scripts/power-check.mjs --self-test",
       "expect": { "exit": 0, "stdout": "power-check self-test: 7 cases passed" }
+    },
+    {
+      "id": "rank-stability-selftest",
+      "name": "rank-stability — bootstrap + sensitivity + shelf-life (negative controls)",
+      "ref": "KN-080",
+      "claim": "clear=firm pass · near-tie=claim fail · stale=claim fail · malformed/single-run/bad-args=exit 2",
+      "cmd": "node .github/harness/scripts/rank-stability.mjs selftest",
+      "expect": { "exit": 0, "stdout": "SELFTEST OK" }
     }
   ]
 }

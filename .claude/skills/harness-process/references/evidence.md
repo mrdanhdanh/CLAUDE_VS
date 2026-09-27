@@ -1,8 +1,8 @@
 # Evidence — harness-process (DisCo arXiv:2609.02749v1 §3.2 (task-agnostic))
 
-> Substrate layer của skill — full text từ docs/knowleged.md. Sinh tự động 2026-09-26T10:56:29.820Z.
+> Substrate layer của skill — full text từ docs/knowleged.md. Sinh tự động 2026-09-27T14:30:54.585Z.
 
-## Bug reports liên quan (17/68 bugs)
+## Bug reports liên quan (17/69 bugs)
 
 - `.agent/bugs/2026-08-30-bug-blindness/bug.md` — Bug: Bug Blindness — mù bug do workaround vô thức + fan bias
 - `.agent/bugs/2026-09-03-rag-export-missing-grounding-chet/bug.md` — Bug: RAG export missing grounding chet
@@ -884,7 +884,7 @@
 - **Ngày:** 2026-09-26
 - **Bug report:** N/A — bài học từ arXiv:2609.30074v1 (Dipankar Sarkar — 24/09/2026, self-audit LLM-inferred prompt structure)
 - **Severity:** major
-- **Guard:** Advisory (disclosure): discipline báo cáo trong skill `evals-gate` §6 + `auto-researcher` Step 4; phần máy-check được = grounding fact-grader (`eval-gate --scope grounding` chặn số/quote bịa). Rank-stability chưa có máy chấm — checklist-level.
+- **Guard (ENFORCED 2026-09-27, nâng từ advisory):** `.github/harness/scripts/rank-stability.mjs` — seeded prompt-cluster bootstrap (retention/pTop1/CI diff) + sensitivity 3 quy tắc (mean/median/winrate) + raw per-run bắt buộc + shelf-life; claim không được evidence hỗ trợ → exit 1, input/arg sai → exit 2 (KN-069); `selftest` 6 case có negative control chạy thật (KN-078) + entry `rank-stability-selftest` trong `.github/harness/evals/components.json` (tự vào `eval-gate --scope all`/power sweep) + spec `tests/e2e/rank-stability-guard.spec.ts`. Discipline kể chuyện giữ ở skill `evals-gate` §6 + `auto-researcher` Step 4; grounding fact-grader (`--scope grounding`) vẫn là lớp số/quote.
 - **Layer:** `process` — cách rút kết luận từ đo lường, không phải lỗi đo.
 - **Liên quan:** KN-037 (Evals Gate) · KN-010 (AAR keep-best) · KN-019 (measured > perceived) · KN-023 (self-prefer bias) · KN-067 (π₀-in-set — top-2 noise → giữ bản đơn giản/hiện tại).
 - **Triệu chứng:** Audit nội bộ 8 model variants (5 families, 8B–675B, caching disabled, 293 raw intermediate reps): identical calls KHÔNG reliably recover identical structure — mean node-set Jaccard 0.39–0.96, **72% prompt-model cells không bao giờ node-set-perfect**. Joint cluster bootstrap: chỉ **đáy** bảng vững (2 model kém ổn định nhất giữ hạng 99%/86%), middle 27–48%, top chỉ 68% — "identifies the worst model reliably but does NOT reliably identify the best". Hai quy tắc merge hợp lý (đều defensible) đổi **4/8 hàng + headline 7pp**. Reproducibility ≠ accuracy. **4/8 endpoint bị thu hồi trong 10 tuần** — study as specified không chạy lại được nữa.

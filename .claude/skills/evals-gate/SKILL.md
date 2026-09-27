@@ -80,7 +80,7 @@ Output có số liệu/trích dẫn nguồn ngoài (report, plan, summary, PRD, 
 
 Khi benchmark/so sánh/rank (AAR 3 methods, model comparison, component evals):
 
-- **Rank stability trước "best":** top-2 nằm trong noise → KHÔNG tuyên "best" — chọn bản đơn giản hơn (minimal-ladder tiebreak) hoặc giữ π₀ (KN-067), ghi rõ "trong noise".
+- **Rank stability trước "best" — MÁY CHẤM (enforce 27/09):** `node .github/harness/scripts/rank-stability.mjs check --file .agent/benchmarks/<task>/results.json --claim "best"` — seeded prompt-cluster bootstrap (retention/pTop1/CI diff) + sensitivity + shelf-life + raw per-run; claim không được evidence hỗ trợ → **exit 1**, input/arg sai → **exit 2**. Format: `{ measuredAt, claim?, models[], cells[{prompt, model, runs[], truth?}] }` — raw per-run bắt buộc (aggregate-only = fail-closed), `truth` all-or-none. Top-2 nằm trong noise → KHÔNG tuyên "best" — chọn bản đơn giản hơn (minimal-ladder tiebreak) hoặc giữ π₀ (KN-067), ghi rõ "trong noise".
 - **Sensitivity executed:** chạy ≥2 quy tắc tổng hợp hợp lý (mean/median/majority); kết luận đổi theo quy tắc → ghi thẳng "phụ thuộc quy tắc", không trưng 1 bảng như chân lý.
 - **Provenance + raw per-run:** mỗi ô truy về raw run đã lưu (`.agent/benchmarks/<task>-<method>.md` + raw) — aggregate một mình không đủ.
 - **Ngày đo + shelf-life:** mọi báo cáo eval ghi `Measured: YYYY-MM-DD`; model/endpoint/API deprecate → kết quả hết hạn, re-run trước khi tái dùng (4/8 endpoint chết trong 10 tuần).
@@ -122,14 +122,14 @@ Không dùng (các) pattern nào task không cần — agency là cost phải ju
 - [ ] Output có số/quote nguồn ngoài → đã chạy grounding fact-grader (`--scope grounding` — invented = fail)?
 - [ ] E2E — scenario thật, goal achieved, không chỉ build xanh?
 - [ ] Error analysis — failures cùng loại ≥2 đã aggregate trước khi fix?
-- [ ] Nếu rank/so sánh ≥2 phương án: đã report rank stability + ≥2 aggregation (sensitivity) + ngày đo + raw runs? (KN-080)
+- [ ] Nếu rank/so sánh ≥2 phương án: đã chạy `rank-stability.mjs check` (rank stability + ≥2 aggregation + ngày đo + raw runs)? (KN-080)
 - [ ] Critique có nguồn ngoài model (tool đo / framing đối lập)?
 - [ ] Số đo kèm claim (nếu claim nhanh/tốt hơn)?
 - [ ] Slop check (duplication/complexity) đã chạy trên changed files? (KN-047)
 
 ## Nguồn
 - Andrew Ng — "Agentic AI" (DeepLearning.AI, Playbook 2026) — distilled: `books/Andrew-Ng-Agentic-AI-Playbook-2026-Distilled.md`
-- Cơ chế: `eval-gate.mjs --scope components` (registry `.github/harness/evals/components.json`) + `--scope grounding` (fact-grader) — KN-072 (component-level), KN-056 (guard), spec `tests/e2e/eval-gate-components.spec.ts`
+- Cơ chế: `eval-gate.mjs --scope components` (registry `.github/harness/evals/components.json`) + `--scope grounding` (fact-grader) + `rank-stability.mjs` (bootstrap + sensitivity — KN-080) — KN-072 (component-level), KN-056 (guard), spec `tests/e2e/eval-gate-components.spec.ts` + `tests/e2e/rank-stability-guard.spec.ts`
 - Harness: KN-037 · liên quan: KN-018 (dissent), KN-019 (metrics), KN-022 (pipeline vs agency), KN-023 (verify ngoài model), KN-034 (error analysis), KN-047 (slop gate), KN-072 (component-level evidence)
 
 ---
