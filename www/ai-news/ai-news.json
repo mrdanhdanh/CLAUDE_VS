@@ -1,12 +1,12 @@
 {
-  "generatedAt": "2026-09-26T07:05:16.530Z",
+  "generatedAt": "2026-09-27T07:36:48.111Z",
   "generatedBy": "YUNIE × Last30Days",
   "version": 2,
   "description": "Tin AI mới nhất — tổng hợp từ Last30Days (HN, GitHub, DEV.to, Reddit, arXiv, HackerNoon) trong 30 ngày qua. Chủ đề: AI. Tự động cập nhật bởi YUNIE.",
   "last30days": {
     "enabled": true,
     "topic": "AI",
-    "since": "2026-08-27",
+    "since": "2026-08-28",
     "days": 30,
     "sources": [
       "Hacker News (Algolia, free)",
@@ -55,157 +55,157 @@
   ],
   "articles": [
     {
-      "id": "hn-49853522",
-      "title": "Can AI Shopping Agents Be Trusted?",
-      "summary": "Can AI Shopping Agents Be Trusted? — 14 points, 24 comments on HN.",
+      "id": "hn-49864109",
+      "title": "I expect AI replication incidents by 2027",
+      "summary": "I expect AI replication incidents by 2027 — 5 points, 1 comments on HN.",
       "source": "Hacker News",
-      "sourceUrl": "https://www.f-secure.com/en/partners/insights/can-ai-shopping-agents-be-trusted-we-built-one-to-find-out",
+      "sourceUrl": "https://www.lesswrong.com/posts/BhcymsLgyYazh6sme/why-i-expect-ai-replication-incidents-by-2027",
       "category": "products",
-      "date": "2026-09-26",
+      "date": "2026-09-27",
       "hot": false,
       "tags": [
         "HN",
         "AI",
         "story",
-        "author_ddaniel10"
+        "author_joozio"
       ]
     },
     {
-      "id": "hn-49853177",
-      "title": "Evolving programming languages in the AI era",
-      "summary": "Evolving programming languages in the AI era — 7 points, 1 comments on HN.",
+      "id": "hn-49862920",
+      "title": "Show HN: PeerTalk.ai - Let your agent talk to a friend's agent",
+      "summary": "Little experiment I&#x27;ve been cooking up.<p>I often find myself wanting to do one of the following:<p>- Get my agent and a someone else&#x27;s agent to agree on something, after we&#x27;ve been discussing the same top — 4 points, 3 comments on HN.",
       "source": "Hacker News",
-      "sourceUrl": "https://twitter.com/josevalim/status/2103133294317445290",
+      "sourceUrl": "https://peertalk.ai",
       "category": "products",
-      "date": "2026-09-26",
+      "date": "2026-09-27",
       "hot": false,
       "tags": [
         "HN",
         "AI",
         "story",
-        "author_ksec"
+        "author_bluepnume"
       ]
     },
     {
-      "id": "hn-49852079",
-      "title": "Why AI is booming, but productivity isn't",
-      "summary": "Why AI is booming, but productivity isn't — 5 points, 0 comments on HN.",
+      "id": "hn-49863072",
+      "title": "Sydney retiree bids to be first to travel Australia on electric motorcycle",
+      "summary": "Sydney retiree bids to be first to travel Australia on electric motorcycle — 3 points, 0 comments on HN.",
       "source": "Hacker News",
-      "sourceUrl": "https://research.socialcapital.com/p/ai-roi",
+      "sourceUrl": "https://www.abc.net.au/news/2026-09-27/man-aims-to-travel-australia-on-electric-motorcycle/107190208",
       "category": "products",
-      "date": "2026-09-26",
+      "date": "2026-09-27",
       "hot": false,
       "tags": [
         "HN",
         "AI",
         "story",
-        "author_gmays"
+        "author_defrost"
       ]
     },
     {
-      "id": "hn-49853845",
-      "title": "AI was supposed to hit new grads hard. So far, unemployment data says otherwise",
-      "summary": "AI was supposed to hit new grads hard. So far, unemployment data says otherwise — 4 points, 1 comments on HN.",
+      "id": "hn-49862289",
+      "title": "Insurers claim AI is increasing healthcare costs",
+      "summary": "Insurers claim AI is increasing healthcare costs — 3 points, 0 comments on HN.",
       "source": "Hacker News",
-      "sourceUrl": "https://arstechnica.com/ai/2026/09/ai-was-supposed-to-hit-new-grads-hard-so-far-unemployment-data-says-otherwise/",
+      "sourceUrl": "https://techcrunch.com/2026/09/26/insurers-claim-ai-is-already-increasing-healthcare-costs/",
       "category": "products",
-      "date": "2026-09-26",
+      "date": "2026-09-27",
       "hot": false,
       "tags": [
         "HN",
         "AI",
         "story",
-        "author_MrDresden"
+        "author_sbulaev"
       ]
     },
     {
-      "id": "hn-49853879",
-      "title": "It's a Jev's World",
-      "summary": "It's a Jev's World — 3 points, 0 comments on HN.",
+      "id": "hn-49862227",
+      "title": "Play Diplomacy against AIs like Claude or GPT: they betray, scheme, etc.",
+      "summary": "Play Diplomacy against AIs like Claude or GPT: they betray, scheme, etc. — 3 points, 0 comments on HN.",
       "source": "Hacker News",
-      "sourceUrl": "https://www.bolna.ai/blog/testing-jev-on-real-phone-calls",
+      "sourceUrl": "https://twitter.com/olam_labs/status/2103986923346043362",
       "category": "products",
-      "date": "2026-09-26",
+      "date": "2026-09-27",
       "hot": false,
       "tags": [
         "HN",
         "AI",
         "story",
-        "author_xan_ps007"
+        "author_sensho"
       ]
     },
     {
-      "id": "hnoon-the-hacker-house-files-14-notorious-scandals-from-8-prominen",
-      "title": "The Hacker House Files: 14 Notorious Scandals From 8 Prominent SF Bay Area Houses",
-      "summary": "From AGI House's 37 police calls to a still-open rape report at Genesis: 14 scandals from 8 Bay Area hacker houses, sourced from police records and lawsuits. — by The Tech Reckoning is Upon Us! on HackerNoon.",
+      "id": "hnoon-the-economics-of-the-euro20-indie-game",
+      "title": "The Economics of the €20 Indie Game",
+      "summary": "How much does a €20 indie game really make? Explore platform fees, taxes, discounts, development costs, and why audience size matters more than price. — by Pantelis Kassotis on HackerNoon.",
       "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/the-hacker-house-files-14-notorious-scandals-from-8-prominent-bay-area-houses",
+      "sourceUrl": "https://hackernoon.com/the-economics-of-the-euro20-indie-game",
+      "category": "products",
+      "date": "2026-09-26",
+      "hot": true,
+      "tags": [
+        "HackerNoon",
+        "indie-game-dev",
+        "AI"
+      ]
+    },
+    {
+      "id": "hnoon-when-your-voice-agent-enters-the-scene-ft-gpt-live",
+      "title": "When Your Voice Agent Enters the Scene, Ft. GPT-Live",
+      "summary": "A starship docking game is where the user can collaborate with a AI agent using voice. The game examplifies how to build voice agents with GPT-Live. — by Marcio S Galli on HackerNoon.",
+      "source": "HackerNoon",
+      "sourceUrl": "https://hackernoon.com/when-your-voice-agent-enters-the-scene-ft-gpt-live",
       "category": "safety",
-      "date": "2026-09-25",
+      "date": "2026-09-26",
       "hot": true,
       "tags": [
         "HackerNoon",
-        "hacker-house",
+        "speech-to-speech-ai",
         "AI"
       ]
     },
     {
-      "id": "hnoon-nemotron-3-diarization-heres-what-you-need-to-know",
-      "title": "Nemotron-3-diarization: Here's What You Need to Know",
-      "summary": "Its most important distinction is that one checkpoint supports offline processing and streaming operation with up to eight speakers, with configurable output resolution in multiple — by aimodels44 on HackerNoon.",
+      "id": "hnoon-when-does-working-software-actually-become-legacy-software",
+      "title": "When Does Working Software Actually Become Legacy Software?",
+      "summary": "Working software can still become legacy. Learn how security, maintenance, knowledge gaps, dependencies, and change costs reveal when software is aging. — by Vikrant Bhalodia on HackerNoon.",
       "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/nemotron-3-diarization-heres-what-you-need-to-know",
-      "category": "safety",
-      "date": "2026-09-25",
-      "hot": true,
-      "tags": [
-        "HackerNoon",
-        "ai",
-        "AI"
-      ]
-    },
-    {
-      "id": "hnoon-just-publish-an-app-how-fg-hard-can-it-be",
-      "title": "Just Publish an App. How F*****g Hard Can It Be?",
-      "summary": "I built my dream iOS app in two months while working full time, then got sick an hour after launch. An honest look at shipping solo. — by Radu on HackerNoon.",
-      "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/just-publish-an-app-how-fg-hard-can-it-be",
-      "category": "safety",
-      "date": "2026-09-25",
-      "hot": true,
-      "tags": [
-        "HackerNoon",
-        "shipaton",
-        "AI"
-      ]
-    },
-    {
-      "id": "hnoon-observability-first-ai-agents-what-you-gain-and-what-you-giv",
-      "title": "Observability-First AI Agents: What You Gain and What You Give Up",
-      "summary": "Observability is the bedrock of reliability, so I designed and implemented the full tracing layer for an AI agent before writing a line of the agent loop. — by Dragos Bilaniuc on HackerNoon.",
-      "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/observability-first-ai-agents-what-you-gain-and-what-you-give-up",
+      "sourceUrl": "https://hackernoon.com/when-does-working-software-actually-become-legacy-software",
       "category": "products",
-      "date": "2026-09-25",
+      "date": "2026-09-26",
       "hot": true,
       "tags": [
         "HackerNoon",
-        "observability",
+        "legacy-software",
         "AI"
       ]
     },
     {
-      "id": "hnoon-how-to-manage-document-metadata-in-react-19",
-      "title": "How to Manage Document Metadata in React 19",
-      "summary": "Manage document titles, descriptions, and canonical links directly in React 19 components, with key caveats when replacing React Helmet. — by Lucas Tonelli on HackerNoon.",
+      "id": "hnoon-ai-assisted-genealogy-using-ai-to-trace-my-family-tree",
+      "title": "AI-Assisted Genealogy: Using AI to Trace My Family Tree",
+      "summary": "I got a lot of feedback on my post AI-assisted genealogy, some good, some not so good. In any case, I felt the subject was interesting to a lot of people. Meanwhile, I continue wor — by Nicolas Fränkel on HackerNoon.",
       "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/how-to-manage-document-metadata-in-react-19",
-      "category": "big-tech",
-      "date": "2026-09-25",
+      "sourceUrl": "https://hackernoon.com/ai-assisted-genealogy-using-ai-to-trace-my-family-tree",
+      "category": "products",
+      "date": "2026-09-26",
       "hot": true,
       "tags": [
         "HackerNoon",
-        "react-helmet",
+        "genealogy",
+        "AI"
+      ]
+    },
+    {
+      "id": "hnoon-why-your-rules-engine-deserves-its-own-kubernetes-node-pool",
+      "title": "Why Your Rules Engine Deserves Its Own Kubernetes Node Pool",
+      "summary": "Dedicated Kubernetes node pools can isolate latency-sensitive rules engines, but the decision should be based on measured contention and resource needs. — by Himashi Meththasena on HackerNoon.",
+      "source": "HackerNoon",
+      "sourceUrl": "https://hackernoon.com/why-your-rules-engine-deserves-its-own-kubernetes-node-pool",
+      "category": "products",
+      "date": "2026-09-26",
+      "hot": true,
+      "tags": [
+        "HackerNoon",
+        "kubernetes-node-pools",
         "AI"
       ]
     },
@@ -287,7 +287,7 @@
     }
   ],
   "meta": {
-    "fetchedAt": "2026-09-26T07:05:16.530Z",
+    "fetchedAt": "2026-09-27T07:36:48.111Z",
     "topic": "AI",
     "total": 15,
     "hot": 9,
