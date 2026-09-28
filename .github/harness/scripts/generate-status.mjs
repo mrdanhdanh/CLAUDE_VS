@@ -317,6 +317,7 @@ async function main() {
     'ai-news': { title: 'AI News', type: 'tin AI' },
     'executive-function': { title: 'Executive Function × Harness (KN-054)', type: 'khám phá' },
     'glassui': { title: 'GlassUI', type: 'demo' },
+    'japanese': { title: '日本語 N5 — Học từ vựng', type: 'học tập' },
     'library': { title: 'Thư Viện', type: 'demo' },
     'n5-blazor': { title: 'N5 Blazor', type: 'demo' },
     'todo-manager': { title: 'Todo Manager', type: 'demo' },

@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="color-scheme" content="light dark" />
+  <meta name="theme-color" content="#2f4fa3" />
+  <meta name="description" content="Bài kiểm tra N5 — đề chính thức (import), đáp án xáo trộn; ngân hàng câu hỏi sinh từ từ vựng; skill lưu trong site." />
+  <title>Kiểm tra — 日本語 N5</title>
+  <link rel="stylesheet" href="./styles.css" />
+  <script>
+    (function () {
+      try {
+        var t = localStorage.getItem('nihongo:theme');
+        if (!t) t = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        document.documentElement.dataset.theme = t;
+      } catch (e) { /* noop */ }
+    })();
+  </script>
+</head>
+<body data-page="quiz">
+  <a class="skip-link" href="#main">Bỏ qua đến nội dung</a>
+  <header class="site-header"></header>
+
+  <main id="main" class="page">
+    <div class="container">
+      <div class="seg" role="tablist" aria-label="Khu vực">
+        <button class="seg-btn" id="tabbtn-play" role="tab" aria-selected="true" aria-controls="panelPlay" data-tab="play" data-i18n="quiz.tabPlay"></button>
+        <button class="seg-btn" id="tabbtn-bank" role="tab" aria-selected="false" aria-controls="panelBank" data-tab="bank" data-i18n="quiz.tabBank"></button>
+        <button class="seg-btn" id="tabbtn-skill" role="tab" aria-selected="false" aria-controls="panelSkill" data-tab="skill" data-i18n="quiz.tabSkill"></button>
+      </div>
+
+      <!-- ============ Làm bài ============ -->
+      <section class="panel mt-3" id="panelPlay" role="tabpanel" aria-labelledby="tabbtn-play">
+        <div id="playConfig" class="filters">
+          <div class="filter-group">
+            <span class="filter-label" data-i18n="quiz.sources"></span>
+            <div class="chips">
+              <label class="chip-check"><input type="checkbox" data-source="official" checked /><span data-i18n="quiz.srcOfficial"></span></label>
+              <label class="chip-check"><input type="checkbox" data-source="generated" checked /><span data-i18n="quiz.srcGenerated"></span></label>
+              <label class="chip-check"><input type="checkbox" data-source="sample" checked /><span data-i18n="quiz.srcSample"></span></label>
+            </div>
+          </div>
+          <div class="field-row">
+            <div class="field"><label for="fYear" data-i18n="quiz.year"></label><select class="input" id="fYear"></select></div>
+            <div class="field"><label for="fSection" data-i18n="quiz.section"></label><select class="input" id="fSection"></select></div>
+          </div>
+          <div class="field-row">
+            <div class="field"><label for="fCount" data-i18n="quiz.count"></label>
+              <select class="input" id="fCount">
+                <option value="5">5</option>
+                <option value="10" selected>10</option>
+                <option value="20">20</option>
+                <option value="all" data-i18n="quiz.countAll"></option>
+              </select>
+            </div>
+            <div class="field"><label data-i18n="quiz.shuffleQ"></label>
+              <label class="chip-check"><input type="checkbox" id="fShuffle" checked /><span data-i18n="quiz.shuffleQ"></span></label>
+            </div>
+          </div>
+          <div class="row">
+            <button class="btn btn-primary" id="btnStart" type="button" data-i18n="quiz.start"></button>
+          </div>
+        </div>
+        <div id="quizArea" class="mt-3"></div>
+      </section>
+
+      <!-- ============ Ngân hàng câu hỏi ============ -->
+      <section class="panel mt-3" id="panelBank" role="tabpanel" aria-labelledby="tabbtn-bank" hidden>
+        <h2 class="panel-title" data-i18n="quiz.tabBank"></h2>
+        <div class="stats-grid">
+          <div class="stat-card"><div class="stat-num" id="statTotal">0</div><div class="stat-label" data-i18n="quiz.statTotal"></div></div>
+          <div class="stat-card"><div class="stat-num" id="statOfficial">0</div><div class="stat-label" data-i18n="quiz.statOfficial"></div></div>
+          <div class="stat-card"><div class="stat-num" id="statGenerated">0</div><div class="stat-label" data-i18n="quiz.statGenerated"></div></div>
+          <div class="stat-card"><div class="stat-num" id="statSample">0</div><div class="stat-label" data-i18n="quiz.statSample"></div></div>
+        </div>
+        <p class="small muted mt-3" id="bankMeta"></p>
+
+        <div class="toolbar-row mt-3">
+          <button class="btn btn-sm" id="btnImportQ" type="button" data-i18n="quiz.importBank"></button>
+          <button class="btn btn-sm" id="btnExportQ" type="button" data-i18n="quiz.exportBank"></button>
+          <input id="qFile" type="file" accept=".json,application/json" hidden />
+        </div>
+
+        <h3 class="panel-title mt-4" data-i18n="quiz.genTitle"></h3>
+        <div class="filter-group">
+          <span class="filter-label" data-i18n="learn.lessons"></span>
+          <div class="chips" id="genLessons"></div>
+        </div>
+        <div class="filter-group mt-3">
+          <span class="filter-label" data-i18n="quiz.genTypes"></span>
+          <div class="chips">
+            <label class="chip-check"><input type="checkbox" data-gtype="kanji-meaning" checked /><span data-i18n="quiz.typeMeaning"></span></label>
+            <label class="chip-check"><input type="checkbox" data-gtype="meaning-kanji" checked /><span data-i18n="quiz.typeReverse"></span></label>
+            <label class="chip-check"><input type="checkbox" data-gtype="reading" checked /><span data-i18n="quiz.typeReading"></span></label>
+            <label class="chip-check"><input type="checkbox" data-gtype="cloze" checked /><span data-i18n="quiz.typeCloze"></span></label>
+          </div>
+        </div>
+        <div class="toolbar-row mt-3">
+          <div class="field field-inline">
+            <label for="genPerType" data-i18n="quiz.perType"></label>
+            <input class="input" id="genPerType" type="number" min="1" max="50" value="5" />
+          </div>
+          <button class="btn btn-primary" id="btnGen" type="button" data-i18n="quiz.genRun"></button>
+          <button class="btn btn-danger" id="btnGenClear" type="button" data-i18n="quiz.genClear"></button>
+        </div>
+
+        <div class="toolbar-row mt-4">
+          <input class="input grow" id="qSearch" type="search" autocomplete="off" data-i18n-ph="quiz.searchQ" />
+        </div>
+        <div class="mt-3" id="bankList"></div>
+      </section>
+
+      <!-- ============ Skill ============ -->
+      <section class="panel mt-3" id="panelSkill" role="tabpanel" aria-labelledby="tabbtn-skill" hidden>
+        <div class="skill-doc">
+          <h2 class="panel-title" data-i18n="skill.title"></h2>
+          <p data-i18n="skill.intro"></p>
+          <h3 data-i18n="skill.h1"></h3>
+          <ul>
+            <li data-i18n="skill.src1"></li>
+            <li data-i18n="skill.src2"></li>
+            <li data-i18n="skill.src3"></li>
+          </ul>
+          <h3 data-i18n="skill.h2"></h3>
+          <ul>
+            <li data-i18n="skill.rule1"></li>
+            <li data-i18n="skill.rule2"></li>
+            <li data-i18n="skill.rule3"></li>
+            <li data-i18n="skill.rule4"></li>
+          </ul>
+          <h3 data-i18n="skill.h3"></h3>
+          <p data-i18n="skill.importSteps"></p>
+          <h3 data-i18n="skill.h4"></h3>
+          <p class="skill-links">
+            <a href="./skills/question-skill/SKILL.md" target="_blank" rel="noopener">skills/question-skill/SKILL.md</a> ·
+            <a href="./skills/question-skill/schema.json" target="_blank" rel="noopener">schema.json</a> ·
+            <a href="./README.md" target="_blank" rel="noopener">README.md</a>
+          </p>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <footer class="site-footer"></footer>
+
+  <script src="./js/core.js"></script>
+  <script src="./js/qgen.js"></script>
+  <script src="./js/quiz.js"></script>
+</body>
+</html>

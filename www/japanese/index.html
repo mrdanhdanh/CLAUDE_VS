@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="color-scheme" content="light dark" />
+  <meta name="theme-color" content="#2f4fa3" />
+  <meta name="description" content="Học từ vựng tiếng Nhật N5 thụ động — chọn nhiều bài, nghe kanji → cách đọc → nghĩa tiếng Việt tự động." />
+  <title>Học từ vựng — 日本語 N5</title>
+  <link rel="stylesheet" href="./styles.css" />
+  <script>
+    (function () {
+      try {
+        var t = localStorage.getItem('nihongo:theme');
+        if (!t) t = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        document.documentElement.dataset.theme = t;
+      } catch (e) { /* noop */ }
+    })();
+  </script>
+</head>
+<body data-page="learn">
+  <a class="skip-link" href="#main">Bỏ qua đến nội dung</a>
+  <header class="site-header"></header>
+
+  <main id="main" class="page">
+    <div class="container">
+      <div class="learn-layout">
+        <section class="panel panel-side" id="lessonPanel" aria-labelledby="lessonTitle">
+          <div class="row spread">
+            <h2 id="lessonTitle" class="panel-title" data-i18n="learn.lessons"></h2>
+            <div class="row">
+              <button class="btn btn-ghost btn-sm" id="selectAll" data-i18n="learn.selectAll"></button>
+              <button class="btn btn-ghost btn-sm" id="clearAll" data-i18n="learn.clearAll"></button>
+            </div>
+          </div>
+          <div class="chips chips-column" id="lessonChips"></div>
+          <p class="small muted mt-3" data-i18n="learn.randomNote"></p>
+        </section>
+
+        <section class="panel panel-stage" aria-label="Khu vực hiển thị từ">
+          <div class="stage-top">
+            <button class="btn" id="btnToggleLessons" type="button" aria-expanded="true" aria-controls="lessonPanel">
+              <span aria-hidden="true">☰</span>
+              <span id="toggleLessonsLabel" data-i18n="learn.hideLessons"></span>
+            </button>
+            <div class="progress" id="progressBar" role="progressbar" aria-valuemin="0" aria-valuemax="0" aria-valuenow="0">
+              <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+              <div class="progress-label" id="progressLabel">0/0</div>
+            </div>
+          </div>
+          <div class="word-card" id="wordCard">
+            <div>
+              <div class="word-kanji jp" id="wordKanji">—</div>
+              <div class="word-kana jp" id="wordKana"></div>
+              <div class="word-vi" id="wordVi"></div>
+              <div class="word-sentences" id="wordSentences" hidden></div>
+            </div>
+          </div>
+          <div class="speak-status">
+            <span class="speak-dot" id="speakDot" aria-hidden="true"></span>
+            <span id="speakStatus" aria-live="polite" data-i18n="learn.ready"></span>
+            <span class="spacer"></span>
+            <button class="voice-badge voice-badge-btn" id="voiceBadge" type="button" data-i18n-aria="voice.badgeTitle" data-i18n-title="voice.badgeTitle"></button>
+          </div>
+          <p class="small muted mt-2" id="stageHint" data-i18n="learn.keyHint"></p>
+        </section>
+      </div>
+    </div>
+
+    <div class="controls">
+      <div class="container controls-inner">
+        <button class="btn btn-primary" id="btnPlay" type="button">▶ <span data-i18n="learn.play"></span></button>
+        <button class="btn" id="btnPause" type="button" hidden>⏸ <span data-i18n="learn.pause"></span></button>
+        <button class="btn" id="btnStop" type="button" disabled>⏹ <span data-i18n="learn.stop"></span></button>
+        <span class="spacer"></span>
+        <button class="btn" id="btnNormal" type="button" data-i18n-title="learn.speedNormalTitle">🔊 <span data-i18n="learn.speedNormal"></span></button>
+        <button class="btn" id="btnFast" type="button" data-i18n-title="learn.speedFastTitle">⚡ <span data-i18n="learn.speedFast"></span></button>
+        <button class="btn" id="btnSentences" type="button" aria-pressed="false">文 <span data-i18n="learn.sentences"></span></button>
+      </div>
+    </div>
+  </main>
+
+  <footer class="site-footer"></footer>
+
+  <dialog class="modal" id="voiceDlg" aria-labelledby="voiceDlgTitle">
+    <div class="modal-head">
+      <h3 id="voiceDlgTitle" data-i18n="voice.dialogTitle"></h3>
+      <button class="btn btn-ghost btn-sm" type="button" data-close data-i18n-aria="ui.close">✕</button>
+    </div>
+    <div class="modal-body">
+      <p class="small muted" id="voiceSummary"></p>
+      <div class="voice-list" id="voiceList"></div>
+      <div id="voiceHowto" hidden>
+        <h4 data-i18n="voice.howto"></h4>
+        <ol class="voice-steps">
+          <li data-i18n="voice.step1"></li>
+          <li data-i18n="voice.step2"></li>
+          <li data-i18n="voice.step3"></li>
+        </ol>
+      </div>
+    </div>
+    <div class="modal-foot">
+      <button class="btn" id="voiceRetry" type="button" data-i18n="voice.retry"></button>
+      <button class="btn btn-primary" type="button" data-close data-i18n="ui.close"></button>
+    </div>
+  </dialog>
+
+  <script src="./js/core.js"></script>
+  <script src="./js/learn.js"></script>
+</body>
+</html>

@@ -1,0 +1,119 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Nihongo N5 Trainer — Data Schemas",
+  "description": "Schema cho seed-lessons.json, questions.json và backup (Export tất cả). Dùng để validate import ở tab Ngân hàng / Từ điển.",
+  "$defs": {
+    "example": {
+      "type": "object",
+      "properties": {
+        "jp": { "type": "string", "description": "Câu tiếng Nhật (mẫu câu N5)" },
+        "vi": { "type": "string", "description": "Nghĩa tiếng Việt" }
+      },
+      "required": ["jp"],
+      "additionalProperties": false
+    },
+    "word": {
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "ID duy nhất, không tái sử dụng sau khi xóa" },
+        "kanji": { "type": "string", "description": "Hán tự — rỗng nếu từ thuần kana" },
+        "kana": { "type": "string" },
+        "vi": { "type": "string" },
+        "examples": { "type": "array", "items": { "$ref": "#/$defs/example" } },
+        "updatedAt": { "type": "string" }
+      },
+      "required": ["id", "kana", "vi"],
+      "anyOf": [{ "required": ["kanji"] }, { "required": ["kana"] }],
+      "additionalProperties": false
+    },
+    "lesson": {
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "source": { "type": "string", "description": "VD: Minna no Nihongo · N5" },
+        "description": { "type": "string" },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["id", "name"],
+      "additionalProperties": false
+    },
+    "question": {
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "official-* | gen-<lesson>-<word>-<kind> | q-sample-* | tuỳ import" },
+        "source": { "enum": ["official", "generated", "sample"], "default": "official" },
+        "kind": { "enum": ["kanji-meaning", "meaning-kanji", "reading", "cloze", "exam"], "description": "exam = câu từ đề thi" },
+        "level": { "type": "string", "default": "N5" },
+        "year": { "type": "string", "description": "VD: 2019-12 (kỳ thi) — '' cho câu sinh" },
+        "section": { "type": "string", "description": "VD: 文字・語彙 / 文法・読解 / Tự sinh" },
+        "type": { "const": "mcq" },
+        "prompt": { "type": "string", "description": "Hướng dẫn câu hỏi" },
+        "question": { "type": "string", "description": "Nội dung câu hỏi (JP với đề thi)" },
+        "options": { "type": "array", "minItems": 2, "maxItems": 4, "items": { "type": "string" }, "uniqueItems": true },
+        "answer": { "type": "integer", "minimum": 0, "description": "Index đáp án trong options như đã lưu (runtime sẽ xáo trộn khi làm bài)" },
+        "explanation": { "type": "string" },
+        "lessonId": { "type": "string" },
+        "wordId": { "type": "string" }
+      },
+      "required": ["id", "question", "options", "answer"],
+      "additionalProperties": false
+    },
+    "wordMap": {
+      "type": "object",
+      "description": "lessonId → mảng word",
+      "additionalProperties": { "type": "array", "items": { "$ref": "#/$defs/word" } }
+    }
+  },
+  "oneOf": [
+    {
+      "title": "seed-lessons.json",
+      "type": "object",
+      "properties": {
+        "kind": { "const": "seed-lessons" },
+        "version": { "type": "integer" },
+        "exportedAt": { "type": "string" },
+        "lessons": { "type": "array", "items": { "$ref": "#/$defs/lesson" } },
+        "words": { "$ref": "#/$defs/wordMap" }
+      },
+      "required": ["lessons", "words"],
+      "additionalProperties": true
+    },
+    {
+      "title": "questions.json",
+      "type": "object",
+      "properties": {
+        "kind": { "const": "seed-questions" },
+        "version": { "type": "integer" },
+        "exportedAt": { "type": "string" },
+        "questions": { "type": "array", "items": { "$ref": "#/$defs/question" } }
+      },
+      "required": ["questions"],
+      "additionalProperties": true
+    },
+    {
+      "title": "lesson export (Export bài)",
+      "type": "object",
+      "properties": {
+        "kind": { "const": "nihongo-lesson" },
+        "lesson": { "$ref": "#/$defs/lesson" },
+        "words": { "type": "array", "items": { "$ref": "#/$defs/word" } }
+      },
+      "required": ["lesson", "words"],
+      "additionalProperties": true
+    },
+    {
+      "title": "full backup (Export tất cả)",
+      "type": "object",
+      "properties": {
+        "kind": { "const": "nihongo-backup" },
+        "version": { "type": "integer" },
+        "lessons": { "type": "array", "items": { "$ref": "#/$defs/lesson" } },
+        "words": { "$ref": "#/$defs/wordMap" },
+        "questions": { "type": "array", "items": { "$ref": "#/$defs/question" } }
+      },
+      "required": ["lessons", "words"],
+      "additionalProperties": true
+    }
+  ]
+}

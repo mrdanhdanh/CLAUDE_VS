@@ -1,0 +1,74 @@
+{
+  "kind": "seed-lessons",
+  "version": 1,
+  "exportedAt": "2026-09-28T00:00:00.000Z",
+  "note": "Seed data — export từ tab Từ điển (Export tất cả) rồi thay file này để chia sẻ dữ liệu qua git/Pages.",
+  "lessons": [
+    {
+      "id": "L-bai-01",
+      "name": "Bài 1 — Chào hỏi & Giới thiệu",
+      "source": "Minna no Nihongo · N5",
+      "description": "Đại từ nhân xưng, nghề nghiệp, quốc tịch, câu hỏi cơ bản.",
+      "createdAt": "2026-09-28T00:00:00.000Z"
+    },
+    {
+      "id": "L-bai-02",
+      "name": "Bài 2 — Gia đình & Con người",
+      "source": "Minna no Nihongo · N5",
+      "description": "Thành viên gia đình, cách gọi lịch sự, tuổi tác.",
+      "createdAt": "2026-09-28T00:00:00.000Z"
+    },
+    {
+      "id": "L-bai-03",
+      "name": "Bài 3 — Thời gian & Ngày tháng",
+      "source": "Minna no Nihongo · N5",
+      "description": "Giờ, buổi trong ngày, hôm nay/ngày mai/hôm qua.",
+      "createdAt": "2026-09-28T00:00:00.000Z"
+    }
+  ],
+  "words": {
+    "L-bai-01": [
+      { "id": "w-b1-01", "kanji": "私", "kana": "わたし", "vi": "tôi, tớ", "examples": [{ "jp": "わたしは 学生です。", "vi": "Tôi là học sinh." }] },
+      { "id": "w-b1-02", "kanji": "", "kana": "あなた", "vi": "bạn, anh/chị", "examples": [{ "jp": "あなたは 先生ですか。", "vi": "Bạn là giáo viên phải không?" }] },
+      { "id": "w-b1-03", "kanji": "学生", "kana": "がくせい", "vi": "học sinh, sinh viên", "examples": [{ "jp": "あの人は 学生です。", "vi": "Người kia là học sinh." }] },
+      { "id": "w-b1-04", "kanji": "先生", "kana": "せんせい", "vi": "giáo viên, thầy/cô", "examples": [{ "jp": "田中先生は 日本人です。", "vi": "Thầy Tanaka là người Nhật." }] },
+      { "id": "w-b1-05", "kanji": "会社員", "kana": "かいしゃいん", "vi": "nhân viên công ty", "examples": [{ "jp": "父は 会社員です。", "vi": "Bố tôi là nhân viên công ty." }] },
+      { "id": "w-b1-06", "kanji": "名前", "kana": "なまえ", "vi": "tên", "examples": [{ "jp": "お名前は 何ですか。", "vi": "Tên bạn là gì?" }] },
+      { "id": "w-b1-07", "kanji": "国", "kana": "くに", "vi": "đất nước, quốc gia", "examples": [{ "jp": "お国は どちらですか。", "vi": "Bạn từ đất nước nào?" }] },
+      { "id": "w-b1-08", "kanji": "日本", "kana": "にほん", "vi": "Nhật Bản", "examples": [{ "jp": "日本は アジアの 国です。", "vi": "Nhật Bản là nước ở châu Á." }] },
+      { "id": "w-b1-09", "kanji": "", "kana": "ベトナム", "vi": "Việt Nam", "examples": [{ "jp": "わたしは ベトナムから 来ました。", "vi": "Tôi đến từ Việt Nam." }] },
+      { "id": "w-b1-10", "kanji": "人", "kana": "ひと", "vi": "người", "examples": [{ "jp": "あの人は だれですか。", "vi": "Người đó là ai?" }] },
+      { "id": "w-b1-11", "kanji": "何", "kana": "なに", "vi": "cái gì", "examples": [{ "jp": "これは 何ですか。", "vi": "Đây là cái gì?" }] },
+      { "id": "w-b1-12", "kanji": "", "kana": "はい", "vi": "vâng, dạ", "examples": [{ "jp": "はい、分かりました。", "vi": "Vâng, tôi hiểu rồi." }] },
+      { "id": "w-b1-13", "kanji": "", "kana": "いいえ", "vi": "không", "examples": [{ "jp": "いいえ、ちがいます。", "vi": "Không, không phải vậy." }] }
+    ],
+    "L-bai-02": [
+      { "id": "w-b2-01", "kanji": "家族", "kana": "かぞく", "vi": "gia đình", "examples": [{ "jp": "わたしの 家族は 四人です。", "vi": "Gia đình tôi có bốn người." }] },
+      { "id": "w-b2-02", "kanji": "父", "kana": "ちち", "vi": "bố (của mình)", "examples": [{ "jp": "父は 五十二歳です。", "vi": "Bố tôi 52 tuổi." }] },
+      { "id": "w-b2-03", "kanji": "母", "kana": "はは", "vi": "mẹ (của mình)", "examples": [{ "jp": "母は 料理が すきです。", "vi": "Mẹ tôi thích nấu ăn." }] },
+      { "id": "w-b2-04", "kanji": "兄", "kana": "あに", "vi": "anh trai", "examples": [{ "jp": "兄は 大学で 勉強しています。", "vi": "Anh trai tôi đang học đại học." }] },
+      { "id": "w-b2-05", "kanji": "姉", "kana": "あね", "vi": "chị gái", "examples": [{ "jp": "姉は 東京に 住んでいます。", "vi": "Chị gái tôi sống ở Tokyo." }] },
+      { "id": "w-b2-06", "kanji": "弟", "kana": "おとうと", "vi": "em trai", "examples": [{ "jp": "弟は 中学生です。", "vi": "Em trai tôi là học sinh cấp 2." }] },
+      { "id": "w-b2-07", "kanji": "妹", "kana": "いもうと", "vi": "em gái", "examples": [{ "jp": "妹は ピアノを 習っています。", "vi": "Em gái tôi đang học piano." }] },
+      { "id": "w-b2-08", "kanji": "友達", "kana": "ともだち", "vi": "bạn bè", "examples": [{ "jp": "友達と 映画を 見ました。", "vi": "Tôi đã xem phim với bạn." }] },
+      { "id": "w-b2-09", "kanji": "子供", "kana": "こども", "vi": "trẻ em, con cái", "examples": [{ "jp": "子供が 公園で 遊んでいます。", "vi": "Bọn trẻ đang chơi ở công viên." }] },
+      { "id": "w-b2-10", "kanji": "奥さん", "kana": "おくさん", "vi": "vợ (của người khác)", "examples": [{ "jp": "田中さんの 奥さんは 先生です。", "vi": "Vợ anh Tanaka là giáo viên." }] },
+      { "id": "w-b2-11", "kanji": "ご主人", "kana": "ごしゅじん", "vi": "chồng (của người khác)", "examples": [{ "jp": "ご主人は お元気ですか。", "vi": "Chồng chị có khỏe không?" }] },
+      { "id": "w-b2-12", "kanji": "", "kana": "おいくつ", "vi": "bao nhiêu tuổi (lịch sự)", "examples": [{ "jp": "お子さんは おいくつですか。", "vi": "Con anh/chị bao nhiêu tuổi?" }] }
+    ],
+    "L-bai-03": [
+      { "id": "w-b3-01", "kanji": "今", "kana": "いま", "vi": "bây giờ", "examples": [{ "jp": "今 三時です。", "vi": "Bây giờ là 3 giờ." }] },
+      { "id": "w-b3-02", "kanji": "時間", "kana": "じかん", "vi": "thời gian, giờ", "examples": [{ "jp": "時間が ありません。", "vi": "Tôi không có thời gian." }] },
+      { "id": "w-b3-03", "kanji": "時", "kana": "じ", "vi": "giờ (mấy giờ)", "examples": [{ "jp": "毎朝 七時に 起きます。", "vi": "Mỗi sáng tôi thức dậy lúc 7 giờ." }] },
+      { "id": "w-b3-04", "kanji": "分", "kana": "ふん", "vi": "phút", "examples": [{ "jp": "十分 待ってください。", "vi": "Xin đợi 10 phút." }] },
+      { "id": "w-b3-05", "kanji": "半", "kana": "はん", "vi": "rưỡi", "examples": [{ "jp": "二時半に 会いましょう。", "vi": "Hai giờ rưỡi gặp nhau nhé." }] },
+      { "id": "w-b3-06", "kanji": "朝", "kana": "あさ", "vi": "buổi sáng", "examples": [{ "jp": "朝ごはんを 食べます。", "vi": "Tôi ăn sáng." }] },
+      { "id": "w-b3-07", "kanji": "昼", "kana": "ひる", "vi": "buổi trưa", "examples": [{ "jp": "昼休みは 十二時からです。", "vi": "Giờ nghỉ trưa từ 12 giờ." }] },
+      { "id": "w-b3-08", "kanji": "夜", "kana": "よる", "vi": "buổi tối, đêm", "examples": [{ "jp": "夜 十一時に 寝ます。", "vi": "Buổi tối tôi ngủ lúc 11 giờ." }] },
+      { "id": "w-b3-09", "kanji": "今日", "kana": "きょう", "vi": "hôm nay", "examples": [{ "jp": "今日は 月曜日です。", "vi": "Hôm nay là thứ Hai." }] },
+      { "id": "w-b3-10", "kanji": "明日", "kana": "あした", "vi": "ngày mai", "examples": [{ "jp": "明日 学校へ 行きます。", "vi": "Ngày mai tôi đi học." }] },
+      { "id": "w-b3-11", "kanji": "昨日", "kana": "きのう", "vi": "hôm qua", "examples": [{ "jp": "昨日は 日曜日でした。", "vi": "Hôm qua là Chủ nhật." }] },
+      { "id": "w-b3-12", "kanji": "毎日", "kana": "まいにち", "vi": "mỗi ngày", "examples": [{ "jp": "毎日 日本語を 勉強します。", "vi": "Mỗi ngày tôi học tiếng Nhật." }] }
+    ]
+  }
+}

@@ -7,6 +7,7 @@
     { "source": "/agentic-academy", "destination": "/agentic-academy/index.html" },
     { "source": "/ai-news", "destination": "/ai-news/index.html" },
     { "source": "/glassui", "destination": "/glassui/index.html" },
+    { "source": "/japanese", "destination": "/japanese/index.html" },
     { "source": "/cosmos-3d", "destination": "/cosmos-3d/index.html" },
     { "source": "/cosmos", "destination": "/cosmos/index.html" }
   ]

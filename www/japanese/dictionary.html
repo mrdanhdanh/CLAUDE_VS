@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="color-scheme" content="light dark" />
+  <meta name="theme-color" content="#2f4fa3" />
+  <meta name="description" content="Từ điển N5 — quản lý bài học và từ vựng: bảng JSON, thêm/xóa dòng, sort, tìm kiếm, import và export." />
+  <title>Từ điển — 日本語 N5</title>
+  <link rel="stylesheet" href="./styles.css" />
+  <script>
+    (function () {
+      try {
+        var t = localStorage.getItem('nihongo:theme');
+        if (!t) t = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        document.documentElement.dataset.theme = t;
+      } catch (e) { /* noop */ }
+    })();
+  </script>
+</head>
+<body data-page="dict">
+  <a class="skip-link" href="#main">Bỏ qua đến nội dung</a>
+  <header class="site-header"></header>
+
+  <main id="main" class="page">
+    <div class="container">
+      <div class="dict-layout">
+        <!-- Quản lý bài học -->
+        <section class="panel" aria-labelledby="lessonsTitle">
+          <div class="row spread">
+            <h2 id="lessonsTitle" class="panel-title" data-i18n="dict.lessons"></h2>
+            <button class="btn btn-primary btn-sm" id="btnNewLesson" type="button" data-i18n="dict.newLesson"></button>
+          </div>
+          <div class="lesson-rows" id="lessonRows"></div>
+        </section>
+
+        <!-- Quản lý nội dung bài học -->
+        <section class="panel" aria-labelledby="contentTitle">
+          <div class="row spread">
+            <h2 class="panel-title" id="contentTitle">—</h2>
+            <span class="small muted" id="tableMeta"></span>
+          </div>
+
+          <div class="toolbar-row mt-3">
+            <input class="input grow" id="searchInput" type="search" autocomplete="off" data-i18n-ph="dict.searchPh" />
+          </div>
+          <div class="toolbar-row mt-3">
+            <button class="btn btn-sm" id="btnAddRow" type="button" data-i18n="dict.addRow"></button>
+            <button class="btn btn-sm" id="btnImport" type="button" data-i18n="dict.import"></button>
+            <button class="btn btn-sm" id="btnExportLesson" type="button" data-i18n="dict.exportLesson"></button>
+            <button class="btn btn-sm" id="btnExportAll" type="button" data-i18n="dict.exportAll"></button>
+            <button class="btn btn-sm" id="btnRestore" type="button" data-i18n="dict.restore"></button>
+          </div>
+
+          <div class="mt-3" id="tableArea">
+            <div class="jp-tbl-wrap">
+              <table class="jp-tbl">
+                <thead>
+                  <tr>
+                    <th scope="col">#</th>
+                    <th scope="col" id="thKanji"><button class="sort-btn" type="button" data-sort="kanji" data-i18n="dict.thKanji"></button></th>
+                    <th scope="col" id="thKana"><button class="sort-btn" type="button" data-sort="kana" data-i18n="dict.thKana"></button></th>
+                    <th scope="col" id="thVi"><button class="sort-btn" type="button" data-sort="vi" data-i18n="dict.thVi"></button></th>
+                    <th scope="col" id="thEx" data-i18n="dict.thEx"></th>
+                    <th scope="col"><span data-i18n="dict.thActions"></span></th>
+                  </tr>
+                </thead>
+                <tbody id="tbody"></tbody>
+              </table>
+            </div>
+            <p class="small muted tbl-note" data-i18n="dict.irreversible"></p>
+          </div>
+        </section>
+      </div>
+    </div>
+  </main>
+
+  <footer class="site-footer"></footer>
+
+  <!-- Dialog: bài học -->
+  <dialog class="modal" id="lessonDlg" aria-labelledby="lessonDlgTitle">
+    <div class="modal-head">
+      <h3 id="lessonDlgTitle" data-i18n="dict.newLesson"></h3>
+      <button class="btn btn-ghost btn-sm" type="button" data-close data-i18n-aria="ui.close">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="field"><label for="lName" data-i18n="dict.name"></label><input class="input" id="lName" maxlength="80" /></div>
+      <div class="field"><label for="lSource" data-i18n="dict.source"></label><input class="input" id="lSource" maxlength="80" /></div>
+      <div class="field"><label for="lDesc" data-i18n="dict.desc"></label><textarea class="input" id="lDesc" maxlength="300"></textarea></div>
+    </div>
+    <div class="modal-foot">
+      <button class="btn" type="button" data-close data-i18n="ui.cancel"></button>
+      <button class="btn btn-primary" type="button" id="lessonSave" data-i18n="ui.save"></button>
+    </div>
+  </dialog>
+
+  <!-- Dialog: từ vựng -->
+  <dialog class="modal" id="wordDlg" aria-labelledby="wordDlgTitle">
+    <div class="modal-head">
+      <h3 id="wordDlgTitle" data-i18n="dict.newWord"></h3>
+      <button class="btn btn-ghost btn-sm" type="button" data-close data-i18n-aria="ui.close">✕</button>
+    </div>
+    <div class="modal-body">
+      <p class="small muted" id="wordIdChip"></p>
+      <div class="field"><label for="wKanji" data-i18n="dict.thKanji"></label><input class="input jp" id="wKanji" autocomplete="off" /></div>
+      <div class="field"><label for="wKana" data-i18n="dict.thKana"></label><input class="input jp" id="wKana" autocomplete="off" /></div>
+      <div class="field"><label for="wVi" data-i18n="dict.thVi"></label><input class="input" id="wVi" autocomplete="off" /></div>
+      <div class="field">
+        <label data-i18n="dict.examples"></label>
+        <div class="ex-list" id="exList"></div>
+        <button class="btn btn-sm mt-2" type="button" id="addEx" data-i18n="dict.addExample"></button>
+      </div>
+      <p class="small muted" data-i18n="dict.irreversible"></p>
+    </div>
+    <div class="modal-foot">
+      <button class="btn" type="button" data-close data-i18n="ui.cancel"></button>
+      <button class="btn btn-primary" type="button" id="wordSave" data-i18n="ui.save"></button>
+    </div>
+  </dialog>
+
+  <!-- Dialog: import -->
+  <dialog class="modal" id="importDlg" aria-labelledby="importTitle">
+    <div class="modal-head">
+      <h3 id="importTitle"></h3>
+      <button class="btn btn-ghost btn-sm" type="button" data-close data-i18n-aria="ui.close">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="field">
+        <label for="importFile" data-i18n="dict.pickFile"></label>
+        <input class="input" id="importFile" type="file" accept=".json,application/json" />
+      </div>
+      <div class="field">
+        <label data-i18n="dict.importMode"></label>
+        <label class="chip-check"><input type="radio" name="importMode" value="merge" checked /><span data-i18n="dict.modeMerge"></span></label>
+        <label class="chip-check mt-2"><input type="radio" name="importMode" value="replace" /><span data-i18n="dict.modeReplace"></span></label>
+      </div>
+      <p class="small muted" data-i18n="dict.irreversible"></p>
+    </div>
+    <div class="modal-foot">
+      <button class="btn" type="button" data-close data-i18n="ui.cancel"></button>
+      <button class="btn btn-primary" type="button" id="importRun" data-i18n="dict.runImport"></button>
+    </div>
+  </dialog>
+
+  <script src="./js/core.js"></script>
+  <script src="./js/dict.js"></script>
+</body>
+</html>
