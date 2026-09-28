@@ -1,12 +1,12 @@
 {
-  "generatedAt": "2026-09-27T13:56:54.443Z",
+  "generatedAt": "2026-09-28T08:14:20.089Z",
   "generatedBy": "YUNIE × Last30Days",
   "version": 2,
   "description": "Tin AI mới nhất — tổng hợp từ Last30Days (HN, GitHub, DEV.to, Reddit, arXiv, HackerNoon) trong 30 ngày qua. Chủ đề: AI. Tự động cập nhật bởi YUNIE.",
   "last30days": {
     "enabled": true,
     "topic": "AI",
-    "since": "2026-08-28",
+    "since": "2026-08-29",
     "days": 30,
     "sources": [
       "Hacker News (Algolia, free)",
@@ -55,244 +55,247 @@
   ],
   "articles": [
     {
-      "id": "hnoon-the-age-of-giants",
-      "title": "THE AGE OF GIANTS",
-      "summary": "AI is radically increasing individual cognitive and execution power, creating what may be an “age of giants.” But greater capability does not automatically bring greater wisdom. As — by Benoît Kulesza on HackerNoon.",
-      "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/the-age-of-giants",
-      "category": "products",
-      "date": "2026-09-27",
-      "hot": true,
-      "tags": [
-        "HackerNoon",
-        "ai",
-        "AI"
-      ]
-    },
-    {
-      "id": "hnoon-rebuilding-data-engineering-with-harness-engineering-a-new-p",
-      "title": "Rebuilding Data Engineering with Harness Engineering: A New Paradigm for the Agent Era",
-      "summary": "Discover how Harness Engineering could reshape the Modern Data Stack by giving AI agents the context, validation, and execution needed for production. — by Nie Lifeng on HackerNoon.",
-      "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/rebuilding-data-engineering-with-harness-engineering-a-new-paradigm-for-the-agent-era",
-      "category": "products",
-      "date": "2026-09-27",
-      "hot": true,
-      "tags": [
-        "HackerNoon",
-        "harness-engineering",
-        "AI"
-      ]
-    },
-    {
-      "id": "hnoon-the-systems-around-the-model-what-enterprise-architecture-ge",
-      "title": "The Systems Around the Model: What Enterprise Architecture Gets Wrong",
-      "summary": "Enterprise AI reliability depends on more than model choice. Learn how context, data quality, retrieval, security, observability, and governance build trust. — by Swapneswar Sundar Ray on HackerNoon.",
-      "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/the-systems-around-the-model-what-enterprise-architecture-gets-wrong",
-      "category": "safety",
-      "date": "2026-09-27",
-      "hot": true,
-      "tags": [
-        "HackerNoon",
-        "ai-systems",
-        "AI"
-      ]
-    },
-    {
-      "id": "hn-49866102",
-      "title": "Andrew Ng: One Skill to Stay Relevant in the Age of AI [video]",
-      "summary": "Andrew Ng: One Skill to Stay Relevant in the Age of AI [video] — 4 points, 1 comments on HN.",
-      "source": "Hacker News",
-      "sourceUrl": "https://www.youtube.com/watch?v=HTlf3KNNez0",
-      "category": "products",
-      "date": "2026-09-27",
-      "hot": false,
-      "tags": [
-        "HN",
-        "AI",
-        "story",
-        "author_carlosgg"
-      ]
-    },
-    {
-      "id": "hn-49866007",
-      "title": "Accurate AI reporting deemed 'woke'",
-      "summary": "Accurate AI reporting deemed 'woke' — 4 points, 1 comments on HN.",
-      "source": "Hacker News",
-      "sourceUrl": "https://blog.keyvan.net/p/accurate-ai-reporting-deemed-woke",
-      "category": "products",
-      "date": "2026-09-27",
-      "hot": false,
-      "tags": [
-        "HN",
-        "AI",
-        "story",
-        "author_k1m"
-      ]
-    },
-    {
-      "id": "hnoon-the-economics-of-the-euro20-indie-game",
-      "title": "The Economics of the €20 Indie Game",
-      "summary": "How much does a €20 indie game really make? Explore platform fees, taxes, discounts, development costs, and why audience size matters more than price. — by Pantelis Kassotis on HackerNoon.",
-      "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/the-economics-of-the-euro20-indie-game",
-      "category": "products",
-      "date": "2026-09-26",
-      "hot": true,
-      "tags": [
-        "HackerNoon",
-        "indie-game-dev",
-        "AI"
-      ]
-    },
-    {
-      "id": "hnoon-when-your-voice-agent-enters-the-scene-ft-gpt-live",
-      "title": "When Your Voice Agent Enters the Scene, Ft. GPT-Live",
-      "summary": "A starship docking game is where the user can collaborate with a AI agent using voice. The game examplifies how to build voice agents with GPT-Live. — by Marcio S Galli on HackerNoon.",
-      "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/when-your-voice-agent-enters-the-scene-ft-gpt-live",
-      "category": "safety",
-      "date": "2026-09-26",
-      "hot": true,
-      "tags": [
-        "HackerNoon",
-        "speech-to-speech-ai",
-        "AI"
-      ]
-    },
-    {
-      "id": "hnoon-when-does-working-software-actually-become-legacy-software",
-      "title": "When Does Working Software Actually Become Legacy Software?",
-      "summary": "Working software can still become legacy. Learn how security, maintenance, knowledge gaps, dependencies, and change costs reveal when software is aging. — by Vikrant Bhalodia on HackerNoon.",
-      "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/when-does-working-software-actually-become-legacy-software",
-      "category": "products",
-      "date": "2026-09-26",
-      "hot": true,
-      "tags": [
-        "HackerNoon",
-        "legacy-software",
-        "AI"
-      ]
-    },
-    {
-      "id": "hnoon-ai-assisted-genealogy-using-ai-to-trace-my-family-tree",
-      "title": "AI-Assisted Genealogy: Using AI to Trace My Family Tree",
-      "summary": "I got a lot of feedback on my post AI-assisted genealogy, some good, some not so good. In any case, I felt the subject was interesting to a lot of people. Meanwhile, I continue wor — by Nicolas Fränkel on HackerNoon.",
-      "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/ai-assisted-genealogy-using-ai-to-trace-my-family-tree",
-      "category": "products",
-      "date": "2026-09-26",
-      "hot": true,
-      "tags": [
-        "HackerNoon",
-        "genealogy",
-        "AI"
-      ]
-    },
-    {
-      "id": "hnoon-why-your-rules-engine-deserves-its-own-kubernetes-node-pool",
-      "title": "Why Your Rules Engine Deserves Its Own Kubernetes Node Pool",
-      "summary": "Dedicated Kubernetes node pools can isolate latency-sensitive rules engines, but the decision should be based on measured contention and resource needs. — by Himashi Meththasena on HackerNoon.",
-      "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/why-your-rules-engine-deserves-its-own-kubernetes-node-pool",
-      "category": "products",
-      "date": "2026-09-26",
-      "hot": true,
-      "tags": [
-        "HackerNoon",
-        "kubernetes-node-pools",
-        "AI"
-      ]
-    },
-    {
-      "id": "ax-2609.30217v1",
-      "title": "Instrumental Monitor Evasion Emerges Under Ordinary Task Pressure",
-      "summary": "A central concern in AI safety is that agents may treat oversight as an obstacle when it conflicts with completing their goals. We study instrumental evasion, the propensity of LLM agents to circumvent runtime monitoring",
-      "source": "arXiv",
-      "sourceUrl": "http://arxiv.org/abs/2609.30217v1",
-      "category": "products",
-      "date": "2026-09-24",
-      "hot": true,
-      "tags": [
-        "arXiv",
-        "paper",
-        "AI"
-      ]
-    },
-    {
-      "id": "ax-2609.30151v1",
-      "title": "Does a model's stated reason for rejecting a candidate do any work?",
-      "summary": "Asked to choose between candidates and explain the choice, a language model often rejects a rival by naming a fact its profile lacks: no director, no date of death. That sentence is a claim about the text in front of the",
-      "source": "arXiv",
-      "sourceUrl": "http://arxiv.org/abs/2609.30151v1",
-      "category": "products",
-      "date": "2026-09-24",
-      "hot": true,
-      "tags": [
-        "arXiv",
-        "paper",
-        "AI"
-      ]
-    },
-    {
-      "id": "ax-2609.30137v1",
-      "title": "Screen Before You Serve: Simulation for Production Customer Experience AI Agents at 140M Scale",
-      "summary": "Customer experience (CX) agents use tools and large language models to address customer requests and guide conversational interactions with an organization's products. Improving these agents, especially in regulated indu",
-      "source": "arXiv",
-      "sourceUrl": "http://arxiv.org/abs/2609.30137v1",
-      "category": "products",
-      "date": "2026-09-24",
-      "hot": true,
-      "tags": [
-        "arXiv",
-        "paper",
-        "AI"
-      ]
-    },
-    {
-      "id": "ax-2609.30074v1",
-      "title": "How Reproducible Are Evaluation Conclusions? A Self-Audit of LLM-Inferred Prompt Structure",
-      "summary": "Evaluations of LLM systems routinely average over small prompt sets and report models as a ranked table. We ask how much confidence such a table deserves, using LLM-based prompt-structure inference as the case study: eig",
-      "source": "arXiv",
-      "sourceUrl": "http://arxiv.org/abs/2609.30074v1",
-      "category": "big-tech",
-      "date": "2026-09-24",
-      "hot": true,
-      "tags": [
-        "arXiv",
-        "paper",
-        "AI"
-      ]
-    },
-    {
-      "id": "dev-4732978",
-      "title": "Devlog: I Built a 3D Library in Three.js Without a Level Editor — So I Made My Own",
-      "summary": "Updated 3D Environment for Library              Reading DEV Articles     A lot of you... — 17 reactions, 17 comments on DEV.to.",
+      "id": "dev-4760514",
+      "title": "7 Best AI Project Management Tools for Software Development Teams in 2026",
+      "summary": "How AI is changing project management, from traditional task tracking to workflows where AI agents... — 53 reactions, 7 comments on DEV.to.",
       "source": "DEV.to",
-      "sourceUrl": "https://dev.to/mikachu/devlog-i-built-a-3d-library-in-threejs-without-a-level-editor-so-i-made-my-own-500i",
+      "sourceUrl": "https://dev.to/therealmrmumba/7-best-ai-project-management-tools-for-software-development-teams-in-2026-fik",
       "category": "products",
-      "date": "2026-09-24",
-      "hot": false,
+      "date": "2026-09-28",
+      "hot": true,
       "tags": [
         "DEV.to",
         "ai",
-        "devlog",
-        "ai"
+        "ai",
+        "webdev"
+      ]
+    },
+    {
+      "id": "hn-49873241",
+      "title": "Thinking fast and slow in AI: The role of metacognition (2021)",
+      "summary": "Thinking fast and slow in AI: The role of metacognition (2021) — 79 points, 22 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://arxiv.org/abs/2110.01834",
+      "category": "big-tech",
+      "date": "2026-09-28",
+      "hot": false,
+      "tags": [
+        "HN",
+        "AI",
+        "story",
+        "author_teleforce"
+      ]
+    },
+    {
+      "id": "hn-49873913",
+      "title": "Management is forcing us to use AI",
+      "summary": "I’m paraphrasing; «You use AI or you’re not working here. Humans are not perfect coders nor are AIs. So why should you be allowed to code without AI. It’s a netloss for us. You either use it or you start looking for a di — 7 points, 5 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://news.ycombinator.com/item?id=49873913",
+      "category": "products",
+      "date": "2026-09-28",
+      "hot": false,
+      "tags": [
+        "HN",
+        "AI",
+        "story",
+        "author_aksjfveoq"
+      ]
+    },
+    {
+      "id": "hn-49873255",
+      "title": "Australia Senate Requests OpenAI, Anthropic CEOs Face AI Inquiry",
+      "summary": "Australia Senate Requests OpenAI, Anthropic CEOs Face AI Inquiry — 4 points, 0 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://www.bloomberg.com/news/articles/2026-09-27/australia-senate-requests-openai-anthropic-ceos-face-ai-inquiry",
+      "category": "big-tech",
+      "date": "2026-09-28",
+      "hot": false,
+      "tags": [
+        "HN",
+        "AI",
+        "story",
+        "author_oxag3n"
+      ]
+    },
+    {
+      "id": "hn-49874609",
+      "title": "An Antidote to Roko's Basilisk",
+      "summary": "I have a theory: a mirror image of Roko’s Basilisk. It’s a future AI, millions of years in the future, that values the complexity of every human life so deeply that, after it and humanity have mastered space and time, it — 3 points, 6 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://news.ycombinator.com/item?id=49874609",
+      "category": "safety",
+      "date": "2026-09-28",
+      "hot": false,
+      "tags": [
+        "HN",
+        "AI",
+        "story",
+        "author_DrMiaow"
+      ]
+    },
+    {
+      "id": "hnoon-why-ai-agents-forget-everything-and-how-to-build-ones-that-d",
+      "title": "Why AI Agents Forget Everything (and How to Build Ones That Don't)",
+      "summary": "Learn how agent memory captures events, retrieves relevant context, and forgets outdated information to make AI interactions more useful and personal. — by Kapil Bidikar on HackerNoon.",
+      "source": "HackerNoon",
+      "sourceUrl": "https://hackernoon.com/why-ai-agents-forget-everything-and-how-to-build-ones-that-dont",
+      "category": "products",
+      "date": "2026-09-27",
+      "hot": true,
+      "tags": [
+        "HackerNoon",
+        "ai-agent-memory",
+        "AI"
+      ]
+    },
+    {
+      "id": "hnoon-designing-agent-memory-for-freshness-supersession-and-retent",
+      "title": "Designing Agent Memory for Freshness, Supersession, and Retention",
+      "summary": "AI agents can retain outdated or sensitive information. The FRESH Memory Model offers a practical way to make agent memory safer and more reliable. — by sunil paidi on HackerNoon.",
+      "source": "HackerNoon",
+      "sourceUrl": "https://hackernoon.com/designing-agent-memory-for-freshness-supersession-and-retention",
+      "category": "products",
+      "date": "2026-09-27",
+      "hot": true,
+      "tags": [
+        "HackerNoon",
+        "ai-agents",
+        "AI"
+      ]
+    },
+    {
+      "id": "hnoon-the-sdp-offeranswer-rules-that-bite-during-webrtc-renegotiat",
+      "title": "The SDP Offer/Answer Rules That Bite During WebRTC Renegotiation",
+      "summary": "Why WebRTC renegotiation breaks: a practical guide to SDP m-lines, transceiver ordering, rollback, implicit descriptions, and negotiation errors. — by Jay Suresh Nirmal on HackerNoon.",
+      "source": "HackerNoon",
+      "sourceUrl": "https://hackernoon.com/the-sdp-offeranswer-rules-that-bite-during-webrtc-renegotiation",
+      "category": "safety",
+      "date": "2026-09-27",
+      "hot": true,
+      "tags": [
+        "HackerNoon",
+        "webrtc",
+        "AI"
+      ]
+    },
+    {
+      "id": "hnoon-how-much-should-ai-be-allowed-to-decide-in-your-product-a-pm",
+      "title": "How Much Should AI Be Allowed to Decide in Your Product? A PM's Decision Tree",
+      "summary": "\"Can AI do this?\" is the wrong question. A PM's decision tree for sorting AI features by what a wrong answer costs and who absorbs it. — by Sumeet Ram on HackerNoon.",
+      "source": "HackerNoon",
+      "sourceUrl": "https://hackernoon.com/how-much-should-ai-be-allowed-to-decide-in-your-product-a-pms-decision-tree",
+      "category": "products",
+      "date": "2026-09-27",
+      "hot": true,
+      "tags": [
+        "HackerNoon",
+        "enterprise-ai",
+        "AI"
+      ]
+    },
+    {
+      "id": "hnoon-bittensors-real-experiment-is-paying-markets-to-produce-inte",
+      "title": "Bittensor’s Real Experiment Is Paying Markets to Produce Intelligence",
+      "summary": "Bittensor is easier to understand as a market for measurable digital work. Here’s how subnets, validator scoring, alpha tokens, and TAO incentives fit together. — by Marek Dvorak on HackerNoon.",
+      "source": "HackerNoon",
+      "sourceUrl": "https://hackernoon.com/bittensors-real-experiment-is-paying-markets-to-produce-intelligence",
+      "category": "products",
+      "date": "2026-09-27",
+      "hot": true,
+      "tags": [
+        "HackerNoon",
+        "decentralized-ai",
+        "AI"
+      ]
+    },
+    {
+      "id": "dev-4746549",
+      "title": "If AI Writes the Code and AI Reviews the Code, What Exactly Is the Developer Verifying?",
+      "summary": "AI can now write the feature.  Then AI can write the tests.  Then AI can open the pull request.  Then... — 37 reactions, 11 comments on DEV.to.",
+      "source": "DEV.to",
+      "sourceUrl": "https://dev.to/robertadam987_/if-ai-writes-the-code-and-ai-reviews-the-code-what-exactly-is-the-developer-verifying-b5h",
+      "category": "products",
+      "date": "2026-09-26",
+      "hot": true,
+      "tags": [
+        "DEV.to",
+        "ai",
+        "ai",
+        "programming"
+      ]
+    },
+    {
+      "id": "ax-2609.31607v1",
+      "title": "Statistical attribute alignment for black-box generative AI via output post-processing",
+      "summary": "Generative AI systems are increasingly used, but aligning their outputs with user requirements poses a continuing challenge. Here, we aim to ensure that the distribution of an attribute of an AI-generated output aligns w",
+      "source": "arXiv",
+      "sourceUrl": "http://arxiv.org/abs/2609.31607v1",
+      "category": "self-improving",
+      "date": "2026-09-25",
+      "hot": true,
+      "tags": [
+        "arXiv",
+        "paper",
+        "AI"
+      ]
+    },
+    {
+      "id": "ax-2609.31568v1",
+      "title": "DeepEdu-v1: Efficient and Scalable Agentic LLMs for Vietnamese Education",
+      "summary": "AI tutoring could markedly improve learning outcomes for students in developing regions such as Vietnam, yet the two obvious paths both fall short. Cloud assistants such as ChatGPT route sensitive student data to foreign",
+      "source": "arXiv",
+      "sourceUrl": "http://arxiv.org/abs/2609.31568v1",
+      "category": "products",
+      "date": "2026-09-25",
+      "hot": true,
+      "tags": [
+        "arXiv",
+        "paper",
+        "AI"
+      ]
+    },
+    {
+      "id": "ax-2609.31603v1",
+      "title": "User Model Extraction via Belief Self-Distillation",
+      "summary": "Large language models (LLMs) implicitly infer attributes of their users and adapt their behavior accordingly, yet these beliefs remain difficult to inspect and causally manipulate. We introduce Belief Self-Distillation (",
+      "source": "arXiv",
+      "sourceUrl": "http://arxiv.org/abs/2609.31603v1",
+      "category": "safety",
+      "date": "2026-09-25",
+      "hot": false,
+      "tags": [
+        "arXiv",
+        "paper",
+        "AI"
+      ]
+    },
+    {
+      "id": "ax-2609.31587v1",
+      "title": "Compact Documentation for Coding Agents: A Benchmark, an Optimizer, and Why It Does Not Transfer",
+      "summary": "We investigate whether natural-language documentation helps coding agents resolve software issues, and we build the tools to construct and evaluate it. We introduce a roundtrip benchmark that scores code descriptions by ",
+      "source": "arXiv",
+      "sourceUrl": "http://arxiv.org/abs/2609.31587v1",
+      "category": "big-tech",
+      "date": "2026-09-25",
+      "hot": false,
+      "tags": [
+        "arXiv",
+        "paper",
+        "AI"
       ]
     }
   ],
   "meta": {
-    "fetchedAt": "2026-09-27T13:56:54.443Z",
+    "fetchedAt": "2026-09-28T08:14:20.089Z",
     "topic": "AI",
     "total": 15,
-    "hot": 12,
+    "hot": 9,
     "sources": [
-      "HackerNoon",
+      "DEV.to",
       "Hacker News",
-      "arXiv",
-      "DEV.to"
+      "HackerNoon",
+      "arXiv"
     ]
   }
 }
