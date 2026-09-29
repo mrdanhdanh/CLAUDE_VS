@@ -1,12 +1,12 @@
 {
-  "generatedAt": "2026-09-28T08:14:20.089Z",
+  "generatedAt": "2026-09-29T07:54:02.967Z",
   "generatedBy": "YUNIE × Last30Days",
   "version": 2,
   "description": "Tin AI mới nhất — tổng hợp từ Last30Days (HN, GitHub, DEV.to, Reddit, arXiv, HackerNoon) trong 30 ngày qua. Chủ đề: AI. Tự động cập nhật bởi YUNIE.",
   "last30days": {
     "enabled": true,
     "topic": "AI",
-    "since": "2026-08-29",
+    "since": "2026-08-30",
     "days": 30,
     "sources": [
       "Hacker News (Algolia, free)",
@@ -55,164 +55,210 @@
   ],
   "articles": [
     {
-      "id": "dev-4760514",
-      "title": "7 Best AI Project Management Tools for Software Development Teams in 2026",
-      "summary": "How AI is changing project management, from traditional task tracking to workflows where AI agents... — 53 reactions, 7 comments on DEV.to.",
-      "source": "DEV.to",
-      "sourceUrl": "https://dev.to/therealmrmumba/7-best-ai-project-management-tools-for-software-development-teams-in-2026-fik",
+      "id": "hnoon-investors-fire-owners-hire",
+      "title": "Investors Fire. Owners Hire.",
+      "summary": "AI does not automatically lead to layoffs. In fund administration, both an investor-backed company and an independent competitor are adding employees while adopting AI, but for dif — by Chris Gale on HackerNoon.",
+      "source": "HackerNoon",
+      "sourceUrl": "https://hackernoon.com/investors-fire-owners-hire",
+      "category": "big-tech",
+      "date": "2026-09-29",
+      "hot": true,
+      "tags": [
+        "HackerNoon",
+        "ai",
+        "AI"
+      ]
+    },
+    {
+      "id": "hn-49889031",
+      "title": "What's Behind the AI Panic",
+      "summary": "What's Behind the AI Panic — 3 points, 4 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://bombthrower.com/whats-really-behind-the-ai-panic/",
+      "category": "products",
+      "date": "2026-09-29",
+      "hot": false,
+      "tags": [
+        "HN",
+        "AI",
+        "story",
+        "author_ptidhomme"
+      ]
+    },
+    {
+      "id": "hn-49889393",
+      "title": "HeyRepli –AI Social Concierge for SMBs",
+      "summary": "HeyRepli –AI Social Concierge for SMBs — 2 points, 0 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://heyrepli.com/",
+      "category": "products",
+      "date": "2026-09-29",
+      "hot": false,
+      "tags": [
+        "HN",
+        "AI",
+        "story",
+        "author_kaco"
+      ]
+    },
+    {
+      "id": "hn-49889271",
+      "title": "Web Time Lapse",
+      "summary": "Web Time Lapse — 2 points, 0 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://www.projectnothing.ai/experiments/web-time-lapse",
+      "category": "products",
+      "date": "2026-09-29",
+      "hot": false,
+      "tags": [
+        "HN",
+        "AI",
+        "story",
+        "author_erikrothoff"
+      ]
+    },
+    {
+      "id": "hn-49889251",
+      "title": "When can we say AI made a scientific discovery?",
+      "summary": "When can we say AI made a scientific discovery? — 2 points, 0 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://www.technologyreview.com/2026/09/28/1145230/when-can-we-say-ai-made-a-scientific-discovery/",
+      "category": "products",
+      "date": "2026-09-29",
+      "hot": false,
+      "tags": [
+        "HN",
+        "AI",
+        "story",
+        "author_joozio"
+      ]
+    },
+    {
+      "id": "hntop-49872723",
+      "title": "Owed a billion dollars in Nvidia stock",
+      "summary": "Owed a billion dollars in Nvidia stock — 1065 points, 447 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://colo.to/nvidia-stock-narrative.html",
+      "category": "big-tech",
+      "date": "2026-09-28",
+      "hot": true,
+      "tags": [
+        "HN",
+        "top"
+      ]
+    },
+    {
+      "id": "hnoon-what-if-the-world-had-only-one-central-bank-and-one-global-c",
+      "title": "What If the World Had Only One Central Bank and One Global Currency?",
+      "summary": "Could one global currency simplify life or create a financial Big Brother? Discover why convenience might come at a hefty price. — by Obyte on HackerNoon.",
+      "source": "HackerNoon",
+      "sourceUrl": "https://hackernoon.com/what-if-the-world-had-only-one-central-bank-and-one-global-currency",
       "category": "products",
       "date": "2026-09-28",
+      "hot": true,
+      "tags": [
+        "HackerNoon",
+        "globalization",
+        "AI"
+      ]
+    },
+    {
+      "id": "hnoon-project-skysim-part-1-the-case-for-a-drone-simulator-that-ru",
+      "title": "Project SkySim, Part 1: The Case for a Drone Simulator That Runs in Your Browser",
+      "summary": "Every serious drone simulator asks you to install Linux, ROS, or a game engine before you can test a single line of your own code. So, I built my own one. — by vishwa vimukthi gammuduwaththage on HackerNoon.",
+      "source": "HackerNoon",
+      "sourceUrl": "https://hackernoon.com/project-skysim-part-1-the-case-for-a-drone-simulator-that-runs-in-your-browser",
+      "category": "products",
+      "date": "2026-09-28",
+      "hot": true,
+      "tags": [
+        "HackerNoon",
+        "drone-technology",
+        "AI"
+      ]
+    },
+    {
+      "id": "hnoon-autoheal-raises--79m-from-innovation-endeavors-to-make-enter",
+      "title": "Autoheal Raises $7.9M From Innovation Endeavors to Make Enterprise Software Heal Itself",
+      "summary": "Autoheal raises $7.9M led by Innovation Endeavors for self-healing AI agents that fix incidents, patch security flaws and cut AI coding costs at Nomura. — by Ishan Pandey on HackerNoon.",
+      "source": "HackerNoon",
+      "sourceUrl": "https://hackernoon.com/autoheal-raises-$79m-from-innovation-endeavors-to-make-enterprise-software-heal-itself",
+      "category": "products",
+      "date": "2026-09-28",
+      "hot": true,
+      "tags": [
+        "HackerNoon",
+        "autoheal",
+        "AI"
+      ]
+    },
+    {
+      "id": "hnoon-email-marketing-knowledgebase-platform-dependency-and-resurr",
+      "title": "Email Marketing Knowledgebase: Platform Dependency And Resurrections [Part One]",
+      "summary": "A blocked Udemy course. A four-year-old abandoned GitHub repo. One dev's path from platform dependency to owning his own content stack. — by Arthur on HackerNoon.",
+      "source": "HackerNoon",
+      "sourceUrl": "https://hackernoon.com/email-marketing-knowledgebase-platform-dependency-and-resurrections-part-one",
+      "category": "products",
+      "date": "2026-09-28",
+      "hot": true,
+      "tags": [
+        "HackerNoon",
+        "github",
+        "AI"
+      ]
+    },
+    {
+      "id": "dev-4754094",
+      "title": "Prompt Injection Is the New SQL Injection (and We're Not Ready)",
+      "summary": "In March 2026, a financial services company discovered that their customer-facing AI agent had been... — 47 reactions, 50 comments on DEV.to.",
+      "source": "DEV.to",
+      "sourceUrl": "https://dev.to/james_anderson_h/prompt-injection-is-the-new-sql-injection-and-were-not-ready-4ea4",
+      "category": "products",
+      "date": "2026-09-27",
       "hot": true,
       "tags": [
         "DEV.to",
         "ai",
         "ai",
-        "webdev"
+        "security"
       ]
     },
     {
-      "id": "hn-49873241",
-      "title": "Thinking fast and slow in AI: The role of metacognition (2021)",
-      "summary": "Thinking fast and slow in AI: The role of metacognition (2021) — 79 points, 22 comments on HN.",
-      "source": "Hacker News",
-      "sourceUrl": "https://arxiv.org/abs/2110.01834",
-      "category": "big-tech",
-      "date": "2026-09-28",
+      "id": "dev-4754483",
+      "title": "Chain-of-Thought Faithfulness: Toggling 'Reasoning Mode' Made One Model 5x More Likely to Follow Its Own Mistakes",
+      "summary": "This is a submission for the Kaggle Benchmarking Challenge           What I Benchmarked   A while... — 33 reactions, 17 comments on DEV.to.",
+      "source": "DEV.to",
+      "sourceUrl": "https://dev.to/dj29/chain-of-thought-faithfulness-toggling-reasoning-mode-made-one-model-5x-more-likely-to-follow-39b3",
+      "category": "products",
+      "date": "2026-09-27",
+      "hot": true,
+      "tags": [
+        "DEV.to",
+        "ai",
+        "devchallenge",
+        "kagglechallenge"
+      ]
+    },
+    {
+      "id": "dev-4758216",
+      "title": "Implementation is where judgements go to become invisible",
+      "summary": "One question, three answers   I have a small tool that finds people waiting for a reply from... — 15 reactions, 17 comments on DEV.to.",
+      "source": "DEV.to",
+      "sourceUrl": "https://dev.to/tom_jones_230c4659491adcd/implementation-is-where-judgements-go-to-become-invisible-4p1h",
+      "category": "products",
+      "date": "2026-09-27",
       "hot": false,
       "tags": [
-        "HN",
-        "AI",
-        "story",
-        "author_teleforce"
-      ]
-    },
-    {
-      "id": "hn-49873913",
-      "title": "Management is forcing us to use AI",
-      "summary": "I’m paraphrasing; «You use AI or you’re not working here. Humans are not perfect coders nor are AIs. So why should you be allowed to code without AI. It’s a netloss for us. You either use it or you start looking for a di — 7 points, 5 comments on HN.",
-      "source": "Hacker News",
-      "sourceUrl": "https://news.ycombinator.com/item?id=49873913",
-      "category": "products",
-      "date": "2026-09-28",
-      "hot": false,
-      "tags": [
-        "HN",
-        "AI",
-        "story",
-        "author_aksjfveoq"
-      ]
-    },
-    {
-      "id": "hn-49873255",
-      "title": "Australia Senate Requests OpenAI, Anthropic CEOs Face AI Inquiry",
-      "summary": "Australia Senate Requests OpenAI, Anthropic CEOs Face AI Inquiry — 4 points, 0 comments on HN.",
-      "source": "Hacker News",
-      "sourceUrl": "https://www.bloomberg.com/news/articles/2026-09-27/australia-senate-requests-openai-anthropic-ceos-face-ai-inquiry",
-      "category": "big-tech",
-      "date": "2026-09-28",
-      "hot": false,
-      "tags": [
-        "HN",
-        "AI",
-        "story",
-        "author_oxag3n"
-      ]
-    },
-    {
-      "id": "hn-49874609",
-      "title": "An Antidote to Roko's Basilisk",
-      "summary": "I have a theory: a mirror image of Roko’s Basilisk. It’s a future AI, millions of years in the future, that values the complexity of every human life so deeply that, after it and humanity have mastered space and time, it — 3 points, 6 comments on HN.",
-      "source": "Hacker News",
-      "sourceUrl": "https://news.ycombinator.com/item?id=49874609",
-      "category": "safety",
-      "date": "2026-09-28",
-      "hot": false,
-      "tags": [
-        "HN",
-        "AI",
-        "story",
-        "author_DrMiaow"
-      ]
-    },
-    {
-      "id": "hnoon-why-ai-agents-forget-everything-and-how-to-build-ones-that-d",
-      "title": "Why AI Agents Forget Everything (and How to Build Ones That Don't)",
-      "summary": "Learn how agent memory captures events, retrieves relevant context, and forgets outdated information to make AI interactions more useful and personal. — by Kapil Bidikar on HackerNoon.",
-      "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/why-ai-agents-forget-everything-and-how-to-build-ones-that-dont",
-      "category": "products",
-      "date": "2026-09-27",
-      "hot": true,
-      "tags": [
-        "HackerNoon",
-        "ai-agent-memory",
-        "AI"
-      ]
-    },
-    {
-      "id": "hnoon-designing-agent-memory-for-freshness-supersession-and-retent",
-      "title": "Designing Agent Memory for Freshness, Supersession, and Retention",
-      "summary": "AI agents can retain outdated or sensitive information. The FRESH Memory Model offers a practical way to make agent memory safer and more reliable. — by sunil paidi on HackerNoon.",
-      "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/designing-agent-memory-for-freshness-supersession-and-retention",
-      "category": "products",
-      "date": "2026-09-27",
-      "hot": true,
-      "tags": [
-        "HackerNoon",
-        "ai-agents",
-        "AI"
-      ]
-    },
-    {
-      "id": "hnoon-the-sdp-offeranswer-rules-that-bite-during-webrtc-renegotiat",
-      "title": "The SDP Offer/Answer Rules That Bite During WebRTC Renegotiation",
-      "summary": "Why WebRTC renegotiation breaks: a practical guide to SDP m-lines, transceiver ordering, rollback, implicit descriptions, and negotiation errors. — by Jay Suresh Nirmal on HackerNoon.",
-      "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/the-sdp-offeranswer-rules-that-bite-during-webrtc-renegotiation",
-      "category": "safety",
-      "date": "2026-09-27",
-      "hot": true,
-      "tags": [
-        "HackerNoon",
-        "webrtc",
-        "AI"
-      ]
-    },
-    {
-      "id": "hnoon-how-much-should-ai-be-allowed-to-decide-in-your-product-a-pm",
-      "title": "How Much Should AI Be Allowed to Decide in Your Product? A PM's Decision Tree",
-      "summary": "\"Can AI do this?\" is the wrong question. A PM's decision tree for sorting AI features by what a wrong answer costs and who absorbs it. — by Sumeet Ram on HackerNoon.",
-      "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/how-much-should-ai-be-allowed-to-decide-in-your-product-a-pms-decision-tree",
-      "category": "products",
-      "date": "2026-09-27",
-      "hot": true,
-      "tags": [
-        "HackerNoon",
-        "enterprise-ai",
-        "AI"
-      ]
-    },
-    {
-      "id": "hnoon-bittensors-real-experiment-is-paying-markets-to-produce-inte",
-      "title": "Bittensor’s Real Experiment Is Paying Markets to Produce Intelligence",
-      "summary": "Bittensor is easier to understand as a market for measurable digital work. Here’s how subnets, validator scoring, alpha tokens, and TAO incentives fit together. — by Marek Dvorak on HackerNoon.",
-      "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/bittensors-real-experiment-is-paying-markets-to-produce-intelligence",
-      "category": "products",
-      "date": "2026-09-27",
-      "hot": true,
-      "tags": [
-        "HackerNoon",
-        "decentralized-ai",
-        "AI"
+        "DEV.to",
+        "ai",
+        "testing",
+        "programming"
       ]
     },
     {
       "id": "dev-4746549",
       "title": "If AI Writes the Code and AI Reviews the Code, What Exactly Is the Developer Verifying?",
-      "summary": "AI can now write the feature.  Then AI can write the tests.  Then AI can open the pull request.  Then... — 37 reactions, 11 comments on DEV.to.",
+      "summary": "AI can now write the feature.  Then AI can write the tests.  Then AI can open the pull request.  Then... — 39 reactions, 12 comments on DEV.to.",
       "source": "DEV.to",
       "sourceUrl": "https://dev.to/robertadam987_/if-ai-writes-the-code-and-ai-reviews-the-code-what-exactly-is-the-developer-verifying-b5h",
       "category": "products",
@@ -226,76 +272,31 @@
       ]
     },
     {
-      "id": "ax-2609.31607v1",
-      "title": "Statistical attribute alignment for black-box generative AI via output post-processing",
-      "summary": "Generative AI systems are increasingly used, but aligning their outputs with user requirements poses a continuing challenge. Here, we aim to ensure that the distribution of an attribute of an AI-generated output aligns w",
-      "source": "arXiv",
-      "sourceUrl": "http://arxiv.org/abs/2609.31607v1",
-      "category": "self-improving",
-      "date": "2026-09-25",
-      "hot": true,
-      "tags": [
-        "arXiv",
-        "paper",
-        "AI"
-      ]
-    },
-    {
-      "id": "ax-2609.31568v1",
-      "title": "DeepEdu-v1: Efficient and Scalable Agentic LLMs for Vietnamese Education",
-      "summary": "AI tutoring could markedly improve learning outcomes for students in developing regions such as Vietnam, yet the two obvious paths both fall short. Cloud assistants such as ChatGPT route sensitive student data to foreign",
-      "source": "arXiv",
-      "sourceUrl": "http://arxiv.org/abs/2609.31568v1",
+      "id": "dev-4732978",
+      "title": "Devlog: I Built a 3D Library in Three.js Without a Level Editor — So I Made My Own",
+      "summary": "Updated 3D Environment for Library              Reading DEV Articles     A lot of you... — 18 reactions, 17 comments on DEV.to.",
+      "source": "DEV.to",
+      "sourceUrl": "https://dev.to/mikachu/devlog-i-built-a-3d-library-in-threejs-without-a-level-editor-so-i-made-my-own-500i",
       "category": "products",
-      "date": "2026-09-25",
-      "hot": true,
-      "tags": [
-        "arXiv",
-        "paper",
-        "AI"
-      ]
-    },
-    {
-      "id": "ax-2609.31603v1",
-      "title": "User Model Extraction via Belief Self-Distillation",
-      "summary": "Large language models (LLMs) implicitly infer attributes of their users and adapt their behavior accordingly, yet these beliefs remain difficult to inspect and causally manipulate. We introduce Belief Self-Distillation (",
-      "source": "arXiv",
-      "sourceUrl": "http://arxiv.org/abs/2609.31603v1",
-      "category": "safety",
-      "date": "2026-09-25",
+      "date": "2026-09-24",
       "hot": false,
       "tags": [
-        "arXiv",
-        "paper",
-        "AI"
-      ]
-    },
-    {
-      "id": "ax-2609.31587v1",
-      "title": "Compact Documentation for Coding Agents: A Benchmark, an Optimizer, and Why It Does Not Transfer",
-      "summary": "We investigate whether natural-language documentation helps coding agents resolve software issues, and we build the tools to construct and evaluate it. We introduce a roundtrip benchmark that scores code descriptions by ",
-      "source": "arXiv",
-      "sourceUrl": "http://arxiv.org/abs/2609.31587v1",
-      "category": "big-tech",
-      "date": "2026-09-25",
-      "hot": false,
-      "tags": [
-        "arXiv",
-        "paper",
-        "AI"
+        "DEV.to",
+        "ai",
+        "devlog",
+        "ai"
       ]
     }
   ],
   "meta": {
-    "fetchedAt": "2026-09-28T08:14:20.089Z",
+    "fetchedAt": "2026-09-29T07:54:02.967Z",
     "topic": "AI",
     "total": 15,
     "hot": 9,
     "sources": [
-      "DEV.to",
-      "Hacker News",
       "HackerNoon",
-      "arXiv"
+      "Hacker News",
+      "DEV.to"
     ]
   }
 }
