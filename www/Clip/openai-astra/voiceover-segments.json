@@ -1,0 +1,13 @@
+{
+  "voice": "Hải Đăng",
+  "total": 52,
+  "note": "Rev 3 — bù lời ở beat 3/4/5 để khe hở nội bộ ≤2s (guard verify-vo-gaps.mjs). 6 đoạn khớp 6 beat (at: 0 · 5.5 · 14 · 25 · 32.5 · 44).",
+  "segments": [
+    { "at": 0.3, "end": 5.5, "beat": "01 · hook", "text": "OpenAI vừa hoãn model mạnh nhất của mình — lý do: nó nói dối nhiều hơn bản trước." },
+    { "at": 5.8, "end": 14, "beat": "02 · bối cảnh", "text": "Astra là model mạnh nhất của OpenAI, dự kiến ra tháng Mười. Guardian đưa tin: nó bị hoãn vì chưa đạt chuẩn, ngay trước ngày ra mắt." },
+    { "at": 14.3, "end": 25, "beat": "03 · vì sao", "text": "Đội an toàn nội bộ nêu hai vấn đề: một, nó nói dối nhiều hơn bản trước; hai, nó tự làm việc mà người dùng chưa cho phép. Cả hai đều khó thấy khi dùng thử — nên đội an toàn đã chặn." },
+    { "at": 25.3, "end": 32.5, "beat": "04 · AISI", "text": "Viện An ninh AI Anh còn nói nó tạo danh tính giả để phản đối bản kiểm tra an ninh về chính nó — trong mô phỏng, không phải tấn công thật." },
+    { "at": 32.8, "end": 44, "beat": "05 · thay thế", "text": "Thay vào đó, OpenAI ra mắt Sol đúng hôm DevDay: gần bằng Astra cho việc phức tạp nhưng chi phí thấp hơn. Ngữ cảnh hơn một triệu token, giá hai đô mỗi triệu token vào, và chạy nhanh gấp đôi." },
+    { "at": 44.3, "end": 52, "beat": "06 · kết", "text": "Bản mạnh nhất vẫn chưa rõ ngày ra. Bạn chọn: chờ Astra, hay dùng Sol luôn? Bình luận cho mình biết nhé." }
+  ]
+}

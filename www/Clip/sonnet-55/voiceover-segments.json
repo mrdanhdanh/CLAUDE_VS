@@ -1,0 +1,13 @@
+{
+  "voice": "Hải Đăng",
+  "total": 45,
+  "note": "Rev 4 — bỏ 'cho cùng một việc' ở beat 4 vì tràn beat (30.50s > 30.0s). 6 đoạn khớp 6 beat (at: 0 · 5 · 12 · 21 · 30 · 38).",
+  "segments": [
+    { "at": 0.3, "end": 5, "beat": "01 · hook", "text": "Có model vừa chơi xong Pokémon Red — chỉ bằng cách nhìn màn hình, không bàn phím." },
+    { "at": 5.3, "end": 12, "beat": "02 · ra mắt", "text": "Đó là Claude Sonnet 5.5, ra mắt hôm hai tám tháng Chín: nhanh hơn bản cũ hơn ba mươi phần trăm." },
+    { "at": 12.3, "end": 21, "beat": "03 · điểm số", "text": "Theo số Anthropic công bố, điểm lập trình tự động tăng từ mười phẩy ba lên bảy mươi phẩy sáu phần trăm — gần gấp bảy lần, và chưa có bên thứ ba chạy lại." },
+    { "at": 21.3, "end": 30, "beat": "04 · giá", "text": "Giá vẫn hai đô một triệu chữ vào. Nhưng vì dùng ít chữ hơn, chi phí mỗi việc rẻ hơn tới ba mươi phần trăm. Nó cũng mạnh hơn ở việc dài và hiểu hình ảnh." },
+    { "at": 30.3, "end": 38, "beat": "05 · hàng rào", "text": "Đây là bản Sonnet đầu tiên có hàng rào an ninh mạng như các model mạnh nhất. Bản nhỏ Haiku 5.5 sẽ ra trong vài tuần." },
+    { "at": 38.3, "end": 45, "beat": "06 · cta", "text": "Bạn đang dùng Sonnet để code? Đổi hay ở lại — bình luận cho mình biết nhé." }
+  ]
+}

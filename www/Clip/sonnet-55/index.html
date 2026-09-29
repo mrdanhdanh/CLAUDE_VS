@@ -1,0 +1,503 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Sonnet 5.5 — clip 45s · Tin AI hôm nay</title>
+<style>
+  :root { color-scheme: dark; font-family: "Segoe UI", Arial, sans-serif; background:#04070d; color:#eef4ff; }
+  * { box-sizing: border-box; }
+  body { margin:0; min-height:100vh; display:grid; place-items:center; background:#04070d; }
+  .stage { width:min(100vw, 562.5px); aspect-ratio:9/16; position:relative; overflow:hidden; background:#04070d; }
+  canvas { display:block; width:100%; height:100%; }
+  .sr { position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap; }
+</style>
+</head>
+<body>
+  <main class="stage" aria-label="Clip tin AI 45 giây">
+    <canvas id="canvas" width="1080" height="1920" role="img" aria-label="Claude Sonnet 5.5 chơi xong Pokémon Red chỉ bằng cách nhìn màn hình; điểm lập trình tự động 10,3% lên 70,6% theo số Anthropic công bố; giá 2 đô một triệu chữ vào; lần đầu có hàng rào an ninh mạng ở dòng Sonnet."></canvas>
+    <h1 class="sr">Claude Sonnet 5.5 — chơi xong Pokémon Red chỉ bằng màn hình</h1>
+  </main>
+<script type="module">
+  const canvas = document.querySelector('#canvas');
+  const ctx = canvas.getContext('2d', { alpha: false });
+  const W = canvas.width, H = canvas.height;
+
+  // ── TOKENS ────────────────────────────────────────────────────────────────
+  // Một object DUY NHẤT (design.md §1). Thiếu key = ctx.fillStyle = undefined = KHÔNG throw
+  // ⇒ chữ giữ màu cũ, tàng hình. verify-frames.mjs quét đúng chỗ này.
+  const C = {
+    bg0: '#04070d', bg1: '#081120', panel: '#0d1830', panel2: '#122040', line: '#24365c',
+    ink: '#eef4ff', muted: '#93a7cc', dim: '#7789ae',
+    cyan: '#4fe3e0', green: '#5dfc9b', amber: '#ffc857', red: '#ff5d73',
+    white: '#ffffff'
+  };
+  const MONO = '"Consolas","Segoe UI",monospace';
+  const UI = '"Segoe UI",Arial,sans-serif';
+
+  // ── BEATS ─────────────────────────────────────────────────────────────────
+  // `at`/`end` khớp `segments` trong voiceover-segments.json (0·5·12·21·30·38, hết 45).
+  // eyebrow/title/sub = chữ trên hình lấy từ spec-sonnet-55.md; beat 3 dùng title làm nhãn 2 thanh,
+  // sub làm note trung thực "số do Anthropic công bố".
+  const DURATION = 45;
+  const beats = [
+    { at: 0,  end: 5,  eyebrow: 'TIN AI · SẢN PHẨM · 28.09.2026', title: 'Model này vừa chơi xong\nPOKÉMON RED', sub: 'chỉ bằng cách nhìn màn hình — không bàn phím' },
+    { at: 5,  end: 12, eyebrow: 'RA MẮT 28.09', title: 'Claude\nSonnet 5.5', sub: 'NHANH HƠN +30%' },
+    { at: 12, end: 21, eyebrow: 'ĐIỂM LẬP TRÌNH TỰ ĐỘNG · TERMINAL-BENCH 4.0', title: 'SONNET 5 — 10,3%\nSONNET 5.5 — 70,6%', sub: 'số do Anthropic công bố' },
+    { at: 21, end: 30, eyebrow: 'GIÁ', title: '$2', sub: '/ 1 TRIỆU CHỮ VÀO' },
+    { at: 30, end: 38, eyebrow: 'AN TOÀN & LỘ TRÌNH', title: 'LẦN ĐẦU: HÀNG RÀO AN NINH MẠNG Ở DÒNG SONNET', sub: 'TỚI TỪ OPUS 5.5' },
+    { at: 38, end: 45, eyebrow: 'CÒN BẠN?', title: 'Đổi hay ở lại?', sub: 'Bạn đang dùng model nào để code? 👇' }
+  ];
+  const ACCENT = [C.green, C.cyan, C.green, C.amber, C.cyan, C.cyan];
+
+  // ── COPY ──────────────────────────────────────────────────────────────────
+  // Chữ trên hình nằm một chỗ (locale của clip) — scene chỉ đọc từ đây, không rải literal.
+  const TXT = {
+    channel: 'TIN AI HÔM NAY',
+    source: 'anthropic.com/claude-sonnet-5-5',
+    sourceShort: 'nguồn · anthropic.com',
+    chipScreen: '✓ BEAT GAME FROM SCREENSHOTS',
+    chipAnthropic: 'ANTHROPIC',
+    gaugeAxis: ['0', '1,0×', '1,3×'],
+    priceRow: 'MỖI VIỆC RẺ HƠN TỚI 30%',
+    priceNote: 'vì dùng ít chữ hơn cho cùng việc',
+    scale: ['0%', '50%', '100%'],
+    roadmap: 'HAIKU 5.5 — VÀI TUẦN TỚI',
+    roadmapNow: 'HÔM NAY',
+    cardYes: 'ĐỔI',
+    cardYesSub: 'nhanh hơn, rẻ hơn',
+    cardStay: 'Ở LẠI',
+    cardStaySub: 'quen tay, ổn định',
+    vs: 'VS'
+  };
+
+  // ── HELPERS ───────────────────────────────────────────────────────────────
+  const clamp = (v, a = 0, b = 1) => (v < a ? a : v > b ? b : v);
+  const ease = t => (t < .5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2);
+  const easeOut = t => 1 - Math.pow(1 - clamp(t), 3);
+  const rv = (t, start, dur) => ease(clamp((t - start) / dur));      // reveal 0..1
+  const beatAt = t => Math.max(0, beats.findIndex(b => t >= b.at && t < b.end));
+  // Tôn trọng reduced-motion: chỉ tắt hiệu ứng trang trí (quét màn hình, nhấp nháy), giữ nguyên hình.
+  const MOTION = (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) ? 0 : 1;
+
+  const rgbaCache = new Map();
+  function rgba(hex, a) {
+    const key = hex + a;
+    let v = rgbaCache.get(key);
+    if (v === undefined) {
+      const n = parseInt(hex.slice(1), 16);
+      v = `rgba(${(n >> 16) & 255},${(n >> 8) & 255},${n & 255},${a})`;
+      rgbaCache.set(key, v);
+    }
+    return v;
+  }
+  // Nhân alpha lồng nhau (không ghi đè) — để scene luôn nằm trong envelope của draw().
+  const withAlpha = (k, fn) => { if (k <= 0.002) return; ctx.save(); ctx.globalAlpha *= k; fn(); ctx.restore(); };
+
+  function setFont(weight, size, mono) {
+    ctx.font = `${weight} ${Math.round(size)}px ${mono ? MONO : UI}`;
+  }
+  function txt(str, x, y, size, color, weight = 700, mono = false, align = 'left') {
+    setFont(weight, size, mono);
+    ctx.fillStyle = color;
+    ctx.textAlign = align;
+    ctx.textBaseline = 'alphabetic';
+    ctx.fillText(str, x, y);
+  }
+  // Đo 1 lần rồi cache — không measureText mỗi khung (KN-083).
+  const wCache = new Map();
+  function width(str, size, weight, mono) {
+    const key = `${str}|${size}|${weight}|${mono ? 1 : 0}`;
+    let v = wCache.get(key);
+    if (v === undefined) { setFont(weight, size, mono); v = ctx.measureText(str).width; wCache.set(key, v); }
+    return v;
+  }
+  const longest = (parts) => {
+    let w = 0;
+    for (const p of parts) w = Math.max(w, ctx.measureText(p).width);
+    return w;
+  };
+  // `\n` trong spec là ngắt dòng CHỦ Ý: thu size (tối đa 26%) để giữ đúng số dòng,
+  // chỉ ngắt thêm khi chạm sàn — nếu không, chữ dài sẽ tràn khỏi safe zone.
+  function fitSize(str, maxW, size, weight, mono) {
+    const parts = str.split('\n');
+    const minS = Math.max(46, Math.round(size * 0.74));
+    let s = size;
+    for (let pass = 0; pass < 6; pass++) {
+      setFont(weight, s, mono);
+      const w = longest(parts);
+      if (w <= maxW || s <= minS) break;
+      s = Math.max(minS, Math.floor(s * maxW / w * 0.995));
+    }
+    return s;
+  }
+  function wrapPart(part, maxW) {
+    const out = [];
+    let line = '';
+    for (const word of part.split(' ')) {
+      const test = line ? `${line} ${word}` : word;
+      if (line && ctx.measureText(test).width > maxW) { out.push(line); line = word; }
+      else line = test;
+    }
+    if (line) out.push(line);
+    return out;
+  }
+  const layoutCache = new Map();
+  function layout(str, maxW, size, weight, mono) {
+    const key = `${size}|${weight}|${mono ? 'm' : 'u'}|${maxW}|${str}`;
+    let hit = layoutCache.get(key);
+    if (hit) return hit;
+    const s = fitSize(str, maxW, size, weight, mono);
+    setFont(weight, s, mono);
+    const lines = [];
+    for (const p of str.split('\n')) {
+      if (ctx.measureText(p).width <= maxW) lines.push(p);
+      else lines.push(...wrapPart(p, maxW));
+    }
+    hit = { lines, size: s };
+    layoutCache.set(key, hit);
+    return hit;
+  }
+  // Vẽ khối chữ từ `top` (top = mép trên dòng đầu), trả về chiều cao đã dùng.
+  function block(str, x, top, maxW, size, color, weight = 800, mono = false, lhK = 1.1) {
+    const L = layout(str, maxW, size, weight, mono);
+    const lh = L.size * lhK;
+    for (let i = 0; i < L.lines.length; i++) {
+      const col = typeof color === 'function' ? color(i) : color;
+      if (col) txt(L.lines[i], x, top + i * lh + L.size * 0.8, L.size, col, weight, mono);
+    }
+    return L.lines.length * lh;
+  }
+  // Vẽ khối chữ đã đo sẵn từ baseline dòng đầu (dùng L.lines — không fillText chuỗi gốc).
+  function lines(L, x, baseline, color, weight = 800, mono = false, lhK = 1.06) {
+    const lh = L.size * lhK;
+    for (let i = 0; i < L.lines.length; i++) txt(L.lines[i], x, baseline + i * lh, L.size, color, weight, mono);
+    return L.lines.length * lh;
+  }
+  function chip(label, x, y, accent, h = 56, size = 24) {
+    const w = width(label, size, 700, true) + 44;
+    ctx.fillStyle = rgba(accent, 0.13);
+    ctx.beginPath(); ctx.roundRect(x, y, w, h, h / 2); ctx.fill();
+    ctx.strokeStyle = rgba(accent, 0.65); ctx.lineWidth = 2;
+    ctx.beginPath(); ctx.roundRect(x + 1, y + 1, w - 2, h - 2, (h - 2) / 2); ctx.stroke();
+    txt(label, x + 22, y + h * 0.68, size, accent, 700, true);
+    return w;
+  }
+  function track(x, y, w, h, r, fill) {
+    ctx.fillStyle = fill;
+    ctx.beginPath(); ctx.roundRect(x, y, Math.max(2, w), h, r); ctx.fill();
+  }
+
+  // ── TEXTURE BAKE ──────────────────────────────────────────────────────────
+  // Nền tĩnh + khung panel + lưới pixel vẽ 1 LẦN rồi drawImage (KN-083: vẽ lại gradient
+  // toàn màn hình + hàng trăm fillText mỗi khung là nguồn lag im lặng của clip cũ).
+  const texCache = new Map();
+  function tex(key, w, h, paint, opaque = false) {
+    let cv = texCache.get(key);
+    if (cv) return cv;
+    cv = document.createElement('canvas');
+    cv.width = Math.ceil(w); cv.height = Math.ceil(h);
+    paint(cv.getContext('2d', { alpha: !opaque }), cv.width, cv.height);
+    texCache.set(key, cv);
+    return cv;
+  }
+  function panelChrome(g, w, h, accent) {
+    const r = 34;
+    g.fillStyle = C.panel;
+    g.beginPath(); g.roundRect(0, 0, w, h, r); g.fill();
+    g.strokeStyle = rgba(accent, 0.32); g.lineWidth = 3;
+    g.beginPath(); g.roundRect(1.5, 1.5, w - 3, h - 3, r); g.stroke();
+    g.fillStyle = rgba(accent, 0.9);                       // tab nhấn — nhận diện panel trong series
+    g.beginPath(); g.roundRect(30, 28, 84, 8, 4); g.fill();
+    const sheen = g.createLinearGradient(0, 0, 0, h);
+    sheen.addColorStop(0, rgba(C.white, 0.045));
+    sheen.addColorStop(0.55, rgba(C.white, 0));
+    g.fillStyle = sheen;
+    g.beginPath(); g.roundRect(0, 0, w, h, r); g.fill();
+  }
+
+  // Nền + lưới điểm "bảng đo" + góc khung + track tiến độ (tất cả tĩnh).
+  const texBg = tex('bg', W, H, (g) => {
+    g.fillStyle = C.bg0; g.fillRect(0, 0, W, H);
+    const sky = g.createLinearGradient(0, 0, 0, H * 0.9);
+    sky.addColorStop(0, C.bg1); sky.addColorStop(0.55, C.bg0); sky.addColorStop(1, C.bg0);
+    g.fillStyle = sky; g.fillRect(0, 0, W, H);
+    const glow = g.createRadialGradient(540, 360, 40, 540, 360, 920);
+    glow.addColorStop(0, rgba(C.cyan, 0.07)); glow.addColorStop(1, rgba(C.cyan, 0));
+    g.fillStyle = glow; g.fillRect(0, 0, W, 1400);
+    g.fillStyle = rgba(C.line, 0.5);
+    for (let y = 60; y < H; y += 48) for (let x = 60; x < W; x += 48) g.fillRect(x, y, 3, 3);
+    const vg = g.createRadialGradient(540, 960, 640, 540, 960, 1260);
+    vg.addColorStop(0, 'rgba(0,0,0,0)'); vg.addColorStop(1, rgba(C.bg0, 0.9));
+    g.fillStyle = vg; g.fillRect(0, 0, W, H);
+    const corner = (x, y, dx, dy) => {
+      g.strokeStyle = rgba(C.line, 0.95); g.lineWidth = 3; g.beginPath();
+      g.moveTo(x, y + dy * 46); g.lineTo(x, y); g.lineTo(x + dx * 46, y); g.stroke();
+    };
+    corner(90, 260, 1, 1); corner(990, 260, -1, 1); corner(90, 1660, 1, -1); corner(990, 1660, -1, -1);
+    g.fillStyle = rgba(C.line, 0.9);
+    g.beginPath(); g.roundRect(90, 1790, 900, 5, 2.5); g.fill();
+    for (const b of beats) {
+      if (b.at === 0) continue;
+      const x = 90 + (b.at / DURATION) * 900;
+      g.fillStyle = rgba(C.line, 1);
+      g.fillRect(x - 1, 1786, 2, 13);
+    }
+  }, true);
+
+  // Beat 1 — khung màn hình 8-bit: bezel + lưới pixel + sprite xanh (chấm đỏ vẽ mỗi khung).
+  const texScreen = tex('screen', 900, 660, (g) => {
+    g.fillStyle = C.panel2;
+    g.beginPath(); g.roundRect(0, 0, 900, 660, 36); g.fill();
+    g.strokeStyle = rgba(C.green, 0.3); g.lineWidth = 3;
+    g.beginPath(); g.roundRect(1.5, 1.5, 897, 657, 36); g.stroke();
+    const sx = 34, sy = 34, sw = 832, sh = 500, cell = 26;
+    g.fillStyle = '#02050b';
+    g.beginPath(); g.roundRect(sx, sy, sw, sh, 16); g.fill();
+    g.strokeStyle = rgba(C.green, 0.22); g.lineWidth = 2;
+    g.beginPath(); g.roundRect(sx + 1, sy + 1, sw - 2, sh - 2, 16); g.stroke();
+    const cols = 32, rows = 19;
+    g.strokeStyle = rgba(C.green, 0.12); g.lineWidth = 1;
+    for (let i = 0; i <= cols; i++) { g.beginPath(); g.moveTo(sx + i * cell, sy); g.lineTo(sx + i * cell, sy + rows * cell); g.stroke(); }
+    for (let j = 0; j <= rows; j++) { g.beginPath(); g.moveTo(sx, sy + j * cell); g.lineTo(sx + cols * cell, sy + j * cell); g.stroke(); }
+    const px = (col, row, cw, ch, fill) => {
+      g.fillStyle = fill;
+      g.fillRect(sx + col * cell + 1, sy + row * cell + 1, cw * cell - 2, ch * cell - 2);
+    };
+    for (let i = 1; i < cols; i += 3) px(i, 15, 1, 1, rgba(C.green, 0.16));
+    px(3, 12, 1, 3, rgba(C.green, 0.6)); px(4, 12, 1, 3, rgba(C.green, 0.34));
+    px(24, 11, 2, 4, rgba(C.green, 0.42)); px(23, 14, 4, 1, rgba(C.green, 0.22));
+    px(9, 14, 2, 1, rgba(C.ink, 0.3));
+    g.fillStyle = rgba(C.line, 0.9);
+    for (let i = 0; i < 3; i++) g.fillRect(300 + i * 120, 582, 90, 6);
+  });
+
+  const texGauge = tex('gauge', 900, 560, (g) => { panelChrome(g, 900, 560, C.cyan); });
+  const texBars = tex('bars', 900, 860, (g) => { panelChrome(g, 900, 860, C.green); });
+  const texPrice = tex('price', 900, 440, (g) => {
+    panelChrome(g, 900, 440, C.green);
+    g.fillStyle = rgba(C.line, 0.95);
+    g.fillRect(60, 230, 780, 2);
+  });
+  const texShieldPanel = tex('shield-panel', 900, 640, (g) => {
+    panelChrome(g, 900, 640, C.cyan);
+    g.fillStyle = rgba(C.line, 0.95);
+    g.fillRect(60, 330, 780, 2);
+    g.strokeStyle = rgba(C.line, 0.95); g.lineWidth = 3;
+    g.beginPath(); g.moveTo(60, 420); g.lineTo(840, 420); g.stroke();
+    g.fillStyle = C.green;
+    g.beginPath(); g.arc(82, 420, 11, 0, Math.PI * 2); g.fill();
+    g.fillStyle = C.dim;
+    g.font = '700 22px "Consolas","Segoe UI",monospace';
+    g.fillText(TXT.roadmapNow, 110, 428);
+  });
+  // Khiên "hàng rào an ninh mạng": viền cyan + lưới bên trong (bake, không shadowBlur mỗi khung).
+  const texShieldIcon = tex('shield-icon', 176, 200, (g) => {
+    const x = 13, y = 10, w = 150, h = 180;
+    g.beginPath();
+    g.moveTo(x + w / 2, y);
+    g.lineTo(x + w, y + h * 0.2);
+    g.lineTo(x + w, y + h * 0.56);
+    g.quadraticCurveTo(x + w, y + h * 0.96, x + w / 2, y + h);
+    g.quadraticCurveTo(x, y + h * 0.96, x, y + h * 0.56);
+    g.lineTo(x, y + h * 0.2);
+    g.closePath();
+    g.fillStyle = rgba(C.cyan, 0.1); g.fill();
+    g.strokeStyle = rgba(C.cyan, 0.85); g.lineWidth = 5; g.stroke();
+    g.save(); g.clip();
+    g.strokeStyle = rgba(C.cyan, 0.26); g.lineWidth = 2;
+    for (let i = 1; i < 5; i++) { g.beginPath(); g.moveTo(x, y + (h / 5) * i); g.lineTo(x + w, y + (h / 5) * i); g.stroke(); }
+    for (let i = 1; i < 4; i++) { g.beginPath(); g.moveTo(x + (w / 4) * i, y); g.lineTo(x + (w / 4) * i, y + h); g.stroke(); }
+    g.restore();
+  });
+  const texCardYes = tex('card-yes', 435, 360, (g) => {
+    panelChrome(g, 435, 360, C.green);
+    g.font = '800 46px "Consolas","Segoe UI",monospace';
+    g.fillStyle = C.green; g.textBaseline = 'alphabetic';
+    g.fillText(TXT.cardYes, 60, 122);
+    g.font = '600 32px "Segoe UI",Arial,sans-serif';
+    g.fillStyle = C.muted;
+    g.fillText(TXT.cardYesSub, 60, 206);
+  });
+  const texCardStay = tex('card-stay', 435, 360, (g) => {
+    panelChrome(g, 435, 360, C.dim);
+    g.font = '800 46px "Consolas","Segoe UI",monospace';
+    g.fillStyle = C.dim; g.textBaseline = 'alphabetic';
+    g.fillText(TXT.cardStay, 60, 122);
+    g.font = '600 32px "Segoe UI",Arial,sans-serif';
+    g.fillStyle = C.muted;
+    g.fillText(TXT.cardStaySub, 60, 206);
+  });
+  const texVs = tex('vs', 84, 84, (g) => {
+    g.beginPath(); g.arc(42, 42, 38, 0, Math.PI * 2);
+    g.fillStyle = rgba(C.bg0, 0.94); g.fill();
+    g.strokeStyle = rgba(C.cyan, 0.8); g.lineWidth = 3; g.stroke();
+    g.font = '800 26px "Consolas","Segoe UI",monospace';
+    g.fillStyle = C.cyan; g.textAlign = 'center'; g.textBaseline = 'middle';
+    g.fillText(TXT.vs, 42, 44);
+  });
+  const texCta = tex('cta', 900, 240, (g) => { panelChrome(g, 900, 240, C.cyan); });
+
+  // ── SCENES ────────────────────────────────────────────────────────────────
+  const X = 90, CW = 900, EYE_Y = 322;
+  const SCENES = [sceneCover, sceneGauge, sceneBars, scenePrice, sceneShield, sceneCta];
+
+  function header(idx) {
+    txt(beats[idx].eyebrow, X, EYE_Y, 25, ACCENT[idx], 700, true);
+    txt(`${String(idx + 1).padStart(2, '0')} / ${String(beats.length).padStart(2, '0')}`, X + CW, EYE_Y, 21, C.dim, 700, true, 'right');
+  }
+
+  // Beat 1 — cover: frame ở t=0 đã hoàn chỉnh (không fade-in), chỉ nhấp nháy pixel + quét màn hình.
+  function sceneCover(t) {
+    const p = beats[0].title.split('\n');
+    lines(layout(p[0], CW, 72, 800, false), X, 476, C.ink, 800);
+    lines(layout(p[1], CW, 96, 800, false), X, 604, C.green, 800);
+    block(beats[0].sub, X, 660, CW, 30, C.muted, 600, false, 1.2);
+    ctx.drawImage(texScreen, X, 740);
+    const sx = X + 34, sy = 774, sw = 832, sh = 500, cell = 26;
+    const scan = sy + ((t * MOTION * 96) % sh);
+    if (MOTION) {
+      ctx.fillStyle = rgba(C.green, 0.05);
+      ctx.fillRect(sx, scan - 30, sw, 60);
+      ctx.fillStyle = rgba(C.green, 0.16);
+      ctx.fillRect(sx, scan, sw, 3);
+    }
+    const pulse = MOTION ? 0.55 + 0.45 * (0.5 + 0.5 * Math.sin(t * 3.6)) : 0.9;
+    ctx.fillStyle = rgba(C.red, pulse);
+    ctx.fillRect(sx + 20 * cell + 2, sy + 12 * cell + 2, cell * 2 - 4, cell * 2 - 4);
+    chip(TXT.chipScreen, X, 1440, C.green);
+  }
+
+  // Beat 2 — ra mắt + gauge tốc độ (fill chạy từ t≈6.5, khớp mốc "gauge +30% (7)").
+  function sceneGauge(t) {
+    const p = beats[1].title.split('\n');
+    lines(layout(p[0], CW, 88, 800, false), X, 476, C.ink, 800);
+    lines(layout(p[1], CW, 96, 800, false), X, 604, C.cyan, 800);
+    ctx.drawImage(texGauge, X, 740);
+    chip(TXT.chipAnthropic, 150, 800, C.amber, 54, 24);
+    lines(layout(beats[1].sub, 780, 62, 800, true), 150, 1000, C.amber, 800, true);
+    const tx = 150, tw = 780, ty = 1064, th = 56;
+    track(tx, ty, tw, th, 28, C.line);
+    const k = ease(clamp((t - 6.5) / 1.4));
+    if (k > 0.002) track(tx, ty, tw * k, th, 28, C.cyan);
+    const mx = tx + tw / 1.3;
+    ctx.strokeStyle = rgba(C.dim, 0.95); ctx.lineWidth = 3; ctx.setLineDash([10, 9]);
+    ctx.beginPath(); ctx.moveTo(mx, ty - 28); ctx.lineTo(mx, ty + th + 28); ctx.stroke();
+    ctx.setLineDash([]);
+    txt(TXT.gaugeAxis[0], tx, ty + th + 60, 20, C.dim, 700, true);
+    txt(TXT.gaugeAxis[1], mx, ty + th + 60, 20, C.dim, 700, true, 'center');
+    txt(TXT.gaugeAxis[2], tx + tw, ty + th + 60, 20, C.dim, 700, true, 'right');
+  }
+
+  // Beat 3 — bảng đo: 2 thanh cùng bài test (nhãn lấy từ beats[2].title), note trung thực bắt buộc.
+  function sceneBars(t) {
+    const p = beats[2].title.split('\n');
+    const tx = 150, tw = 780, th = 76;
+    ctx.drawImage(texBars, X, 620);
+    withAlpha(rv(t, 13.4, 0.4), () => {
+      lines(layout(p[0], 780, 34, 700, true), tx, 800, C.muted, 700, true);
+      track(tx, 830, tw, th, 14, rgba(C.line, 0.85));
+      track(tx, 830, tw * 0.103, th, 14, C.muted);
+    });
+    withAlpha(rv(t, 14.9, 0.35), () => {
+      lines(layout(p[1], 780, 44, 800, true), tx, 1050, C.green, 800, true);
+      track(tx, 1080, tw, th, 14, rgba(C.line, 0.85));
+      track(tx, 1080, tw * 0.706 * easeOut(clamp((t - 15) / 1.8)), th, 14, C.green);
+      ctx.fillStyle = rgba(C.ink, 0.6);
+      ctx.fillRect(tx + tw * 0.103 - 2, 1080, 4, th);      // vạch mốc 10,3% — đo phần tăng
+    });
+    ctx.strokeStyle = rgba(C.dim, 0.6); ctx.lineWidth = 2;
+    ctx.beginPath(); ctx.moveTo(tx, 1216); ctx.lineTo(tx + tw, 1216); ctx.stroke();
+    for (let i = 0; i <= 2; i++) {
+      const x = tx + (tw / 2) * i;
+      ctx.beginPath(); ctx.moveTo(x, 1216); ctx.lineTo(x, 1228); ctx.stroke();
+      txt(TXT.scale[i], x, 1274, 20, C.dim, 700, true, i === 0 ? 'left' : i === 2 ? 'right' : 'center');
+    }
+    txt('ⓘ', tx, 1360, 26, C.dim, 700, true);
+    txt(beats[2].sub, tx + 40, 1360, 26, C.dim, 600, false);
+  }
+
+  // Beat 4 — giá: số lớn amber + hàng xanh "rẻ hơn 30%" + note giải thích (reveal lệch nhịp).
+  function scenePrice(t) {
+    withAlpha(rv(t, 22.3, 0.5), () => {
+      const a = rv(t, 22.3, 0.5), dy = (1 - a) * 22;
+      const L = layout(beats[3].title, 700, 120, 800, true);
+      const nw = width(beats[3].title, L.size, 800, true);
+      lines(L, X, 640 + dy, C.amber, 800, true);
+      txt(beats[3].sub, X + nw + 26, 636 + dy, 30, C.muted, 600, false);
+    });
+    ctx.drawImage(texPrice, X, 800);
+    withAlpha(rv(t, 24.6, 0.5), () => {
+      const dy = (1 - rv(t, 24.6, 0.5)) * 18;
+      lines(layout(TXT.priceRow, 780, 46, 800, true), 150, 950 + dy, C.green, 800, true);
+    });
+    withAlpha(rv(t, 26.6, 0.5), () => {
+      txt(TXT.priceNote, 150, 1100, 27, C.dim, 600, false);
+    });
+  }
+
+  // Beat 5 — khiên an ninh (32) + roadmap Haiku trượt vào (35.5).
+  function sceneShield(t) {
+    ctx.drawImage(texShieldPanel, X, 700);
+    withAlpha(rv(t, 31.9, 0.5), () => ctx.drawImage(texShieldIcon, 150, 812));
+    withAlpha(rv(t, 31.0, 0.5), () => block(beats[4].title, 350, 780, 580, 42, C.ink, 800, false, 1.16));
+    withAlpha(rv(t, 31.8, 0.45), () => chip(beats[4].sub, 350, 966, C.dim, 52, 22));
+    withAlpha(rv(t, 35.5, 0.6), () => {
+      const a = rv(t, 35.5, 0.6), dy = (1 - a) * 18;
+      ctx.strokeStyle = rgba(C.green, 0.75); ctx.lineWidth = 3; ctx.setLineDash([9, 8]);
+      ctx.beginPath(); ctx.arc(172, 1206 + dy, 15, 0, Math.PI * 2); ctx.stroke();
+      ctx.setLineDash([]);
+      txt(TXT.roadmap, 208, 1218 + dy, 38, C.green, 800, false);
+    });
+  }
+
+  // Beat 6 — panel VS "đổi hay ở lại" (40) + CTA (42); cuối clip cross-fade về cover để loop.
+  function sceneCta(t) {
+    lines(layout(beats[5].title, CW, 96, 800, false), X, 480, C.ink, 800);
+    withAlpha(rv(t, 39.7, 0.45), () => ctx.drawImage(texCardYes, 90, 700));
+    withAlpha(rv(t, 40.0, 0.45), () => ctx.drawImage(texCardStay, 555, 700));
+    withAlpha(rv(t, 40.3, 0.4), () => ctx.drawImage(texVs, 498, 838));
+    withAlpha(rv(t, 42.0, 0.5), () => {
+      const dy = (1 - rv(t, 42.0, 0.5)) * 20;
+      ctx.drawImage(texCta, X, 1120 + dy);
+      block(beats[5].sub, 150, 1150 + dy, 780, 46, C.ink, 700, false, 1.15);
+    });
+  }
+
+  function drawBeat(idx, t) {
+    header(idx);
+    SCENES[idx](t);
+  }
+
+  // HUD dưới safe zone: chỉ nhãn phụ (kênh + nguồn) + tiến độ.
+  function drawHud(t) {
+    const p = clamp(t / DURATION);
+    if (p > 0.004) track(90, 1790, 900 * p, 5, 2.5, rgba(C.cyan, 0.85));
+    txt(TXT.channel, X, 1850, 19, C.dim, 700, true);
+    txt(t >= beats[5].at ? TXT.source : TXT.sourceShort, 990, 1850, 19, C.dim, 700, true, 'right');
+  }
+
+  // ── DRAW ──────────────────────────────────────────────────────────────────
+  // Mọi thứ suy ra từ `t` — KHÔNG state tích lũy (guard chụp khung ở giây bất kỳ phải ra đúng hình).
+  function draw(rawT) {
+    const t = clamp(rawT, 0, DURATION - 0.001);
+    const idx = beatAt(t);
+    const loopK = ease(clamp((t - (DURATION - 1)) / 1));    // 44→45: trả frame về tông cover
+    ctx.globalAlpha = 1;
+    ctx.drawImage(texBg, 0, 0);
+    withAlpha(1 - loopK, () => drawBeat(idx, t));
+    withAlpha(loopK, () => drawBeat(0, 0));                 // cover tĩnh ⇒ t=45 trùng khít t=0
+    drawHud(t);
+  }
+
+  // ── CONTRACT + LOOP ───────────────────────────────────────────────────────
+  window.__clip = { duration: DURATION, width: W, height: H, draw, beats, freeze: false };
+  let start = performance.now();
+  function frame(now) {
+    if (!window.__clip.freeze) draw((now - start) / 1000);
+    requestAnimationFrame(frame);
+  }
+  requestAnimationFrame(frame);
+</script>
+</body>
+</html>

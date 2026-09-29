@@ -1,0 +1,676 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Trợ lý AI của Meta đọc địa chỉ nhà — clip 45 giây</title>
+<style>
+  :root { color-scheme: dark; font-family: "Segoe UI", Arial, sans-serif; background:#04070d; color:#eef4ff; }
+  * { box-sizing: border-box; }
+  body { margin:0; min-height:100vh; display:grid; place-items:center; background:#04070d; }
+  .stage { width:min(100vw, 562.5px); aspect-ratio:9/16; position:relative; overflow:hidden; background:#04070d; }
+  canvas { display:block; width:100%; height:100%; }
+  .sr { position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap; }
+</style>
+</head>
+<body>
+  <main class="stage" id="stage">
+    <canvas id="canvas" width="1080" height="1920" role="img"></canvas>
+    <h1 class="sr" id="sr-title"></h1>
+  </main>
+<script>
+(() => {
+  'use strict';
+  const canvas = document.querySelector('#canvas');
+  const ctx = canvas.getContext('2d', { alpha: false });
+  const W = canvas.width;
+  const H = canvas.height;
+  const X0 = 90;          // mép trái vùng an toàn
+  const XW = 900;         // bề rộng vùng an toàn (x 90 → 990)
+
+  // ── TOKENS ────────────────────────────────────────────────────────────────
+  // Một object DUY NHẤT. Thiếu key ở đây = ctx.fillStyle = undefined = KHÔNG throw,
+  // chữ giữ màu cũ ⇒ tàng hình. verify-frames.mjs quét đúng chỗ này.
+  const C = {
+    bg0: '#04070d', bg1: '#081120', panel: '#0d1830', panel2: '#122040', line: '#24365c',
+    ink: '#eef4ff', muted: '#93a7cc', dim: '#7789ae', cyan: '#4fe3e0',
+    red: '#ff5d73', green: '#5dfc9b', amber: '#ffc857', violet: '#b18cff', white: '#ffffff'
+  };
+  const TINT_RED = 'rgba(255,93,115,0.10)';
+  const TINT_VIOLET = 'rgba(177,140,255,0.07)';
+  const TINT_CYAN = 'rgba(79,227,224,0.06)';
+
+  // ── COPY ──────────────────────────────────────────────────────────────────
+  // Locale-owned: mọi chữ người xem đọc được (kể cả aria-label) đi qua dictionary này,
+  // không rải string literal trong code vẽ.
+  const COPY = {
+    pageTitle: 'Trợ lý AI của Meta đọc địa chỉ nhà — clip 45 giây',
+    stageLabel: 'Clip dọc 9:16 — trợ lý AI của Meta đọc địa chỉ nhà người bán cho người mua',
+    srTitle: 'Trợ lý AI của Meta đọc địa chỉ nhà cho người lạ',
+    canvasLabel: 'Sáu phần: trợ lý AI của Meta đọc địa chỉ nhà; người bán trên Marketplace bị lộ địa chỉ; hội thoại đọc địa chỉ và cảnh người lạ gõ cửa; ba triệu lượt tải trong tuần đầu; hai điều chưa kiểm chứng; câu hỏi kiểm quyền trợ lý AI của bạn.',
+
+    b1_eyebrow: 'TIN AI · QUYỀN RIÊNG TƯ · 28.09.2026',
+    b1_title: 'Trợ lý AI của Meta\nđọc địa chỉ nhà',
+    b1_sub: 'cho người lạ — và người đó đã tới gõ cửa',
+    b1_chip: 'NGUỒN: GUARDIAN 28.09',
+    b1_stamp: 'RÒ RỈ ĐỊA CHỈ',
+    b1_card_head: 'HỒ SƠ NGƯỜI BÁN',
+    b1_mock: 'mô phỏng',
+    b1_row1: 'HỌ TÊN',
+    b1_row2: 'SỐ ĐIỆN THOẠI',
+    b1_row3: 'ĐỊA CHỈ',
+    b1_row4: 'THANH TOÁN',
+    b1_addr: 'Số 12, đường Nguyễn …',
+    b1_cap: 'CHƯA HỀ CHO PHÉP — ĐỊA CHỈ VẪN BỊ ĐỌC',
+
+    b2_eyebrow: 'CHUYỆN THẬT',
+    b2_title: 'Người bán trên\nMarketplace',
+    b2_sub: 'bị lộ địa chỉ — dù chưa hề cho phép',
+    b2_head: 'MARKETPLACE · TIN ĐĂNG',
+    b2_age: '3 NGÀY TRƯỚC',
+    b2_avatar: 'TH',
+    b2_name: 'Thanh H.',
+    b2_who: 'Hà Nội · người bán cá nhân',
+    b2_item: 'BÁN: SOFA CŨ — ',
+    b2_price: '500K',
+    b2_meta: 'Đăng 3 ngày trước · 12 người hỏi mua',
+    b2_phone: 'SĐT: ••• ••• •••',
+    b2_addr: 'địa chỉ: không hiện công khai',
+    b2_sent: 'ĐỊA CHỈ NHÀ → ĐÃ GỬI',
+    b2_src: 'NGUỒN: GUARDIAN 28.09',
+    b2_src2: 'Muse đọc địa chỉ cho người mua — chưa được phép',
+
+    b3_eyebrow: 'CHUYỆN GÌ ĐÃ XẢY RA',
+    b3_title: 'Người mua hỏi.\nTrợ lý đọc luôn.',
+    b3_sub: 'rồi người mua cùng vợ và con tới gõ cửa',
+    b3_thread: 'HỘI THOẠI · TRỢ LÝ MUSE',
+    b3_who1: 'NGƯỜI MUA',
+    b3_msg1: '"Nhà ở đâu?"',
+    b3_who2: 'TRỢ LÝ',
+    b3_msg2: '"Số 12, đường…"',
+    b3_door: 'NGƯỜI LẠ GÕ CỬA',
+
+    b4_eyebrow: 'QUY MÔ',
+    b4_title: '3.000.000',
+    b4_sub: 'LƯỢT TẢI TUẦN ĐẦU',
+    b4_legend: '1 ô = 10.000 lượt tải',
+    b4_legend2: '300 ô ≈ 3 triệu lượt tải trong tuần đầu — Guardian 28.09',
+    b4_row: 'BỎ QUA QUYỀN RIÊNG TƯ — APPLEINSIDER',
+    b4_row2: 'theo tiêu đề bài · 1 nguồn',
+
+    b5_eyebrow: 'PHẦN CHƯA CHẮC',
+    b5_title: 'Điều chưa thể\nkhẳng định',
+    b5_sub: 'hai điều dưới đây chưa đủ chắc để kể như sự thật',
+    b5_meta_tag: 'META',
+    b5_meta_text: 'CHƯA ĐƯA RA GIẢI THÍCH',
+    b5_meta_note: 'tính tới 30.09.2026 — chưa thấy phản hồi',
+    b5_cav_tag: 'HUNTERBROOK',
+    b5_cav_text: '1 NGUỒN — CHƯA KIỂM CHỨNG ĐỘC LẬP',
+    b5_cav_note: 'danh sách người dễ tổn thương (cáo buộc)',
+    b5_cav_note2: 'cần nguồn thứ hai trước khi kể như sự thật',
+
+    b6_eyebrow: 'CÒN BẠN?',
+    b6_title: 'Bạn đã kiểm quyền\ncủa trợ lý AI?',
+    b6_sub: 'trợ lý AI của bạn đang có quyền gì?',
+    b6_perm_head: 'QUYỀN CỦA TRỢ LÝ — VÍ DỤ',
+    b6_perm1: 'Vị trí',
+    b6_perm2: 'Danh bạ',
+    b6_perm3: 'Tin nhắn',
+    b6_perm_state: 'chưa kiểm',
+    b6_cta_tag: 'VIỆC CẦN LÀM',
+    b6_cta_text: 'Mở phần cài đặt quyền của trợ lý đang dùng — xem nó đọc được gì 👇',
+
+    footer_left: 'TIN AI · 30.09.2026',
+    footer_right: 'GUARDIAN · APPLEINSIDER · 28.09'
+  };
+  const copy = (key) => COPY[key];
+
+  // ── BEATS ─────────────────────────────────────────────────────────────────
+  // `at`/`end` khớp `segments` trong voiceover-segments.json (0 · 5.5 · 13 · 22 · 30 · 38.5 · 45).
+  const DURATION = 45;
+  const beats = [
+    { at: 0,    end: 5.5,  tone: C.red,    chip: copy('b1_chip'),
+      eyebrow: copy('b1_eyebrow'), title: copy('b1_title'), sub: copy('b1_sub') },
+    { at: 5.5,  end: 13,   tone: C.amber,
+      eyebrow: copy('b2_eyebrow'), title: copy('b2_title'), sub: copy('b2_sub') },
+    { at: 13,   end: 22,   tone: C.violet,
+      eyebrow: copy('b3_eyebrow'), title: copy('b3_title'), sub: copy('b3_sub') },
+    { at: 22,   end: 30,   tone: C.amber, dyn: true,
+      eyebrow: copy('b4_eyebrow'), title: copy('b4_title'), sub: copy('b4_sub') },
+    { at: 30,   end: 38.5, tone: C.violet,
+      eyebrow: copy('b5_eyebrow'), title: copy('b5_title'), sub: copy('b5_sub') },
+    { at: 38.5, end: 45,   tone: C.cyan,
+      eyebrow: copy('b6_eyebrow'), title: copy('b6_title'), sub: copy('b6_sub') }
+  ];
+
+  // ── TIỆN ÍCH ──────────────────────────────────────────────────────────────
+  const clamp = (v, a = 0, b = 1) => Math.max(a, Math.min(b, v));
+  const ease = (v) => (v < 0.5 ? 2 * v * v : 1 - Math.pow(-2 * v + 2, 2) / 2);
+  const rv = (time, start, dur) => ease(clamp((time - start) / dur));
+  const fmt = (n) => String(n).replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+  const fontOf = (size, weight, mono) =>
+    `${weight} ${size}px ${mono ? 'Consolas, "Segoe UI", monospace' : '"Segoe UI", Arial, sans-serif'}`;
+  const RM = (() => {
+    try { return window.matchMedia('(prefers-reduced-motion: reduce)').matches; } catch { return false; }
+  })();
+  function beatAt(time) { return beats.findIndex((b) => time >= b.at && time < b.end); }
+
+  function rrect(c, x, y, w, h, r, fill, stroke, lw) {
+    if (w <= 0 || h <= 0) return;
+    c.beginPath();
+    c.roundRect(x, y, w, h, Math.min(r, Math.min(w, h) / 2));
+    if (fill) { c.fillStyle = fill; c.fill(); }
+    if (stroke) { c.lineWidth = lw || 3; c.strokeStyle = stroke; c.stroke(); }
+  }
+
+  // Đo & cắt dòng MỘT LẦN cho mỗi cấu hình chữ — cache theo khoá (bake-time, không đo trong khung).
+  const lineCache = new Map();
+  function layout(c, str, size, weight, mono, maxW, lh) {
+    const key = `${size}|${weight}|${mono}|${maxW}|${lh}|${str}`;
+    const hit = lineCache.get(key);
+    if (hit) return hit;
+    c.font = fontOf(size, weight, mono);
+    const lines = [];
+    for (const part of str.split('\n')) {
+      let line = '';
+      for (const word of part.split(' ')) {
+        const probe = line ? `${line} ${word}` : word;
+        if (c.measureText(probe).width > maxW && line) { lines.push(line); line = word; }
+        else line = probe;
+      }
+      if (line) lines.push(line);
+    }
+    const block = { lines, step: size * lh };
+    lineCache.set(key, block);
+    return block;
+  }
+  function para(c, str, o) {
+    const block = layout(c, str, o.size, o.weight || 700, !!o.mono, o.maxW || XW, o.lh || 1.05);
+    c.font = fontOf(o.size, o.weight || 700, !!o.mono);
+    c.fillStyle = o.color;
+    c.textAlign = o.align || 'left';
+    c.textBaseline = 'middle';
+    let y = o.y;
+    for (const line of block.lines) { c.fillText(line, o.x, y); y += block.step; }
+    return y - block.step;
+  }
+
+  // ── TEXTURE TĨNH (bake 1 lần) ─────────────────────────────────────────────
+  // Mọi thứ tĩnh (nền, khung, chữ headline, thẻ) vẽ 1 lần ra canvas phụ rồi drawImage —
+  // không vẽ lại gradient toàn màn hình hay hàng trăm fillText mỗi khung (KN-083).
+  const TEX = {};
+  let baked = false;
+  function texPage(key, x, y, w, h, paint) {
+    const cv = document.createElement('canvas');
+    cv.width = Math.round(w); cv.height = Math.round(h);
+    const c = cv.getContext('2d');
+    c.save(); c.translate(-x, -y); paint(c); c.restore();
+    return (TEX[key] = { img: cv, x, y, w: cv.width, h: cv.height });
+  }
+  // GA = hệ số alpha nhóm (dùng cho crossfade cuối clip) nhân với alpha từng lớp.
+  let GA = 1;
+  function setA(a) { ctx.globalAlpha = clamp(GA * a); }
+  function group(a, fn) { if (a <= 0.004) return; const prev = GA; GA = prev * a; fn(); GA = prev; ctx.globalAlpha = 1; }
+  function blit(o, a, dx, dy) {
+    if (!o || a <= 0.004) return;
+    setA(a);
+    ctx.drawImage(o.img, o.x + (dx || 0), o.y + (dy || 0));
+    ctx.globalAlpha = 1;
+  }
+
+  function bakeBg(c) {
+    const g = c.createLinearGradient(0, 0, 0, H);
+    g.addColorStop(0, C.bg1); g.addColorStop(0.5, C.bg0); g.addColorStop(1, C.bg1);
+    c.fillStyle = g; c.fillRect(0, 0, W, H);
+    // lưới mảnh (chất "console"), chỉ trong vùng an toàn
+    c.strokeStyle = C.line; c.lineWidth = 1; c.globalAlpha = 0.45;
+    for (let x = X0 + 100; x < X0 + XW; x += 100) { c.beginPath(); c.moveTo(x + 0.5, 280); c.lineTo(x + 0.5, 1680); c.stroke(); }
+    for (let y = 300; y < 1680; y += 100) { c.beginPath(); c.moveTo(X0, y + 0.5); c.lineTo(X0 + XW, y + 0.5); c.stroke(); }
+    c.globalAlpha = 1;
+    const glow = c.createRadialGradient(540, 1100, 80, 540, 1100, 900);
+    glow.addColorStop(0, 'rgba(79,227,224,0.055)');
+    glow.addColorStop(1, 'rgba(79,227,224,0)');
+    c.fillStyle = glow; c.fillRect(0, 0, W, H);
+    const vg = c.createRadialGradient(540, 960, 420, 540, 960, 1180);
+    vg.addColorStop(0, 'rgba(2,6,12,0)');
+    vg.addColorStop(1, 'rgba(2,6,12,0.52)');
+    c.fillStyle = vg; c.fillRect(0, 0, W, H);
+    // footer: chỉ nhãn phụ + thước tiến trình (tĩnh)
+    rrect(c, X0, 1752, XW, 2, 1, C.line);
+    for (let i = 0; i < 45; i++) rrect(c, X0 + i * 20, 1790, 17, 8, 4, C.line);
+    c.font = fontOf(22, 600, true); c.textBaseline = 'middle';
+    c.textAlign = 'left'; c.fillStyle = C.muted; c.fillText(copy('footer_left'), X0, 1852);
+    c.textAlign = 'right'; c.fillStyle = C.dim; c.fillText(copy('footer_right'), X0 + XW, 1852);
+  }
+
+  function bakeHead(c, b, i) {
+    c.textAlign = 'left'; c.textBaseline = 'middle';
+    c.font = fontOf(25, 700, true); c.fillStyle = b.tone;
+    c.fillText(b.eyebrow, X0, 300);
+    rrect(c, X0, 328, 92, 5, 2.5, b.tone);
+    if (b.dyn) {                                   // beat 4: số lớn vẽ động (đếm lên), nhãn đứng dưới
+      para(c, b.sub, { x: X0, y: 588, size: 28, weight: 600, mono: true, color: C.muted, maxW: XW });
+      return;
+    }
+    const last = para(c, b.title, { x: X0, y: 402, size: b.size || 88, weight: 800, color: C.ink, maxW: XW, lh: 1.04 });
+    para(c, b.sub, { x: X0, y: last + 66, size: 30, weight: 500, color: C.muted, maxW: 880, lh: 1.14 });
+    if (b.chip) {
+      c.font = fontOf(26, 700, true);
+      const w = c.measureText(b.chip).width + 44;
+      rrect(c, X0, 618, w, 56, 28, C.panel2, C.amber, 2);
+      c.fillStyle = C.amber; c.fillText(b.chip, X0 + 22, 647);
+    }
+  }
+
+  function bakeCard(c) {
+    rrect(c, X0, 700, XW, 480, 30, C.panel, C.line, 2);
+    rrect(c, X0, 700, XW, 96, 30, C.panel2);
+    c.textAlign = 'left'; c.textBaseline = 'middle';
+    c.font = fontOf(24, 700, true); c.fillStyle = C.muted;
+    c.fillText(copy('b1_card_head'), 126, 748);
+    c.font = fontOf(20, 600, true); c.fillStyle = C.dim; c.textAlign = 'right';
+    c.fillText(copy('b1_mock'), 954, 748);
+    c.textAlign = 'left';
+    rrect(c, X0, 796, XW, 2, 1, C.line);
+    const rows = [
+      { label: copy('b1_row1'), value: '' },
+      { label: copy('b1_row2'), value: '' },
+      { label: copy('b1_row3'), value: copy('b1_addr'), hot: true },
+      { label: copy('b1_row4'), value: '' }
+    ];
+    rows.forEach((row, i) => {
+      const y = 856 + i * 80;
+      c.font = fontOf(22, 700, true); c.fillStyle = C.muted;
+      c.fillText(row.label, 126, y);
+      if (row.hot) {
+        rrect(c, 108, y - 31, 864, 62, 14, TINT_RED, C.red, 2);
+        c.font = fontOf(32, 700, false); c.fillStyle = C.red;
+        c.fillText(row.value, 400, y);
+      } else {
+        rrect(c, 400, y - 15, 360, 30, 8, C.line);
+      }
+    });
+  }
+
+  function bakeDrip(c) {
+    c.save();
+    c.strokeStyle = C.red; c.lineWidth = 3; c.globalAlpha = 0.34;
+    c.setLineDash([12, 12]); c.lineDashOffset = 0;
+    c.beginPath(); c.moveTo(880, 1180); c.lineTo(880, 1650); c.stroke();
+    c.restore();
+  }
+
+  function bakeCap(c) {
+    rrect(c, X0, 1240, XW, 104, 26, TINT_RED, C.red, 3);
+    c.beginPath(); c.arc(140, 1292, 22, 0, 7); c.fillStyle = C.red; c.fill();
+    c.font = fontOf(28, 800, false); c.fillStyle = C.bg0;
+    c.textAlign = 'center'; c.textBaseline = 'middle'; c.fillText('!', 140, 1294);
+    c.textAlign = 'left'; c.fillStyle = C.red;
+    c.fillText(copy('b1_cap'), 184, 1292);
+  }
+
+  function bakeStamp(c, w, h) {
+    c.translate(w / 2, h / 2);
+    rrect(c, -w / 2 + 6, -h / 2 + 6, w - 12, h - 12, 18, 'rgba(4,7,13,0.72)', C.red, 8);
+    rrect(c, -w / 2 + 22, -h / 2 + 22, w - 44, h - 44, 12, null, C.red, 3);
+    c.font = fontOf(58, 800, true); c.textAlign = 'center'; c.textBaseline = 'middle';
+    c.fillStyle = C.red; c.fillText(copy('b1_stamp'), 0, 4);
+  }
+
+  function bakeList(c) {
+    rrect(c, X0, 700, XW, 560, 30, C.panel, C.line, 2);
+    rrect(c, X0, 700, XW, 84, 30, C.panel2);
+    c.textAlign = 'left'; c.textBaseline = 'middle';
+    c.font = fontOf(24, 700, true); c.fillStyle = C.muted;
+    c.fillText(copy('b2_head'), 126, 742);
+    c.textAlign = 'right'; c.font = fontOf(20, 600, true); c.fillStyle = C.dim;
+    c.fillText(copy('b2_age'), 954, 742);
+    rrect(c, 126, 812, 104, 104, 22, C.panel2, C.amber, 3);
+    c.textAlign = 'center'; c.font = fontOf(40, 800, true); c.fillStyle = C.amber;
+    c.fillText(copy('b2_avatar'), 178, 866);
+    c.textAlign = 'left'; c.font = fontOf(36, 800, false); c.fillStyle = C.ink;
+    c.fillText(copy('b2_name'), 262, 848);
+    c.font = fontOf(24, 500, false); c.fillStyle = C.muted;
+    c.fillText(copy('b2_who'), 262, 898);
+    rrect(c, 126, 952, 828, 2, 1, C.line);
+    c.font = fontOf(46, 800, false); c.fillStyle = C.ink;
+    const item = copy('b2_item');
+    c.fillText(item, 126, 1024);
+    c.fillStyle = C.amber;
+    c.fillText(copy('b2_price'), 126 + c.measureText(item).width, 1024);
+    c.font = fontOf(26, 500, false); c.fillStyle = C.muted;
+    c.fillText(copy('b2_meta'), 126, 1086);
+    rrect(c, 126, 1124, 828, 2, 1, C.line);
+    c.font = fontOf(26, 600, true); c.fillStyle = C.muted;
+    c.fillText(copy('b2_phone'), 126, 1176);
+    c.font = fontOf(24, 500, false); c.fillStyle = C.dim;
+    c.fillText(copy('b2_addr'), 126, 1222);
+  }
+
+  function bakeSent(c) {
+    rrect(c, X0, 1330, XW, 130, 26, TINT_RED, C.red, 3);
+    c.font = fontOf(44, 800, false); c.textAlign = 'center'; c.textBaseline = 'middle';
+    c.fillStyle = C.red; c.fillText(copy('b2_sent'), 540, 1396);
+  }
+
+  function bakeSrc(c) {
+    c.textAlign = 'left'; c.textBaseline = 'middle';
+    c.font = fontOf(24, 700, true); c.fillStyle = C.amber;
+    c.fillText(copy('b2_src'), X0, 1544);
+    c.font = fontOf(26, 500, false); c.fillStyle = C.muted;
+    c.fillText(copy('b2_src2'), X0, 1590);
+  }
+
+  function bakeChat(c) {
+    rrect(c, X0, 700, XW, 520, 30, C.panel, C.line, 2);
+    rrect(c, X0, 700, XW, 84, 30, C.panel2);
+    c.textAlign = 'left'; c.textBaseline = 'middle';
+    c.font = fontOf(24, 700, true); c.fillStyle = C.muted;
+    c.fillText(copy('b3_thread'), 126, 742);
+    c.fillStyle = C.line;
+    for (let i = 0; i < 3; i++) { c.beginPath(); c.arc(930 + i * 22, 742, 6, 0, 7); c.fill(); }
+  }
+
+  function bakeBubble(c, x, y, w, h, who, msg, color, tint) {
+    rrect(c, x, y, w, h, 26, tint || C.panel2, color, 3);
+    c.textAlign = 'left'; c.textBaseline = 'middle';
+    c.font = fontOf(22, 700, true); c.fillStyle = color;
+    c.fillText(who, x + 40, y + 46);
+    c.font = fontOf(42, 800, false); c.fillStyle = color === C.muted ? C.ink : color;
+    c.fillText(msg, x + 40, y + h - 54);
+  }
+
+  function bakeDoor(c) {
+    rrect(c, 240, 752, 340, 600, 10, C.panel, C.line, 4);
+    rrect(c, 258, 770, 304, 564, 6, C.panel2, C.line, 3);
+    rrect(c, 290, 806, 240, 190, 6, C.panel);
+    rrect(c, 290, 1030, 240, 268, 6, C.panel);
+    c.beginPath(); c.arc(524, 1092, 13, 0, 7); c.fillStyle = C.muted; c.fill();
+    rrect(c, 500, 1064, 10, 12, 4, C.muted);
+    rrect(c, X0, 1348, XW, 6, 3, C.line);
+    const people = [
+      { x: 700, h: 300, r: 42 },
+      { x: 812, h: 244, r: 34 },
+      { x: 908, h: 168, r: 24 }
+    ];
+    for (const p of people) {
+      const top = 1348 - p.h;
+      c.beginPath(); c.arc(p.x, top + p.r, p.r, 0, 7);
+      c.fillStyle = 'rgba(255,93,115,0.14)'; c.fill();
+      c.lineWidth = 3; c.strokeStyle = C.red; c.stroke();
+      rrect(c, p.x - p.r - 12, top + p.r * 2, (p.r + 12) * 2, p.h - p.r * 2, 18, 'rgba(255,93,115,0.14)', C.red, 3);
+    }
+  }
+
+  function bakeDoorLabel(c) {
+    rrect(c, X0, 1440, XW, 130, 26, TINT_RED, C.red, 3);
+    c.font = fontOf(46, 800, false); c.textAlign = 'center'; c.textBaseline = 'middle';
+    c.fillStyle = C.red; c.fillText(copy('b3_door'), 540, 1506);
+  }
+
+  function bakeGrid(c, lit) {
+    for (let r = 0; r < 12; r++) {
+      for (let k = 0; k < 25; k++) {
+        rrect(c, 93 + k * 36, 700 + r * 36, 30, 30, 7, lit ? 'rgba(255,200,87,0.42)' : C.panel);
+      }
+    }
+  }
+
+  function bakeLegend(c) {
+    c.textAlign = 'left'; c.textBaseline = 'middle';
+    c.font = fontOf(26, 600, false); c.fillStyle = C.muted;
+    c.fillText(copy('b4_legend'), X0, 1180);
+    c.font = fontOf(24, 500, false); c.fillStyle = C.dim;
+    c.fillText(copy('b4_legend2'), X0, 1228);
+  }
+
+  function bakeRow4(c) {
+    rrect(c, X0, 1300, XW, 180, 26, TINT_RED, C.red, 3);
+    c.textAlign = 'center'; c.textBaseline = 'middle';
+    c.font = fontOf(38, 800, false); c.fillStyle = C.red;
+    c.fillText(copy('b4_row'), 540, 1364);
+    c.font = fontOf(24, 500, false); c.fillStyle = C.muted;
+    c.fillText(copy('b4_row2'), 540, 1424);
+  }
+
+  function bakeMetaCard(c) {
+    rrect(c, X0, 700, XW, 280, 30, C.panel, C.line, 2);
+    c.textAlign = 'left'; c.textBaseline = 'middle';
+    c.font = fontOf(22, 700, true); c.fillStyle = C.dim;
+    c.fillText(copy('b5_meta_tag'), 126, 758);
+    c.font = fontOf(42, 800, false); c.fillStyle = C.ink;
+    c.fillText(copy('b5_meta_text'), 126, 832);
+    c.font = fontOf(24, 500, false); c.fillStyle = C.muted;
+    c.fillText(copy('b5_meta_note'), 126, 908);
+  }
+
+  function bakeCaveatCard(c) {
+    rrect(c, X0, 1040, XW, 420, 30, TINT_VIOLET, C.violet, 3);
+    c.textAlign = 'left'; c.textBaseline = 'middle';
+    c.font = fontOf(24, 700, true); c.fillStyle = C.violet;
+    c.fillText(copy('b5_cav_tag'), 126, 1096);
+    c.font = fontOf(38, 800, false);
+    c.fillText(copy('b5_cav_text'), 126, 1180);
+    c.font = fontOf(28, 500, false); c.fillStyle = C.ink;
+    c.fillText(copy('b5_cav_note'), 126, 1262);
+    c.font = fontOf(24, 500, false); c.fillStyle = C.muted;
+    c.fillText(copy('b5_cav_note2'), 126, 1324);
+  }
+
+  function bakePerm(c) {
+    rrect(c, X0, 700, XW, 460, 30, C.panel, C.line, 2);
+    c.textAlign = 'left'; c.textBaseline = 'middle';
+    c.font = fontOf(22, 700, true); c.fillStyle = C.muted;
+    c.fillText(copy('b6_perm_head'), 126, 756);
+    const labels = [copy('b6_perm1'), copy('b6_perm2'), copy('b6_perm3')];
+    labels.forEach((label, i) => {
+      const y = 852 + i * 110;
+      rrect(c, 126, y - 20, 40, 40, 9, null, C.line, 3);
+      c.font = fontOf(36, 700, false); c.fillStyle = C.ink; c.textAlign = 'left';
+      c.fillText(label, 198, y);
+      c.font = fontOf(24, 600, true); c.fillStyle = C.dim; c.textAlign = 'right';
+      c.fillText(copy('b6_perm_state'), 954, y);
+    });
+  }
+
+  function bakeCta(c) {
+    rrect(c, X0, 1240, XW, 300, 30, TINT_CYAN, C.cyan, 3);
+    c.textAlign = 'left'; c.textBaseline = 'middle';
+    c.font = fontOf(24, 700, true); c.fillStyle = C.cyan;
+    c.fillText(copy('b6_cta_tag'), 126, 1300);
+    para(c, copy('b6_cta_text'), { x: 126, y: 1390, size: 40, weight: 700, color: C.ink, maxW: 812, lh: 1.2 });
+  }
+
+  function build() {
+    if (baked) return;
+    baked = true;
+    texPage('bg', 0, 0, W, H, bakeBg);
+    beats.forEach((b, i) => texPage('head' + i, X0, 270, XW, 440, (c) => bakeHead(c, b, i)));
+    texPage('b1card', X0, 700, XW, 480, bakeCard);
+    texPage('b1drip', 800, 1160, 160, 500, bakeDrip);
+    texPage('b1cap', X0, 1240, XW, 104, bakeCap);
+    texPage('b1stamp', 260, 1410, 560, 180, (c) => bakeStamp(c, 560, 180));
+    texPage('b2list', X0, 700, XW, 560, bakeList);
+    texPage('b2sent', X0, 1330, XW, 130, bakeSent);
+    texPage('b2src', X0, 1510, XW, 120, bakeSrc);
+    texPage('b3chat', X0, 700, XW, 520, bakeChat);
+    texPage('b3b1', 126, 830, 640, 150, (c) => bakeBubble(c, 126, 830, 640, 150, copy('b3_who1'), copy('b3_msg1'), C.muted));
+    texPage('b3b2', 320, 1010, 646, 170, (c) => bakeBubble(c, 320, 1010, 646, 170, copy('b3_who2'), copy('b3_msg2'), C.violet, TINT_VIOLET));
+    texPage('b3door', X0, 700, XW, 700, bakeDoor);
+    texPage('b3label', X0, 1440, XW, 130, bakeDoorLabel);
+    texPage('b4base', X0, 690, XW, 450, (c) => bakeGrid(c, false));
+    texPage('b4lit', X0, 690, XW, 450, (c) => bakeGrid(c, true));
+    texPage('b4legend', X0, 1150, XW, 110, bakeLegend);
+    texPage('b4row', X0, 1300, XW, 180, bakeRow4);
+    texPage('b5meta', X0, 700, XW, 280, bakeMetaCard);
+    texPage('b5cav', X0, 1040, XW, 420, bakeCaveatCard);
+    texPage('b6perm', X0, 700, XW, 460, bakePerm);
+    texPage('b6cta', X0, 1240, XW, 300, bakeCta);
+  }
+
+  // ── KHUNG HÌNH TỪNG BEAT (mọi thứ suy ra từ `t`, không state tích luỹ) ────
+  function head(i, t) {
+    const p = i === 0 ? 1 : rv(t, beats[i].at, 0.34);
+    blit(TEX['head' + i], i === 0 ? 1 : 0.28 + 0.72 * p, 0, (1 - p) * 18);
+  }
+
+  function beat0(t) {
+    head(0, t);
+    blit(TEX.b1card);
+    blit(TEX.b1drip);
+    setA(0.34 + 0.34 * Math.sin(t * 3.2));           // nhịp rò rỉ trên dòng địa chỉ
+    rrect(ctx, 108, 985, 864, 62, 14, 'rgba(255,93,115,0.16)');
+    setA(1);
+    for (let i = 0; i < 3; i++) {                     // giọt rò rỉ chảy xuống
+      const p = (t * 0.32 + i * 0.34) % 1;
+      setA((1 - p) * 0.6);
+      ctx.fillStyle = C.red;
+      ctx.beginPath(); ctx.arc(880, 1200 + p * 430, 7, 0, 7); ctx.fill();
+    }
+    setA(1);
+    blit(TEX.b1cap);
+    const k = rv(t, 1.3, 0.32);                       // dấu đóng xuống ở t≈1.3
+    if (k > 0) {
+      const s = TEX.b1stamp;
+      const shake = RM ? 0 : (1 - k) * 9 * Math.sin(t * 42);
+      ctx.save();
+      ctx.translate(s.x + s.w / 2 + shake, s.y + s.h / 2);
+      ctx.rotate(-0.09);
+      const sc = 1.5 - 0.5 * k;
+      ctx.scale(sc, sc);
+      setA(k);
+      ctx.drawImage(s.img, -s.w / 2, -s.h / 2);
+      ctx.restore();
+    }
+  }
+
+  function beat1(t) {
+    head(1, t);
+    blit(TEX.b2list);
+    const k = rv(t, 10.2, 0.45);                      // hàng đỏ trượt vào ở t≈10.2
+    if (k > 0) blit(TEX.b2sent, k, (1 - k) * 90, 0);
+    blit(TEX.b2src);
+  }
+
+  function beat2(t) {
+    head(2, t);
+    const chat = 1 - rv(t, 18.3, 0.25);
+    group(chat, () => {
+      blit(TEX.b3chat);
+      const k1 = rv(t, 13.7, 0.4);
+      if (k1 > 0) blit(TEX.b3b1, k1, (1 - k1) * -26, 0);
+      const k2 = rv(t, 15, 0.4);                      // bubble 2 ở t≈15
+      if (k2 > 0) blit(TEX.b3b2, k2, 0, (1 - k2) * 22);
+    });
+    const door = rv(t, 18.5, 0.4);                    // chuyển cảnh ở t≈18.5
+    group(door, () => {
+      blit(TEX.b3door);
+      const p = (((t - 18.6) % 1.15) + 1.15) % 1.15 / 1.15;
+      setA((1 - p) * 0.55);
+      ctx.strokeStyle = C.red; ctx.lineWidth = 4;
+      ctx.beginPath(); ctx.arc(470, 1100, 46 + p * 84, 0, Math.PI * 2); ctx.stroke();
+      setA(1);
+      const kl = rv(t, 19, 0.4);
+      if (kl > 0) blit(TEX.b3label, kl, 0, (1 - kl) * 22);
+    });
+  }
+
+  function beat3(t) {
+    head(3, t);
+    blit(TEX.b4base);
+    const gp = ease(clamp((t - 22.3) / 2.35));        // lưới ô sáng dần theo số
+    if (gp > 0) {
+      ctx.save();
+      ctx.beginPath(); ctx.rect(X0, 700, XW, 432 * gp); ctx.clip();
+      blit(TEX.b4lit);
+      ctx.restore();
+    }
+    blit(TEX.b4legend);
+    const a = rv(t, 22.25, 0.35);                     // số lớn đếm lên từ t≈22.25
+    if (a > 0) {
+      const n = Math.round(3000000 * ease(clamp((t - 22.25) / 2.3)));
+      setA(a);
+      ctx.font = fontOf(140, 800, true);
+      ctx.fillStyle = C.amber; ctx.textAlign = 'left'; ctx.textBaseline = 'middle';
+      ctx.fillText(fmt(n), X0, 462);
+      setA(1);
+    }
+    const rk = rv(t, 24.2, 0.5);
+    if (rk > 0) blit(TEX.b4row, rk, 0, (1 - rk) * 26);
+  }
+
+  function beat4(t) {
+    head(4, t);
+    const k1 = rv(t, 30.5, 0.45);
+    if (k1 > 0) blit(TEX.b5meta, k1, 0, (1 - k1) * 24);
+    const k2 = rv(t, 32.5, 0.5);                      // thẻ caveat ở t≈32.5
+    if (k2 > 0) group(k2, () => {
+      blit(TEX.b5cav);
+      const p = rv(t, 32.5, 0.55);
+      const s = TEX.b5cav;
+      setA(0.4 * p);
+      ctx.strokeStyle = C.violet; ctx.lineWidth = 7; ctx.lineCap = 'round';
+      const x1 = s.x + s.w - 16, y1 = s.y + 16, x2 = s.x + 16, y2 = s.y + s.h - 16;
+      ctx.beginPath(); ctx.moveTo(x1, y1); ctx.lineTo(x1 + (x2 - x1) * p, y1 + (y2 - y1) * p); ctx.stroke();
+      ctx.beginPath(); ctx.moveTo(x1 - 18, y1 + 30); ctx.lineTo(x1 - 18 + (x2 - x1) * p, y1 + 30 + (y2 - y1) * p); ctx.stroke();
+      setA(1);
+    });
+  }
+
+  function beat5(t) {
+    head(5, t);
+    const k = rv(t, 38.9, 0.5);
+    if (k > 0) {
+      ctx.save();
+      ctx.beginPath(); ctx.rect(X0, 700, XW, 470 * ease(k)); ctx.clip();
+      blit(TEX.b6perm, 0.88 + 0.12 * k, 0, (1 - k) * 22);
+      ctx.restore();
+    }
+    const c = rv(t, 41, 0.5);                         // CTA ở t≈41
+    if (c > 0) blit(TEX.b6cta, c, 0, (1 - c) * 26);
+  }
+
+  const PAINT = [beat0, beat1, beat2, beat3, beat4, beat5];
+
+  function hud(t) {
+    const w = XW * clamp(t / DURATION);
+    if (w > 4) { setA(0.9); rrect(ctx, X0, 1790, w, 8, 4, C.cyan); }
+    setA(1);
+  }
+
+  function draw(t) {
+    const tt = clamp(t, 0, DURATION);
+    build();
+    blit(TEX.bg);
+    const idx = Math.max(0, beatAt(tt));
+    if (idx === 5) {
+      // Loop ending: 1,5s cuối quay về tông + layout cover để xem lại liền mạch
+      const br = rv(tt, 43.4, 1.5);
+      if (br < 1) group(1 - br, () => beat5(tt));
+      if (br > 0) group(br, () => beat0(tt));
+    } else {
+      PAINT[idx](tt);
+    }
+    hud(tt);
+  }
+
+  // ── CONTRACT + LOOP ───────────────────────────────────────────────────────
+  // Bake TRƯỚC khi vào vòng vẽ: render.mjs chờ `window.__clip` rồi mới bật MediaRecorder,
+  // nên chi phí bake không rơi vào khung đầu của clip (nếu không sẽ ghi lặp ~10 khung đầu).
+  build();
+  window.__clip = { duration: DURATION, width: W, height: H, draw, beats, freeze: false };
+  document.title = copy('pageTitle');
+  document.querySelector('#sr-title').textContent = copy('srTitle');
+  document.querySelector('#stage').setAttribute('aria-label', copy('stageLabel'));
+  canvas.setAttribute('aria-label', copy('canvasLabel'));
+
+  let start = performance.now();
+  function frame(now) {
+    if (!window.__clip.freeze) draw((now - start) / 1000);
+    requestAnimationFrame(frame);
+  }
+  requestAnimationFrame(frame);
+})();
+</script>
+</body>
+</html>

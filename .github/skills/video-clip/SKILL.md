@@ -6,7 +6,7 @@ user-invocable: true
 
 # Video Clip Studio — Dựng clip dọc có kiểm chứng
 
-> Pipeline đã trả giá để rút ra: **canvas + MediaRecorder (không cần ffmpeg) + TTS local + 3 guard**. Mọi bước "trông ổn" đều đã từng lọt lỗi — nên ở đây không có bước nào tin bằng mắt.
+> Pipeline đã trả giá để rút ra: **canvas + MediaRecorder (không cần ffmpeg) + TTS local + bộ guard** (layout/token · âm thanh · khe hở lời · timing · perf draw · MP4 trắng/mượt · contrast token). Mọi bước "trông ổn" đều đã từng lọt lỗi — nên ở đây không có bước nào tin bằng mắt.
 > **Không cần ffmpeg, không cần API trả tiền, chạy offline sau lần tải model đầu.**
 
 ## When to Use
@@ -72,6 +72,9 @@ node www\Clip\<slug>\render.mjs --voice-wav=www\Clip\<slug>\voiceover-<voice>-<N
 | `verify-audio.mjs` | Track im lặng (peak/RMS = 0) trong MP4/WAV | File vẫn có box `soun`/`mp4a`, element vẫn "chạy" ⇒ tưởng có tiếng mà **im ru** |
 | Guard timing trong `tts-vieneu.py` | Đoạn lời tràn khỏi beat/timeline (exit 1) | v3 Turbo **không có tham số `speed`** ⇒ phải cắt theo beat, tràn là lệch hình |
 | `verify-perf.mjs` | `draw(t)` quá chậm → capture 30fps ghi lặp khung (clip **giật/lag**) | Không exception nào — file vẫn ra, chỉ lag. Đo 2 tầng: command avg (≤20ms) + nhịp rAF thật quét toàn timeline (interval p95 ≤ 33ms). Clip 50s 2026-09: baseline 47.7ms p95 (22.9fps) → sau khi bake texture + cache strip mưa: 18.6ms (≈60fps) **(KN-083)** |
+| `verify-vo-gaps.mjs` | Lời thoại **thưa** — khe hở nội bộ > 2s, hoặc tỉ lệ có tiếng < 65% | `verify-audio` chỉ hỏi "CÓ tiếng không" nên clip 42–52% im lặng vẫn PASS; người nghe phản hồi "lưng cứng" (bug 2026-09-27). Guard đo RMS theo cửa sổ 60ms trên WAV/MP4, im lặng cuối clip (end card) báo riêng |
+| `verify-mp4.mjs` | Khung **đen/trắng** trong file đã ghi (std < 3) | Render vẫn "thành công" và guard khác vẫn PASS nếu MediaRecorder ghi khung trống ở vài mốc (đổi tab, stall cấp browser). Seek đúng mốc beat → vẽ vào canvas → đo độ lệch chuẩn + lưu PNG để xem |
+| `verify-mp4-smooth.mjs` | Clip **giật khi phát lại** — khung rơi > 3% hoặc fps trung bình < 28 | `verify-perf` chỉ đo chi phí `draw(t)` trên trang; stall cấp browser/encoder (đo được outlier 66–258ms) không lộ ở p95 command cost. Guard mở lại MP4, phát ở 4× và đọc `getVideoPlaybackQuality()` |
 
 `render.mjs` **tự gọi** `verify-audio.mjs` sau khi ghi file — im lặng là fail, không ship.
 
@@ -88,6 +91,8 @@ node www\Clip\<slug>\render.mjs --voice-wav=www\Clip\<slug>\voiceover-<voice>-<N
 | VieNeu v3 Turbo không có `speed` | Không kéo dài giọng đọc được | Cắt lời theo beat + chèn khoảng nghỉ (`--segments`) |
 | Vẽ lại gradient toàn màn hình / hàng trăm `fillText` mỗi khung | Clip ra file vẫn có tiếng/hình nhưng **giật, khung bị lặp** (đo: interval p95 47.7ms ≈ 23fps) | Bake nền/overlay thành texture 1 lần; cache chuỗi động thành strip theo tick; cache layout chữ; `alpha:false` — rồi đo lại bằng `verify-perf.mjs` **(KN-083)** |
 | Font thiếu glyph VN (Georgia) | Chữ dấu vỡ **im lặng** — "thô ng kê", "Sớ m"; không throw, không console error | Đo trước bằng `references/font-test.mjs`; dùng Times New Roman / Cambria / Segoe UI; lưới `tests/e2e/clip-font-guard.spec.ts` + template verify-frames (KN-082) |
+| VO đặt đúng mốc beat (`at` = beat + 0.3s) rồi để đó | Lời kết thúc sớm → hở 2–6s giữa các beat, clip 42–52% im lặng; người nghe nói "lưng cứng"; không throw, `verify-audio` vẫn PASS | Viết dày lời tới ~75–85% thời lượng · VO vào sớm ~0.3s **trước** mốc cắt hình · chạy `verify-vo-gaps.mjs` (bug `2026-09-27-vo-xep-theo-beat-grid`) |
+| Render **nhiều clip song song** (2–3 tiến trình Chromium cùng lúc) | Clip nặng (52s) rơi **2.9%** khung — `verify-perf` trên trang vẫn xanh (p95 17.9ms), chỉ lộ khi đo lại MP4 | Render **tuần tự** từng clip; kiểm bằng `verify-mp4-smooth.mjs` (đo được: song song 2.9% → render một mình 0.0%) |
 
 ## B-roll AI (khi clip cần footage ngoài canvas)
 
@@ -110,10 +115,12 @@ Cài lần đầu: `python -m venv D:\CLAUDE_VS\.venv-tts` → `.venv-tts\Script
 ## Kiểm tra độ dài trước khi render
 
 ```powershell
-node www\Clip\<slug>\verify-audio.mjs www\Clip\<slug>\voiceover-<voice>-<N>s.wav   # duration phải ≈ duration clip
+node www\Clip\<slug>\verify-audio.mjs www\Clip\<slug>\voiceover-<voice>-<N>s.wav    # có tiếng thật? (peak/RMS > 0)
+node www\Clip\<slug>\verify-vo-gaps.mjs www\Clip\<slug>\voiceover-<voice>-<N>s.wav  # tiếng có ĐỀU? (khe hở ≤2s · ≥65%)
 ```
 
 Voiceover **ngắn hơn** clip = an toàn (im lặng ở đuôi). **Dài hơn** = bị cắt cụt giữa câu → sửa lời hoặc tăng duration.
+**Thưa lời** = clip nghe "lưng cứng" — mục tiêu 75–85% thời lượng có tiếng. Mẹo đã đo: viết dày lời tới ~4 từ/giây tiếng Việt, và cho VO vào sớm ~0.3s *trước* mốc cắt hình (audio lead-in) thay vì chờ sau mốc — mốc `end` trong segments phải khớp `beats` của trang.
 
 ## Checklist trước khi gọi Done
 
@@ -121,6 +128,10 @@ Voiceover **ngắn hơn** clip = an toàn (im lặng ở đuôi). **Dài hơn** 
 - [ ] `verify-frames.mjs` pass + đã **xem ảnh** từng beat (không đoán)?
 - [ ] `verify-perf.mjs` pass (clip mới hoặc vừa đổi hiệu ứng)?
 - [ ] `verify-audio.mjs` pass trên WAV voiceover **và** trên MP4 cuối?
+- [ ] `verify-vo-gaps.mjs` pass (khe hở nội bộ ≤2s · có tiếng ≥65%)?
+- [ ] `verify-mp4.mjs` pass (không khung đen/trắng ở mốc beat)?
+- [ ] `verify-mp4-smooth.mjs` pass (khung rơi ≤3% · ≥28fps)?
+- [ ] `verify-contrast.mjs` pass (mọi token chữ ≥4.5:1 trên nền panel)?
 - [ ] Guard timing không báo tràn beat?
 - [ ] Voiceover ≤ duration clip?
 - [ ] Nội dung claim có provenance (official vs community claim) nếu nói về sản phẩm?

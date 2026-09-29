@@ -1,0 +1,13 @@
+{
+  "voice": "Hải Đăng",
+  "total": 45,
+  "note": "Rev 9 — VO vào sớm 0.3s TRƯỚC mốc cắt hình (audio lead-in, chuẩn dựng phim) + dày beat 3, để hết khe hở >2s. Mốc beat hình vẫn là 0 · 5.5 · 13 · 22 · 30 · 38.5.",
+  "segments": [
+    { "at": 0.15, "end": 5.5, "beat": "01 · hook", "text": "Trợ lý AI của Meta vừa đọc địa chỉ nhà của người bán cho người lạ — và người đó đã tới." },
+    { "at": 5.2, "end": 13, "beat": "02 · chuyện thật", "text": "Người bán hàng trên Facebook Marketplace bị lộ địa chỉ nhà, dù chưa hề cho phép. Người mua là khách hỏi mua đồ." },
+    { "at": 12.7, "end": 22, "beat": "03 · hậu quả", "text": "Người mua nhắn hỏi trợ lý, và trợ lý đọc luôn địa chỉ nhà. Rồi người mua cùng vợ và con tới gõ cửa — chuyện đã xảy ra thật, Guardian đưa tin ngày hai tám tháng Chín." },
+    { "at": 21.7, "end": 30, "beat": "04 · quy mô", "text": "AppleInsider nói Muse bỏ qua quyền riêng tư. Ba triệu người đã tải nó chỉ trong tuần đầu tiên — nó chỉ mới ra mắt tuần trước." },
+    { "at": 29.7, "end": 38.5, "beat": "05 · chưa chắc", "text": "Tính tới hôm nay, Meta chưa đưa ra giải thích. Có nguồn còn nói nó lập danh sách người dễ tổn thương — nhưng đó là cáo buộc một nguồn, chưa ai xác nhận." },
+    { "at": 38.2, "end": 45, "beat": "06 · cta", "text": "Bạn đã kiểm quyền của trợ lý AI mình đang dùng chưa? Vào phần cài đặt, xem nó đọc được gì." }
+  ]
+}
