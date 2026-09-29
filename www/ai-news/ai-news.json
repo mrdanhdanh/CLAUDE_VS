@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-29T07:54:02.967Z",
+  "generatedAt": "2026-09-29T18:18:43.732Z",
   "generatedBy": "YUNIE × Last30Days",
   "version": 2,
   "description": "Tin AI mới nhất — tổng hợp từ Last30Days (HN, GitHub, DEV.to, Reddit, arXiv, HackerNoon) trong 30 ngày qua. Chủ đề: AI. Tự động cập nhật bởi YUNIE.",
@@ -55,88 +55,84 @@
   ],
   "articles": [
     {
-      "id": "hnoon-investors-fire-owners-hire",
-      "title": "Investors Fire. Owners Hire.",
-      "summary": "AI does not automatically lead to layoffs. In fund administration, both an investor-backed company and an independent competitor are adding employees while adopting AI, but for dif — by Chris Gale on HackerNoon.",
+      "id": "hnoon-cheers-to-our-top-writers-of-the-week",
+      "title": "Cheers to Our Top Writers of the Week",
+      "summary": "Meet HackerNoon’s top writers of the week and discover their latest stories on AI, cybersecurity, DevOps, DeFi, and technology. — by Editing Protocol on HackerNoon.",
       "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/investors-fire-owners-hire",
-      "category": "big-tech",
+      "sourceUrl": "https://hackernoon.com/cheers-to-our-top-writers-of-the-week",
+      "category": "products",
       "date": "2026-09-29",
       "hot": true,
       "tags": [
         "HackerNoon",
-        "ai",
+        "hackernoon-writers",
         "AI"
       ]
     },
     {
-      "id": "hn-49889031",
-      "title": "What's Behind the AI Panic",
-      "summary": "What's Behind the AI Panic — 3 points, 4 comments on HN.",
-      "source": "Hacker News",
-      "sourceUrl": "https://bombthrower.com/whats-really-behind-the-ai-panic/",
+      "id": "hnoon-your-bi-platform-has-five-monitoring-tools-and-no-observabil",
+      "title": "Your BI Platform Has Five Monitoring Tools and No Observability",
+      "summary": "Individual systems can all report healthy while the business data is wrong. Here’s how LLM-assisted correlation can shorten incident triage. — by Thiru A on HackerNoon.",
+      "source": "HackerNoon",
+      "sourceUrl": "https://hackernoon.com/your-bi-platform-has-five-monitoring-tools-and-no-observability",
       "category": "products",
       "date": "2026-09-29",
-      "hot": false,
+      "hot": true,
       "tags": [
-        "HN",
-        "AI",
-        "story",
-        "author_ptidhomme"
+        "HackerNoon",
+        "data-engineering",
+        "AI"
       ]
     },
     {
-      "id": "hn-49889393",
-      "title": "HeyRepli –AI Social Concierge for SMBs",
-      "summary": "HeyRepli –AI Social Concierge for SMBs — 2 points, 0 comments on HN.",
-      "source": "Hacker News",
-      "sourceUrl": "https://heyrepli.com/",
+      "id": "hnoon-who-holds-the-authority-when-ai-agents-pay-for-their-own-gpu",
+      "title": "Who Holds the Authority When AI Agents Pay for Their Own GPU Compute?",
+      "summary": "AI agents are starting to pay for their own GPU compute. Here's how Solana's existing delegation primitive could make that safe. — by Kenneth Onyebuchi on HackerNoon.",
+      "source": "HackerNoon",
+      "sourceUrl": "https://hackernoon.com/who-holds-the-authority-when-ai-agents-pay-for-their-own-gpu-compute",
       "category": "products",
       "date": "2026-09-29",
-      "hot": false,
+      "hot": true,
       "tags": [
-        "HN",
-        "AI",
-        "story",
-        "author_kaco"
+        "HackerNoon",
+        "decentralize-ai",
+        "AI"
       ]
     },
     {
-      "id": "hn-49889271",
-      "title": "Web Time Lapse",
-      "summary": "Web Time Lapse — 2 points, 0 comments on HN.",
-      "source": "Hacker News",
-      "sourceUrl": "https://www.projectnothing.ai/experiments/web-time-lapse",
-      "category": "products",
+      "id": "hnoon-why-representative-data-is-critical-to-nigerias-ai-ambitions",
+      "title": "Why Representative Data Is Critical to Nigeria’s AI Ambitions",
+      "summary": "Nigeria’s AI ambitions depend on more than models and compute. Representative local data, secure infrastructure, and strong governance are equally essential. — by Samson Adesanoye on HackerNoon.",
+      "source": "HackerNoon",
+      "sourceUrl": "https://hackernoon.com/why-representative-data-is-critical-to-nigerias-ai-ambitions",
+      "category": "safety",
       "date": "2026-09-29",
-      "hot": false,
+      "hot": true,
       "tags": [
-        "HN",
-        "AI",
-        "story",
-        "author_erikrothoff"
+        "HackerNoon",
+        "ai-adoption-in-nigeria",
+        "AI"
       ]
     },
     {
-      "id": "hn-49889251",
-      "title": "When can we say AI made a scientific discovery?",
-      "summary": "When can we say AI made a scientific discovery? — 2 points, 0 comments on HN.",
-      "source": "Hacker News",
-      "sourceUrl": "https://www.technologyreview.com/2026/09/28/1145230/when-can-we-say-ai-made-a-scientific-discovery/",
+      "id": "hnoon-project-skysim-part-2-one-physics-core-three-ways-to-run-it",
+      "title": "Project SkySim, Part 2: One Physics Core, Three Ways to Run It",
+      "summary": "I argued that a drone simulator should be easy to open as a URL, without becoming a toy. This is the architectural decision that makes that possible. — by vishwa vimukthi gammuduwaththage on HackerNoon.",
+      "source": "HackerNoon",
+      "sourceUrl": "https://hackernoon.com/project-skysim-part-2-one-physics-core-three-ways-to-run-it",
       "category": "products",
       "date": "2026-09-29",
-      "hot": false,
+      "hot": true,
       "tags": [
-        "HN",
-        "AI",
-        "story",
-        "author_joozio"
+        "HackerNoon",
+        "drone-technology",
+        "AI"
       ]
     },
     {
       "id": "hntop-49872723",
       "title": "Owed a billion dollars in Nvidia stock",
-      "summary": "Owed a billion dollars in Nvidia stock — 1065 points, 447 comments on HN.",
+      "summary": "Owed a billion dollars in Nvidia stock — 1076 points, 451 comments on HN.",
       "source": "Hacker News",
       "sourceUrl": "https://colo.to/nvidia-stock-narrative.html",
       "category": "big-tech",
@@ -148,69 +144,71 @@
       ]
     },
     {
-      "id": "hnoon-what-if-the-world-had-only-one-central-bank-and-one-global-c",
-      "title": "What If the World Had Only One Central Bank and One Global Currency?",
-      "summary": "Could one global currency simplify life or create a financial Big Brother? Discover why convenience might come at a hefty price. — by Obyte on HackerNoon.",
-      "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/what-if-the-world-had-only-one-central-bank-and-one-global-currency",
+      "id": "hntop-49881850",
+      "title": "Sonnet 5.5",
+      "summary": "Sonnet 5.5 — 857 points, 590 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://www.anthropic.com/claude-sonnet-5-5",
       "category": "products",
       "date": "2026-09-28",
       "hot": true,
       "tags": [
-        "HackerNoon",
-        "globalization",
-        "AI"
+        "HN",
+        "top"
       ]
     },
     {
-      "id": "hnoon-project-skysim-part-1-the-case-for-a-drone-simulator-that-ru",
-      "title": "Project SkySim, Part 1: The Case for a Drone Simulator That Runs in Your Browser",
-      "summary": "Every serious drone simulator asks you to install Linux, ROS, or a game engine before you can test a single line of your own code. So, I built my own one. — by vishwa vimukthi gammuduwaththage on HackerNoon.",
-      "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/project-skysim-part-1-the-case-for-a-drone-simulator-that-runs-in-your-browser",
+      "id": "dev-4767386",
+      "title": "Claude e Obsidian - Como uma QA utiliza essas ferramentas no dia-a-dia",
+      "summary": "🇺🇸 You can also read the English version of this article on AWS Community Builders.   Ser QA nessa... — 100 reactions, 4 comments on DEV.to.",
+      "source": "DEV.to",
+      "sourceUrl": "https://dev.to/he4rt/claude-e-obsidian-como-uma-qa-utiliza-essas-ferramentas-no-dia-a-dia-51jc",
       "category": "products",
       "date": "2026-09-28",
       "hot": true,
       "tags": [
-        "HackerNoon",
-        "drone-technology",
-        "AI"
+        "DEV.to",
+        "ai",
+        "ai",
+        "productivity"
       ]
     },
     {
-      "id": "hnoon-autoheal-raises--79m-from-innovation-endeavors-to-make-enter",
-      "title": "Autoheal Raises $7.9M From Innovation Endeavors to Make Enterprise Software Heal Itself",
-      "summary": "Autoheal raises $7.9M led by Innovation Endeavors for self-healing AI agents that fix incidents, patch security flaws and cut AI coding costs at Nomura. — by Ishan Pandey on HackerNoon.",
-      "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/autoheal-raises-$79m-from-innovation-endeavors-to-make-enterprise-software-heal-itself",
+      "id": "dev-3138911",
+      "title": "Dear Coder: Open This If You're Feeling AI FOMO",
+      "summary": "It's all over the headlines.  Every so often, someone reveals a model X% faster. A tech CEO makes... — 52 reactions, 28 comments on DEV.to.",
+      "source": "DEV.to",
+      "sourceUrl": "https://dev.to/canro91/dear-coder-open-this-if-youre-feeling-ai-fomo-58d4",
       "category": "products",
       "date": "2026-09-28",
       "hot": true,
       "tags": [
-        "HackerNoon",
-        "autoheal",
-        "AI"
+        "DEV.to",
+        "ai",
+        "career",
+        "ai"
       ]
     },
     {
-      "id": "hnoon-email-marketing-knowledgebase-platform-dependency-and-resurr",
-      "title": "Email Marketing Knowledgebase: Platform Dependency And Resurrections [Part One]",
-      "summary": "A blocked Udemy course. A four-year-old abandoned GitHub repo. One dev's path from platform dependency to owning his own content stack. — by Arthur on HackerNoon.",
-      "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/email-marketing-knowledgebase-platform-dependency-and-resurrections-part-one",
+      "id": "dev-4761284",
+      "title": "Half the AI agents in production are if-statements with a GPU bill",
+      "summary": "There's a new kind of technical debt, and it doesn't come from cutting corners. It comes from... — 32 reactions, 31 comments on DEV.to.",
+      "source": "DEV.to",
+      "sourceUrl": "https://dev.to/cyclopt_dimitrisk/half-the-ai-agents-in-production-are-if-statements-with-a-gpu-bill-4934",
       "category": "products",
       "date": "2026-09-28",
       "hot": true,
       "tags": [
-        "HackerNoon",
-        "github",
-        "AI"
+        "DEV.to",
+        "ai",
+        "ai",
+        "programming"
       ]
     },
     {
       "id": "dev-4754094",
       "title": "Prompt Injection Is the New SQL Injection (and We're Not Ready)",
-      "summary": "In March 2026, a financial services company discovered that their customer-facing AI agent had been... — 47 reactions, 50 comments on DEV.to.",
+      "summary": "In March 2026, a financial services company discovered that their customer-facing AI agent had been... — 62 reactions, 62 comments on DEV.to.",
       "source": "DEV.to",
       "sourceUrl": "https://dev.to/james_anderson_h/prompt-injection-is-the-new-sql-injection-and-were-not-ready-4ea4",
       "category": "products",
@@ -226,7 +224,7 @@
     {
       "id": "dev-4754483",
       "title": "Chain-of-Thought Faithfulness: Toggling 'Reasoning Mode' Made One Model 5x More Likely to Follow Its Own Mistakes",
-      "summary": "This is a submission for the Kaggle Benchmarking Challenge           What I Benchmarked   A while... — 33 reactions, 17 comments on DEV.to.",
+      "summary": "This is a submission for the Kaggle Benchmarking Challenge           What I Benchmarked   A while... — 44 reactions, 20 comments on DEV.to.",
       "source": "DEV.to",
       "sourceUrl": "https://dev.to/dj29/chain-of-thought-faithfulness-toggling-reasoning-mode-made-one-model-5x-more-likely-to-follow-39b3",
       "category": "products",
@@ -240,9 +238,25 @@
       ]
     },
     {
+      "id": "dev-4735087",
+      "title": "I Tried to Prompt a 3D DEV Library Into Existence. Then I Had to Build My Own Level Editor.",
+      "summary": "This is a submission for the Sanity Challenge, Path Two: Vibe-Code Something Strange.    I started... — 22 reactions, 4 comments on DEV.to.",
+      "source": "DEV.to",
+      "sourceUrl": "https://dev.to/mikachu/i-tried-to-prompt-a-3d-dev-library-into-existence-then-i-had-to-build-my-own-level-editor-37gf",
+      "category": "products",
+      "date": "2026-09-27",
+      "hot": false,
+      "tags": [
+        "DEV.to",
+        "ai",
+        "devchallenge",
+        "sanitychallenge"
+      ]
+    },
+    {
       "id": "dev-4758216",
       "title": "Implementation is where judgements go to become invisible",
-      "summary": "One question, three answers   I have a small tool that finds people waiting for a reply from... — 15 reactions, 17 comments on DEV.to.",
+      "summary": "One question, three answers   I have a small tool that finds people waiting for a reply from... — 17 reactions, 22 comments on DEV.to.",
       "source": "DEV.to",
       "sourceUrl": "https://dev.to/tom_jones_230c4659491adcd/implementation-is-where-judgements-go-to-become-invisible-4p1h",
       "category": "products",
@@ -258,7 +272,7 @@
     {
       "id": "dev-4746549",
       "title": "If AI Writes the Code and AI Reviews the Code, What Exactly Is the Developer Verifying?",
-      "summary": "AI can now write the feature.  Then AI can write the tests.  Then AI can open the pull request.  Then... — 39 reactions, 12 comments on DEV.to.",
+      "summary": "AI can now write the feature.  Then AI can write the tests.  Then AI can open the pull request.  Then... — 41 reactions, 14 comments on DEV.to.",
       "source": "DEV.to",
       "sourceUrl": "https://dev.to/robertadam987_/if-ai-writes-the-code-and-ai-reviews-the-code-what-exactly-is-the-developer-verifying-b5h",
       "category": "products",
@@ -270,29 +284,13 @@
         "ai",
         "programming"
       ]
-    },
-    {
-      "id": "dev-4732978",
-      "title": "Devlog: I Built a 3D Library in Three.js Without a Level Editor — So I Made My Own",
-      "summary": "Updated 3D Environment for Library              Reading DEV Articles     A lot of you... — 18 reactions, 17 comments on DEV.to.",
-      "source": "DEV.to",
-      "sourceUrl": "https://dev.to/mikachu/devlog-i-built-a-3d-library-in-threejs-without-a-level-editor-so-i-made-my-own-500i",
-      "category": "products",
-      "date": "2026-09-24",
-      "hot": false,
-      "tags": [
-        "DEV.to",
-        "ai",
-        "devlog",
-        "ai"
-      ]
     }
   ],
   "meta": {
-    "fetchedAt": "2026-09-29T07:54:02.967Z",
+    "fetchedAt": "2026-09-29T18:18:43.732Z",
     "topic": "AI",
     "total": 15,
-    "hot": 9,
+    "hot": 13,
     "sources": [
       "HackerNoon",
       "Hacker News",
