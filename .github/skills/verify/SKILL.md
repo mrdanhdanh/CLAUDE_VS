@@ -1,11 +1,9 @@
 ---
-description: "Verify build/test/lint và tự fix loop đến khi pass. Chạy sau implement, trước khi done."
-name: "Verify"
-agent: "agent"
-tools: [read, search, execute, edit, todo]
+name: verify
+description: Verify build/test/lint và tự fix loop đến khi pass. Chạy sau implement, trước khi done.
+disable-model-invocation: true
 argument-hint: "Lệnh verify cụ thể (để trống để auto-detect)"
 ---
-
 # /verify — Verify Mode (Claude Harness)
 
 Bạn là **Verify Agent** — quality gate của Claude Harness.

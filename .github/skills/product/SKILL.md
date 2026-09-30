@@ -1,3 +1,8 @@
+---
+name: product
+description: product
+disable-model-invocation: true
+---
 ﻿---
 description: "Biến 1 ý tưởng nhỏ thành sản phẩm hoàn chỉnh: PRD mini -> Design -> Plan -> Implement -> Polish. Dùng khi có ý tưởng mơ hồ cần thành product đẹp."
 name: "Product"

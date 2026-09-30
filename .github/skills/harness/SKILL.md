@@ -1,3 +1,8 @@
+---
+name: harness
+description: harness
+disable-model-invocation: true
+---
 ﻿---
 description: "Chạy full Claude Harness v2 pipeline Idea -> Explore -> Clarify -> PRD -> Design -> Plan -> Implement -> Polish -> Verify. Model-agnostic, product-driven."
 name: "Harness"

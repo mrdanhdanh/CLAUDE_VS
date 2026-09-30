@@ -1,3 +1,8 @@
+---
+name: plan
+description: plan
+disable-model-invocation: true
+---
 ﻿---
 description: "Tạo plan chi tiết Explore -> Plan cho task, xuất file .agent/plans/ và todos. Dùng trước khi implement."
 name: "Plan"

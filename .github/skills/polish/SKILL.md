@@ -1,3 +1,8 @@
+---
+name: polish
+description: polish
+disable-model-invocation: true
+---
 ﻿---
 description: "Polish giao diện đến chuẩn product: responsive, states, animation, a11y. Chạy sau implement, trước verify."
 name: "Polish"

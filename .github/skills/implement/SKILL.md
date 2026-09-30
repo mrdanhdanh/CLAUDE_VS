@@ -1,3 +1,8 @@
+---
+name: implement
+description: implement
+disable-model-invocation: true
+---
 ﻿---
 description: "Implement plan đã duyệt theo todo-driven workflow. Đọc plan, chạy từng todo, verify sau mỗi edit."
 name: "Implement"

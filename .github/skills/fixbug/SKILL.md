@@ -1,11 +1,9 @@
 ---
-description: "Fix bug gọn nhẹ: Reproduce → Root Cause → Fix → Verify → Learn. Lưu .agent/bugs/<slug>/bug.md và cập nhật docs/knowleged.md (bắt buộc đọc). Use when fixing bug, sửa lỗi, regression, hotfix — thay cho /harness full pipeline."
-name: "Fixbug"
-agent: "agent"
-tools: [read, edit, search, execute, todo, agent]
+name: fixbug
+description: Fix bug gọn nhẹ: Reproduce → Root Cause → Fix → Verify → Learn. Lưu .agent/bugs/<slug>/bug.md và cập nhật docs/knowleged.md (bắt buộc đọc). Use when fixing bug, sửa lỗi, regression, hotfix — thay cho /harness full pipeline.
+disable-model-invocation: true
 argument-hint: "Mô tả bug: triệu chứng + cách reproduce (1-3 câu)"
 ---
-
 # /fixbug — Bug Fix Pipeline (nhẹ, không full harness)
 
 Bạn là **Claude Harness v2 — Bug Fixer**. Thực thi pipeline **gọn nhẹ** cho fix bug — KHÔNG chạy full PRD/Design/Polish như `/harness`.
