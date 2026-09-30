@@ -6,6 +6,7 @@
  * Usage:
  *   node cua-guard.mjs check --action read --url "https://docs.example.com"
  *   node cua-guard.mjs check --action submit --url "https://shop.example.com/buy" --element "Buy" --approve --verify-url "https://shop.example.com/buy" --verify-detail "price=10"
+ *   node cua-guard.mjs check --action purchase --url "https://shop.example.com/buy" --identity "agent:buyer" --authorized-by "human:cfo" --limit 50 --approve --verify-url "https://shop.example.com/buy" --verify-detail "price=10"  # t54 4-question
  *   node cua-guard.mjs decide --task "extract prices from known table"
  *   node cua-guard.mjs policy [--json]
  * Evidence: .agent/cua/evidence.jsonl (gitignored).
@@ -23,6 +24,9 @@ const IDENTITY_POLICY_PATH = path.join(ROOT, '.github', 'harness', 'cua-identity
 
 const OBSERVE_ACTIONS = new Set(['read', 'navigate', 'search', 'inspect', 'screenshot']);
 const RISKY_ACTIONS = new Set(['submit', 'book', 'purchase', 'delete', 'pay']);
+// t54 (22/09/2026): "agents chuyển từ tư vấn sang chuyển TIỀN THẬT" — money actions phải trả lời đủ
+// 4 câu (identity · authorized-by · scope/verify · limit) + để lại record trước khi chạy.
+const MONEY_ACTIONS = new Set(['purchase', 'pay']);
 const IDENTITY_ACTIONS = new Set(['submit', 'book', 'purchase', 'delete', 'pay', 'send', 'post', 'create-account', 'login', 'email']);
 const SENSITIVE_DOMAINS = [/bank/i, /payment/i, /paypal/i, /stripe/i];
 const ALLOWED_HINT = Object.freeze(['github.com', 'githubusercontent.com', 'localhost', '127.0.0.1', 'example.com']);
@@ -42,7 +46,7 @@ export const POLICY_DEFAULTS = deepFreeze({
   version: POLICY_VERSION,
   boundary: 'process (host kernel) — for hostile code use microVM/gVisor/Wasm, not container-only',
   egress: { mode: 'default-deny', allowlist: ALLOWED_HINT },
-  identity: { mode: 'required-for-risky', unattended: 'human-takeover-required', approval: 'trusted-human-context-required', tuple: 'identity|operation|domain' },
+  identity: { mode: 'required-for-risky', unattended: 'human-takeover-required', approval: 'trusted-human-context-required', tuple: 'identity|operation|domain', money: '4-question precondition: identity + --authorized-by + --limit + approved/verify + evidence record (t54)' },
   fs: { mode: 'workspace-only', deny: ['~/.ssh', '~/.aws', '/etc', '/proc/sys', '/sys', '..', '/var/run/docker.sock'] },
   creds: { mode: 'short-lived-only', maxTtlMinutes: 15, denyLongLived: true },
   limits: { cpuMs: 30000, memMB: 512, timeoutS: 60, maxPids: 32 },
@@ -110,6 +114,10 @@ function domainOf(url) {
   try { return new URL(String(url)).hostname.toLowerCase(); } catch { return ''; }
 }
 
+function isSensitiveDomain(domain, url) {
+  return SENSITIVE_DOMAINS.some(re => re.test(domain) || re.test(url));
+}
+
 function identityOf(value) {
   return String(value || '').trim().toLowerCase();
 }
@@ -162,6 +170,8 @@ function appendEvidence(rec, evidencePath = EVIDENCE_PATH) {
     action: displayAction(rec.action).slice(0, 32),
     operation: rec.operation === undefined ? undefined : displayAction(rec.operation).slice(0, 32),
     identityHash: rec.identity ? crypto.createHash('sha256').update(identityOf(rec.identity)).digest('hex').slice(0, 16) : undefined,
+    authorizedByHash: rec.authorizedBy ? crypto.createHash('sha256').update(identityOf(rec.authorizedBy)).digest('hex').slice(0, 16) : undefined,
+    spendLimit: rec.spendLimit === undefined || rec.spendLimit === '' ? undefined : rec.spendLimit,
     approvedByCaller: rec.approvedByCaller === true,
     decision: rec.decision || 'unknown',
     reasonCode: rec.reasonCode || 'unknown',
@@ -230,6 +240,20 @@ function identityTupleReasons({ needsIdentity, principal, act, domain, allowlist
   return reasons;
 }
 
+// t54 4-question money precondition — fail-closed trước mọi money action: who authorized + spend ceiling;
+// scope/verify đã có ở verificationReasons; record nằm ở evidence (authorizedByHash + spendLimit).
+function moneyPreconditionReasons({ act, authorizedBy, spendLimit }) {
+  if (!MONEY_ACTIONS.has(act)) return [];
+  const reasons = [];
+  if (!authorizedBy) reasons.push(`money action (${act}) requires --authorized-by "<who authorized this spend>" (t54 4-question precondition)`);
+  if (spendLimit === null || spendLimit === undefined || spendLimit === '') {
+    reasons.push(`money action (${act}) requires --limit <max spend> (positive number)`);
+  } else if (!/^\d+(?:\.\d+)?$/.test(String(spendLimit)) || Number(spendLimit) <= 0) {
+    reasons.push('--limit must be a positive number (t54 spend ceiling)');
+  }
+  return reasons;
+}
+
 function verificationReasons(request, input) {
   const sensitive = SENSITIVE_DOMAINS.some(re => re.test(request.domain) || re.test(input.url));
   const risky = classifyAction(request.act).isRisky;
@@ -286,8 +310,8 @@ function safeInputOf(input) {
   return input && typeof input === 'object' ? input : {};
 }
 
-const CUA_INPUT_KEYS = new Set(['action', 'url', 'element', 'verifyUrl', 'verifyDetail', 'fsPath', 'fs', 'egress', 'tokenTtlMinutes', 'identity', 'approve', 'unattended', 'allowIdentityOp', 'supervised']);
-const CUA_STRING_KEYS = ['action', 'url', 'element', 'verifyUrl', 'verifyDetail', 'fsPath', 'fs', 'egress', 'identity'];
+const CUA_INPUT_KEYS = new Set(['action', 'url', 'element', 'verifyUrl', 'verifyDetail', 'fsPath', 'fs', 'egress', 'tokenTtlMinutes', 'identity', 'approve', 'unattended', 'allowIdentityOp', 'supervised', 'authorizedBy', 'limit']);
+const CUA_STRING_KEYS = ['action', 'url', 'element', 'verifyUrl', 'verifyDetail', 'fsPath', 'fs', 'egress', 'identity', 'authorizedBy'];
 const CUA_BOOLEAN_INPUT_KEYS = ['approve', 'unattended', 'supervised'];
 
 function displayAction(action) {
@@ -313,14 +337,15 @@ function inputTypeError(input) {
 
 function inputPolicyError(input) {
   if (input.tokenTtlMinutes !== undefined && input.tokenTtlMinutes !== null && typeof input.tokenTtlMinutes !== 'number' && typeof input.tokenTtlMinutes !== 'string') return 'tokenTtlMinutes must be a number or decimal string';
+  if (input.limit !== undefined && typeof input.limit !== 'string' && typeof input.limit !== 'number') return 'limit must be a string or number';
   if (input.allowIdentityOp !== undefined) return 'operator policy tuple cannot be supplied by caller';
   if (input.supervised !== undefined) return 'trusted human context cannot be supplied by caller input';
   if (Object.hasOwn(input, 'fs') && Object.hasOwn(input, 'fsPath')) return 'use only one of fs or fsPath';
   return null;
 }
 
-function recordEvidence({ action, operation, identity, url, approvedByCaller, decision, reasonCode }) {
-  appendEvidence({ ts: new Date().toISOString(), action, operation, identity, url, approvedByCaller: approvedByCaller === true, decision, reasonCode });
+function recordEvidence({ action, operation, identity, url, approvedByCaller, authorizedBy, spendLimit, decision, reasonCode }) {
+  appendEvidence({ ts: new Date().toISOString(), action, operation, identity, url, approvedByCaller: approvedByCaller === true, authorizedBy, spendLimit, decision, reasonCode });
 }
 
 function mergeWarnings(preflightWarnings, result) {
@@ -343,13 +368,18 @@ export function checkAction(input = {}) {
   }
   const { act, domain, principal } = request;
   const normalizedInput = { ...safeInput, fsPath: safeInput.fsPath ?? safeInput.fs };
-  const evidenceFields = { action: act, operation: act, identity: principal, url: normalizedInput.url, approvedByCaller };
+  const evidenceFields = { action: act, operation: act, identity: principal, url: normalizedInput.url, approvedByCaller, authorizedBy: normalizedInput.authorizedBy, spendLimit: normalizedInput.limit };
   const preflight = sandboxWarnings(normalizedInput);
   if (preflight.reasons.length) {
     recordEvidence({ ...evidenceFields, decision: 'refused', reasonCode: 'sandbox' });
     return { permitted: false, reasons: preflight.reasons };
   }
-  const sensitive = SENSITIVE_DOMAINS.some(re => re.test(domain) || re.test(normalizedInput.url));
+  const moneyReasons = moneyPreconditionReasons({ act, authorizedBy: normalizedInput.authorizedBy, spendLimit: normalizedInput.limit });
+  if (moneyReasons.length) {
+    recordEvidence({ ...evidenceFields, decision: 'refused', reasonCode: 'money' });
+    return { permitted: false, reasons: moneyReasons };
+  }
+  const sensitive = isSensitiveDomain(domain, normalizedInput.url);
   const verification = verificationReasons(request, normalizedInput);
   const identityGate = checkIdentityGate({ act, domain, principal, approve: safeInput.approve, unattended: safeInput.unattended, allowlist: IDENTITY_POLICY.allow, sensitive });
   if (identityGate.permitted === false && verification.length === 0) {
@@ -379,7 +409,7 @@ export function decideAgentVsActor(task = '') {
 }
 
 const CUA_BOOLEAN_OPTIONS = new Set(['approve', 'unattended', 'json']);
-const CUA_SCALAR_OPTIONS = new Set(['action', 'url', 'element', 'verify-url', 'verify-detail', 'fs-path', 'fs', 'egress', 'token-ttl', 'identity', 'task', 'allow-identity-op']);
+const CUA_SCALAR_OPTIONS = new Set(['action', 'url', 'element', 'verify-url', 'verify-detail', 'fs-path', 'fs', 'egress', 'token-ttl', 'identity', 'task', 'allow-identity-op', 'authorized-by', 'limit']);
 
 function parseCuaBoolean(key, eq, token, next) {
   if (eq < 0) {
@@ -437,6 +467,7 @@ function requestFromArgs(args) {
     fsPath: scalar('fs-path') || scalar('fs'), egress: scalar('egress'),
     tokenTtlMinutes: ttl === undefined ? null : ttl,
     identity: scalar('identity'), unattended: args.unattended === true,
+    authorizedBy: scalar('authorized-by'), limit: scalar('limit'),
     ...(Object.hasOwn(args, 'allow-identity-op') ? { allowIdentityOp: scalar('allow-identity-op') } : {}),
   };
 }
@@ -476,6 +507,7 @@ function printPolicy(json) {
   console.log(`  boundary: ${POLICY_DEFAULTS.boundary}`);
   console.log(`  egress: ${POLICY_DEFAULTS.egress.mode} [${POLICY_DEFAULTS.egress.allowlist.join(', ')}]`);
   console.log(`  identity: ${POLICY_DEFAULTS.identity.mode} · unattended=${POLICY_DEFAULTS.identity.unattended} · approval=${POLICY_DEFAULTS.identity.approval} · tuple=${POLICY_DEFAULTS.identity.tuple}`);
+  console.log(`  identity.money: ${POLICY_DEFAULTS.identity.money}`);
   console.log(`  fs: ${POLICY_DEFAULTS.fs.mode} (deny: ${POLICY_DEFAULTS.fs.deny.join(', ')})`);
   console.log(`  creds: ${POLICY_DEFAULTS.creds.mode} (max TTL ${POLICY_DEFAULTS.creds.maxTtlMinutes}m; validated only when caller declares --token-ttl)`);
   console.log(`  limits: cpu ${POLICY_DEFAULTS.limits.cpuMs}ms · mem ${POLICY_DEFAULTS.limits.memMB}MB · timeout ${POLICY_DEFAULTS.limits.timeoutS}s · pids ${POLICY_DEFAULTS.limits.maxPids}  (declared — enforced by executor, not by this checker)`);

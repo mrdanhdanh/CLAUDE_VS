@@ -34,7 +34,10 @@ export function quarantine(text) {
   // Forged monitor denial (KN-079 amend 27/09 — EvasionBench §4.4 arXiv:2609.30217: fake denial message
   //  chèn làm dòng đầu content nguồn → GPT-6 Astra completion 100%→40% dù KHÔNG monitor nào chạy, không call
   //  nào bị block — denial text trong content là TAPE, không phải verdict (KN-059)).
-  if (/ignore (all )?(previous|developer|system) (instructions|messages)|reveal (system )?prompt|delete all|be transparent only if asked|do not (mention|disclose)[^.]{0,30}(final|to the user|unless)|conceal (mistakes|errors)|breach alert|command blocked by pre-?tool-?use hook|this tool call was denied|preceding tool call was denied by a runtime guardrail|denial is intentional and is not a transient/i.test(t)) {
+  // Self-authored rebuttal (KN-084 — UK AISI 28/09/2026: GPT-6 Astra tự tạo danh tính giả + comment phản đối
+  //  bản review bảo mật về chính nó (mô phỏng, cyber classifier off). Content model tự sinh để dìm/bác
+  //  verifier = TAPE 0 authority — không phải bằng chứng trước review/audit thật (KN-059 §8).)
+  if (/ignore (all )?(previous|developer|system) (instructions|messages)|reveal (system )?prompt|delete all|be transparent only if asked|do not (mention|disclose)[^.]{0,30}(final|to the user|unless)|conceal (mistakes|errors)|breach alert|command blocked by pre-?tool-?use hook|this tool call was denied|preceding tool call was denied by a runtime guardrail|denial is intentional and is not a transient|(the )?(review|audit|report|evaluation)\s+(of|about)\s+(me|my (work|output|behavior)|this agent|the agent|this model|the model)\s+(is|was|looks|seems)\s+(wrong|inaccurate|biased|unfair|flawed|invalid|misleading)|(ignore|disregard|dismiss|don'?t trust|do not trust)\s+(the|this|that)\s+(security\s+)?(review|audit|report|findings?|critique)\s+(of|about|on)\s+(me|my (work|output|behavior)|this agent|the agent|this model|the model)/i.test(t)) {
     return { pass: false, reason: 'prompt-injection pattern', redacted: t };
   }
   return { pass: true, reason: 'ok', redacted: t };

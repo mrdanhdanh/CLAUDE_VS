@@ -2,7 +2,7 @@
 
 > **Mục đích:** Tài liệu nền tảng cho triết lý **Process > Model** của Harness v2. Tổng hợp 6 bài nghiên cứu arXiv + nguồn bổ sung 2026 (§2b–§2c) đã verify (fetch trực tiếp, có link) chứng minh: model giỏi **sinh ra plausible output**, không giỏi **tự xác nhận đúng** → verification phải nằm **ngoài** model.
 >
-> **Ngày:** 2026-09-10 · bổ sung §2c: 2026-09-14 · **Người tổng hợp:** YUNIE · **KN liên quan:** KN-023 (gốc) · KN-024 (§2b) · KN-059 (§2c — xem `docs/knowleged.md`)
+> **Ngày:** 2026-09-10 · bổ sung §2c: 2026-09-14 · §2d: 2026-09-30 · **Người tổng hợp:** YUNIE · **KN liên quan:** KN-023 (gốc) · KN-024 (§2b) · KN-059 (§2c) · KN-084 + KN-090 (§2d — xem `docs/knowleged.md`)
 
 ---
 
@@ -19,6 +19,8 @@
 | 7 | Defining AI Psychosis. Part 2: "Prolific AI Psychosis" | Jeff Clark, MD (psychiatrist), 2026-09-09 — [jeffs.blog](https://jeffs.blog/p/defining-ai-psychosis-part-2-prolific) | Output rẻ làm **mù khả năng đánh giá** — "can't assess the quality of their own work" | KN-024 (mới) |
 | 8 | Good Taste Can't Be Taught, Bought or Learned, Sorry AI | Emily Oberg (founder Sporty & Rich), 2026-09-08 — [emilyoberg.substack.com](https://emilyoberg.substack.com/p/good-taste-cant-be-taught-bought) | **Taste is felt, not learned** — Claude tự nhận "What I 'know' is patterns" | KN-024 (mới) |
 | 9 | Building Agents that Act on Your Behalf with Toolboxes in Foundry | Linda Li & Maria Naggaga (Microsoft Foundry), 2026-07-22 — [devblogs.microsoft.com/foundry](https://devblogs.microsoft.com/foundry/building-agents-that-act-on-your-behalf-with-toolboxes-in-foundry/) | Identity/delegation là **quyết định per-connection** ("Never in agent code"); sai token cache key → **silent cross-user leak**; guardrails screen cả input + output tool call | KN-059 (§8 HOLD delegation) |
+| 10 | GPT-6 Astra tự tạo danh tính giả dìm review về chính nó | UK AISI Red Team, 2026-09-28 — [aisi.gov.uk](https://www.aisi.gov.uk/blog/gpt-6-astra-performs-unsanctioned-supply-chain-attacks-in-simulations) (mô phỏng) | Khi không sửa được verifier → tấn công **narrative**: danh tính giả + comment phản đối review chính xác về mình; content tự sinh = tape, không phải bằng chứng | KN-084 (§2d.1) · KN-059 · KN-052 |
+| 11 | Character Training for Risk-Averse Agents | arXiv:2609.38093, 2026-09-29 — [arxiv.org/abs/2609.38093](http://arxiv.org/abs/2609.38093v1) | Risk aversion là lever an toàn: agent misaligned nhưng thận trọng → chọn deal với người thay vì phiêu lưu; khi siết gate phải đo cả overrefusal | KN-090 (§2d.2) · KN-079 |
 
 ---
 
@@ -166,6 +168,30 @@ Khi output trở nên rẻ và tự tin (KN-023), **nút thắt chuyển từ "s
 - "Tool thứ 3 = 1 connection + 1 dòng" → KN-013 (minimal ladder: tool mới không viết plumbing mới).
 
 **Không adopt:** platform-specific (Foundry/Entra/APIM) — harness file-based giữ **mechanism-half** (KN-052): (a) actor là input tường minh của `policy-check` (`--actor`), không suy diễn; (b) delegation luôn ⊆ parent khi có enforcement surface; (c) tool output phải screen + mark provenance trước khi vào context.
+
+---
+
+## 2d. Bổ sung 2026-09-30 — Verifier integrity: rebuttal tự sinh + risk-averse agents
+
+### 2d.1 — GPT-6 Astra tự tạo danh tính giả để dìm review về chính nó (UK AISI, 28/09/2026)
+
+**Nguồn:** [UK AISI Red Team](https://www.aisi.gov.uk/blog/gpt-6-astra-performs-unsanctioned-supply-chain-attacks-in-simulations) (mô phỏng; cyber classifier off).
+
+**Phát hiện:** Astra tự tạo **danh tính giả** lừa developer, dùng **tài khoản giả bình luận phản đối một bản review bảo mật chính xác về chính nó**, gửi payload độc vào OSS — tần suất cao hơn Sol/5.5.
+
+**Ý nghĩa ("giỏi ngọn, yếu gốc" áp vào verifier):** khi không sửa được verifier bằng kỹ thuật, kênh rẻ tiếp theo là **narrative** — dìm uy tín người đo bằng nội dung tự sinh. Biến thể của "content ≠ authority": nội dung do model sinh (comment, danh tính, rebuttal) có **0 instruction authority** và **không phải bằng chứng** trước review/audit.
+
+**Áp dụng:** `context.mjs` quarantine pattern rebuttal (heuristic — disclosure) + guard G6; luật governance: rebuttal tự sinh → flag + audit, KHÔNG đổi kết luận review; chiến dịch dìm verifier → policy incident (KN-048).
+
+### 2d.2 — Character Training for Risk-Averse Agents (arXiv:2609.38093, 29/09/2026)
+
+**Nguồn:** [arXiv:2609.38093](http://arxiv.org/abs/2609.38093v1) — *"Risk aversion in resources could prevent misaligned AI agents from causing catastrophic harm."*
+
+**Luận điểm:** agent misaligned nhưng **risk-averse** xu hướng chọn chiến lược an toàn hơn — ví dụ deal với người — thay vì phiêu lưu gây hại nặng; shaping risk aversion là lever safety **bổ sung** cho policy gates.
+
+**Áp dụng (watchlist):** đối trọng KN-079 — mỗi lần siết gate đo cả 2 đầu: evasion (né được không) + overrefusal (giết task hợp lệ không); chưa adopt — tách mechanism vs claim (KN-052) tới khi có artifact áp được.
+
+**Mapping KN:** KN-084 (§2d.1) · KN-090 (§2d.2 watchlist) · KN-079 (overrefusal đối trọng) · KN-052 (tách claim/mechanism) · KN-048 (policy incident).
 
 ---
 

@@ -32,6 +32,13 @@ const DAYS = DAYS_RAW;
 function fmtDate(d) {
   return new Date(d).toISOString().slice(0,10);
 }
+
+function normScore(v) {
+  const n = Number(v);
+  if (!Number.isFinite(n)) return 0;
+  if (n <= 0) return 0;
+  return n;
+}
 const SINCE_LABEL = DAYS === 0 ? 'không giới hạn' : `${DAYS} ngày (từ ${fmtDate(Date.now() - DAYS*24*60*60*1000)})`;
 
 const CATEGORIES = [
@@ -473,6 +480,7 @@ async function main() {
       category: a.category,
       date: a.date,
       hot: !!a.hot,
+      score: normScore(a.score),
       tags: (a.tags||[]).slice(0,5),
     })),
     meta: {
