@@ -1,12 +1,12 @@
 {
-  "generatedAt": "2026-09-29T18:18:43.732Z",
+  "generatedAt": "2026-09-30T08:00:56.176Z",
   "generatedBy": "YUNIE × Last30Days",
   "version": 2,
   "description": "Tin AI mới nhất — tổng hợp từ Last30Days (HN, GitHub, DEV.to, Reddit, arXiv, HackerNoon) trong 30 ngày qua. Chủ đề: AI. Tự động cập nhật bởi YUNIE.",
   "last30days": {
     "enabled": true,
     "topic": "AI",
-    "since": "2026-08-30",
+    "since": "2026-08-31",
     "days": 30,
     "sources": [
       "Hacker News (Algolia, free)",
@@ -55,84 +55,178 @@
   ],
   "articles": [
     {
-      "id": "hnoon-cheers-to-our-top-writers-of-the-week",
-      "title": "Cheers to Our Top Writers of the Week",
-      "summary": "Meet HackerNoon’s top writers of the week and discover their latest stories on AI, cybersecurity, DevOps, DeFi, and technology. — by Editing Protocol on HackerNoon.",
+      "id": "hnoon-jev-find-out-why-rlcd-and-system-one-models-are-rewriting-ai",
+      "title": "Jev: Find Out Why RLCD and System One Models Are Rewriting AI Architecture",
+      "summary": "Prompt engineering, complex parsing layers, validation libraries, and fragile JSON repair loops begin to disappear from your daily work. Not because those skills stop mattering, bu — by ProgrammingCentral on HackerNoon.",
       "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/cheers-to-our-top-writers-of-the-week",
+      "sourceUrl": "https://hackernoon.com/jev-find-out-why-rlcd-and-system-one-models-are-rewriting-ai-architecture",
       "category": "products",
-      "date": "2026-09-29",
+      "date": "2026-09-30",
       "hot": true,
       "tags": [
         "HackerNoon",
-        "hackernoon-writers",
+        "typesafe-jev",
         "AI"
       ]
     },
     {
-      "id": "hnoon-your-bi-platform-has-five-monitoring-tools-and-no-observabil",
-      "title": "Your BI Platform Has Five Monitoring Tools and No Observability",
-      "summary": "Individual systems can all report healthy while the business data is wrong. Here’s how LLM-assisted correlation can shorten incident triage. — by Thiru A on HackerNoon.",
-      "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/your-bi-platform-has-five-monitoring-tools-and-no-observability",
+      "id": "hn-49904386",
+      "title": "McDonalds has AI estimate \"customer willingness to pay\" at each restaurant",
+      "summary": "McDonalds has AI estimate \"customer willingness to pay\" at each restaurant — 5 points, 0 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://www.reuters.com/business/inside-mcdonalds-push-have-ai-price-your-big-mac-2026-09-29/",
+      "category": "products",
+      "date": "2026-09-30",
+      "hot": false,
+      "tags": [
+        "HN",
+        "AI",
+        "story",
+        "author_Propelloni"
+      ]
+    },
+    {
+      "id": "hn-49904531",
+      "title": "Are you getting a weird response to the query: 'play Minecraft' on America.gov?",
+      "summary": "Are you seeing this?<p><i>I see the constituent you mean.<p>((insert legal name here, as it appears on the Social Security card))?<p>Yes. Take care. It has reached a higher level now. It can read the Code of Federal Regu — 4 points, 1 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://news.ycombinator.com/item?id=49904531",
+      "category": "safety",
+      "date": "2026-09-30",
+      "hot": false,
+      "tags": [
+        "HN",
+        "AI",
+        "story",
+        "author_UncleOxidant"
+      ]
+    },
+    {
+      "id": "hn-49905503",
+      "title": "Agda Implementors' Meeting Xliii",
+      "summary": "Agda Implementors' Meeting Xliii — 3 points, 0 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://wiki.portal.chalmers.se/agda/Main/AIMXLIII",
+      "category": "products",
+      "date": "2026-09-30",
+      "hot": false,
+      "tags": [
+        "HN",
+        "AI",
+        "story",
+        "author_m_j_g"
+      ]
+    },
+    {
+      "id": "hn-49904380",
+      "title": "Sonnet 5.5 Doesn't Worry Anymore. It Also Doesn't Think Anyone's in Charge",
+      "summary": "Sonnet 5.5 Doesn't Worry Anymore. It Also Doesn't Think Anyone's in Charge — 3 points, 1 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://persona.earthpilot.ai/changelog/claude-sonnet-5-5",
+      "category": "products",
+      "date": "2026-09-30",
+      "hot": false,
+      "tags": [
+        "HN",
+        "AI",
+        "story",
+        "author_ada1981"
+      ]
+    },
+    {
+      "id": "hntop-49896586",
+      "title": "GPT 6.1 Sol: Near-Astra intelligence for a fifth of the price",
+      "summary": "GPT 6.1 Sol: Near-Astra intelligence for a fifth of the price — 904 points, 815 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://openai.com/index/introducing-gpt-6-1-sol/",
       "category": "products",
       "date": "2026-09-29",
       "hot": true,
       "tags": [
-        "HackerNoon",
-        "data-engineering",
-        "AI"
+        "HN",
+        "top"
       ]
     },
     {
-      "id": "hnoon-who-holds-the-authority-when-ai-agents-pay-for-their-own-gpu",
-      "title": "Who Holds the Authority When AI Agents Pay for Their Own GPU Compute?",
-      "summary": "AI agents are starting to pay for their own GPU compute. Here's how Solana's existing delegation primitive could make that safe. — by Kenneth Onyebuchi on HackerNoon.",
-      "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/who-holds-the-authority-when-ai-agents-pay-for-their-own-gpu-compute",
-      "category": "products",
-      "date": "2026-09-29",
-      "hot": true,
-      "tags": [
-        "HackerNoon",
-        "decentralize-ai",
-        "AI"
-      ]
-    },
-    {
-      "id": "hnoon-why-representative-data-is-critical-to-nigerias-ai-ambitions",
-      "title": "Why Representative Data Is Critical to Nigeria’s AI Ambitions",
-      "summary": "Nigeria’s AI ambitions depend on more than models and compute. Representative local data, secure infrastructure, and strong governance are equally essential. — by Samson Adesanoye on HackerNoon.",
-      "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/why-representative-data-is-critical-to-nigerias-ai-ambitions",
+      "id": "ax-2609.38093v1",
+      "title": "Character Training for Risk-Averse Agents",
+      "summary": "Risk aversion in resources could prevent misaligned AI agents from causing catastrophic harm. Misaligned but risk-averse agents would tend to favor safer strategies like making deals with humans over riskier strategies l",
+      "source": "arXiv",
+      "sourceUrl": "http://arxiv.org/abs/2609.38093v1",
       "category": "safety",
       "date": "2026-09-29",
       "hot": true,
       "tags": [
-        "HackerNoon",
-        "ai-adoption-in-nigeria",
+        "arXiv",
+        "paper",
         "AI"
       ]
     },
     {
-      "id": "hnoon-project-skysim-part-2-one-physics-core-three-ways-to-run-it",
-      "title": "Project SkySim, Part 2: One Physics Core, Three Ways to Run It",
-      "summary": "I argued that a drone simulator should be easy to open as a URL, without becoming a toy. This is the architectural decision that makes that possible. — by vishwa vimukthi gammuduwaththage on HackerNoon.",
+      "id": "ax-2609.38081v1",
+      "title": "Traversing the solution space of neural networks with Hessian Null Space Continuation",
+      "summary": "On a single task, deep networks can learn many solutions, depending on their optimizer, training data, architecture, and hyperparameters. Many of these solutions are mode-connected: rather than isolated points in weight ",
+      "source": "arXiv",
+      "sourceUrl": "http://arxiv.org/abs/2609.38081v1",
+      "category": "safety",
+      "date": "2026-09-29",
+      "hot": true,
+      "tags": [
+        "arXiv",
+        "paper",
+        "AI"
+      ]
+    },
+    {
+      "id": "hnoon-amaze-holdings-nyse-amze-executes-binding-loi-to-acquire-bul",
+      "title": "Amaze Holdings (NYSE: AMZE) Executes Binding LOI to Acquire BullionFX | Alchemy for US$155 Million",
+      "summary": "Proposed acquisition would bring a gold-backed decentralized financial ecosystem, including decentralized financial infrastructure targeting retail, institution — by Chainwire on HackerNoon.",
       "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/project-skysim-part-2-one-physics-core-three-ways-to-run-it",
+      "sourceUrl": "https://hackernoon.com/amaze-holdings-nyse-amze-executes-binding-loi-to-acquire-bullionfx-or-alchemy-for-us$155-million",
+      "category": "big-tech",
+      "date": "2026-09-29",
+      "hot": true,
+      "tags": [
+        "HackerNoon",
+        "web3",
+        "AI"
+      ]
+    },
+    {
+      "id": "hnoon-does-being-a-gtm-engineer-beat-being-an-engineer-the-truth",
+      "title": "Does Being a GTM Engineer Beat Being an Engineer? The Truth",
+      "summary": "Software engineers are facing a quandary as AI takes over coding tasks, with options including reviewing AI output or specializing in areas like data engineering and GTM engineerin — by ammbo on HackerNoon.",
+      "source": "HackerNoon",
+      "sourceUrl": "https://hackernoon.com/does-being-a-gtm-engineer-beat-being-an-engineer-the-truth",
       "category": "products",
       "date": "2026-09-29",
       "hot": true,
       "tags": [
         "HackerNoon",
-        "drone-technology",
+        "gtm",
         "AI"
+      ]
+    },
+    {
+      "id": "gh-1393965829",
+      "title": "KKKKhazix/AIHOT — 一个自己找热点、自己写日报的网站框架。把信源和精选标准换成你的，它就是你的行业热点站。",
+      "summary": "一个自己找热点、自己写日报的网站框架。把信源和精选标准换成你的，它就是你的行业热点站。 ⭐ 3659 stars, TypeScript. ai, llm, mcp",
+      "source": "GitHub",
+      "sourceUrl": "https://github.com/KKKKhazix/AIHOT",
+      "category": "products",
+      "date": "2026-09-28",
+      "hot": true,
+      "tags": [
+        "GitHub",
+        "TypeScript",
+        "ai",
+        "llm"
       ]
     },
     {
       "id": "hntop-49872723",
       "title": "Owed a billion dollars in Nvidia stock",
-      "summary": "Owed a billion dollars in Nvidia stock — 1076 points, 451 comments on HN.",
+      "summary": "Owed a billion dollars in Nvidia stock — 1084 points, 454 comments on HN.",
       "source": "Hacker News",
       "sourceUrl": "https://colo.to/nvidia-stock-narrative.html",
       "category": "big-tech",
@@ -146,7 +240,7 @@
     {
       "id": "hntop-49881850",
       "title": "Sonnet 5.5",
-      "summary": "Sonnet 5.5 — 857 points, 590 comments on HN.",
+      "summary": "Sonnet 5.5 — 875 points, 606 comments on HN.",
       "source": "Hacker News",
       "sourceUrl": "https://www.anthropic.com/claude-sonnet-5-5",
       "category": "products",
@@ -160,7 +254,7 @@
     {
       "id": "dev-4767386",
       "title": "Claude e Obsidian - Como uma QA utiliza essas ferramentas no dia-a-dia",
-      "summary": "🇺🇸 You can also read the English version of this article on AWS Community Builders.   Ser QA nessa... — 100 reactions, 4 comments on DEV.to.",
+      "summary": "🇺🇸 You can also read the English version of this article on AWS Community Builders.   Ser QA nessa... — 102 reactions, 4 comments on DEV.to.",
       "source": "DEV.to",
       "sourceUrl": "https://dev.to/he4rt/claude-e-obsidian-como-uma-qa-utiliza-essas-ferramentas-no-dia-a-dia-51jc",
       "category": "products",
@@ -176,7 +270,7 @@
     {
       "id": "dev-3138911",
       "title": "Dear Coder: Open This If You're Feeling AI FOMO",
-      "summary": "It's all over the headlines.  Every so often, someone reveals a model X% faster. A tech CEO makes... — 52 reactions, 28 comments on DEV.to.",
+      "summary": "It's all over the headlines.  Every so often, someone reveals a model X% faster. A tech CEO makes... — 63 reactions, 30 comments on DEV.to.",
       "source": "DEV.to",
       "sourceUrl": "https://dev.to/canro91/dear-coder-open-this-if-youre-feeling-ai-fomo-58d4",
       "category": "products",
@@ -188,112 +282,18 @@
         "career",
         "ai"
       ]
-    },
-    {
-      "id": "dev-4761284",
-      "title": "Half the AI agents in production are if-statements with a GPU bill",
-      "summary": "There's a new kind of technical debt, and it doesn't come from cutting corners. It comes from... — 32 reactions, 31 comments on DEV.to.",
-      "source": "DEV.to",
-      "sourceUrl": "https://dev.to/cyclopt_dimitrisk/half-the-ai-agents-in-production-are-if-statements-with-a-gpu-bill-4934",
-      "category": "products",
-      "date": "2026-09-28",
-      "hot": true,
-      "tags": [
-        "DEV.to",
-        "ai",
-        "ai",
-        "programming"
-      ]
-    },
-    {
-      "id": "dev-4754094",
-      "title": "Prompt Injection Is the New SQL Injection (and We're Not Ready)",
-      "summary": "In March 2026, a financial services company discovered that their customer-facing AI agent had been... — 62 reactions, 62 comments on DEV.to.",
-      "source": "DEV.to",
-      "sourceUrl": "https://dev.to/james_anderson_h/prompt-injection-is-the-new-sql-injection-and-were-not-ready-4ea4",
-      "category": "products",
-      "date": "2026-09-27",
-      "hot": true,
-      "tags": [
-        "DEV.to",
-        "ai",
-        "ai",
-        "security"
-      ]
-    },
-    {
-      "id": "dev-4754483",
-      "title": "Chain-of-Thought Faithfulness: Toggling 'Reasoning Mode' Made One Model 5x More Likely to Follow Its Own Mistakes",
-      "summary": "This is a submission for the Kaggle Benchmarking Challenge           What I Benchmarked   A while... — 44 reactions, 20 comments on DEV.to.",
-      "source": "DEV.to",
-      "sourceUrl": "https://dev.to/dj29/chain-of-thought-faithfulness-toggling-reasoning-mode-made-one-model-5x-more-likely-to-follow-39b3",
-      "category": "products",
-      "date": "2026-09-27",
-      "hot": true,
-      "tags": [
-        "DEV.to",
-        "ai",
-        "devchallenge",
-        "kagglechallenge"
-      ]
-    },
-    {
-      "id": "dev-4735087",
-      "title": "I Tried to Prompt a 3D DEV Library Into Existence. Then I Had to Build My Own Level Editor.",
-      "summary": "This is a submission for the Sanity Challenge, Path Two: Vibe-Code Something Strange.    I started... — 22 reactions, 4 comments on DEV.to.",
-      "source": "DEV.to",
-      "sourceUrl": "https://dev.to/mikachu/i-tried-to-prompt-a-3d-dev-library-into-existence-then-i-had-to-build-my-own-level-editor-37gf",
-      "category": "products",
-      "date": "2026-09-27",
-      "hot": false,
-      "tags": [
-        "DEV.to",
-        "ai",
-        "devchallenge",
-        "sanitychallenge"
-      ]
-    },
-    {
-      "id": "dev-4758216",
-      "title": "Implementation is where judgements go to become invisible",
-      "summary": "One question, three answers   I have a small tool that finds people waiting for a reply from... — 17 reactions, 22 comments on DEV.to.",
-      "source": "DEV.to",
-      "sourceUrl": "https://dev.to/tom_jones_230c4659491adcd/implementation-is-where-judgements-go-to-become-invisible-4p1h",
-      "category": "products",
-      "date": "2026-09-27",
-      "hot": false,
-      "tags": [
-        "DEV.to",
-        "ai",
-        "testing",
-        "programming"
-      ]
-    },
-    {
-      "id": "dev-4746549",
-      "title": "If AI Writes the Code and AI Reviews the Code, What Exactly Is the Developer Verifying?",
-      "summary": "AI can now write the feature.  Then AI can write the tests.  Then AI can open the pull request.  Then... — 41 reactions, 14 comments on DEV.to.",
-      "source": "DEV.to",
-      "sourceUrl": "https://dev.to/robertadam987_/if-ai-writes-the-code-and-ai-reviews-the-code-what-exactly-is-the-developer-verifying-b5h",
-      "category": "products",
-      "date": "2026-09-26",
-      "hot": true,
-      "tags": [
-        "DEV.to",
-        "ai",
-        "ai",
-        "programming"
-      ]
     }
   ],
   "meta": {
-    "fetchedAt": "2026-09-29T18:18:43.732Z",
+    "fetchedAt": "2026-09-30T08:00:56.176Z",
     "topic": "AI",
     "total": 15,
-    "hot": 13,
+    "hot": 11,
     "sources": [
       "HackerNoon",
       "Hacker News",
+      "arXiv",
+      "GitHub",
       "DEV.to"
     ]
   }
