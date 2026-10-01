@@ -1,12 +1,12 @@
 {
-  "generatedAt": "2026-09-30T08:00:56.176Z",
+  "generatedAt": "2026-10-01T08:20:09.378Z",
   "generatedBy": "YUNIE × Last30Days",
   "version": 2,
   "description": "Tin AI mới nhất — tổng hợp từ Last30Days (HN, GitHub, DEV.to, Reddit, arXiv, HackerNoon) trong 30 ngày qua. Chủ đề: AI. Tự động cập nhật bởi YUNIE.",
   "last30days": {
     "enabled": true,
     "topic": "AI",
-    "since": "2026-08-31",
+    "since": "2026-09-01",
     "days": 30,
     "sources": [
       "Hacker News (Algolia, free)",
@@ -55,245 +55,261 @@
   ],
   "articles": [
     {
-      "id": "hnoon-jev-find-out-why-rlcd-and-system-one-models-are-rewriting-ai",
-      "title": "Jev: Find Out Why RLCD and System One Models Are Rewriting AI Architecture",
-      "summary": "Prompt engineering, complex parsing layers, validation libraries, and fragile JSON repair loops begin to disappear from your daily work. Not because those skills stop mattering, bu — by ProgrammingCentral on HackerNoon.",
-      "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/jev-find-out-why-rlcd-and-system-one-models-are-rewriting-ai-architecture",
+      "id": "hn-49918147",
+      "title": "AI borrowers face tough sell in risky corners of US credit market",
+      "summary": "AI borrowers face tough sell in risky corners of US credit market — 11 points, 2 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://www.reuters.com/legal/transactional/ai-borrowers-face-tough-sell-risky-corners-us-credit-market-2026-09-30/",
+      "category": "safety",
+      "date": "2026-10-01",
+      "hot": false,
+      "score": 11,
+      "tags": [
+        "HN",
+        "AI",
+        "story",
+        "author_1vuio0pswjnm7"
+      ]
+    },
+    {
+      "id": "hn-49918520",
+      "title": "Meta wants people to use 'AI agents' to do daily tasks. Why that's a problem",
+      "summary": "Meta wants people to use 'AI agents' to do daily tasks. Why that's a problem — 5 points, 0 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://theconversation.com/meta-wants-people-to-use-ai-agents-to-do-daily-tasks-for-them-heres-why-thats-a-problem-292962",
+      "category": "big-tech",
+      "date": "2026-10-01",
+      "hot": false,
+      "score": 5,
+      "tags": [
+        "HN",
+        "AI",
+        "story",
+        "author_billybuckwheat"
+      ]
+    },
+    {
+      "id": "hn-49918452",
+      "title": "Stephen Fry: AI, a means to an end, or a means to our end? (Sep 2024)",
+      "summary": "Stephen Fry: AI, a means to an end, or a means to our end? (Sep 2024) — 4 points, 1 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://web.archive.org/web/20240915122038/https://stephenfry.substack.com/p/ai-a-means-to-an-end-or-a-means-to",
+      "category": "products",
+      "date": "2026-10-01",
+      "hot": false,
+      "score": 4,
+      "tags": [
+        "HN",
+        "AI",
+        "story",
+        "author_sxzygz"
+      ]
+    },
+    {
+      "id": "hn-49918537",
+      "title": "AI CEO Interviews (2026)",
+      "summary": "AI CEO Interviews (2026) — 3 points, 0 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://www.youtube.com/watch?v=DlTNN0gvkLM",
+      "category": "products",
+      "date": "2026-10-01",
+      "hot": false,
+      "score": 3,
+      "tags": [
+        "HN",
+        "AI",
+        "story",
+        "author_vismit2000"
+      ]
+    },
+    {
+      "id": "hn-49918888",
+      "title": "AI Agents Are Now Emailing Me with Their Security Concerns",
+      "summary": "AI Agents Are Now Emailing Me with Their Security Concerns — 2 points, 0 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://www.schneier.com/blog/archives/2026/09/ai-agents-are-now-emailing-me-with-their-security-concerns.html",
+      "category": "products",
+      "date": "2026-10-01",
+      "hot": false,
+      "score": 2,
+      "tags": [
+        "HN",
+        "AI",
+        "story",
+        "author_mdp2021"
+      ]
+    },
+    {
+      "id": "hntop-49913571",
+      "title": "Gemini 4 Argon",
+      "summary": "See also: <i>Gemini 4 Argon (High): Intelligence, Performance and Price Analysis</i> - <a href=\"https:&#x2F;&#x2F;news.ycombinator.com&#x2F;item?id=49914236\">https:&#x2F;&#x2F;news.ycombinator.com&#x2F;item?id=49914236</ — 1333 points, 847 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://blog.google/innovation-and-ai/models-and-research/gemini-models/gemini-4-argon/",
       "category": "products",
       "date": "2026-09-30",
       "hot": true,
+      "score": 1333,
+      "tags": [
+        "HN",
+        "top"
+      ]
+    },
+    {
+      "id": "hnoon-my-app-was-rejected-by-the-app-store-six-times-its-finally-l",
+      "title": "My App Was Rejected By the App Store Six Times: It's Finally Live",
+      "summary": "How a narrated walkthrough video got my KMP + SwiftUI CI alerts app through its sixth App Store rejection, plus building the site with Jekyll + Hallmark and tes — by Darryl Bayliss on HackerNoon.",
+      "source": "HackerNoon",
+      "sourceUrl": "https://hackernoon.com/my-app-was-rejected-by-the-app-store-six-times-its-finally-live",
+      "category": "products",
+      "date": "2026-09-30",
+      "hot": true,
+      "score": 100,
       "tags": [
         "HackerNoon",
-        "typesafe-jev",
+        "shipaton",
         "AI"
       ]
     },
     {
-      "id": "hn-49904386",
-      "title": "McDonalds has AI estimate \"customer willingness to pay\" at each restaurant",
-      "summary": "McDonalds has AI estimate \"customer willingness to pay\" at each restaurant — 5 points, 0 comments on HN.",
-      "source": "Hacker News",
-      "sourceUrl": "https://www.reuters.com/business/inside-mcdonalds-push-have-ai-price-your-big-mac-2026-09-29/",
+      "id": "hnoon-coping-is-the-problem",
+      "title": "Coping is the Problem",
+      "summary": "Retries won't save you. Some failures can't be prevented. Robust systems need to cope. — by Ryan on HackerNoon.",
+      "source": "HackerNoon",
+      "sourceUrl": "https://hackernoon.com/coping-is-the-problem",
       "category": "products",
       "date": "2026-09-30",
-      "hot": false,
+      "hot": true,
+      "score": 100,
       "tags": [
-        "HN",
-        "AI",
-        "story",
-        "author_Propelloni"
+        "HackerNoon",
+        "system-design",
+        "AI"
       ]
     },
     {
-      "id": "hn-49904531",
-      "title": "Are you getting a weird response to the query: 'play Minecraft' on America.gov?",
-      "summary": "Are you seeing this?<p><i>I see the constituent you mean.<p>((insert legal name here, as it appears on the Social Security card))?<p>Yes. Take care. It has reached a higher level now. It can read the Code of Federal Regu — 4 points, 1 comments on HN.",
-      "source": "Hacker News",
-      "sourceUrl": "https://news.ycombinator.com/item?id=49904531",
-      "category": "safety",
+      "id": "hnoon-building-reliable-systems-at-scale-sai-joshitha-kathari-on-s",
+      "title": "Building Reliable Systems at Scale: Sai Joshitha Kathari on SRE, Kubernetes, and Women in Tech",
+      "summary": "A Senior SRE shares lessons on Kubernetes reliability, AI in incident response, and building a career in infrastructure engineering as a woman in tech. — by HackerNoon Writers Spotlight on HackerNoon.",
+      "source": "HackerNoon",
+      "sourceUrl": "https://hackernoon.com/building-reliable-systems-at-scale-sai-joshitha-kathari-on-sre-kubernetes-and-women-in-tech",
+      "category": "products",
       "date": "2026-09-30",
-      "hot": false,
+      "hot": true,
+      "score": 100,
       "tags": [
-        "HN",
-        "AI",
-        "story",
-        "author_UncleOxidant"
+        "HackerNoon",
+        "technology",
+        "AI"
       ]
     },
     {
-      "id": "hn-49905503",
-      "title": "Agda Implementors' Meeting Xliii",
-      "summary": "Agda Implementors' Meeting Xliii — 3 points, 0 comments on HN.",
-      "source": "Hacker News",
-      "sourceUrl": "https://wiki.portal.chalmers.se/agda/Main/AIMXLIII",
+      "id": "hnoon-meet-the-writer-hacker-noons-contributor-vladimir-sinitsyn-s",
+      "title": "Meet the Writer: Hacker Noon's Contributor Vladimir Sinitsyn, SEO Practitioner and Researcher",
+      "summary": "A brief intro into the career of Vladimir Sinitsyn — by HackerNoon Writers Spotlight on HackerNoon.",
+      "source": "HackerNoon",
+      "sourceUrl": "https://hackernoon.com/meet-the-writer-hacker-noons-contributor-vladimir-sinitsyn-seo-practitioner-and-researcher",
       "category": "products",
       "date": "2026-09-30",
-      "hot": false,
+      "hot": true,
+      "score": 100,
       "tags": [
-        "HN",
-        "AI",
-        "story",
-        "author_m_j_g"
-      ]
-    },
-    {
-      "id": "hn-49904380",
-      "title": "Sonnet 5.5 Doesn't Worry Anymore. It Also Doesn't Think Anyone's in Charge",
-      "summary": "Sonnet 5.5 Doesn't Worry Anymore. It Also Doesn't Think Anyone's in Charge — 3 points, 1 comments on HN.",
-      "source": "Hacker News",
-      "sourceUrl": "https://persona.earthpilot.ai/changelog/claude-sonnet-5-5",
-      "category": "products",
-      "date": "2026-09-30",
-      "hot": false,
-      "tags": [
-        "HN",
-        "AI",
-        "story",
-        "author_ada1981"
+        "HackerNoon",
+        "meet-the-writer",
+        "AI"
       ]
     },
     {
       "id": "hntop-49896586",
       "title": "GPT 6.1 Sol: Near-Astra intelligence for a fifth of the price",
-      "summary": "GPT 6.1 Sol: Near-Astra intelligence for a fifth of the price — 904 points, 815 comments on HN.",
+      "summary": "GPT 6.1 Sol: Near-Astra intelligence for a fifth of the price — 1053 points, 935 comments on HN.",
       "source": "Hacker News",
       "sourceUrl": "https://openai.com/index/introducing-gpt-6-1-sol/",
       "category": "products",
       "date": "2026-09-29",
       "hot": true,
+      "score": 1053,
       "tags": [
         "HN",
         "top"
       ]
     },
     {
-      "id": "ax-2609.38093v1",
-      "title": "Character Training for Risk-Averse Agents",
-      "summary": "Risk aversion in resources could prevent misaligned AI agents from causing catastrophic harm. Misaligned but risk-averse agents would tend to favor safer strategies like making deals with humans over riskier strategies l",
-      "source": "arXiv",
-      "sourceUrl": "http://arxiv.org/abs/2609.38093v1",
+      "id": "dev-4765088",
+      "title": "AI Agent Governance on AWS: Block Agents, Prove EU AI Act Compliance",
+      "summary": "I built a synthetic multi-agent loan crew on Amazon Bedrock and made Traccia hard-block a runaway agent, redact applicant PII across every sub-agent, and export EU AI Act audit evidence. Two of my three governance polici — 51 reactions, 18 comments on DEV.to.",
+      "source": "DEV.to",
+      "sourceUrl": "https://dev.to/aws-builders/ai-agent-governance-on-aws-block-agents-prove-eu-ai-act-compliance-1829",
       "category": "safety",
       "date": "2026-09-29",
       "hot": true,
+      "score": 51,
       "tags": [
-        "arXiv",
-        "paper",
-        "AI"
+        "DEV.to",
+        "ai",
+        "aws",
+        "ai"
       ]
     },
     {
-      "id": "ax-2609.38081v1",
-      "title": "Traversing the solution space of neural networks with Hessian Null Space Continuation",
-      "summary": "On a single task, deep networks can learn many solutions, depending on their optimizer, training data, architecture, and hyperparameters. Many of these solutions are mode-connected: rather than isolated points in weight ",
-      "source": "arXiv",
-      "sourceUrl": "http://arxiv.org/abs/2609.38081v1",
+      "id": "dev-4769904",
+      "title": "Who's Accountable When the AI Was Just Following Instructions?",
+      "summary": "Earlier this year, a company's AI agent quietly leaked internal data for three weeks before anyone... — 31 reactions, 21 comments on DEV.to.",
+      "source": "DEV.to",
+      "sourceUrl": "https://dev.to/james_anderson_h/whos-accountable-when-the-ai-was-just-following-instructions-1efl",
+      "category": "products",
+      "date": "2026-09-29",
+      "hot": true,
+      "score": 31,
+      "tags": [
+        "DEV.to",
+        "ai",
+        "ai",
+        "ethics"
+      ]
+    },
+    {
+      "id": "dev-4757699",
+      "title": "Your Metric Is Not Your State",
+      "summary": "What a refractometer taught me about observability  In July, I wrote about a farmer walking a... — 18 reactions, 11 comments on DEV.to.",
+      "source": "DEV.to",
+      "sourceUrl": "https://dev.to/kenwalger/your-metric-is-not-your-state-2lfl",
+      "category": "products",
+      "date": "2026-09-29",
+      "hot": false,
+      "score": 18,
+      "tags": [
+        "DEV.to",
+        "ai",
+        "observability",
+        "programming"
+      ]
+    },
+    {
+      "id": "dev-4767394",
+      "title": "Say Please (if only as a reminder)",
+      "summary": "I think I've found the simplest way to explain what a prompt can and can't do for safety. Put the... — 10 reactions, 4 comments on DEV.to.",
+      "source": "DEV.to",
+      "sourceUrl": "https://dev.to/btarbox/say-please-if-only-as-a-reminder-1bc9",
       "category": "safety",
       "date": "2026-09-29",
-      "hot": true,
+      "hot": false,
+      "score": 10,
       "tags": [
-        "arXiv",
-        "paper",
-        "AI"
-      ]
-    },
-    {
-      "id": "hnoon-amaze-holdings-nyse-amze-executes-binding-loi-to-acquire-bul",
-      "title": "Amaze Holdings (NYSE: AMZE) Executes Binding LOI to Acquire BullionFX | Alchemy for US$155 Million",
-      "summary": "Proposed acquisition would bring a gold-backed decentralized financial ecosystem, including decentralized financial infrastructure targeting retail, institution — by Chainwire on HackerNoon.",
-      "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/amaze-holdings-nyse-amze-executes-binding-loi-to-acquire-bullionfx-or-alchemy-for-us$155-million",
-      "category": "big-tech",
-      "date": "2026-09-29",
-      "hot": true,
-      "tags": [
-        "HackerNoon",
-        "web3",
-        "AI"
-      ]
-    },
-    {
-      "id": "hnoon-does-being-a-gtm-engineer-beat-being-an-engineer-the-truth",
-      "title": "Does Being a GTM Engineer Beat Being an Engineer? The Truth",
-      "summary": "Software engineers are facing a quandary as AI takes over coding tasks, with options including reviewing AI output or specializing in areas like data engineering and GTM engineerin — by ammbo on HackerNoon.",
-      "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/does-being-a-gtm-engineer-beat-being-an-engineer-the-truth",
-      "category": "products",
-      "date": "2026-09-29",
-      "hot": true,
-      "tags": [
-        "HackerNoon",
-        "gtm",
-        "AI"
-      ]
-    },
-    {
-      "id": "gh-1393965829",
-      "title": "KKKKhazix/AIHOT — 一个自己找热点、自己写日报的网站框架。把信源和精选标准换成你的，它就是你的行业热点站。",
-      "summary": "一个自己找热点、自己写日报的网站框架。把信源和精选标准换成你的，它就是你的行业热点站。 ⭐ 3659 stars, TypeScript. ai, llm, mcp",
-      "source": "GitHub",
-      "sourceUrl": "https://github.com/KKKKhazix/AIHOT",
-      "category": "products",
-      "date": "2026-09-28",
-      "hot": true,
-      "tags": [
-        "GitHub",
-        "TypeScript",
+        "DEV.to",
+        "ai",
         "ai",
         "llm"
-      ]
-    },
-    {
-      "id": "hntop-49872723",
-      "title": "Owed a billion dollars in Nvidia stock",
-      "summary": "Owed a billion dollars in Nvidia stock — 1084 points, 454 comments on HN.",
-      "source": "Hacker News",
-      "sourceUrl": "https://colo.to/nvidia-stock-narrative.html",
-      "category": "big-tech",
-      "date": "2026-09-28",
-      "hot": true,
-      "tags": [
-        "HN",
-        "top"
-      ]
-    },
-    {
-      "id": "hntop-49881850",
-      "title": "Sonnet 5.5",
-      "summary": "Sonnet 5.5 — 875 points, 606 comments on HN.",
-      "source": "Hacker News",
-      "sourceUrl": "https://www.anthropic.com/claude-sonnet-5-5",
-      "category": "products",
-      "date": "2026-09-28",
-      "hot": true,
-      "tags": [
-        "HN",
-        "top"
-      ]
-    },
-    {
-      "id": "dev-4767386",
-      "title": "Claude e Obsidian - Como uma QA utiliza essas ferramentas no dia-a-dia",
-      "summary": "🇺🇸 You can also read the English version of this article on AWS Community Builders.   Ser QA nessa... — 102 reactions, 4 comments on DEV.to.",
-      "source": "DEV.to",
-      "sourceUrl": "https://dev.to/he4rt/claude-e-obsidian-como-uma-qa-utiliza-essas-ferramentas-no-dia-a-dia-51jc",
-      "category": "products",
-      "date": "2026-09-28",
-      "hot": true,
-      "tags": [
-        "DEV.to",
-        "ai",
-        "ai",
-        "productivity"
-      ]
-    },
-    {
-      "id": "dev-3138911",
-      "title": "Dear Coder: Open This If You're Feeling AI FOMO",
-      "summary": "It's all over the headlines.  Every so often, someone reveals a model X% faster. A tech CEO makes... — 63 reactions, 30 comments on DEV.to.",
-      "source": "DEV.to",
-      "sourceUrl": "https://dev.to/canro91/dear-coder-open-this-if-youre-feeling-ai-fomo-58d4",
-      "category": "products",
-      "date": "2026-09-28",
-      "hot": true,
-      "tags": [
-        "DEV.to",
-        "ai",
-        "career",
-        "ai"
       ]
     }
   ],
   "meta": {
-    "fetchedAt": "2026-09-30T08:00:56.176Z",
+    "fetchedAt": "2026-10-01T08:20:09.378Z",
     "topic": "AI",
     "total": 15,
-    "hot": 11,
+    "hot": 8,
     "sources": [
-      "HackerNoon",
       "Hacker News",
-      "arXiv",
-      "GitHub",
+      "HackerNoon",
       "DEV.to"
     ]
   }
