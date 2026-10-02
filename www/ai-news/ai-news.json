@@ -1,12 +1,12 @@
 {
-  "generatedAt": "2026-10-01T08:20:09.378Z",
+  "generatedAt": "2026-10-02T07:57:20.900Z",
   "generatedBy": "YUNIE × Last30Days",
   "version": 2,
   "description": "Tin AI mới nhất — tổng hợp từ Last30Days (HN, GitHub, DEV.to, Reddit, arXiv, HackerNoon) trong 30 ngày qua. Chủ đề: AI. Tự động cập nhật bởi YUNIE.",
   "last30days": {
     "enabled": true,
     "topic": "AI",
-    "since": "2026-09-01",
+    "since": "2026-09-02",
     "days": 30,
     "sources": [
       "Hacker News (Algolia, free)",
@@ -55,113 +55,162 @@
   ],
   "articles": [
     {
-      "id": "hn-49918147",
-      "title": "AI borrowers face tough sell in risky corners of US credit market",
-      "summary": "AI borrowers face tough sell in risky corners of US credit market — 11 points, 2 comments on HN.",
+      "id": "hn-49930430",
+      "title": "AI godfather Yann LeCun: Anthropic CEO deluded, doesn't understand cybersecurity",
+      "summary": "AI godfather Yann LeCun: Anthropic CEO deluded, doesn't understand cybersecurity — 12 points, 0 comments on HN.",
       "source": "Hacker News",
-      "sourceUrl": "https://www.reuters.com/legal/transactional/ai-borrowers-face-tough-sell-risky-corners-us-credit-market-2026-09-30/",
-      "category": "safety",
-      "date": "2026-10-01",
-      "hot": false,
-      "score": 11,
-      "tags": [
-        "HN",
-        "AI",
-        "story",
-        "author_1vuio0pswjnm7"
-      ]
-    },
-    {
-      "id": "hn-49918520",
-      "title": "Meta wants people to use 'AI agents' to do daily tasks. Why that's a problem",
-      "summary": "Meta wants people to use 'AI agents' to do daily tasks. Why that's a problem — 5 points, 0 comments on HN.",
-      "source": "Hacker News",
-      "sourceUrl": "https://theconversation.com/meta-wants-people-to-use-ai-agents-to-do-daily-tasks-for-them-heres-why-thats-a-problem-292962",
+      "sourceUrl": "https://fortune.com/2026/10/01/yann-lecun-anthropic-ceo-dario-amodei-deluded-crazy-cybersecurity/",
       "category": "big-tech",
-      "date": "2026-10-01",
+      "date": "2026-10-02",
       "hot": false,
-      "score": 5,
+      "score": 12,
       "tags": [
         "HN",
         "AI",
         "story",
-        "author_billybuckwheat"
+        "author_OtomotO"
       ]
     },
     {
-      "id": "hn-49918452",
-      "title": "Stephen Fry: AI, a means to an end, or a means to our end? (Sep 2024)",
-      "summary": "Stephen Fry: AI, a means to an end, or a means to our end? (Sep 2024) — 4 points, 1 comments on HN.",
+      "id": "hn-49930061",
+      "title": "There's a spike in Bitcoin activity around the time foreign aid money goes out",
+      "summary": "There's a spike in Bitcoin activity around the time foreign aid money goes out — 10 points, 3 comments on HN.",
       "source": "Hacker News",
-      "sourceUrl": "https://web.archive.org/web/20240915122038/https://stephenfry.substack.com/p/ai-a-means-to-an-end-or-a-means-to",
+      "sourceUrl": "https://twitter.com/cremieuxrecueil/status/2105707121073328552",
       "category": "products",
-      "date": "2026-10-01",
+      "date": "2026-10-02",
+      "hot": false,
+      "score": 10,
+      "tags": [
+        "HN",
+        "AI",
+        "story",
+        "author_MrBuddyCasino"
+      ]
+    },
+    {
+      "id": "hn-49930625",
+      "title": "$250M Apple AI Settlement – iPhone 15/16 Users Can Claim $25 to $95 per Device",
+      "summary": "$250M Apple AI Settlement – iPhone 15/16 Users Can Claim $25 to $95 per Device — 4 points, 1 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://openclassactions.com/settlements/false-advertising/apple-intelligence-siri-false-advertising-class-action-settlement.php",
+      "category": "safety",
+      "date": "2026-10-02",
       "hot": false,
       "score": 4,
       "tags": [
         "HN",
         "AI",
         "story",
-        "author_sxzygz"
+        "author_openclassaction"
       ]
     },
     {
-      "id": "hn-49918537",
-      "title": "AI CEO Interviews (2026)",
-      "summary": "AI CEO Interviews (2026) — 3 points, 0 comments on HN.",
+      "id": "hn-49930512",
+      "title": "China's rise as a health tech superpower is important",
+      "summary": "China's rise as a health tech superpower is important — 3 points, 0 comments on HN.",
       "source": "Hacker News",
-      "sourceUrl": "https://www.youtube.com/watch?v=DlTNN0gvkLM",
+      "sourceUrl": "https://restofworld.org/2026/china-ai-healthcare-biotech-drugs/",
       "category": "products",
-      "date": "2026-10-01",
+      "date": "2026-10-02",
       "hot": false,
       "score": 3,
       "tags": [
         "HN",
         "AI",
         "story",
-        "author_vismit2000"
+        "author_stareatgoats"
       ]
     },
     {
-      "id": "hn-49918888",
-      "title": "AI Agents Are Now Emailing Me with Their Security Concerns",
-      "summary": "AI Agents Are Now Emailing Me with Their Security Concerns — 2 points, 0 comments on HN.",
+      "id": "hn-49930364",
+      "title": "AI training of copyrighted material not fair use: Third Circuit",
+      "summary": "AI training of copyrighted material not fair use: Third Circuit — 3 points, 0 comments on HN.",
       "source": "Hacker News",
-      "sourceUrl": "https://www.schneier.com/blog/archives/2026/09/ai-agents-are-now-emailing-me-with-their-security-concerns.html",
-      "category": "products",
-      "date": "2026-10-01",
+      "sourceUrl": "https://www.courthousenews.com/ai-training-of-copyrighted-material-not-fair-use-third-circuit/",
+      "category": "safety",
+      "date": "2026-10-02",
       "hot": false,
-      "score": 2,
+      "score": 3,
       "tags": [
         "HN",
         "AI",
         "story",
-        "author_mdp2021"
+        "author_reasonableklout"
       ]
     },
     {
-      "id": "hntop-49913571",
-      "title": "Gemini 4 Argon",
-      "summary": "See also: <i>Gemini 4 Argon (High): Intelligence, Performance and Price Analysis</i> - <a href=\"https:&#x2F;&#x2F;news.ycombinator.com&#x2F;item?id=49914236\">https:&#x2F;&#x2F;news.ycombinator.com&#x2F;item?id=49914236</ — 1333 points, 847 comments on HN.",
-      "source": "Hacker News",
-      "sourceUrl": "https://blog.google/innovation-and-ai/models-and-research/gemini-models/gemini-4-argon/",
-      "category": "products",
-      "date": "2026-09-30",
+      "id": "ax-2610.02069v1",
+      "title": "AI Emulation of Stochastic Sudden Stratospheric Warming with Interpretable Latent Structure",
+      "summary": "Rare weather regime transitions pose a challenge for data-driven modeling due to class imbalance. In this study, we develop a probabilistic deep learning emulator for a prototypical system with regime transitions, the st",
+      "source": "arXiv",
+      "sourceUrl": "http://arxiv.org/abs/2610.02069v1",
+      "category": "big-tech",
+      "date": "2026-10-01",
       "hot": true,
-      "score": 1333,
+      "score": 800,
       "tags": [
-        "HN",
-        "top"
+        "arXiv",
+        "paper",
+        "AI"
       ]
     },
     {
-      "id": "hnoon-my-app-was-rejected-by-the-app-store-six-times-its-finally-l",
-      "title": "My App Was Rejected By the App Store Six Times: It's Finally Live",
-      "summary": "How a narrated walkthrough video got my KMP + SwiftUI CI alerts app through its sixth App Store rejection, plus building the site with Jekyll + Hallmark and tes — by Darryl Bayliss on HackerNoon.",
-      "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/my-app-was-rejected-by-the-app-store-six-times-its-finally-live",
+      "id": "ax-2610.02036v1",
+      "title": "Global Coherence: When Every Agent Is Right and the Team Is Still Wrong - A Local-to-Global Semantic Foundation for Multi-Agent Collaboration",
+      "summary": "AI agents can each make locally valid decisions yet jointly produce an invalid result. We call this the global coherence problem: a failure of shared state, not merely of model intelligence. Our Observation-Aliasing Impo",
+      "source": "arXiv",
+      "sourceUrl": "http://arxiv.org/abs/2610.02036v1",
+      "category": "safety",
+      "date": "2026-10-01",
+      "hot": true,
+      "score": 800,
+      "tags": [
+        "arXiv",
+        "paper",
+        "AI"
+      ]
+    },
+    {
+      "id": "ax-2610.02023v1",
+      "title": "SPHERE: Adaptive VR Indoor Scene Generation via LLM-Enhanced Spatial Preference Learning and Human-in-the-Loop RL",
+      "summary": "While Large Language Models (LLMs) advance 3D indoor scene synthesis, current pipelines fail to retain user-specific preferences across sessions, making immersive authoring a repetitive and physically fatiguing process. ",
+      "source": "arXiv",
+      "sourceUrl": "http://arxiv.org/abs/2610.02023v1",
       "category": "products",
-      "date": "2026-09-30",
+      "date": "2026-10-01",
+      "hot": true,
+      "score": 800,
+      "tags": [
+        "arXiv",
+        "paper",
+        "AI"
+      ]
+    },
+    {
+      "id": "hnoon-api-layer-access-master-timeline-of-ai-and-tech-companies-cu",
+      "title": "API Layer Access: Master Timeline of AI & Tech Companies Cutting Each Other Off",
+      "summary": "116 times tech and AI giants cut each other off, from Twitter's API lockdowns to Amazon blocking AI shopping agents and Figma's MCP allowlist. Fully sourced. — by The API Economy Trends Report on HackerNoon.",
+      "source": "HackerNoon",
+      "sourceUrl": "https://hackernoon.com/api-layer-access-master-timeline-of-ai-and-tech-companies-cutting-each-other-off",
+      "category": "products",
+      "date": "2026-10-01",
+      "hot": true,
+      "score": 100,
+      "tags": [
+        "HackerNoon",
+        "api-access",
+        "AI"
+      ]
+    },
+    {
+      "id": "hnoon-last-shipaton-i-couldnt-ship-a-paywall-this-year-six-people-",
+      "title": "Last Shipaton, I Couldn’t Ship a Paywall. This Year, Six People Paid Me $13",
+      "summary": "In 2025 I couldn't get RevenueCat purchases working for Shipaton. In 2026 it took a month in App Store Connect. As of Sept 22: six subscribers, $13. — by shohei on HackerNoon.",
+      "source": "HackerNoon",
+      "sourceUrl": "https://hackernoon.com/last-shipaton-i-couldnt-ship-a-paywall-this-year-six-people-paid-me-$13",
+      "category": "safety",
+      "date": "2026-10-01",
       "hot": true,
       "score": 100,
       "tags": [
@@ -171,144 +220,95 @@
       ]
     },
     {
-      "id": "hnoon-coping-is-the-problem",
-      "title": "Coping is the Problem",
-      "summary": "Retries won't save you. Some failures can't be prevented. Robust systems need to cope. — by Ryan on HackerNoon.",
-      "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/coping-is-the-problem",
-      "category": "products",
-      "date": "2026-09-30",
-      "hot": true,
-      "score": 100,
-      "tags": [
-        "HackerNoon",
-        "system-design",
-        "AI"
-      ]
-    },
-    {
-      "id": "hnoon-building-reliable-systems-at-scale-sai-joshitha-kathari-on-s",
-      "title": "Building Reliable Systems at Scale: Sai Joshitha Kathari on SRE, Kubernetes, and Women in Tech",
-      "summary": "A Senior SRE shares lessons on Kubernetes reliability, AI in incident response, and building a career in infrastructure engineering as a woman in tech. — by HackerNoon Writers Spotlight on HackerNoon.",
-      "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/building-reliable-systems-at-scale-sai-joshitha-kathari-on-sre-kubernetes-and-women-in-tech",
-      "category": "products",
-      "date": "2026-09-30",
-      "hot": true,
-      "score": 100,
-      "tags": [
-        "HackerNoon",
-        "technology",
-        "AI"
-      ]
-    },
-    {
-      "id": "hnoon-meet-the-writer-hacker-noons-contributor-vladimir-sinitsyn-s",
-      "title": "Meet the Writer: Hacker Noon's Contributor Vladimir Sinitsyn, SEO Practitioner and Researcher",
-      "summary": "A brief intro into the career of Vladimir Sinitsyn — by HackerNoon Writers Spotlight on HackerNoon.",
-      "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/meet-the-writer-hacker-noons-contributor-vladimir-sinitsyn-seo-practitioner-and-researcher",
-      "category": "products",
-      "date": "2026-09-30",
-      "hot": true,
-      "score": 100,
-      "tags": [
-        "HackerNoon",
-        "meet-the-writer",
-        "AI"
-      ]
-    },
-    {
-      "id": "hntop-49896586",
-      "title": "GPT 6.1 Sol: Near-Astra intelligence for a fifth of the price",
-      "summary": "GPT 6.1 Sol: Near-Astra intelligence for a fifth of the price — 1053 points, 935 comments on HN.",
+      "id": "hntop-49913571",
+      "title": "Gemini 4 Argon",
+      "summary": "See also: <i>Gemini 4 Argon (High): Intelligence, Performance and Price Analysis</i> - <a href=\"https:&#x2F;&#x2F;news.ycombinator.com&#x2F;item?id=49914236\">https:&#x2F;&#x2F;news.ycombinator.com&#x2F;item?id=49914236</ — 1653 points, 1135 comments on HN.",
       "source": "Hacker News",
-      "sourceUrl": "https://openai.com/index/introducing-gpt-6-1-sol/",
+      "sourceUrl": "https://blog.google/innovation-and-ai/models-and-research/gemini-models/gemini-4-argon/",
       "category": "products",
-      "date": "2026-09-29",
+      "date": "2026-09-30",
       "hot": true,
-      "score": 1053,
+      "score": 1653,
       "tags": [
         "HN",
         "top"
       ]
     },
     {
-      "id": "dev-4765088",
-      "title": "AI Agent Governance on AWS: Block Agents, Prove EU AI Act Compliance",
-      "summary": "I built a synthetic multi-agent loan crew on Amazon Bedrock and made Traccia hard-block a runaway agent, redact applicant PII across every sub-agent, and export EU AI Act audit evidence. Two of my three governance polici — 51 reactions, 18 comments on DEV.to.",
+      "id": "dev-4774091",
+      "title": "Are Frontend Developers Cooked? Is Frontend design safe?",
+      "summary": "I recently put out a video arguing that frontend development is changing. I don't think the work is... — 48 reactions, 18 comments on DEV.to.",
       "source": "DEV.to",
-      "sourceUrl": "https://dev.to/aws-builders/ai-agent-governance-on-aws-block-agents-prove-eu-ai-act-compliance-1829",
-      "category": "safety",
-      "date": "2026-09-29",
+      "sourceUrl": "https://dev.to/erikch/are-frontend-developers-cooked-is-frontend-design-safe-nn8",
+      "category": "products",
+      "date": "2026-09-30",
       "hot": true,
-      "score": 51,
+      "score": 48,
       "tags": [
         "DEV.to",
         "ai",
-        "aws",
-        "ai"
+        "webdev",
+        "frontend"
       ]
     },
     {
-      "id": "dev-4769904",
-      "title": "Who's Accountable When the AI Was Just Following Instructions?",
-      "summary": "Earlier this year, a company's AI agent quietly leaked internal data for three weeks before anyone... — 31 reactions, 21 comments on DEV.to.",
+      "id": "dev-4778910",
+      "title": "Building an Offline Arduino UNO Q Cyberdeck That Identifies Birdsong and Draws Vintage Field Notes",
+      "summary": "In this post, I walk through B.L.O.O.M. (Bridging Local Observations, Openly Mapped), an offline... — 18 reactions, 1 comments on DEV.to.",
       "source": "DEV.to",
-      "sourceUrl": "https://dev.to/james_anderson_h/whos-accountable-when-the-ai-was-just-following-instructions-1efl",
+      "sourceUrl": "https://dev.to/cloudinary/building-an-offline-arduino-uno-q-cyberdeck-that-identifies-birdsong-and-draws-vintage-field-notes-1cjg",
       "category": "products",
-      "date": "2026-09-29",
-      "hot": true,
-      "score": 31,
-      "tags": [
-        "DEV.to",
-        "ai",
-        "ai",
-        "ethics"
-      ]
-    },
-    {
-      "id": "dev-4757699",
-      "title": "Your Metric Is Not Your State",
-      "summary": "What a refractometer taught me about observability  In July, I wrote about a farmer walking a... — 18 reactions, 11 comments on DEV.to.",
-      "source": "DEV.to",
-      "sourceUrl": "https://dev.to/kenwalger/your-metric-is-not-your-state-2lfl",
-      "category": "products",
-      "date": "2026-09-29",
+      "date": "2026-09-30",
       "hot": false,
       "score": 18,
       "tags": [
         "DEV.to",
         "ai",
-        "observability",
-        "programming"
+        "arduino",
+        "iot"
       ]
     },
     {
-      "id": "dev-4767394",
-      "title": "Say Please (if only as a reminder)",
-      "summary": "I think I've found the simplest way to explain what a prompt can and can't do for safety. Put the... — 10 reactions, 4 comments on DEV.to.",
+      "id": "dev-4779489",
+      "title": "🎵 Burnout: I wrote a song - \"Bleeding Knuckles\"",
+      "summary": "I was seeing a lot of people writing about burnout on here recently. I feel for you. I was in a mood... — 18 reactions, 5 comments on DEV.to.",
       "source": "DEV.to",
-      "sourceUrl": "https://dev.to/btarbox/say-please-if-only-as-a-reminder-1bc9",
-      "category": "safety",
-      "date": "2026-09-29",
+      "sourceUrl": "https://dev.to/annavi11arrea1/burnout-i-wrote-a-song-bleeding-knuckles-43fp",
+      "category": "products",
+      "date": "2026-09-30",
       "hot": false,
-      "score": 10,
+      "score": 18,
       "tags": [
         "DEV.to",
         "ai",
         "ai",
-        "llm"
+        "mentalhealth"
+      ]
+    },
+    {
+      "id": "hntop-49896586",
+      "title": "GPT 6.1 Sol: Near-Astra intelligence for a fifth of the price",
+      "summary": "GPT 6.1 Sol: Near-Astra intelligence for a fifth of the price — 1061 points, 947 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://openai.com/index/introducing-gpt-6-1-sol/",
+      "category": "products",
+      "date": "2026-09-29",
+      "hot": true,
+      "score": 1061,
+      "tags": [
+        "HN",
+        "top"
       ]
     }
   ],
   "meta": {
-    "fetchedAt": "2026-10-01T08:20:09.378Z",
+    "fetchedAt": "2026-10-02T07:57:20.900Z",
     "topic": "AI",
     "total": 15,
     "hot": 8,
     "sources": [
       "Hacker News",
+      "arXiv",
       "HackerNoon",
       "DEV.to"
     ]
