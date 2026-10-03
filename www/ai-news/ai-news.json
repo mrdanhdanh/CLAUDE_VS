@@ -1,12 +1,12 @@
 {
-  "generatedAt": "2026-10-02T07:57:20.900Z",
+  "generatedAt": "2026-10-03T07:36:39.538Z",
   "generatedBy": "YUNIE × Last30Days",
   "version": 2,
   "description": "Tin AI mới nhất — tổng hợp từ Last30Days (HN, GitHub, DEV.to, Reddit, arXiv, HackerNoon) trong 30 ngày qua. Chủ đề: AI. Tự động cập nhật bởi YUNIE.",
   "last30days": {
     "enabled": true,
     "topic": "AI",
-    "since": "2026-09-02",
+    "since": "2026-09-03",
     "days": 30,
     "sources": [
       "Hacker News (Algolia, free)",
@@ -55,88 +55,167 @@
   ],
   "articles": [
     {
-      "id": "hn-49930430",
-      "title": "AI godfather Yann LeCun: Anthropic CEO deluded, doesn't understand cybersecurity",
-      "summary": "AI godfather Yann LeCun: Anthropic CEO deluded, doesn't understand cybersecurity — 12 points, 0 comments on HN.",
-      "source": "Hacker News",
-      "sourceUrl": "https://fortune.com/2026/10/01/yann-lecun-anthropic-ceo-dario-amodei-deluded-crazy-cybersecurity/",
-      "category": "big-tech",
-      "date": "2026-10-02",
-      "hot": false,
-      "score": 12,
-      "tags": [
-        "HN",
-        "AI",
-        "story",
-        "author_OtomotO"
-      ]
-    },
-    {
-      "id": "hn-49930061",
-      "title": "There's a spike in Bitcoin activity around the time foreign aid money goes out",
-      "summary": "There's a spike in Bitcoin activity around the time foreign aid money goes out — 10 points, 3 comments on HN.",
-      "source": "Hacker News",
-      "sourceUrl": "https://twitter.com/cremieuxrecueil/status/2105707121073328552",
+      "id": "hnoon-ai-vs-super-intelligence-is-the-rename-actually-more-accurat",
+      "title": "AI vs. Super Intelligence: Is the Rename Actually More Accurate?",
+      "summary": "The White House has instructed government departments to use \"Super Intelligence\" instead of \"Artificial Intelligence,\" citing a need for a more accurate name due to the stigma sur — by Shawn Gordon on HackerNoon.",
+      "source": "HackerNoon",
+      "sourceUrl": "https://hackernoon.com/ai-vs-super-intelligence-is-the-rename-actually-more-accurate",
       "category": "products",
-      "date": "2026-10-02",
-      "hot": false,
-      "score": 10,
+      "date": "2026-10-03",
+      "hot": true,
+      "score": 100,
       "tags": [
-        "HN",
-        "AI",
-        "story",
-        "author_MrBuddyCasino"
+        "HackerNoon",
+        "ai",
+        "AI"
       ]
     },
     {
-      "id": "hn-49930625",
-      "title": "$250M Apple AI Settlement – iPhone 15/16 Users Can Claim $25 to $95 per Device",
-      "summary": "$250M Apple AI Settlement – iPhone 15/16 Users Can Claim $25 to $95 per Device — 4 points, 1 comments on HN.",
+      "id": "hn-49941380",
+      "title": "We Can't Let My Former Venture Capital Colleagues Buy Off Our Democracy",
+      "summary": "We Can't Let My Former Venture Capital Colleagues Buy Off Our Democracy — 7 points, 1 comments on HN.",
       "source": "Hacker News",
-      "sourceUrl": "https://openclassactions.com/settlements/false-advertising/apple-intelligence-siri-false-advertising-class-action-settlement.php",
-      "category": "safety",
-      "date": "2026-10-02",
-      "hot": false,
-      "score": 4,
-      "tags": [
-        "HN",
-        "AI",
-        "story",
-        "author_openclassaction"
-      ]
-    },
-    {
-      "id": "hn-49930512",
-      "title": "China's rise as a health tech superpower is important",
-      "summary": "China's rise as a health tech superpower is important — 3 points, 0 comments on HN.",
-      "source": "Hacker News",
-      "sourceUrl": "https://restofworld.org/2026/china-ai-healthcare-biotech-drugs/",
+      "sourceUrl": "https://www.nytimes.com/2026/06/11/opinion/silicon-valley-ai-politics.html",
       "category": "products",
-      "date": "2026-10-02",
+      "date": "2026-10-03",
+      "hot": false,
+      "score": 7,
+      "tags": [
+        "HN",
+        "AI",
+        "story",
+        "author_ajoy"
+      ]
+    },
+    {
+      "id": "hn-49941327",
+      "title": "What if AI worked at 1.000.000 tokens per seconds?",
+      "summary": "What if AI worked at 1.000.000 tokens per seconds? — 5 points, 9 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://www.echohive.ai/one-million-tokens-per-second",
+      "category": "products",
+      "date": "2026-10-03",
+      "hot": false,
+      "score": 5,
+      "tags": [
+        "HN",
+        "AI",
+        "story",
+        "author_echohive42"
+      ]
+    },
+    {
+      "id": "hn-49941569",
+      "title": "Show HN: Rowan, an open-source SAST scanner for AI apps (code, models, MCP)\"",
+      "summary": "Show HN: Rowan, an open-source SAST scanner for AI apps (code, models, MCP)\" — 3 points, 0 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://github.com/hedgerow-dev/rowan",
+      "category": "products",
+      "date": "2026-10-03",
       "hot": false,
       "score": 3,
       "tags": [
         "HN",
         "AI",
         "story",
-        "author_stareatgoats"
+        "author_hedgerow-dev"
       ]
     },
     {
-      "id": "hn-49930364",
-      "title": "AI training of copyrighted material not fair use: Third Circuit",
-      "summary": "AI training of copyrighted material not fair use: Third Circuit — 3 points, 0 comments on HN.",
+      "id": "hn-49941522",
+      "title": "Will America Spend 9% of Its GDP on AI? The Industry Is Counting on It",
+      "summary": "Will America Spend 9% of Its GDP on AI? The Industry Is Counting on It — 3 points, 3 comments on HN.",
       "source": "Hacker News",
-      "sourceUrl": "https://www.courthousenews.com/ai-training-of-copyrighted-material-not-fair-use-third-circuit/",
-      "category": "safety",
-      "date": "2026-10-02",
+      "sourceUrl": "https://www.wsj.com/tech/ai/will-america-spend-9-of-its-gdp-on-ai-the-industry-is-counting-on-it-3501bb4f",
+      "category": "products",
+      "date": "2026-10-03",
       "hot": false,
       "score": 3,
       "tags": [
         "HN",
         "AI",
         "story",
-        "author_reasonableklout"
+        "author_geox"
+      ]
+    },
+    {
+      "id": "hnoon-hirequotients-easysource-elevated-to-featured-listing-on-pay",
+      "title": "HireQuotient’s EasySource Elevated to Featured Listing on Paylocity Marketplace",
+      "summary": "HireQuotient's AI sourcing agent, EasySource, has been featured on the Paylocity Marketplace, highlighting the demand for autonomous talent sourcing tools that integrate with core  — by Technology Wire on HackerNoon.",
+      "source": "HackerNoon",
+      "sourceUrl": "https://hackernoon.com/hirequotients-easysource-elevated-to-featured-listing-on-paylocity-marketplace",
+      "category": "products",
+      "date": "2026-10-02",
+      "hot": true,
+      "score": 100,
+      "tags": [
+        "HackerNoon",
+        "ai",
+        "AI"
+      ]
+    },
+    {
+      "id": "hnoon-52-blog-posts-to-learn-about-apache",
+      "title": "52 Blog Posts To Learn About Apache",
+      "summary": "Learn everything you need to know about Apache via these 52 free HackerNoon blog posts. — by Learn Repo on HackerNoon.",
+      "source": "HackerNoon",
+      "sourceUrl": "https://hackernoon.com/52-blog-posts-to-learn-about-apache",
+      "category": "products",
+      "date": "2026-10-02",
+      "hot": true,
+      "score": 100,
+      "tags": [
+        "HackerNoon",
+        "apache",
+        "AI"
+      ]
+    },
+    {
+      "id": "hnoon-how-to-query-data-the-professional-way-in-sql-server-a-perfo",
+      "title": "How to Query Data the Professional Way in SQL Server: A Performance-First Guide for Beginners",
+      "summary": "How to Query Data the Professional Way in SQL Server: A Performance-First Guide for Beginners — by Surendra Reddy on HackerNoon.",
+      "source": "HackerNoon",
+      "sourceUrl": "https://hackernoon.com/how-to-query-data-the-professional-way-in-sql-server-a-performance-first-guide-for-beginners",
+      "category": "products",
+      "date": "2026-10-02",
+      "hot": true,
+      "score": 100,
+      "tags": [
+        "HackerNoon",
+        "sql-server",
+        "AI"
+      ]
+    },
+    {
+      "id": "hnoon-testing-androids-on-device-speech-recognition-with-hindi-eng",
+      "title": "Testing Android’s On-Device Speech Recognition With Hindi-English Code-Switching",
+      "summary": "On-device speech recognition turned \"dizzy\" into डीसी for my Hindi-speaking mother. The one-flag fix, a crashing OnePlus, and a reject button. — by AmberMindStudio on HackerNoon.",
+      "source": "HackerNoon",
+      "sourceUrl": "https://hackernoon.com/testing-androids-on-device-speech-recognition-with-hindi-english-code-switching",
+      "category": "products",
+      "date": "2026-10-02",
+      "hot": true,
+      "score": 100,
+      "tags": [
+        "HackerNoon",
+        "shipaton",
+        "AI"
+      ]
+    },
+    {
+      "id": "hnoon-building-a-multimodal-game-box-scanner-with-visionkit-igdb-a",
+      "title": "Building a Multimodal Game-Box Scanner With VisionKit, IGDB, and GPT-5.6 Luna",
+      "summary": "Duo Queue combined VisionKit OCR, title dictionaries, image fingerprints, IGDB, and GPT-5.6 Luna to recognize Japanese game boxes. — by shohei on HackerNoon.",
+      "source": "HackerNoon",
+      "sourceUrl": "https://hackernoon.com/building-a-multimodal-game-box-scanner-with-visionkit-igdb-and-gpt-56-luna",
+      "category": "products",
+      "date": "2026-10-02",
+      "hot": true,
+      "score": 100,
+      "tags": [
+        "HackerNoon",
+        "shipaton",
+        "AI"
       ]
     },
     {
@@ -188,128 +267,48 @@
       ]
     },
     {
-      "id": "hnoon-api-layer-access-master-timeline-of-ai-and-tech-companies-cu",
-      "title": "API Layer Access: Master Timeline of AI & Tech Companies Cutting Each Other Off",
-      "summary": "116 times tech and AI giants cut each other off, from Twitter's API lockdowns to Amazon blocking AI shopping agents and Figma's MCP allowlist. Fully sourced. — by The API Economy Trends Report on HackerNoon.",
-      "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/api-layer-access-master-timeline-of-ai-and-tech-companies-cutting-each-other-off",
-      "category": "products",
-      "date": "2026-10-01",
-      "hot": true,
-      "score": 100,
-      "tags": [
-        "HackerNoon",
-        "api-access",
-        "AI"
-      ]
-    },
-    {
-      "id": "hnoon-last-shipaton-i-couldnt-ship-a-paywall-this-year-six-people-",
-      "title": "Last Shipaton, I Couldn’t Ship a Paywall. This Year, Six People Paid Me $13",
-      "summary": "In 2025 I couldn't get RevenueCat purchases working for Shipaton. In 2026 it took a month in App Store Connect. As of Sept 22: six subscribers, $13. — by shohei on HackerNoon.",
-      "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/last-shipaton-i-couldnt-ship-a-paywall-this-year-six-people-paid-me-$13",
+      "id": "dev-4783294",
+      "title": "Which AWS limit is actually current? An agent that proves it, 32 vs 5 vs 16",
+      "summary": "This is a submission for the Sanity Challenge, Path One: Ship an Agent That Queries Real Content    ... — 18 reactions, 6 comments on DEV.to.",
+      "source": "DEV.to",
+      "sourceUrl": "https://dev.to/sarvar_04/which-aws-limit-is-actually-current-an-agent-that-proves-it-32-vs-5-vs-16-6i4",
       "category": "safety",
       "date": "2026-10-01",
-      "hot": true,
-      "score": 100,
+      "hot": false,
+      "score": 18,
       "tags": [
-        "HackerNoon",
-        "shipaton",
+        "DEV.to",
+        "ai",
+        "devchallenge",
+        "sanitychallenge"
+      ]
+    },
+    {
+      "id": "ax-2610.02202v1",
+      "title": "ScholarCatalyst: A Benchmark for Retrieving Papers That Inspire New Research",
+      "summary": "What makes great scientists great? Even as AI systems start to make progress on open problems, scientists remain far ahead of them at sensing which prior idea, buried in an ever-growing archive of research, a new problem",
+      "source": "arXiv",
+      "sourceUrl": "http://arxiv.org/abs/2610.02202v1",
+      "category": "products",
+      "date": "2026-10-01",
+      "hot": false,
+      "score": 0,
+      "tags": [
+        "arXiv",
+        "paper",
         "AI"
-      ]
-    },
-    {
-      "id": "hntop-49913571",
-      "title": "Gemini 4 Argon",
-      "summary": "See also: <i>Gemini 4 Argon (High): Intelligence, Performance and Price Analysis</i> - <a href=\"https:&#x2F;&#x2F;news.ycombinator.com&#x2F;item?id=49914236\">https:&#x2F;&#x2F;news.ycombinator.com&#x2F;item?id=49914236</ — 1653 points, 1135 comments on HN.",
-      "source": "Hacker News",
-      "sourceUrl": "https://blog.google/innovation-and-ai/models-and-research/gemini-models/gemini-4-argon/",
-      "category": "products",
-      "date": "2026-09-30",
-      "hot": true,
-      "score": 1653,
-      "tags": [
-        "HN",
-        "top"
-      ]
-    },
-    {
-      "id": "dev-4774091",
-      "title": "Are Frontend Developers Cooked? Is Frontend design safe?",
-      "summary": "I recently put out a video arguing that frontend development is changing. I don't think the work is... — 48 reactions, 18 comments on DEV.to.",
-      "source": "DEV.to",
-      "sourceUrl": "https://dev.to/erikch/are-frontend-developers-cooked-is-frontend-design-safe-nn8",
-      "category": "products",
-      "date": "2026-09-30",
-      "hot": true,
-      "score": 48,
-      "tags": [
-        "DEV.to",
-        "ai",
-        "webdev",
-        "frontend"
-      ]
-    },
-    {
-      "id": "dev-4778910",
-      "title": "Building an Offline Arduino UNO Q Cyberdeck That Identifies Birdsong and Draws Vintage Field Notes",
-      "summary": "In this post, I walk through B.L.O.O.M. (Bridging Local Observations, Openly Mapped), an offline... — 18 reactions, 1 comments on DEV.to.",
-      "source": "DEV.to",
-      "sourceUrl": "https://dev.to/cloudinary/building-an-offline-arduino-uno-q-cyberdeck-that-identifies-birdsong-and-draws-vintage-field-notes-1cjg",
-      "category": "products",
-      "date": "2026-09-30",
-      "hot": false,
-      "score": 18,
-      "tags": [
-        "DEV.to",
-        "ai",
-        "arduino",
-        "iot"
-      ]
-    },
-    {
-      "id": "dev-4779489",
-      "title": "🎵 Burnout: I wrote a song - \"Bleeding Knuckles\"",
-      "summary": "I was seeing a lot of people writing about burnout on here recently. I feel for you. I was in a mood... — 18 reactions, 5 comments on DEV.to.",
-      "source": "DEV.to",
-      "sourceUrl": "https://dev.to/annavi11arrea1/burnout-i-wrote-a-song-bleeding-knuckles-43fp",
-      "category": "products",
-      "date": "2026-09-30",
-      "hot": false,
-      "score": 18,
-      "tags": [
-        "DEV.to",
-        "ai",
-        "ai",
-        "mentalhealth"
-      ]
-    },
-    {
-      "id": "hntop-49896586",
-      "title": "GPT 6.1 Sol: Near-Astra intelligence for a fifth of the price",
-      "summary": "GPT 6.1 Sol: Near-Astra intelligence for a fifth of the price — 1061 points, 947 comments on HN.",
-      "source": "Hacker News",
-      "sourceUrl": "https://openai.com/index/introducing-gpt-6-1-sol/",
-      "category": "products",
-      "date": "2026-09-29",
-      "hot": true,
-      "score": 1061,
-      "tags": [
-        "HN",
-        "top"
       ]
     }
   ],
   "meta": {
-    "fetchedAt": "2026-10-02T07:57:20.900Z",
+    "fetchedAt": "2026-10-03T07:36:39.538Z",
     "topic": "AI",
     "total": 15,
-    "hot": 8,
+    "hot": 9,
     "sources": [
+      "HackerNoon",
       "Hacker News",
       "arXiv",
-      "HackerNoon",
       "DEV.to"
     ]
   }
