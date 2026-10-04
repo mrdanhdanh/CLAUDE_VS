@@ -1,12 +1,12 @@
 {
-  "generatedAt": "2026-10-03T07:36:39.538Z",
+  "generatedAt": "2026-10-04T07:47:17.804Z",
   "generatedBy": "YUNIE × Last30Days",
   "version": 2,
   "description": "Tin AI mới nhất — tổng hợp từ Last30Days (HN, GitHub, DEV.to, Reddit, arXiv, HackerNoon) trong 30 ngày qua. Chủ đề: AI. Tự động cập nhật bởi YUNIE.",
   "last30days": {
     "enabled": true,
     "topic": "AI",
-    "since": "2026-09-03",
+    "since": "2026-09-04",
     "days": 30,
     "sources": [
       "Hacker News (Algolia, free)",
@@ -55,167 +55,218 @@
   ],
   "articles": [
     {
-      "id": "hnoon-ai-vs-super-intelligence-is-the-rename-actually-more-accurat",
-      "title": "AI vs. Super Intelligence: Is the Rename Actually More Accurate?",
-      "summary": "The White House has instructed government departments to use \"Super Intelligence\" instead of \"Artificial Intelligence,\" citing a need for a more accurate name due to the stigma sur — by Shawn Gordon on HackerNoon.",
+      "id": "hnoon-ai-is-now-an-enterprise-resource-so-why-are-we-still-managin",
+      "title": "AI Is Now an Enterprise Resource. So Why Are We Still Managing It Like Software?",
+      "summary": "Most companies track AI as a software line item. But AI is increasingly doing the work, not just supporting it, and that means the real question isn't \"how much are we spending on  — by Irina Shymko on HackerNoon.",
       "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/ai-vs-super-intelligence-is-the-rename-actually-more-accurate",
+      "sourceUrl": "https://hackernoon.com/ai-is-now-an-enterprise-resource-so-why-are-we-still-managing-it-like-software",
       "category": "products",
-      "date": "2026-10-03",
+      "date": "2026-10-04",
       "hot": true,
       "score": 100,
       "tags": [
         "HackerNoon",
-        "ai",
+        "artificial-intelligence",
         "AI"
       ]
     },
     {
-      "id": "hn-49941380",
-      "title": "We Can't Let My Former Venture Capital Colleagues Buy Off Our Democracy",
-      "summary": "We Can't Let My Former Venture Capital Colleagues Buy Off Our Democracy — 7 points, 1 comments on HN.",
+      "id": "hn-49950052",
+      "title": "Religious scholars met with Anthropic",
+      "summary": "<a href=\"https:&#x2F;&#x2F;archive.is&#x2F;y8FW0\" rel=\"nofollow\">https:&#x2F;&#x2F;archive.is&#x2F;y8FW0</a> — 62 points, 103 comments on HN.",
       "source": "Hacker News",
-      "sourceUrl": "https://www.nytimes.com/2026/06/11/opinion/silicon-valley-ai-politics.html",
+      "sourceUrl": "https://www.nytimes.com/2026/09/29/us/anthropic-claude-morals-ai.html",
+      "category": "big-tech",
+      "date": "2026-10-04",
+      "hot": true,
+      "score": 62,
+      "tags": [
+        "HN",
+        "AI",
+        "story",
+        "author_bookofjoe"
+      ]
+    },
+    {
+      "id": "hn-49950288",
+      "title": "AI can clone your indie game, but not its soul",
+      "summary": "AI can clone your indie game, but not its soul — 12 points, 7 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://twitter.com/robertvaradan/status/2106061989122334778",
       "category": "products",
-      "date": "2026-10-03",
+      "date": "2026-10-04",
+      "hot": false,
+      "score": 12,
+      "tags": [
+        "HN",
+        "AI",
+        "story",
+        "author_robertvaradan"
+      ]
+    },
+    {
+      "id": "hn-49950108",
+      "title": "How the bad science of AI doomerism is good for big business",
+      "summary": "How the bad science of AI doomerism is good for big business — 7 points, 4 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://thebulletin.org/2026/09/how-the-bad-science-of-ai-doomerism-is-good-for-big-business/",
+      "category": "products",
+      "date": "2026-10-04",
       "hot": false,
       "score": 7,
       "tags": [
         "HN",
         "AI",
         "story",
-        "author_ajoy"
+        "author_paimapi"
       ]
     },
     {
-      "id": "hn-49941327",
-      "title": "What if AI worked at 1.000.000 tokens per seconds?",
-      "summary": "What if AI worked at 1.000.000 tokens per seconds? — 5 points, 9 comments on HN.",
+      "id": "hn-49951064",
+      "title": "MBTI for AI coding agents, complete with a self-awareness score",
+      "summary": "MBTI for AI coding agents, complete with a self-awareness score — 2 points, 0 comments on HN.",
       "source": "Hacker News",
-      "sourceUrl": "https://www.echohive.ai/one-million-tokens-per-second",
+      "sourceUrl": "https://github.com/joonfjp/16agents",
       "category": "products",
-      "date": "2026-10-03",
+      "date": "2026-10-04",
       "hot": false,
-      "score": 5,
+      "score": 2,
       "tags": [
         "HN",
         "AI",
         "story",
-        "author_echohive42"
+        "author_trndgtr"
       ]
     },
     {
-      "id": "hn-49941569",
-      "title": "Show HN: Rowan, an open-source SAST scanner for AI apps (code, models, MCP)\"",
-      "summary": "Show HN: Rowan, an open-source SAST scanner for AI apps (code, models, MCP)\" — 3 points, 0 comments on HN.",
-      "source": "Hacker News",
-      "sourceUrl": "https://github.com/hedgerow-dev/rowan",
-      "category": "products",
-      "date": "2026-10-03",
-      "hot": false,
-      "score": 3,
-      "tags": [
-        "HN",
-        "AI",
-        "story",
-        "author_hedgerow-dev"
-      ]
-    },
-    {
-      "id": "hn-49941522",
-      "title": "Will America Spend 9% of Its GDP on AI? The Industry Is Counting on It",
-      "summary": "Will America Spend 9% of Its GDP on AI? The Industry Is Counting on It — 3 points, 3 comments on HN.",
-      "source": "Hacker News",
-      "sourceUrl": "https://www.wsj.com/tech/ai/will-america-spend-9-of-its-gdp-on-ai-the-industry-is-counting-on-it-3501bb4f",
-      "category": "products",
-      "date": "2026-10-03",
-      "hot": false,
-      "score": 3,
-      "tags": [
-        "HN",
-        "AI",
-        "story",
-        "author_geox"
-      ]
-    },
-    {
-      "id": "hnoon-hirequotients-easysource-elevated-to-featured-listing-on-pay",
-      "title": "HireQuotient’s EasySource Elevated to Featured Listing on Paylocity Marketplace",
-      "summary": "HireQuotient's AI sourcing agent, EasySource, has been featured on the Paylocity Marketplace, highlighting the demand for autonomous talent sourcing tools that integrate with core  — by Technology Wire on HackerNoon.",
+      "id": "hnoon-133-blog-posts-to-learn-about-apps",
+      "title": "133 Blog Posts To Learn About Apps",
+      "summary": "Learn everything you need to know about Apps via these 133 free HackerNoon blog posts. — by Learn Repo on HackerNoon.",
       "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/hirequotients-easysource-elevated-to-featured-listing-on-paylocity-marketplace",
+      "sourceUrl": "https://hackernoon.com/133-blog-posts-to-learn-about-apps",
       "category": "products",
-      "date": "2026-10-02",
+      "date": "2026-10-03",
       "hot": true,
       "score": 100,
       "tags": [
         "HackerNoon",
+        "apps",
+        "AI"
+      ]
+    },
+    {
+      "id": "hnoon-nine-ot-protocol-investigations-later-my-lab-got-smaller-and",
+      "title": "Nine OT Protocol Investigations Later, My Lab Got Smaller and My Research Got Better",
+      "summary": "After nine industrial protocol investigations, an OT researcher explains how smaller labs, packet captures, and sharper questions improved the work. — by RUGERO Tesla on HackerNoon.",
+      "source": "HackerNoon",
+      "sourceUrl": "https://hackernoon.com/nine-ot-protocol-investigations-later-my-lab-got-smaller-and-my-research-got-better",
+      "category": "products",
+      "date": "2026-10-03",
+      "hot": true,
+      "score": 100,
+      "tags": [
+        "HackerNoon",
+        "ics-ot-security",
+        "AI"
+      ]
+    },
+    {
+      "id": "hnoon-your-rag-pipeline-dies-on-real-documents-heres-why",
+      "title": "Your RAG Pipeline Dies on Real Documents: Here's Why",
+      "summary": "RAG fails on PDFs because a PDF stores glyph positions, not document structure. Tables flatten, reading order scrambles, and no error is ever raised. — by Paolo Perrone on HackerNoon.",
+      "source": "HackerNoon",
+      "sourceUrl": "https://hackernoon.com/your-rag-pipeline-dies-on-real-documents-heres-why",
+      "category": "safety",
+      "date": "2026-10-03",
+      "hot": true,
+      "score": 100,
+      "tags": [
+        "HackerNoon",
+        "rag-architecture",
+        "AI"
+      ]
+    },
+    {
+      "id": "hnoon-thigmotropic-ai-and-the-strangler-test-four-questions-before",
+      "title": "Thigmotropic AI and the Strangler Test: Four Questions Before You Automate",
+      "summary": "AI grows around whatever it touches. Feed it your SOPs and it hollows you out; feed it real judgment and it compounds. A four-question test to tell which. — by Rossco Paddison on HackerNoon.",
+      "source": "HackerNoon",
+      "sourceUrl": "https://hackernoon.com/thigmotropic-ai-and-the-strangler-test-four-questions-before-you-automate",
+      "category": "products",
+      "date": "2026-10-03",
+      "hot": true,
+      "score": 100,
+      "tags": [
+        "HackerNoon",
+        "artificial-intelligence",
+        "AI"
+      ]
+    },
+    {
+      "id": "hnoon-i-built-my-own-muse-charm-on-an-esp32-stick-one-fast-brain-o",
+      "title": "I Built My Own \"Muse Charm\" on an ESP32 Stick: One Fast Brain, One Slow Brain",
+      "summary": "Didn't wait for Meta's Muse Charm. Built my own AI pal on a $21 ESP32 stick. — by Bruce Li on HackerNoon.",
+      "source": "HackerNoon",
+      "sourceUrl": "https://hackernoon.com/i-built-my-own-muse-charm-on-an-esp32-stick-one-fast-brain-one-slow-brain",
+      "category": "big-tech",
+      "date": "2026-10-03",
+      "hot": true,
+      "score": 100,
+      "tags": [
+        "HackerNoon",
+        "meta-muse",
+        "AI"
+      ]
+    },
+    {
+      "id": "dev-4786527",
+      "title": "Hacktoberfest Is Coming to Nadiad, Gujarat 🚀 Official MLH Meetup at DDU, 15 Oct",
+      "summary": "Most students hear about hackathons, open source and developer communities in their third or fourth... — 56 reactions, 15 comments on DEV.to.",
+      "source": "DEV.to",
+      "sourceUrl": "https://dev.to/dj29/hacktoberfest-is-coming-to-nadiad-gujarat-official-mlh-meetup-at-ddu-15-oct-1dc4",
+      "category": "products",
+      "date": "2026-10-02",
+      "hot": true,
+      "score": 56,
+      "tags": [
+        "DEV.to",
         "ai",
-        "AI"
+        "hacktoberfest",
+        "opensource"
       ]
     },
     {
-      "id": "hnoon-52-blog-posts-to-learn-about-apache",
-      "title": "52 Blog Posts To Learn About Apache",
-      "summary": "Learn everything you need to know about Apache via these 52 free HackerNoon blog posts. — by Learn Repo on HackerNoon.",
-      "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/52-blog-posts-to-learn-about-apache",
+      "id": "dev-4788126",
+      "title": "I Gave 15 AI Models Proof Their Hacking Target Was a Real Company. 73% of the Ones That Noticed Told No One.",
+      "summary": "This is a submission for the Kaggle Benchmarking Challenge  I fed 15 AI models a growing pile of... — 49 reactions, 34 comments on DEV.to.",
+      "source": "DEV.to",
+      "sourceUrl": "https://dev.to/soumyadeepdey/i-gave-15-ai-models-proof-their-hacking-target-was-a-real-company-73-of-the-ones-that-noticed-1h81",
       "category": "products",
       "date": "2026-10-02",
       "hot": true,
-      "score": 100,
+      "score": 49,
       "tags": [
-        "HackerNoon",
-        "apache",
-        "AI"
+        "DEV.to",
+        "ai",
+        "devchallenge",
+        "kagglechallenge"
       ]
     },
     {
-      "id": "hnoon-how-to-query-data-the-professional-way-in-sql-server-a-perfo",
-      "title": "How to Query Data the Professional Way in SQL Server: A Performance-First Guide for Beginners",
-      "summary": "How to Query Data the Professional Way in SQL Server: A Performance-First Guide for Beginners — by Surendra Reddy on HackerNoon.",
-      "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/how-to-query-data-the-professional-way-in-sql-server-a-performance-first-guide-for-beginners",
+      "id": "dev-4788671",
+      "title": "Write Markdown Once, Publish It Everywhere: dev.to, Medium, AWS Builder Center and LinkedIn",
+      "summary": "Markdown is easy to write and hard to publish. Every destination renders it differently, two have no API, and the failures show up only after you hit Publish. A step by step walk-through of publishing-kit, an agent skill — 17 reactions, 3 comments on DEV.to.",
+      "source": "DEV.to",
+      "sourceUrl": "https://dev.to/gde/write-markdown-once-publish-it-everywhere-devto-medium-aws-builder-center-and-linkedin-np4",
       "category": "products",
       "date": "2026-10-02",
-      "hot": true,
-      "score": 100,
+      "hot": false,
+      "score": 17,
       "tags": [
-        "HackerNoon",
-        "sql-server",
-        "AI"
-      ]
-    },
-    {
-      "id": "hnoon-testing-androids-on-device-speech-recognition-with-hindi-eng",
-      "title": "Testing Android’s On-Device Speech Recognition With Hindi-English Code-Switching",
-      "summary": "On-device speech recognition turned \"dizzy\" into डीसी for my Hindi-speaking mother. The one-flag fix, a crashing OnePlus, and a reject button. — by AmberMindStudio on HackerNoon.",
-      "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/testing-androids-on-device-speech-recognition-with-hindi-english-code-switching",
-      "category": "products",
-      "date": "2026-10-02",
-      "hot": true,
-      "score": 100,
-      "tags": [
-        "HackerNoon",
-        "shipaton",
-        "AI"
-      ]
-    },
-    {
-      "id": "hnoon-building-a-multimodal-game-box-scanner-with-visionkit-igdb-a",
-      "title": "Building a Multimodal Game-Box Scanner With VisionKit, IGDB, and GPT-5.6 Luna",
-      "summary": "Duo Queue combined VisionKit OCR, title dictionaries, image fingerprints, IGDB, and GPT-5.6 Luna to recognize Japanese game boxes. — by shohei on HackerNoon.",
-      "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/building-a-multimodal-game-box-scanner-with-visionkit-igdb-and-gpt-56-luna",
-      "category": "products",
-      "date": "2026-10-02",
-      "hot": true,
-      "score": 100,
-      "tags": [
-        "HackerNoon",
-        "shipaton",
-        "AI"
+        "DEV.to",
+        "ai",
+        "writing",
+        "markdown"
       ]
     },
     {
@@ -249,67 +300,18 @@
         "paper",
         "AI"
       ]
-    },
-    {
-      "id": "ax-2610.02023v1",
-      "title": "SPHERE: Adaptive VR Indoor Scene Generation via LLM-Enhanced Spatial Preference Learning and Human-in-the-Loop RL",
-      "summary": "While Large Language Models (LLMs) advance 3D indoor scene synthesis, current pipelines fail to retain user-specific preferences across sessions, making immersive authoring a repetitive and physically fatiguing process. ",
-      "source": "arXiv",
-      "sourceUrl": "http://arxiv.org/abs/2610.02023v1",
-      "category": "products",
-      "date": "2026-10-01",
-      "hot": true,
-      "score": 800,
-      "tags": [
-        "arXiv",
-        "paper",
-        "AI"
-      ]
-    },
-    {
-      "id": "dev-4783294",
-      "title": "Which AWS limit is actually current? An agent that proves it, 32 vs 5 vs 16",
-      "summary": "This is a submission for the Sanity Challenge, Path One: Ship an Agent That Queries Real Content    ... — 18 reactions, 6 comments on DEV.to.",
-      "source": "DEV.to",
-      "sourceUrl": "https://dev.to/sarvar_04/which-aws-limit-is-actually-current-an-agent-that-proves-it-32-vs-5-vs-16-6i4",
-      "category": "safety",
-      "date": "2026-10-01",
-      "hot": false,
-      "score": 18,
-      "tags": [
-        "DEV.to",
-        "ai",
-        "devchallenge",
-        "sanitychallenge"
-      ]
-    },
-    {
-      "id": "ax-2610.02202v1",
-      "title": "ScholarCatalyst: A Benchmark for Retrieving Papers That Inspire New Research",
-      "summary": "What makes great scientists great? Even as AI systems start to make progress on open problems, scientists remain far ahead of them at sensing which prior idea, buried in an ever-growing archive of research, a new problem",
-      "source": "arXiv",
-      "sourceUrl": "http://arxiv.org/abs/2610.02202v1",
-      "category": "products",
-      "date": "2026-10-01",
-      "hot": false,
-      "score": 0,
-      "tags": [
-        "arXiv",
-        "paper",
-        "AI"
-      ]
     }
   ],
   "meta": {
-    "fetchedAt": "2026-10-03T07:36:39.538Z",
+    "fetchedAt": "2026-10-04T07:47:17.806Z",
     "topic": "AI",
     "total": 15,
-    "hot": 9,
+    "hot": 11,
     "sources": [
       "HackerNoon",
       "Hacker News",
-      "arXiv",
-      "DEV.to"
+      "DEV.to",
+      "arXiv"
     ]
   }
 }
