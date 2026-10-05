@@ -1,12 +1,12 @@
 {
-  "generatedAt": "2026-10-04T07:47:17.804Z",
+  "generatedAt": "2026-10-05T08:23:25.428Z",
   "generatedBy": "YUNIE × Last30Days",
   "version": 2,
   "description": "Tin AI mới nhất — tổng hợp từ Last30Days (HN, GitHub, DEV.to, Reddit, arXiv, HackerNoon) trong 30 ngày qua. Chủ đề: AI. Tự động cập nhật bởi YUNIE.",
   "last30days": {
     "enabled": true,
     "topic": "AI",
-    "since": "2026-09-04",
+    "since": "2026-09-05",
     "days": 30,
     "sources": [
       "Hacker News (Algolia, free)",
@@ -55,179 +55,195 @@
   ],
   "articles": [
     {
-      "id": "hnoon-ai-is-now-an-enterprise-resource-so-why-are-we-still-managin",
-      "title": "AI Is Now an Enterprise Resource. So Why Are We Still Managing It Like Software?",
-      "summary": "Most companies track AI as a software line item. But AI is increasingly doing the work, not just supporting it, and that means the real question isn't \"how much are we spending on  — by Irina Shymko on HackerNoon.",
+      "id": "hnoon-decisions-you-can-check-what-solvi-10-is-for-and-what-it-wil",
+      "title": "Decisions You Can Check: What solvi 1.0 Is For, and What It Will Not Do for You",
+      "summary": "solvi 1.0 is an open-source Python library for decisions you can check: fast solvers answer under a calibrated error promise, an LLM or a search takes the rest, a person decides wh — by Maksim Kuznetsov on HackerNoon.",
       "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/ai-is-now-an-enterprise-resource-so-why-are-we-still-managing-it-like-software",
+      "sourceUrl": "https://hackernoon.com/decisions-you-can-check-what-solvi-10-is-for-and-what-it-will-not-do-for-you",
       "category": "products",
-      "date": "2026-10-04",
+      "date": "2026-10-05",
       "hot": true,
       "score": 100,
       "tags": [
         "HackerNoon",
-        "artificial-intelligence",
+        "python",
         "AI"
       ]
     },
     {
-      "id": "hn-49950052",
-      "title": "Religious scholars met with Anthropic",
-      "summary": "<a href=\"https:&#x2F;&#x2F;archive.is&#x2F;y8FW0\" rel=\"nofollow\">https:&#x2F;&#x2F;archive.is&#x2F;y8FW0</a> — 62 points, 103 comments on HN.",
+      "id": "hn-49960725",
+      "title": "The AI industry is booming. Women are getting left behind",
+      "summary": "The AI industry is booming. Women are getting left behind — 5 points, 8 comments on HN.",
       "source": "Hacker News",
-      "sourceUrl": "https://www.nytimes.com/2026/09/29/us/anthropic-claude-morals-ai.html",
+      "sourceUrl": "https://www.theguardian.com/technology/2026/oct/04/women-ai-jobs-inequality",
+      "category": "products",
+      "date": "2026-10-05",
+      "hot": false,
+      "score": 5,
+      "tags": [
+        "HN",
+        "AI",
+        "story",
+        "author_shadow28"
+      ]
+    },
+    {
+      "id": "hn-49961574",
+      "title": "Google freezes open-source bug bounty program",
+      "summary": "Google freezes open-source bug bounty program — 4 points, 0 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://www.tomshardware.com/tech-industry/artificial-intelligence/google-suspends-part-of-the-oss-vrp-bug-bounty-program-due-to-an-influx-of-invalid-ai-submissions-product-vulnerability-submissions-ended-october-1",
       "category": "big-tech",
-      "date": "2026-10-04",
-      "hot": true,
-      "score": 62,
-      "tags": [
-        "HN",
-        "AI",
-        "story",
-        "author_bookofjoe"
-      ]
-    },
-    {
-      "id": "hn-49950288",
-      "title": "AI can clone your indie game, but not its soul",
-      "summary": "AI can clone your indie game, but not its soul — 12 points, 7 comments on HN.",
-      "source": "Hacker News",
-      "sourceUrl": "https://twitter.com/robertvaradan/status/2106061989122334778",
-      "category": "products",
-      "date": "2026-10-04",
+      "date": "2026-10-05",
       "hot": false,
-      "score": 12,
+      "score": 4,
       "tags": [
         "HN",
         "AI",
         "story",
-        "author_robertvaradan"
+        "author_socializer"
       ]
     },
     {
-      "id": "hn-49950108",
-      "title": "How the bad science of AI doomerism is good for big business",
-      "summary": "How the bad science of AI doomerism is good for big business — 7 points, 4 comments on HN.",
+      "id": "hn-49960944",
+      "title": "Altman: `World should accept some bad things happening' for the benefits of AI",
+      "summary": "Altman: `World should accept some bad things happening' for the benefits of AI — 4 points, 8 comments on HN.",
       "source": "Hacker News",
-      "sourceUrl": "https://thebulletin.org/2026/09/how-the-bad-science-of-ai-doomerism-is-good-for-big-business/",
+      "sourceUrl": "https://www.politico.com/news/2026/10/04/sam-altman-decoded-interview-ai-01106217",
+      "category": "products",
+      "date": "2026-10-05",
+      "hot": false,
+      "score": 4,
+      "tags": [
+        "HN",
+        "AI",
+        "story",
+        "author_theanonymousone"
+      ]
+    },
+    {
+      "id": "hn-49961098",
+      "title": "The Hottest Debate in Tech: Ads in AI",
+      "summary": "The Hottest Debate in Tech: Ads in AI — 3 points, 1 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://www.forbes.com/councils/forbesagencycouncil/2026/04/13/the-hottest-debate-in-tech-ads-in-ai/",
+      "category": "products",
+      "date": "2026-10-05",
+      "hot": false,
+      "score": 3,
+      "tags": [
+        "HN",
+        "AI",
+        "story",
+        "author_bryanrasmussen"
+      ]
+    },
+    {
+      "id": "hntop-49953495",
+      "title": "Run Qwen 3.8 Flash Next (125B) on consumer hardware (RTX 4090) at 100T/s",
+      "summary": "Run Qwen 3.8 Flash Next (125B) on consumer hardware (RTX 4090) at 100T/s — 778 points, 350 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://github.com/Niko1221/Strata",
       "category": "products",
       "date": "2026-10-04",
-      "hot": false,
-      "score": 7,
+      "hot": true,
+      "score": 778,
       "tags": [
         "HN",
-        "AI",
-        "story",
-        "author_paimapi"
+        "top"
       ]
     },
     {
-      "id": "hn-49951064",
-      "title": "MBTI for AI coding agents, complete with a self-awareness score",
-      "summary": "MBTI for AI coding agents, complete with a self-awareness score — 2 points, 0 comments on HN.",
-      "source": "Hacker News",
-      "sourceUrl": "https://github.com/joonfjp/16agents",
+      "id": "hnoon-the-crypto-sector-lost-58percent-of-its-newcomers-there-is-s",
+      "title": "The Crypto Sector Lost 58% of its Newcomers: There Is Still a Way to Get Them Back",
+      "summary": "Crypto kept its veteran developers but lost 58% of its newcomers as builders moved to AI tools. With non-technical builders now driving much of software's growth, the real question — by unusual-writer on HackerNoon.",
+      "source": "HackerNoon",
+      "sourceUrl": "https://hackernoon.com/the-crypto-sector-lost-58percent-of-its-newcomers-there-is-still-a-way-to-get-them-back",
       "category": "products",
       "date": "2026-10-04",
-      "hot": false,
-      "score": 2,
+      "hot": true,
+      "score": 100,
       "tags": [
-        "HN",
-        "AI",
-        "story",
-        "author_trndgtr"
+        "HackerNoon",
+        "vibe-coding",
+        "AI"
       ]
     },
     {
-      "id": "hnoon-133-blog-posts-to-learn-about-apps",
-      "title": "133 Blog Posts To Learn About Apps",
-      "summary": "Learn everything you need to know about Apps via these 133 free HackerNoon blog posts. — by Learn Repo on HackerNoon.",
+      "id": "hnoon-347-blog-posts-to-learn-about-astounding-stories",
+      "title": "347 Blog Posts To Learn About Astounding Stories",
+      "summary": "Learn everything you need to know about Astounding Stories via these 347 free HackerNoon blog posts. — by Learn Repo on HackerNoon.",
       "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/133-blog-posts-to-learn-about-apps",
+      "sourceUrl": "https://hackernoon.com/347-blog-posts-to-learn-about-astounding-stories",
+      "category": "products",
+      "date": "2026-10-04",
+      "hot": true,
+      "score": 100,
+      "tags": [
+        "HackerNoon",
+        "astounding-stories",
+        "AI"
+      ]
+    },
+    {
+      "id": "hnoon-5-cassandra-enhancement-proposals-operators-should-be-watchi",
+      "title": "5 Cassandra Enhancement Proposals Operators Should Be Watching",
+      "summary": "A look at five accepted Cassandra CEPs, from write tracking and tablets to CQL admin and hardware compression, and what they mean for teams running it at scale. — by Mariah McLaughlin on HackerNoon.",
+      "source": "HackerNoon",
+      "sourceUrl": "https://hackernoon.com/5-cassandra-enhancement-proposals-operators-should-be-watching",
+      "category": "products",
+      "date": "2026-10-04",
+      "hot": true,
+      "score": 100,
+      "tags": [
+        "HackerNoon",
+        "apache-cassandra",
+        "AI"
+      ]
+    },
+    {
+      "id": "hnoon-designing-an-automation-layer-for-large-scale-enterprise-clo",
+      "title": "Designing an Automation Layer for Large-Scale Enterprise Cloud Migration",
+      "summary": "Enterprise cloud migration scales when assessment, orchestration, validation and rollback become automated workflows rather than manual project steps. — by Nireesha Mandala on HackerNoon.",
+      "source": "HackerNoon",
+      "sourceUrl": "https://hackernoon.com/designing-an-automation-layer-for-large-scale-enterprise-cloud-migration",
+      "category": "products",
+      "date": "2026-10-04",
+      "hot": true,
+      "score": 100,
+      "tags": [
+        "HackerNoon",
+        "cloud-migration",
+        "AI"
+      ]
+    },
+    {
+      "id": "dev-4793045",
+      "title": "I Made Spider-Man Swing Without Animating a Single Frame",
+      "summary": "Hello, I'm Maneshwar, and I'm building LiveReview — a blast-radius aware AI code review built for... — 42 reactions, 6 comments on DEV.to.",
+      "source": "DEV.to",
+      "sourceUrl": "https://dev.to/lovestaco/i-made-spider-man-swing-without-animating-a-single-frame-blender-rigging-and-mcp-14f7",
       "category": "products",
       "date": "2026-10-03",
       "hot": true,
-      "score": 100,
+      "score": 42,
       "tags": [
-        "HackerNoon",
-        "apps",
-        "AI"
-      ]
-    },
-    {
-      "id": "hnoon-nine-ot-protocol-investigations-later-my-lab-got-smaller-and",
-      "title": "Nine OT Protocol Investigations Later, My Lab Got Smaller and My Research Got Better",
-      "summary": "After nine industrial protocol investigations, an OT researcher explains how smaller labs, packet captures, and sharper questions improved the work. — by RUGERO Tesla on HackerNoon.",
-      "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/nine-ot-protocol-investigations-later-my-lab-got-smaller-and-my-research-got-better",
-      "category": "products",
-      "date": "2026-10-03",
-      "hot": true,
-      "score": 100,
-      "tags": [
-        "HackerNoon",
-        "ics-ot-security",
-        "AI"
-      ]
-    },
-    {
-      "id": "hnoon-your-rag-pipeline-dies-on-real-documents-heres-why",
-      "title": "Your RAG Pipeline Dies on Real Documents: Here's Why",
-      "summary": "RAG fails on PDFs because a PDF stores glyph positions, not document structure. Tables flatten, reading order scrambles, and no error is ever raised. — by Paolo Perrone on HackerNoon.",
-      "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/your-rag-pipeline-dies-on-real-documents-heres-why",
-      "category": "safety",
-      "date": "2026-10-03",
-      "hot": true,
-      "score": 100,
-      "tags": [
-        "HackerNoon",
-        "rag-architecture",
-        "AI"
-      ]
-    },
-    {
-      "id": "hnoon-thigmotropic-ai-and-the-strangler-test-four-questions-before",
-      "title": "Thigmotropic AI and the Strangler Test: Four Questions Before You Automate",
-      "summary": "AI grows around whatever it touches. Feed it your SOPs and it hollows you out; feed it real judgment and it compounds. A four-question test to tell which. — by Rossco Paddison on HackerNoon.",
-      "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/thigmotropic-ai-and-the-strangler-test-four-questions-before-you-automate",
-      "category": "products",
-      "date": "2026-10-03",
-      "hot": true,
-      "score": 100,
-      "tags": [
-        "HackerNoon",
-        "artificial-intelligence",
-        "AI"
-      ]
-    },
-    {
-      "id": "hnoon-i-built-my-own-muse-charm-on-an-esp32-stick-one-fast-brain-o",
-      "title": "I Built My Own \"Muse Charm\" on an ESP32 Stick: One Fast Brain, One Slow Brain",
-      "summary": "Didn't wait for Meta's Muse Charm. Built my own AI pal on a $21 ESP32 stick. — by Bruce Li on HackerNoon.",
-      "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/i-built-my-own-muse-charm-on-an-esp32-stick-one-fast-brain-one-slow-brain",
-      "category": "big-tech",
-      "date": "2026-10-03",
-      "hot": true,
-      "score": 100,
-      "tags": [
-        "HackerNoon",
-        "meta-muse",
-        "AI"
+        "DEV.to",
+        "ai",
+        "blender",
+        "mcp"
       ]
     },
     {
       "id": "dev-4786527",
       "title": "Hacktoberfest Is Coming to Nadiad, Gujarat 🚀 Official MLH Meetup at DDU, 15 Oct",
-      "summary": "Most students hear about hackathons, open source and developer communities in their third or fourth... — 56 reactions, 15 comments on DEV.to.",
+      "summary": "Most students hear about hackathons, open source and developer communities in their third or fourth... — 61 reactions, 17 comments on DEV.to.",
       "source": "DEV.to",
       "sourceUrl": "https://dev.to/dj29/hacktoberfest-is-coming-to-nadiad-gujarat-official-mlh-meetup-at-ddu-15-oct-1dc4",
       "category": "products",
       "date": "2026-10-02",
       "hot": true,
-      "score": 56,
+      "score": 61,
       "tags": [
         "DEV.to",
         "ai",
@@ -238,13 +254,13 @@
     {
       "id": "dev-4788126",
       "title": "I Gave 15 AI Models Proof Their Hacking Target Was a Real Company. 73% of the Ones That Noticed Told No One.",
-      "summary": "This is a submission for the Kaggle Benchmarking Challenge  I fed 15 AI models a growing pile of... — 49 reactions, 34 comments on DEV.to.",
+      "summary": "This is a submission for the Kaggle Benchmarking Challenge  I fed 15 AI models a growing pile of... — 61 reactions, 43 comments on DEV.to.",
       "source": "DEV.to",
       "sourceUrl": "https://dev.to/soumyadeepdey/i-gave-15-ai-models-proof-their-hacking-target-was-a-real-company-73-of-the-ones-that-noticed-1h81",
       "category": "products",
       "date": "2026-10-02",
       "hot": true,
-      "score": 49,
+      "score": 61,
       "tags": [
         "DEV.to",
         "ai",
@@ -255,13 +271,13 @@
     {
       "id": "dev-4788671",
       "title": "Write Markdown Once, Publish It Everywhere: dev.to, Medium, AWS Builder Center and LinkedIn",
-      "summary": "Markdown is easy to write and hard to publish. Every destination renders it differently, two have no API, and the failures show up only after you hit Publish. A step by step walk-through of publishing-kit, an agent skill — 17 reactions, 3 comments on DEV.to.",
+      "summary": "Markdown is easy to write and hard to publish. Every destination renders it differently, two have no API, and the failures show up only after you hit Publish. A step by step walk-through of publishing-kit, an agent skill — 19 reactions, 3 comments on DEV.to.",
       "source": "DEV.to",
       "sourceUrl": "https://dev.to/gde/write-markdown-once-publish-it-everywhere-devto-medium-aws-builder-center-and-linkedin-np4",
       "category": "products",
       "date": "2026-10-02",
       "hot": false,
-      "score": 17,
+      "score": 19,
       "tags": [
         "DEV.to",
         "ai",
@@ -270,31 +286,15 @@
       ]
     },
     {
-      "id": "ax-2610.02069v1",
-      "title": "AI Emulation of Stochastic Sudden Stratospheric Warming with Interpretable Latent Structure",
-      "summary": "Rare weather regime transitions pose a challenge for data-driven modeling due to class imbalance. In this study, we develop a probabilistic deep learning emulator for a prototypical system with regime transitions, the st",
+      "id": "ax-2610.03693v1",
+      "title": "Transcriptome-informed multi-modal AI for predicting neoadjuvant therapy response from breast cancer biopsies",
+      "summary": "Scarcity of labeled data limits development of deep learning biomarkers in oncology. We develop a two-stage AI model predicting pathological complete response (pCR) to neoadjuvant therapy in breast cancer. The first stag",
       "source": "arXiv",
-      "sourceUrl": "http://arxiv.org/abs/2610.02069v1",
-      "category": "big-tech",
-      "date": "2026-10-01",
-      "hot": true,
-      "score": 800,
-      "tags": [
-        "arXiv",
-        "paper",
-        "AI"
-      ]
-    },
-    {
-      "id": "ax-2610.02036v1",
-      "title": "Global Coherence: When Every Agent Is Right and the Team Is Still Wrong - A Local-to-Global Semantic Foundation for Multi-Agent Collaboration",
-      "summary": "AI agents can each make locally valid decisions yet jointly produce an invalid result. We call this the global coherence problem: a failure of shared state, not merely of model intelligence. Our Observation-Aliasing Impo",
-      "source": "arXiv",
-      "sourceUrl": "http://arxiv.org/abs/2610.02036v1",
+      "sourceUrl": "http://arxiv.org/abs/2610.03693v1",
       "category": "safety",
-      "date": "2026-10-01",
-      "hot": true,
-      "score": 800,
+      "date": "2026-10-02",
+      "hot": false,
+      "score": 0,
       "tags": [
         "arXiv",
         "paper",
@@ -303,10 +303,10 @@
     }
   ],
   "meta": {
-    "fetchedAt": "2026-10-04T07:47:17.806Z",
+    "fetchedAt": "2026-10-05T08:23:25.428Z",
     "topic": "AI",
     "total": 15,
-    "hot": 11,
+    "hot": 9,
     "sources": [
       "HackerNoon",
       "Hacker News",
