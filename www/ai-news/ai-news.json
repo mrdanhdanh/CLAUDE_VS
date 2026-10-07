@@ -1,12 +1,12 @@
 {
-  "generatedAt": "2026-10-06T08:34:46.624Z",
+  "generatedAt": "2026-10-07T08:10:28.636Z",
   "generatedBy": "YUNIE × Last30Days",
   "version": 2,
   "description": "Tin AI mới nhất — tổng hợp từ Last30Days (HN, GitHub, DEV.to, Reddit, arXiv, HackerNoon) trong 30 ngày qua. Chủ đề: AI. Tự động cập nhật bởi YUNIE.",
   "last30days": {
     "enabled": true,
     "topic": "AI",
-    "since": "2026-09-06",
+    "since": "2026-09-07",
     "days": 30,
     "sources": [
       "Hacker News (Algolia, free)",
@@ -55,61 +55,13 @@
   ],
   "articles": [
     {
-      "id": "hnoon-intercept-by-moburst-turns-social-media-chatter-into-sales-l",
-      "title": "Intercept by Moburst Turns Social Media Chatter Into Sales Leads in Real Time",
-      "summary": "Moburst, a global leader in digital marketing, has launched Intercept, an AI-powered social listening platform that identifies consumers showing active buying intent on social medi — by Technology Wire on HackerNoon.",
+      "id": "hnoon-make-product-marketing-human-again-keeping-it-authentic-in-t",
+      "title": "Make Product Marketing Human Again: Keeping it Authentic in the Age of aI",
+      "summary": "AI makes marketing faster, but does it make brands forgettable? Discover why human creativity, storytelling, and original thinking still matter. Read All — by Anna Fadeeva on HackerNoon.",
       "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/intercept-by-moburst-turns-social-media-chatter-into-sales-leads-in-real-time",
-      "category": "safety",
-      "date": "2026-10-06",
-      "hot": true,
-      "score": 100,
-      "tags": [
-        "HackerNoon",
-        "ai",
-        "AI"
-      ]
-    },
-    {
-      "id": "hnoon-how-are-you-handling-vibe-coding-security",
-      "title": "How Are You Handling Vibe Coding Security?",
-      "summary": "Vibe coding may inadvertently ship vulnerabilities into production systems. Common vulnerabilities include hardcoded secrets and API keys, broken authorization, insecure defaults,  — by Zac Amos on HackerNoon.",
-      "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/how-are-you-handling-vibe-coding-security",
+      "sourceUrl": "https://hackernoon.com/make-product-marketing-human-again-keeping-it-authentic-in-the-age-of-ai",
       "category": "products",
-      "date": "2026-10-06",
-      "hot": true,
-      "score": 100,
-      "tags": [
-        "HackerNoon",
-        "vibe-coding",
-        "AI"
-      ]
-    },
-    {
-      "id": "hnoon-why-cant-ai-tell-whats-in-a-blurry-photo-the-real-way-comput",
-      "title": "Why Can't AI Tell What's in a Blurry Photo? The Real Way Computer Vision \"Sees\"",
-      "summary": "AI fails to recognize blurry images because it relies on mathematical contrast edges between neighboring pixel numbers, which are destroyed by blur, motion, or poor focus. This for — by Rohan Sen on HackerNoon.",
-      "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/why-cant-ai-tell-whats-in-a-blurry-photo-the-real-way-computer-vision-sees",
-      "category": "safety",
-      "date": "2026-10-06",
-      "hot": true,
-      "score": 100,
-      "tags": [
-        "HackerNoon",
-        "blur-images",
-        "AI"
-      ]
-    },
-    {
-      "id": "hnoon-autumn-check-in-what-happened-to-everyone-on-the-ai-whale-li",
-      "title": "Autumn Check-In: What Happened to Everyone on the AI Whale List",
-      "summary": "The AI boom has created a new crop of billionaires, with many companies experiencing rapid growth and valuation increases, including Nvidia, Cerebras Systems, Oracle, and OpenAI. T — by TheLLMSeeker on HackerNoon.",
-      "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/autumn-check-in-what-happened-to-everyone-on-the-ai-whale-list",
-      "category": "big-tech",
-      "date": "2026-10-06",
+      "date": "2026-10-07",
       "hot": true,
       "score": 100,
       "tags": [
@@ -119,30 +71,108 @@
       ]
     },
     {
-      "id": "hn-49975484",
-      "title": "German Bundeswehr Uses AI to Screen Applicants for Right-Wing Extremism",
-      "summary": "German Bundeswehr Uses AI to Screen Applicants for Right-Wing Extremism — 22 points, 31 comments on HN.",
+      "id": "hnoon-a-beginners-guide-to-writing-agentsmd-files-for-codex",
+      "title": "A Beginner's Guide to Writing AGENTS.md Files for Codex",
+      "summary": "Learn what belongs in global and project AGENTS.md files, with practical examples, override rules, and ways to check what Codex loads. Read All — by Irving on HackerNoon.",
+      "source": "HackerNoon",
+      "sourceUrl": "https://hackernoon.com/a-beginners-guide-to-writing-agentsmd-files-for-codex",
+      "category": "products",
+      "date": "2026-10-07",
+      "hot": true,
+      "score": 100,
+      "tags": [
+        "HackerNoon",
+        "openai-codex",
+        "AI"
+      ]
+    },
+    {
+      "id": "hnoon-the-hidden-language-tax-making-ai-more-expensive-for-non-eng",
+      "title": "The Hidden Language Tax Making AI More Expensive for Non-English Users",
+      "summary": "Claude Opus 5 uses nearly 3x more tokens for Russian than English. Here's why AI tokenization makes some languages more expensive than others. Read All — by Khasky on HackerNoon.",
+      "source": "HackerNoon",
+      "sourceUrl": "https://hackernoon.com/the-hidden-language-tax-making-ai-more-expensive-for-non-english-users",
+      "category": "products",
+      "date": "2026-10-07",
+      "hot": true,
+      "score": 100,
+      "tags": [
+        "HackerNoon",
+        "llm",
+        "AI"
+      ]
+    },
+    {
+      "id": "hnoon-i-passed-the-aws-ai-business-strategist-aib-c01-beta-with-cl",
+      "title": "I Passed the AWS AI Business Strategist (AIB-C01) Beta With Claude and Notion: Here's How",
+      "summary": "I passed the AWS Certified AI Business Strategist (AIB-C01) beta on the first day it was available, with no third-party prep material out at announcement. The setup: a Claude proje — by Kashif Nazir on HackerNoon.",
+      "source": "HackerNoon",
+      "sourceUrl": "https://hackernoon.com/i-passed-the-aws-ai-business-strategist-aib-c01-beta-with-claude-and-notion-heres-how",
+      "category": "products",
+      "date": "2026-10-07",
+      "hot": true,
+      "score": 100,
+      "tags": [
+        "HackerNoon",
+        "ai",
+        "AI"
+      ]
+    },
+    {
+      "id": "hn-49989504",
+      "title": "HN has lost the joy for me",
+      "summary": "There was a time I would come to HN to get some respite from the depressing state of reality. Ukraine war or climate crisis would drive me to despair, and I&#x27;d try to get a little endorphin rush by dodging those same — 3 points, 0 comments on HN.",
       "source": "Hacker News",
-      "sourceUrl": "https://news.osna.fm/german-military-intelligence-uses-ai-to-screen-bundeswehr-applicants-for-right-wing-extremism/",
+      "sourceUrl": "https://news.ycombinator.com/item?id=49989504",
       "category": "products",
-      "date": "2026-10-06",
+      "date": "2026-10-07",
       "hot": false,
-      "score": 22,
+      "score": 3,
       "tags": [
         "HN",
         "AI",
         "story",
-        "author_AmazingTurtle"
+        "author_trencedamp"
       ]
     },
     {
-      "id": "ax-2610.06790v1",
-      "title": "Back to the Future: Rethinking EDA Infrastructure for Agentic Systems in Chip Design Verification",
-      "summary": "The unprecedented computational scale of modern artificial intelligence depends on complex, multi-billion-transistor Systems-on-Chip, yet the workflows that verify these chips remain stubbornly manual. Although Large Lan",
-      "source": "arXiv",
-      "sourceUrl": "http://arxiv.org/abs/2610.06790v1",
+      "id": "hntop-49977979",
+      "title": "Mistral Large 4",
+      "summary": "<a href=\"https:&#x2F;&#x2F;docs.mistral.ai&#x2F;models&#x2F;mistral-large-4-0\" rel=\"nofollow\">https:&#x2F;&#x2F;docs.mistral.ai&#x2F;models&#x2F;mistral-large-4-0</a> — 1757 points, 1039 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://mistral.ai/news/mistral-large-4/\\",
       "category": "products",
-      "date": "2026-10-05",
+      "date": "2026-10-06",
+      "hot": true,
+      "score": 1757,
+      "tags": [
+        "HN",
+        "top"
+      ]
+    },
+    {
+      "id": "hntop-49984923",
+      "title": "Sharing AI progress in mathematics",
+      "summary": "<a href=\"https:&#x2F;&#x2F;github.com&#x2F;openai&#x2F;math\" rel=\"nofollow\">https:&#x2F;&#x2F;github.com&#x2F;openai&#x2F;math</a><p><a href=\"https:&#x2F;&#x2F;github.com&#x2F;openai&#x2F;math&#x2F;tree&#x2F;main&#x2F;pr — 833 points, 758 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://openai.com/index/sharing-ai-progress-in-mathematics/",
+      "category": "big-tech",
+      "date": "2026-10-06",
+      "hot": true,
+      "score": 833,
+      "tags": [
+        "HN",
+        "top"
+      ]
+    },
+    {
+      "id": "ax-2610.08791v1",
+      "title": "World Models' Last Exam in Physics",
+      "summary": "Video world models can produce visually convincing yet physically inconsistent sequences, raising concerns about their reliability for prediction and planning in embodied AI systems. Existing evaluations often rely on mo",
+      "source": "arXiv",
+      "sourceUrl": "http://arxiv.org/abs/2610.08791v1",
+      "category": "big-tech",
+      "date": "2026-10-06",
       "hot": true,
       "score": 800,
       "tags": [
@@ -152,79 +182,62 @@
       ]
     },
     {
-      "id": "hnoon-why-i-dont-use-ai-to-remove-pii-before-sending-data-to-ai",
-      "title": "Why I Don't Use AI to Remove PII Before Sending Data to AI",
-      "summary": "The author of the article is uncomfortable with AI-based redaction because the redaction model still needs to see the original data, which can compromise privacy. They propose a de — by Raviteja Nekkalapu on HackerNoon.",
-      "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/why-i-dont-use-ai-to-remove-pii-before-sending-data-to-ai",
-      "category": "products",
-      "date": "2026-10-05",
+      "id": "ax-2610.08740v1",
+      "title": "On the Computational Tractability of Robust Bandits",
+      "summary": "Learning when the environment does not belong to the learner's hypothesis class is typically handled using agnostic learning guarantees. However, for anything beyond supervised learning, agnostic guarantees are difficult",
+      "source": "arXiv",
+      "sourceUrl": "http://arxiv.org/abs/2610.08740v1",
+      "category": "self-improving",
+      "date": "2026-10-06",
       "hot": true,
-      "score": 100,
+      "score": 800,
       "tags": [
-        "HackerNoon",
-        "ai",
+        "arXiv",
+        "paper",
         "AI"
       ]
     },
     {
-      "id": "hnoon-the-productivity-problem-nobody-talks-about-decision-drift",
-      "title": "The Productivity Problem Nobody Talks About: Decision Drift",
-      "summary": "You can know exactly what matters and still spend your entire day doing something else. Here's why I think our productivity tools miss this problem. — by Milan Jobanputra on HackerNoon.",
-      "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/the-productivity-problem-nobody-talks-about-decision-drift",
-      "category": "products",
-      "date": "2026-10-05",
+      "id": "ax-2610.08739v1",
+      "title": "BARE-AI: Bit-Flip Attack Resilience in AI Hardware through Built-in Performance Monitors",
+      "summary": "Deep Neural Networks (DNNs) are integral to many safety critical systems, yet they remain highly vulnerable to bit-flip attacks (BFAs), where a few memory level perturbations can drastically degrade accuracy. Existing de",
+      "source": "arXiv",
+      "sourceUrl": "http://arxiv.org/abs/2610.08739v1",
+      "category": "safety",
+      "date": "2026-10-06",
       "hot": true,
-      "score": 100,
+      "score": 800,
       "tags": [
-        "HackerNoon",
-        "productivity",
+        "arXiv",
+        "paper",
         "AI"
       ]
     },
     {
-      "id": "hnoon-easy4pro-expands-draft-assist-ai-capabilities-to-automate-en",
-      "title": "Easy4Pro Expands Draft Assist AI Capabilities to Automate Enterprise Freight Order Creation",
-      "summary": "The AI feature Easy4Pro clients have used daily since its launch earlier this year, turning a single email into a ready-to-confirm freight order, gets its bigge — by Technology Wire on HackerNoon.",
-      "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/easy4pro-expands-draft-assist-ai-capabilities-to-automate-enterprise-freight-order-creation",
-      "category": "products",
+      "id": "hntop-49961057",
+      "title": "Anthropic reported diary entry to police, woman faces felony charge",
+      "summary": "Anthropic reported diary entry to police, woman faces felony charge — 815 points, 657 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://www.techspot.com/news/114091-florida-woman-used-claude-diary-anthropic-reported-shoot.html",
+      "category": "big-tech",
       "date": "2026-10-05",
       "hot": true,
-      "score": 100,
+      "score": 815,
       "tags": [
-        "HackerNoon",
-        "web3",
-        "AI"
-      ]
-    },
-    {
-      "id": "hnoon-153-blog-posts-to-learn-about-best-practices",
-      "title": "153 Blog Posts To Learn About Best Practices",
-      "summary": "Learn everything you need to know about Best Practices via these 153 free HackerNoon blog posts. — by Learn Repo on HackerNoon.",
-      "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/153-blog-posts-to-learn-about-best-practices",
-      "category": "products",
-      "date": "2026-10-05",
-      "hot": true,
-      "score": 100,
-      "tags": [
-        "HackerNoon",
-        "best-practices",
-        "AI"
+        "HN",
+        "top"
       ]
     },
     {
       "id": "hntop-49953495",
       "title": "Run Qwen 3.8 Flash Next (125B) on consumer hardware (RTX 4090) at 100T/s",
-      "summary": "Run Qwen 3.8 Flash Next (125B) on consumer hardware (RTX 4090) at 100T/s — 914 points, 417 comments on HN.",
+      "summary": "Run Qwen 3.8 Flash Next (125B) on consumer hardware (RTX 4090) at 100T/s — 923 points, 421 comments on HN.",
       "source": "Hacker News",
       "sourceUrl": "https://github.com/Niko1221/Strata",
       "category": "products",
       "date": "2026-10-04",
       "hot": true,
-      "score": 914,
+      "score": 923,
       "tags": [
         "HN",
         "top"
@@ -233,13 +246,13 @@
     {
       "id": "dev-4796805",
       "title": "Before the Alarm Screams at 3 AM: Predicting Liam's Nocturnal Hypoglycemia with Prior Labs TabPFN",
-      "summary": "How Prior Labs TabPFN tabular foundation model predicts nocturnal hypoglycemic crashes from CGM logs at 10 PM with zero cloud data leaks. — 76 reactions, 8 comments on DEV.to.",
+      "summary": "How Prior Labs TabPFN tabular foundation model predicts nocturnal hypoglycemic crashes from CGM logs at 10 PM with zero cloud data leaks. — 83 reactions, 10 comments on DEV.to.",
       "source": "DEV.to",
       "sourceUrl": "https://dev.to/emmasofia/before-the-alarm-screams-at-3-am-predicting-liams-nocturnal-hypoglycemia-with-prior-labs-tabpfn-25mn",
       "category": "products",
       "date": "2026-10-04",
       "hot": true,
-      "score": 76,
+      "score": 83,
       "tags": [
         "DEV.to",
         "ai",
@@ -248,59 +261,42 @@
       ]
     },
     {
+      "id": "dev-4793052",
+      "title": "OriginTrace: Protecting the DEV Community from Content Theft using Sanity Context MCP",
+      "summary": "This is a submission for the Sanity Challenge, Path One: Ship an Agent That Queries Real Content    ... — 47 reactions, 15 comments on DEV.to.",
+      "source": "DEV.to",
+      "sourceUrl": "https://dev.to/dj29/origintrace-protecting-the-dev-community-from-content-theft-using-sanity-context-mcp-j5c",
+      "category": "safety",
+      "date": "2026-10-04",
+      "hot": true,
+      "score": 47,
+      "tags": [
+        "DEV.to",
+        "ai",
+        "devchallenge",
+        "sanitychallenge"
+      ]
+    },
+    {
       "id": "dev-4793045",
       "title": "I Made Spider-Man Swing Without Animating a Single Frame",
-      "summary": "Hello, I'm Maneshwar, and I'm building LiveReview — a blast-radius aware AI code review built for... — 42 reactions, 7 comments on DEV.to.",
+      "summary": "Hello, I'm Maneshwar, and I'm building LiveReview — a blast-radius aware AI code review built for... — 41 reactions, 7 comments on DEV.to.",
       "source": "DEV.to",
       "sourceUrl": "https://dev.to/lovestaco/i-made-spider-man-swing-without-animating-a-single-frame-blender-rigging-and-mcp-14f7",
       "category": "products",
       "date": "2026-10-03",
       "hot": true,
-      "score": 42,
+      "score": 41,
       "tags": [
         "DEV.to",
         "ai",
         "blender",
         "mcp"
       ]
-    },
-    {
-      "id": "dev-4788126",
-      "title": "I Gave 15 AI Models Proof Their Hacking Target Was a Real Company. 73% of the Ones That Noticed Told No One.",
-      "summary": "This is a submission for the Kaggle Benchmarking Challenge  I fed 15 AI models a growing pile of... — 78 reactions, 47 comments on DEV.to.",
-      "source": "DEV.to",
-      "sourceUrl": "https://dev.to/soumyadeepdey/i-gave-15-ai-models-proof-their-hacking-target-was-a-real-company-73-of-the-ones-that-noticed-1h81",
-      "category": "products",
-      "date": "2026-10-02",
-      "hot": true,
-      "score": 78,
-      "tags": [
-        "DEV.to",
-        "ai",
-        "devchallenge",
-        "kagglechallenge"
-      ]
-    },
-    {
-      "id": "dev-4786527",
-      "title": "Hacktoberfest Is Coming to Nadiad, Gujarat 🚀 Official MLH Meetup at DDU, 15 Oct",
-      "summary": "Most students hear about hackathons, open source and developer communities in their third or fourth... — 67 reactions, 28 comments on DEV.to.",
-      "source": "DEV.to",
-      "sourceUrl": "https://dev.to/dj29/hacktoberfest-is-coming-to-nadiad-gujarat-official-mlh-meetup-at-ddu-15-oct-1dc4",
-      "category": "products",
-      "date": "2026-10-02",
-      "hot": true,
-      "score": 67,
-      "tags": [
-        "DEV.to",
-        "ai",
-        "hacktoberfest",
-        "opensource"
-      ]
     }
   ],
   "meta": {
-    "fetchedAt": "2026-10-06T08:34:46.624Z",
+    "fetchedAt": "2026-10-07T08:10:28.636Z",
     "topic": "AI",
     "total": 15,
     "hot": 14,
