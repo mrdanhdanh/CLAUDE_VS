@@ -1,12 +1,12 @@
 {
-  "generatedAt": "2026-10-07T08:10:28.636Z",
+  "generatedAt": "2026-10-08T08:26:20.182Z",
   "generatedBy": "YUNIE × Last30Days",
   "version": 2,
   "description": "Tin AI mới nhất — tổng hợp từ Last30Days (HN, GitHub, DEV.to, Reddit, arXiv, HackerNoon) trong 30 ngày qua. Chủ đề: AI. Tự động cập nhật bởi YUNIE.",
   "last30days": {
     "enabled": true,
     "topic": "AI",
-    "since": "2026-09-07",
+    "since": "2026-09-08",
     "days": 30,
     "sources": [
       "Hacker News (Algolia, free)",
@@ -55,13 +55,29 @@
   ],
   "articles": [
     {
-      "id": "hnoon-make-product-marketing-human-again-keeping-it-authentic-in-t",
-      "title": "Make Product Marketing Human Again: Keeping it Authentic in the Age of aI",
-      "summary": "AI makes marketing faster, but does it make brands forgettable? Discover why human creativity, storytelling, and original thinking still matter. Read All — by Anna Fadeeva on HackerNoon.",
+      "id": "hnoon-ai-can-remember-your-chats-remembering-your-life-is-much-har",
+      "title": "AI Can Remember Your Chats. Remembering Your Life Is Much Harder.",
+      "summary": "For AI to become truly useful in everyday life, it needs memory that goes beyond chat history. Building that memory means solving four key challenges: deciding what to remember, re — by Bocong Liu on HackerNoon.",
       "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/make-product-marketing-human-again-keeping-it-authentic-in-the-age-of-ai",
+      "sourceUrl": "https://hackernoon.com/ai-can-remember-your-chats-remembering-your-life-is-much-harder",
       "category": "products",
-      "date": "2026-10-07",
+      "date": "2026-10-08",
+      "hot": true,
+      "score": 100,
+      "tags": [
+        "HackerNoon",
+        "aritificial-intelligence",
+        "AI"
+      ]
+    },
+    {
+      "id": "hnoon-the-eyes-of-intelligence-why-computer-vision-will-define-the",
+      "title": "The Eyes of Intelligence: Why Computer Vision Will Define the AI Century",
+      "summary": "For three years we've measured AI progress in text such as tokens, context windows, benchmark scores. That framing treats intelligence as a language problem and everything else as  — by vishwa vimukthi gammuduwaththage o",
+      "source": "HackerNoon",
+      "sourceUrl": "https://hackernoon.com/the-eyes-of-intelligence-why-computer-vision-will-define-the-ai-century",
+      "category": "products",
+      "date": "2026-10-08",
       "hot": true,
       "score": 100,
       "tags": [
@@ -71,80 +87,142 @@
       ]
     },
     {
-      "id": "hnoon-a-beginners-guide-to-writing-agentsmd-files-for-codex",
-      "title": "A Beginner's Guide to Writing AGENTS.md Files for Codex",
-      "summary": "Learn what belongs in global and project AGENTS.md files, with practical examples, override rules, and ways to check what Codex loads. Read All — by Irving on HackerNoon.",
+      "id": "hnoon-i-wrote-a-war-fought-with-ai-weapons-how-close-is-fiction-to",
+      "title": "I Wrote a War Fought With AI Weapons. How Close Is Fiction to Reality?",
+      "summary": "AI is already changing warfare. Drawing on the ideas behind An Unlikely War, this article explores autonomous weapons, human control and what happens when military decisions begin  — by Tony Rebeiro on HackerNoon.",
       "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/a-beginners-guide-to-writing-agentsmd-files-for-codex",
+      "sourceUrl": "https://hackernoon.com/i-wrote-a-war-fought-with-ai-weapons-how-close-is-fiction-to-reality",
       "category": "products",
-      "date": "2026-10-07",
+      "date": "2026-10-08",
       "hot": true,
       "score": 100,
       "tags": [
         "HackerNoon",
-        "openai-codex",
+        "artificial-intelligence",
         "AI"
       ]
     },
     {
-      "id": "hnoon-the-hidden-language-tax-making-ai-more-expensive-for-non-eng",
-      "title": "The Hidden Language Tax Making AI More Expensive for Non-English Users",
-      "summary": "Claude Opus 5 uses nearly 3x more tokens for Russian than English. Here's why AI tokenization makes some languages more expensive than others. Read All — by Khasky on HackerNoon.",
+      "id": "hnoon-the-joining-tax-a-year-of-governing-claude-code",
+      "title": "The Joining Tax: A Year of Governing Claude Code",
+      "summary": "Multi-agent coding setups lose context at every handoff not because the design is broken, but because the boundary is the whole reason those roles exist and the handoff is its pric — by Dmitriy Fedoryshchev on HackerNoon",
       "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/the-hidden-language-tax-making-ai-more-expensive-for-non-english-users",
+      "sourceUrl": "https://hackernoon.com/the-joining-tax-a-year-of-governing-claude-code",
       "category": "products",
-      "date": "2026-10-07",
+      "date": "2026-10-08",
       "hot": true,
       "score": 100,
       "tags": [
         "HackerNoon",
-        "llm",
+        "programming",
         "AI"
       ]
     },
     {
-      "id": "hnoon-i-passed-the-aws-ai-business-strategist-aib-c01-beta-with-cl",
-      "title": "I Passed the AWS AI Business Strategist (AIB-C01) Beta With Claude and Notion: Here's How",
-      "summary": "I passed the AWS Certified AI Business Strategist (AIB-C01) beta on the first day it was available, with no third-party prep material out at announcement. The setup: a Claude proje — by Kashif Nazir on HackerNoon.",
+      "id": "hnoon-dhhs-vibe-coding-advice-ignores-the-biggest-problem-with-ai-",
+      "title": "DHH's Vibe Coding Advice Ignores the Biggest Problem With AI-Generated Code",
+      "summary": "Ruby Memes 2026-09-30: DHH's AI Vision Read All — by Andy Maleh on HackerNoon.",
       "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/i-passed-the-aws-ai-business-strategist-aib-c01-beta-with-claude-and-notion-heres-how",
-      "category": "products",
-      "date": "2026-10-07",
+      "sourceUrl": "https://hackernoon.com/dhhs-vibe-coding-advice-ignores-the-biggest-problem-with-ai-generated-code",
+      "category": "fun",
+      "date": "2026-10-08",
       "hot": true,
       "score": 100,
       "tags": [
         "HackerNoon",
-        "ai",
+        "ruby",
         "AI"
       ]
     },
     {
-      "id": "hn-49989504",
-      "title": "HN has lost the joy for me",
-      "summary": "There was a time I would come to HN to get some respite from the depressing state of reality. Ukraine war or climate crisis would drive me to despair, and I&#x27;d try to get a little endorphin rush by dodging those same — 3 points, 0 comments on HN.",
+      "id": "hntop-49996437",
+      "title": "Claude Haiku 5.5",
+      "summary": "Claude Haiku 5.5 — 850 points, 413 comments on HN.",
       "source": "Hacker News",
-      "sourceUrl": "https://news.ycombinator.com/item?id=49989504",
+      "sourceUrl": "https://www.anthropic.com/claude-haiku-5-5",
       "category": "products",
       "date": "2026-10-07",
-      "hot": false,
-      "score": 3,
+      "hot": true,
+      "score": 850,
       "tags": [
         "HN",
-        "AI",
-        "story",
-        "author_trencedamp"
+        "top"
+      ]
+    },
+    {
+      "id": "ax-2610.10502v1",
+      "title": "Notes on Kozma and Nitzan's proof of $θ(p_c)=0$",
+      "summary": "We present a human intelligible proof of the conjectures of Kozma and Nitzan, that they used to show $θ(p_c)=0$. The proof was recently found by AI, but was very poorly written. Our version is much shorter as it complete",
+      "source": "arXiv",
+      "sourceUrl": "http://arxiv.org/abs/2610.10502v1",
+      "category": "safety",
+      "date": "2026-10-07",
+      "hot": true,
+      "score": 800,
+      "tags": [
+        "arXiv",
+        "paper",
+        "AI"
+      ]
+    },
+    {
+      "id": "hnoon-neuromorphic-vision-vs-traditional-still-frame-cameras-which",
+      "title": "Neuromorphic Vision vs. Traditional Still-Frame Cameras: Which One Wins the Surveillance Race?",
+      "summary": "Most video surveillance still runs on traditional still-frame cameras that capture full frames at a fixed rate. Neuromorphic (event) cameras work differently: each pixel fires only — by vishwa vimukthi gammuduwaththage o",
+      "source": "HackerNoon",
+      "sourceUrl": "https://hackernoon.com/neuromorphic-vision-vs-traditional-still-frame-cameras-which-one-wins-the-surveillance-race",
+      "category": "safety",
+      "date": "2026-10-07",
+      "hot": true,
+      "score": 100,
+      "tags": [
+        "HackerNoon",
+        "ai",
+        "AI"
+      ]
+    },
+    {
+      "id": "hnoon-claude-code-finally-made-me-an-engineer-after-10-years-in-fi",
+      "title": "Claude Code Finally Made Me an Engineer After 10 Years in Figma",
+      "summary": "Andrii Bondar on building mobile apps with AI coding tools as a product designer. DecentWealth as the example of a fintech app. — by Andrii Bondar on HackerNoon.",
+      "source": "HackerNoon",
+      "sourceUrl": "https://hackernoon.com/claude-code-finally-made-me-an-engineer-after-10-years-in-figma",
+      "category": "products",
+      "date": "2026-10-07",
+      "hot": true,
+      "score": 100,
+      "tags": [
+        "HackerNoon",
+        "vibecoding",
+        "AI"
+      ]
+    },
+    {
+      "id": "hnoon-should-you-perform-a-penetration-test-in-staging-or-producti",
+      "title": "Should You Perform a Penetration Test in Staging or Production?",
+      "summary": "Should you pentest in staging or production? Learn the key differences, risks, and best practices for safer, effective penetration testing. — by Sanjay-Barot on HackerNoon.",
+      "source": "HackerNoon",
+      "sourceUrl": "https://hackernoon.com/should-you-perform-a-penetration-test-in-staging-or-production",
+      "category": "safety",
+      "date": "2026-10-07",
+      "hot": true,
+      "score": 100,
+      "tags": [
+        "HackerNoon",
+        "penetration-testing",
+        "AI"
       ]
     },
     {
       "id": "hntop-49977979",
       "title": "Mistral Large 4",
-      "summary": "<a href=\"https:&#x2F;&#x2F;docs.mistral.ai&#x2F;models&#x2F;mistral-large-4-0\" rel=\"nofollow\">https:&#x2F;&#x2F;docs.mistral.ai&#x2F;models&#x2F;mistral-large-4-0</a> — 1757 points, 1039 comments on HN.",
+      "summary": "<a href=\"https:&#x2F;&#x2F;docs.mistral.ai&#x2F;models&#x2F;mistral-large-4-0\" rel=\"nofollow\">https:&#x2F;&#x2F;docs.mistral.ai&#x2F;models&#x2F;mistral-large-4-0</a> — 2012 points, 1195 comments on HN.",
       "source": "Hacker News",
       "sourceUrl": "https://mistral.ai/news/mistral-large-4/\\",
       "category": "products",
       "date": "2026-10-06",
       "hot": true,
-      "score": 1757,
+      "score": 2012,
       "tags": [
         "HN",
         "top"
@@ -153,150 +231,70 @@
     {
       "id": "hntop-49984923",
       "title": "Sharing AI progress in mathematics",
-      "summary": "<a href=\"https:&#x2F;&#x2F;github.com&#x2F;openai&#x2F;math\" rel=\"nofollow\">https:&#x2F;&#x2F;github.com&#x2F;openai&#x2F;math</a><p><a href=\"https:&#x2F;&#x2F;github.com&#x2F;openai&#x2F;math&#x2F;tree&#x2F;main&#x2F;pr — 833 points, 758 comments on HN.",
+      "summary": "<a href=\"https:&#x2F;&#x2F;github.com&#x2F;openai&#x2F;math\" rel=\"nofollow\">https:&#x2F;&#x2F;github.com&#x2F;openai&#x2F;math</a><p><a href=\"https:&#x2F;&#x2F;github.com&#x2F;openai&#x2F;math&#x2F;tree&#x2F;main&#x2F;pr — 1277 points, 1450 comments on HN.",
       "source": "Hacker News",
       "sourceUrl": "https://openai.com/index/sharing-ai-progress-in-mathematics/",
       "category": "big-tech",
       "date": "2026-10-06",
       "hot": true,
-      "score": 833,
+      "score": 1277,
       "tags": [
         "HN",
         "top"
       ]
     },
     {
-      "id": "ax-2610.08791v1",
-      "title": "World Models' Last Exam in Physics",
-      "summary": "Video world models can produce visually convincing yet physically inconsistent sequences, raising concerns about their reliability for prediction and planning in embodied AI systems. Existing evaluations often rely on mo",
-      "source": "arXiv",
-      "sourceUrl": "http://arxiv.org/abs/2610.08791v1",
-      "category": "big-tech",
+      "id": "dev-4809038",
+      "title": "Curiosity Over Comfort",
+      "summary": "I’m More Interested in Why Things Break Than Why They Work   I don’t think I became... — 15 reactions, 7 comments on DEV.to.",
+      "source": "DEV.to",
+      "sourceUrl": "https://dev.to/marceli/curiosity-over-comfort-5cki",
+      "category": "products",
       "date": "2026-10-06",
-      "hot": true,
-      "score": 800,
+      "hot": false,
+      "score": 15,
       "tags": [
-        "arXiv",
-        "paper",
-        "AI"
-      ]
-    },
-    {
-      "id": "ax-2610.08740v1",
-      "title": "On the Computational Tractability of Robust Bandits",
-      "summary": "Learning when the environment does not belong to the learner's hypothesis class is typically handled using agnostic learning guarantees. However, for anything beyond supervised learning, agnostic guarantees are difficult",
-      "source": "arXiv",
-      "sourceUrl": "http://arxiv.org/abs/2610.08740v1",
-      "category": "self-improving",
-      "date": "2026-10-06",
-      "hot": true,
-      "score": 800,
-      "tags": [
-        "arXiv",
-        "paper",
-        "AI"
-      ]
-    },
-    {
-      "id": "ax-2610.08739v1",
-      "title": "BARE-AI: Bit-Flip Attack Resilience in AI Hardware through Built-in Performance Monitors",
-      "summary": "Deep Neural Networks (DNNs) are integral to many safety critical systems, yet they remain highly vulnerable to bit-flip attacks (BFAs), where a few memory level perturbations can drastically degrade accuracy. Existing de",
-      "source": "arXiv",
-      "sourceUrl": "http://arxiv.org/abs/2610.08739v1",
-      "category": "safety",
-      "date": "2026-10-06",
-      "hot": true,
-      "score": 800,
-      "tags": [
-        "arXiv",
-        "paper",
-        "AI"
+        "DEV.to",
+        "ai",
+        "ai",
+        "webdev"
       ]
     },
     {
       "id": "hntop-49961057",
       "title": "Anthropic reported diary entry to police, woman faces felony charge",
-      "summary": "Anthropic reported diary entry to police, woman faces felony charge — 815 points, 657 comments on HN.",
+      "summary": "Anthropic reported diary entry to police, woman faces felony charge — 829 points, 674 comments on HN.",
       "source": "Hacker News",
       "sourceUrl": "https://www.techspot.com/news/114091-florida-woman-used-claude-diary-anthropic-reported-shoot.html",
       "category": "big-tech",
       "date": "2026-10-05",
       "hot": true,
-      "score": 815,
+      "score": 829,
       "tags": [
         "HN",
         "top"
       ]
     },
     {
-      "id": "hntop-49953495",
-      "title": "Run Qwen 3.8 Flash Next (125B) on consumer hardware (RTX 4090) at 100T/s",
-      "summary": "Run Qwen 3.8 Flash Next (125B) on consumer hardware (RTX 4090) at 100T/s — 923 points, 421 comments on HN.",
-      "source": "Hacker News",
-      "sourceUrl": "https://github.com/Niko1221/Strata",
-      "category": "products",
-      "date": "2026-10-04",
-      "hot": true,
-      "score": 923,
-      "tags": [
-        "HN",
-        "top"
-      ]
-    },
-    {
-      "id": "dev-4796805",
-      "title": "Before the Alarm Screams at 3 AM: Predicting Liam's Nocturnal Hypoglycemia with Prior Labs TabPFN",
-      "summary": "How Prior Labs TabPFN tabular foundation model predicts nocturnal hypoglycemic crashes from CGM logs at 10 PM with zero cloud data leaks. — 83 reactions, 10 comments on DEV.to.",
+      "id": "dev-4799560",
+      "title": "The Witness Was the Suspect: Why AI Audit Logs Can't Be Trusted",
+      "summary": "An AI agent does something it shouldn't. It leaks data, or wipes the wrong database, or makes a call... — 47 reactions, 63 comments on DEV.to.",
       "source": "DEV.to",
-      "sourceUrl": "https://dev.to/emmasofia/before-the-alarm-screams-at-3-am-predicting-liams-nocturnal-hypoglycemia-with-prior-labs-tabpfn-25mn",
-      "category": "products",
-      "date": "2026-10-04",
-      "hot": true,
-      "score": 83,
-      "tags": [
-        "DEV.to",
-        "ai",
-        "hf26challenge",
-        "weekendchallenge"
-      ]
-    },
-    {
-      "id": "dev-4793052",
-      "title": "OriginTrace: Protecting the DEV Community from Content Theft using Sanity Context MCP",
-      "summary": "This is a submission for the Sanity Challenge, Path One: Ship an Agent That Queries Real Content    ... — 47 reactions, 15 comments on DEV.to.",
-      "source": "DEV.to",
-      "sourceUrl": "https://dev.to/dj29/origintrace-protecting-the-dev-community-from-content-theft-using-sanity-context-mcp-j5c",
+      "sourceUrl": "https://dev.to/james_anderson_h/the-witness-was-the-suspect-why-ai-audit-logs-cant-be-trusted-2190",
       "category": "safety",
-      "date": "2026-10-04",
+      "date": "2026-10-05",
       "hot": true,
       "score": 47,
       "tags": [
         "DEV.to",
         "ai",
-        "devchallenge",
-        "sanitychallenge"
-      ]
-    },
-    {
-      "id": "dev-4793045",
-      "title": "I Made Spider-Man Swing Without Animating a Single Frame",
-      "summary": "Hello, I'm Maneshwar, and I'm building LiveReview — a blast-radius aware AI code review built for... — 41 reactions, 7 comments on DEV.to.",
-      "source": "DEV.to",
-      "sourceUrl": "https://dev.to/lovestaco/i-made-spider-man-swing-without-animating-a-single-frame-blender-rigging-and-mcp-14f7",
-      "category": "products",
-      "date": "2026-10-03",
-      "hot": true,
-      "score": 41,
-      "tags": [
-        "DEV.to",
         "ai",
-        "blender",
-        "mcp"
+        "security"
       ]
     }
   ],
   "meta": {
-    "fetchedAt": "2026-10-07T08:10:28.636Z",
+    "fetchedAt": "2026-10-08T08:26:20.182Z",
     "topic": "AI",
     "total": 15,
     "hot": 14,
