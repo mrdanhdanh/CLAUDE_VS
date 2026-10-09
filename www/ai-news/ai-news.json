@@ -1,12 +1,12 @@
 {
-  "generatedAt": "2026-10-08T08:26:20.182Z",
+  "generatedAt": "2026-10-09T08:30:21.393Z",
   "generatedBy": "YUNIE × Last30Days",
   "version": 2,
   "description": "Tin AI mới nhất — tổng hợp từ Last30Days (HN, GitHub, DEV.to, Reddit, arXiv, HackerNoon) trong 30 ngày qua. Chủ đề: AI. Tự động cập nhật bởi YUNIE.",
   "last30days": {
     "enabled": true,
     "topic": "AI",
-    "since": "2026-09-08",
+    "since": "2026-09-09",
     "days": 30,
     "sources": [
       "Hacker News (Algolia, free)",
@@ -55,29 +55,13 @@
   ],
   "articles": [
     {
-      "id": "hnoon-ai-can-remember-your-chats-remembering-your-life-is-much-har",
-      "title": "AI Can Remember Your Chats. Remembering Your Life Is Much Harder.",
-      "summary": "For AI to become truly useful in everyday life, it needs memory that goes beyond chat history. Building that memory means solving four key challenges: deciding what to remember, re — by Bocong Liu on HackerNoon.",
+      "id": "hnoon-ai-agents-dont-need-user-accounts-they-need-identities",
+      "title": "AI Agents Don't Need User Accounts. They Need Identities.",
+      "summary": "AI agents are becoming autonomous software actors with access to real systems and sensitive data. This article explores why traditional user accounts are not enough and introduces  — by Atul Kumar on HackerNoon.",
       "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/ai-can-remember-your-chats-remembering-your-life-is-much-harder",
+      "sourceUrl": "https://hackernoon.com/ai-agents-dont-need-user-accounts-they-need-identities",
       "category": "products",
-      "date": "2026-10-08",
-      "hot": true,
-      "score": 100,
-      "tags": [
-        "HackerNoon",
-        "aritificial-intelligence",
-        "AI"
-      ]
-    },
-    {
-      "id": "hnoon-the-eyes-of-intelligence-why-computer-vision-will-define-the",
-      "title": "The Eyes of Intelligence: Why Computer Vision Will Define the AI Century",
-      "summary": "For three years we've measured AI progress in text such as tokens, context windows, benchmark scores. That framing treats intelligence as a language problem and everything else as  — by vishwa vimukthi gammuduwaththage o",
-      "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/the-eyes-of-intelligence-why-computer-vision-will-define-the-ai-century",
-      "category": "products",
-      "date": "2026-10-08",
+      "date": "2026-10-09",
       "hot": true,
       "score": 100,
       "tags": [
@@ -87,76 +71,79 @@
       ]
     },
     {
-      "id": "hnoon-i-wrote-a-war-fought-with-ai-weapons-how-close-is-fiction-to",
-      "title": "I Wrote a War Fought With AI Weapons. How Close Is Fiction to Reality?",
-      "summary": "AI is already changing warfare. Drawing on the ideas behind An Unlikely War, this article explores autonomous weapons, human control and what happens when military decisions begin  — by Tony Rebeiro on HackerNoon.",
+      "id": "hnoon-why-a-five-cent-earnings-beat-isnt-always-what-it-seems",
+      "title": "Why a Five-Cent Earnings Beat Isn't Always What It Seems",
+      "summary": "A five-cent earnings beat looks simple until you ask whether the reported result and the analysts’ estimates measure the same thing. I use a language model to read the meaning buri — by Sagar Bonthu on HackerNoon.",
       "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/i-wrote-a-war-fought-with-ai-weapons-how-close-is-fiction-to-reality",
-      "category": "products",
-      "date": "2026-10-08",
+      "sourceUrl": "https://hackernoon.com/why-a-five-cent-earnings-beat-isnt-always-what-it-seems",
+      "category": "big-tech",
+      "date": "2026-10-09",
       "hot": true,
       "score": 100,
       "tags": [
         "HackerNoon",
-        "artificial-intelligence",
+        "llm",
         "AI"
       ]
     },
     {
-      "id": "hnoon-the-joining-tax-a-year-of-governing-claude-code",
-      "title": "The Joining Tax: A Year of Governing Claude Code",
-      "summary": "Multi-agent coding setups lose context at every handoff not because the design is broken, but because the boundary is the whole reason those roles exist and the handoff is its pric — by Dmitriy Fedoryshchev on HackerNoon",
+      "id": "hnoon-ai-robot-cruelty-and-the-human-instinct-to-dominate",
+      "title": "AI, Robot Cruelty, and the Human Instinct to Dominate",
+      "summary": "We're creating intelligent machines that may surpass human capabilities, but our instinct is to dominate and control them, raising questions about empathy, cruelty, and our relatio — by Carmelo Giuliano on HackerNoon.",
       "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/the-joining-tax-a-year-of-governing-claude-code",
-      "category": "products",
-      "date": "2026-10-08",
+      "sourceUrl": "https://hackernoon.com/ai-robot-cruelty-and-the-human-instinct-to-dominate",
+      "category": "safety",
+      "date": "2026-10-09",
       "hot": true,
       "score": 100,
       "tags": [
         "HackerNoon",
-        "programming",
+        "robotics",
         "AI"
       ]
     },
     {
-      "id": "hnoon-dhhs-vibe-coding-advice-ignores-the-biggest-problem-with-ai-",
-      "title": "DHH's Vibe Coding Advice Ignores the Biggest Problem With AI-Generated Code",
-      "summary": "Ruby Memes 2026-09-30: DHH's AI Vision Read All — by Andy Maleh on HackerNoon.",
-      "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/dhhs-vibe-coding-advice-ignores-the-biggest-problem-with-ai-generated-code",
-      "category": "fun",
-      "date": "2026-10-08",
-      "hot": true,
-      "score": 100,
-      "tags": [
-        "HackerNoon",
-        "ruby",
-        "AI"
-      ]
-    },
-    {
-      "id": "hntop-49996437",
-      "title": "Claude Haiku 5.5",
-      "summary": "Claude Haiku 5.5 — 850 points, 413 comments on HN.",
+      "id": "hn-50016734",
+      "title": "Agency offers staff two years pay if they can replace themselves with AI",
+      "summary": "Agency offers staff two years pay if they can replace themselves with AI — 5 points, 0 comments on HN.",
       "source": "Hacker News",
-      "sourceUrl": "https://www.anthropic.com/claude-haiku-5-5",
+      "sourceUrl": "https://mumbrella.com.au/agency-offers-staff-two-years-pay-if-they-can-replace-themselves-with-ai-940294",
       "category": "products",
-      "date": "2026-10-07",
-      "hot": true,
-      "score": 850,
+      "date": "2026-10-09",
+      "hot": false,
+      "score": 5,
       "tags": [
         "HN",
-        "top"
+        "AI",
+        "story",
+        "author_jyhrow"
       ]
     },
     {
-      "id": "ax-2610.10502v1",
-      "title": "Notes on Kozma and Nitzan's proof of $θ(p_c)=0$",
-      "summary": "We present a human intelligible proof of the conjectures of Kozma and Nitzan, that they used to show $θ(p_c)=0$. The proof was recently found by AI, but was very poorly written. Our version is much shorter as it complete",
+      "id": "hn-50016756",
+      "title": "Shai-Hulud worm makes jump to AI infrastructure with Tensorlake compromise",
+      "summary": "Shai-Hulud worm makes jump to AI infrastructure with Tensorlake compromise — 4 points, 0 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://www.theregister.com/security/2026/10/08/shai-hulud-worm-makes-jump-to-ai-infrastructure-with-tensorlake-compromise/5302054",
+      "category": "products",
+      "date": "2026-10-09",
+      "hot": false,
+      "score": 4,
+      "tags": [
+        "HN",
+        "AI",
+        "story",
+        "author_fork-bomber"
+      ]
+    },
+    {
+      "id": "ax-2610.12341v1",
+      "title": "Can AI Agents Learn Their Way to the Top? Evaluating Heuristic Learning in a Long-Running Game Agent Competition",
+      "summary": "Adversarial games have driven advances from heuristic search to reinforcement learning, yet learning and adapting strategies from limited samples remain challenging. AI agents offer an alternative by turning game experie",
       "source": "arXiv",
-      "sourceUrl": "http://arxiv.org/abs/2610.10502v1",
-      "category": "safety",
-      "date": "2026-10-07",
+      "sourceUrl": "http://arxiv.org/abs/2610.12341v1",
+      "category": "products",
+      "date": "2026-10-08",
       "hot": true,
       "score": 800,
       "tags": [
@@ -166,63 +153,111 @@
       ]
     },
     {
-      "id": "hnoon-neuromorphic-vision-vs-traditional-still-frame-cameras-which",
-      "title": "Neuromorphic Vision vs. Traditional Still-Frame Cameras: Which One Wins the Surveillance Race?",
-      "summary": "Most video surveillance still runs on traditional still-frame cameras that capture full frames at a fixed rate. Neuromorphic (event) cameras work differently: each pixel fires only — by vishwa vimukthi gammuduwaththage o",
+      "id": "hnoon-integrating-condition-monitoring-and-production-scheduling-i",
+      "title": "Integrating Condition Monitoring and Production Scheduling in High-Load Manufacturing",
+      "summary": "A practical case study on condition-based maintenance, vibration monitoring, and production planning in a high-load 22-hour printing operation. — by Tigran Hovhannisyan on HackerNoon.",
       "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/neuromorphic-vision-vs-traditional-still-frame-cameras-which-one-wins-the-surveillance-race",
-      "category": "safety",
-      "date": "2026-10-07",
+      "sourceUrl": "https://hackernoon.com/integrating-condition-monitoring-and-production-scheduling-in-high-load-manufacturing",
+      "category": "products",
+      "date": "2026-10-08",
       "hot": true,
       "score": 100,
       "tags": [
         "HackerNoon",
-        "ai",
+        "industrial-automation",
         "AI"
       ]
     },
     {
-      "id": "hnoon-claude-code-finally-made-me-an-engineer-after-10-years-in-fi",
-      "title": "Claude Code Finally Made Me an Engineer After 10 Years in Figma",
-      "summary": "Andrii Bondar on building mobile apps with AI coding tools as a product designer. DecentWealth as the example of a fintech app. — by Andrii Bondar on HackerNoon.",
+      "id": "hnoon-when-peer-to-peer-crypto-transfers-beat-exchanges",
+      "title": "When Peer-To-Peer Crypto Transfers Beat Exchanges",
+      "summary": "Skip the middlemen. Discover how P2P crypto transfers can offer more control, flexible payments, and lower costs for moving digital assets. — by Obyte on HackerNoon.",
       "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/claude-code-finally-made-me-an-engineer-after-10-years-in-figma",
+      "sourceUrl": "https://hackernoon.com/when-peer-to-peer-crypto-transfers-beat-exchanges",
+      "category": "safety",
+      "date": "2026-10-08",
+      "hot": true,
+      "score": 100,
+      "tags": [
+        "HackerNoon",
+        "p2p-payments",
+        "AI"
+      ]
+    },
+    {
+      "id": "hnoon-gate-partners-with-visa-to-launch-crypto-linked-card-across-",
+      "title": "Gate Partners with Visa to Launch Crypto-linked Card Across 40+ Countries and Territories",
+      "summary": "Users can also apply for and manage the card through the Gate app and access related payment services within a familiar platform environment — by Blockman PR and Marketing on HackerNoon.",
+      "source": "HackerNoon",
+      "sourceUrl": "https://hackernoon.com/gate-partners-with-visa-to-launch-crypto-linked-card-across-40-countries-and-territories",
+      "category": "products",
+      "date": "2026-10-08",
+      "hot": true,
+      "score": 100,
+      "tags": [
+        "HackerNoon",
+        "cybersecurity",
+        "AI"
+      ]
+    },
+    {
+      "id": "hnoon-500-blog-posts-to-learn-about-creativity",
+      "title": "500 Blog Posts To Learn About Creativity",
+      "summary": "Learn everything you need to know about Creativity via these 500 free HackerNoon blog posts. — by Learn Repo on HackerNoon.",
+      "source": "HackerNoon",
+      "sourceUrl": "https://hackernoon.com/500-blog-posts-to-learn-about-creativity",
+      "category": "products",
+      "date": "2026-10-08",
+      "hot": true,
+      "score": 100,
+      "tags": [
+        "HackerNoon",
+        "creativity",
+        "AI"
+      ]
+    },
+    {
+      "id": "hntop-49996437",
+      "title": "Claude Haiku 5.5",
+      "summary": "Claude Haiku 5.5 — 1039 points, 483 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://www.anthropic.com/claude-haiku-5-5",
       "category": "products",
       "date": "2026-10-07",
       "hot": true,
-      "score": 100,
+      "score": 1039,
       "tags": [
-        "HackerNoon",
-        "vibecoding",
-        "AI"
+        "HN",
+        "top"
       ]
     },
     {
-      "id": "hnoon-should-you-perform-a-penetration-test-in-staging-or-producti",
-      "title": "Should You Perform a Penetration Test in Staging or Production?",
-      "summary": "Should you pentest in staging or production? Learn the key differences, risks, and best practices for safer, effective penetration testing. — by Sanjay-Barot on HackerNoon.",
-      "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/should-you-perform-a-penetration-test-in-staging-or-production",
-      "category": "safety",
+      "id": "dev-4810584",
+      "title": "I Think We're Forgetting How to Be Bored",
+      "summary": "You know the moment. You're waiting for the kettle, or the elevator, or a page to load, or a friend... — 66 reactions, 26 comments on DEV.to.",
+      "source": "DEV.to",
+      "sourceUrl": "https://dev.to/james_anderson_h/i-think-were-forgetting-how-to-be-bored-3pe5",
+      "category": "products",
       "date": "2026-10-07",
       "hot": true,
-      "score": 100,
+      "score": 66,
       "tags": [
-        "HackerNoon",
-        "penetration-testing",
-        "AI"
+        "DEV.to",
+        "ai",
+        "discuss",
+        "mentalhealth"
       ]
     },
     {
       "id": "hntop-49977979",
       "title": "Mistral Large 4",
-      "summary": "<a href=\"https:&#x2F;&#x2F;docs.mistral.ai&#x2F;models&#x2F;mistral-large-4-0\" rel=\"nofollow\">https:&#x2F;&#x2F;docs.mistral.ai&#x2F;models&#x2F;mistral-large-4-0</a> — 2012 points, 1195 comments on HN.",
+      "summary": "<a href=\"https:&#x2F;&#x2F;docs.mistral.ai&#x2F;models&#x2F;mistral-large-4-0\" rel=\"nofollow\">https:&#x2F;&#x2F;docs.mistral.ai&#x2F;models&#x2F;mistral-large-4-0</a> — 2031 points, 1210 comments on HN.",
       "source": "Hacker News",
       "sourceUrl": "https://mistral.ai/news/mistral-large-4/\\",
       "category": "products",
       "date": "2026-10-06",
       "hot": true,
-      "score": 2012,
+      "score": 2031,
       "tags": [
         "HN",
         "top"
@@ -231,13 +266,13 @@
     {
       "id": "hntop-49984923",
       "title": "Sharing AI progress in mathematics",
-      "summary": "<a href=\"https:&#x2F;&#x2F;github.com&#x2F;openai&#x2F;math\" rel=\"nofollow\">https:&#x2F;&#x2F;github.com&#x2F;openai&#x2F;math</a><p><a href=\"https:&#x2F;&#x2F;github.com&#x2F;openai&#x2F;math&#x2F;tree&#x2F;main&#x2F;pr — 1277 points, 1450 comments on HN.",
+      "summary": "<a href=\"https:&#x2F;&#x2F;github.com&#x2F;openai&#x2F;math\" rel=\"nofollow\">https:&#x2F;&#x2F;github.com&#x2F;openai&#x2F;math</a><p><a href=\"https:&#x2F;&#x2F;github.com&#x2F;openai&#x2F;math&#x2F;tree&#x2F;main&#x2F;pr — 1326 points, 1509 comments on HN.",
       "source": "Hacker News",
       "sourceUrl": "https://openai.com/index/sharing-ai-progress-in-mathematics/",
       "category": "big-tech",
       "date": "2026-10-06",
       "hot": true,
-      "score": 1277,
+      "score": 1326,
       "tags": [
         "HN",
         "top"
@@ -246,58 +281,26 @@
     {
       "id": "dev-4809038",
       "title": "Curiosity Over Comfort",
-      "summary": "I’m More Interested in Why Things Break Than Why They Work   I don’t think I became... — 15 reactions, 7 comments on DEV.to.",
+      "summary": "I’m More Interested in Why Things Break Than Why They Work   I don’t think I became... — 20 reactions, 8 comments on DEV.to.",
       "source": "DEV.to",
       "sourceUrl": "https://dev.to/marceli/curiosity-over-comfort-5cki",
       "category": "products",
       "date": "2026-10-06",
       "hot": false,
-      "score": 15,
+      "score": 20,
       "tags": [
         "DEV.to",
         "ai",
         "ai",
         "webdev"
       ]
-    },
-    {
-      "id": "hntop-49961057",
-      "title": "Anthropic reported diary entry to police, woman faces felony charge",
-      "summary": "Anthropic reported diary entry to police, woman faces felony charge — 829 points, 674 comments on HN.",
-      "source": "Hacker News",
-      "sourceUrl": "https://www.techspot.com/news/114091-florida-woman-used-claude-diary-anthropic-reported-shoot.html",
-      "category": "big-tech",
-      "date": "2026-10-05",
-      "hot": true,
-      "score": 829,
-      "tags": [
-        "HN",
-        "top"
-      ]
-    },
-    {
-      "id": "dev-4799560",
-      "title": "The Witness Was the Suspect: Why AI Audit Logs Can't Be Trusted",
-      "summary": "An AI agent does something it shouldn't. It leaks data, or wipes the wrong database, or makes a call... — 47 reactions, 63 comments on DEV.to.",
-      "source": "DEV.to",
-      "sourceUrl": "https://dev.to/james_anderson_h/the-witness-was-the-suspect-why-ai-audit-logs-cant-be-trusted-2190",
-      "category": "safety",
-      "date": "2026-10-05",
-      "hot": true,
-      "score": 47,
-      "tags": [
-        "DEV.to",
-        "ai",
-        "ai",
-        "security"
-      ]
     }
   ],
   "meta": {
-    "fetchedAt": "2026-10-08T08:26:20.182Z",
+    "fetchedAt": "2026-10-09T08:30:21.393Z",
     "topic": "AI",
     "total": 15,
-    "hot": 14,
+    "hot": 12,
     "sources": [
       "HackerNoon",
       "Hacker News",
