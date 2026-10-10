@@ -1,12 +1,12 @@
 {
-  "generatedAt": "2026-10-09T08:30:21.393Z",
+  "generatedAt": "2026-10-10T08:07:24.309Z",
   "generatedBy": "YUNIE × Last30Days",
   "version": 2,
   "description": "Tin AI mới nhất — tổng hợp từ Last30Days (HN, GitHub, DEV.to, Reddit, arXiv, HackerNoon) trong 30 ngày qua. Chủ đề: AI. Tự động cập nhật bởi YUNIE.",
   "last30days": {
     "enabled": true,
     "topic": "AI",
-    "since": "2026-09-09",
+    "since": "2026-09-10",
     "days": 30,
     "sources": [
       "Hacker News (Algolia, free)",
@@ -55,85 +55,183 @@
   ],
   "articles": [
     {
-      "id": "hnoon-ai-agents-dont-need-user-accounts-they-need-identities",
-      "title": "AI Agents Don't Need User Accounts. They Need Identities.",
-      "summary": "AI agents are becoming autonomous software actors with access to real systems and sensitive data. This article explores why traditional user accounts are not enough and introduces  — by Atul Kumar on HackerNoon.",
-      "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/ai-agents-dont-need-user-accounts-they-need-identities",
-      "category": "products",
-      "date": "2026-10-09",
-      "hot": true,
-      "score": 100,
-      "tags": [
-        "HackerNoon",
-        "ai",
-        "AI"
-      ]
-    },
-    {
-      "id": "hnoon-why-a-five-cent-earnings-beat-isnt-always-what-it-seems",
-      "title": "Why a Five-Cent Earnings Beat Isn't Always What It Seems",
-      "summary": "A five-cent earnings beat looks simple until you ask whether the reported result and the analysts’ estimates measure the same thing. I use a language model to read the meaning buri — by Sagar Bonthu on HackerNoon.",
-      "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/why-a-five-cent-earnings-beat-isnt-always-what-it-seems",
-      "category": "big-tech",
-      "date": "2026-10-09",
-      "hot": true,
-      "score": 100,
-      "tags": [
-        "HackerNoon",
-        "llm",
-        "AI"
-      ]
-    },
-    {
-      "id": "hnoon-ai-robot-cruelty-and-the-human-instinct-to-dominate",
-      "title": "AI, Robot Cruelty, and the Human Instinct to Dominate",
-      "summary": "We're creating intelligent machines that may surpass human capabilities, but our instinct is to dominate and control them, raising questions about empathy, cruelty, and our relatio — by Carmelo Giuliano on HackerNoon.",
-      "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/ai-robot-cruelty-and-the-human-instinct-to-dominate",
-      "category": "safety",
-      "date": "2026-10-09",
-      "hot": true,
-      "score": 100,
-      "tags": [
-        "HackerNoon",
-        "robotics",
-        "AI"
-      ]
-    },
-    {
-      "id": "hn-50016734",
-      "title": "Agency offers staff two years pay if they can replace themselves with AI",
-      "summary": "Agency offers staff two years pay if they can replace themselves with AI — 5 points, 0 comments on HN.",
+      "id": "hn-50029681",
+      "title": "If AI is conscient, then we are making slaves",
+      "summary": "If AI is conscient, then we are making slaves — 24 points, 61 comments on HN.",
       "source": "Hacker News",
-      "sourceUrl": "https://mumbrella.com.au/agency-offers-staff-two-years-pay-if-they-can-replace-themselves-with-ai-940294",
+      "sourceUrl": "https://www.groundlevel-ai.com/p/anthropic-ai-consciousness-new-york-times-rabbi",
       "category": "products",
-      "date": "2026-10-09",
-      "hot": false,
-      "score": 5,
+      "date": "2026-10-10",
+      "hot": true,
+      "score": 24,
       "tags": [
         "HN",
         "AI",
         "story",
-        "author_jyhrow"
+        "author_mathieu_aithos"
       ]
     },
     {
-      "id": "hn-50016756",
-      "title": "Shai-Hulud worm makes jump to AI infrastructure with Tensorlake compromise",
-      "summary": "Shai-Hulud worm makes jump to AI infrastructure with Tensorlake compromise — 4 points, 0 comments on HN.",
+      "id": "hn-50029896",
+      "title": "If AI keeps evolving,would you worry about your next generation's survival",
+      "summary": "Imagine this. Twenty years from now, if AI is capable of handling all work, how will your kids make ends meet? If you want to prevent that future, what should you be doing today? — 9 points, 5 comments on HN.",
       "source": "Hacker News",
-      "sourceUrl": "https://www.theregister.com/security/2026/10/08/shai-hulud-worm-makes-jump-to-ai-infrastructure-with-tensorlake-compromise/5302054",
+      "sourceUrl": "https://news.ycombinator.com/item?id=50029896",
       "category": "products",
-      "date": "2026-10-09",
+      "date": "2026-10-10",
+      "hot": false,
+      "score": 9,
+      "tags": [
+        "HN",
+        "AI",
+        "story",
+        "author_hanstyle"
+      ]
+    },
+    {
+      "id": "hn-50029874",
+      "title": "AI companies plot \"day after\" scenarios for public revolt",
+      "summary": "AI companies plot \"day after\" scenarios for public revolt — 4 points, 1 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://www.axios.com/2026/10/09/ai-companies-day-after-major-attack",
+      "category": "products",
+      "date": "2026-10-10",
       "hot": false,
       "score": 4,
       "tags": [
         "HN",
         "AI",
         "story",
-        "author_fork-bomber"
+        "author_thm"
+      ]
+    },
+    {
+      "id": "hn-50030427",
+      "title": "Building AI agents? You're probably overpaying for infrastructure",
+      "summary": "Building AI agents? You're probably overpaying for infrastructure — 3 points, 0 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://withruntime.com/",
+      "category": "products",
+      "date": "2026-10-10",
+      "hot": false,
+      "score": 3,
+      "tags": [
+        "HN",
+        "AI",
+        "story",
+        "author_shermansingh"
+      ]
+    },
+    {
+      "id": "hn-50030108",
+      "title": "Researchers studied AI layoffs. Here's their warning. [video]",
+      "summary": "Researchers studied AI layoffs. Here's their warning. [video] — 3 points, 1 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://www.youtube.com/watch?v=O3gYyCB2n9o",
+      "category": "big-tech",
+      "date": "2026-10-10",
+      "hot": false,
+      "score": 3,
+      "tags": [
+        "HN",
+        "AI",
+        "story",
+        "author_shinryuu"
+      ]
+    },
+    {
+      "id": "hnoon-gpt-6-astra-will-it-shake-up-the-world-of-marketing",
+      "title": "GPT 6 Astra - Will It Shake Up the World of Marketing?",
+      "summary": "The launch of GPT 6 Astra by open AI promises to forever alter the way marketing has been approached and carried out hitherto. — by Vipin Labroo on HackerNoon.",
+      "source": "HackerNoon",
+      "sourceUrl": "https://hackernoon.com/gpt-6-astra-will-it-shake-up-the-world-of-marketing",
+      "category": "products",
+      "date": "2026-10-09",
+      "hot": true,
+      "score": 100,
+      "tags": [
+        "HackerNoon",
+        "gpt-6-astra",
+        "AI"
+      ]
+    },
+    {
+      "id": "hnoon-allox-tge-nears-with-363k-eligible-claimants-and-coinbase-ow",
+      "title": "ALLOX TGE Nears With 363K Eligible Claimants and Coinbase-Owned Sonar Sale",
+      "summary": "AlloX's upcoming token generation event (TGE) is a major milestone, with 363,298 users eligible to claim tokens and over $5 million in strategic backing. The event will activate a  — by Crypto Unfolded on HackerNoon.",
+      "source": "HackerNoon",
+      "sourceUrl": "https://hackernoon.com/allox-tge-nears-with-363k-eligible-claimants-and-coinbase-owned-sonar-sale",
+      "category": "big-tech",
+      "date": "2026-10-09",
+      "hot": true,
+      "score": 100,
+      "tags": [
+        "HackerNoon",
+        "allox",
+        "AI"
+      ]
+    },
+    {
+      "id": "hnoon-86-blog-posts-to-learn-about-digital-art",
+      "title": "86 Blog Posts To Learn About Digital Art",
+      "summary": "Learn everything you need to know about Digital Art via these 86 free HackerNoon blog posts. — by Learn Repo on HackerNoon.",
+      "source": "HackerNoon",
+      "sourceUrl": "https://hackernoon.com/86-blog-posts-to-learn-about-digital-art",
+      "category": "products",
+      "date": "2026-10-09",
+      "hot": true,
+      "score": 100,
+      "tags": [
+        "HackerNoon",
+        "digital-art",
+        "AI"
+      ]
+    },
+    {
+      "id": "hnoon-i-wanted-a-simpler-static-site-generator-so-i-created-neyx",
+      "title": "I Wanted a Simpler Static Site Generator, So I Created Neyx",
+      "summary": "I created NeyX: a static site generator could stay super fast, simple, and useful without piling on runtimes, plugins, and dependencies. — by Seyyed Ali Mohammadiyeh (Max Base) on HackerNoon.",
+      "source": "HackerNoon",
+      "sourceUrl": "https://hackernoon.com/i-wanted-a-simpler-static-site-generator-so-i-created-neyx",
+      "category": "products",
+      "date": "2026-10-09",
+      "hot": true,
+      "score": 100,
+      "tags": [
+        "HackerNoon",
+        "neyx",
+        "AI"
+      ]
+    },
+    {
+      "id": "hnoon-an-e-commerce-platform-is-a-reliability-problem-disguised-as",
+      "title": "An E-Commerce Platform Is a Reliability Problem Disguised as a Website Project",
+      "summary": "Learn how to design a production-grade e-commerce web platform with clear domain boundaries, caching, search, inventory consistency, checkout reliability, obser — by lou hackfun on HackerNoon.",
+      "source": "HackerNoon",
+      "sourceUrl": "https://hackernoon.com/an-e-commerce-platform-is-a-reliability-problem-disguised-as-a-website-project",
+      "category": "products",
+      "date": "2026-10-09",
+      "hot": true,
+      "score": 100,
+      "tags": [
+        "HackerNoon",
+        "software-development",
+        "AI"
+      ]
+    },
+    {
+      "id": "hntop-50000488",
+      "title": "Why isn't the industry freaking out about DeepSeek 4.1 Flash?",
+      "summary": "Why isn't the industry freaking out about DeepSeek 4.1 Flash? — 1093 points, 962 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://www.dgt.is/blog/2026-10-07-deepseek-freek-out/",
+      "category": "products",
+      "date": "2026-10-08",
+      "hot": true,
+      "score": 1093,
+      "tags": [
+        "HN",
+        "top"
       ]
     },
     {
@@ -153,157 +251,65 @@
       ]
     },
     {
-      "id": "hnoon-integrating-condition-monitoring-and-production-scheduling-i",
-      "title": "Integrating Condition Monitoring and Production Scheduling in High-Load Manufacturing",
-      "summary": "A practical case study on condition-based maintenance, vibration monitoring, and production planning in a high-load 22-hour printing operation. — by Tigran Hovhannisyan on HackerNoon.",
-      "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/integrating-condition-monitoring-and-production-scheduling-in-high-load-manufacturing",
-      "category": "products",
-      "date": "2026-10-08",
-      "hot": true,
-      "score": 100,
-      "tags": [
-        "HackerNoon",
-        "industrial-automation",
-        "AI"
-      ]
-    },
-    {
-      "id": "hnoon-when-peer-to-peer-crypto-transfers-beat-exchanges",
-      "title": "When Peer-To-Peer Crypto Transfers Beat Exchanges",
-      "summary": "Skip the middlemen. Discover how P2P crypto transfers can offer more control, flexible payments, and lower costs for moving digital assets. — by Obyte on HackerNoon.",
-      "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/when-peer-to-peer-crypto-transfers-beat-exchanges",
-      "category": "safety",
-      "date": "2026-10-08",
-      "hot": true,
-      "score": 100,
-      "tags": [
-        "HackerNoon",
-        "p2p-payments",
-        "AI"
-      ]
-    },
-    {
-      "id": "hnoon-gate-partners-with-visa-to-launch-crypto-linked-card-across-",
-      "title": "Gate Partners with Visa to Launch Crypto-linked Card Across 40+ Countries and Territories",
-      "summary": "Users can also apply for and manage the card through the Gate app and access related payment services within a familiar platform environment — by Blockman PR and Marketing on HackerNoon.",
-      "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/gate-partners-with-visa-to-launch-crypto-linked-card-across-40-countries-and-territories",
-      "category": "products",
-      "date": "2026-10-08",
-      "hot": true,
-      "score": 100,
-      "tags": [
-        "HackerNoon",
-        "cybersecurity",
-        "AI"
-      ]
-    },
-    {
-      "id": "hnoon-500-blog-posts-to-learn-about-creativity",
-      "title": "500 Blog Posts To Learn About Creativity",
-      "summary": "Learn everything you need to know about Creativity via these 500 free HackerNoon blog posts. — by Learn Repo on HackerNoon.",
-      "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/500-blog-posts-to-learn-about-creativity",
-      "category": "products",
-      "date": "2026-10-08",
-      "hot": true,
-      "score": 100,
-      "tags": [
-        "HackerNoon",
-        "creativity",
-        "AI"
-      ]
-    },
-    {
-      "id": "hntop-49996437",
-      "title": "Claude Haiku 5.5",
-      "summary": "Claude Haiku 5.5 — 1039 points, 483 comments on HN.",
-      "source": "Hacker News",
-      "sourceUrl": "https://www.anthropic.com/claude-haiku-5-5",
-      "category": "products",
-      "date": "2026-10-07",
-      "hot": true,
-      "score": 1039,
-      "tags": [
-        "HN",
-        "top"
-      ]
-    },
-    {
-      "id": "dev-4810584",
-      "title": "I Think We're Forgetting How to Be Bored",
-      "summary": "You know the moment. You're waiting for the kettle, or the elevator, or a page to load, or a friend... — 66 reactions, 26 comments on DEV.to.",
+      "id": "dev-4776935",
+      "title": "To Retry or Not to Retry? That Is the Question.",
+      "summary": "This is a submission for the Kaggle Benchmarking Challenge  Those who read my articles know that a... — 58 reactions, 62 comments on DEV.to.",
       "source": "DEV.to",
-      "sourceUrl": "https://dev.to/james_anderson_h/i-think-were-forgetting-how-to-be-bored-3pe5",
+      "sourceUrl": "https://dev.to/gramli/to-retry-or-not-to-retry-that-is-the-question-1j2l",
       "category": "products",
-      "date": "2026-10-07",
+      "date": "2026-10-08",
       "hot": true,
-      "score": 66,
+      "score": 58,
       "tags": [
         "DEV.to",
         "ai",
-        "discuss",
-        "mentalhealth"
+        "devchallenge",
+        "kagglechallenge"
       ]
     },
     {
-      "id": "hntop-49977979",
-      "title": "Mistral Large 4",
-      "summary": "<a href=\"https:&#x2F;&#x2F;docs.mistral.ai&#x2F;models&#x2F;mistral-large-4-0\" rel=\"nofollow\">https:&#x2F;&#x2F;docs.mistral.ai&#x2F;models&#x2F;mistral-large-4-0</a> — 2031 points, 1210 comments on HN.",
-      "source": "Hacker News",
-      "sourceUrl": "https://mistral.ai/news/mistral-large-4/\\",
-      "category": "products",
-      "date": "2026-10-06",
-      "hot": true,
-      "score": 2031,
-      "tags": [
-        "HN",
-        "top"
-      ]
-    },
-    {
-      "id": "hntop-49984923",
-      "title": "Sharing AI progress in mathematics",
-      "summary": "<a href=\"https:&#x2F;&#x2F;github.com&#x2F;openai&#x2F;math\" rel=\"nofollow\">https:&#x2F;&#x2F;github.com&#x2F;openai&#x2F;math</a><p><a href=\"https:&#x2F;&#x2F;github.com&#x2F;openai&#x2F;math&#x2F;tree&#x2F;main&#x2F;pr — 1326 points, 1509 comments on HN.",
-      "source": "Hacker News",
-      "sourceUrl": "https://openai.com/index/sharing-ai-progress-in-mathematics/",
-      "category": "big-tech",
-      "date": "2026-10-06",
-      "hot": true,
-      "score": 1326,
-      "tags": [
-        "HN",
-        "top"
-      ]
-    },
-    {
-      "id": "dev-4809038",
-      "title": "Curiosity Over Comfort",
-      "summary": "I’m More Interested in Why Things Break Than Why They Work   I don’t think I became... — 20 reactions, 8 comments on DEV.to.",
+      "id": "dev-4819778",
+      "title": "I got Jev to zero mistakes. I'm still using Flash-Lite.",
+      "summary": "Jev is a brilliant decision model. Gemini Flash-Lite is the model nobody talks about, and it’s fast,... — 34 reactions, 15 comments on DEV.to.",
       "source": "DEV.to",
-      "sourceUrl": "https://dev.to/marceli/curiosity-over-comfort-5cki",
+      "sourceUrl": "https://dev.to/theycallmeswift/i-got-jev-to-zero-mistakes-im-still-using-flash-lite-2mo7",
       "category": "products",
-      "date": "2026-10-06",
+      "date": "2026-10-08",
+      "hot": true,
+      "score": 34,
+      "tags": [
+        "DEV.to",
+        "ai",
+        "ai",
+        "gemini"
+      ]
+    },
+    {
+      "id": "dev-4814991",
+      "title": "Llama Village: a virtual world powered by local AI with llamadart",
+      "summary": "Llama Village in motion. The characters’ dialogue is generated by an on-device model.  Watch the... — 16 reactions, 9 comments on DEV.to.",
+      "source": "DEV.to",
+      "sourceUrl": "https://dev.to/gde/llama-village-a-virtual-world-powered-by-local-ai-with-llamadart-3lmi",
+      "category": "products",
+      "date": "2026-10-08",
       "hot": false,
-      "score": 20,
+      "score": 16,
       "tags": [
         "DEV.to",
         "ai",
-        "ai",
-        "webdev"
+        "flutter",
+        "ai"
       ]
     }
   ],
   "meta": {
-    "fetchedAt": "2026-10-09T08:30:21.393Z",
+    "fetchedAt": "2026-10-10T08:07:24.309Z",
     "topic": "AI",
     "total": 15,
-    "hot": 12,
+    "hot": 10,
     "sources": [
-      "HackerNoon",
       "Hacker News",
+      "HackerNoon",
       "arXiv",
       "DEV.to"
     ]
