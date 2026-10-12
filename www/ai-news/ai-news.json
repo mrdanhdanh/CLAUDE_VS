@@ -1,12 +1,12 @@
 {
-  "generatedAt": "2026-10-11T08:18:43.976Z",
+  "generatedAt": "2026-10-12T08:38:19.721Z",
   "generatedBy": "YUNIE × Last30Days",
   "version": 2,
   "description": "Tin AI mới nhất — tổng hợp từ Last30Days (HN, GitHub, DEV.to, Reddit, arXiv, HackerNoon) trong 30 ngày qua. Chủ đề: AI. Tự động cập nhật bởi YUNIE.",
   "last30days": {
     "enabled": true,
     "topic": "AI",
-    "since": "2026-09-11",
+    "since": "2026-09-12",
     "days": 30,
     "sources": [
       "Hacker News (Algolia, free)",
@@ -55,227 +55,228 @@
   ],
   "articles": [
     {
-      "id": "hn-50039627",
-      "title": "Satya Nadella says we should assume all AI models are 'compromised'",
-      "summary": "Satya Nadella says we should assume all AI models are 'compromised' — 36 points, 54 comments on HN.",
-      "source": "Hacker News",
-      "sourceUrl": "https://www.theverge.com/ai-artificial-intelligence/1009337/satya-nadella-says-we-should-assume-all-ai-models-are-compromised",
-      "category": "products",
-      "date": "2026-10-11",
-      "hot": true,
-      "score": 36,
-      "tags": [
-        "HN",
-        "AI",
-        "story",
-        "author_jonbaer"
-      ]
-    },
-    {
-      "id": "hn-50039630",
-      "title": "AI agents in a stand-up call",
-      "summary": "AI agents in a stand-up call — 39 points, 42 comments on HN.",
-      "source": "Hacker News",
-      "sourceUrl": "https://atoll92.github.io/agent-standup/",
-      "category": "products",
-      "date": "2026-10-11",
-      "hot": false,
-      "score": 39,
-      "tags": [
-        "HN",
-        "AI",
-        "story",
-        "author_jonbaer"
-      ]
-    },
-    {
-      "id": "hn-50039678",
-      "title": "Europe confident its rules can thwart rogue AI",
-      "summary": "Europe confident its rules can thwart rogue AI — 6 points, 0 comments on HN.",
-      "source": "Hacker News",
-      "sourceUrl": "https://www.rnz.co.nz/news/science-and-technology/1824809/europe-confident-its-rules-can-thwart-rogue-ai",
-      "category": "safety",
-      "date": "2026-10-11",
-      "hot": false,
-      "score": 6,
-      "tags": [
-        "HN",
-        "AI",
-        "story",
-        "author_billybuckwheat"
-      ]
-    },
-    {
-      "id": "hn-50039633",
-      "title": "Show HN: GSD Task Manager – an MCP server that gives your AI agent a task list",
-      "summary": "Show HN: GSD Task Manager – an MCP server that gives your AI agent a task list — 6 points, 3 comments on HN.",
-      "source": "Hacker News",
-      "sourceUrl": "https://github.com/vscarpenter/gsd-task-manager",
-      "category": "products",
-      "date": "2026-10-11",
-      "hot": false,
-      "score": 6,
-      "tags": [
-        "HN",
-        "AI",
-        "story",
-        "author_vscarpenter"
-      ]
-    },
-    {
-      "id": "hn-50039367",
-      "title": "A new AI model that renders generative visuals of what you see",
-      "summary": "A new AI model that renders generative visuals of what you see — 6 points, 0 comments on HN.",
-      "source": "Hacker News",
-      "sourceUrl": "https://www.weizmann.ac.il/pages/news/mathematics-and-computer-science/the-new-science-of-mind-reading",
-      "category": "products",
-      "date": "2026-10-11",
-      "hot": false,
-      "score": 6,
-      "tags": [
-        "HN",
-        "AI",
-        "story",
-        "author_inshard"
-      ]
-    },
-    {
-      "id": "hnoon-61-blog-posts-to-learn-about-efficiency",
-      "title": "61 Blog Posts To Learn About Efficiency",
-      "summary": "Learn everything you need to know about Efficiency via these 61 free HackerNoon blog posts. — by Learn Repo on HackerNoon.",
+      "id": "hnoon-privacy-personalization-and-precision-health-interview-with-",
+      "title": "Privacy, Personalization and Precision Health: Interview with DEPH Labs CEO Lisa Loud",
+      "summary": "Health data remains fragmented across various sources, making it difficult for individuals to control and benefit from their own information. AI can improve healthcare by analyzing — by Olayimika Oyebanji on HackerNoon.",
       "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/61-blog-posts-to-learn-about-efficiency",
+      "sourceUrl": "https://hackernoon.com/privacy-personalization-and-precision-health-interview-with-deph-labs-ceo-lisa-loud",
       "category": "products",
-      "date": "2026-10-10",
+      "date": "2026-10-12",
       "hot": true,
       "score": 100,
       "tags": [
         "HackerNoon",
-        "efficiency",
-        "AI"
-      ]
-    },
-    {
-      "id": "hnoon-the-safer-internet-lie-why-more-surveillance-isnt-making-any",
-      "title": "The Safer Internet Lie: Why More Surveillance Isn't Making Anyone Safer",
-      "summary": "Age verification, digital ID, and data retention are sold as cybersecurity wins. A technical look at who gets monitored, and who simply routes around the rules. — by David Timothy on HackerNoon.",
-      "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/the-safer-internet-lie-why-more-surveillance-isnt-making-anyone-safer",
-      "category": "products",
-      "date": "2026-10-10",
-      "hot": true,
-      "score": 100,
-      "tags": [
-        "HackerNoon",
-        "cybersecurity",
-        "AI"
-      ]
-    },
-    {
-      "id": "hnoon-ai-agent-evaluation-is-the-foundation-of-reliable-autonomy",
-      "title": "AI Agent Evaluation Is the Foundation of Reliable Autonomy",
-      "summary": "AI agent evaluation frameworks test outcomes, tool use, recovery, and cost. Learn how to turn agent experiments into defensible release decisions. — by Veera Ravindra Divi on HackerNoon.",
-      "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/ai-agent-evaluation-is-the-foundation-of-reliable-autonomy",
-      "category": "big-tech",
-      "date": "2026-10-10",
-      "hot": true,
-      "score": 100,
-      "tags": [
-        "HackerNoon",
-        "ai-agent-evaluation",
-        "AI"
-      ]
-    },
-    {
-      "id": "hnoon-europe-needs-more-rockets-can-its-launch-industry-keep-up",
-      "title": "Europe Needs More Rockets. Can Its Launch Industry Keep Up?",
-      "summary": "ESA is reviewing Europe's rocket launch capacity as satellite demand grows, while funding new launch providers alongside Ariane 6 and Vega-C. — by 150Sec on HackerNoon.",
-      "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/europe-needs-more-rockets-can-its-launch-industry-keep-up",
-      "category": "big-tech",
-      "date": "2026-10-10",
-      "hot": true,
-      "score": 100,
-      "tags": [
-        "HackerNoon",
-        "european-space-agency",
-        "AI"
-      ]
-    },
-    {
-      "id": "hnoon-10-10-2026-techbeat",
-      "title": "The TechBeat: The Billing Ladder: Five Ways to Price an AI Agent (10/10/2026)",
-      "summary": "10/10/2026: Trending stories on Hackernoon today! — by Techbeat on HackerNoon.",
-      "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/10-10-2026-techbeat",
-      "category": "products",
-      "date": "2026-10-10",
-      "hot": true,
-      "score": 100,
-      "tags": [
-        "HackerNoon",
-        "tech-beat",
-        "AI"
-      ]
-    },
-    {
-      "id": "dev-4821943",
-      "title": "AI Got Better While I Was Away. Software Didn't.",
-      "summary": "I haven't written here in a while.  Not because I ran out of opinions.  That would be concerning.  I... — 52 reactions, 47 comments on DEV.to.",
-      "source": "DEV.to",
-      "sourceUrl": "https://dev.to/the_nortern_dev/ai-got-better-while-i-was-away-software-didnt-4b2b",
-      "category": "products",
-      "date": "2026-10-09",
-      "hot": true,
-      "score": 52,
-      "tags": [
-        "DEV.to",
         "ai",
-        "ai",
-        "programming"
+        "AI"
       ]
     },
     {
-      "id": "dev-4821589",
-      "title": "Super-Intelligent Yes-Men: Are We Training AI to Ignore the Truth?",
-      "summary": "This is a submission for the Kaggle Benchmarking Challenge           What I Benchmarked   A published... — 39 reactions, 21 comments on DEV.to.",
+      "id": "dev-4832839",
+      "title": "\"Light don go\": when Nigeria''s power cuts out, my laptop sends me outside",
+      "summary": "This is a submission for the Hacktoberfest Open-Source AI Challenge Week 1: Touch Grass          ... — 10 reactions, 1 comments on DEV.to.",
       "source": "DEV.to",
-      "sourceUrl": "https://dev.to/dannwaneri/super-intelligent-yes-men-are-we-training-ai-to-ignore-the-truth-epp",
+      "sourceUrl": "https://dev.to/dannwaneri/light-don-go-when-nigerias-power-cuts-out-my-laptop-sends-me-outside-38k8",
       "category": "products",
-      "date": "2026-10-09",
-      "hot": true,
-      "score": 39,
+      "date": "2026-10-12",
+      "hot": false,
+      "score": 10,
       "tags": [
         "DEV.to",
         "ai",
         "devchallenge",
-        "kagglechallenge"
+        "hf26challenge"
       ]
     },
     {
-      "id": "hntop-50000488",
-      "title": "Why isn't the industry freaking out about DeepSeek 4.1 Flash?",
-      "summary": "Why isn't the industry freaking out about DeepSeek 4.1 Flash? — 1114 points, 977 comments on HN.",
+      "id": "hn-50050732",
+      "title": "Show HN: Skills Hub, a desktop app for managing AI agent skills",
+      "summary": "Show HN: Skills Hub, a desktop app for managing AI agent skills — 9 points, 1 comments on HN.",
       "source": "Hacker News",
-      "sourceUrl": "https://www.dgt.is/blog/2026-10-07-deepseek-freek-out/",
+      "sourceUrl": "https://github.com/qufei1993/skills-hub",
       "category": "products",
-      "date": "2026-10-08",
-      "hot": true,
-      "score": 1114,
+      "date": "2026-10-12",
+      "hot": false,
+      "score": 9,
       "tags": [
         "HN",
-        "top"
+        "AI",
+        "story",
+        "author_qufei1993"
       ]
     },
     {
-      "id": "ax-2610.12341v1",
-      "title": "Can AI Agents Learn Their Way to the Top? Evaluating Heuristic Learning in a Long-Running Game Agent Competition",
-      "summary": "Adversarial games have driven advances from heuristic search to reinforcement learning, yet learning and adapting strategies from limited samples remain challenging. AI agents offer an alternative by turning game experie",
-      "source": "arXiv",
-      "sourceUrl": "http://arxiv.org/abs/2610.12341v1",
+      "id": "hn-50052217",
+      "title": "AI-Built Torrent Site Looks Inside Downloads to Catch Fakes and Malware",
+      "summary": "AI-Built Torrent Site Looks Inside Downloads to Catch Fakes and Malware — 7 points, 2 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://torrentfreak.com/ai-built-torrent-site-looks-inside-downloads-to-catch-fakes-and-malware/",
       "category": "products",
-      "date": "2026-10-08",
+      "date": "2026-10-12",
+      "hot": false,
+      "score": 7,
+      "tags": [
+        "HN",
+        "AI",
+        "story",
+        "author_HieronymusBosch"
+      ]
+    },
+    {
+      "id": "hn-50051894",
+      "title": "Ask HN: As a Democrat in USA, how can you support AI datacenters?",
+      "summary": "Ask HN: As a Democrat in USA, how can you support AI datacenters? — 4 points, 1 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://news.ycombinator.com/item?id=50051894",
+      "category": "products",
+      "date": "2026-10-12",
+      "hot": false,
+      "score": 4,
+      "tags": [
+        "HN",
+        "AI",
+        "story",
+        "author_roschdal"
+      ]
+    },
+    {
+      "id": "hnoon-google-lsas-october-update-creates-a-new-lead-attribution-pr",
+      "title": "Google LSA's October Update Creates a New Lead Attribution Problem",
+      "summary": "Google’s October 2026 LSA update changes how missed calls, follow-ups, IVR interactions, and bookings become billable leads. — by Mayur S on HackerNoon.",
+      "source": "HackerNoon",
+      "sourceUrl": "https://hackernoon.com/google-lsas-october-update-creates-a-new-lead-attribution-problem",
+      "category": "big-tech",
+      "date": "2026-10-11",
+      "hot": true,
+      "score": 100,
+      "tags": [
+        "HackerNoon",
+        "google-local-service-ads",
+        "AI"
+      ]
+    },
+    {
+      "id": "hnoon-a-short-history-of-the-barcode",
+      "title": "A Short History of the Barcode",
+      "summary": "How Morse code inspired the barcode, why early prototypes failed, and how an IBM engineer created the rectangular barcode used on billions of products today. — by Emmanuel Awosika on HackerNoon.",
+      "source": "HackerNoon",
+      "sourceUrl": "https://hackernoon.com/a-short-history-of-the-barcode",
+      "category": "products",
+      "date": "2026-10-11",
+      "hot": true,
+      "score": 100,
+      "tags": [
+        "HackerNoon",
+        "barcode-history",
+        "AI"
+      ]
+    },
+    {
+      "id": "hnoon-why-rwa-growth-is-a-distribution-story",
+      "title": "Why RWA Growth Is a Distribution Story",
+      "summary": "Tokenized real-world assets grew sharply from 2025 to 2026. Explore the key drivers behind RWA market growth and the shift of assets onchain. — by Evan Ceolini on HackerNoon.",
+      "source": "HackerNoon",
+      "sourceUrl": "https://hackernoon.com/why-rwa-growth-is-a-distribution-story",
+      "category": "products",
+      "date": "2026-10-11",
+      "hot": true,
+      "score": 100,
+      "tags": [
+        "HackerNoon",
+        "rwa-tokenization",
+        "AI"
+      ]
+    },
+    {
+      "id": "hnoon-five-supabase-backup-failure-modes-and-how-to-restore-test-f",
+      "title": "Five Supabase Backup Failure Modes and How to Restore-Test for Them",
+      "summary": "Five Supabase backup setups that look fine until you restore them, from dumps with no rows to lost Storage files, and a 15-minute check that catches them. — by Super Lede on HackerNoon.",
+      "source": "HackerNoon",
+      "sourceUrl": "https://hackernoon.com/five-supabase-backup-failure-modes-and-how-to-restore-test-for-them",
+      "category": "products",
+      "date": "2026-10-11",
+      "hot": true,
+      "score": 100,
+      "tags": [
+        "HackerNoon",
+        "supabase",
+        "AI"
+      ]
+    },
+    {
+      "id": "hnoon-how-we-caught-an-llm-scoring-bug-and-fixed-it-without-compro",
+      "title": "How We Caught an LLM Scoring Bug and Fixed It Without Compromising Our Research",
+      "summary": "A 42-of-42 failure rate in our LLM benchmark was a parser bug. How we found it, fixed our scorer without fudging results, and a checklist for your evals. — by Kruthik Jadhav on HackerNoon.",
+      "source": "HackerNoon",
+      "sourceUrl": "https://hackernoon.com/how-we-caught-an-llm-scoring-bug-and-fixed-it-without-compromising-our-research",
+      "category": "products",
+      "date": "2026-10-11",
+      "hot": true,
+      "score": 100,
+      "tags": [
+        "HackerNoon",
+        "llm-benchmarking",
+        "AI"
+      ]
+    },
+    {
+      "id": "dev-4819360",
+      "title": "How Do We Extract the “Why” from a PR into a CHANGELOG with Jev? 🤔",
+      "summary": "Hoi hoi! 👋  I'm @nyaomaru, a frontend engineer currently building an AI-assisted CHANGELOG generator... — 81 reactions, 36 comments on DEV.to.",
+      "source": "DEV.to",
+      "sourceUrl": "https://dev.to/nyaomaru/how-do-we-extract-the-why-from-a-pr-into-a-changelog-with-jev-52pk",
+      "category": "products",
+      "date": "2026-10-10",
+      "hot": true,
+      "score": 81,
+      "tags": [
+        "DEV.to",
+        "ai",
+        "opensource",
+        "githubactions"
+      ]
+    },
+    {
+      "id": "dev-4826975",
+      "title": "WildProof: Go Outside With a Question, Come Back With Evidence",
+      "summary": "This is a submission for the Hacktoberfest Open-Source AI Challenge Week 1: Touch Grass          ... — 40 reactions, 3 comments on DEV.to.",
+      "source": "DEV.to",
+      "sourceUrl": "https://dev.to/dj29/wildproof-go-outside-with-a-question-come-back-with-evidence-574e",
+      "category": "products",
+      "date": "2026-10-10",
+      "hot": true,
+      "score": 40,
+      "tags": [
+        "DEV.to",
+        "ai",
+        "devchallenge",
+        "hf26challenge"
+      ]
+    },
+    {
+      "id": "dev-4825545",
+      "title": "The Epistemology of Quality",
+      "summary": "How do we know code is correct, and what role does human code review play in knowing it? — 11 reactions, 1 comments on DEV.to.",
+      "source": "DEV.to",
+      "sourceUrl": "https://dev.to/cheetah100/the-epistemology-of-quality-4cmi",
+      "category": "products",
+      "date": "2026-10-10",
+      "hot": false,
+      "score": 11,
+      "tags": [
+        "DEV.to",
+        "ai",
+        "ai",
+        "codereview"
+      ]
+    },
+    {
+      "id": "ax-2610.13750v1",
+      "title": "Studying the Effects of Task Diversity Using Small Mathematical Worlds",
+      "summary": "Basic mathematical tasks like modular addition have been a valuable tool for illuminating aspects of neural network behavior that are challenging to see in noisy, unverifiable, large-scale, real-world settings. These stu",
+      "source": "arXiv",
+      "sourceUrl": "http://arxiv.org/abs/2610.13750v1",
+      "category": "products",
+      "date": "2026-10-09",
       "hot": true,
       "score": 800,
       "tags": [
@@ -285,32 +286,31 @@
       ]
     },
     {
-      "id": "dev-4776935",
-      "title": "To Retry or Not to Retry? That Is the Question.",
-      "summary": "This is a submission for the Kaggle Benchmarking Challenge  Those who read my articles know that a... — 69 reactions, 77 comments on DEV.to.",
-      "source": "DEV.to",
-      "sourceUrl": "https://dev.to/gramli/to-retry-or-not-to-retry-that-is-the-question-1j2l",
-      "category": "products",
-      "date": "2026-10-08",
+      "id": "ax-2610.13695v1",
+      "title": "Verifiable Retrieval for Legal Reasoning through Structure-driven Knowledge Graph",
+      "summary": "Any automation within reliability-critical contexts such as medicine or law has to be transparent and verifiable. Despite their advantages, current LLM-based systems do not meet these requirements due to their inherent b",
+      "source": "arXiv",
+      "sourceUrl": "http://arxiv.org/abs/2610.13695v1",
+      "category": "safety",
+      "date": "2026-10-09",
       "hot": true,
-      "score": 69,
+      "score": 800,
       "tags": [
-        "DEV.to",
-        "ai",
-        "devchallenge",
-        "kagglechallenge"
+        "arXiv",
+        "paper",
+        "AI"
       ]
     }
   ],
   "meta": {
-    "fetchedAt": "2026-10-11T08:18:43.976Z",
+    "fetchedAt": "2026-10-12T08:38:19.721Z",
     "topic": "AI",
     "total": 15,
-    "hot": 11,
+    "hot": 10,
     "sources": [
-      "Hacker News",
       "HackerNoon",
       "DEV.to",
+      "Hacker News",
       "arXiv"
     ]
   }
