@@ -1,12 +1,12 @@
 {
-  "generatedAt": "2026-10-12T08:38:19.721Z",
+  "generatedAt": "2026-10-13T08:57:59.574Z",
   "generatedBy": "YUNIE × Last30Days",
   "version": 2,
   "description": "Tin AI mới nhất — tổng hợp từ Last30Days (HN, GitHub, DEV.to, Reddit, arXiv, HackerNoon) trong 30 ngày qua. Chủ đề: AI. Tự động cập nhật bởi YUNIE.",
   "last30days": {
     "enabled": true,
     "topic": "AI",
-    "since": "2026-09-12",
+    "since": "2026-09-13",
     "days": 30,
     "sources": [
       "Hacker News (Algolia, free)",
@@ -55,13 +55,29 @@
   ],
   "articles": [
     {
-      "id": "hnoon-privacy-personalization-and-precision-health-interview-with-",
-      "title": "Privacy, Personalization and Precision Health: Interview with DEPH Labs CEO Lisa Loud",
-      "summary": "Health data remains fragmented across various sources, making it difficult for individuals to control and benefit from their own information. AI can improve healthcare by analyzing — by Olayimika Oyebanji on HackerNoon.",
+      "id": "hnoon-how-to-fix-one-detail-on-an-ai-generated-3d-model-without-lo",
+      "title": "How to Fix One Detail on an AI-Generated 3D Model Without Losing the Rest",
+      "summary": "Meshy Edit is a mesh-editing model that allows users to change specific parts of a 3D model by selecting the area and describing the desired change in plain language. It handles th — by Meshy on HackerNoon.",
       "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/privacy-personalization-and-precision-health-interview-with-deph-labs-ceo-lisa-loud",
+      "sourceUrl": "https://hackernoon.com/how-to-fix-one-detail-on-an-ai-generated-3d-model-without-losing-the-rest",
       "category": "products",
-      "date": "2026-10-12",
+      "date": "2026-10-13",
+      "hot": true,
+      "score": 100,
+      "tags": [
+        "HackerNoon",
+        "3d-printing",
+        "AI"
+      ]
+    },
+    {
+      "id": "hnoon-6-ways-to-introduce-ai-agents-into-business-workflows",
+      "title": "6 Ways to Introduce AI Agents Into Business Workflows",
+      "summary": "There are many different ways to use AI agents, with every business having to find solutions that fit their workflows. Read All — by Dmytro Spilka on HackerNoon.",
+      "source": "HackerNoon",
+      "sourceUrl": "https://hackernoon.com/6-ways-to-introduce-ai-agents-into-business-workflows",
+      "category": "products",
+      "date": "2026-10-13",
       "hot": true,
       "score": 100,
       "tags": [
@@ -71,163 +87,197 @@
       ]
     },
     {
-      "id": "dev-4832839",
-      "title": "\"Light don go\": when Nigeria''s power cuts out, my laptop sends me outside",
-      "summary": "This is a submission for the Hacktoberfest Open-Source AI Challenge Week 1: Touch Grass          ... — 10 reactions, 1 comments on DEV.to.",
-      "source": "DEV.to",
-      "sourceUrl": "https://dev.to/dannwaneri/light-don-go-when-nigerias-power-cuts-out-my-laptop-sends-me-outside-38k8",
-      "category": "products",
-      "date": "2026-10-12",
-      "hot": false,
-      "score": 10,
-      "tags": [
-        "DEV.to",
-        "ai",
-        "devchallenge",
-        "hf26challenge"
-      ]
-    },
-    {
-      "id": "hn-50050732",
-      "title": "Show HN: Skills Hub, a desktop app for managing AI agent skills",
-      "summary": "Show HN: Skills Hub, a desktop app for managing AI agent skills — 9 points, 1 comments on HN.",
+      "id": "hn-50068210",
+      "title": "Linus Torvalds \"Did What I Preach\" Used AI to Make Code Decipherabl, Find Bugs",
+      "summary": "Linus Torvalds \"Did What I Preach\" Used AI to Make Code Decipherabl, Find Bugs — 7 points, 0 comments on HN.",
       "source": "Hacker News",
-      "sourceUrl": "https://github.com/qufei1993/skills-hub",
-      "category": "products",
-      "date": "2026-10-12",
-      "hot": false,
-      "score": 9,
-      "tags": [
-        "HN",
-        "AI",
-        "story",
-        "author_qufei1993"
-      ]
-    },
-    {
-      "id": "hn-50052217",
-      "title": "AI-Built Torrent Site Looks Inside Downloads to Catch Fakes and Malware",
-      "summary": "AI-Built Torrent Site Looks Inside Downloads to Catch Fakes and Malware — 7 points, 2 comments on HN.",
-      "source": "Hacker News",
-      "sourceUrl": "https://torrentfreak.com/ai-built-torrent-site-looks-inside-downloads-to-catch-fakes-and-malware/",
-      "category": "products",
-      "date": "2026-10-12",
+      "sourceUrl": "https://www.phoronix.com/news/Linus-Torvalds-Assoc-Array",
+      "category": "safety",
+      "date": "2026-10-13",
       "hot": false,
       "score": 7,
       "tags": [
         "HN",
         "AI",
         "story",
-        "author_HieronymusBosch"
+        "author_raybb"
       ]
     },
     {
-      "id": "hn-50051894",
-      "title": "Ask HN: As a Democrat in USA, how can you support AI datacenters?",
-      "summary": "Ask HN: As a Democrat in USA, how can you support AI datacenters? — 4 points, 1 comments on HN.",
+      "id": "hn-50068225",
+      "title": "Chinese data vendors emerging and trying to go global – focus on healthcare data",
+      "summary": "Chinese data vendors emerging and trying to go global – focus on healthcare data — 4 points, 0 comments on HN.",
       "source": "Hacker News",
-      "sourceUrl": "https://news.ycombinator.com/item?id=50051894",
+      "sourceUrl": "https://aiproem.substack.com/p/does-china-not-have-data-vendors",
       "category": "products",
-      "date": "2026-10-12",
+      "date": "2026-10-13",
       "hot": false,
       "score": 4,
       "tags": [
         "HN",
         "AI",
         "story",
-        "author_roschdal"
+        "author_pretext"
       ]
     },
     {
-      "id": "hnoon-google-lsas-october-update-creates-a-new-lead-attribution-pr",
-      "title": "Google LSA's October Update Creates a New Lead Attribution Problem",
-      "summary": "Google’s October 2026 LSA update changes how missed calls, follow-ups, IVR interactions, and bookings become billable leads. — by Mayur S on HackerNoon.",
+      "id": "hn-50068154",
+      "title": "Welcome to the age of decadence without pleasure",
+      "summary": "Welcome to the age of decadence without pleasure — 4 points, 0 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://www.theguardian.com/us-news/ng-interactive/2026/jul/26/age-of-decadence-pleasure-ai",
+      "category": "products",
+      "date": "2026-10-13",
+      "hot": false,
+      "score": 4,
+      "tags": [
+        "HN",
+        "AI",
+        "story",
+        "author_XzetaU8"
+      ]
+    },
+    {
+      "id": "hnoon-a7-to-unveil-a-service-that-will-re-invent-the-international",
+      "title": "A7 To Unveil a Service That Will Re-invent The International Payments Market",
+      "summary": "The service will cater primarily to foreign trade operators, but individuals are also eligible customers. The fee remains fixed at 0.3 percent. — by Chainwire on HackerNoon.",
       "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/google-lsas-october-update-creates-a-new-lead-attribution-problem",
-      "category": "big-tech",
-      "date": "2026-10-11",
+      "sourceUrl": "https://hackernoon.com/a7-to-unveil-a-service-that-will-re-invent-the-international-payments-market",
+      "category": "products",
+      "date": "2026-10-12",
       "hot": true,
       "score": 100,
       "tags": [
         "HackerNoon",
-        "google-local-service-ads",
+        "web3",
         "AI"
       ]
     },
     {
-      "id": "hnoon-a-short-history-of-the-barcode",
-      "title": "A Short History of the Barcode",
-      "summary": "How Morse code inspired the barcode, why early prototypes failed, and how an IBM engineer created the rectangular barcode used on billions of products today. — by Emmanuel Awosika on HackerNoon.",
+      "id": "hnoon-72-blog-posts-to-learn-about-excel",
+      "title": "72 Blog Posts To Learn About Excel",
+      "summary": "Learn everything you need to know about Excel via these 72 free HackerNoon blog posts. — by Learn Repo on HackerNoon.",
       "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/a-short-history-of-the-barcode",
+      "sourceUrl": "https://hackernoon.com/72-blog-posts-to-learn-about-excel",
+      "category": "products",
+      "date": "2026-10-12",
+      "hot": true,
+      "score": 100,
+      "tags": [
+        "HackerNoon",
+        "excel",
+        "AI"
+      ]
+    },
+    {
+      "id": "hnoon-your-portfolio-tracker-is-answering-a-question-you-never-ask",
+      "title": "Your Portfolio Tracker Is Answering a Question You Never Asked",
+      "summary": "— A portfolio balance answers \"what is it worth.\" It cannot answer \"how did it get there,\" because nearly every tracker stores positions and throws away the events that produced th — by Steffan Kharmaaiarvi on HackerNoon",
+      "source": "HackerNoon",
+      "sourceUrl": "https://hackernoon.com/your-portfolio-tracker-is-answering-a-question-you-never-asked",
+      "category": "products",
+      "date": "2026-10-12",
+      "hot": true,
+      "score": 100,
+      "tags": [
+        "HackerNoon",
+        "fintech",
+        "AI"
+      ]
+    },
+    {
+      "id": "hnoon-most-ai-agents-are-just-flowcharts-with-good-marketing",
+      "title": "Most \"AI Agents\" Are Just Flowcharts With Good Marketing",
+      "summary": "Software labeled \"agentic\" today is just a thin LLM wrapper around simple API calls. Real enterprise ROI from autonomous agents isn't happening in basic chat interfaces it is happe — by Abhilash Pakalapati on HackerNoon.",
+      "source": "HackerNoon",
+      "sourceUrl": "https://hackernoon.com/most-ai-agents-are-just-flowcharts-with-good-marketing",
+      "category": "products",
+      "date": "2026-10-12",
+      "hot": true,
+      "score": 100,
+      "tags": [
+        "HackerNoon",
+        "enterprisesoftware",
+        "AI"
+      ]
+    },
+    {
+      "id": "hnoon-kubernetes-security-best-practices-for-production-clusters",
+      "title": "Kubernetes Security Best Practices for Production Clusters",
+      "summary": "Explore Kubernetes security best practices covering RBAC, pod hardening, network policies, secrets, supply chain protection, and runtime monitoring. — by Varun Varde on HackerNoon.",
+      "source": "HackerNoon",
+      "sourceUrl": "https://hackernoon.com/kubernetes-security-best-practices-for-production-clusters",
+      "category": "products",
+      "date": "2026-10-12",
+      "hot": true,
+      "score": 100,
+      "tags": [
+        "HackerNoon",
+        "kubernetes",
+        "AI"
+      ]
+    },
+    {
+      "id": "dev-4832848",
+      "title": "Georgian Language Benchmark: Two Biggest AI Labs Clash in a Language That Doesn't Play by Anyone's Rules",
+      "summary": "This is a submission for the Kaggle Benchmarking Challenge           Table of Contents    One Eye,... — 53 reactions, 30 comments on DEV.to.",
+      "source": "DEV.to",
+      "sourceUrl": "https://dev.to/georgekobaidze/georgian-language-benchmark-two-biggest-ai-labs-clash-in-a-language-that-doesnt-play-by-anyones-5b22",
       "category": "products",
       "date": "2026-10-11",
       "hot": true,
-      "score": 100,
+      "score": 53,
       "tags": [
-        "HackerNoon",
-        "barcode-history",
-        "AI"
+        "DEV.to",
+        "ai",
+        "devchallenge",
+        "kagglechallenge"
       ]
     },
     {
-      "id": "hnoon-why-rwa-growth-is-a-distribution-story",
-      "title": "Why RWA Growth Is a Distribution Story",
-      "summary": "Tokenized real-world assets grew sharply from 2025 to 2026. Explore the key drivers behind RWA market growth and the shift of assets onchain. — by Evan Ceolini on HackerNoon.",
-      "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/why-rwa-growth-is-a-distribution-story",
+      "id": "dev-4824002",
+      "title": "One Weekend: 3,000 Open-Source AI Projects",
+      "summary": "Every October for the past twelve years, developers around the world have taken part in... — 48 reactions, 4 comments on DEV.to.",
+      "source": "DEV.to",
+      "sourceUrl": "https://dev.to/dailycontext/one-weekend-3000-open-source-ai-projects-3g65",
       "category": "products",
       "date": "2026-10-11",
       "hot": true,
-      "score": 100,
+      "score": 48,
       "tags": [
-        "HackerNoon",
-        "rwa-tokenization",
-        "AI"
+        "DEV.to",
+        "ai",
+        "aie",
+        "hacktoberfest"
       ]
     },
     {
-      "id": "hnoon-five-supabase-backup-failure-modes-and-how-to-restore-test-f",
-      "title": "Five Supabase Backup Failure Modes and How to Restore-Test for Them",
-      "summary": "Five Supabase backup setups that look fine until you restore them, from dumps with no rows to lost Storage files, and a 15-minute check that catches them. — by Super Lede on HackerNoon.",
-      "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/five-supabase-backup-failure-modes-and-how-to-restore-test-for-them",
+      "id": "dev-4830780",
+      "title": "What LLMs 'Know' That You Don't Know They Know: Stop Inventing Prompt DSLs and Ride 50 Years of Unix Pre-Training Gravity",
+      "summary": "Why did a 1976 Makefile (Part 3.6) and a 1983 Unix init.d directory (Part 3.7) outperform 2,000 lines of English prompt rules? Because prompt engineering is static symbol linkage against 50 years of pre-trained computer  — 28 reactions, 35 comments on DEV.to.",
+      "source": "DEV.to",
+      "sourceUrl": "https://dev.to/gde/what-llms-know-that-you-dont-know-they-know-stop-inventing-prompt-dsls-and-ride-50-years-of-2bl6",
       "category": "products",
       "date": "2026-10-11",
-      "hot": true,
-      "score": 100,
+      "hot": false,
+      "score": 28,
       "tags": [
-        "HackerNoon",
-        "supabase",
-        "AI"
-      ]
-    },
-    {
-      "id": "hnoon-how-we-caught-an-llm-scoring-bug-and-fixed-it-without-compro",
-      "title": "How We Caught an LLM Scoring Bug and Fixed It Without Compromising Our Research",
-      "summary": "A 42-of-42 failure rate in our LLM benchmark was a parser bug. How we found it, fixed our scorer without fudging results, and a checklist for your evals. — by Kruthik Jadhav on HackerNoon.",
-      "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/how-we-caught-an-llm-scoring-bug-and-fixed-it-without-compromising-our-research",
-      "category": "products",
-      "date": "2026-10-11",
-      "hot": true,
-      "score": 100,
-      "tags": [
-        "HackerNoon",
-        "llm-benchmarking",
-        "AI"
+        "DEV.to",
+        "ai",
+        "ai",
+        "programming"
       ]
     },
     {
       "id": "dev-4819360",
       "title": "How Do We Extract the “Why” from a PR into a CHANGELOG with Jev? 🤔",
-      "summary": "Hoi hoi! 👋  I'm @nyaomaru, a frontend engineer currently building an AI-assisted CHANGELOG generator... — 81 reactions, 36 comments on DEV.to.",
+      "summary": "Hoi hoi! 👋  I'm @nyaomaru, a frontend engineer currently building an AI-assisted CHANGELOG generator... — 89 reactions, 41 comments on DEV.to.",
       "source": "DEV.to",
       "sourceUrl": "https://dev.to/nyaomaru/how-do-we-extract-the-why-from-a-pr-into-a-changelog-with-jev-52pk",
       "category": "products",
       "date": "2026-10-10",
       "hot": true,
-      "score": 81,
+      "score": 89,
       "tags": [
         "DEV.to",
         "ai",
@@ -238,80 +288,30 @@
     {
       "id": "dev-4826975",
       "title": "WildProof: Go Outside With a Question, Come Back With Evidence",
-      "summary": "This is a submission for the Hacktoberfest Open-Source AI Challenge Week 1: Touch Grass          ... — 40 reactions, 3 comments on DEV.to.",
+      "summary": "This is a submission for the Hacktoberfest Open-Source AI Challenge Week 1: Touch Grass          ... — 41 reactions, 4 comments on DEV.to.",
       "source": "DEV.to",
       "sourceUrl": "https://dev.to/dj29/wildproof-go-outside-with-a-question-come-back-with-evidence-574e",
       "category": "products",
       "date": "2026-10-10",
       "hot": true,
-      "score": 40,
+      "score": 41,
       "tags": [
         "DEV.to",
         "ai",
         "devchallenge",
         "hf26challenge"
       ]
-    },
-    {
-      "id": "dev-4825545",
-      "title": "The Epistemology of Quality",
-      "summary": "How do we know code is correct, and what role does human code review play in knowing it? — 11 reactions, 1 comments on DEV.to.",
-      "source": "DEV.to",
-      "sourceUrl": "https://dev.to/cheetah100/the-epistemology-of-quality-4cmi",
-      "category": "products",
-      "date": "2026-10-10",
-      "hot": false,
-      "score": 11,
-      "tags": [
-        "DEV.to",
-        "ai",
-        "ai",
-        "codereview"
-      ]
-    },
-    {
-      "id": "ax-2610.13750v1",
-      "title": "Studying the Effects of Task Diversity Using Small Mathematical Worlds",
-      "summary": "Basic mathematical tasks like modular addition have been a valuable tool for illuminating aspects of neural network behavior that are challenging to see in noisy, unverifiable, large-scale, real-world settings. These stu",
-      "source": "arXiv",
-      "sourceUrl": "http://arxiv.org/abs/2610.13750v1",
-      "category": "products",
-      "date": "2026-10-09",
-      "hot": true,
-      "score": 800,
-      "tags": [
-        "arXiv",
-        "paper",
-        "AI"
-      ]
-    },
-    {
-      "id": "ax-2610.13695v1",
-      "title": "Verifiable Retrieval for Legal Reasoning through Structure-driven Knowledge Graph",
-      "summary": "Any automation within reliability-critical contexts such as medicine or law has to be transparent and verifiable. Despite their advantages, current LLM-based systems do not meet these requirements due to their inherent b",
-      "source": "arXiv",
-      "sourceUrl": "http://arxiv.org/abs/2610.13695v1",
-      "category": "safety",
-      "date": "2026-10-09",
-      "hot": true,
-      "score": 800,
-      "tags": [
-        "arXiv",
-        "paper",
-        "AI"
-      ]
     }
   ],
   "meta": {
-    "fetchedAt": "2026-10-12T08:38:19.721Z",
+    "fetchedAt": "2026-10-13T08:57:59.575Z",
     "topic": "AI",
     "total": 15,
-    "hot": 10,
+    "hot": 11,
     "sources": [
       "HackerNoon",
-      "DEV.to",
       "Hacker News",
-      "arXiv"
+      "DEV.to"
     ]
   }
 }
