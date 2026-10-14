@@ -1,12 +1,12 @@
 {
-  "generatedAt": "2026-10-13T08:57:59.574Z",
+  "generatedAt": "2026-10-14T07:07:28.908Z",
   "generatedBy": "YUNIE × Last30Days",
   "version": 2,
   "description": "Tin AI mới nhất — tổng hợp từ Last30Days (HN, GitHub, DEV.to, Reddit, arXiv, HackerNoon) trong 30 ngày qua. Chủ đề: AI. Tự động cập nhật bởi YUNIE.",
   "last30days": {
     "enabled": true,
     "topic": "AI",
-    "since": "2026-09-13",
+    "since": "2026-09-14",
     "days": 30,
     "sources": [
       "Hacker News (Algolia, free)",
@@ -55,29 +55,45 @@
   ],
   "articles": [
     {
-      "id": "hnoon-how-to-fix-one-detail-on-an-ai-generated-3d-model-without-lo",
-      "title": "How to Fix One Detail on an AI-Generated 3D Model Without Losing the Rest",
-      "summary": "Meshy Edit is a mesh-editing model that allows users to change specific parts of a 3D model by selecting the area and describing the desired change in plain language. It handles th — by Meshy on HackerNoon.",
+      "id": "hnoon-i-tried-using-ai-to-shop-for-a-gpu-heres-what-actually-worke",
+      "title": "I Tried Using AI to Shop for a GPU. Here's What Actually Worked",
+      "summary": "A real US GPU search using MCP: irrelevant search results, retailer extraction, and a refurbished RTX 3090 listing checked against its source. Read All — by Michael P on HackerNoon.",
       "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/how-to-fix-one-detail-on-an-ai-generated-3d-model-without-losing-the-rest",
+      "sourceUrl": "https://hackernoon.com/i-tried-using-ai-to-shop-for-a-gpu-heres-what-actually-worked",
       "category": "products",
-      "date": "2026-10-13",
+      "date": "2026-10-14",
       "hot": true,
       "score": 100,
       "tags": [
         "HackerNoon",
-        "3d-printing",
+        "mcp",
         "AI"
       ]
     },
     {
-      "id": "hnoon-6-ways-to-introduce-ai-agents-into-business-workflows",
-      "title": "6 Ways to Introduce AI Agents Into Business Workflows",
-      "summary": "There are many different ways to use AI agents, with every business having to find solutions that fit their workflows. Read All — by Dmytro Spilka on HackerNoon.",
+      "id": "hnoon-what-is-llmstxt-and-should-you-add-it-to-your-website",
+      "title": "What Is llms.txt, and Should You Add It to Your Website?",
+      "summary": "What goes in an llms.txt file, the rules worth following, and what it will and will not do for a small business site. Read All — by David Black on HackerNoon.",
       "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/6-ways-to-introduce-ai-agents-into-business-workflows",
+      "sourceUrl": "https://hackernoon.com/what-is-llmstxt-and-should-you-add-it-to-your-website",
       "category": "products",
-      "date": "2026-10-13",
+      "date": "2026-10-14",
+      "hot": true,
+      "score": 100,
+      "tags": [
+        "HackerNoon",
+        "seo",
+        "AI"
+      ]
+    },
+    {
+      "id": "hnoon-i-tested-pi-desktop-0161-on-linux-heres-what-worked-and-what",
+      "title": "I Tested PI-Desktop 0.16.1 on Linux: Here's What Worked and What Broke",
+      "summary": "A hands-on, measured test of the v0.16.1 \"early preview\" on Linux: a 165 MB AppImage, a 4.1k-token system prompt, one good subagent run and one Goal run that went wrong. Read All — by Ishank Choudhary on HackerNoon.",
+      "source": "HackerNoon",
+      "sourceUrl": "https://hackernoon.com/i-tested-pi-desktop-0161-on-linux-heres-what-worked-and-what-broke",
+      "category": "products",
+      "date": "2026-10-14",
       "hot": true,
       "score": 100,
       "tags": [
@@ -87,64 +103,94 @@
       ]
     },
     {
-      "id": "hn-50068210",
-      "title": "Linus Torvalds \"Did What I Preach\" Used AI to Make Code Decipherabl, Find Bugs",
-      "summary": "Linus Torvalds \"Did What I Preach\" Used AI to Make Code Decipherabl, Find Bugs — 7 points, 0 comments on HN.",
+      "id": "hnoon-agent-graph-engineering-part-1-the-ai-agent-stack-i-wish-id-",
+      "title": "Agent Graph Engineering, Part 1: The AI Agent Stack I Wish I'd Had Five Years Ago",
+      "summary": "The stack is Python, Pydantic AI for agents, LangGraph for the flow, chanx for typed streaming WebSockets and a generated frontend contract, OpenTelemetry into a trace store you ow — by Huy Nguyen on HackerNoon.",
+      "source": "HackerNoon",
+      "sourceUrl": "https://hackernoon.com/agent-graph-engineering-part-1-the-ai-agent-stack-i-wish-id-had-five-years-ago",
+      "category": "products",
+      "date": "2026-10-14",
+      "hot": true,
+      "score": 100,
+      "tags": [
+        "HackerNoon",
+        "ai-agent",
+        "AI"
+      ]
+    },
+    {
+      "id": "hn-50082962",
+      "title": "Anthropic conjures threat that doesn't exist yet to stoke fears of AI apocalypse",
+      "summary": "Anthropic conjures threat that doesn't exist yet to stoke fears of AI apocalypse — 61 points, 49 comments on HN.",
       "source": "Hacker News",
-      "sourceUrl": "https://www.phoronix.com/news/Linus-Torvalds-Assoc-Array",
+      "sourceUrl": "https://www.theregister.com/ai-and-ml/2026/10/13/anthropic-conjures-another-threat-that-doesnt-exist-yet-to-stoke-fears-of-ai-apocalypse/5302866",
+      "category": "big-tech",
+      "date": "2026-10-14",
+      "hot": false,
+      "score": 61,
+      "tags": [
+        "HN",
+        "AI",
+        "story",
+        "author_beardyw"
+      ]
+    },
+    {
+      "id": "hnoon-seeing-the-threat-why-counter-uas-needs-an-ai-brain-that-det",
+      "title": "Seeing the Threat: Why Counter-UAS Needs an AI Brain That Detects Aerial Threats With Vision Alone",
+      "summary": "drones have become the next major threat in aerial warfare. One drone can achieve a lot of damage than expensive missiles. But the biggest threat is not one drone, it is coordinate — by vishwa vimukthi gammuduwaththage o",
+      "source": "HackerNoon",
+      "sourceUrl": "https://hackernoon.com/seeing-the-threat-why-counter-uas-needs-an-ai-brain-that-detects-aerial-threats-with-vision-alone",
       "category": "safety",
       "date": "2026-10-13",
-      "hot": false,
-      "score": 7,
+      "hot": true,
+      "score": 100,
       "tags": [
-        "HN",
-        "AI",
-        "story",
-        "author_raybb"
+        "HackerNoon",
+        "uavs",
+        "AI"
       ]
     },
     {
-      "id": "hn-50068225",
-      "title": "Chinese data vendors emerging and trying to go global – focus on healthcare data",
-      "summary": "Chinese data vendors emerging and trying to go global – focus on healthcare data — 4 points, 0 comments on HN.",
-      "source": "Hacker News",
-      "sourceUrl": "https://aiproem.substack.com/p/does-china-not-have-data-vendors",
-      "category": "products",
-      "date": "2026-10-13",
-      "hot": false,
-      "score": 4,
-      "tags": [
-        "HN",
-        "AI",
-        "story",
-        "author_pretext"
-      ]
-    },
-    {
-      "id": "hn-50068154",
-      "title": "Welcome to the age of decadence without pleasure",
-      "summary": "Welcome to the age of decadence without pleasure — 4 points, 0 comments on HN.",
-      "source": "Hacker News",
-      "sourceUrl": "https://www.theguardian.com/us-news/ng-interactive/2026/jul/26/age-of-decadence-pleasure-ai",
-      "category": "products",
-      "date": "2026-10-13",
-      "hot": false,
-      "score": 4,
-      "tags": [
-        "HN",
-        "AI",
-        "story",
-        "author_XzetaU8"
-      ]
-    },
-    {
-      "id": "hnoon-a7-to-unveil-a-service-that-will-re-invent-the-international",
-      "title": "A7 To Unveil a Service That Will Re-invent The International Payments Market",
-      "summary": "The service will cater primarily to foreign trade operators, but individuals are also eligible customers. The fee remains fixed at 0.3 percent. — by Chainwire on HackerNoon.",
+      "id": "hnoon-custom-etl-or-ai-choosing-the-right-strategy-for-legacy-data",
+      "title": "Custom ETL or AI? Choosing the Right Strategy for Legacy Data Migration",
+      "summary": "Compare Custom ETL vs. AI data pipeline migration. Learn why the best strategy lets AI automate the grunt work while engineers manage the high-risk tasks. — by aparnamitra on HackerNoon.",
       "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/a7-to-unveil-a-service-that-will-re-invent-the-international-payments-market",
+      "sourceUrl": "https://hackernoon.com/custom-etl-or-ai-choosing-the-right-strategy-for-legacy-data-migration",
+      "category": "safety",
+      "date": "2026-10-13",
+      "hot": true,
+      "score": 100,
+      "tags": [
+        "HackerNoon",
+        "ai-assisted-data-migration",
+        "AI"
+      ]
+    },
+    {
+      "id": "hnoon-50-blog-posts-to-learn-about-film-and-tv",
+      "title": "50 Blog Posts To Learn About Film And Tv",
+      "summary": "Learn everything you need to know about Film And Tv via these 50 free HackerNoon blog posts. — by Learn Repo on HackerNoon.",
+      "source": "HackerNoon",
+      "sourceUrl": "https://hackernoon.com/50-blog-posts-to-learn-about-film-and-tv",
       "category": "products",
-      "date": "2026-10-12",
+      "date": "2026-10-13",
+      "hot": true,
+      "score": 100,
+      "tags": [
+        "HackerNoon",
+        "film-and-tv",
+        "AI"
+      ]
+    },
+    {
+      "id": "hnoon-privacy-by-default-disclosure-by-choicericchezza-coin-prepar",
+      "title": "Privacy by Default. Disclosure by Choice:Ricchezza Coin Prepares to Launch Layer 1 Privacy Ecosystem",
+      "summary": "One company helped establish demand for private digital transactions. The other one demonstrated the potential of zero-knowledge technology and shielded transac — by Chainwire on HackerNoon.",
+      "source": "HackerNoon",
+      "sourceUrl": "https://hackernoon.com/privacy-by-default-disclosure-by-choicericchezza-coin-prepares-to-launch-layer-1-privacy-ecosystem",
+      "category": "products",
+      "date": "2026-10-13",
       "hot": true,
       "score": 100,
       "tags": [
@@ -154,113 +200,83 @@
       ]
     },
     {
-      "id": "hnoon-72-blog-posts-to-learn-about-excel",
-      "title": "72 Blog Posts To Learn About Excel",
-      "summary": "Learn everything you need to know about Excel via these 72 free HackerNoon blog posts. — by Learn Repo on HackerNoon.",
-      "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/72-blog-posts-to-learn-about-excel",
-      "category": "products",
-      "date": "2026-10-12",
-      "hot": true,
-      "score": 100,
-      "tags": [
-        "HackerNoon",
-        "excel",
-        "AI"
-      ]
-    },
-    {
-      "id": "hnoon-your-portfolio-tracker-is-answering-a-question-you-never-ask",
-      "title": "Your Portfolio Tracker Is Answering a Question You Never Asked",
-      "summary": "— A portfolio balance answers \"what is it worth.\" It cannot answer \"how did it get there,\" because nearly every tracker stores positions and throws away the events that produced th — by Steffan Kharmaaiarvi on HackerNoon",
-      "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/your-portfolio-tracker-is-answering-a-question-you-never-asked",
-      "category": "products",
-      "date": "2026-10-12",
-      "hot": true,
-      "score": 100,
-      "tags": [
-        "HackerNoon",
-        "fintech",
-        "AI"
-      ]
-    },
-    {
-      "id": "hnoon-most-ai-agents-are-just-flowcharts-with-good-marketing",
-      "title": "Most \"AI Agents\" Are Just Flowcharts With Good Marketing",
-      "summary": "Software labeled \"agentic\" today is just a thin LLM wrapper around simple API calls. Real enterprise ROI from autonomous agents isn't happening in basic chat interfaces it is happe — by Abhilash Pakalapati on HackerNoon.",
-      "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/most-ai-agents-are-just-flowcharts-with-good-marketing",
-      "category": "products",
-      "date": "2026-10-12",
-      "hot": true,
-      "score": 100,
-      "tags": [
-        "HackerNoon",
-        "enterprisesoftware",
-        "AI"
-      ]
-    },
-    {
-      "id": "hnoon-kubernetes-security-best-practices-for-production-clusters",
-      "title": "Kubernetes Security Best Practices for Production Clusters",
-      "summary": "Explore Kubernetes security best practices covering RBAC, pod hardening, network policies, secrets, supply chain protection, and runtime monitoring. — by Varun Varde on HackerNoon.",
-      "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/kubernetes-security-best-practices-for-production-clusters",
-      "category": "products",
-      "date": "2026-10-12",
-      "hot": true,
-      "score": 100,
-      "tags": [
-        "HackerNoon",
-        "kubernetes",
-        "AI"
-      ]
-    },
-    {
-      "id": "dev-4832848",
-      "title": "Georgian Language Benchmark: Two Biggest AI Labs Clash in a Language That Doesn't Play by Anyone's Rules",
-      "summary": "This is a submission for the Kaggle Benchmarking Challenge           Table of Contents    One Eye,... — 53 reactions, 30 comments on DEV.to.",
+      "id": "dev-4826108",
+      "title": "AI Fatigue? Yea I know.",
+      "summary": "I don't know how to start this off really haha. Though to be fair, everyone is talking about AI... — 65 reactions, 18 comments on DEV.to.",
       "source": "DEV.to",
-      "sourceUrl": "https://dev.to/georgekobaidze/georgian-language-benchmark-two-biggest-ai-labs-clash-in-a-language-that-doesnt-play-by-anyones-5b22",
+      "sourceUrl": "https://dev.to/francistrdev/ai-fatigue-yea-i-know-f9",
       "category": "products",
-      "date": "2026-10-11",
+      "date": "2026-10-13",
       "hot": true,
-      "score": 53,
+      "score": 65,
+      "tags": [
+        "DEV.to",
+        "ai",
+        "discuss",
+        "community"
+      ]
+    },
+    {
+      "id": "dev-4826026",
+      "title": "Local embeddings with llamadart: how llamas share secrets",
+      "summary": "Beyond chat with llamadart · Part 2    Llama Village, where five llamas share a world without sharing... — 33 reactions, 0 comments on DEV.to.",
+      "source": "DEV.to",
+      "sourceUrl": "https://dev.to/gde/local-embeddings-with-llamadart-how-llamas-share-secrets-46o",
+      "category": "products",
+      "date": "2026-10-12",
+      "hot": true,
+      "score": 33,
+      "tags": [
+        "DEV.to",
+        "ai",
+        "dart",
+        "ai"
+      ]
+    },
+    {
+      "id": "dev-4832839",
+      "title": "\"Light don go\": when Nigeria''s power cuts out, my laptop sends me outside",
+      "summary": "This is a submission for the Hacktoberfest Open-Source AI Challenge Week 1: Touch Grass          ... — 30 reactions, 15 comments on DEV.to.",
+      "source": "DEV.to",
+      "sourceUrl": "https://dev.to/dannwaneri/light-don-go-when-nigerias-power-cuts-out-my-laptop-sends-me-outside-38k8",
+      "category": "products",
+      "date": "2026-10-12",
+      "hot": false,
+      "score": 30,
       "tags": [
         "DEV.to",
         "ai",
         "devchallenge",
-        "kagglechallenge"
+        "hf26challenge"
       ]
     },
     {
-      "id": "dev-4824002",
-      "title": "One Weekend: 3,000 Open-Source AI Projects",
-      "summary": "Every October for the past twelve years, developers around the world have taken part in... — 48 reactions, 4 comments on DEV.to.",
+      "id": "dev-4839261",
+      "title": "What 9,050 AI-Written Scripts Taught Me About Slop",
+      "summary": "You’ve read way too many versions of this paragraph already. Probably even this week:   “In today’s... — 16 reactions, 2 comments on DEV.to.",
       "source": "DEV.to",
-      "sourceUrl": "https://dev.to/dailycontext/one-weekend-3000-open-source-ai-projects-3g65",
-      "category": "products",
-      "date": "2026-10-11",
-      "hot": true,
-      "score": 48,
+      "sourceUrl": "https://dev.to/dailycontext/what-9050-ai-written-scripts-taught-me-about-slop-1g5n",
+      "category": "safety",
+      "date": "2026-10-12",
+      "hot": false,
+      "score": 16,
       "tags": [
         "DEV.to",
         "ai",
-        "aie",
-        "hacktoberfest"
+        "ai",
+        "llm"
       ]
     },
     {
-      "id": "dev-4830780",
-      "title": "What LLMs 'Know' That You Don't Know They Know: Stop Inventing Prompt DSLs and Ride 50 Years of Unix Pre-Training Gravity",
-      "summary": "Why did a 1976 Makefile (Part 3.6) and a 1983 Unix init.d directory (Part 3.7) outperform 2,000 lines of English prompt rules? Because prompt engineering is static symbol linkage against 50 years of pre-trained computer  — 28 reactions, 35 comments on DEV.to.",
+      "id": "dev-4835698",
+      "title": "If You Never Do Anything Else to Fix Your Prompts, Do This One Thing",
+      "summary": "Why do LLMs confidently invent APIs that have never existed in the history of the universe? It is not a memory defect. Agents hallucinated because they were committed to the prompt—and Fernando Flores solved the root cau — 15 reactions, 4 comments on DEV.to.",
       "source": "DEV.to",
-      "sourceUrl": "https://dev.to/gde/what-llms-know-that-you-dont-know-they-know-stop-inventing-prompt-dsls-and-ride-50-years-of-2bl6",
+      "sourceUrl": "https://dev.to/gde/if-you-never-do-anything-else-to-fix-your-prompts-do-this-one-thing-3069",
       "category": "products",
-      "date": "2026-10-11",
+      "date": "2026-10-12",
       "hot": false,
-      "score": 28,
+      "score": 15,
       "tags": [
         "DEV.to",
         "ai",
@@ -269,45 +285,28 @@
       ]
     },
     {
-      "id": "dev-4819360",
-      "title": "How Do We Extract the “Why” from a PR into a CHANGELOG with Jev? 🤔",
-      "summary": "Hoi hoi! 👋  I'm @nyaomaru, a frontend engineer currently building an AI-assisted CHANGELOG generator... — 89 reactions, 41 comments on DEV.to.",
+      "id": "dev-4839337",
+      "title": "AI Needs a Test That Fights Back",
+      "summary": "One right answer is not the same as a good sequence of decisions. eSlams is building a public stadium... — 8 reactions, 1 comments on DEV.to.",
       "source": "DEV.to",
-      "sourceUrl": "https://dev.to/nyaomaru/how-do-we-extract-the-why-from-a-pr-into-a-changelog-with-jev-52pk",
+      "sourceUrl": "https://dev.to/dailycontext/ai-needs-a-test-that-fights-back-4f17",
       "category": "products",
-      "date": "2026-10-10",
-      "hot": true,
-      "score": 89,
+      "date": "2026-10-12",
+      "hot": false,
+      "score": 8,
       "tags": [
         "DEV.to",
         "ai",
-        "opensource",
-        "githubactions"
-      ]
-    },
-    {
-      "id": "dev-4826975",
-      "title": "WildProof: Go Outside With a Question, Come Back With Evidence",
-      "summary": "This is a submission for the Hacktoberfest Open-Source AI Challenge Week 1: Touch Grass          ... — 41 reactions, 4 comments on DEV.to.",
-      "source": "DEV.to",
-      "sourceUrl": "https://dev.to/dj29/wildproof-go-outside-with-a-question-come-back-with-evidence-574e",
-      "category": "products",
-      "date": "2026-10-10",
-      "hot": true,
-      "score": 41,
-      "tags": [
-        "DEV.to",
         "ai",
-        "devchallenge",
-        "hf26challenge"
+        "opensource"
       ]
     }
   ],
   "meta": {
-    "fetchedAt": "2026-10-13T08:57:59.575Z",
+    "fetchedAt": "2026-10-14T07:07:28.909Z",
     "topic": "AI",
     "total": 15,
-    "hot": 11,
+    "hot": 10,
     "sources": [
       "HackerNoon",
       "Hacker News",
