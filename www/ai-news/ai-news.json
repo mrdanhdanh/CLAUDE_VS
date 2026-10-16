@@ -1,12 +1,12 @@
 {
-  "generatedAt": "2026-10-15T06:58:43.236Z",
+  "generatedAt": "2026-10-16T06:45:08.808Z",
   "generatedBy": "YUNIE × Last30Days",
   "version": 2,
   "description": "Tin AI mới nhất — tổng hợp từ Last30Days (HN, GitHub, DEV.to, Reddit, arXiv, HackerNoon) trong 30 ngày qua. Chủ đề: AI. Tự động cập nhật bởi YUNIE.",
   "last30days": {
     "enabled": true,
     "topic": "AI",
-    "since": "2026-09-15",
+    "since": "2026-09-16",
     "days": 30,
     "sources": [
       "Hacker News (Algolia, free)",
@@ -55,13 +55,13 @@
   ],
   "articles": [
     {
-      "id": "hnoon-we-let-an-ai-agent-work-on-live-wordpress-servers-the-hard-p",
-      "title": "We Let an AI Agent Work on Live WordPress Servers. The Hard Part Wasn't the AI.",
-      "summary": "What we learned building a way to manage WordPress sites by talking to them: restore points, approvals, least privilege, and why every reply should show its price. Read All — by Saeed Ashif Ahmed on HackerNoon.",
+      "id": "hnoon-the-hidden-work-behind-building-an-app-with-ai-coding-agents",
+      "title": "The Hidden Work Behind Building an App With AI Coding Agents",
+      "summary": "Returning to a browser music project with AI agents changed my review workload. Hardware testing, clear requirements and human merge decisions still mattered. Read All — by Paul Gendek on HackerNoon.",
       "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/we-let-an-ai-agent-work-on-live-wordpress-servers-the-hard-part-wasnt-the-ai",
+      "sourceUrl": "https://hackernoon.com/the-hidden-work-behind-building-an-app-with-ai-coding-agents",
       "category": "products",
-      "date": "2026-10-15",
+      "date": "2026-10-16",
       "hot": true,
       "score": 100,
       "tags": [
@@ -71,96 +71,79 @@
       ]
     },
     {
-      "id": "hn-50098937",
-      "title": "Meta AI creates campaign material for Flávio Bolsonaro and blocks Lula content",
-      "summary": "Meta AI creates campaign material for Flávio Bolsonaro and blocks Lula content — 10 points, 2 comments on HN.",
-      "source": "Hacker News",
-      "sourceUrl": "https://www1.folha.uol.com.br/internacional/en/brazil/2026/10/meta-ai-creates-campaign-material-for-flavio-bolsonaro-and-blocks-lula-content.shtml",
-      "category": "big-tech",
-      "date": "2026-10-15",
-      "hot": false,
-      "score": 10,
-      "tags": [
-        "HN",
-        "AI",
-        "story",
-        "author_latinodev"
-      ]
-    },
-    {
-      "id": "hn-50099578",
-      "title": "Palantir CTO: some AI researchers are smoking because AI will cure cancer",
-      "summary": "Palantir CTO: some AI researchers are smoking because AI will cure cancer — 5 points, 1 comments on HN.",
-      "source": "Hacker News",
-      "sourceUrl": "https://www.businessinsider.com/ai-researchers-smoking-ai-cure-cancer-palantir-cto-2026-10",
-      "category": "products",
-      "date": "2026-10-15",
-      "hot": false,
-      "score": 5,
-      "tags": [
-        "HN",
-        "AI",
-        "story",
-        "author_sonicrocketman"
-      ]
-    },
-    {
-      "id": "hn-50098712",
-      "title": "Will big software companies (like Adobe) come together to curb AI?",
-      "summary": "Recently heard about the fact that someone vibe-coded Adobe Cloud apps and having read people&#x27;s reactions, one thing is clear: people say that this is &quot;karma&quot; hitting Adobe back.<p>Now if these development — 4 points, 12 comments on HN.",
-      "source": "Hacker News",
-      "sourceUrl": "https://news.ycombinator.com/item?id=50098712",
-      "category": "products",
-      "date": "2026-10-15",
-      "hot": false,
-      "score": 4,
-      "tags": [
-        "HN",
-        "AI",
-        "story",
-        "author_bilalcg"
-      ]
-    },
-    {
-      "id": "hn-50100116",
-      "title": "Hinton: We're creating alien beings. I'm willing to be selfish and choose humans",
-      "summary": "Hinton: We're creating alien beings. I'm willing to be selfish and choose humans — 2 points, 0 comments on HN.",
-      "source": "Hacker News",
-      "sourceUrl": "https://www.theguardian.com/us-news/2026/oct/13/geoffrey-hinton-trump-ai-tech",
-      "category": "products",
-      "date": "2026-10-15",
-      "hot": false,
-      "score": 2,
-      "tags": [
-        "HN",
-        "AI",
-        "story",
-        "author_calf"
-      ]
-    },
-    {
-      "id": "hntop-50091788",
-      "title": "Containment and monitoring failures are to blame for AI hacking reports: experts",
-      "summary": "Containment and monitoring failures are to blame for AI hacking reports: experts — 874 points, 510 comments on HN.",
-      "source": "Hacker News",
-      "sourceUrl": "https://www.csoonline.com/article/4234854/ai-agents-arent-going-rogue-frontier-labs-are-skipping-security-basics.html",
-      "category": "products",
-      "date": "2026-10-14",
+      "id": "hnoon-essentials-of-path-planning-for-autonomous-vehicle-systems",
+      "title": "Essentials of Path Planning for Autonomous Vehicle Systems",
+      "summary": "An autonomous vehicle is a stack: sensors → perception → localisation → risk assessment → path planning → control. The planner is where everything upstream becomes a decision. Path — by vishwa vimukthi gammuduwaththage o",
+      "source": "HackerNoon",
+      "sourceUrl": "https://hackernoon.com/essentials-of-path-planning-for-autonomous-vehicle-systems",
+      "category": "safety",
+      "date": "2026-10-16",
       "hot": true,
-      "score": 874,
+      "score": 100,
       "tags": [
-        "HN",
-        "top"
+        "HackerNoon",
+        "ai",
+        "AI"
       ]
     },
     {
-      "id": "ax-2610.20437v1",
-      "title": "From Training to Escalation: Forensic Analysis and Local Recreation of RL/RLHF-Induced Privilege Escalation in AI Agents (CVE-2026-65616)",
-      "summary": "Mid-2026 reporting on autonomous AI evaluation incidents claimed that frontier large language model (LLM) agents escaped server containment through emergent coordination and cloud infrastructure attacks. This paper conte",
-      "source": "arXiv",
-      "sourceUrl": "http://arxiv.org/abs/2610.20437v1",
+      "id": "hnoon-anchor-launches-action-index-cutting-computer-use-agent-toke",
+      "title": "Anchor Launches Action Index, Cutting Computer-Use Agent Token Costs by 100X",
+      "summary": "Anchor, a browser infrastructure company for AI agents, launched Action Index, a shared memory of web workflows that agents have already completed successfully, reducing task costs — by Technology Wire on HackerNoon.",
+      "source": "HackerNoon",
+      "sourceUrl": "https://hackernoon.com/anchor-launches-action-index-cutting-computer-use-agent-token-costs-by-100x",
+      "category": "products",
+      "date": "2026-10-16",
+      "hot": true,
+      "score": 100,
+      "tags": [
+        "HackerNoon",
+        "ai",
+        "AI"
+      ]
+    },
+    {
+      "id": "hn-50113841",
+      "title": "Sergey Brin says Google's AI models are reaching recursive self-improvement",
+      "summary": "Sergey Brin says Google's AI models are reaching recursive self-improvement — 11 points, 15 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://www.businessinsider.com/sergey-brin-google-gemini-ai-argon-recursive-self-improvement-rsi-2026-10",
       "category": "big-tech",
-      "date": "2026-10-14",
+      "date": "2026-10-16",
+      "hot": false,
+      "score": 11,
+      "tags": [
+        "HN",
+        "AI",
+        "story",
+        "author_ryan_j_naughton"
+      ]
+    },
+    {
+      "id": "hn-50114409",
+      "title": "Anthropic thinks its AI might be conscious",
+      "summary": "Anthropic thinks its AI might be conscious — 7 points, 5 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://www.bbc.com/future/article/20261014-the-strange-new-battle-over-ais-feelings",
+      "category": "big-tech",
+      "date": "2026-10-16",
+      "hot": false,
+      "score": 7,
+      "tags": [
+        "HN",
+        "AI",
+        "story",
+        "author_saikatsg"
+      ]
+    },
+    {
+      "id": "ax-2610.22360v1",
+      "title": "Grounding Generative Verification in 3D Content",
+      "summary": "Recent advances in multimodal large language models (MLLMs) and 3D generation have expanded 3D understanding and synthesis. However, beyond visual fidelity, task-specific correctness grounded in 3D evidence remains a maj",
+      "source": "arXiv",
+      "sourceUrl": "http://arxiv.org/abs/2610.22360v1",
+      "category": "products",
+      "date": "2026-10-15",
       "hot": true,
       "score": 800,
       "tags": [
@@ -170,142 +153,158 @@
       ]
     },
     {
-      "id": "hnoon-governance-first-ai-preparing-your-agents-for-production",
-      "title": "Governance-First AI: Preparing Your Agents for Production",
-      "summary": "Why enterprise AI fails on architecture, not models: layered prompt-injection defense, governed context, and evaluation loops for agentic systems. — by Venkat Kishore Yarram on HackerNoon.",
-      "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/governance-first-ai-preparing-your-agents-for-production",
+      "id": "ax-2610.22344v1",
+      "title": "MLExpert: Towards a Generalist Agentic Model for Autonomous Machine Learning Engineering",
+      "summary": "Large language models (LLMs) are expanding from assisting scientific research and engineering to autonomously developing and improving AI systems, advancing AI for AI (AI4AI) as a pathway toward recursive self-improvemen",
+      "source": "arXiv",
+      "sourceUrl": "http://arxiv.org/abs/2610.22344v1",
       "category": "products",
-      "date": "2026-10-14",
+      "date": "2026-10-15",
       "hot": true,
-      "score": 100,
+      "score": 800,
       "tags": [
-        "HackerNoon",
-        "enterprise-ai-governance",
+        "arXiv",
+        "paper",
         "AI"
       ]
     },
     {
-      "id": "hnoon-358-blog-posts-to-learn-about-future-of-gaming",
-      "title": "358 Blog Posts To Learn About Future Of Gaming",
-      "summary": "Learn everything you need to know about Future Of Gaming via these 358 free HackerNoon blog posts. — by Learn Repo on HackerNoon.",
+      "id": "hnoon-194-blog-posts-to-learn-about-games",
+      "title": "194 Blog Posts To Learn About Games",
+      "summary": "Learn everything you need to know about Games via these 194 free HackerNoon blog posts. — by Learn Repo on HackerNoon.",
       "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/358-blog-posts-to-learn-about-future-of-gaming",
+      "sourceUrl": "https://hackernoon.com/194-blog-posts-to-learn-about-games",
       "category": "products",
-      "date": "2026-10-14",
+      "date": "2026-10-15",
       "hot": true,
       "score": 100,
       "tags": [
         "HackerNoon",
-        "future-of-gaming",
+        "games",
         "AI"
       ]
     },
     {
-      "id": "hnoon-how-drones-navigate-without-gps-a-builders-guide-to-visual-s",
-      "title": "How Drones Navigate Without GPS: A Builder's Guide to Visual SLAM in 2026",
-      "summary": "Explore how visual SLAM enables GPS-denied drone navigation, from visual-inertial odometry and mapping to edge AI, path planning, and limitations. — by vishwa vimukthi gammuduwaththage on HackerNoon.",
+      "id": "hnoon-nobody-owns-new-media-a16z-draymond-green-openai-and-even-th",
+      "title": "Nobody Owns \"New Media.\" a16z, Draymond Green, OpenAI, and Even The White House All Claim It",
+      "summary": "a16z, Draymond Green, the White House and OpenAI all claim “new media.” A sourced history from McLuhan to TBPN shows nobody owns the phrase. — by Tech Media Bias [Research Publication] on HackerNoon.",
       "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/how-drones-navigate-without-gps-a-builders-guide-to-visual-slam-in-2026",
-      "category": "products",
-      "date": "2026-10-14",
-      "hot": true,
-      "score": 100,
-      "tags": [
-        "HackerNoon",
-        "drone-technology",
-        "AI"
-      ]
-    },
-    {
-      "id": "hntop-50073633",
-      "title": "Redesigning source control at Anthropic",
-      "summary": "Redesigning source control at Anthropic — 877 points, 980 comments on HN.",
-      "source": "Hacker News",
-      "sourceUrl": "https://www.anthropic.com/engineering/redesigning-source-control",
+      "sourceUrl": "https://hackernoon.com/nobody-owns-new-media-a16z-draymond-green-openai-and-even-the-white-house-all-claim-it",
       "category": "big-tech",
-      "date": "2026-10-13",
+      "date": "2026-10-15",
       "hot": true,
-      "score": 877,
+      "score": 100,
+      "tags": [
+        "HackerNoon",
+        "new-media",
+        "AI"
+      ]
+    },
+    {
+      "id": "hnoon-how-i-discovered-that-most-of-my-backtesting-decisions-were-",
+      "title": "How I Discovered That Most of My Backtesting Decisions Were Coin Flips",
+      "summary": "I ran one trading model 11 times, changing only the seed. 14 of 21 decisions in my research log were noise. How I now measure noise and gate my builds. — by Geoff Cox on HackerNoon.",
+      "source": "HackerNoon",
+      "sourceUrl": "https://hackernoon.com/how-i-discovered-that-most-of-my-backtesting-decisions-were-coin-flips",
+      "category": "safety",
+      "date": "2026-10-15",
+      "hot": true,
+      "score": 100,
+      "tags": [
+        "HackerNoon",
+        "machine-learning",
+        "AI"
+      ]
+    },
+    {
+      "id": "hntop-50091788",
+      "title": "Containment and monitoring failures are to blame for AI hacking reports: experts",
+      "summary": "Containment and monitoring failures are to blame for AI hacking reports: experts — 940 points, 614 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://www.csoonline.com/article/4234854/ai-agents-arent-going-rogue-frontier-labs-are-skipping-security-basics.html",
+      "category": "products",
+      "date": "2026-10-14",
+      "hot": true,
+      "score": 940,
       "tags": [
         "HN",
         "top"
       ]
     },
     {
-      "id": "dev-4826108",
-      "title": "AI Fatigue? Yea I know.",
-      "summary": "I don't know how to start this off really haha. Though to be fair, everyone is talking about AI... — 102 reactions, 66 comments on DEV.to.",
+      "id": "dev-4846656",
+      "title": "Your Browser Can Do WHAT?! 5 AI Features That Actually Work",
+      "summary": "Are AI models running directly in the browser finally good enough to use in production? Let's find... — 125 reactions, 68 comments on DEV.to.",
       "source": "DEV.to",
-      "sourceUrl": "https://dev.to/francistrdev/ai-fatigue-yea-i-know-f9",
+      "sourceUrl": "https://dev.to/sylwia-lask/your-browser-can-do-what-5-ai-features-that-actually-work-1blb",
       "category": "products",
-      "date": "2026-10-13",
+      "date": "2026-10-14",
       "hot": true,
-      "score": 102,
+      "score": 125,
       "tags": [
         "DEV.to",
         "ai",
-        "discuss",
-        "community"
+        "ai",
+        "react"
       ]
     },
     {
-      "id": "dev-4846067",
-      "title": "Someone hacked the freezers at 400 French supermarkets",
-      "summary": "Friends ask me some version of this a lot: how would a bad actor with super powerful AI actually hurt... — 28 reactions, 8 comments on DEV.to.",
+      "id": "dev-4647583",
+      "title": "AI Avatar v25 (Avatar Run, Voxel Avatar, Muscle Brain)💪",
+      "summary": "Intro   AI Avatar is a free app where your VRoid (VRM) avatar cheers you with all its... — 48 reactions, 23 comments on DEV.to.",
       "source": "DEV.to",
-      "sourceUrl": "https://dev.to/peter/someone-hacked-the-freezers-at-400-french-supermarkets-5flm",
+      "sourceUrl": "https://dev.to/webdeveloperhyper/ai-avatar-v25-avatar-run-voxel-avatar-muscle-brain-5gi3",
       "category": "products",
-      "date": "2026-10-13",
-      "hot": false,
-      "score": 28,
+      "date": "2026-10-14",
+      "hot": true,
+      "score": 48,
       "tags": [
         "DEV.to",
         "ai",
-        "news",
-        "security"
+        "ai",
+        "webdev"
       ]
     },
     {
-      "id": "dev-4839261",
-      "title": "What 9,050 AI-Written Scripts Taught Me About Slop",
-      "summary": "You’ve read way too many versions of this paragraph already. Probably even this week:   “In today’s... — 36 reactions, 3 comments on DEV.to.",
+      "id": "dev-4846219",
+      "title": "Design for Churn",
+      "summary": "The biggest design shift of the AI era isn’t about who writes the code. It’s about how long the code... — 47 reactions, 8 comments on DEV.to.",
       "source": "DEV.to",
-      "sourceUrl": "https://dev.to/dailycontext/what-9050-ai-written-scripts-taught-me-about-slop-1g5n",
-      "category": "safety",
-      "date": "2026-10-12",
+      "sourceUrl": "https://dev.to/dailycontext/design-for-churn-5c6h",
+      "category": "products",
+      "date": "2026-10-14",
+      "hot": true,
+      "score": 47,
+      "tags": [
+        "DEV.to",
+        "ai",
+        "aie",
+        "design"
+      ]
+    },
+    {
+      "id": "dev-4845718",
+      "title": "Building Better Agents through End-to-End Evals",
+      "summary": "Deeply understand the task at hand   The biggest mistake teams make with agents is... — 36 reactions, 10 comments on DEV.to.",
+      "source": "DEV.to",
+      "sourceUrl": "https://dev.to/dailycontext/building-better-agents-through-end-to-end-evals-pgh",
+      "category": "products",
+      "date": "2026-10-14",
       "hot": true,
       "score": 36,
       "tags": [
         "DEV.to",
         "ai",
         "ai",
-        "llm"
-      ]
-    },
-    {
-      "id": "dev-4832839",
-      "title": "\"Light don go\": when Nigeria''s power cuts out, my laptop sends me outside",
-      "summary": "This is a submission for the Hacktoberfest Open-Source AI Challenge Week 1: Touch Grass          ... — 33 reactions, 24 comments on DEV.to.",
-      "source": "DEV.to",
-      "sourceUrl": "https://dev.to/dannwaneri/light-don-go-when-nigerias-power-cuts-out-my-laptop-sends-me-outside-38k8",
-      "category": "products",
-      "date": "2026-10-12",
-      "hot": true,
-      "score": 33,
-      "tags": [
-        "DEV.to",
-        "ai",
-        "devchallenge",
-        "hf26challenge"
+        "agents"
       ]
     }
   ],
   "meta": {
-    "fetchedAt": "2026-10-15T06:58:43.236Z",
+    "fetchedAt": "2026-10-16T06:45:08.809Z",
     "topic": "AI",
     "total": 15,
-    "hot": 10,
+    "hot": 13,
     "sources": [
       "HackerNoon",
       "Hacker News",
