@@ -1,12 +1,12 @@
 {
-  "generatedAt": "2026-10-16T06:45:08.808Z",
+  "generatedAt": "2026-10-17T06:35:15.337Z",
   "generatedBy": "YUNIE × Last30Days",
   "version": 2,
   "description": "Tin AI mới nhất — tổng hợp từ Last30Days (HN, GitHub, DEV.to, Reddit, arXiv, HackerNoon) trong 30 ngày qua. Chủ đề: AI. Tự động cập nhật bởi YUNIE.",
   "last30days": {
     "enabled": true,
     "topic": "AI",
-    "since": "2026-09-16",
+    "since": "2026-09-17",
     "days": 30,
     "sources": [
       "Hacker News (Algolia, free)",
@@ -55,260 +55,257 @@
   ],
   "articles": [
     {
-      "id": "hnoon-the-hidden-work-behind-building-an-app-with-ai-coding-agents",
-      "title": "The Hidden Work Behind Building an App With AI Coding Agents",
-      "summary": "Returning to a browser music project with AI agents changed my review workload. Hardware testing, clear requirements and human merge decisions still mattered. Read All — by Paul Gendek on HackerNoon.",
-      "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/the-hidden-work-behind-building-an-app-with-ai-coding-agents",
-      "category": "products",
-      "date": "2026-10-16",
-      "hot": true,
-      "score": 100,
-      "tags": [
-        "HackerNoon",
-        "ai",
-        "AI"
-      ]
-    },
-    {
-      "id": "hnoon-essentials-of-path-planning-for-autonomous-vehicle-systems",
-      "title": "Essentials of Path Planning for Autonomous Vehicle Systems",
-      "summary": "An autonomous vehicle is a stack: sensors → perception → localisation → risk assessment → path planning → control. The planner is where everything upstream becomes a decision. Path — by vishwa vimukthi gammuduwaththage o",
-      "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/essentials-of-path-planning-for-autonomous-vehicle-systems",
-      "category": "safety",
-      "date": "2026-10-16",
-      "hot": true,
-      "score": 100,
-      "tags": [
-        "HackerNoon",
-        "ai",
-        "AI"
-      ]
-    },
-    {
-      "id": "hnoon-anchor-launches-action-index-cutting-computer-use-agent-toke",
-      "title": "Anchor Launches Action Index, Cutting Computer-Use Agent Token Costs by 100X",
-      "summary": "Anchor, a browser infrastructure company for AI agents, launched Action Index, a shared memory of web workflows that agents have already completed successfully, reducing task costs — by Technology Wire on HackerNoon.",
-      "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/anchor-launches-action-index-cutting-computer-use-agent-token-costs-by-100x",
-      "category": "products",
-      "date": "2026-10-16",
-      "hot": true,
-      "score": 100,
-      "tags": [
-        "HackerNoon",
-        "ai",
-        "AI"
-      ]
-    },
-    {
-      "id": "hn-50113841",
-      "title": "Sergey Brin says Google's AI models are reaching recursive self-improvement",
-      "summary": "Sergey Brin says Google's AI models are reaching recursive self-improvement — 11 points, 15 comments on HN.",
+      "id": "hn-50127369",
+      "title": "China to Restrict Open-Weights Model Exports",
+      "summary": "China to Restrict Open-Weights Model Exports — 10 points, 1 comments on HN.",
       "source": "Hacker News",
-      "sourceUrl": "https://www.businessinsider.com/sergey-brin-google-gemini-ai-argon-recursive-self-improvement-rsi-2026-10",
-      "category": "big-tech",
-      "date": "2026-10-16",
+      "sourceUrl": "https://www.reuters.com/world/asia-pacific/china-proposes-adding-40-ai-biotech-solar-technologies-export-control-list-2026-10-16/",
+      "category": "products",
+      "date": "2026-10-17",
       "hot": false,
-      "score": 11,
+      "score": 10,
       "tags": [
         "HN",
         "AI",
         "story",
-        "author_ryan_j_naughton"
+        "author_gr_norm"
       ]
     },
     {
-      "id": "hn-50114409",
-      "title": "Anthropic thinks its AI might be conscious",
-      "summary": "Anthropic thinks its AI might be conscious — 7 points, 5 comments on HN.",
+      "id": "hn-50127489",
+      "title": "Why Is Tech Billionaire Marc Andreessen So Mad?",
+      "summary": "Why Is Tech Billionaire Marc Andreessen So Mad? — 8 points, 1 comments on HN.",
       "source": "Hacker News",
-      "sourceUrl": "https://www.bbc.com/future/article/20261014-the-strange-new-battle-over-ais-feelings",
-      "category": "big-tech",
-      "date": "2026-10-16",
+      "sourceUrl": "https://www.bloomberg.com/news/features/2026-10-15/how-ai-crypto-and-dei-drove-marc-andreessen-to-maga",
+      "category": "products",
+      "date": "2026-10-17",
+      "hot": false,
+      "score": 8,
+      "tags": [
+        "HN",
+        "AI",
+        "story",
+        "author_xbryanx"
+      ]
+    },
+    {
+      "id": "hn-50127729",
+      "title": "AI is driving a boom in modestly successful software projects",
+      "summary": "AI is driving a boom in modestly successful software projects — 7 points, 1 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://www.seangoedecke.com/ai-is-driving-a-boom-in-modestly-successful-software/",
+      "category": "products",
+      "date": "2026-10-17",
       "hot": false,
       "score": 7,
       "tags": [
         "HN",
         "AI",
         "story",
-        "author_saikatsg"
+        "author_gpi"
       ]
     },
     {
-      "id": "ax-2610.22360v1",
-      "title": "Grounding Generative Verification in 3D Content",
-      "summary": "Recent advances in multimodal large language models (MLLMs) and 3D generation have expanded 3D understanding and synthesis. However, beyond visual fidelity, task-specific correctness grounded in 3D evidence remains a maj",
-      "source": "arXiv",
-      "sourceUrl": "http://arxiv.org/abs/2610.22360v1",
-      "category": "products",
-      "date": "2026-10-15",
-      "hot": true,
-      "score": 800,
-      "tags": [
-        "arXiv",
-        "paper",
-        "AI"
-      ]
-    },
-    {
-      "id": "ax-2610.22344v1",
-      "title": "MLExpert: Towards a Generalist Agentic Model for Autonomous Machine Learning Engineering",
-      "summary": "Large language models (LLMs) are expanding from assisting scientific research and engineering to autonomously developing and improving AI systems, advancing AI for AI (AI4AI) as a pathway toward recursive self-improvemen",
-      "source": "arXiv",
-      "sourceUrl": "http://arxiv.org/abs/2610.22344v1",
-      "category": "products",
-      "date": "2026-10-15",
-      "hot": true,
-      "score": 800,
-      "tags": [
-        "arXiv",
-        "paper",
-        "AI"
-      ]
-    },
-    {
-      "id": "hnoon-194-blog-posts-to-learn-about-games",
-      "title": "194 Blog Posts To Learn About Games",
-      "summary": "Learn everything you need to know about Games via these 194 free HackerNoon blog posts. — by Learn Repo on HackerNoon.",
-      "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/194-blog-posts-to-learn-about-games",
-      "category": "products",
-      "date": "2026-10-15",
-      "hot": true,
-      "score": 100,
-      "tags": [
-        "HackerNoon",
-        "games",
-        "AI"
-      ]
-    },
-    {
-      "id": "hnoon-nobody-owns-new-media-a16z-draymond-green-openai-and-even-th",
-      "title": "Nobody Owns \"New Media.\" a16z, Draymond Green, OpenAI, and Even The White House All Claim It",
-      "summary": "a16z, Draymond Green, the White House and OpenAI all claim “new media.” A sourced history from McLuhan to TBPN shows nobody owns the phrase. — by Tech Media Bias [Research Publication] on HackerNoon.",
-      "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/nobody-owns-new-media-a16z-draymond-green-openai-and-even-the-white-house-all-claim-it",
-      "category": "big-tech",
-      "date": "2026-10-15",
-      "hot": true,
-      "score": 100,
-      "tags": [
-        "HackerNoon",
-        "new-media",
-        "AI"
-      ]
-    },
-    {
-      "id": "hnoon-how-i-discovered-that-most-of-my-backtesting-decisions-were-",
-      "title": "How I Discovered That Most of My Backtesting Decisions Were Coin Flips",
-      "summary": "I ran one trading model 11 times, changing only the seed. 14 of 21 decisions in my research log were noise. How I now measure noise and gate my builds. — by Geoff Cox on HackerNoon.",
-      "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/how-i-discovered-that-most-of-my-backtesting-decisions-were-coin-flips",
-      "category": "safety",
-      "date": "2026-10-15",
-      "hot": true,
-      "score": 100,
-      "tags": [
-        "HackerNoon",
-        "machine-learning",
-        "AI"
-      ]
-    },
-    {
-      "id": "hntop-50091788",
-      "title": "Containment and monitoring failures are to blame for AI hacking reports: experts",
-      "summary": "Containment and monitoring failures are to blame for AI hacking reports: experts — 940 points, 614 comments on HN.",
+      "id": "hn-50127280",
+      "title": "SF AI Founder's Zombie Shooter Game Turns Tenderloin Residents into Targets",
+      "summary": "SF AI Founder's Zombie Shooter Game Turns Tenderloin Residents into Targets — 4 points, 1 comments on HN.",
       "source": "Hacker News",
-      "sourceUrl": "https://www.csoonline.com/article/4234854/ai-agents-arent-going-rogue-frontier-labs-are-skipping-security-basics.html",
+      "sourceUrl": "https://sfist.com/2026/10/15/sf-tech-founders-zombie-shooter-game-turns-tenderloin-residents-into-targets/",
       "category": "products",
-      "date": "2026-10-14",
+      "date": "2026-10-17",
+      "hot": false,
+      "score": 4,
+      "tags": [
+        "HN",
+        "AI",
+        "story",
+        "author_ubiquitysc"
+      ]
+    },
+    {
+      "id": "hn-50128412",
+      "title": "Ask HN: What is the most useful thing AI has done for you?",
+      "summary": "I had a deep conversation with a friend about what is the most useful thing AI has created&#x2F;done for either of us.<p>For my private life, AI helped me to diagnose and root caused a running toilet, and avoided the hig — 3 points, 1 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://news.ycombinator.com/item?id=50128412",
+      "category": "products",
+      "date": "2026-10-17",
+      "hot": false,
+      "score": 3,
+      "tags": [
+        "HN",
+        "AI",
+        "story",
+        "author_yitchelle"
+      ]
+    },
+    {
+      "id": "hntop-50122800",
+      "title": "Claude reveals ECDSA curve origins",
+      "summary": "<a href=\"https:&#x2F;&#x2F;words.filippo.io&#x2F;seeds-solved&#x2F;\" rel=\"nofollow\">https:&#x2F;&#x2F;words.filippo.io&#x2F;seeds-solved&#x2F;</a> — 807 points, 306 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://www.anthropic.com/research/ecdsa-curve-origins",
+      "category": "safety",
+      "date": "2026-10-16",
       "hot": true,
-      "score": 940,
+      "score": 807,
       "tags": [
         "HN",
         "top"
       ]
     },
     {
-      "id": "dev-4846656",
-      "title": "Your Browser Can Do WHAT?! 5 AI Features That Actually Work",
-      "summary": "Are AI models running directly in the browser finally good enough to use in production? Let's find... — 125 reactions, 68 comments on DEV.to.",
-      "source": "DEV.to",
-      "sourceUrl": "https://dev.to/sylwia-lask/your-browser-can-do-what-5-ai-features-that-actually-work-1blb",
+      "id": "hnoon-500-blog-posts-to-learn-about-gaming",
+      "title": "500 Blog Posts To Learn About Gaming",
+      "summary": "Learn everything you need to know about Gaming via these 500 free HackerNoon blog posts. — by Learn Repo on HackerNoon.",
+      "source": "HackerNoon",
+      "sourceUrl": "https://hackernoon.com/500-blog-posts-to-learn-about-gaming",
       "category": "products",
-      "date": "2026-10-14",
+      "date": "2026-10-16",
       "hot": true,
-      "score": 125,
+      "score": 100,
       "tags": [
-        "DEV.to",
-        "ai",
-        "ai",
-        "react"
+        "HackerNoon",
+        "gaming",
+        "AI"
       ]
     },
     {
-      "id": "dev-4647583",
-      "title": "AI Avatar v25 (Avatar Run, Voxel Avatar, Muscle Brain)💪",
-      "summary": "Intro   AI Avatar is a free app where your VRoid (VRM) avatar cheers you with all its... — 48 reactions, 23 comments on DEV.to.",
-      "source": "DEV.to",
-      "sourceUrl": "https://dev.to/webdeveloperhyper/ai-avatar-v25-avatar-run-voxel-avatar-muscle-brain-5gi3",
-      "category": "products",
-      "date": "2026-10-14",
+      "id": "hnoon-what-is-a-memecoin-launchpad-how-it-works-2026-guide",
+      "title": "What Is a Memecoin Launchpad? How It Works (2026 Guide)",
+      "summary": "A memecoin launchpad is a platform that helps creators set up a token launch and helps buyers review its terms, funding process and route to trading. — by BTCWire on HackerNoon.",
+      "source": "HackerNoon",
+      "sourceUrl": "https://hackernoon.com/what-is-a-memecoin-launchpad-how-it-works-2026-guide",
+      "category": "fun",
+      "date": "2026-10-16",
       "hot": true,
-      "score": 48,
+      "score": 100,
       "tags": [
-        "DEV.to",
-        "ai",
-        "ai",
-        "webdev"
+        "HackerNoon",
+        "web3",
+        "AI"
       ]
     },
     {
-      "id": "dev-4846219",
-      "title": "Design for Churn",
-      "summary": "The biggest design shift of the AI era isn’t about who writes the code. It’s about how long the code... — 47 reactions, 8 comments on DEV.to.",
-      "source": "DEV.to",
-      "sourceUrl": "https://dev.to/dailycontext/design-for-churn-5c6h",
+      "id": "hnoon-meme-coin-trading-in-2026-memetoro-open-sources-its-ai-agent",
+      "title": "Meme Coin Trading in 2026: MemeToro Open-Sources Its AI Agent",
+      "summary": "Meme coin trading in 2026 is shifting to AI research and public launch rules. MemeToro open-sources its AI agent and token discovery tools on BNB Chain. — by BTCWire on HackerNoon.",
+      "source": "HackerNoon",
+      "sourceUrl": "https://hackernoon.com/meme-coin-trading-in-2026-memetoro-open-sources-its-ai-agent",
       "category": "products",
-      "date": "2026-10-14",
+      "date": "2026-10-16",
+      "hot": true,
+      "score": 100,
+      "tags": [
+        "HackerNoon",
+        "web3",
+        "AI"
+      ]
+    },
+    {
+      "id": "hnoon-10-16-2026-techbeat",
+      "title": "The TechBeat: This AI Model Has Native Text, Image, and Video Capabilities: Here's What You Should Know (10/16/2026)",
+      "summary": "10/16/2026: Trending stories on Hackernoon today! — by Techbeat on HackerNoon.",
+      "source": "HackerNoon",
+      "sourceUrl": "https://hackernoon.com/10-16-2026-techbeat",
+      "category": "products",
+      "date": "2026-10-16",
+      "hot": true,
+      "score": 100,
+      "tags": [
+        "HackerNoon",
+        "tech-beat",
+        "AI"
+      ]
+    },
+    {
+      "id": "hntop-50107379",
+      "title": "Muse Spark Open",
+      "summary": "<a href=\"https:&#x2F;&#x2F;dev.meta.ai&#x2F;resources&#x2F;blog&#x2F;build-with-muse-spark-open\" rel=\"nofollow\">https:&#x2F;&#x2F;dev.meta.ai&#x2F;resources&#x2F;blog&#x2F;build-with-muse-spark-ope...</a><p><a href=\"http — 903 points, 467 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://research.meta.ai/blog/muse-spark-open",
+      "category": "products",
+      "date": "2026-10-15",
+      "hot": true,
+      "score": 903,
+      "tags": [
+        "HN",
+        "top"
+      ]
+    },
+    {
+      "id": "hntop-50105647",
+      "title": "Neural networks are clean",
+      "summary": "<a href=\"https:&#x2F;&#x2F;twitter.com&#x2F;nickcammarata&#x2F;status&#x2F;2110757819427574056\" rel=\"nofollow\">https:&#x2F;&#x2F;twitter.com&#x2F;nickcammarata&#x2F;status&#x2F;2110757819427574056</a> — 803 points, 326 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://already-clean.goodfire.com/",
+      "category": "products",
+      "date": "2026-10-15",
+      "hot": true,
+      "score": 803,
+      "tags": [
+        "HN",
+        "top"
+      ]
+    },
+    {
+      "id": "dev-4808239",
+      "title": "I Vibe-Coded My Way Out of Angular Upgrades",
+      "summary": "Do you also hate upgrading Angular versions? Because I do. I maintain a few open-source projects, and... — 47 reactions, 27 comments on DEV.to.",
+      "source": "DEV.to",
+      "sourceUrl": "https://dev.to/gramli/i-vibe-coded-my-way-out-of-angular-upgrades-4fkh",
+      "category": "products",
+      "date": "2026-10-15",
       "hot": true,
       "score": 47,
       "tags": [
         "DEV.to",
         "ai",
-        "aie",
-        "design"
+        "ai",
+        "vibecoding"
       ]
     },
     {
-      "id": "dev-4845718",
-      "title": "Building Better Agents through End-to-End Evals",
-      "summary": "Deeply understand the task at hand   The biggest mistake teams make with agents is... — 36 reactions, 10 comments on DEV.to.",
+      "id": "dev-4853717",
+      "title": "I built a lie detector for AI coding agents. Then I read the rules.",
+      "summary": "When an AI agent commits a change to code, it makes a claim about what it changed: \"fixed typos\" or... — 32 reactions, 22 comments on DEV.to.",
       "source": "DEV.to",
-      "sourceUrl": "https://dev.to/dailycontext/building-better-agents-through-end-to-end-evals-pgh",
+      "sourceUrl": "https://dev.to/dannwaneri/i-built-a-lie-detector-for-ai-coding-agents-then-i-read-the-rules-1hhb",
       "category": "products",
-      "date": "2026-10-14",
+      "date": "2026-10-15",
       "hot": true,
-      "score": 36,
+      "score": 32,
       "tags": [
         "DEV.to",
         "ai",
         "ai",
-        "agents"
+        "cloudflare"
+      ]
+    },
+    {
+      "id": "hntop-50091788",
+      "title": "Containment and monitoring failures are to blame for AI hacking reports: experts",
+      "summary": "Containment and monitoring failures are to blame for AI hacking reports: experts — 946 points, 619 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://www.csoonline.com/article/4234854/ai-agents-arent-going-rogue-frontier-labs-are-skipping-security-basics.html",
+      "category": "products",
+      "date": "2026-10-14",
+      "hot": true,
+      "score": 946,
+      "tags": [
+        "HN",
+        "top"
       ]
     }
   ],
   "meta": {
-    "fetchedAt": "2026-10-16T06:45:08.809Z",
+    "fetchedAt": "2026-10-17T06:35:15.337Z",
     "topic": "AI",
     "total": 15,
-    "hot": 13,
+    "hot": 10,
     "sources": [
-      "HackerNoon",
       "Hacker News",
-      "arXiv",
+      "HackerNoon",
       "DEV.to"
     ]
   }
