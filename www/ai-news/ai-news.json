@@ -1,12 +1,12 @@
 {
-  "generatedAt": "2026-10-17T06:35:15.337Z",
+  "generatedAt": "2026-10-18T06:58:35.139Z",
   "generatedBy": "YUNIE × Last30Days",
   "version": 2,
   "description": "Tin AI mới nhất — tổng hợp từ Last30Days (HN, GitHub, DEV.to, Reddit, arXiv, HackerNoon) trong 30 ngày qua. Chủ đề: AI. Tự động cập nhật bởi YUNIE.",
   "last30days": {
     "enabled": true,
     "topic": "AI",
-    "since": "2026-09-17",
+    "since": "2026-09-18",
     "days": 30,
     "sources": [
       "Hacker News (Algolia, free)",
@@ -55,100 +55,179 @@
   ],
   "articles": [
     {
-      "id": "hn-50127369",
-      "title": "China to Restrict Open-Weights Model Exports",
-      "summary": "China to Restrict Open-Weights Model Exports — 10 points, 1 comments on HN.",
+      "id": "hn-50137950",
+      "title": "Show HN: Sphinx – A hook that quizzes you on your AI's code before shipping",
+      "summary": "FOSS, Basically it plugs into your existing coding agent workflow and every time you push to prod it&#x27;ll throw up a questionnaire that checks if you understand how the code you&#x27;re pushing works. — 70 points, 19 comments on HN.",
       "source": "Hacker News",
-      "sourceUrl": "https://www.reuters.com/world/asia-pacific/china-proposes-adding-40-ai-biotech-solar-technologies-export-control-list-2026-10-16/",
-      "category": "products",
-      "date": "2026-10-17",
+      "sourceUrl": "https://sphinx-six-theta.vercel.app/",
+      "category": "safety",
+      "date": "2026-10-18",
       "hot": false,
-      "score": 10,
+      "score": 70,
       "tags": [
         "HN",
         "AI",
         "story",
-        "author_gr_norm"
+        "author_critiquebrowser"
       ]
     },
     {
-      "id": "hn-50127489",
-      "title": "Why Is Tech Billionaire Marc Andreessen So Mad?",
-      "summary": "Why Is Tech Billionaire Marc Andreessen So Mad? — 8 points, 1 comments on HN.",
+      "id": "hn-50137248",
+      "title": "Woodworking Tools and Knowledge Tools",
+      "summary": "Woodworking Tools and Knowledge Tools — 4 points, 2 comments on HN.",
       "source": "Hacker News",
-      "sourceUrl": "https://www.bloomberg.com/news/features/2026-10-15/how-ai-crypto-and-dei-drove-marc-andreessen-to-maga",
+      "sourceUrl": "https://peterkaminski.ai/writing/woodworking/",
       "category": "products",
-      "date": "2026-10-17",
-      "hot": false,
-      "score": 8,
-      "tags": [
-        "HN",
-        "AI",
-        "story",
-        "author_xbryanx"
-      ]
-    },
-    {
-      "id": "hn-50127729",
-      "title": "AI is driving a boom in modestly successful software projects",
-      "summary": "AI is driving a boom in modestly successful software projects — 7 points, 1 comments on HN.",
-      "source": "Hacker News",
-      "sourceUrl": "https://www.seangoedecke.com/ai-is-driving-a-boom-in-modestly-successful-software/",
-      "category": "products",
-      "date": "2026-10-17",
-      "hot": false,
-      "score": 7,
-      "tags": [
-        "HN",
-        "AI",
-        "story",
-        "author_gpi"
-      ]
-    },
-    {
-      "id": "hn-50127280",
-      "title": "SF AI Founder's Zombie Shooter Game Turns Tenderloin Residents into Targets",
-      "summary": "SF AI Founder's Zombie Shooter Game Turns Tenderloin Residents into Targets — 4 points, 1 comments on HN.",
-      "source": "Hacker News",
-      "sourceUrl": "https://sfist.com/2026/10/15/sf-tech-founders-zombie-shooter-game-turns-tenderloin-residents-into-targets/",
-      "category": "products",
-      "date": "2026-10-17",
+      "date": "2026-10-18",
       "hot": false,
       "score": 4,
       "tags": [
         "HN",
         "AI",
         "story",
-        "author_ubiquitysc"
+        "author_cyb0rg0"
       ]
     },
     {
-      "id": "hn-50128412",
-      "title": "Ask HN: What is the most useful thing AI has done for you?",
-      "summary": "I had a deep conversation with a friend about what is the most useful thing AI has created&#x2F;done for either of us.<p>For my private life, AI helped me to diagnose and root caused a running toilet, and avoided the hig — 3 points, 1 comments on HN.",
+      "id": "hn-50137768",
+      "title": "Phishing emails are baiting your AI assistant",
+      "summary": "Phishing emails are baiting your AI assistant — 3 points, 0 comments on HN.",
       "source": "Hacker News",
-      "sourceUrl": "https://news.ycombinator.com/item?id=50128412",
+      "sourceUrl": "https://www.malwarebytes.com/blog/ai/2026/10/phishing-emails-are-baiting-your-ai-assistant",
       "category": "products",
-      "date": "2026-10-17",
+      "date": "2026-10-18",
       "hot": false,
       "score": 3,
       "tags": [
         "HN",
         "AI",
         "story",
-        "author_yitchelle"
+        "author_cdrnsf"
+      ]
+    },
+    {
+      "id": "hn-50136796",
+      "title": "What 500 MiniMax Code Tests Revealed About AI Saying \"Done\"",
+      "summary": "What 500 MiniMax Code Tests Revealed About AI Saying \"Done\" — 3 points, 0 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://defuzex.ai/blog/what-500-minimax-code-tests-revealed-about-ai-saying-done",
+      "category": "products",
+      "date": "2026-10-18",
+      "hot": false,
+      "score": 3,
+      "tags": [
+        "HN",
+        "AI",
+        "story",
+        "author_SongWang"
+      ]
+    },
+    {
+      "id": "hn-50138278",
+      "title": "PwnEscape: Guest-to-Host KVM Escape (CVE-2026-99999)",
+      "summary": "PwnEscape: Guest-to-Host KVM Escape (CVE-2026-99999) — 2 points, 1 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://pwn.ai/blog/pwnescape",
+      "category": "products",
+      "date": "2026-10-18",
+      "hot": false,
+      "score": 2,
+      "tags": [
+        "HN",
+        "AI",
+        "story",
+        "author_taubek"
+      ]
+    },
+    {
+      "id": "hntop-50129045",
+      "title": "DeepSeek-v4.1-Flash-1017",
+      "summary": "<a href=\"https:&#x2F;&#x2F;api-docs.deepseek.com&#x2F;news&#x2F;news261017&#x2F;\" rel=\"nofollow\">https:&#x2F;&#x2F;api-docs.deepseek.com&#x2F;news&#x2F;news261017&#x2F;</a><p><a href=\"https:&#x2F;&#x2F;openrouter.ai&#x2F — 808 points, 633 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://huggingface.co/deepseek-ai/DeepSeek-V4.1-Flash-1017",
+      "category": "products",
+      "date": "2026-10-17",
+      "hot": true,
+      "score": 808,
+      "tags": [
+        "HN",
+        "top"
+      ]
+    },
+    {
+      "id": "hnoon-500-blog-posts-to-learn-about-github",
+      "title": "500 Blog Posts To Learn About Github",
+      "summary": "Learn everything you need to know about Github via these 500 free HackerNoon blog posts. — by Learn Repo on HackerNoon.",
+      "source": "HackerNoon",
+      "sourceUrl": "https://hackernoon.com/500-blog-posts-to-learn-about-github",
+      "category": "products",
+      "date": "2026-10-17",
+      "hot": true,
+      "score": 100,
+      "tags": [
+        "HackerNoon",
+        "github",
+        "AI"
+      ]
+    },
+    {
+      "id": "hnoon-mastercard-launches-stablecoin-platform-how-crypto-turns-int",
+      "title": "Mastercard Launches Stablecoin Platform: How Crypto Turns into Card Swipes and Bank Payouts",
+      "summary": "Mastercard launches its stablecoin platform with BVNK, connecting digital assets to global card payments, fiat conversion and bank payouts. — by MEXC Learn on HackerNoon.",
+      "source": "HackerNoon",
+      "sourceUrl": "https://hackernoon.com/mastercard-launches-stablecoin-platform-how-crypto-turns-into-card-swipes-and-bank-payouts",
+      "category": "safety",
+      "date": "2026-10-17",
+      "hot": true,
+      "score": 100,
+      "tags": [
+        "HackerNoon",
+        "cryptocurrency",
+        "AI"
+      ]
+    },
+    {
+      "id": "hnoon-inside-goodrecs-matching-engine-for-pickup-sports",
+      "title": "Inside GoodRec's Matching Engine for Pickup Sports",
+      "summary": "Discover how GoodRec connects players with pickup games, fills unused sports facility slots, and scales its booking platform across 50+ US cities. — by Sanya Kapoor on HackerNoon.",
+      "source": "HackerNoon",
+      "sourceUrl": "https://hackernoon.com/inside-goodrecs-matching-engine-for-pickup-sports",
+      "category": "products",
+      "date": "2026-10-17",
+      "hot": true,
+      "score": 100,
+      "tags": [
+        "HackerNoon",
+        "goodrec-pickup-games",
+        "AI"
+      ]
+    },
+    {
+      "id": "hnoon-170-blog-posts-to-learn-about-github-copilot",
+      "title": "170 Blog Posts To Learn About Github Copilot",
+      "summary": "Learn everything you need to know about Github Copilot via these 170 free HackerNoon blog posts. — by Learn Repo on HackerNoon.",
+      "source": "HackerNoon",
+      "sourceUrl": "https://hackernoon.com/170-blog-posts-to-learn-about-github-copilot",
+      "category": "products",
+      "date": "2026-10-17",
+      "hot": true,
+      "score": 100,
+      "tags": [
+        "HackerNoon",
+        "github-copilot",
+        "AI"
       ]
     },
     {
       "id": "hntop-50122800",
       "title": "Claude reveals ECDSA curve origins",
-      "summary": "<a href=\"https:&#x2F;&#x2F;words.filippo.io&#x2F;seeds-solved&#x2F;\" rel=\"nofollow\">https:&#x2F;&#x2F;words.filippo.io&#x2F;seeds-solved&#x2F;</a> — 807 points, 306 comments on HN.",
+      "summary": "<a href=\"https:&#x2F;&#x2F;words.filippo.io&#x2F;seeds-solved&#x2F;\" rel=\"nofollow\">https:&#x2F;&#x2F;words.filippo.io&#x2F;seeds-solved&#x2F;</a> — 1034 points, 380 comments on HN.",
       "source": "Hacker News",
       "sourceUrl": "https://www.anthropic.com/research/ecdsa-curve-origins",
       "category": "safety",
       "date": "2026-10-16",
       "hot": true,
-      "score": 807,
+      "score": 1034,
       "tags": [
         "HN",
         "top"
@@ -171,63 +250,15 @@
       ]
     },
     {
-      "id": "hnoon-what-is-a-memecoin-launchpad-how-it-works-2026-guide",
-      "title": "What Is a Memecoin Launchpad? How It Works (2026 Guide)",
-      "summary": "A memecoin launchpad is a platform that helps creators set up a token launch and helps buyers review its terms, funding process and route to trading. — by BTCWire on HackerNoon.",
-      "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/what-is-a-memecoin-launchpad-how-it-works-2026-guide",
-      "category": "fun",
-      "date": "2026-10-16",
-      "hot": true,
-      "score": 100,
-      "tags": [
-        "HackerNoon",
-        "web3",
-        "AI"
-      ]
-    },
-    {
-      "id": "hnoon-meme-coin-trading-in-2026-memetoro-open-sources-its-ai-agent",
-      "title": "Meme Coin Trading in 2026: MemeToro Open-Sources Its AI Agent",
-      "summary": "Meme coin trading in 2026 is shifting to AI research and public launch rules. MemeToro open-sources its AI agent and token discovery tools on BNB Chain. — by BTCWire on HackerNoon.",
-      "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/meme-coin-trading-in-2026-memetoro-open-sources-its-ai-agent",
-      "category": "products",
-      "date": "2026-10-16",
-      "hot": true,
-      "score": 100,
-      "tags": [
-        "HackerNoon",
-        "web3",
-        "AI"
-      ]
-    },
-    {
-      "id": "hnoon-10-16-2026-techbeat",
-      "title": "The TechBeat: This AI Model Has Native Text, Image, and Video Capabilities: Here's What You Should Know (10/16/2026)",
-      "summary": "10/16/2026: Trending stories on Hackernoon today! — by Techbeat on HackerNoon.",
-      "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/10-16-2026-techbeat",
-      "category": "products",
-      "date": "2026-10-16",
-      "hot": true,
-      "score": 100,
-      "tags": [
-        "HackerNoon",
-        "tech-beat",
-        "AI"
-      ]
-    },
-    {
       "id": "hntop-50107379",
       "title": "Muse Spark Open",
-      "summary": "<a href=\"https:&#x2F;&#x2F;dev.meta.ai&#x2F;resources&#x2F;blog&#x2F;build-with-muse-spark-open\" rel=\"nofollow\">https:&#x2F;&#x2F;dev.meta.ai&#x2F;resources&#x2F;blog&#x2F;build-with-muse-spark-ope...</a><p><a href=\"http — 903 points, 467 comments on HN.",
+      "summary": "<a href=\"https:&#x2F;&#x2F;dev.meta.ai&#x2F;resources&#x2F;blog&#x2F;build-with-muse-spark-open\" rel=\"nofollow\">https:&#x2F;&#x2F;dev.meta.ai&#x2F;resources&#x2F;blog&#x2F;build-with-muse-spark-ope...</a><p><a href=\"http — 914 points, 477 comments on HN.",
       "source": "Hacker News",
       "sourceUrl": "https://research.meta.ai/blog/muse-spark-open",
       "category": "products",
       "date": "2026-10-15",
       "hot": true,
-      "score": 903,
+      "score": 914,
       "tags": [
         "HN",
         "top"
@@ -236,77 +267,44 @@
     {
       "id": "hntop-50105647",
       "title": "Neural networks are clean",
-      "summary": "<a href=\"https:&#x2F;&#x2F;twitter.com&#x2F;nickcammarata&#x2F;status&#x2F;2110757819427574056\" rel=\"nofollow\">https:&#x2F;&#x2F;twitter.com&#x2F;nickcammarata&#x2F;status&#x2F;2110757819427574056</a> — 803 points, 326 comments on HN.",
+      "summary": "<a href=\"https:&#x2F;&#x2F;twitter.com&#x2F;nickcammarata&#x2F;status&#x2F;2110757819427574056\" rel=\"nofollow\">https:&#x2F;&#x2F;twitter.com&#x2F;nickcammarata&#x2F;status&#x2F;2110757819427574056</a> — 812 points, 332 comments on HN.",
       "source": "Hacker News",
       "sourceUrl": "https://already-clean.goodfire.com/",
       "category": "products",
       "date": "2026-10-15",
       "hot": true,
-      "score": 803,
+      "score": 812,
       "tags": [
         "HN",
         "top"
       ]
     },
     {
-      "id": "dev-4808239",
-      "title": "I Vibe-Coded My Way Out of Angular Upgrades",
-      "summary": "Do you also hate upgrading Angular versions? Because I do. I maintain a few open-source projects, and... — 47 reactions, 27 comments on DEV.to.",
-      "source": "DEV.to",
-      "sourceUrl": "https://dev.to/gramli/i-vibe-coded-my-way-out-of-angular-upgrades-4fkh",
+      "id": "ax-2610.22360v1",
+      "title": "Grounding Generative Verification in 3D Content",
+      "summary": "Recent advances in multimodal large language models (MLLMs) and 3D generation have expanded 3D understanding and synthesis. However, beyond visual fidelity, task-specific correctness grounded in 3D evidence remains a maj",
+      "source": "arXiv",
+      "sourceUrl": "http://arxiv.org/abs/2610.22360v1",
       "category": "products",
       "date": "2026-10-15",
       "hot": true,
-      "score": 47,
+      "score": 800,
       "tags": [
-        "DEV.to",
-        "ai",
-        "ai",
-        "vibecoding"
-      ]
-    },
-    {
-      "id": "dev-4853717",
-      "title": "I built a lie detector for AI coding agents. Then I read the rules.",
-      "summary": "When an AI agent commits a change to code, it makes a claim about what it changed: \"fixed typos\" or... — 32 reactions, 22 comments on DEV.to.",
-      "source": "DEV.to",
-      "sourceUrl": "https://dev.to/dannwaneri/i-built-a-lie-detector-for-ai-coding-agents-then-i-read-the-rules-1hhb",
-      "category": "products",
-      "date": "2026-10-15",
-      "hot": true,
-      "score": 32,
-      "tags": [
-        "DEV.to",
-        "ai",
-        "ai",
-        "cloudflare"
-      ]
-    },
-    {
-      "id": "hntop-50091788",
-      "title": "Containment and monitoring failures are to blame for AI hacking reports: experts",
-      "summary": "Containment and monitoring failures are to blame for AI hacking reports: experts — 946 points, 619 comments on HN.",
-      "source": "Hacker News",
-      "sourceUrl": "https://www.csoonline.com/article/4234854/ai-agents-arent-going-rogue-frontier-labs-are-skipping-security-basics.html",
-      "category": "products",
-      "date": "2026-10-14",
-      "hot": true,
-      "score": 946,
-      "tags": [
-        "HN",
-        "top"
+        "arXiv",
+        "paper",
+        "AI"
       ]
     }
   ],
   "meta": {
-    "fetchedAt": "2026-10-17T06:35:15.337Z",
+    "fetchedAt": "2026-10-18T06:58:35.139Z",
     "topic": "AI",
     "total": 15,
     "hot": 10,
     "sources": [
       "Hacker News",
       "HackerNoon",
-      "DEV.to"
+      "arXiv"
     ]
   }
 }
