@@ -1,12 +1,12 @@
 {
-  "generatedAt": "2026-10-18T06:58:35.139Z",
+  "generatedAt": "2026-10-19T07:20:06.605Z",
   "generatedBy": "YUNIE × Last30Days",
   "version": 2,
   "description": "Tin AI mới nhất — tổng hợp từ Last30Days (HN, GitHub, DEV.to, Reddit, arXiv, HackerNoon) trong 30 ngày qua. Chủ đề: AI. Tự động cập nhật bởi YUNIE.",
   "last30days": {
     "enabled": true,
     "topic": "AI",
-    "since": "2026-09-18",
+    "since": "2026-09-19",
     "days": 30,
     "sources": [
       "Hacker News (Algolia, free)",
@@ -55,210 +55,209 @@
   ],
   "articles": [
     {
-      "id": "hn-50137950",
-      "title": "Show HN: Sphinx – A hook that quizzes you on your AI's code before shipping",
-      "summary": "FOSS, Basically it plugs into your existing coding agent workflow and every time you push to prod it&#x27;ll throw up a questionnaire that checks if you understand how the code you&#x27;re pushing works. — 70 points, 19 comments on HN.",
+      "id": "hn-50148452",
+      "title": "DeepSeek V4.1 Flash 1017 (Max)",
+      "summary": "DeepSeek V4.1 Flash 1017 (Max) — 105 points, 33 comments on HN.",
       "source": "Hacker News",
-      "sourceUrl": "https://sphinx-six-theta.vercel.app/",
+      "sourceUrl": "https://artificialanalysis.ai/models/deepseek-v4-1-flash-1017",
+      "category": "products",
+      "date": "2026-10-19",
+      "hot": true,
+      "score": 105,
+      "tags": [
+        "HN",
+        "AI",
+        "story",
+        "author_theanonymousone"
+      ]
+    },
+    {
+      "id": "hnoon-controlled-autonomy-for-ai-agents-interview-with-cobo-co-fou",
+      "title": "Controlled Autonomy for AI Agents: Interview with Cobo Co-founder and CTO Changhao Jiang",
+      "summary": "The development of AI agents capable of handling real financial transactions raises concerns about authorization, freedom, and accountability, with the Global Blockchain Business C — by Olayimika Oyebanji on HackerNoon.",
+      "source": "HackerNoon",
+      "sourceUrl": "https://hackernoon.com/controlled-autonomy-for-ai-agents-interview-with-cobo-co-founder-and-cto-changhao-jiang",
+      "category": "safety",
+      "date": "2026-10-19",
+      "hot": true,
+      "score": 100,
+      "tags": [
+        "HackerNoon",
+        "web3",
+        "AI"
+      ]
+    },
+    {
+      "id": "hn-50148396",
+      "title": "Show HN: Strot – Compile an LLM's intent once, run decisions locally",
+      "summary": "Show HN: Strot – Compile an LLM's intent once, run decisions locally — 23 points, 10 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://github.com/strot-ai/Project-STROT",
+      "category": "products",
+      "date": "2026-10-19",
+      "hot": false,
+      "score": 23,
+      "tags": [
+        "HN",
+        "AI",
+        "story",
+        "author_solohunter001"
+      ]
+    },
+    {
+      "id": "hn-50148298",
+      "title": "Man arrested after discussing plans for childcare mass shooting with [Claude]",
+      "summary": "Man arrested after discussing plans for childcare mass shooting with [Claude] — 8 points, 9 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://www.smh.com.au/national/nsw/sydney-man-allegedly-discussed-plans-for-childcare-mass-shooting-with-ai-chatbot-20261019-p616oc.html",
+      "category": "products",
+      "date": "2026-10-19",
+      "hot": false,
+      "score": 8,
+      "tags": [
+        "HN",
+        "AI",
+        "story",
+        "author_milderworkacc"
+      ]
+    },
+    {
+      "id": "hn-50148356",
+      "title": "Show HN: Yila – A Codex for Scientific Research",
+      "summary": "Show HN: Yila – A Codex for Scientific Research — 6 points, 2 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://yila.ai",
+      "category": "products",
+      "date": "2026-10-19",
+      "hot": false,
+      "score": 6,
+      "tags": [
+        "HN",
+        "AI",
+        "story",
+        "author_blacktechnology"
+      ]
+    },
+    {
+      "id": "hnoon-a-three-checkpoint-framework-for-testing-website-contact-for",
+      "title": "A Three-Checkpoint Framework for Testing Website Contact Forms",
+      "summary": "A contact form's success message doesn't prove an inquiry arrived. Learn three practical checks to verify submissions, receipt, and replies. — by Emanuil Vasigia on HackerNoon.",
+      "source": "HackerNoon",
+      "sourceUrl": "https://hackernoon.com/a-three-checkpoint-framework-for-testing-website-contact-forms",
       "category": "safety",
       "date": "2026-10-18",
-      "hot": false,
-      "score": 70,
+      "hot": true,
+      "score": 100,
       "tags": [
-        "HN",
-        "AI",
-        "story",
-        "author_critiquebrowser"
+        "HackerNoon",
+        "contact-form-testing",
+        "AI"
       ]
     },
     {
-      "id": "hn-50137248",
-      "title": "Woodworking Tools and Knowledge Tools",
-      "summary": "Woodworking Tools and Knowledge Tools — 4 points, 2 comments on HN.",
-      "source": "Hacker News",
-      "sourceUrl": "https://peterkaminski.ai/writing/woodworking/",
-      "category": "products",
+      "id": "hnoon-adversarial-testing-for-browser-e2ee-authentication-replay-a",
+      "title": "Adversarial Testing for Browser E2EE: Authentication, Replay, and State Recovery",
+      "summary": "Learn how to test browser E2EE against key substitution, ciphertext tampering, replay, downgrade attacks, and asynchronous state failures. — by Richard Andresik on HackerNoon.",
+      "source": "HackerNoon",
+      "sourceUrl": "https://hackernoon.com/adversarial-testing-for-browser-e2ee-authentication-replay-and-state-recovery",
+      "category": "safety",
       "date": "2026-10-18",
-      "hot": false,
-      "score": 4,
+      "hot": true,
+      "score": 100,
       "tags": [
-        "HN",
-        "AI",
-        "story",
-        "author_cyb0rg0"
+        "HackerNoon",
+        "end-to-end-encryption-testing",
+        "AI"
       ]
     },
     {
-      "id": "hn-50137768",
-      "title": "Phishing emails are baiting your AI assistant",
-      "summary": "Phishing emails are baiting your AI assistant — 3 points, 0 comments on HN.",
-      "source": "Hacker News",
-      "sourceUrl": "https://www.malwarebytes.com/blog/ai/2026/10/phishing-emails-are-baiting-your-ai-assistant",
+      "id": "hnoon-51-blog-posts-to-learn-about-hacker",
+      "title": "51 Blog Posts To Learn About Hacker",
+      "summary": "Learn everything you need to know about Hacker via these 51 free HackerNoon blog posts. — by Learn Repo on HackerNoon.",
+      "source": "HackerNoon",
+      "sourceUrl": "https://hackernoon.com/51-blog-posts-to-learn-about-hacker",
       "category": "products",
       "date": "2026-10-18",
-      "hot": false,
-      "score": 3,
+      "hot": true,
+      "score": 100,
       "tags": [
-        "HN",
-        "AI",
-        "story",
-        "author_cdrnsf"
+        "HackerNoon",
+        "hacker",
+        "AI"
       ]
     },
     {
-      "id": "hn-50136796",
-      "title": "What 500 MiniMax Code Tests Revealed About AI Saying \"Done\"",
-      "summary": "What 500 MiniMax Code Tests Revealed About AI Saying \"Done\" — 3 points, 0 comments on HN.",
-      "source": "Hacker News",
-      "sourceUrl": "https://defuzex.ai/blog/what-500-minimax-code-tests-revealed-about-ai-saying-done",
-      "category": "products",
+      "id": "hnoon-10-18-2026-techbeat",
+      "title": "The TechBeat: Muse, Instinct, Wajo, and OpenAI's Dots: Four AI Assistants That Do the Work for You (10/18/2026)",
+      "summary": "10/18/2026: Trending stories on Hackernoon today! — by Techbeat on HackerNoon.",
+      "source": "HackerNoon",
+      "sourceUrl": "https://hackernoon.com/10-18-2026-techbeat",
+      "category": "big-tech",
       "date": "2026-10-18",
-      "hot": false,
-      "score": 3,
+      "hot": true,
+      "score": 100,
       "tags": [
-        "HN",
-        "AI",
-        "story",
-        "author_SongWang"
+        "HackerNoon",
+        "tech-beat",
+        "AI"
       ]
     },
     {
-      "id": "hn-50138278",
-      "title": "PwnEscape: Guest-to-Host KVM Escape (CVE-2026-99999)",
-      "summary": "PwnEscape: Guest-to-Host KVM Escape (CVE-2026-99999) — 2 points, 1 comments on HN.",
-      "source": "Hacker News",
-      "sourceUrl": "https://pwn.ai/blog/pwnescape",
+      "id": "hnoon-85-blog-posts-to-learn-about-hackathon",
+      "title": "85 Blog Posts To Learn About Hackathon",
+      "summary": "Learn everything you need to know about Hackathon via these 85 free HackerNoon blog posts. — by Learn Repo on HackerNoon.",
+      "source": "HackerNoon",
+      "sourceUrl": "https://hackernoon.com/85-blog-posts-to-learn-about-hackathon",
       "category": "products",
       "date": "2026-10-18",
-      "hot": false,
-      "score": 2,
+      "hot": true,
+      "score": 100,
       "tags": [
-        "HN",
-        "AI",
-        "story",
-        "author_taubek"
+        "HackerNoon",
+        "hackathon",
+        "AI"
       ]
     },
     {
       "id": "hntop-50129045",
       "title": "DeepSeek-v4.1-Flash-1017",
-      "summary": "<a href=\"https:&#x2F;&#x2F;api-docs.deepseek.com&#x2F;news&#x2F;news261017&#x2F;\" rel=\"nofollow\">https:&#x2F;&#x2F;api-docs.deepseek.com&#x2F;news&#x2F;news261017&#x2F;</a><p><a href=\"https:&#x2F;&#x2F;openrouter.ai&#x2F — 808 points, 633 comments on HN.",
+      "summary": "<a href=\"https:&#x2F;&#x2F;api-docs.deepseek.com&#x2F;news&#x2F;news261017&#x2F;\" rel=\"nofollow\">https:&#x2F;&#x2F;api-docs.deepseek.com&#x2F;news&#x2F;news261017&#x2F;</a><p><a href=\"https:&#x2F;&#x2F;openrouter.ai&#x2F — 942 points, 706 comments on HN.",
       "source": "Hacker News",
       "sourceUrl": "https://huggingface.co/deepseek-ai/DeepSeek-V4.1-Flash-1017",
       "category": "products",
       "date": "2026-10-17",
       "hot": true,
-      "score": 808,
+      "score": 942,
       "tags": [
         "HN",
         "top"
-      ]
-    },
-    {
-      "id": "hnoon-500-blog-posts-to-learn-about-github",
-      "title": "500 Blog Posts To Learn About Github",
-      "summary": "Learn everything you need to know about Github via these 500 free HackerNoon blog posts. — by Learn Repo on HackerNoon.",
-      "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/500-blog-posts-to-learn-about-github",
-      "category": "products",
-      "date": "2026-10-17",
-      "hot": true,
-      "score": 100,
-      "tags": [
-        "HackerNoon",
-        "github",
-        "AI"
-      ]
-    },
-    {
-      "id": "hnoon-mastercard-launches-stablecoin-platform-how-crypto-turns-int",
-      "title": "Mastercard Launches Stablecoin Platform: How Crypto Turns into Card Swipes and Bank Payouts",
-      "summary": "Mastercard launches its stablecoin platform with BVNK, connecting digital assets to global card payments, fiat conversion and bank payouts. — by MEXC Learn on HackerNoon.",
-      "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/mastercard-launches-stablecoin-platform-how-crypto-turns-into-card-swipes-and-bank-payouts",
-      "category": "safety",
-      "date": "2026-10-17",
-      "hot": true,
-      "score": 100,
-      "tags": [
-        "HackerNoon",
-        "cryptocurrency",
-        "AI"
-      ]
-    },
-    {
-      "id": "hnoon-inside-goodrecs-matching-engine-for-pickup-sports",
-      "title": "Inside GoodRec's Matching Engine for Pickup Sports",
-      "summary": "Discover how GoodRec connects players with pickup games, fills unused sports facility slots, and scales its booking platform across 50+ US cities. — by Sanya Kapoor on HackerNoon.",
-      "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/inside-goodrecs-matching-engine-for-pickup-sports",
-      "category": "products",
-      "date": "2026-10-17",
-      "hot": true,
-      "score": 100,
-      "tags": [
-        "HackerNoon",
-        "goodrec-pickup-games",
-        "AI"
-      ]
-    },
-    {
-      "id": "hnoon-170-blog-posts-to-learn-about-github-copilot",
-      "title": "170 Blog Posts To Learn About Github Copilot",
-      "summary": "Learn everything you need to know about Github Copilot via these 170 free HackerNoon blog posts. — by Learn Repo on HackerNoon.",
-      "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/170-blog-posts-to-learn-about-github-copilot",
-      "category": "products",
-      "date": "2026-10-17",
-      "hot": true,
-      "score": 100,
-      "tags": [
-        "HackerNoon",
-        "github-copilot",
-        "AI"
       ]
     },
     {
       "id": "hntop-50122800",
       "title": "Claude reveals ECDSA curve origins",
-      "summary": "<a href=\"https:&#x2F;&#x2F;words.filippo.io&#x2F;seeds-solved&#x2F;\" rel=\"nofollow\">https:&#x2F;&#x2F;words.filippo.io&#x2F;seeds-solved&#x2F;</a> — 1034 points, 380 comments on HN.",
+      "summary": "<a href=\"https:&#x2F;&#x2F;words.filippo.io&#x2F;seeds-solved&#x2F;\" rel=\"nofollow\">https:&#x2F;&#x2F;words.filippo.io&#x2F;seeds-solved&#x2F;</a> — 1051 points, 388 comments on HN.",
       "source": "Hacker News",
       "sourceUrl": "https://www.anthropic.com/research/ecdsa-curve-origins",
       "category": "safety",
       "date": "2026-10-16",
       "hot": true,
-      "score": 1034,
+      "score": 1051,
       "tags": [
         "HN",
         "top"
       ]
     },
     {
-      "id": "hnoon-500-blog-posts-to-learn-about-gaming",
-      "title": "500 Blog Posts To Learn About Gaming",
-      "summary": "Learn everything you need to know about Gaming via these 500 free HackerNoon blog posts. — by Learn Repo on HackerNoon.",
-      "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/500-blog-posts-to-learn-about-gaming",
-      "category": "products",
-      "date": "2026-10-16",
-      "hot": true,
-      "score": 100,
-      "tags": [
-        "HackerNoon",
-        "gaming",
-        "AI"
-      ]
-    },
-    {
       "id": "hntop-50107379",
       "title": "Muse Spark Open",
-      "summary": "<a href=\"https:&#x2F;&#x2F;dev.meta.ai&#x2F;resources&#x2F;blog&#x2F;build-with-muse-spark-open\" rel=\"nofollow\">https:&#x2F;&#x2F;dev.meta.ai&#x2F;resources&#x2F;blog&#x2F;build-with-muse-spark-ope...</a><p><a href=\"http — 914 points, 477 comments on HN.",
+      "summary": "<a href=\"https:&#x2F;&#x2F;dev.meta.ai&#x2F;resources&#x2F;blog&#x2F;build-with-muse-spark-open\" rel=\"nofollow\">https:&#x2F;&#x2F;dev.meta.ai&#x2F;resources&#x2F;blog&#x2F;build-with-muse-spark-ope...</a><p><a href=\"http — 917 points, 477 comments on HN.",
       "source": "Hacker News",
       "sourceUrl": "https://research.meta.ai/blog/muse-spark-open",
       "category": "products",
       "date": "2026-10-15",
       "hot": true,
-      "score": 914,
+      "score": 917,
       "tags": [
         "HN",
         "top"
@@ -267,44 +266,45 @@
     {
       "id": "hntop-50105647",
       "title": "Neural networks are clean",
-      "summary": "<a href=\"https:&#x2F;&#x2F;twitter.com&#x2F;nickcammarata&#x2F;status&#x2F;2110757819427574056\" rel=\"nofollow\">https:&#x2F;&#x2F;twitter.com&#x2F;nickcammarata&#x2F;status&#x2F;2110757819427574056</a> — 812 points, 332 comments on HN.",
+      "summary": "<a href=\"https:&#x2F;&#x2F;twitter.com&#x2F;nickcammarata&#x2F;status&#x2F;2110757819427574056\" rel=\"nofollow\">https:&#x2F;&#x2F;twitter.com&#x2F;nickcammarata&#x2F;status&#x2F;2110757819427574056</a> — 822 points, 336 comments on HN.",
       "source": "Hacker News",
       "sourceUrl": "https://already-clean.goodfire.com/",
       "category": "products",
       "date": "2026-10-15",
       "hot": true,
-      "score": 812,
+      "score": 822,
       "tags": [
         "HN",
         "top"
       ]
     },
     {
-      "id": "ax-2610.22360v1",
-      "title": "Grounding Generative Verification in 3D Content",
-      "summary": "Recent advances in multimodal large language models (MLLMs) and 3D generation have expanded 3D understanding and synthesis. However, beyond visual fidelity, task-specific correctness grounded in 3D evidence remains a maj",
-      "source": "arXiv",
-      "sourceUrl": "http://arxiv.org/abs/2610.22360v1",
+      "id": "dev-4808239",
+      "title": "I Vibe-Coded My Way Out of Angular Upgrades",
+      "summary": "Do you also hate upgrading Angular versions? Because I do. I maintain a few open-source projects, and... — 69 reactions, 44 comments on DEV.to.",
+      "source": "DEV.to",
+      "sourceUrl": "https://dev.to/gramli/i-vibe-coded-my-way-out-of-angular-upgrades-4fkh",
       "category": "products",
       "date": "2026-10-15",
       "hot": true,
-      "score": 800,
+      "score": 69,
       "tags": [
-        "arXiv",
-        "paper",
-        "AI"
+        "DEV.to",
+        "ai",
+        "ai",
+        "vibecoding"
       ]
     }
   ],
   "meta": {
-    "fetchedAt": "2026-10-18T06:58:35.139Z",
+    "fetchedAt": "2026-10-19T07:20:06.605Z",
     "topic": "AI",
     "total": 15,
-    "hot": 10,
+    "hot": 12,
     "sources": [
       "Hacker News",
       "HackerNoon",
-      "arXiv"
+      "DEV.to"
     ]
   }
 }
