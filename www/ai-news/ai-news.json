@@ -1,12 +1,12 @@
 {
-  "generatedAt": "2026-10-19T07:20:06.605Z",
+  "generatedAt": "2026-10-20T07:11:52.945Z",
   "generatedBy": "YUNIE × Last30Days",
   "version": 2,
   "description": "Tin AI mới nhất — tổng hợp từ Last30Days (HN, GitHub, DEV.to, Reddit, arXiv, HackerNoon) trong 30 ngày qua. Chủ đề: AI. Tự động cập nhật bởi YUNIE.",
   "last30days": {
     "enabled": true,
     "topic": "AI",
-    "since": "2026-09-19",
+    "since": "2026-09-20",
     "days": 30,
     "sources": [
       "Hacker News (Algolia, free)",
@@ -55,179 +55,192 @@
   ],
   "articles": [
     {
-      "id": "hn-50148452",
-      "title": "DeepSeek V4.1 Flash 1017 (Max)",
-      "summary": "DeepSeek V4.1 Flash 1017 (Max) — 105 points, 33 comments on HN.",
-      "source": "Hacker News",
-      "sourceUrl": "https://artificialanalysis.ai/models/deepseek-v4-1-flash-1017",
-      "category": "products",
-      "date": "2026-10-19",
+      "id": "hnoon-an-evidence-to-state-architecture-for-reliable-ai-in-retail-",
+      "title": "An Evidence-to-State architecture for reliable AI in Retail Pharmacy",
+      "summary": "The proposed architecture aims to resolve the operational context gap in pharmacy workflows by creating a Current Prescription Context that answers practical questions about the pr — by Puneet Arora on HackerNoon.",
+      "source": "HackerNoon",
+      "sourceUrl": "https://hackernoon.com/an-evidence-to-state-architecture-for-reliable-ai-in-retail-pharmacy",
+      "category": "safety",
+      "date": "2026-10-20",
       "hot": true,
-      "score": 105,
+      "score": 100,
       "tags": [
-        "HN",
-        "AI",
-        "story",
-        "author_theanonymousone"
+        "HackerNoon",
+        "solution-architecture",
+        "AI"
       ]
     },
     {
-      "id": "hnoon-controlled-autonomy-for-ai-agents-interview-with-cobo-co-fou",
-      "title": "Controlled Autonomy for AI Agents: Interview with Cobo Co-founder and CTO Changhao Jiang",
-      "summary": "The development of AI agents capable of handling real financial transactions raises concerns about authorization, freedom, and accountability, with the Global Blockchain Business C — by Olayimika Oyebanji on HackerNoon.",
+      "id": "hnoon-to-cop31-your-prompts-are-packing-away-an-electric-bill",
+      "title": "To COP31: Your Prompts Are Packing Away an Electric Bill",
+      "summary": "TL;DR: Asking a question to a LLM requires about the same amount of energy it takes to power a 10 watt LED bulb for two minutes. The problem isn’t our prompts, it’s how we use them — by Onder A. on HackerNoon.",
       "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/controlled-autonomy-for-ai-agents-interview-with-cobo-co-founder-and-cto-changhao-jiang",
+      "sourceUrl": "https://hackernoon.com/to-cop31-your-prompts-are-packing-away-an-electric-bill",
+      "category": "safety",
+      "date": "2026-10-20",
+      "hot": true,
+      "score": 100,
+      "tags": [
+        "HackerNoon",
+        "ai",
+        "AI"
+      ]
+    },
+    {
+      "id": "hnoon-the-ai-readiness-problem-hiding-in-your-database",
+      "title": "The AI Readiness Problem Hiding in Your Database",
+      "summary": "The gap between AI access and intent is growing, with databases often lacking context about why data was retrieved, making it difficult to account for what was done with the data.  — by Victor Horlenko on HackerNoon.",
+      "source": "HackerNoon",
+      "sourceUrl": "https://hackernoon.com/the-ai-readiness-problem-hiding-in-your-database",
+      "category": "products",
+      "date": "2026-10-20",
+      "hot": true,
+      "score": 100,
+      "tags": [
+        "HackerNoon",
+        "database-management",
+        "AI"
+      ]
+    },
+    {
+      "id": "hnoon-beyond-generative-ai-the-enterprise-ai-opportunities-busines",
+      "title": "Beyond Generative AI: The Enterprise AI Opportunities Businesses Shouldn't Overlook",
+      "summary": "Businesses should focus on solving specific problems with the right AI technology, rather than assuming generative AI is the only solution. By understanding the differences between — by Maulik Shah on HackerNoon.",
+      "source": "HackerNoon",
+      "sourceUrl": "https://hackernoon.com/beyond-generative-ai-the-enterprise-ai-opportunities-businesses-shouldnt-overlook",
+      "category": "products",
+      "date": "2026-10-20",
+      "hot": true,
+      "score": 100,
+      "tags": [
+        "HackerNoon",
+        "ai",
+        "AI"
+      ]
+    },
+    {
+      "id": "hnoon-what-saas-pricing-pages-reveal-about-2026-price-hikes-and-ai",
+      "title": "What SaaS Pricing Pages Reveal About 2026 Price Hikes (and AI Add-On Pricing)",
+      "summary": "Pricing pages change without announcement — tier shuffles, expiring grandfathering, AI billed as add-ons. Run a 10-minute audit to find the real price before you commit. Read All — by SaaSFilter on HackerNoon.",
+      "source": "HackerNoon",
+      "sourceUrl": "https://hackernoon.com/what-saas-pricing-pages-reveal-about-2026-price-hikes-and-ai-add-on-pricing",
+      "category": "products",
+      "date": "2026-10-20",
+      "hot": true,
+      "score": 100,
+      "tags": [
+        "HackerNoon",
+        "saas",
+        "AI"
+      ]
+    },
+    {
+      "id": "ax-2610.26799v1",
+      "title": "Accountable partial understanding: securing the epistemic attack surface of agentic systems",
+      "summary": "Attackers profit from what defenders do not understand. Software security has treated the gap between system behavior and human comprehension as a condition to narrow through analysis and assurance, booking the remainder",
+      "source": "arXiv",
+      "sourceUrl": "http://arxiv.org/abs/2610.26799v1",
       "category": "safety",
       "date": "2026-10-19",
       "hot": true,
-      "score": 100,
+      "score": 800,
       "tags": [
-        "HackerNoon",
-        "web3",
+        "arXiv",
+        "paper",
         "AI"
       ]
     },
     {
-      "id": "hn-50148396",
-      "title": "Show HN: Strot – Compile an LLM's intent once, run decisions locally",
-      "summary": "Show HN: Strot – Compile an LLM's intent once, run decisions locally — 23 points, 10 comments on HN.",
-      "source": "Hacker News",
-      "sourceUrl": "https://github.com/strot-ai/Project-STROT",
+      "id": "ax-2610.26770v1",
+      "title": "HarnessPro: Recursive Harness Self-Improvement with Pareto Optimization for Performance-Cost Trade-offs",
+      "summary": "Harness development plays a crucial role in building capable AI agents. Recent approaches improve harnesses through recursive self-improvement (RSI), but their performance gains often come with higher execution costs. We",
+      "source": "arXiv",
+      "sourceUrl": "http://arxiv.org/abs/2610.26770v1",
       "category": "products",
       "date": "2026-10-19",
-      "hot": false,
-      "score": 23,
+      "hot": true,
+      "score": 800,
       "tags": [
-        "HN",
-        "AI",
-        "story",
-        "author_solohunter001"
+        "arXiv",
+        "paper",
+        "AI"
       ]
     },
     {
-      "id": "hn-50148298",
-      "title": "Man arrested after discussing plans for childcare mass shooting with [Claude]",
-      "summary": "Man arrested after discussing plans for childcare mass shooting with [Claude] — 8 points, 9 comments on HN.",
-      "source": "Hacker News",
-      "sourceUrl": "https://www.smh.com.au/national/nsw/sydney-man-allegedly-discussed-plans-for-childcare-mass-shooting-with-ai-chatbot-20261019-p616oc.html",
-      "category": "products",
-      "date": "2026-10-19",
-      "hot": false,
-      "score": 8,
-      "tags": [
-        "HN",
-        "AI",
-        "story",
-        "author_milderworkacc"
-      ]
-    },
-    {
-      "id": "hn-50148356",
-      "title": "Show HN: Yila – A Codex for Scientific Research",
-      "summary": "Show HN: Yila – A Codex for Scientific Research — 6 points, 2 comments on HN.",
-      "source": "Hacker News",
-      "sourceUrl": "https://yila.ai",
-      "category": "products",
-      "date": "2026-10-19",
-      "hot": false,
-      "score": 6,
-      "tags": [
-        "HN",
-        "AI",
-        "story",
-        "author_blacktechnology"
-      ]
-    },
-    {
-      "id": "hnoon-a-three-checkpoint-framework-for-testing-website-contact-for",
-      "title": "A Three-Checkpoint Framework for Testing Website Contact Forms",
-      "summary": "A contact form's success message doesn't prove an inquiry arrived. Learn three practical checks to verify submissions, receipt, and replies. — by Emanuil Vasigia on HackerNoon.",
-      "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/a-three-checkpoint-framework-for-testing-website-contact-forms",
+      "id": "ax-2610.26758v1",
+      "title": "AI Misconception and Adoption Among Indonesian K-12 Teachers",
+      "summary": "Indonesia's fragmented geography and uneven infrastructure pose persistent challenges for adopting new educational technologies. While national initiatives aim to mainstream AI in K-12 schools by 2025, policy readiness d",
+      "source": "arXiv",
+      "sourceUrl": "http://arxiv.org/abs/2610.26758v1",
       "category": "safety",
-      "date": "2026-10-18",
+      "date": "2026-10-19",
       "hot": true,
-      "score": 100,
+      "score": 800,
       "tags": [
-        "HackerNoon",
-        "contact-form-testing",
+        "arXiv",
+        "paper",
         "AI"
       ]
     },
     {
-      "id": "hnoon-adversarial-testing-for-browser-e2ee-authentication-replay-a",
-      "title": "Adversarial Testing for Browser E2EE: Authentication, Replay, and State Recovery",
-      "summary": "Learn how to test browser E2EE against key substitution, ciphertext tampering, replay, downgrade attacks, and asynchronous state failures. — by Richard Andresik on HackerNoon.",
+      "id": "hnoon-deploying-kubernetes-clusters-on-openstack-an-alternative-to",
+      "title": "Deploying Kubernetes Clusters on OpenStack: An Alternative to AWS EKS",
+      "summary": "Why VMs make more sense than bare metal for Kubernetes and distributed architecture, and where the cost and operational trade-offs come from. — by Milica Maksimovic on HackerNoon.",
       "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/adversarial-testing-for-browser-e2ee-authentication-replay-and-state-recovery",
-      "category": "safety",
-      "date": "2026-10-18",
-      "hot": true,
-      "score": 100,
-      "tags": [
-        "HackerNoon",
-        "end-to-end-encryption-testing",
-        "AI"
-      ]
-    },
-    {
-      "id": "hnoon-51-blog-posts-to-learn-about-hacker",
-      "title": "51 Blog Posts To Learn About Hacker",
-      "summary": "Learn everything you need to know about Hacker via these 51 free HackerNoon blog posts. — by Learn Repo on HackerNoon.",
-      "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/51-blog-posts-to-learn-about-hacker",
-      "category": "products",
-      "date": "2026-10-18",
-      "hot": true,
-      "score": 100,
-      "tags": [
-        "HackerNoon",
-        "hacker",
-        "AI"
-      ]
-    },
-    {
-      "id": "hnoon-10-18-2026-techbeat",
-      "title": "The TechBeat: Muse, Instinct, Wajo, and OpenAI's Dots: Four AI Assistants That Do the Work for You (10/18/2026)",
-      "summary": "10/18/2026: Trending stories on Hackernoon today! — by Techbeat on HackerNoon.",
-      "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/10-18-2026-techbeat",
+      "sourceUrl": "https://hackernoon.com/deploying-kubernetes-clusters-on-openstack-an-alternative-to-aws-eks",
       "category": "big-tech",
-      "date": "2026-10-18",
+      "date": "2026-10-19",
       "hot": true,
       "score": 100,
       "tags": [
         "HackerNoon",
-        "tech-beat",
+        "kubernetes",
         "AI"
       ]
     },
     {
-      "id": "hnoon-85-blog-posts-to-learn-about-hackathon",
-      "title": "85 Blog Posts To Learn About Hackathon",
-      "summary": "Learn everything you need to know about Hackathon via these 85 free HackerNoon blog posts. — by Learn Repo on HackerNoon.",
+      "id": "hnoon-meet-moxie-marlinspike-the-anarchist-sailor-who-built-signal",
+      "title": "Meet Moxie Marlinspike: The Anarchist Sailor Who Built Signal and Encrypted Billions of Chats",
+      "summary": "The contradictions are the man. An anarchist who ran the world's most important privacy infrastructure like an autocrat. A cryptographer who distrusts tech. — by Bruce Li on HackerNoon.",
       "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/85-blog-posts-to-learn-about-hackathon",
+      "sourceUrl": "https://hackernoon.com/meet-moxie-marlinspike-the-anarchist-sailor-who-built-signal-and-encrypted-billions-of-chats",
       "category": "products",
-      "date": "2026-10-18",
+      "date": "2026-10-19",
       "hot": true,
       "score": 100,
       "tags": [
         "HackerNoon",
-        "hackathon",
+        "signal",
         "AI"
+      ]
+    },
+    {
+      "id": "dev-4845404",
+      "title": "Fine-Tuning Qwen3-8B with Tinker: From 50% to 76% Accuracy, and Burning Through My Budget",
+      "summary": "This is a submission for the Hacktoberfest Open-Source AI Challenge Week 2: Side Hustle  Oktoberfest?... — 65 reactions, 29 comments on DEV.to.",
+      "source": "DEV.to",
+      "sourceUrl": "https://dev.to/gramli/fine-tuning-qwen3-8b-with-tinker-from-50-to-76-accuracy-and-burning-through-my-budget-48mh",
+      "category": "products",
+      "date": "2026-10-18",
+      "hot": true,
+      "score": 65,
+      "tags": [
+        "DEV.to",
+        "ai",
+        "devchallenge",
+        "hf26challenge"
       ]
     },
     {
       "id": "hntop-50129045",
       "title": "DeepSeek-v4.1-Flash-1017",
-      "summary": "<a href=\"https:&#x2F;&#x2F;api-docs.deepseek.com&#x2F;news&#x2F;news261017&#x2F;\" rel=\"nofollow\">https:&#x2F;&#x2F;api-docs.deepseek.com&#x2F;news&#x2F;news261017&#x2F;</a><p><a href=\"https:&#x2F;&#x2F;openrouter.ai&#x2F — 942 points, 706 comments on HN.",
+      "summary": "<a href=\"https:&#x2F;&#x2F;api-docs.deepseek.com&#x2F;news&#x2F;news261017&#x2F;\" rel=\"nofollow\">https:&#x2F;&#x2F;api-docs.deepseek.com&#x2F;news&#x2F;news261017&#x2F;</a><p><a href=\"https:&#x2F;&#x2F;openrouter.ai&#x2F — 954 points, 717 comments on HN.",
       "source": "Hacker News",
       "sourceUrl": "https://huggingface.co/deepseek-ai/DeepSeek-V4.1-Flash-1017",
       "category": "products",
       "date": "2026-10-17",
       "hot": true,
-      "score": 942,
+      "score": 954,
       "tags": [
         "HN",
         "top"
@@ -236,75 +249,61 @@
     {
       "id": "hntop-50122800",
       "title": "Claude reveals ECDSA curve origins",
-      "summary": "<a href=\"https:&#x2F;&#x2F;words.filippo.io&#x2F;seeds-solved&#x2F;\" rel=\"nofollow\">https:&#x2F;&#x2F;words.filippo.io&#x2F;seeds-solved&#x2F;</a> — 1051 points, 388 comments on HN.",
+      "summary": "<a href=\"https:&#x2F;&#x2F;words.filippo.io&#x2F;seeds-solved&#x2F;\" rel=\"nofollow\">https:&#x2F;&#x2F;words.filippo.io&#x2F;seeds-solved&#x2F;</a> — 1060 points, 389 comments on HN.",
       "source": "Hacker News",
       "sourceUrl": "https://www.anthropic.com/research/ecdsa-curve-origins",
       "category": "safety",
       "date": "2026-10-16",
       "hot": true,
-      "score": 1051,
+      "score": 1060,
       "tags": [
         "HN",
         "top"
+      ]
+    },
+    {
+      "id": "dev-4859158",
+      "title": "What I Actually Learn When I Build With AI",
+      "summary": "I've spent entire nights building something with AI, gotten a bunch of features working, and then... — 52 reactions, 17 comments on DEV.to.",
+      "source": "DEV.to",
+      "sourceUrl": "https://dev.to/sizzlebop/what-i-actually-learn-when-i-build-with-ai-1074",
+      "category": "products",
+      "date": "2026-10-16",
+      "hot": true,
+      "score": 52,
+      "tags": [
+        "DEV.to",
+        "ai",
+        "ai",
+        "programming"
       ]
     },
     {
       "id": "hntop-50107379",
       "title": "Muse Spark Open",
-      "summary": "<a href=\"https:&#x2F;&#x2F;dev.meta.ai&#x2F;resources&#x2F;blog&#x2F;build-with-muse-spark-open\" rel=\"nofollow\">https:&#x2F;&#x2F;dev.meta.ai&#x2F;resources&#x2F;blog&#x2F;build-with-muse-spark-ope...</a><p><a href=\"http — 917 points, 477 comments on HN.",
+      "summary": "<a href=\"https:&#x2F;&#x2F;dev.meta.ai&#x2F;resources&#x2F;blog&#x2F;build-with-muse-spark-open\" rel=\"nofollow\">https:&#x2F;&#x2F;dev.meta.ai&#x2F;resources&#x2F;blog&#x2F;build-with-muse-spark-ope...</a><p><a href=\"http — 919 points, 478 comments on HN.",
       "source": "Hacker News",
       "sourceUrl": "https://research.meta.ai/blog/muse-spark-open",
       "category": "products",
       "date": "2026-10-15",
       "hot": true,
-      "score": 917,
+      "score": 919,
       "tags": [
         "HN",
         "top"
-      ]
-    },
-    {
-      "id": "hntop-50105647",
-      "title": "Neural networks are clean",
-      "summary": "<a href=\"https:&#x2F;&#x2F;twitter.com&#x2F;nickcammarata&#x2F;status&#x2F;2110757819427574056\" rel=\"nofollow\">https:&#x2F;&#x2F;twitter.com&#x2F;nickcammarata&#x2F;status&#x2F;2110757819427574056</a> — 822 points, 336 comments on HN.",
-      "source": "Hacker News",
-      "sourceUrl": "https://already-clean.goodfire.com/",
-      "category": "products",
-      "date": "2026-10-15",
-      "hot": true,
-      "score": 822,
-      "tags": [
-        "HN",
-        "top"
-      ]
-    },
-    {
-      "id": "dev-4808239",
-      "title": "I Vibe-Coded My Way Out of Angular Upgrades",
-      "summary": "Do you also hate upgrading Angular versions? Because I do. I maintain a few open-source projects, and... — 69 reactions, 44 comments on DEV.to.",
-      "source": "DEV.to",
-      "sourceUrl": "https://dev.to/gramli/i-vibe-coded-my-way-out-of-angular-upgrades-4fkh",
-      "category": "products",
-      "date": "2026-10-15",
-      "hot": true,
-      "score": 69,
-      "tags": [
-        "DEV.to",
-        "ai",
-        "ai",
-        "vibecoding"
       ]
     }
   ],
   "meta": {
-    "fetchedAt": "2026-10-19T07:20:06.605Z",
+    "fetchedAt": "2026-10-20T07:11:52.945Z",
     "topic": "AI",
     "total": 15,
-    "hot": 12,
+    "hot": 15,
     "sources": [
-      "Hacker News",
       "HackerNoon",
-      "DEV.to"
+      "arXiv",
+      "DEV.to",
+      "Hacker News"
     ]
   }
 }
