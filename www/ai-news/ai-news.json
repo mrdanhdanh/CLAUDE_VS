@@ -1,12 +1,12 @@
 {
-  "generatedAt": "2026-10-21T07:05:42.104Z",
+  "generatedAt": "2026-10-22T07:07:17.088Z",
   "generatedBy": "YUNIE × Last30Days",
   "version": 2,
   "description": "Tin AI mới nhất — tổng hợp từ Last30Days (HN, GitHub, DEV.to, Reddit, arXiv, HackerNoon) trong 30 ngày qua. Chủ đề: AI. Tự động cập nhật bởi YUNIE.",
   "last30days": {
     "enabled": true,
     "topic": "AI",
-    "since": "2026-09-21",
+    "since": "2026-09-22",
     "days": 30,
     "sources": [
       "Hacker News (Algolia, free)",
@@ -55,11 +55,126 @@
   ],
   "articles": [
     {
-      "id": "hnoon-the-ai-stack-is-becoming-more-complicated-than-the-model",
-      "title": "The AI Stack Is Becoming More Complicated Than the Model",
-      "summary": "Production AI is no longer just a model behind an API. Data pipelines, retrieval, context engineering, inference, evaluation, and observability increasingly determine whether an AI — by Atul Kumar on HackerNoon.",
+      "id": "hnoon-the-green-ai-crisis-and-sustainable-infrastructure",
+      "title": "The \"Green AI\" Crisis & Sustainable Infrastructure",
+      "summary": "AI got far more efficient per query while its total footprint hit records. Google measured a 33x drop in energy per prompt, down to 0.24 Wh for a median text prompt, then reported  — by vishwa vimukthi gammuduwaththage o",
       "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/the-ai-stack-is-becoming-more-complicated-than-the-model",
+      "sourceUrl": "https://hackernoon.com/the-green-ai-crisis-and-sustainable-infrastructure",
+      "category": "big-tech",
+      "date": "2026-10-22",
+      "hot": true,
+      "score": 100,
+      "tags": [
+        "HackerNoon",
+        "ai",
+        "AI"
+      ]
+    },
+    {
+      "id": "hnoon-why-nobody-will-insure-your-ai-generated-film-in-2026",
+      "title": "Why Nobody Will Insure Your AI-Generated Film in 2026",
+      "summary": "Festivals debate AI disclosure. Unions debate AI actors. Meanwhile insurers are the ones actually deciding if your AI film gets distributed. Read All — by Frank Houbre on HackerNoon.",
+      "source": "HackerNoon",
+      "sourceUrl": "https://hackernoon.com/why-nobody-will-insure-your-ai-generated-film-in-2026",
+      "category": "products",
+      "date": "2026-10-22",
+      "hot": true,
+      "score": 100,
+      "tags": [
+        "HackerNoon",
+        "ai",
+        "AI"
+      ]
+    },
+    {
+      "id": "hn-50191586",
+      "title": "A sovereign, local AI browser for professionals who want to save time",
+      "summary": "A sovereign, local AI browser for professionals who want to save time — 4 points, 1 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://ricuicui.com/en/articles/a-sovereign-local-ai-browser-for-professionals-who-want-to-save-time",
+      "category": "products",
+      "date": "2026-10-22",
+      "hot": false,
+      "score": 4,
+      "tags": [
+        "HN",
+        "AI",
+        "story",
+        "author_contextetech"
+      ]
+    },
+    {
+      "id": "hn-50191278",
+      "title": "Lemoncode, Free Coding Agent",
+      "summary": "Lemoncode, Free Coding Agent — 4 points, 2 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://lemoncode.ai/",
+      "category": "products",
+      "date": "2026-10-22",
+      "hot": false,
+      "score": 4,
+      "tags": [
+        "HN",
+        "AI",
+        "story",
+        "author_SafwanCodes"
+      ]
+    },
+    {
+      "id": "hn-50191904",
+      "title": "AI revealed 400 years of seafaring history",
+      "summary": "AI revealed 400 years of seafaring history — 3 points, 0 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://www.bbc.com/news/articles/cr93z9zq5l9jo",
+      "category": "products",
+      "date": "2026-10-22",
+      "hot": false,
+      "score": 3,
+      "tags": [
+        "HN",
+        "AI",
+        "story",
+        "author_1659447091"
+      ]
+    },
+    {
+      "id": "ax-2610.30104v1",
+      "title": "BatchBench: Benchmarking AI Robustness to Batch Effects and Domain Shift in Biomedical Images - A JUMP Cell Painting Leaderboard",
+      "summary": "Despite recent advances, current AI systems remain highly susceptible to domain shifts, particularly in biomedical imaging, where images are usually acquired under substantially different experimental conditions. Althoug",
+      "source": "arXiv",
+      "sourceUrl": "http://arxiv.org/abs/2610.30104v1",
+      "category": "products",
+      "date": "2026-10-21",
+      "hot": true,
+      "score": 800,
+      "tags": [
+        "arXiv",
+        "paper",
+        "AI"
+      ]
+    },
+    {
+      "id": "ax-2610.30059v1",
+      "title": "Validating Autoformalized Specifications via Contrapuntal Languages",
+      "summary": "Formal specifications can make AI-generated code mechanically checkable. Because user intent is typically expressed in natural language rather than formal logic, specifications must first be derived from it, e.g., via LL",
+      "source": "arXiv",
+      "sourceUrl": "http://arxiv.org/abs/2610.30059v1",
+      "category": "products",
+      "date": "2026-10-21",
+      "hot": true,
+      "score": 800,
+      "tags": [
+        "arXiv",
+        "paper",
+        "AI"
+      ]
+    },
+    {
+      "id": "hnoon-edge-ai-the-shift-to-on-device-inference",
+      "title": "Edge AI: The Shift to On-Device Inference",
+      "summary": "On-device inference is usually sold as cheaper, faster, and more private. I would describe it more narrowly: it gives you a system whose worst case you can know in advance. It does — by vishwa vimukthi gammuduwaththage o",
+      "source": "HackerNoon",
+      "sourceUrl": "https://hackernoon.com/edge-ai-the-shift-to-on-device-inference",
       "category": "products",
       "date": "2026-10-21",
       "hot": true,
@@ -71,242 +186,130 @@
       ]
     },
     {
-      "id": "hn-50176351",
-      "title": "Alibaba hikes DeepSeek V4 Flash 0731 output prices by 230%",
-      "summary": "Alibaba hikes DeepSeek V4 Flash 0731 output prices by 230% — 23 points, 21 comments on HN.",
-      "source": "Hacker News",
-      "sourceUrl": "https://www.stork.ai/newsletter/2026-10-20-alibaba-quietly-tripled-deepseek-prices#lead",
+      "id": "hnoon-why-ai-agent-pricing-is-still-unsolved-and-what-it-means-for",
+      "title": "Why AI Agent Pricing Is Still Unsolved and What It Means for How You Track Costs",
+      "summary": "Unlike traditional SaaS, AI agents deliver uncertain value at a cost that keeps shifting, and that combination breaks the pricing logic SaaS was built on. — by Deniz Akbasaran on HackerNoon.",
+      "source": "HackerNoon",
+      "sourceUrl": "https://hackernoon.com/why-ai-agent-pricing-is-still-unsolved-and-what-it-means-for-how-you-track-costs",
       "category": "products",
       "date": "2026-10-21",
-      "hot": false,
-      "score": 23,
+      "hot": true,
+      "score": 100,
       "tags": [
-        "HN",
-        "AI",
-        "story",
-        "author_GloVin"
+        "HackerNoon",
+        "saas",
+        "AI"
       ]
     },
     {
-      "id": "hn-50175716",
-      "title": "US Air Force pilots used malware-laden USB drives to plan Afghanistan missions",
-      "summary": "US Air Force pilots used malware-laden USB drives to plan Afghanistan missions — 6 points, 0 comments on HN.",
-      "source": "Hacker News",
-      "sourceUrl": "https://www.theregister.com/security/2026/10/15/us-air-force-pilots-used-malware-laden-usb-drives-to-plan-afghanistan-missions/5303156",
+      "id": "hnoon-why-a-disgusting-parasite-study-just-exposed-your-broken-b2b",
+      "title": "Why a Disgusting Parasite Study Just Exposed Your Broken B2B Content Strategy",
+      "summary": "Why building custom B2B content for every ICP fails. Learn how a landmark parasite study reveals the secret to horizontal scale and content leverage. — by CSKaron on HackerNoon.",
+      "source": "HackerNoon",
+      "sourceUrl": "https://hackernoon.com/why-a-disgusting-parasite-study-just-exposed-your-broken-b2b-content-strategy",
       "category": "products",
       "date": "2026-10-21",
-      "hot": false,
-      "score": 6,
+      "hot": true,
+      "score": 100,
       "tags": [
-        "HN",
-        "AI",
-        "story",
-        "author_gumby"
-      ]
-    },
-    {
-      "id": "hn-50176908",
-      "title": "Launch HN: Alter (YC S25) – Access control for multi-user agents",
-      "summary": "Hi HN! We’re Srikar and Kevan, founders of Alter – <a href=\"https:&#x2F;&#x2F;alterauth.com&#x2F;\">https:&#x2F;&#x2F;alterauth.com&#x2F;</a>. We’re building access control for agents that can take actions on behalf of mu — 4 points, 1 comments on HN.",
-      "source": "Hacker News",
-      "sourceUrl": "https://alterauth.com/",
-      "category": "products",
-      "date": "2026-10-21",
-      "hot": false,
-      "score": 4,
-      "tags": [
-        "HN",
-        "AI",
-        "story",
-        "author_simfinii"
-      ]
-    },
-    {
-      "id": "hn-50176107",
-      "title": "This Is the Good Scenario?",
-      "summary": "This Is the Good Scenario? — 4 points, 2 comments on HN.",
-      "source": "Hacker News",
-      "sourceUrl": "https://www.nytimes.com/2026/10/18/opinion/ai-bubble-catastrophe-investors-control.html",
-      "category": "products",
-      "date": "2026-10-21",
-      "hot": false,
-      "score": 4,
-      "tags": [
-        "HN",
-        "AI",
-        "story",
-        "author_reasonableklout"
+        "HackerNoon",
+        "b2b-marketing",
+        "AI"
       ]
     },
     {
       "id": "hntop-50163277",
       "title": "DeepInfer: High-performance inference framework for DeepSeek models",
-      "summary": "DeepInfer: High-performance inference framework for DeepSeek models — 2213 points, 852 comments on HN.",
+      "summary": "DeepInfer: High-performance inference framework for DeepSeek models — 2313 points, 885 comments on HN.",
       "source": "Hacker News",
       "sourceUrl": "https://github.com/deepseek-ai/DeepInfer",
       "category": "products",
       "date": "2026-10-20",
       "hot": true,
-      "score": 2213,
+      "score": 2313,
       "tags": [
         "HN",
         "top"
       ]
     },
     {
-      "id": "hnoon-agentsmd-is-a-config-file-not-a-wishlist",
-      "title": "AGENTS.md Is a Config File, Not a Wishlist",
-      "summary": "Outdated AGENTS.md instructions can undermine AI coding agents. Learn how versioning, pruning, and evaluations can keep repository guidance reliable. — by Bhaskar on HackerNoon.",
-      "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/agentsmd-is-a-config-file-not-a-wishlist",
+      "id": "dev-4884586",
+      "title": "Building an Open-Source Support Tool That Turns Your Docs into Reusable Knowledge",
+      "summary": "I spend a good part of my day working with the community at CopilotKit, answering questions in... — 130 reactions, 38 comments on DEV.to.",
+      "source": "DEV.to",
+      "sourceUrl": "https://dev.to/nathan_tarbert/your-team-has-answered-this-before-im-building-a-tool-that-remembers-5604",
+      "category": "products",
+      "date": "2026-10-20",
+      "hot": true,
+      "score": 130,
+      "tags": [
+        "DEV.to",
+        "ai",
+        "ai",
+        "webdev"
+      ]
+    },
+    {
+      "id": "dev-4881368",
+      "title": "Somewhere, Coding Stopped Being Allowed to Be Fun",
+      "summary": "Somewhere in the last couple of years, a strange feeling crept in, and I don't think I'm the only one... — 48 reactions, 44 comments on DEV.to.",
+      "source": "DEV.to",
+      "sourceUrl": "https://dev.to/james_anderson_h/somewhere-coding-stopped-being-allowed-to-be-fun-14pe",
+      "category": "fun",
+      "date": "2026-10-20",
+      "hot": true,
+      "score": 48,
+      "tags": [
+        "DEV.to",
+        "ai",
+        "career",
+        "discuss"
+      ]
+    },
+    {
+      "id": "dev-4881051",
+      "title": "An App Built for One: Why a Devpost Skill Pack Made Me Spec It Anyway",
+      "summary": "My wife lost her yellow book. So I built her an app.   TL;DR: Cuenta is a small app for my wife's... — 24 reactions, 16 comments on DEV.to.",
+      "source": "DEV.to",
+      "sourceUrl": "https://dev.to/earlgreyhot1701d/an-app-built-for-one-why-a-devpost-skill-pack-made-me-spec-it-anyway-knh",
+      "category": "products",
+      "date": "2026-10-20",
+      "hot": false,
+      "score": 24,
+      "tags": [
+        "DEV.to",
+        "ai",
+        "ai",
+        "webdev"
+      ]
+    },
+    {
+      "id": "dev-4881169",
+      "title": "Generative UI Without the Async Tax: Introducing bloc_signals_genui 1.0",
+      "summary": "Why we built a pure-Dart, 0ms synchronous Generative UI state machine on top of Google's official A2UI protocol—supporting two-way reactive forms, Riverpod/BLoC interop, Flutter Material 3, and ANSI terminal TUIs. — 18 reactions, 23 comments on DEV.to.",
+      "source": "DEV.to",
+      "sourceUrl": "https://dev.to/gde/generative-ui-without-the-async-tax-introducing-blocsignalsgenui-10-3gge",
       "category": "big-tech",
       "date": "2026-10-20",
-      "hot": true,
-      "score": 100,
-      "tags": [
-        "HackerNoon",
-        "agents.md",
-        "AI"
-      ]
-    },
-    {
-      "id": "hnoon-fhenix-launches-cofhe-on-ethereum-and-arbitrum-for-confident",
-      "title": "Fhenix Launches CoFHE on Ethereum and Arbitrum for Confidential Smart Contracts",
-      "summary": "Fhenix launches CoFHE on Ethereum and Arbitrum. Its dual-mode tokens support public and confidential activity, with integration and trust tradeoffs. — by Ishan Pandey on HackerNoon.",
-      "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/fhenix-launches-cofhe-on-ethereum-and-arbitrum-for-confidential-smart-contracts",
-      "category": "products",
-      "date": "2026-10-20",
-      "hot": true,
-      "score": 100,
-      "tags": [
-        "HackerNoon",
-        "fhenix",
-        "AI"
-      ]
-    },
-    {
-      "id": "hnoon-building-verifiable-ai-agent-audit-logs-with-signed-hash-cha",
-      "title": "Building Verifiable AI Agent Audit Logs With Signed, Hash-Chained Record",
-      "summary": "How I built a tamper-evident AI agent audit log with Arkiv, signed hash chains, and browser-based verification, then tested it against forged entries. — by Artur Baranouski on HackerNoon.",
-      "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/building-verifiable-ai-agent-audit-logs-with-signed-hash-chained-record",
-      "category": "products",
-      "date": "2026-10-20",
-      "hot": true,
-      "score": 100,
-      "tags": [
-        "HackerNoon",
-        "decentralize-ai",
-        "AI"
-      ]
-    },
-    {
-      "id": "hnoon-transparency-and-auditability-in-ai-configured-lending",
-      "title": "Transparency and Auditability in AI-Configured Lending",
-      "summary": "Explore how versioned lending rules, built-in audit trails, and human approvals can make AI-assisted credit decisioning more transparent. — by Dmitriy Wolkenstein on HackerNoon.",
-      "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/transparency-and-auditability-in-ai-configured-lending",
-      "category": "products",
-      "date": "2026-10-20",
-      "hot": true,
-      "score": 100,
-      "tags": [
-        "HackerNoon",
-        "ai-lending",
-        "AI"
-      ]
-    },
-    {
-      "id": "dev-4865167",
-      "title": "Stress-Testing Gemini 4 Argon: Building a 3D Flutter Kart Game in 15 Prompts with Zero Assets",
-      "summary": "Most AI coding benchmarks test standard web apps or CRUD dashboards. Frontier models can already... — 15 reactions, 3 comments on DEV.to.",
-      "source": "DEV.to",
-      "sourceUrl": "https://dev.to/gde/stress-testing-gemini-4-argon-building-a-3d-flutter-kart-game-in-15-prompts-with-zero-assets-55ha",
-      "category": "products",
-      "date": "2026-10-19",
       "hot": false,
-      "score": 15,
+      "score": 18,
       "tags": [
         "DEV.to",
         "ai",
         "flutter",
-        "ai"
-      ]
-    },
-    {
-      "id": "dev-4845404",
-      "title": "Fine-Tuning Qwen3-8B with Tinker: From 50% to 76% Accuracy, and Burning Through My Budget",
-      "summary": "This is a submission for the Hacktoberfest Open-Source AI Challenge Week 2: Side Hustle  Oktoberfest?... — 74 reactions, 39 comments on DEV.to.",
-      "source": "DEV.to",
-      "sourceUrl": "https://dev.to/gramli/fine-tuning-qwen3-8b-with-tinker-from-50-to-76-accuracy-and-burning-through-my-budget-48mh",
-      "category": "products",
-      "date": "2026-10-18",
-      "hot": true,
-      "score": 74,
-      "tags": [
-        "DEV.to",
-        "ai",
-        "devchallenge",
-        "hf26challenge"
-      ]
-    },
-    {
-      "id": "hntop-50129045",
-      "title": "DeepSeek-v4.1-Flash-1017",
-      "summary": "<a href=\"https:&#x2F;&#x2F;api-docs.deepseek.com&#x2F;news&#x2F;news261017&#x2F;\" rel=\"nofollow\">https:&#x2F;&#x2F;api-docs.deepseek.com&#x2F;news&#x2F;news261017&#x2F;</a><p><a href=\"https:&#x2F;&#x2F;openrouter.ai&#x2F — 959 points, 720 comments on HN.",
-      "source": "Hacker News",
-      "sourceUrl": "https://huggingface.co/deepseek-ai/DeepSeek-V4.1-Flash-1017",
-      "category": "products",
-      "date": "2026-10-17",
-      "hot": true,
-      "score": 959,
-      "tags": [
-        "HN",
-        "top"
-      ]
-    },
-    {
-      "id": "dev-4627125",
-      "title": "10 Prompting Techniques My Deep Learning Exam Taught Me (That I Actually Use Now)",
-      "summary": "You already use prompting every day.  You just don't know the names of what you're doing.  Every time... — 79 reactions, 25 comments on DEV.to.",
-      "source": "DEV.to",
-      "sourceUrl": "https://dev.to/dj29/10-prompting-techniques-my-deep-learning-exam-taught-me-that-i-actually-use-now-43h0",
-      "category": "products",
-      "date": "2026-10-17",
-      "hot": true,
-      "score": 79,
-      "tags": [
-        "DEV.to",
-        "ai",
-        "promptengineering",
-        "ai"
-      ]
-    },
-    {
-      "id": "hntop-50122800",
-      "title": "Claude reveals ECDSA curve origins",
-      "summary": "<a href=\"https:&#x2F;&#x2F;words.filippo.io&#x2F;seeds-solved&#x2F;\" rel=\"nofollow\">https:&#x2F;&#x2F;words.filippo.io&#x2F;seeds-solved&#x2F;</a> — 1064 points, 391 comments on HN.",
-      "source": "Hacker News",
-      "sourceUrl": "https://www.anthropic.com/research/ecdsa-curve-origins",
-      "category": "safety",
-      "date": "2026-10-16",
-      "hot": true,
-      "score": 1064,
-      "tags": [
-        "HN",
-        "top"
+        "dart"
       ]
     }
   ],
   "meta": {
-    "fetchedAt": "2026-10-21T07:05:42.104Z",
+    "fetchedAt": "2026-10-22T07:07:17.088Z",
     "topic": "AI",
     "total": 15,
     "hot": 10,
     "sources": [
       "HackerNoon",
       "Hacker News",
+      "arXiv",
       "DEV.to"
     ]
   }
