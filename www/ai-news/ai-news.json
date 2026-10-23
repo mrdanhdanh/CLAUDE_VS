@@ -1,12 +1,12 @@
 {
-  "generatedAt": "2026-10-22T07:07:17.088Z",
+  "generatedAt": "2026-10-23T06:59:12.429Z",
   "generatedBy": "YUNIE × Last30Days",
   "version": 2,
   "description": "Tin AI mới nhất — tổng hợp từ Last30Days (HN, GitHub, DEV.to, Reddit, arXiv, HackerNoon) trong 30 ngày qua. Chủ đề: AI. Tự động cập nhật bởi YUNIE.",
   "last30days": {
     "enabled": true,
     "topic": "AI",
-    "since": "2026-09-22",
+    "since": "2026-09-23",
     "days": 30,
     "sources": [
       "Hacker News (Algolia, free)",
@@ -55,96 +55,94 @@
   ],
   "articles": [
     {
-      "id": "hnoon-the-green-ai-crisis-and-sustainable-infrastructure",
-      "title": "The \"Green AI\" Crisis & Sustainable Infrastructure",
-      "summary": "AI got far more efficient per query while its total footprint hit records. Google measured a 33x drop in energy per prompt, down to 0.24 Wh for a median text prompt, then reported  — by vishwa vimukthi gammuduwaththage o",
+      "id": "hnoon-ai-hype-php-and-the-illusion-of-expertise-in-tech-journalism",
+      "title": "AI Hype, PHP and the Illusion of Expertise in Tech Journalism",
+      "summary": "Critical PHP security flaws leaked online before an official patch, causing widespread internet outages as sites went offline as a precautionary measure. The incident highlights th — by Edward Aslin on HackerNoon.",
       "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/the-green-ai-crisis-and-sustainable-infrastructure",
+      "sourceUrl": "https://hackernoon.com/ai-hype-php-and-the-illusion-of-expertise-in-tech-journalism",
+      "category": "products",
+      "date": "2026-10-23",
+      "hot": true,
+      "score": 100,
+      "tags": [
+        "HackerNoon",
+        "cybersecurity",
+        "AI"
+      ]
+    },
+    {
+      "id": "hnoon-the-decentralized-gpu-marketplace-breaking-the-big-tech-comp",
+      "title": "The Decentralized GPU Marketplace: Breaking the Big Tech Compute Monopoly",
+      "summary": "High-end AI chips sit mostly in data centers owned or leased by a handful of hyperscalers, and in 2026 that capacity got more expensive, not less. Decentralized compute networks su — by vishwa vimukthi gammuduwaththage o",
+      "source": "HackerNoon",
+      "sourceUrl": "https://hackernoon.com/the-decentralized-gpu-marketplace-breaking-the-big-tech-compute-monopoly",
+      "category": "safety",
+      "date": "2026-10-23",
+      "hot": true,
+      "score": 100,
+      "tags": [
+        "HackerNoon",
+        "ai",
+        "AI"
+      ]
+    },
+    {
+      "id": "hnoon-how-to-build-an-audit-ready-regulatory-reporting-pipeline-wi",
+      "title": "How to Build an Audit-Ready Regulatory Reporting Pipeline With dbt and AWS",
+      "summary": "Audit-ready does not mean \"has a dashboard\". It means that for any number in a filed report you can show where it came from, rerun it as it stood on filing day, prove nobody quietl — by Sunilkumar Reddy Eraganeni on Hack",
+      "source": "HackerNoon",
+      "sourceUrl": "https://hackernoon.com/how-to-build-an-audit-ready-regulatory-reporting-pipeline-with-dbt-and-aws",
+      "category": "safety",
+      "date": "2026-10-23",
+      "hot": true,
+      "score": 100,
+      "tags": [
+        "HackerNoon",
+        "ai",
+        "AI"
+      ]
+    },
+    {
+      "id": "hnoon-data-sovereignty-transforming-users-from-products-into-owner",
+      "title": "Data Sovereignty: Transforming Users From Products Into Owners",
+      "summary": "Modern AI was trained largely on data collected without asking or paying the people who made it. Courts and markets are only now pricing that. The money that has moved so far went  — by vishwa vimukthi gammuduwaththage o",
+      "source": "HackerNoon",
+      "sourceUrl": "https://hackernoon.com/data-sovereignty-transforming-users-from-products-into-owners",
+      "category": "safety",
+      "date": "2026-10-23",
+      "hot": true,
+      "score": 100,
+      "tags": [
+        "HackerNoon",
+        "ai",
+        "AI"
+      ]
+    },
+    {
+      "id": "hn-50204095",
+      "title": "The Signal Chats That Cost OpenAI Researchers Their Jobs",
+      "summary": "The Signal Chats That Cost OpenAI Researchers Their Jobs — 4 points, 0 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://www.wsj.com/tech/ai/the-signal-chats-that-cost-openai-researchers-their-jobs-594c5853",
       "category": "big-tech",
-      "date": "2026-10-22",
-      "hot": true,
-      "score": 100,
-      "tags": [
-        "HackerNoon",
-        "ai",
-        "AI"
-      ]
-    },
-    {
-      "id": "hnoon-why-nobody-will-insure-your-ai-generated-film-in-2026",
-      "title": "Why Nobody Will Insure Your AI-Generated Film in 2026",
-      "summary": "Festivals debate AI disclosure. Unions debate AI actors. Meanwhile insurers are the ones actually deciding if your AI film gets distributed. Read All — by Frank Houbre on HackerNoon.",
-      "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/why-nobody-will-insure-your-ai-generated-film-in-2026",
-      "category": "products",
-      "date": "2026-10-22",
-      "hot": true,
-      "score": 100,
-      "tags": [
-        "HackerNoon",
-        "ai",
-        "AI"
-      ]
-    },
-    {
-      "id": "hn-50191586",
-      "title": "A sovereign, local AI browser for professionals who want to save time",
-      "summary": "A sovereign, local AI browser for professionals who want to save time — 4 points, 1 comments on HN.",
-      "source": "Hacker News",
-      "sourceUrl": "https://ricuicui.com/en/articles/a-sovereign-local-ai-browser-for-professionals-who-want-to-save-time",
-      "category": "products",
-      "date": "2026-10-22",
+      "date": "2026-10-23",
       "hot": false,
       "score": 4,
       "tags": [
         "HN",
         "AI",
         "story",
-        "author_contextetech"
+        "author_elffjs"
       ]
     },
     {
-      "id": "hn-50191278",
-      "title": "Lemoncode, Free Coding Agent",
-      "summary": "Lemoncode, Free Coding Agent — 4 points, 2 comments on HN.",
-      "source": "Hacker News",
-      "sourceUrl": "https://lemoncode.ai/",
-      "category": "products",
-      "date": "2026-10-22",
-      "hot": false,
-      "score": 4,
-      "tags": [
-        "HN",
-        "AI",
-        "story",
-        "author_SafwanCodes"
-      ]
-    },
-    {
-      "id": "hn-50191904",
-      "title": "AI revealed 400 years of seafaring history",
-      "summary": "AI revealed 400 years of seafaring history — 3 points, 0 comments on HN.",
-      "source": "Hacker News",
-      "sourceUrl": "https://www.bbc.com/news/articles/cr93z9zq5l9jo",
-      "category": "products",
-      "date": "2026-10-22",
-      "hot": false,
-      "score": 3,
-      "tags": [
-        "HN",
-        "AI",
-        "story",
-        "author_1659447091"
-      ]
-    },
-    {
-      "id": "ax-2610.30104v1",
-      "title": "BatchBench: Benchmarking AI Robustness to Batch Effects and Domain Shift in Biomedical Images - A JUMP Cell Painting Leaderboard",
-      "summary": "Despite recent advances, current AI systems remain highly susceptible to domain shifts, particularly in biomedical imaging, where images are usually acquired under substantially different experimental conditions. Althoug",
+      "id": "ax-2610.31553v1",
+      "title": "Contestable Agents for Data Governance: Recording Human Stewardship of AI-Generated Metadata Across Structured and Unstructured Systems",
+      "summary": "Industrial organizations hold operational knowledge in structured records, such as telemetry, point lists, and transactions, and in unstructured sources, such as manuals, service notes, communications, and inspection rep",
       "source": "arXiv",
-      "sourceUrl": "http://arxiv.org/abs/2610.30104v1",
-      "category": "products",
-      "date": "2026-10-21",
+      "sourceUrl": "http://arxiv.org/abs/2610.31553v1",
+      "category": "safety",
+      "date": "2026-10-22",
       "hot": true,
       "score": 800,
       "tags": [
@@ -154,79 +152,113 @@
       ]
     },
     {
-      "id": "ax-2610.30059v1",
-      "title": "Validating Autoformalized Specifications via Contrapuntal Languages",
-      "summary": "Formal specifications can make AI-generated code mechanically checkable. Because user intent is typically expressed in natural language rather than formal logic, specifications must first be derived from it, e.g., via LL",
-      "source": "arXiv",
-      "sourceUrl": "http://arxiv.org/abs/2610.30059v1",
-      "category": "products",
-      "date": "2026-10-21",
-      "hot": true,
-      "score": 800,
-      "tags": [
-        "arXiv",
-        "paper",
-        "AI"
-      ]
-    },
-    {
-      "id": "hnoon-edge-ai-the-shift-to-on-device-inference",
-      "title": "Edge AI: The Shift to On-Device Inference",
-      "summary": "On-device inference is usually sold as cheaper, faster, and more private. I would describe it more narrowly: it gives you a system whose worst case you can know in advance. It does — by vishwa vimukthi gammuduwaththage o",
+      "id": "hnoon-12-hackathons-worth-your-fall-and-winter",
+      "title": "12 Hackathons Worth Your Fall and Winter",
+      "summary": "Hackathons offer a great way to apply technical skills to real-world challenges, with various events worldwide providing free participation and prizes. These events cater to differ — by Alexandra Belski on HackerNoon.",
       "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/edge-ai-the-shift-to-on-device-inference",
-      "category": "products",
-      "date": "2026-10-21",
+      "sourceUrl": "https://hackernoon.com/12-hackathons-worth-your-fall-and-winter",
+      "category": "safety",
+      "date": "2026-10-22",
       "hot": true,
       "score": 100,
       "tags": [
         "HackerNoon",
+        "hackathon",
+        "AI"
+      ]
+    },
+    {
+      "id": "hnoon-ohhh-it-was-made-by-ai-i-knew-it-or-do-you",
+      "title": "\"Ohhh, It Was Made by AI! I Knew It!\"... Or Do You?",
+      "summary": "When critics say \"I could do that too with AI,\" they mistake raw compute for human vision. Why your AI agent isn't mine—and why the recipe isn't the pizza. — by Emir Mirzamuhamed on HackerNoon.",
+      "source": "HackerNoon",
+      "sourceUrl": "https://hackernoon.com/ohhh-it-was-made-by-ai-i-knew-it-or-do-you",
+      "category": "safety",
+      "date": "2026-10-22",
+      "hot": true,
+      "score": 100,
+      "tags": [
+        "HackerNoon",
+        "artificial-intelligence-(ai)",
+        "AI"
+      ]
+    },
+    {
+      "id": "hnoon-how-airflow-handles-dynamic-task-executions-with-immutable-d",
+      "title": "How Airflow Handles Dynamic Task Executions with Immutable Dynamic Regions",
+      "summary": "The introduction of dynamic regions in Airflow represents a thoughtful and scalable approach to a subtle but impactful problem. By adding a dedicated immutable table to represent d — by pdrojack on HackerNoon.",
+      "source": "HackerNoon",
+      "sourceUrl": "https://hackernoon.com/how-airflow-handles-dynamic-task-executions-with-immutable-dynamic-regions",
+      "category": "products",
+      "date": "2026-10-22",
+      "hot": true,
+      "score": 100,
+      "tags": [
+        "HackerNoon",
+        "database",
+        "AI"
+      ]
+    },
+    {
+      "id": "hnoon-will-that-sofa-fit-validate-your-furniture-layout-with-javas",
+      "title": "Will That Sofa Fit? Validate Your Furniture Layout With JavaScript Rectangles",
+      "summary": "Check room boundaries, furniture overlaps, and reserved walkways with JavaScript rectangles, then sketch the same layout in SVG. — by Geo Scribe on HackerNoon.",
+      "source": "HackerNoon",
+      "sourceUrl": "https://hackernoon.com/will-that-sofa-fit-validate-your-furniture-layout-with-javascript-rectangles",
+      "category": "safety",
+      "date": "2026-10-22",
+      "hot": true,
+      "score": 100,
+      "tags": [
+        "HackerNoon",
+        "javascript",
+        "AI"
+      ]
+    },
+    {
+      "id": "dev-4882857",
+      "title": "Stuck in the same dev.to topics? An open model fixed it.",
+      "summary": "This is a submission for the Hacktoberfest Open-Source AI Challenge Week 3: Slow and Steady          ... — 47 reactions, 26 comments on DEV.to.",
+      "source": "DEV.to",
+      "sourceUrl": "https://dev.to/thomasbnt/stuck-in-the-same-devto-topics-an-open-model-fixed-it-4mbc",
+      "category": "products",
+      "date": "2026-10-21",
+      "hot": true,
+      "score": 47,
+      "tags": [
+        "DEV.to",
         "ai",
-        "AI"
+        "devchallenge",
+        "hf26challenge"
       ]
     },
     {
-      "id": "hnoon-why-ai-agent-pricing-is-still-unsolved-and-what-it-means-for",
-      "title": "Why AI Agent Pricing Is Still Unsolved and What It Means for How You Track Costs",
-      "summary": "Unlike traditional SaaS, AI agents deliver uncertain value at a cost that keeps shifting, and that combination breaks the pricing logic SaaS was built on. — by Deniz Akbasaran on HackerNoon.",
-      "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/why-ai-agent-pricing-is-still-unsolved-and-what-it-means-for-how-you-track-costs",
+      "id": "dev-4891584",
+      "title": "AI Made Coding Cheaper. So Why Is Building Software Still So Expensive?",
+      "summary": "I can generate a full authentication flow with a database schema, API routes, and unit tests in under... — 31 reactions, 20 comments on DEV.to.",
+      "source": "DEV.to",
+      "sourceUrl": "https://dev.to/harsh2644/ai-made-coding-cheaper-so-why-is-building-software-still-so-expensive-59m",
       "category": "products",
       "date": "2026-10-21",
       "hot": true,
-      "score": 100,
+      "score": 31,
       "tags": [
-        "HackerNoon",
-        "saas",
-        "AI"
-      ]
-    },
-    {
-      "id": "hnoon-why-a-disgusting-parasite-study-just-exposed-your-broken-b2b",
-      "title": "Why a Disgusting Parasite Study Just Exposed Your Broken B2B Content Strategy",
-      "summary": "Why building custom B2B content for every ICP fails. Learn how a landmark parasite study reveals the secret to horizontal scale and content leverage. — by CSKaron on HackerNoon.",
-      "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/why-a-disgusting-parasite-study-just-exposed-your-broken-b2b-content-strategy",
-      "category": "products",
-      "date": "2026-10-21",
-      "hot": true,
-      "score": 100,
-      "tags": [
-        "HackerNoon",
-        "b2b-marketing",
-        "AI"
+        "DEV.to",
+        "ai",
+        "ai",
+        "productivity"
       ]
     },
     {
       "id": "hntop-50163277",
       "title": "DeepInfer: High-performance inference framework for DeepSeek models",
-      "summary": "DeepInfer: High-performance inference framework for DeepSeek models — 2313 points, 885 comments on HN.",
+      "summary": "DeepInfer: High-performance inference framework for DeepSeek models — 2333 points, 889 comments on HN.",
       "source": "Hacker News",
       "sourceUrl": "https://github.com/deepseek-ai/DeepInfer",
       "category": "products",
       "date": "2026-10-20",
       "hot": true,
-      "score": 2313,
+      "score": 2333,
       "tags": [
         "HN",
         "top"
@@ -235,13 +267,13 @@
     {
       "id": "dev-4884586",
       "title": "Building an Open-Source Support Tool That Turns Your Docs into Reusable Knowledge",
-      "summary": "I spend a good part of my day working with the community at CopilotKit, answering questions in... — 130 reactions, 38 comments on DEV.to.",
+      "summary": "I spend a good part of my day working with the community at CopilotKit, answering questions in... — 145 reactions, 46 comments on DEV.to.",
       "source": "DEV.to",
       "sourceUrl": "https://dev.to/nathan_tarbert/your-team-has-answered-this-before-im-building-a-tool-that-remembers-5604",
       "category": "products",
       "date": "2026-10-20",
       "hot": true,
-      "score": 130,
+      "score": 145,
       "tags": [
         "DEV.to",
         "ai",
@@ -252,60 +284,26 @@
     {
       "id": "dev-4881368",
       "title": "Somewhere, Coding Stopped Being Allowed to Be Fun",
-      "summary": "Somewhere in the last couple of years, a strange feeling crept in, and I don't think I'm the only one... — 48 reactions, 44 comments on DEV.to.",
+      "summary": "Somewhere in the last couple of years, a strange feeling crept in, and I don't think I'm the only one... — 53 reactions, 71 comments on DEV.to.",
       "source": "DEV.to",
       "sourceUrl": "https://dev.to/james_anderson_h/somewhere-coding-stopped-being-allowed-to-be-fun-14pe",
       "category": "fun",
       "date": "2026-10-20",
       "hot": true,
-      "score": 48,
+      "score": 53,
       "tags": [
         "DEV.to",
         "ai",
         "career",
         "discuss"
       ]
-    },
-    {
-      "id": "dev-4881051",
-      "title": "An App Built for One: Why a Devpost Skill Pack Made Me Spec It Anyway",
-      "summary": "My wife lost her yellow book. So I built her an app.   TL;DR: Cuenta is a small app for my wife's... — 24 reactions, 16 comments on DEV.to.",
-      "source": "DEV.to",
-      "sourceUrl": "https://dev.to/earlgreyhot1701d/an-app-built-for-one-why-a-devpost-skill-pack-made-me-spec-it-anyway-knh",
-      "category": "products",
-      "date": "2026-10-20",
-      "hot": false,
-      "score": 24,
-      "tags": [
-        "DEV.to",
-        "ai",
-        "ai",
-        "webdev"
-      ]
-    },
-    {
-      "id": "dev-4881169",
-      "title": "Generative UI Without the Async Tax: Introducing bloc_signals_genui 1.0",
-      "summary": "Why we built a pure-Dart, 0ms synchronous Generative UI state machine on top of Google's official A2UI protocol—supporting two-way reactive forms, Riverpod/BLoC interop, Flutter Material 3, and ANSI terminal TUIs. — 18 reactions, 23 comments on DEV.to.",
-      "source": "DEV.to",
-      "sourceUrl": "https://dev.to/gde/generative-ui-without-the-async-tax-introducing-blocsignalsgenui-10-3gge",
-      "category": "big-tech",
-      "date": "2026-10-20",
-      "hot": false,
-      "score": 18,
-      "tags": [
-        "DEV.to",
-        "ai",
-        "flutter",
-        "dart"
-      ]
     }
   ],
   "meta": {
-    "fetchedAt": "2026-10-22T07:07:17.088Z",
+    "fetchedAt": "2026-10-23T06:59:12.429Z",
     "topic": "AI",
     "total": 15,
-    "hot": 10,
+    "hot": 14,
     "sources": [
       "HackerNoon",
       "Hacker News",
