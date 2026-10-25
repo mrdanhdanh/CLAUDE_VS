@@ -1,12 +1,12 @@
 {
-  "generatedAt": "2026-10-24T06:53:08.881Z",
+  "generatedAt": "2026-10-25T07:17:21.206Z",
   "generatedBy": "YUNIE × Last30Days",
   "version": 2,
   "description": "Tin AI mới nhất — tổng hợp từ Last30Days (HN, GitHub, DEV.to, Reddit, arXiv, HackerNoon) trong 30 ngày qua. Chủ đề: AI. Tự động cập nhật bởi YUNIE.",
   "last30days": {
     "enabled": true,
     "topic": "AI",
-    "since": "2026-09-24",
+    "since": "2026-09-25",
     "days": 30,
     "sources": [
       "Hacker News (Algolia, free)",
@@ -55,166 +55,234 @@
   ],
   "articles": [
     {
-      "id": "hnoon-immutable-architecture-why-the-future-of-ai-models-demands-p",
-      "title": "Immutable Architecture: Why the Future of AI Models Demands Permanent Storage",
-      "summary": "Most open model weights live on one platform. A license that lets you use a model does not guarantee you can still download it next year. Read All — by vishwa vimukthi gammuduwaththage on HackerNoon.",
-      "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/immutable-architecture-why-the-future-of-ai-models-demands-permanent-storage",
-      "category": "products",
-      "date": "2026-10-24",
-      "hot": true,
-      "score": 100,
-      "tags": [
-        "HackerNoon",
-        "ai",
-        "AI"
-      ]
-    },
-    {
-      "id": "hn-50218633",
-      "title": "Hacker reverses Samsung TV, finds on-board AI listening OpenAI account suspended",
-      "summary": "Hacker reverses Samsung TV, finds on-board AI listening OpenAI account suspended — 6 points, 0 comments on HN.",
+      "id": "hn-50229059",
+      "title": "New Open-Source Cybersecurity Platform Uses AI Agents to Hunt Threats",
+      "summary": "New Open-Source Cybersecurity Platform Uses AI Agents to Hunt Threats — 9 points, 1 comments on HN.",
       "source": "Hacker News",
-      "sourceUrl": "https://www.reddit.com/r/antiai/comments/1xdv3e5/hacker_reverse_engineers_his_samsung_tv_and_finds/",
-      "category": "big-tech",
-      "date": "2026-10-24",
+      "sourceUrl": "https://medium.com/@ai_news/argus-might-be-one-of-the-most-impressive-open-source-cybersecurity-projects-released-this-year-118043bd0c8c",
+      "category": "products",
+      "date": "2026-10-25",
       "hot": false,
-      "score": 6,
+      "score": 9,
       "tags": [
         "HN",
         "AI",
         "story",
-        "author_testing22321"
+        "author_is_dev_active"
       ]
     },
     {
-      "id": "hn-50218553",
-      "title": "Advertisers Pull Meta Ads That Had Unwanted AI Glow-Ups",
-      "summary": "Advertisers Pull Meta Ads That Had Unwanted AI Glow-Ups — 6 points, 0 comments on HN.",
+      "id": "hn-50228483",
+      "title": "eMudhra faces a bigger test of public trust after security lapse",
+      "summary": "eMudhra faces a bigger test of public trust after security lapse — 5 points, 0 comments on HN.",
       "source": "Hacker News",
-      "sourceUrl": "https://www.adweek.com/media/advertisers-pull-meta-ads-that-had-unwanted-ai-glow-ups/",
-      "category": "big-tech",
-      "date": "2026-10-24",
+      "sourceUrl": "https://economictimes.indiatimes.com/ai/ai-insights/emudhra-faces-a-bigger-test-of-public-trust-after-security-lapse/articleshow/135165282.cms?from=mdr",
+      "category": "products",
+      "date": "2026-10-25",
       "hot": false,
-      "score": 6,
+      "score": 5,
       "tags": [
         "HN",
         "AI",
         "story",
-        "author_thm"
+        "author_thunderbong"
       ]
     },
     {
-      "id": "hn-50218141",
-      "title": "CowAgent – Open-Source Super AI Assistant",
-      "summary": "CowAgent – Open-Source Super AI Assistant — 4 points, 0 comments on HN.",
+      "id": "hn-50228616",
+      "title": "Why popular airplanes are getting scrapped years early",
+      "summary": "Why popular airplanes are getting scrapped years early — 4 points, 0 comments on HN.",
       "source": "Hacker News",
-      "sourceUrl": "https://cowagent.ai/en/",
+      "sourceUrl": "https://www.cnbc.com/2026/10/24/spirit-airlines-planes-scrapped-engine-shortage.html",
       "category": "products",
-      "date": "2026-10-24",
+      "date": "2026-10-25",
       "hot": false,
       "score": 4,
       "tags": [
         "HN",
         "AI",
         "story",
-        "author_ankitg12"
+        "author_kristianp"
       ]
     },
     {
-      "id": "hn-50218265",
-      "title": "The Age of Reasoning [pdf]",
-      "summary": "The Age of Reasoning [pdf] — 3 points, 0 comments on HN.",
+      "id": "hn-50227985",
+      "title": "Tokens aren't valuable: No more AI",
+      "summary": "Tokens aren't valuable: No more AI — 3 points, 2 comments on HN.",
       "source": "Hacker News",
-      "sourceUrl": "https://metisreasoning.ai/whitepaper/the-age-of-reasoning-2026-10.pdf",
+      "sourceUrl": "https://www.reddit.com/r/opensource/s/Vmk5Fd1N8H",
       "category": "products",
-      "date": "2026-10-24",
+      "date": "2026-10-25",
       "hot": false,
       "score": 3,
       "tags": [
         "HN",
         "AI",
         "story",
-        "author_gmays"
+        "author_0xcrypto"
+      ]
+    },
+    {
+      "id": "hn-50229028",
+      "title": "Show HN: Hindsight – Lightweight, elegant, open-source tracker for Windows/macOS",
+      "summary": "Hi HN, I’m building Hindsight, a free, open-source activity tracker for Windows and macOS.<p>I know there are plenty of time trackers. I wanted something that combined automatic tracking, detailed charts, and cross-devic — 2 points, 0 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://github.com/Tomotsugu-dev/Hindsight",
+      "category": "products",
+      "date": "2026-10-25",
+      "hot": false,
+      "score": 2,
+      "tags": [
+        "HN",
+        "AI",
+        "story",
+        "author_Tomotsugu-dev"
+      ]
+    },
+    {
+      "id": "hnoon-500-blog-posts-to-learn-about-hackernoon",
+      "title": "500 Blog Posts To Learn About Hackernoon",
+      "summary": "Learn everything you need to know about Hackernoon via these 500 free HackerNoon blog posts. — by Learn Repo on HackerNoon.",
+      "source": "HackerNoon",
+      "sourceUrl": "https://hackernoon.com/500-blog-posts-to-learn-about-hackernoon",
+      "category": "products",
+      "date": "2026-10-24",
+      "hot": true,
+      "score": 100,
+      "tags": [
+        "HackerNoon",
+        "hackernoon",
+        "AI"
+      ]
+    },
+    {
+      "id": "hnoon-why-modern-data-lakehouses-fail-at-scale-the-metadata-proble",
+      "title": "Why Modern Data Lakehouses Fail at Scale: The Metadata Problem Nobody Talks About",
+      "summary": "Explore why modern data lakehouses slow down at scale and how metadata growth, small files, partitioning, and maintenance affect Iceberg and Delta Lake. — by FNU Aditya Ranjan on HackerNoon.",
+      "source": "HackerNoon",
+      "sourceUrl": "https://hackernoon.com/why-modern-data-lakehouses-fail-at-scale-the-metadata-problem-nobody-talks-about",
+      "category": "big-tech",
+      "date": "2026-10-24",
+      "hot": true,
+      "score": 100,
+      "tags": [
+        "HackerNoon",
+        "data-engineering",
+        "AI"
+      ]
+    },
+    {
+      "id": "hnoon-10-24-2026-techbeat",
+      "title": "The TechBeat: Everyone Rushed to Deploy AI Agents. Now the Security Debt Is Coming Due (10/24/2026)",
+      "summary": "10/24/2026: Trending stories on Hackernoon today! — by Techbeat on HackerNoon.",
+      "source": "HackerNoon",
+      "sourceUrl": "https://hackernoon.com/10-24-2026-techbeat",
+      "category": "products",
+      "date": "2026-10-24",
+      "hot": true,
+      "score": 100,
+      "tags": [
+        "HackerNoon",
+        "tech-beat",
+        "AI"
+      ]
+    },
+    {
+      "id": "hnoon-a-borrower-pays-euro100-where-does-the-money-go",
+      "title": "A Borrower Pays €100. Where Does the Money Go?",
+      "summary": "How payment allocation exposes a deeper Financial Product Engineering challenge: turning financial intent into precise, reliable, evolvable software behavior. — by Adam Saghy on HackerNoon.",
+      "source": "HackerNoon",
+      "sourceUrl": "https://hackernoon.com/a-borrower-pays-euro100-where-does-the-money-go",
+      "category": "products",
+      "date": "2026-10-24",
+      "hot": true,
+      "score": 100,
+      "tags": [
+        "HackerNoon",
+        "fintech",
+        "AI"
+      ]
+    },
+    {
+      "id": "hnoon-how-to-shadow-test-an-ai-agent-without-letting-it-act-twice",
+      "title": "How to Shadow-Test an AI Agent Without Letting It Act Twice",
+      "summary": "Shadow testing can compare a candidate AI agent on real traffic—but only if proposals, policy decisions, and side effects are cleanly separated. — by Raju Dandigam on HackerNoon.",
+      "source": "HackerNoon",
+      "sourceUrl": "https://hackernoon.com/how-to-shadow-test-an-ai-agent-without-letting-it-act-twice",
+      "category": "safety",
+      "date": "2026-10-24",
+      "hot": true,
+      "score": 100,
+      "tags": [
+        "HackerNoon",
+        "ai-agent-shadow-testing",
+        "AI"
       ]
     },
     {
       "id": "hntop-50212065",
       "title": "Kimi K3.1 Pro and K3.1 Pro Highspeed",
-      "summary": "<a href=\"https:&#x2F;&#x2F;www.kimi.com&#x2F;code&#x2F;docs&#x2F;en&#x2F;kimi-code&#x2F;models.html\" rel=\"nofollow\">https:&#x2F;&#x2F;www.kimi.com&#x2F;code&#x2F;docs&#x2F;en&#x2F;kimi-code&#x2F;models.html</a><p><a href — 852 points, 494 comments on HN.",
+      "summary": "<a href=\"https:&#x2F;&#x2F;www.kimi.com&#x2F;code&#x2F;docs&#x2F;en&#x2F;kimi-code&#x2F;models.html\" rel=\"nofollow\">https:&#x2F;&#x2F;www.kimi.com&#x2F;code&#x2F;docs&#x2F;en&#x2F;kimi-code&#x2F;models.html</a><p><a href — 1064 points, 655 comments on HN.",
       "source": "Hacker News",
       "sourceUrl": "https://www.kimi.ai/blog/kimi-k3-1-pro",
       "category": "products",
       "date": "2026-10-23",
       "hot": true,
-      "score": 852,
+      "score": 1064,
       "tags": [
         "HN",
         "top"
       ]
     },
     {
-      "id": "hnoon-can-you-build-an-agent-entirely-in-sql-almost",
-      "title": "Can You Build an Agent Entirely in SQL? Almost",
-      "summary": "Tables is not a coding agent. It doesn't have access to other files on your computer. It can't do most things people want out of their AI in 2026. Tables is just tables. But those  — by Nicholas Lisac on HackerNoon.",
-      "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/can-you-build-an-agent-entirely-in-sql-almost",
+      "id": "dev-4904556",
+      "title": "I let an open model delete 1,242 of my saved articles. On purpose. I feel lighter.",
+      "summary": "Unpile is a 100% local read-later triage agent. TabPFN decides which saved articles you will actually read, Gemma writes the digest, offline and free. — 27 reactions, 21 comments on DEV.to.",
+      "source": "DEV.to",
+      "sourceUrl": "https://dev.to/sarvar_04/i-let-an-open-model-delete-1242-of-my-saved-articles-on-purpose-i-feel-lighter-l7f",
+      "category": "products",
+      "date": "2026-10-23",
+      "hot": false,
+      "score": 27,
+      "tags": [
+        "DEV.to",
+        "ai",
+        "devchallenge",
+        "hf26challenge"
+      ]
+    },
+    {
+      "id": "dev-4904732",
+      "title": "5 Steps on How to not loose at a hackathon?",
+      "summary": "In 1999, ten developers gathered to work on cryptographic frameworks, IPv6, and IPsec for OpenBSD, in... — 24 reactions, 3 comments on DEV.to.",
+      "source": "DEV.to",
+      "sourceUrl": "https://dev.to/sanidhya_at_mlh/5-steps-on-how-to-not-loose-at-a-hackathon-3hd1",
       "category": "safety",
       "date": "2026-10-23",
-      "hot": true,
-      "score": 100,
+      "hot": false,
+      "score": 24,
       "tags": [
-        "HackerNoon",
+        "DEV.to",
         "ai",
-        "AI"
+        "ai",
+        "programming"
       ]
     },
     {
-      "id": "hnoon-five-seo-errors-on-my-static-site-that-werent-errors",
-      "title": "Five SEO “Errors” on My Static Site That Weren’t Errors",
-      "summary": "Search Console and an SEO audit flagged dozens of problems on my static site. Only one was real, and one suggested fix would have made things worse. — by Alex on HackerNoon.",
-      "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/five-seo-errors-on-my-static-site-that-werent-errors",
-      "category": "products",
+      "id": "dev-4903104",
+      "title": "Building a Multimodal, Suggestion-Based AI Writing Coach with Gemini and Google Docs",
+      "summary": "When we use generative AI to proofread our daily writing—whether technical reports, business... — 12 reactions, 14 comments on DEV.to.",
+      "source": "DEV.to",
+      "sourceUrl": "https://dev.to/gde/building-a-multimodal-suggestion-based-ai-writing-coach-with-gemini-and-google-docs-ea4",
+      "category": "big-tech",
       "date": "2026-10-23",
-      "hot": true,
-      "score": 100,
+      "hot": false,
+      "score": 12,
       "tags": [
-        "HackerNoon",
-        "seo",
-        "AI"
-      ]
-    },
-    {
-      "id": "hnoon-event-driven-ci-at-enterprise-scale-decoupling-webhook-inges",
-      "title": "Event-Driven CI at Enterprise Scale: Decoupling Webhook Ingestion with Kafka",
-      "summary": "Decouple CI webhook ingestion with Kafka: stateless receivers, per-ref partition keys, idempotent consumers, dead-letter queues, and production lessons. — by Vidhi Shah on HackerNoon.",
-      "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/event-driven-ci-at-enterprise-scale-decoupling-webhook-ingestion-with-kafka",
-      "category": "products",
-      "date": "2026-10-23",
-      "hot": true,
-      "score": 100,
-      "tags": [
-        "HackerNoon",
-        "kafka",
-        "AI"
-      ]
-    },
-    {
-      "id": "hnoon-hunting-replication-lag-a-queue-by-queue-method-for-diagnosi",
-      "title": "Hunting Replication Lag: A Queue-by-Queue Method for Diagnosing Oracle GoldenGate",
-      "summary": "When replication falls behind, the reflex is to raise Replicat parallelism, which works only when apply is the binding constraint. — by Zalak Shrof on HackerNoon.",
-      "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/hunting-replication-lag-a-queue-by-queue-method-for-diagnosing-oracle-goldengate",
-      "category": "products",
-      "date": "2026-10-23",
-      "hot": true,
-      "score": 100,
-      "tags": [
-        "HackerNoon",
-        "oracle",
-        "AI"
+        "DEV.to",
+        "ai",
+        "ai",
+        "gemini"
       ]
     },
     {
@@ -232,84 +300,18 @@
         "paper",
         "AI"
       ]
-    },
-    {
-      "id": "dev-4893750",
-      "title": "Don't Be a Proxy Between Me and Your AI",
-      "summary": "I've had this conversation more times than I'd like to admit.  I raise a technical question in a... — 67 reactions, 42 comments on DEV.to.",
-      "source": "DEV.to",
-      "sourceUrl": "https://dev.to/adamthedeveloper/dont-be-a-proxy-between-me-and-your-ai-mcn",
-      "category": "products",
-      "date": "2026-10-22",
-      "hot": true,
-      "score": 67,
-      "tags": [
-        "DEV.to",
-        "ai",
-        "ai",
-        "discuss"
-      ]
-    },
-    {
-      "id": "dev-4901412",
-      "title": "926 Steps, Two Lobotomies, and Zero Nudges: Flight-Testing the Commitment Machine Across Gemini, Claude, and GPT-OSS",
-      "summary": "A 2026 Harvard study of 718 companies found that AI agents write 30% more code and close zero additional tickets because review times jump 49%. Here is what happened when I put my 1986 Commitment Machine into live produc — 13 reactions, 29 comments on DEV.to.",
-      "source": "DEV.to",
-      "sourceUrl": "https://dev.to/gde/926-steps-two-lobotomies-and-zero-nudges-flight-testing-the-commitment-machine-across-gemini-55ca",
-      "category": "products",
-      "date": "2026-10-22",
-      "hot": false,
-      "score": 13,
-      "tags": [
-        "DEV.to",
-        "ai",
-        "ai",
-        "programming"
-      ]
-    },
-    {
-      "id": "ax-2610.31662v1",
-      "title": "Reliable AI-Assisted Decisions via Selective Auditing",
-      "summary": "We consider online monitoring of an AI system that produces a sequence of decisions. At each round, the system outputs a proposed decision together with a confidence score estimating the trustworthiness of the decision. ",
-      "source": "arXiv",
-      "sourceUrl": "http://arxiv.org/abs/2610.31662v1",
-      "category": "safety",
-      "date": "2026-10-22",
-      "hot": false,
-      "score": 0,
-      "tags": [
-        "arXiv",
-        "paper",
-        "AI"
-      ]
-    },
-    {
-      "id": "ax-2610.31648v1",
-      "title": "On the direct SLE-martingale approach to the integrability of Conformal Loop Ensembles",
-      "summary": "This paper is about the derivation of \"integrability results\" (i.e., for example, explicit formulas for the probability of events involving a few marked points) for Conformal Loop Ensembles, that are the (conjectured) sc",
-      "source": "arXiv",
-      "sourceUrl": "http://arxiv.org/abs/2610.31648v1",
-      "category": "products",
-      "date": "2026-10-22",
-      "hot": false,
-      "score": 0,
-      "tags": [
-        "arXiv",
-        "paper",
-        "AI"
-      ]
     }
   ],
   "meta": {
-    "fetchedAt": "2026-10-24T06:53:08.882Z",
+    "fetchedAt": "2026-10-25T07:17:21.206Z",
     "topic": "AI",
     "total": 15,
-    "hot": 8,
+    "hot": 7,
     "sources": [
-      "HackerNoon",
       "Hacker News",
-      "arXiv",
-      "DEV.to"
+      "HackerNoon",
+      "DEV.to",
+      "arXiv"
     ]
   }
 }
