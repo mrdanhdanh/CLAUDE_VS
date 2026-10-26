@@ -1,12 +1,12 @@
 {
-  "generatedAt": "2026-10-25T07:17:21.206Z",
+  "generatedAt": "2026-10-26T07:25:53.892Z",
   "generatedBy": "YUNIE × Last30Days",
   "version": 2,
   "description": "Tin AI mới nhất — tổng hợp từ Last30Days (HN, GitHub, DEV.to, Reddit, arXiv, HackerNoon) trong 30 ngày qua. Chủ đề: AI. Tự động cập nhật bởi YUNIE.",
   "last30days": {
     "enabled": true,
     "topic": "AI",
-    "since": "2026-09-25",
+    "since": "2026-09-26",
     "days": 30,
     "sources": [
       "Hacker News (Algolia, free)",
@@ -55,88 +55,168 @@
   ],
   "articles": [
     {
-      "id": "hn-50229059",
-      "title": "New Open-Source Cybersecurity Platform Uses AI Agents to Hunt Threats",
-      "summary": "New Open-Source Cybersecurity Platform Uses AI Agents to Hunt Threats — 9 points, 1 comments on HN.",
+      "id": "hn-50238351",
+      "title": "If AI displaces human workers, they will lose more than just pay",
+      "summary": "If AI displaces human workers, they will lose more than just pay — 29 points, 56 comments on HN.",
       "source": "Hacker News",
-      "sourceUrl": "https://medium.com/@ai_news/argus-might-be-one-of-the-most-impressive-open-source-cybersecurity-projects-released-this-year-118043bd0c8c",
+      "sourceUrl": "https://www.economist.com/business/2026/10/22/if-ai-displaces-human-workers-they-will-lose-more-than-just-pay",
       "category": "products",
-      "date": "2026-10-25",
-      "hot": false,
-      "score": 9,
+      "date": "2026-10-26",
+      "hot": true,
+      "score": 29,
       "tags": [
         "HN",
         "AI",
         "story",
-        "author_is_dev_active"
+        "author_andsoitis"
       ]
     },
     {
-      "id": "hn-50228483",
-      "title": "eMudhra faces a bigger test of public trust after security lapse",
-      "summary": "eMudhra faces a bigger test of public trust after security lapse — 5 points, 0 comments on HN.",
+      "id": "hn-50239027",
+      "title": "Cognitive Mercantilism: AI panic resembles fears of early capitalism",
+      "summary": "Cognitive Mercantilism: AI panic resembles fears of early capitalism — 55 points, 42 comments on HN.",
       "source": "Hacker News",
-      "sourceUrl": "https://economictimes.indiatimes.com/ai/ai-insights/emudhra-faces-a-bigger-test-of-public-trust-after-security-lapse/articleshow/135165282.cms?from=mdr",
+      "sourceUrl": "https://contraptions.venkateshrao.com/p/cognitive-mercantilism",
       "category": "products",
-      "date": "2026-10-25",
+      "date": "2026-10-26",
+      "hot": false,
+      "score": 55,
+      "tags": [
+        "HN",
+        "AI",
+        "story",
+        "author_ianand"
+      ]
+    },
+    {
+      "id": "hn-50237813",
+      "title": "Show HN: Freehire, open-source search 3M+ tech jobs from company career boards",
+      "summary": "freehire is a filterable, job board aggregator, job tracker, and AI-assisted resume tailoring tool. Saving your skills and preferences changes which jobs appear and how your resume gets tailored. I&#x27;ve looked at a lo — 14 points, 0 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://freehire.me/",
+      "category": "products",
+      "date": "2026-10-26",
+      "hot": false,
+      "score": 14,
+      "tags": [
+        "HN",
+        "AI",
+        "story",
+        "author_i_strelov"
+      ]
+    },
+    {
+      "id": "hn-50238943",
+      "title": "Show HN: UIPalooza – Do AI models have a recognizable design taste?",
+      "summary": "This question has been bugging me for a while: do different AI models have a different design sense? Does it matter which one I pick?<p>I built UI Palooza to explore that. I gave models the same four frontend briefs, wit — 6 points, 0 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://uipalooza.ai/",
+      "category": "safety",
+      "date": "2026-10-26",
+      "hot": false,
+      "score": 6,
+      "tags": [
+        "HN",
+        "AI",
+        "story",
+        "author_joeysim"
+      ]
+    },
+    {
+      "id": "hn-50238561",
+      "title": "Anthropic sued for allegedly using 274 Elvis Presley songs to train AI models",
+      "summary": "Anthropic sued for allegedly using 274 Elvis Presley songs to train AI models — 5 points, 3 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://www.theguardian.com/us-news/2026/oct/25/elvis-presley-anthropic-lawsuit-ai-models-music",
+      "category": "big-tech",
+      "date": "2026-10-26",
       "hot": false,
       "score": 5,
       "tags": [
         "HN",
         "AI",
         "story",
-        "author_thunderbong"
+        "author_pseudolus"
       ]
     },
     {
-      "id": "hn-50228616",
-      "title": "Why popular airplanes are getting scrapped years early",
-      "summary": "Why popular airplanes are getting scrapped years early — 4 points, 0 comments on HN.",
-      "source": "Hacker News",
-      "sourceUrl": "https://www.cnbc.com/2026/10/24/spirit-airlines-planes-scrapped-engine-shortage.html",
+      "id": "hnoon-355-blog-posts-to-learn-about-healthcare",
+      "title": "355 Blog Posts To Learn About Healthcare",
+      "summary": "Learn everything you need to know about Healthcare via these 355 free HackerNoon blog posts. — by Learn Repo on HackerNoon.",
+      "source": "HackerNoon",
+      "sourceUrl": "https://hackernoon.com/355-blog-posts-to-learn-about-healthcare",
       "category": "products",
       "date": "2026-10-25",
-      "hot": false,
-      "score": 4,
+      "hot": true,
+      "score": 100,
       "tags": [
-        "HN",
-        "AI",
-        "story",
-        "author_kristianp"
+        "HackerNoon",
+        "healthcare",
+        "AI"
       ]
     },
     {
-      "id": "hn-50227985",
-      "title": "Tokens aren't valuable: No more AI",
-      "summary": "Tokens aren't valuable: No more AI — 3 points, 2 comments on HN.",
-      "source": "Hacker News",
-      "sourceUrl": "https://www.reddit.com/r/opensource/s/Vmk5Fd1N8H",
-      "category": "products",
+      "id": "hnoon-my-tests-fail-if-anyone-types-a-dollar-amount-by-hand",
+      "title": "My Tests Fail If Anyone Types a Dollar Amount by Hand",
+      "summary": "A one-line Vitest rule bans hand-typed prices in MDX; components and build-time SVG charts pull every number from one function. — by horushe on HackerNoon.",
+      "source": "HackerNoon",
+      "sourceUrl": "https://hackernoon.com/my-tests-fail-if-anyone-types-a-dollar-amount-by-hand",
+      "category": "fun",
       "date": "2026-10-25",
-      "hot": false,
-      "score": 3,
+      "hot": true,
+      "score": 100,
       "tags": [
-        "HN",
-        "AI",
-        "story",
-        "author_0xcrypto"
+        "HackerNoon",
+        "programming",
+        "AI"
       ]
     },
     {
-      "id": "hn-50229028",
-      "title": "Show HN: Hindsight – Lightweight, elegant, open-source tracker for Windows/macOS",
-      "summary": "Hi HN, I’m building Hindsight, a free, open-source activity tracker for Windows and macOS.<p>I know there are plenty of time trackers. I wanted something that combined automatic tracking, detailed charts, and cross-devic — 2 points, 0 comments on HN.",
-      "source": "Hacker News",
-      "sourceUrl": "https://github.com/Tomotsugu-dev/Hindsight",
+      "id": "hnoon-10-25-2026-techbeat",
+      "title": "The TechBeat: Gemini 4 Argon: How Does It Do Against GPT-6 Astra and Claude? (10/25/2026)",
+      "summary": "10/25/2026: Trending stories on Hackernoon today! — by Techbeat on HackerNoon.",
+      "source": "HackerNoon",
+      "sourceUrl": "https://hackernoon.com/10-25-2026-techbeat",
       "category": "products",
       "date": "2026-10-25",
-      "hot": false,
-      "score": 2,
+      "hot": true,
+      "score": 100,
       "tags": [
-        "HN",
-        "AI",
-        "story",
-        "author_Tomotsugu-dev"
+        "HackerNoon",
+        "tech-beat",
+        "AI"
+      ]
+    },
+    {
+      "id": "hnoon-244-blog-posts-to-learn-about-health",
+      "title": "244 Blog Posts To Learn About Health",
+      "summary": "Learn everything you need to know about Health via these 244 free HackerNoon blog posts. — by Learn Repo on HackerNoon.",
+      "source": "HackerNoon",
+      "sourceUrl": "https://hackernoon.com/244-blog-posts-to-learn-about-health",
+      "category": "products",
+      "date": "2026-10-25",
+      "hot": true,
+      "score": 100,
+      "tags": [
+        "HackerNoon",
+        "health",
+        "AI"
+      ]
+    },
+    {
+      "id": "hnoon-stop-trusting-the-oauth-email-how-one-missing-check-enables-",
+      "title": "Stop Trusting the OAuth Email: How One Missing Check Enables Account Takeover in 2026",
+      "summary": "Explore OAuth Verification Trust Mismatch, a security issue caused by mismatch between OAuth providers and client applications — by viodex on HackerNoon.",
+      "source": "HackerNoon",
+      "sourceUrl": "https://hackernoon.com/stop-trusting-the-oauth-email-how-one-missing-check-enables-account-takeover-in-2026",
+      "category": "products",
+      "date": "2026-10-25",
+      "hot": true,
+      "score": 100,
+      "tags": [
+        "HackerNoon",
+        "cybersecurity",
+        "AI"
       ]
     },
     {
@@ -156,143 +236,61 @@
       ]
     },
     {
-      "id": "hnoon-why-modern-data-lakehouses-fail-at-scale-the-metadata-proble",
-      "title": "Why Modern Data Lakehouses Fail at Scale: The Metadata Problem Nobody Talks About",
-      "summary": "Explore why modern data lakehouses slow down at scale and how metadata growth, small files, partitioning, and maintenance affect Iceberg and Delta Lake. — by FNU Aditya Ranjan on HackerNoon.",
-      "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/why-modern-data-lakehouses-fail-at-scale-the-metadata-problem-nobody-talks-about",
-      "category": "big-tech",
-      "date": "2026-10-24",
-      "hot": true,
-      "score": 100,
-      "tags": [
-        "HackerNoon",
-        "data-engineering",
-        "AI"
-      ]
-    },
-    {
-      "id": "hnoon-10-24-2026-techbeat",
-      "title": "The TechBeat: Everyone Rushed to Deploy AI Agents. Now the Security Debt Is Coming Due (10/24/2026)",
-      "summary": "10/24/2026: Trending stories on Hackernoon today! — by Techbeat on HackerNoon.",
-      "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/10-24-2026-techbeat",
+      "id": "dev-4908848",
+      "title": "Hours, Not Weeks: How AI Rewrote the Clock of Software Security",
+      "summary": "The third week of October 2026 was a rough one for anyone who runs software on the internet.  Two... — 26 reactions, 32 comments on DEV.to.",
+      "source": "DEV.to",
+      "sourceUrl": "https://dev.to/james_anderson_h/security-changed-with-ai-and-small-teams-are-falling-behind-5ebg",
       "category": "products",
       "date": "2026-10-24",
-      "hot": true,
-      "score": 100,
+      "hot": false,
+      "score": 26,
       "tags": [
-        "HackerNoon",
-        "tech-beat",
-        "AI"
-      ]
-    },
-    {
-      "id": "hnoon-a-borrower-pays-euro100-where-does-the-money-go",
-      "title": "A Borrower Pays €100. Where Does the Money Go?",
-      "summary": "How payment allocation exposes a deeper Financial Product Engineering challenge: turning financial intent into precise, reliable, evolvable software behavior. — by Adam Saghy on HackerNoon.",
-      "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/a-borrower-pays-euro100-where-does-the-money-go",
-      "category": "products",
-      "date": "2026-10-24",
-      "hot": true,
-      "score": 100,
-      "tags": [
-        "HackerNoon",
-        "fintech",
-        "AI"
-      ]
-    },
-    {
-      "id": "hnoon-how-to-shadow-test-an-ai-agent-without-letting-it-act-twice",
-      "title": "How to Shadow-Test an AI Agent Without Letting It Act Twice",
-      "summary": "Shadow testing can compare a candidate AI agent on real traffic—but only if proposals, policy decisions, and side effects are cleanly separated. — by Raju Dandigam on HackerNoon.",
-      "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/how-to-shadow-test-an-ai-agent-without-letting-it-act-twice",
-      "category": "safety",
-      "date": "2026-10-24",
-      "hot": true,
-      "score": 100,
-      "tags": [
-        "HackerNoon",
-        "ai-agent-shadow-testing",
-        "AI"
+        "DEV.to",
+        "ai",
+        "security",
+        "ai"
       ]
     },
     {
       "id": "hntop-50212065",
       "title": "Kimi K3.1 Pro and K3.1 Pro Highspeed",
-      "summary": "<a href=\"https:&#x2F;&#x2F;www.kimi.com&#x2F;code&#x2F;docs&#x2F;en&#x2F;kimi-code&#x2F;models.html\" rel=\"nofollow\">https:&#x2F;&#x2F;www.kimi.com&#x2F;code&#x2F;docs&#x2F;en&#x2F;kimi-code&#x2F;models.html</a><p><a href — 1064 points, 655 comments on HN.",
+      "summary": "<a href=\"https:&#x2F;&#x2F;www.kimi.com&#x2F;code&#x2F;docs&#x2F;en&#x2F;kimi-code&#x2F;models.html\" rel=\"nofollow\">https:&#x2F;&#x2F;www.kimi.com&#x2F;code&#x2F;docs&#x2F;en&#x2F;kimi-code&#x2F;models.html</a><p><a href — 1083 points, 673 comments on HN.",
       "source": "Hacker News",
       "sourceUrl": "https://www.kimi.ai/blog/kimi-k3-1-pro",
       "category": "products",
       "date": "2026-10-23",
       "hot": true,
-      "score": 1064,
+      "score": 1083,
       "tags": [
         "HN",
         "top"
       ]
     },
     {
-      "id": "dev-4904556",
-      "title": "I let an open model delete 1,242 of my saved articles. On purpose. I feel lighter.",
-      "summary": "Unpile is a 100% local read-later triage agent. TabPFN decides which saved articles you will actually read, Gemma writes the digest, offline and free. — 27 reactions, 21 comments on DEV.to.",
-      "source": "DEV.to",
-      "sourceUrl": "https://dev.to/sarvar_04/i-let-an-open-model-delete-1242-of-my-saved-articles-on-purpose-i-feel-lighter-l7f",
+      "id": "ax-2610.32982v1",
+      "title": "The Language of Instruction: Genre and Generative AI",
+      "summary": "This article argues that instruction-fine-tuned language models should be understood as implementing a genre, what is proposed as the instructional-conversational genre. This genre is an amalgamation of discursive langua",
+      "source": "arXiv",
+      "sourceUrl": "http://arxiv.org/abs/2610.32982v1",
       "category": "products",
       "date": "2026-10-23",
-      "hot": false,
-      "score": 27,
+      "hot": true,
+      "score": 800,
       "tags": [
-        "DEV.to",
-        "ai",
-        "devchallenge",
-        "hf26challenge"
+        "arXiv",
+        "paper",
+        "AI"
       ]
     },
     {
-      "id": "dev-4904732",
-      "title": "5 Steps on How to not loose at a hackathon?",
-      "summary": "In 1999, ten developers gathered to work on cryptographic frameworks, IPv6, and IPsec for OpenBSD, in... — 24 reactions, 3 comments on DEV.to.",
-      "source": "DEV.to",
-      "sourceUrl": "https://dev.to/sanidhya_at_mlh/5-steps-on-how-to-not-loose-at-a-hackathon-3hd1",
-      "category": "safety",
-      "date": "2026-10-23",
-      "hot": false,
-      "score": 24,
-      "tags": [
-        "DEV.to",
-        "ai",
-        "ai",
-        "programming"
-      ]
-    },
-    {
-      "id": "dev-4903104",
-      "title": "Building a Multimodal, Suggestion-Based AI Writing Coach with Gemini and Google Docs",
-      "summary": "When we use generative AI to proofread our daily writing—whether technical reports, business... — 12 reactions, 14 comments on DEV.to.",
-      "source": "DEV.to",
-      "sourceUrl": "https://dev.to/gde/building-a-multimodal-suggestion-based-ai-writing-coach-with-gemini-and-google-docs-ea4",
-      "category": "big-tech",
-      "date": "2026-10-23",
-      "hot": false,
-      "score": 12,
-      "tags": [
-        "DEV.to",
-        "ai",
-        "ai",
-        "gemini"
-      ]
-    },
-    {
-      "id": "ax-2610.31553v1",
-      "title": "Contestable Agents for Data Governance: Recording Human Stewardship of AI-Generated Metadata Across Structured and Unstructured Systems",
-      "summary": "Industrial organizations hold operational knowledge in structured records, such as telemetry, point lists, and transactions, and in unstructured sources, such as manuals, service notes, communications, and inspection rep",
+      "id": "ax-2610.32755v1",
+      "title": "Semantic Representation for Agentic Self-Play in Automated Laboratories",
+      "summary": "Navigating complex, high-dimensional biological search spaces necessitates scalable physical and computational intelligence to explore beyond local optima through iterative self-play across ideation, experimentation, and",
       "source": "arXiv",
-      "sourceUrl": "http://arxiv.org/abs/2610.31553v1",
+      "sourceUrl": "http://arxiv.org/abs/2610.32755v1",
       "category": "safety",
-      "date": "2026-10-22",
+      "date": "2026-10-23",
       "hot": true,
       "score": 800,
       "tags": [
@@ -303,10 +301,10 @@
     }
   ],
   "meta": {
-    "fetchedAt": "2026-10-25T07:17:21.206Z",
+    "fetchedAt": "2026-10-26T07:25:53.892Z",
     "topic": "AI",
     "total": 15,
-    "hot": 7,
+    "hot": 10,
     "sources": [
       "Hacker News",
       "HackerNoon",
