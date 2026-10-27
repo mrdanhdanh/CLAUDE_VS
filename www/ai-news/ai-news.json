@@ -1,12 +1,12 @@
 {
-  "generatedAt": "2026-10-26T07:25:53.892Z",
+  "generatedAt": "2026-10-27T07:19:38.567Z",
   "generatedBy": "YUNIE × Last30Days",
   "version": 2,
   "description": "Tin AI mới nhất — tổng hợp từ Last30Days (HN, GitHub, DEV.to, Reddit, arXiv, HackerNoon) trong 30 ngày qua. Chủ đề: AI. Tự động cập nhật bởi YUNIE.",
   "last30days": {
     "enabled": true,
     "topic": "AI",
-    "since": "2026-09-26",
+    "since": "2026-09-27",
     "days": 30,
     "sources": [
       "Hacker News (Algolia, free)",
@@ -55,196 +55,211 @@
   ],
   "articles": [
     {
-      "id": "hn-50238351",
-      "title": "If AI displaces human workers, they will lose more than just pay",
-      "summary": "If AI displaces human workers, they will lose more than just pay — 29 points, 56 comments on HN.",
-      "source": "Hacker News",
-      "sourceUrl": "https://www.economist.com/business/2026/10/22/if-ai-displaces-human-workers-they-will-lose-more-than-just-pay",
-      "category": "products",
-      "date": "2026-10-26",
-      "hot": true,
-      "score": 29,
-      "tags": [
-        "HN",
-        "AI",
-        "story",
-        "author_andsoitis"
-      ]
-    },
-    {
-      "id": "hn-50239027",
-      "title": "Cognitive Mercantilism: AI panic resembles fears of early capitalism",
-      "summary": "Cognitive Mercantilism: AI panic resembles fears of early capitalism — 55 points, 42 comments on HN.",
-      "source": "Hacker News",
-      "sourceUrl": "https://contraptions.venkateshrao.com/p/cognitive-mercantilism",
-      "category": "products",
-      "date": "2026-10-26",
-      "hot": false,
-      "score": 55,
-      "tags": [
-        "HN",
-        "AI",
-        "story",
-        "author_ianand"
-      ]
-    },
-    {
-      "id": "hn-50237813",
-      "title": "Show HN: Freehire, open-source search 3M+ tech jobs from company career boards",
-      "summary": "freehire is a filterable, job board aggregator, job tracker, and AI-assisted resume tailoring tool. Saving your skills and preferences changes which jobs appear and how your resume gets tailored. I&#x27;ve looked at a lo — 14 points, 0 comments on HN.",
-      "source": "Hacker News",
-      "sourceUrl": "https://freehire.me/",
-      "category": "products",
-      "date": "2026-10-26",
-      "hot": false,
-      "score": 14,
-      "tags": [
-        "HN",
-        "AI",
-        "story",
-        "author_i_strelov"
-      ]
-    },
-    {
-      "id": "hn-50238943",
-      "title": "Show HN: UIPalooza – Do AI models have a recognizable design taste?",
-      "summary": "This question has been bugging me for a while: do different AI models have a different design sense? Does it matter which one I pick?<p>I built UI Palooza to explore that. I gave models the same four frontend briefs, wit — 6 points, 0 comments on HN.",
-      "source": "Hacker News",
-      "sourceUrl": "https://uipalooza.ai/",
+      "id": "hnoon-architecting-ai-sdlc-five-lessons-for-devsecfinops-teams",
+      "title": "Architecting AI-SDLC: Five Lessons For DevSecFinOps Teams",
+      "summary": "Using AI in enterprises is challenging due to issues like cognitive debt, unpredictable token consumption, and the need for strict governance. To succeed, teams must overhaul their — by krishna dutt on HackerNoon.",
+      "source": "HackerNoon",
+      "sourceUrl": "https://hackernoon.com/architecting-ai-sdlc-five-lessons-for-devsecfinops-teams",
       "category": "safety",
-      "date": "2026-10-26",
+      "date": "2026-10-27",
+      "hot": true,
+      "score": 100,
+      "tags": [
+        "HackerNoon",
+        "ai",
+        "AI"
+      ]
+    },
+    {
+      "id": "hnoon-drone-autonomy-without-a-gpu-why-cpu-first-simulation-matter",
+      "title": "Drone Autonomy Without a GPU: Why CPU-First Simulation Matters for Decentralized AI",
+      "summary": "• Most drone simulators are built for photorealism, so testing autonomy means owning a capable GPU. That shuts most of the world out. • Many autonomy problems never need rendered p — by vishwa vimukthi gammuduwaththage o",
+      "source": "HackerNoon",
+      "sourceUrl": "https://hackernoon.com/drone-autonomy-without-a-gpu-why-cpu-first-simulation-matters-for-decentralized-ai",
+      "category": "products",
+      "date": "2026-10-27",
+      "hot": true,
+      "score": 100,
+      "tags": [
+        "HackerNoon",
+        "ai",
+        "AI"
+      ]
+    },
+    {
+      "id": "hn-50255298",
+      "title": "The Mythical Man-Month in the Age of AI",
+      "summary": "The Mythical Man-Month in the Age of AI — 6 points, 2 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://j11g.com/the-mythical-man-month-in-the-age-of-ai",
+      "category": "products",
+      "date": "2026-10-27",
       "hot": false,
       "score": 6,
       "tags": [
         "HN",
         "AI",
         "story",
-        "author_joeysim"
+        "author_ilreb"
       ]
     },
     {
-      "id": "hn-50238561",
-      "title": "Anthropic sued for allegedly using 274 Elvis Presley songs to train AI models",
-      "summary": "Anthropic sued for allegedly using 274 Elvis Presley songs to train AI models — 5 points, 3 comments on HN.",
+      "id": "hn-50254873",
+      "title": "Looking for a tech job is a helpless data-entry nightmare",
+      "summary": "I spent hundred of hours (distributed over many days) filling my resume data to freshly developed forms made specifically to the hiring process of one or two companies, even though I feel like I have a top 10% resume and — 6 points, 3 comments on HN.",
       "source": "Hacker News",
-      "sourceUrl": "https://www.theguardian.com/us-news/2026/oct/25/elvis-presley-anthropic-lawsuit-ai-models-music",
+      "sourceUrl": "https://news.ycombinator.com/item?id=50254873",
       "category": "big-tech",
-      "date": "2026-10-26",
+      "date": "2026-10-27",
       "hot": false,
-      "score": 5,
+      "score": 6,
       "tags": [
         "HN",
         "AI",
         "story",
-        "author_pseudolus"
+        "author_Gravyness"
       ]
     },
     {
-      "id": "hnoon-355-blog-posts-to-learn-about-healthcare",
-      "title": "355 Blog Posts To Learn About Healthcare",
-      "summary": "Learn everything you need to know about Healthcare via these 355 free HackerNoon blog posts. — by Learn Repo on HackerNoon.",
-      "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/355-blog-posts-to-learn-about-healthcare",
+      "id": "hn-50254670",
+      "title": "AI and the Collapse of Capitalism",
+      "summary": "AI and the Collapse of Capitalism — 6 points, 2 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://jasonpolak.substack.com/p/ai-and-the-collapse-of-capitalism",
       "category": "products",
-      "date": "2026-10-25",
-      "hot": true,
-      "score": 100,
+      "date": "2026-10-27",
+      "hot": false,
+      "score": 6,
       "tags": [
-        "HackerNoon",
-        "healthcare",
+        "HN",
+        "AI",
+        "story",
+        "author_bemtevi"
+      ]
+    },
+    {
+      "id": "hntop-50242939",
+      "title": "Anthropic S-1",
+      "summary": "Anthropic S-1 — 1577 points, 1510 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://www.sec.gov/Archives/edgar/data/2130357/000162828026067168/anthropicpbc-sx1.htm",
+      "category": "big-tech",
+      "date": "2026-10-26",
+      "hot": true,
+      "score": 1577,
+      "tags": [
+        "HN",
+        "top"
+      ]
+    },
+    {
+      "id": "ax-2610.35835v1",
+      "title": "I-HITL: Inalienable Human-in-the-Loop",
+      "summary": "Human oversight is a pillar of AI safety. It is often exercised by a human in the loop (HITL) who approves critical actions taken by an AI agent. AI agents' increasing ability to bypass guardrails, though, raises the que",
+      "source": "arXiv",
+      "sourceUrl": "http://arxiv.org/abs/2610.35835v1",
+      "category": "safety",
+      "date": "2026-10-26",
+      "hot": true,
+      "score": 800,
+      "tags": [
+        "arXiv",
+        "paper",
         "AI"
       ]
     },
     {
-      "id": "hnoon-my-tests-fail-if-anyone-types-a-dollar-amount-by-hand",
-      "title": "My Tests Fail If Anyone Types a Dollar Amount by Hand",
-      "summary": "A one-line Vitest rule bans hand-typed prices in MDX; components and build-time SVG charts pull every number from one function. — by horushe on HackerNoon.",
-      "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/my-tests-fail-if-anyone-types-a-dollar-amount-by-hand",
+      "id": "ax-2610.35750v1",
+      "title": "Large Excursions of Reflected Lévy Processes: Local Asymptotics",
+      "summary": "This paper establishes uniform local large-deviation asymptotics for excursions of a Lévy process $X$ with negative drift $-β$ and $α$-locally regularly varying Lévy measure $ν$, reflected at its running infimum. Under t",
+      "source": "arXiv",
+      "sourceUrl": "http://arxiv.org/abs/2610.35750v1",
       "category": "fun",
-      "date": "2026-10-25",
+      "date": "2026-10-26",
       "hot": true,
-      "score": 100,
+      "score": 800,
       "tags": [
-        "HackerNoon",
-        "programming",
+        "arXiv",
+        "paper",
         "AI"
       ]
     },
     {
-      "id": "hnoon-10-25-2026-techbeat",
-      "title": "The TechBeat: Gemini 4 Argon: How Does It Do Against GPT-6 Astra and Claude? (10/25/2026)",
-      "summary": "10/25/2026: Trending stories on Hackernoon today! — by Techbeat on HackerNoon.",
+      "id": "hnoon-anthropics-s-1-shows--163b-in-half-year-revenue-a-900percent",
+      "title": "Anthropic's S-1 Shows $16.3B in Half-Year Revenue, a 900% NRR, and an $80.7B Loss That Mostly Isn't",
+      "summary": "Anthropic's S-1: $16.3B in half-year revenue, ~900% NRR, an $80.7B mostly-paper loss, a blank compute bill and governance that keeps control with founders. — by Hockey Stick on HackerNoon.",
       "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/10-25-2026-techbeat",
-      "category": "products",
-      "date": "2026-10-25",
+      "sourceUrl": "https://hackernoon.com/anthropics-s-1-shows-$163b-in-half-year-revenue-a-900percent-nrr-and-an-$807b-loss-that-mostly-isnt",
+      "category": "big-tech",
+      "date": "2026-10-26",
       "hot": true,
       "score": 100,
       "tags": [
         "HackerNoon",
-        "tech-beat",
+        "anthropic-ipo",
         "AI"
       ]
     },
     {
-      "id": "hnoon-244-blog-posts-to-learn-about-health",
-      "title": "244 Blog Posts To Learn About Health",
-      "summary": "Learn everything you need to know about Health via these 244 free HackerNoon blog posts. — by Learn Repo on HackerNoon.",
+      "id": "hnoon-the-bicycle-that-taught-me-my-agent-loop-had-no-ground-truth",
+      "title": "The Bicycle That Taught Me My Agent Loop Had No Ground Truth",
+      "summary": "In June 2026 I designed an Autonomous Semantic Vector Graphics Engine: an LLM drawing vector art from text in a closed loop. Six models reviewed it; the verdict was that my loop ha — by Vitali Tsikhanovich on HackerNoon.",
       "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/244-blog-posts-to-learn-about-health",
+      "sourceUrl": "https://hackernoon.com/the-bicycle-that-taught-me-my-agent-loop-had-no-ground-truth",
       "category": "products",
-      "date": "2026-10-25",
+      "date": "2026-10-26",
       "hot": true,
       "score": 100,
       "tags": [
         "HackerNoon",
-        "health",
+        "ai",
         "AI"
       ]
     },
     {
-      "id": "hnoon-stop-trusting-the-oauth-email-how-one-missing-check-enables-",
-      "title": "Stop Trusting the OAuth Email: How One Missing Check Enables Account Takeover in 2026",
-      "summary": "Explore OAuth Verification Trust Mismatch, a security issue caused by mismatch between OAuth providers and client applications — by viodex on HackerNoon.",
-      "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/stop-trusting-the-oauth-email-how-one-missing-check-enables-account-takeover-in-2026",
+      "id": "dev-4796922",
+      "title": "Three Times My Test Failed and the LLM Was Right",
+      "summary": "A test fails, and the reflex is: the code is wrong. Debug the code, fix the code, move on. That... — 23 reactions, 26 comments on DEV.to.",
+      "source": "DEV.to",
+      "sourceUrl": "https://dev.to/debashish_ghosal/three-times-my-test-failed-and-the-llm-was-right-43l2",
       "category": "products",
       "date": "2026-10-25",
-      "hot": true,
-      "score": 100,
+      "hot": false,
+      "score": 23,
       "tags": [
-        "HackerNoon",
-        "cybersecurity",
-        "AI"
+        "DEV.to",
+        "ai",
+        "ai",
+        "programming"
       ]
     },
     {
-      "id": "hnoon-500-blog-posts-to-learn-about-hackernoon",
-      "title": "500 Blog Posts To Learn About Hackernoon",
-      "summary": "Learn everything you need to know about Hackernoon via these 500 free HackerNoon blog posts. — by Learn Repo on HackerNoon.",
-      "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/500-blog-posts-to-learn-about-hackernoon",
+      "id": "dev-4915028",
+      "title": "Postmortem: The Tuesday Our AI Bill Had No Owner",
+      "summary": "I've read a lot of postmortems. The best ones aren't about blame. They're about the gap between what... — 14 reactions, 10 comments on DEV.to.",
+      "source": "DEV.to",
+      "sourceUrl": "https://dev.to/gde/postmortem-the-tuesday-our-ai-bill-had-no-owner-34pd",
       "category": "products",
-      "date": "2026-10-24",
-      "hot": true,
-      "score": 100,
+      "date": "2026-10-25",
+      "hot": false,
+      "score": 14,
       "tags": [
-        "HackerNoon",
-        "hackernoon",
-        "AI"
+        "DEV.to",
+        "ai",
+        "discuss",
+        "vertexai"
       ]
     },
     {
       "id": "dev-4908848",
       "title": "Hours, Not Weeks: How AI Rewrote the Clock of Software Security",
-      "summary": "The third week of October 2026 was a rough one for anyone who runs software on the internet.  Two... — 26 reactions, 32 comments on DEV.to.",
+      "summary": "The third week of October 2026 was a rough one for anyone who runs software on the internet.  Two... — 29 reactions, 36 comments on DEV.to.",
       "source": "DEV.to",
       "sourceUrl": "https://dev.to/james_anderson_h/security-changed-with-ai-and-small-teams-are-falling-behind-5ebg",
       "category": "products",
       "date": "2026-10-24",
       "hot": false,
-      "score": 26,
+      "score": 29,
       "tags": [
         "DEV.to",
         "ai",
@@ -253,63 +268,50 @@
       ]
     },
     {
-      "id": "hntop-50212065",
-      "title": "Kimi K3.1 Pro and K3.1 Pro Highspeed",
-      "summary": "<a href=\"https:&#x2F;&#x2F;www.kimi.com&#x2F;code&#x2F;docs&#x2F;en&#x2F;kimi-code&#x2F;models.html\" rel=\"nofollow\">https:&#x2F;&#x2F;www.kimi.com&#x2F;code&#x2F;docs&#x2F;en&#x2F;kimi-code&#x2F;models.html</a><p><a href — 1083 points, 673 comments on HN.",
-      "source": "Hacker News",
-      "sourceUrl": "https://www.kimi.ai/blog/kimi-k3-1-pro",
+      "id": "dev-4909233",
+      "title": "Sloth Reads: an open model reads my read-later pile overnight, then reads me the good ones",
+      "summary": "This is a submission for the Hacktoberfest Open-Source AI Challenge Week 3: Slow and Steady         ... — 22 reactions, 3 comments on DEV.to.",
+      "source": "DEV.to",
+      "sourceUrl": "https://dev.to/sbis04/sloth-reads-an-open-model-reads-my-read-later-pile-overnight-then-reads-me-the-good-ones-3o14",
       "category": "products",
-      "date": "2026-10-23",
-      "hot": true,
-      "score": 1083,
+      "date": "2026-10-24",
+      "hot": false,
+      "score": 22,
       "tags": [
-        "HN",
-        "top"
+        "DEV.to",
+        "ai",
+        "devchallenge",
+        "hf26challenge"
       ]
     },
     {
-      "id": "ax-2610.32982v1",
-      "title": "The Language of Instruction: Genre and Generative AI",
-      "summary": "This article argues that instruction-fine-tuned language models should be understood as implementing a genre, what is proposed as the instructional-conversational genre. This genre is an amalgamation of discursive langua",
-      "source": "arXiv",
-      "sourceUrl": "http://arxiv.org/abs/2610.32982v1",
+      "id": "dev-4910882",
+      "title": "Everyone Clicks 'I Agree.' No One Reads Them: I Fine-Tuned a 4B Model with Tinker to Catch Unfair Terms of Service in 30 Seconds",
+      "summary": "A 9,000-word contract scanned in 30 seconds. How I fine-tuned Qwen 4B with Tinker on the LexGLUE UNFAIR-ToS benchmark to catch arbitration waivers, unilateral changes, and liability caps. — 13 reactions, 2 comments on DEV.to.",
+      "source": "DEV.to",
+      "sourceUrl": "https://dev.to/emmasofia/everyone-clicks-i-agree-no-one-reads-them-i-fine-tuned-a-4b-model-with-tinker-to-catch-unfair-30lm",
       "category": "products",
-      "date": "2026-10-23",
-      "hot": true,
-      "score": 800,
+      "date": "2026-10-24",
+      "hot": false,
+      "score": 13,
       "tags": [
-        "arXiv",
-        "paper",
-        "AI"
-      ]
-    },
-    {
-      "id": "ax-2610.32755v1",
-      "title": "Semantic Representation for Agentic Self-Play in Automated Laboratories",
-      "summary": "Navigating complex, high-dimensional biological search spaces necessitates scalable physical and computational intelligence to explore beyond local optima through iterative self-play across ideation, experimentation, and",
-      "source": "arXiv",
-      "sourceUrl": "http://arxiv.org/abs/2610.32755v1",
-      "category": "safety",
-      "date": "2026-10-23",
-      "hot": true,
-      "score": 800,
-      "tags": [
-        "arXiv",
-        "paper",
-        "AI"
+        "DEV.to",
+        "ai",
+        "devchallenge",
+        "hf26challenge"
       ]
     }
   ],
   "meta": {
-    "fetchedAt": "2026-10-26T07:25:53.892Z",
+    "fetchedAt": "2026-10-27T07:19:38.567Z",
     "topic": "AI",
     "total": 15,
-    "hot": 10,
+    "hot": 7,
     "sources": [
-      "Hacker News",
       "HackerNoon",
-      "DEV.to",
-      "arXiv"
+      "Hacker News",
+      "arXiv",
+      "DEV.to"
     ]
   }
 }
