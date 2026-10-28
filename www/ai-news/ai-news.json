@@ -1,12 +1,12 @@
 {
-  "generatedAt": "2026-10-27T07:19:38.567Z",
+  "generatedAt": "2026-10-28T07:56:01.926Z",
   "generatedBy": "YUNIE × Last30Days",
   "version": 2,
   "description": "Tin AI mới nhất — tổng hợp từ Last30Days (HN, GitHub, DEV.to, Reddit, arXiv, HackerNoon) trong 30 ngày qua. Chủ đề: AI. Tự động cập nhật bởi YUNIE.",
   "last30days": {
     "enabled": true,
     "topic": "AI",
-    "since": "2026-09-27",
+    "since": "2026-09-28",
     "days": 30,
     "sources": [
       "Hacker News (Algolia, free)",
@@ -55,13 +55,29 @@
   ],
   "articles": [
     {
-      "id": "hnoon-architecting-ai-sdlc-five-lessons-for-devsecfinops-teams",
-      "title": "Architecting AI-SDLC: Five Lessons For DevSecFinOps Teams",
-      "summary": "Using AI in enterprises is challenging due to issues like cognitive debt, unpredictable token consumption, and the need for strict governance. To succeed, teams must overhaul their — by krishna dutt on HackerNoon.",
+      "id": "hnoon-how-an-ai-bot-turned-30-school-emails-a-week-into-one-daily-",
+      "title": "How an AI Bot Turned 30 School Emails a Week Into One Daily Digest",
+      "summary": "Our kids' two schools sent about 200 emails in six weeks, plus messages in an app that never reaches email. I built an AI bot that reads it all and sends my wife and me one digest  — by Geoff Cox on HackerNoon.",
       "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/architecting-ai-sdlc-five-lessons-for-devsecfinops-teams",
+      "sourceUrl": "https://hackernoon.com/how-an-ai-bot-turned-30-school-emails-a-week-into-one-daily-digest",
+      "category": "products",
+      "date": "2026-10-28",
+      "hot": true,
+      "score": 100,
+      "tags": [
+        "HackerNoon",
+        "ai-agents",
+        "AI"
+      ]
+    },
+    {
+      "id": "hnoon-how-lean-thinking-can-make-ai-development-smarter-and-cheape",
+      "title": "How Lean Thinking Can Make AI Development Smarter and Cheaper",
+      "summary": "I built a fantasy name generator using a $20/month AI subscription, free tools, and Lean thinking. Rather than using AI for everything, I relied on conventional automation for repe — by Brad Nelson on HackerNoon.",
+      "source": "HackerNoon",
+      "sourceUrl": "https://hackernoon.com/how-lean-thinking-can-make-ai-development-smarter-and-cheaper",
       "category": "safety",
-      "date": "2026-10-27",
+      "date": "2026-10-28",
       "hot": true,
       "score": 100,
       "tags": [
@@ -71,13 +87,13 @@
       ]
     },
     {
-      "id": "hnoon-drone-autonomy-without-a-gpu-why-cpu-first-simulation-matter",
-      "title": "Drone Autonomy Without a GPU: Why CPU-First Simulation Matters for Decentralized AI",
-      "summary": "• Most drone simulators are built for photorealism, so testing autonomy means owning a capable GPU. That shuts most of the world out. • Many autonomy problems never need rendered p — by vishwa vimukthi gammuduwaththage o",
+      "id": "hnoon-grok-bot-vs-claude-duet-vs-dots-vs-muse-which-ai-agent-shoul",
+      "title": "Grok Bot vs Claude Duet vs Dots vs Muse: Which AI Agent Should You Use?",
+      "summary": "Claude Duet, Grok Bot, Muse and Dots compared on price, availability, approvals and connectors, with hands-on tests of the one I could use from India. Read All — by Ishank Choudhary on HackerNoon.",
       "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/drone-autonomy-without-a-gpu-why-cpu-first-simulation-matters-for-decentralized-ai",
+      "sourceUrl": "https://hackernoon.com/grok-bot-vs-claude-duet-vs-dots-vs-muse-which-ai-agent-should-you-use",
       "category": "products",
-      "date": "2026-10-27",
+      "date": "2026-10-28",
       "hot": true,
       "score": 100,
       "tags": [
@@ -87,79 +103,76 @@
       ]
     },
     {
-      "id": "hn-50255298",
-      "title": "The Mythical Man-Month in the Age of AI",
-      "summary": "The Mythical Man-Month in the Age of AI — 6 points, 2 comments on HN.",
-      "source": "Hacker News",
-      "sourceUrl": "https://j11g.com/the-mythical-man-month-in-the-age-of-ai",
+      "id": "hnoon-can-an-ai-writing-linter-outperform-a-good-prompt",
+      "title": "Can an AI Writing Linter Outperform a Good Prompt?",
+      "summary": "An AI rewrite can read better and still lose facts. I tested whether a deterministic linter helps Claude rewrite files better than six popular skills that do the same job. It came  — by Efe Genc on HackerNoon.",
+      "source": "HackerNoon",
+      "sourceUrl": "https://hackernoon.com/can-an-ai-writing-linter-outperform-a-good-prompt",
       "category": "products",
-      "date": "2026-10-27",
-      "hot": false,
-      "score": 6,
-      "tags": [
-        "HN",
-        "AI",
-        "story",
-        "author_ilreb"
-      ]
-    },
-    {
-      "id": "hn-50254873",
-      "title": "Looking for a tech job is a helpless data-entry nightmare",
-      "summary": "I spent hundred of hours (distributed over many days) filling my resume data to freshly developed forms made specifically to the hiring process of one or two companies, even though I feel like I have a top 10% resume and — 6 points, 3 comments on HN.",
-      "source": "Hacker News",
-      "sourceUrl": "https://news.ycombinator.com/item?id=50254873",
-      "category": "big-tech",
-      "date": "2026-10-27",
-      "hot": false,
-      "score": 6,
-      "tags": [
-        "HN",
-        "AI",
-        "story",
-        "author_Gravyness"
-      ]
-    },
-    {
-      "id": "hn-50254670",
-      "title": "AI and the Collapse of Capitalism",
-      "summary": "AI and the Collapse of Capitalism — 6 points, 2 comments on HN.",
-      "source": "Hacker News",
-      "sourceUrl": "https://jasonpolak.substack.com/p/ai-and-the-collapse-of-capitalism",
-      "category": "products",
-      "date": "2026-10-27",
-      "hot": false,
-      "score": 6,
-      "tags": [
-        "HN",
-        "AI",
-        "story",
-        "author_bemtevi"
-      ]
-    },
-    {
-      "id": "hntop-50242939",
-      "title": "Anthropic S-1",
-      "summary": "Anthropic S-1 — 1577 points, 1510 comments on HN.",
-      "source": "Hacker News",
-      "sourceUrl": "https://www.sec.gov/Archives/edgar/data/2130357/000162828026067168/anthropicpbc-sx1.htm",
-      "category": "big-tech",
-      "date": "2026-10-26",
+      "date": "2026-10-28",
       "hot": true,
-      "score": 1577,
+      "score": 100,
+      "tags": [
+        "HackerNoon",
+        "ai",
+        "AI"
+      ]
+    },
+    {
+      "id": "hnoon-how-to-use-small-models-to-fix-broken-json-between-llm-steps",
+      "title": "How to Use Small Models to Fix Broken JSON Between LLM Steps",
+      "summary": "Model handoffs usually use JSON because it’s simple and clean, but that handoff is also where a lot of failures show up. Deterministic repair only catches the obvious parsing error — by nayankote on HackerNoon.",
+      "source": "HackerNoon",
+      "sourceUrl": "https://hackernoon.com/how-to-use-small-models-to-fix-broken-json-between-llm-steps",
+      "category": "products",
+      "date": "2026-10-28",
+      "hot": true,
+      "score": 100,
+      "tags": [
+        "HackerNoon",
+        "ai",
+        "AI"
+      ]
+    },
+    {
+      "id": "hntop-50261319",
+      "title": "Genie 4",
+      "summary": "Genie 4 — 853 points, 501 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://deepmind.google/blog/genie-4-a-new-generation-of-world-simulation/",
+      "category": "products",
+      "date": "2026-10-27",
+      "hot": true,
+      "score": 853,
       "tags": [
         "HN",
         "top"
       ]
     },
     {
-      "id": "ax-2610.35835v1",
-      "title": "I-HITL: Inalienable Human-in-the-Loop",
-      "summary": "Human oversight is a pillar of AI safety. It is often exercised by a human in the loop (HITL) who approves critical actions taken by an AI agent. AI agents' increasing ability to bypass guardrails, though, raises the que",
+      "id": "ax-2610.37595v1",
+      "title": "On Khovanov local equivalence groups",
+      "summary": "Inspired by work in Seiberg--Witten and Heegaard Floer homology, Dunfield, Schütz, and the author constructed an abelian \"local equivalence group\" built from pairs of chain complexes, and a homomorphism from the smooth c",
       "source": "arXiv",
-      "sourceUrl": "http://arxiv.org/abs/2610.35835v1",
+      "sourceUrl": "http://arxiv.org/abs/2610.37595v1",
+      "category": "self-improving",
+      "date": "2026-10-27",
+      "hot": true,
+      "score": 800,
+      "tags": [
+        "arXiv",
+        "paper",
+        "AI"
+      ]
+    },
+    {
+      "id": "ax-2610.37523v1",
+      "title": "The Structure Gap: When More Data Cannot Replace Structured Reasoning",
+      "summary": "A persistent belief in modern AI is that sufficiently large learners trained on sufficiently much data can make explicit domain knowledge optional. This paper examines a limitation of that belief. We define structure-enc",
+      "source": "arXiv",
+      "sourceUrl": "http://arxiv.org/abs/2610.37523v1",
       "category": "safety",
-      "date": "2026-10-26",
+      "date": "2026-10-27",
       "hot": true,
       "score": 800,
       "tags": [
@@ -169,13 +182,13 @@
       ]
     },
     {
-      "id": "ax-2610.35750v1",
-      "title": "Large Excursions of Reflected Lévy Processes: Local Asymptotics",
-      "summary": "This paper establishes uniform local large-deviation asymptotics for excursions of a Lévy process $X$ with negative drift $-β$ and $α$-locally regularly varying Lévy measure $ν$, reflected at its running infimum. Under t",
+      "id": "ax-2610.37484v1",
+      "title": "Teach reality, not ethics: a drop-in continued-pretraining corpus installs coupled human-biosphere-AI welfare dispositions across model families",
+      "summary": "Large language models (LLMs) are increasingly used to make and execute decisions that affect living systems. Yet, to our knowledge, ecological reasoning is not a focus of pre- or post-training. This increases the risk th",
       "source": "arXiv",
-      "sourceUrl": "http://arxiv.org/abs/2610.35750v1",
-      "category": "fun",
-      "date": "2026-10-26",
+      "sourceUrl": "http://arxiv.org/abs/2610.37484v1",
+      "category": "safety",
+      "date": "2026-10-27",
       "hot": true,
       "score": 800,
       "tags": [
@@ -185,47 +198,78 @@
       ]
     },
     {
-      "id": "hnoon-anthropics-s-1-shows--163b-in-half-year-revenue-a-900percent",
-      "title": "Anthropic's S-1 Shows $16.3B in Half-Year Revenue, a 900% NRR, and an $80.7B Loss That Mostly Isn't",
-      "summary": "Anthropic's S-1: $16.3B in half-year revenue, ~900% NRR, an $80.7B mostly-paper loss, a blank compute bill and governance that keeps control with founders. — by Hockey Stick on HackerNoon.",
-      "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/anthropics-s-1-shows-$163b-in-half-year-revenue-a-900percent-nrr-and-an-$807b-loss-that-mostly-isnt",
+      "id": "ax-2610.37459v1",
+      "title": "M4Bench: Evaluating Procedural Specification for Clinical EHR Derivation Agents",
+      "summary": "Clinical research over electronic health records depends on derived variables whose definitions sit outside the schema, in item codes, time windows, missingness rules, and output-grain choices that change cohorts and dow",
+      "source": "arXiv",
+      "sourceUrl": "http://arxiv.org/abs/2610.37459v1",
+      "category": "products",
+      "date": "2026-10-27",
+      "hot": true,
+      "score": 800,
+      "tags": [
+        "arXiv",
+        "paper",
+        "AI"
+      ]
+    },
+    {
+      "id": "hntop-50242939",
+      "title": "Anthropic S-1",
+      "summary": "Anthropic S-1 — 1695 points, 1659 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://www.sec.gov/Archives/edgar/data/2130357/000162828026067168/anthropicpbc-sx1.htm",
       "category": "big-tech",
       "date": "2026-10-26",
       "hot": true,
-      "score": 100,
+      "score": 1695,
       "tags": [
-        "HackerNoon",
-        "anthropic-ipo",
-        "AI"
+        "HN",
+        "top"
       ]
     },
     {
-      "id": "hnoon-the-bicycle-that-taught-me-my-agent-loop-had-no-ground-truth",
-      "title": "The Bicycle That Taught Me My Agent Loop Had No Ground Truth",
-      "summary": "In June 2026 I designed an Autonomous Semantic Vector Graphics Engine: an LLM drawing vector art from text in a closed loop. Six models reviewed it; the verdict was that my loop ha — by Vitali Tsikhanovich on HackerNoon.",
-      "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/the-bicycle-that-taught-me-my-agent-loop-had-no-ground-truth",
+      "id": "hntop-50251344",
+      "title": "Three new discoveries in mathematics, computer science, and physics",
+      "summary": "Related:<p><i>The Exponential Time Hypothesis Is False [pdf]</i> - <a href=\"https:&#x2F;&#x2F;news.ycombinator.com&#x2F;item?id=50251661\">https:&#x2F;&#x2F;news.ycombinator.com&#x2F;item?id=50251661</a> — 1135 points, 672 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://openai.com/index/building-scientific-understanding-with-academic-communities/",
       "category": "products",
       "date": "2026-10-26",
       "hot": true,
-      "score": 100,
+      "score": 1135,
       "tags": [
-        "HackerNoon",
+        "HN",
+        "top"
+      ]
+    },
+    {
+      "id": "dev-4901716",
+      "title": "Slowth Money: a local AI agent for your financial goals",
+      "summary": "This is a submission for the Hacktoberfest Open-Source AI Challenge Week 3: Slow and Steady          ... — 30 reactions, 9 comments on DEV.to.",
+      "source": "DEV.to",
+      "sourceUrl": "https://dev.to/javz/slowth-money-a-local-ai-agent-for-your-financial-goals-2ki2",
+      "category": "products",
+      "date": "2026-10-25",
+      "hot": false,
+      "score": 30,
+      "tags": [
+        "DEV.to",
         "ai",
-        "AI"
+        "devchallenge",
+        "hf26challenge"
       ]
     },
     {
       "id": "dev-4796922",
       "title": "Three Times My Test Failed and the LLM Was Right",
-      "summary": "A test fails, and the reflex is: the code is wrong. Debug the code, fix the code, move on. That... — 23 reactions, 26 comments on DEV.to.",
+      "summary": "A test fails, and the reflex is: the code is wrong. Debug the code, fix the code, move on. That... — 24 reactions, 27 comments on DEV.to.",
       "source": "DEV.to",
       "sourceUrl": "https://dev.to/debashish_ghosal/three-times-my-test-failed-and-the-llm-was-right-43l2",
       "category": "products",
       "date": "2026-10-25",
       "hot": false,
-      "score": 23,
+      "score": 24,
       "tags": [
         "DEV.to",
         "ai",
@@ -234,79 +278,28 @@
       ]
     },
     {
-      "id": "dev-4915028",
-      "title": "Postmortem: The Tuesday Our AI Bill Had No Owner",
-      "summary": "I've read a lot of postmortems. The best ones aren't about blame. They're about the gap between what... — 14 reactions, 10 comments on DEV.to.",
-      "source": "DEV.to",
-      "sourceUrl": "https://dev.to/gde/postmortem-the-tuesday-our-ai-bill-had-no-owner-34pd",
-      "category": "products",
-      "date": "2026-10-25",
-      "hot": false,
-      "score": 14,
-      "tags": [
-        "DEV.to",
-        "ai",
-        "discuss",
-        "vertexai"
-      ]
-    },
-    {
       "id": "dev-4908848",
       "title": "Hours, Not Weeks: How AI Rewrote the Clock of Software Security",
-      "summary": "The third week of October 2026 was a rough one for anyone who runs software on the internet.  Two... — 29 reactions, 36 comments on DEV.to.",
+      "summary": "The third week of October 2026 was a rough one for anyone who runs software on the internet.  Two... — 39 reactions, 36 comments on DEV.to.",
       "source": "DEV.to",
       "sourceUrl": "https://dev.to/james_anderson_h/security-changed-with-ai-and-small-teams-are-falling-behind-5ebg",
       "category": "products",
       "date": "2026-10-24",
-      "hot": false,
-      "score": 29,
+      "hot": true,
+      "score": 39,
       "tags": [
         "DEV.to",
         "ai",
         "security",
         "ai"
       ]
-    },
-    {
-      "id": "dev-4909233",
-      "title": "Sloth Reads: an open model reads my read-later pile overnight, then reads me the good ones",
-      "summary": "This is a submission for the Hacktoberfest Open-Source AI Challenge Week 3: Slow and Steady         ... — 22 reactions, 3 comments on DEV.to.",
-      "source": "DEV.to",
-      "sourceUrl": "https://dev.to/sbis04/sloth-reads-an-open-model-reads-my-read-later-pile-overnight-then-reads-me-the-good-ones-3o14",
-      "category": "products",
-      "date": "2026-10-24",
-      "hot": false,
-      "score": 22,
-      "tags": [
-        "DEV.to",
-        "ai",
-        "devchallenge",
-        "hf26challenge"
-      ]
-    },
-    {
-      "id": "dev-4910882",
-      "title": "Everyone Clicks 'I Agree.' No One Reads Them: I Fine-Tuned a 4B Model with Tinker to Catch Unfair Terms of Service in 30 Seconds",
-      "summary": "A 9,000-word contract scanned in 30 seconds. How I fine-tuned Qwen 4B with Tinker on the LexGLUE UNFAIR-ToS benchmark to catch arbitration waivers, unilateral changes, and liability caps. — 13 reactions, 2 comments on DEV.to.",
-      "source": "DEV.to",
-      "sourceUrl": "https://dev.to/emmasofia/everyone-clicks-i-agree-no-one-reads-them-i-fine-tuned-a-4b-model-with-tinker-to-catch-unfair-30lm",
-      "category": "products",
-      "date": "2026-10-24",
-      "hot": false,
-      "score": 13,
-      "tags": [
-        "DEV.to",
-        "ai",
-        "devchallenge",
-        "hf26challenge"
-      ]
     }
   ],
   "meta": {
-    "fetchedAt": "2026-10-27T07:19:38.567Z",
+    "fetchedAt": "2026-10-28T07:56:01.926Z",
     "topic": "AI",
     "total": 15,
-    "hot": 7,
+    "hot": 13,
     "sources": [
       "HackerNoon",
       "Hacker News",
