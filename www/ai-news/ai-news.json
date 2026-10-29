@@ -1,12 +1,12 @@
 {
-  "generatedAt": "2026-10-28T07:56:01.926Z",
+  "generatedAt": "2026-10-29T08:02:58.577Z",
   "generatedBy": "YUNIE × Last30Days",
   "version": 2,
   "description": "Tin AI mới nhất — tổng hợp từ Last30Days (HN, GitHub, DEV.to, Reddit, arXiv, HackerNoon) trong 30 ngày qua. Chủ đề: AI. Tự động cập nhật bởi YUNIE.",
   "last30days": {
     "enabled": true,
     "topic": "AI",
-    "since": "2026-09-28",
+    "since": "2026-09-29",
     "days": 30,
     "sources": [
       "Hacker News (Algolia, free)",
@@ -55,95 +55,175 @@
   ],
   "articles": [
     {
-      "id": "hnoon-how-an-ai-bot-turned-30-school-emails-a-week-into-one-daily-",
-      "title": "How an AI Bot Turned 30 School Emails a Week Into One Daily Digest",
-      "summary": "Our kids' two schools sent about 200 emails in six weeks, plus messages in an app that never reaches email. I built an AI bot that reads it all and sends my wife and me one digest  — by Geoff Cox on HackerNoon.",
+      "id": "hnoon-modelproof-proving-an-ai-model-hasnt-been-tampered-with-stor",
+      "title": "ModelProof: Proving an AI Model Hasn't Been Tampered With, Stored Forever on Arweave",
+      "summary": "ModelProof hashes AI models in your browser, signs a provenance manifest and stores it free and forever on Arweave, so anyone can verify the weights. Read All — by Lawal Ridwan on HackerNoon.",
       "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/how-an-ai-bot-turned-30-school-emails-a-week-into-one-daily-digest",
+      "sourceUrl": "https://hackernoon.com/modelproof-proving-an-ai-model-hasnt-been-tampered-with-stored-forever-on-arweave",
+      "category": "products",
+      "date": "2026-10-29",
+      "hot": true,
+      "score": 100,
+      "tags": [
+        "HackerNoon",
+        "decentralize-ai-hackathon",
+        "AI"
+      ]
+    },
+    {
+      "id": "hnoon-agent-graph-engineering-part-4-building-ai-agents-with-typed",
+      "title": "Agent Graph Engineering, Part 4: Building AI Agents With Typed Outputs and Graph-Based Routing",
+      "summary": "An agent is four declarations: a purpose, an output type, its instructions, and the type of its dependencies. A graph node is a function that runs one of those and returns where to — by Huy Nguyen on HackerNoon.",
+      "source": "HackerNoon",
+      "sourceUrl": "https://hackernoon.com/agent-graph-engineering-part-4-building-ai-agents-with-typed-outputs-and-graph-based-routing",
+      "category": "products",
+      "date": "2026-10-29",
+      "hot": true,
+      "score": 100,
+      "tags": [
+        "HackerNoon",
+        "ai-agent",
+        "AI"
+      ]
+    },
+    {
+      "id": "hnoon-pr-pros-are-vibe-coding-ai-visibility-workflows-when-they-co",
+      "title": "PR Pros Are “Vibe-Coding” AI Visibility Workflows When They Could Rely on a Modern Newswire",
+      "summary": "Legacy newswires don’t provide PR practitioners with the AI visibility insights they need to deliver to their clients, so many are building their own from scratch. A modern press r — by EZ Newswire on HackerNoon.",
+      "source": "HackerNoon",
+      "sourceUrl": "https://hackernoon.com/pr-pros-are-vibe-coding-ai-visibility-workflows-when-they-could-rely-on-a-modern-newswire",
+      "category": "products",
+      "date": "2026-10-29",
+      "hot": true,
+      "score": 100,
+      "tags": [
+        "HackerNoon",
+        "ai",
+        "AI"
+      ]
+    },
+    {
+      "id": "hnoon-a-2b-model-wrote-a-job-history-i-never-gave-it-the-fix-was-c",
+      "title": "A 2B Model Wrote a Job History I Never Gave It - The Fix Was Code, Not a Better Prompt",
+      "summary": "I run Gemma 4 E2B inside a Chrome extension that fills job applications. A prompt didn't stop it writing work history it was never given, and it called its own evidence \"supported\" — by Kuldeep Singh on HackerNoon.",
+      "source": "HackerNoon",
+      "sourceUrl": "https://hackernoon.com/a-2b-model-wrote-a-job-history-i-never-gave-it-the-fix-was-code-not-a-better-prompt",
+      "category": "products",
+      "date": "2026-10-29",
+      "hot": true,
+      "score": 100,
+      "tags": [
+        "HackerNoon",
+        "webgpu",
+        "AI"
+      ]
+    },
+    {
+      "id": "hn-50285177",
+      "title": "Bernstein – open-source governance layer for AI agents",
+      "summary": "Bernstein – open-source governance layer for AI agents — 16 points, 2 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://bernstein.run",
+      "category": "safety",
+      "date": "2026-10-29",
+      "hot": false,
+      "score": 16,
+      "tags": [
+        "HN",
+        "AI",
+        "story",
+        "author_ankitg12"
+      ]
+    },
+    {
+      "id": "hntop-50276792",
+      "title": "Gemini 4 Carbon",
+      "summary": "Gemini 4 Carbon — 902 points, 737 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://blog.google/innovation-and-ai/models-and-research/gemini-models/introducing-gemini-4-carbon/",
+      "category": "products",
+      "date": "2026-10-28",
+      "hot": true,
+      "score": 902,
+      "tags": [
+        "HN",
+        "top"
+      ]
+    },
+    {
+      "id": "hnoon-before-an-ai-agent-answers-your-revenue-questions-make-it-pa",
+      "title": "Before an AI Agent Answers Your Revenue Questions, Make It Pass This Exam",
+      "summary": "AI agents write SQL that runs and looks right, then miss on time zones, test accounts, and fan-out joins. Malek Damiri, a revenue operations lead, lays out a golden-question exam:  — by Malek Damiri on HackerNoon.",
+      "source": "HackerNoon",
+      "sourceUrl": "https://hackernoon.com/before-an-ai-agent-answers-your-revenue-questions-make-it-pass-this-exam",
+      "category": "fun",
+      "date": "2026-10-28",
+      "hot": true,
+      "score": 100,
+      "tags": [
+        "HackerNoon",
+        "ai",
+        "AI"
+      ]
+    },
+    {
+      "id": "hnoon-how-to-test-a-streaming-react-ai-interface-without-putting-a",
+      "title": "How to Test a Streaming React AI Interface Without Putting an LLM in CI",
+      "summary": "Treat an AI chat UI as a deterministic event-driven state machine. Inject a controlled async stream into the React component, test transitions and accessibility with Cypress Compon — by Raju Dandigam on HackerNoon.",
+      "source": "HackerNoon",
+      "sourceUrl": "https://hackernoon.com/how-to-test-a-streaming-react-ai-interface-without-putting-an-llm-in-ci",
       "category": "products",
       "date": "2026-10-28",
       "hot": true,
       "score": 100,
       "tags": [
         "HackerNoon",
-        "ai-agents",
+        "react",
         "AI"
       ]
     },
     {
-      "id": "hnoon-how-lean-thinking-can-make-ai-development-smarter-and-cheape",
-      "title": "How Lean Thinking Can Make AI Development Smarter and Cheaper",
-      "summary": "I built a fantasy name generator using a $20/month AI subscription, free tools, and Lean thinking. Rather than using AI for everything, I relied on conventional automation for repe — by Brad Nelson on HackerNoon.",
+      "id": "hnoon-your-ai-proof-of-concept-is-probably-just-a-demo",
+      "title": "Your AI Proof of Concept Is Probably Just a Demo",
+      "summary": "Most AI proofs of concept succeed at being impressive and then quietly stall, because nobody decided what a pass looks like. Build the test set first, write the pass line for quali — by Danial Ahmad on HackerNoon.",
       "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/how-lean-thinking-can-make-ai-development-smarter-and-cheaper",
+      "sourceUrl": "https://hackernoon.com/your-ai-proof-of-concept-is-probably-just-a-demo",
+      "category": "products",
+      "date": "2026-10-28",
+      "hot": true,
+      "score": 100,
+      "tags": [
+        "HackerNoon",
+        "ai",
+        "AI"
+      ]
+    },
+    {
+      "id": "hnoon-scaling-agentic-ai-coding-assistants-in-a-regulated-enterpri",
+      "title": "Scaling Agentic AI Coding Assistants in a Regulated Enterprise",
+      "summary": "How to scale agentic AI coding assistants to 600+ engineers in a regulated enterprise, using governance, guardrails, curated skills and approved integrations. — by lokeshsuri on HackerNoon.",
+      "source": "HackerNoon",
+      "sourceUrl": "https://hackernoon.com/scaling-agentic-ai-coding-assistants-in-a-regulated-enterprise",
       "category": "safety",
       "date": "2026-10-28",
       "hot": true,
       "score": 100,
       "tags": [
         "HackerNoon",
-        "ai",
-        "AI"
-      ]
-    },
-    {
-      "id": "hnoon-grok-bot-vs-claude-duet-vs-dots-vs-muse-which-ai-agent-shoul",
-      "title": "Grok Bot vs Claude Duet vs Dots vs Muse: Which AI Agent Should You Use?",
-      "summary": "Claude Duet, Grok Bot, Muse and Dots compared on price, availability, approvals and connectors, with hands-on tests of the one I could use from India. Read All — by Ishank Choudhary on HackerNoon.",
-      "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/grok-bot-vs-claude-duet-vs-dots-vs-muse-which-ai-agent-should-you-use",
-      "category": "products",
-      "date": "2026-10-28",
-      "hot": true,
-      "score": 100,
-      "tags": [
-        "HackerNoon",
-        "ai",
-        "AI"
-      ]
-    },
-    {
-      "id": "hnoon-can-an-ai-writing-linter-outperform-a-good-prompt",
-      "title": "Can an AI Writing Linter Outperform a Good Prompt?",
-      "summary": "An AI rewrite can read better and still lose facts. I tested whether a deterministic linter helps Claude rewrite files better than six popular skills that do the same job. It came  — by Efe Genc on HackerNoon.",
-      "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/can-an-ai-writing-linter-outperform-a-good-prompt",
-      "category": "products",
-      "date": "2026-10-28",
-      "hot": true,
-      "score": 100,
-      "tags": [
-        "HackerNoon",
-        "ai",
-        "AI"
-      ]
-    },
-    {
-      "id": "hnoon-how-to-use-small-models-to-fix-broken-json-between-llm-steps",
-      "title": "How to Use Small Models to Fix Broken JSON Between LLM Steps",
-      "summary": "Model handoffs usually use JSON because it’s simple and clean, but that handoff is also where a lot of failures show up. Deterministic repair only catches the obvious parsing error — by nayankote on HackerNoon.",
-      "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/how-to-use-small-models-to-fix-broken-json-between-llm-steps",
-      "category": "products",
-      "date": "2026-10-28",
-      "hot": true,
-      "score": 100,
-      "tags": [
-        "HackerNoon",
-        "ai",
+        "agentic-ai",
         "AI"
       ]
     },
     {
       "id": "hntop-50261319",
       "title": "Genie 4",
-      "summary": "Genie 4 — 853 points, 501 comments on HN.",
+      "summary": "Genie 4 — 1027 points, 582 comments on HN.",
       "source": "Hacker News",
       "sourceUrl": "https://deepmind.google/blog/genie-4-a-new-generation-of-world-simulation/",
       "category": "products",
       "date": "2026-10-27",
       "hot": true,
-      "score": 853,
+      "score": 1027,
       "tags": [
         "HN",
         "top"
@@ -212,99 +292,17 @@
         "paper",
         "AI"
       ]
-    },
-    {
-      "id": "hntop-50242939",
-      "title": "Anthropic S-1",
-      "summary": "Anthropic S-1 — 1695 points, 1659 comments on HN.",
-      "source": "Hacker News",
-      "sourceUrl": "https://www.sec.gov/Archives/edgar/data/2130357/000162828026067168/anthropicpbc-sx1.htm",
-      "category": "big-tech",
-      "date": "2026-10-26",
-      "hot": true,
-      "score": 1695,
-      "tags": [
-        "HN",
-        "top"
-      ]
-    },
-    {
-      "id": "hntop-50251344",
-      "title": "Three new discoveries in mathematics, computer science, and physics",
-      "summary": "Related:<p><i>The Exponential Time Hypothesis Is False [pdf]</i> - <a href=\"https:&#x2F;&#x2F;news.ycombinator.com&#x2F;item?id=50251661\">https:&#x2F;&#x2F;news.ycombinator.com&#x2F;item?id=50251661</a> — 1135 points, 672 comments on HN.",
-      "source": "Hacker News",
-      "sourceUrl": "https://openai.com/index/building-scientific-understanding-with-academic-communities/",
-      "category": "products",
-      "date": "2026-10-26",
-      "hot": true,
-      "score": 1135,
-      "tags": [
-        "HN",
-        "top"
-      ]
-    },
-    {
-      "id": "dev-4901716",
-      "title": "Slowth Money: a local AI agent for your financial goals",
-      "summary": "This is a submission for the Hacktoberfest Open-Source AI Challenge Week 3: Slow and Steady          ... — 30 reactions, 9 comments on DEV.to.",
-      "source": "DEV.to",
-      "sourceUrl": "https://dev.to/javz/slowth-money-a-local-ai-agent-for-your-financial-goals-2ki2",
-      "category": "products",
-      "date": "2026-10-25",
-      "hot": false,
-      "score": 30,
-      "tags": [
-        "DEV.to",
-        "ai",
-        "devchallenge",
-        "hf26challenge"
-      ]
-    },
-    {
-      "id": "dev-4796922",
-      "title": "Three Times My Test Failed and the LLM Was Right",
-      "summary": "A test fails, and the reflex is: the code is wrong. Debug the code, fix the code, move on. That... — 24 reactions, 27 comments on DEV.to.",
-      "source": "DEV.to",
-      "sourceUrl": "https://dev.to/debashish_ghosal/three-times-my-test-failed-and-the-llm-was-right-43l2",
-      "category": "products",
-      "date": "2026-10-25",
-      "hot": false,
-      "score": 24,
-      "tags": [
-        "DEV.to",
-        "ai",
-        "ai",
-        "programming"
-      ]
-    },
-    {
-      "id": "dev-4908848",
-      "title": "Hours, Not Weeks: How AI Rewrote the Clock of Software Security",
-      "summary": "The third week of October 2026 was a rough one for anyone who runs software on the internet.  Two... — 39 reactions, 36 comments on DEV.to.",
-      "source": "DEV.to",
-      "sourceUrl": "https://dev.to/james_anderson_h/security-changed-with-ai-and-small-teams-are-falling-behind-5ebg",
-      "category": "products",
-      "date": "2026-10-24",
-      "hot": true,
-      "score": 39,
-      "tags": [
-        "DEV.to",
-        "ai",
-        "security",
-        "ai"
-      ]
     }
   ],
   "meta": {
-    "fetchedAt": "2026-10-28T07:56:01.926Z",
+    "fetchedAt": "2026-10-29T08:02:58.577Z",
     "topic": "AI",
     "total": 15,
-    "hot": 13,
+    "hot": 14,
     "sources": [
       "HackerNoon",
       "Hacker News",
-      "arXiv",
-      "DEV.to"
+      "arXiv"
     ]
   }
 }
