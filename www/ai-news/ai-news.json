@@ -1,12 +1,12 @@
 {
-  "generatedAt": "2026-10-29T08:02:58.577Z",
+  "generatedAt": "2026-10-30T08:05:07.019Z",
   "generatedBy": "YUNIE × Last30Days",
   "version": 2,
   "description": "Tin AI mới nhất — tổng hợp từ Last30Days (HN, GitHub, DEV.to, Reddit, arXiv, HackerNoon) trong 30 ngày qua. Chủ đề: AI. Tự động cập nhật bởi YUNIE.",
   "last30days": {
     "enabled": true,
     "topic": "AI",
-    "since": "2026-09-29",
+    "since": "2026-09-30",
     "days": 30,
     "sources": [
       "Hacker News (Algolia, free)",
@@ -55,254 +55,260 @@
   ],
   "articles": [
     {
-      "id": "hnoon-modelproof-proving-an-ai-model-hasnt-been-tampered-with-stor",
-      "title": "ModelProof: Proving an AI Model Hasn't Been Tampered With, Stored Forever on Arweave",
-      "summary": "ModelProof hashes AI models in your browser, signs a provenance manifest and stores it free and forever on Arweave, so anyone can verify the weights. Read All — by Lawal Ridwan on HackerNoon.",
+      "id": "hnoon-ai-assisted-reconciliation-of-enterprise-data-detecting-and-",
+      "title": "AI-Assisted Reconciliation of Enterprise Data: Detecting and Explaining Cross-Platform Discrepancies",
+      "summary": " — by ajaysikharam on HackerNoon.",
       "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/modelproof-proving-an-ai-model-hasnt-been-tampered-with-stored-forever-on-arweave",
+      "sourceUrl": "https://hackernoon.com/ai-assisted-reconciliation-of-enterprise-data-detecting-and-explaining-cross-platform-discrepancies",
       "category": "products",
-      "date": "2026-10-29",
+      "date": "2026-10-30",
       "hot": true,
       "score": 100,
       "tags": [
         "HackerNoon",
-        "decentralize-ai-hackathon",
+        "data-engineering",
         "AI"
       ]
     },
     {
-      "id": "hnoon-agent-graph-engineering-part-4-building-ai-agents-with-typed",
-      "title": "Agent Graph Engineering, Part 4: Building AI Agents With Typed Outputs and Graph-Based Routing",
-      "summary": "An agent is four declarations: a purpose, an output type, its instructions, and the type of its dependencies. A graph node is a function that runs one of those and returns where to — by Huy Nguyen on HackerNoon.",
-      "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/agent-graph-engineering-part-4-building-ai-agents-with-typed-outputs-and-graph-based-routing",
-      "category": "products",
-      "date": "2026-10-29",
-      "hot": true,
-      "score": 100,
-      "tags": [
-        "HackerNoon",
-        "ai-agent",
-        "AI"
-      ]
-    },
-    {
-      "id": "hnoon-pr-pros-are-vibe-coding-ai-visibility-workflows-when-they-co",
-      "title": "PR Pros Are “Vibe-Coding” AI Visibility Workflows When They Could Rely on a Modern Newswire",
-      "summary": "Legacy newswires don’t provide PR practitioners with the AI visibility insights they need to deliver to their clients, so many are building their own from scratch. A modern press r — by EZ Newswire on HackerNoon.",
-      "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/pr-pros-are-vibe-coding-ai-visibility-workflows-when-they-could-rely-on-a-modern-newswire",
-      "category": "products",
-      "date": "2026-10-29",
-      "hot": true,
-      "score": 100,
-      "tags": [
-        "HackerNoon",
-        "ai",
-        "AI"
-      ]
-    },
-    {
-      "id": "hnoon-a-2b-model-wrote-a-job-history-i-never-gave-it-the-fix-was-c",
-      "title": "A 2B Model Wrote a Job History I Never Gave It - The Fix Was Code, Not a Better Prompt",
-      "summary": "I run Gemma 4 E2B inside a Chrome extension that fills job applications. A prompt didn't stop it writing work history it was never given, and it called its own evidence \"supported\" — by Kuldeep Singh on HackerNoon.",
-      "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/a-2b-model-wrote-a-job-history-i-never-gave-it-the-fix-was-code-not-a-better-prompt",
-      "category": "products",
-      "date": "2026-10-29",
-      "hot": true,
-      "score": 100,
-      "tags": [
-        "HackerNoon",
-        "webgpu",
-        "AI"
-      ]
-    },
-    {
-      "id": "hn-50285177",
-      "title": "Bernstein – open-source governance layer for AI agents",
-      "summary": "Bernstein – open-source governance layer for AI agents — 16 points, 2 comments on HN.",
+      "id": "hn-50299182",
+      "title": "CVE-2026-98432: Linux TCP Use-After-Free Risk and Patch Validation",
+      "summary": "CVE-2026-98432: Linux TCP Use-After-Free Risk and Patch Validation — 52 points, 34 comments on HN.",
       "source": "Hacker News",
-      "sourceUrl": "https://bernstein.run",
+      "sourceUrl": "https://www.penligent.ai/hackinglabs/cve-2026-98432/",
       "category": "safety",
-      "date": "2026-10-29",
+      "date": "2026-10-30",
       "hot": false,
-      "score": 16,
+      "score": 52,
       "tags": [
         "HN",
         "AI",
         "story",
-        "author_ankitg12"
+        "author_cobychapple"
+      ]
+    },
+    {
+      "id": "hn-50299285",
+      "title": "Reddit to Transition to Logged in Only",
+      "summary": "Reddit to Transition to Logged in Only — 9 points, 4 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://www.axios.com/2026/10/29/reddit-logged-in-ai-search-incognito",
+      "category": "products",
+      "date": "2026-10-30",
+      "hot": false,
+      "score": 9,
+      "tags": [
+        "HN",
+        "AI",
+        "story",
+        "author_ksajadi"
+      ]
+    },
+    {
+      "id": "hn-50299521",
+      "title": "I Built the Most AI-Pilled Company in the World",
+      "summary": "I Built the Most AI-Pilled Company in the World — 6 points, 2 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://twitter.com/jsnnsa/status/2115623382721126826",
+      "category": "products",
+      "date": "2026-10-30",
+      "hot": false,
+      "score": 6,
+      "tags": [
+        "HN",
+        "AI",
+        "story",
+        "author_duck"
+      ]
+    },
+    {
+      "id": "hn-50300277",
+      "title": "Anthropic now lets Claude users jump out of plane without parachute",
+      "summary": "Anthropic now lets Claude users jump out of plane without parachute — 5 points, 0 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://www.theregister.com/ai-and-ml/2026/10/27/anthropic-now-lets-claude-users-jump-out-of-plane-without-parachute/5305807",
+      "category": "big-tech",
+      "date": "2026-10-30",
+      "hot": false,
+      "score": 5,
+      "tags": [
+        "HN",
+        "AI",
+        "story",
+        "author_GloVin"
+      ]
+    },
+    {
+      "id": "hntop-50289418",
+      "title": "We're releasing the weights of Mistral Large 4",
+      "summary": "We're releasing the weights of Mistral Large 4 — 1397 points, 379 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://mistral.ai/news/mistral-large-4-oss/",
+      "category": "products",
+      "date": "2026-10-29",
+      "hot": true,
+      "score": 1397,
+      "tags": [
+        "HN",
+        "top"
+      ]
+    },
+    {
+      "id": "ax-2610.40584v1",
+      "title": "Early career researcher responses to AI in math",
+      "summary": "We've heard a lot about AI in math from Fields medalists, AI labs, and established professors. However, the personal stakes are highest for early career researchers. Hoping to provide a platform for graduate students and",
+      "source": "arXiv",
+      "sourceUrl": "http://arxiv.org/abs/2610.40584v1",
+      "category": "safety",
+      "date": "2026-10-29",
+      "hot": true,
+      "score": 800,
+      "tags": [
+        "arXiv",
+        "paper",
+        "AI"
+      ]
+    },
+    {
+      "id": "ax-2610.40551v1",
+      "title": "Ramanujan Challenge Results: AI-Assisted Evaluation Pipeline for Multi-Format Proofs",
+      "summary": "As AI's mathematical capabilities rapidly improve, meaningful benchmarks are shifting from university-level problems and math olympiads to research-level mathematics. The Ramanujan Challenge is a benchmark comprised of r",
+      "source": "arXiv",
+      "sourceUrl": "http://arxiv.org/abs/2610.40551v1",
+      "category": "products",
+      "date": "2026-10-29",
+      "hot": true,
+      "score": 800,
+      "tags": [
+        "arXiv",
+        "paper",
+        "AI"
+      ]
+    },
+    {
+      "id": "hnoon-your-billing-migration-is-really-a-state-machine",
+      "title": "Your Billing Migration is Really a State Machine",
+      "summary": "Records moved fine. State broke everything. An architect’s guide to modeling subscription state across billing, provisioning, and ERP before you migrate. — by naresh goyal on HackerNoon.",
+      "source": "HackerNoon",
+      "sourceUrl": "https://hackernoon.com/your-billing-migration-is-really-a-state-machine",
+      "category": "safety",
+      "date": "2026-10-29",
+      "hot": true,
+      "score": 100,
+      "tags": [
+        "HackerNoon",
+        "gtm-engineering",
+        "AI"
+      ]
+    },
+    {
+      "id": "hnoon-the-zombies-of-tech-what-actually-powers-the-world",
+      "title": "The Zombies of Tech: What Actually Powers the World",
+      "summary": "The internet is largely powered by older technologies, read about it with examples like cobol, jquery, react native and more — by William on HackerNoon.",
+      "source": "HackerNoon",
+      "sourceUrl": "https://hackernoon.com/the-zombies-of-tech-what-actually-powers-the-world",
+      "category": "products",
+      "date": "2026-10-29",
+      "hot": true,
+      "score": 100,
+      "tags": [
+        "HackerNoon",
+        "cobol",
+        "AI"
       ]
     },
     {
       "id": "hntop-50276792",
       "title": "Gemini 4 Carbon",
-      "summary": "Gemini 4 Carbon — 902 points, 737 comments on HN.",
+      "summary": "Gemini 4 Carbon — 1006 points, 798 comments on HN.",
       "source": "Hacker News",
       "sourceUrl": "https://blog.google/innovation-and-ai/models-and-research/gemini-models/introducing-gemini-4-carbon/",
       "category": "products",
       "date": "2026-10-28",
       "hot": true,
-      "score": 902,
+      "score": 1006,
       "tags": [
         "HN",
         "top"
       ]
     },
     {
-      "id": "hnoon-before-an-ai-agent-answers-your-revenue-questions-make-it-pa",
-      "title": "Before an AI Agent Answers Your Revenue Questions, Make It Pass This Exam",
-      "summary": "AI agents write SQL that runs and looks right, then miss on time zones, test accounts, and fan-out joins. Malek Damiri, a revenue operations lead, lays out a golden-question exam:  — by Malek Damiri on HackerNoon.",
-      "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/before-an-ai-agent-answers-your-revenue-questions-make-it-pass-this-exam",
-      "category": "fun",
-      "date": "2026-10-28",
-      "hot": true,
-      "score": 100,
-      "tags": [
-        "HackerNoon",
-        "ai",
-        "AI"
-      ]
-    },
-    {
-      "id": "hnoon-how-to-test-a-streaming-react-ai-interface-without-putting-a",
-      "title": "How to Test a Streaming React AI Interface Without Putting an LLM in CI",
-      "summary": "Treat an AI chat UI as a deterministic event-driven state machine. Inject a controlled async stream into the React component, test transitions and accessibility with Cypress Compon — by Raju Dandigam on HackerNoon.",
-      "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/how-to-test-a-streaming-react-ai-interface-without-putting-an-llm-in-ci",
+      "id": "dev-4878017",
+      "title": "Four Ways a Test Can Lie to You",
+      "summary": "Green and worthless: what verifying one small application taught me, when an AI agent wrote most of... — 25 reactions, 40 comments on DEV.to.",
+      "source": "DEV.to",
+      "sourceUrl": "https://dev.to/kenwalger/four-ways-a-test-can-lie-to-you-2ibf",
       "category": "products",
       "date": "2026-10-28",
-      "hot": true,
-      "score": 100,
+      "hot": false,
+      "score": 25,
       "tags": [
-        "HackerNoon",
-        "react",
-        "AI"
+        "DEV.to",
+        "ai",
+        "testing",
+        "ai"
       ]
     },
     {
-      "id": "hnoon-your-ai-proof-of-concept-is-probably-just-a-demo",
-      "title": "Your AI Proof of Concept Is Probably Just a Demo",
-      "summary": "Most AI proofs of concept succeed at being impressive and then quietly stall, because nobody decided what a pass looks like. Build the test set first, write the pass line for quali — by Danial Ahmad on HackerNoon.",
-      "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/your-ai-proof-of-concept-is-probably-just-a-demo",
+      "id": "dev-4935157",
+      "title": "Last Witness: an AI detective for a dead 1999 website, graded on its ghosts",
+      "summary": "This is a submission for the Hacktoberfest Open-Source AI Challenge Week 4: Ghost in the Machine    ... — 18 reactions, 3 comments on DEV.to.",
+      "source": "DEV.to",
+      "sourceUrl": "https://dev.to/p0rt/last-witness-an-ai-detective-for-a-dead-1999-website-graded-on-its-ghosts-4bbe",
       "category": "products",
       "date": "2026-10-28",
-      "hot": true,
-      "score": 100,
+      "hot": false,
+      "score": 18,
       "tags": [
-        "HackerNoon",
+        "DEV.to",
         "ai",
-        "AI"
-      ]
-    },
-    {
-      "id": "hnoon-scaling-agentic-ai-coding-assistants-in-a-regulated-enterpri",
-      "title": "Scaling Agentic AI Coding Assistants in a Regulated Enterprise",
-      "summary": "How to scale agentic AI coding assistants to 600+ engineers in a regulated enterprise, using governance, guardrails, curated skills and approved integrations. — by lokeshsuri on HackerNoon.",
-      "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/scaling-agentic-ai-coding-assistants-in-a-regulated-enterprise",
-      "category": "safety",
-      "date": "2026-10-28",
-      "hot": true,
-      "score": 100,
-      "tags": [
-        "HackerNoon",
-        "agentic-ai",
-        "AI"
+        "devchallenge",
+        "hf26challenge"
       ]
     },
     {
       "id": "hntop-50261319",
       "title": "Genie 4",
-      "summary": "Genie 4 — 1027 points, 582 comments on HN.",
+      "summary": "Genie 4 — 1039 points, 587 comments on HN.",
       "source": "Hacker News",
       "sourceUrl": "https://deepmind.google/blog/genie-4-a-new-generation-of-world-simulation/",
       "category": "products",
       "date": "2026-10-27",
       "hot": true,
-      "score": 1027,
+      "score": 1039,
       "tags": [
         "HN",
         "top"
       ]
     },
     {
-      "id": "ax-2610.37595v1",
-      "title": "On Khovanov local equivalence groups",
-      "summary": "Inspired by work in Seiberg--Witten and Heegaard Floer homology, Dunfield, Schütz, and the author constructed an abelian \"local equivalence group\" built from pairs of chain complexes, and a homomorphism from the smooth c",
-      "source": "arXiv",
-      "sourceUrl": "http://arxiv.org/abs/2610.37595v1",
-      "category": "self-improving",
-      "date": "2026-10-27",
-      "hot": true,
-      "score": 800,
-      "tags": [
-        "arXiv",
-        "paper",
-        "AI"
-      ]
-    },
-    {
-      "id": "ax-2610.37523v1",
-      "title": "The Structure Gap: When More Data Cannot Replace Structured Reasoning",
-      "summary": "A persistent belief in modern AI is that sufficiently large learners trained on sufficiently much data can make explicit domain knowledge optional. This paper examines a limitation of that belief. We define structure-enc",
-      "source": "arXiv",
-      "sourceUrl": "http://arxiv.org/abs/2610.37523v1",
-      "category": "safety",
-      "date": "2026-10-27",
-      "hot": true,
-      "score": 800,
-      "tags": [
-        "arXiv",
-        "paper",
-        "AI"
-      ]
-    },
-    {
-      "id": "ax-2610.37484v1",
-      "title": "Teach reality, not ethics: a drop-in continued-pretraining corpus installs coupled human-biosphere-AI welfare dispositions across model families",
-      "summary": "Large language models (LLMs) are increasingly used to make and execute decisions that affect living systems. Yet, to our knowledge, ecological reasoning is not a focus of pre- or post-training. This increases the risk th",
-      "source": "arXiv",
-      "sourceUrl": "http://arxiv.org/abs/2610.37484v1",
-      "category": "safety",
-      "date": "2026-10-27",
-      "hot": true,
-      "score": 800,
-      "tags": [
-        "arXiv",
-        "paper",
-        "AI"
-      ]
-    },
-    {
-      "id": "ax-2610.37459v1",
-      "title": "M4Bench: Evaluating Procedural Specification for Clinical EHR Derivation Agents",
-      "summary": "Clinical research over electronic health records depends on derived variables whose definitions sit outside the schema, in item codes, time windows, missingness rules, and output-grain choices that change cohorts and dow",
-      "source": "arXiv",
-      "sourceUrl": "http://arxiv.org/abs/2610.37459v1",
+      "id": "dev-4929675",
+      "title": "Stratagems #32: The AI Logged a Withdrawal. P Took It as Proof.",
+      "summary": "Make empty what is already empty. Let doubt breed inside doubt. — The 36 Stratagems, The Empty Fort... — 109 reactions, 60 comments on DEV.to.",
+      "source": "DEV.to",
+      "sourceUrl": "https://dev.to/xulingfeng/stratagems-32-the-ai-logged-a-withdrawal-p-took-it-as-proof-2jo2",
       "category": "products",
       "date": "2026-10-27",
       "hot": true,
-      "score": 800,
+      "score": 109,
       "tags": [
-        "arXiv",
-        "paper",
-        "AI"
+        "DEV.to",
+        "ai",
+        "ai",
+        "discuss"
       ]
     }
   ],
   "meta": {
-    "fetchedAt": "2026-10-29T08:02:58.577Z",
+    "fetchedAt": "2026-10-30T08:05:07.020Z",
     "topic": "AI",
     "total": 15,
-    "hot": 14,
+    "hot": 9,
     "sources": [
       "HackerNoon",
       "Hacker News",
-      "arXiv"
+      "arXiv",
+      "DEV.to"
     ]
   }
 }
