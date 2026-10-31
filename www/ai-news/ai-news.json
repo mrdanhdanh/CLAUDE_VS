@@ -1,12 +1,12 @@
 {
-  "generatedAt": "2026-10-30T08:05:07.019Z",
+  "generatedAt": "2026-10-31T08:00:14.988Z",
   "generatedBy": "YUNIE × Last30Days",
   "version": 2,
   "description": "Tin AI mới nhất — tổng hợp từ Last30Days (HN, GitHub, DEV.to, Reddit, arXiv, HackerNoon) trong 30 ngày qua. Chủ đề: AI. Tự động cập nhật bởi YUNIE.",
   "last30days": {
     "enabled": true,
     "topic": "AI",
-    "since": "2026-09-30",
+    "since": "2026-10-01",
     "days": 30,
     "sources": [
       "Hacker News (Algolia, free)",
@@ -55,99 +55,178 @@
   ],
   "articles": [
     {
-      "id": "hnoon-ai-assisted-reconciliation-of-enterprise-data-detecting-and-",
-      "title": "AI-Assisted Reconciliation of Enterprise Data: Detecting and Explaining Cross-Platform Discrepancies",
-      "summary": " — by ajaysikharam on HackerNoon.",
+      "id": "hn-50312922",
+      "title": "OpenAI raises less than half of $30B target",
+      "summary": "OpenAI raises less than half of $30B target — 145 points, 126 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://www.wsj.com/tech/ai/openai-raises-less-than-half-of-30-billion-target-in-latest-round-91aecdc5",
+      "category": "big-tech",
+      "date": "2026-10-31",
+      "hot": true,
+      "score": 145,
+      "tags": [
+        "HN",
+        "AI",
+        "story",
+        "author_timr"
+      ]
+    },
+    {
+      "id": "hnoon-open-sourcing-all-day-ai-the-playbook-for-a-12000-attendee-c",
+      "title": "Open-Sourcing All Day AI: The Playbook for a 12,000+ Attendee Conference",
+      "summary": " — by Brian Turcotte on HackerNoon.",
       "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/ai-assisted-reconciliation-of-enterprise-data-detecting-and-explaining-cross-platform-discrepancies",
+      "sourceUrl": "https://hackernoon.com/open-sourcing-all-day-ai-the-playbook-for-a-12000-attendee-conference",
+      "category": "products",
+      "date": "2026-10-31",
+      "hot": true,
+      "score": 100,
+      "tags": [
+        "HackerNoon",
+        "ai",
+        "AI"
+      ]
+    },
+    {
+      "id": "hn-50313127",
+      "title": "Visit Iceland Will Send a Real Knitter to Your Dumb Meeting So You Can Skip It",
+      "summary": "Visit Iceland Will Send a Real Knitter to Your Dumb Meeting So You Can Skip It — 12 points, 1 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://matadornetwork.com/read/iceland-ai-notetaker-knitting/",
+      "category": "safety",
+      "date": "2026-10-31",
+      "hot": false,
+      "score": 12,
+      "tags": [
+        "HN",
+        "AI",
+        "story",
+        "author_rdmuser"
+      ]
+    },
+    {
+      "id": "hn-50313473",
+      "title": "The Beleaguered Chip Sellers Getting Their Revenge on Apple",
+      "summary": "The Beleaguered Chip Sellers Getting Their Revenge on Apple — 4 points, 0 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://www.wsj.com/tech/apple-iphone-memory-chips-ai-c0084cc9",
+      "category": "safety",
+      "date": "2026-10-31",
+      "hot": false,
+      "score": 4,
+      "tags": [
+        "HN",
+        "AI",
+        "story",
+        "author_shubhamjain"
+      ]
+    },
+    {
+      "id": "hn-50313296",
+      "title": "The biggest names in AI are backing a new way to opt out of scraping",
+      "summary": "The biggest names in AI are backing a new way to opt out of scraping — 4 points, 0 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://www.theverge.com/tech/1023763/openai-google-microsoft-ai-scraping-standard-opt-out",
+      "category": "products",
+      "date": "2026-10-31",
+      "hot": false,
+      "score": 4,
+      "tags": [
+        "HN",
+        "AI",
+        "story",
+        "author_noorsimar"
+      ]
+    },
+    {
+      "id": "hntop-50300683",
+      "title": "Backdoor in Claude Code for VS Code extension on the Cursor Marketplace",
+      "summary": "<a href=\"https:&#x2F;&#x2F;cursor.com&#x2F;blog&#x2F;claude-code-extension-security-notice\" rel=\"nofollow\">https:&#x2F;&#x2F;cursor.com&#x2F;blog&#x2F;claude-code-extension-security-notic...</a> — 875 points, 514 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://phorion.io/blog/offical-claude-code-vsx-compromise/",
+      "category": "products",
+      "date": "2026-10-30",
+      "hot": true,
+      "score": 875,
+      "tags": [
+        "HN",
+        "top"
+      ]
+    },
+    {
+      "id": "hnoon-395-blog-posts-to-learn-about-learning",
+      "title": "395 Blog Posts To Learn About Learning",
+      "summary": "Learn everything you need to know about Learning via these 395 free HackerNoon blog posts. — by Learn Repo on HackerNoon.",
+      "source": "HackerNoon",
+      "sourceUrl": "https://hackernoon.com/395-blog-posts-to-learn-about-learning",
       "category": "products",
       "date": "2026-10-30",
       "hot": true,
       "score": 100,
       "tags": [
         "HackerNoon",
-        "data-engineering",
+        "learning",
         "AI"
       ]
     },
     {
-      "id": "hn-50299182",
-      "title": "CVE-2026-98432: Linux TCP Use-After-Free Risk and Patch Validation",
-      "summary": "CVE-2026-98432: Linux TCP Use-After-Free Risk and Patch Validation — 52 points, 34 comments on HN.",
-      "source": "Hacker News",
-      "sourceUrl": "https://www.penligent.ai/hackinglabs/cve-2026-98432/",
-      "category": "safety",
-      "date": "2026-10-30",
-      "hot": false,
-      "score": 52,
-      "tags": [
-        "HN",
-        "AI",
-        "story",
-        "author_cobychapple"
-      ]
-    },
-    {
-      "id": "hn-50299285",
-      "title": "Reddit to Transition to Logged in Only",
-      "summary": "Reddit to Transition to Logged in Only — 9 points, 4 comments on HN.",
-      "source": "Hacker News",
-      "sourceUrl": "https://www.axios.com/2026/10/29/reddit-logged-in-ai-search-incognito",
+      "id": "hnoon-the-night-he-came-home",
+      "title": "The Night He Came Home",
+      "summary": "Why evil needs no motive. — by Renan Botasse on HackerNoon.",
+      "source": "HackerNoon",
+      "sourceUrl": "https://hackernoon.com/the-night-he-came-home",
       "category": "products",
       "date": "2026-10-30",
-      "hot": false,
-      "score": 9,
+      "hot": true,
+      "score": 100,
       "tags": [
-        "HN",
-        "AI",
-        "story",
-        "author_ksajadi"
+        "HackerNoon",
+        "halloween",
+        "AI"
       ]
     },
     {
-      "id": "hn-50299521",
-      "title": "I Built the Most AI-Pilled Company in the World",
-      "summary": "I Built the Most AI-Pilled Company in the World — 6 points, 2 comments on HN.",
-      "source": "Hacker News",
-      "sourceUrl": "https://twitter.com/jsnnsa/status/2115623382721126826",
+      "id": "hnoon-proof-of-usefulness-hackathon-final-winners-announced",
+      "title": "Proof of Usefulness Hackathon Final Winners Announced 🎉",
+      "summary": "The Proof of Usefulness Hackathon announces its final winners, awarding $118,000 in cash prizes and software credits across five categories. — by Proof of Usefulness on HackerNoon.",
+      "source": "HackerNoon",
+      "sourceUrl": "https://hackernoon.com/proof-of-usefulness-hackathon-final-winners-announced",
       "category": "products",
       "date": "2026-10-30",
-      "hot": false,
-      "score": 6,
+      "hot": true,
+      "score": 100,
       "tags": [
-        "HN",
-        "AI",
-        "story",
-        "author_duck"
+        "HackerNoon",
+        "proof-of-usefulness-hackathon",
+        "AI"
       ]
     },
     {
-      "id": "hn-50300277",
-      "title": "Anthropic now lets Claude users jump out of plane without parachute",
-      "summary": "Anthropic now lets Claude users jump out of plane without parachute — 5 points, 0 comments on HN.",
-      "source": "Hacker News",
-      "sourceUrl": "https://www.theregister.com/ai-and-ml/2026/10/27/anthropic-now-lets-claude-users-jump-out-of-plane-without-parachute/5305807",
-      "category": "big-tech",
+      "id": "hnoon-500-blog-posts-to-learn-about-learn",
+      "title": "500 Blog Posts To Learn About Learn",
+      "summary": "Learn everything you need to know about Learn via these 500 free HackerNoon blog posts. — by Learn Repo on HackerNoon.",
+      "source": "HackerNoon",
+      "sourceUrl": "https://hackernoon.com/500-blog-posts-to-learn-about-learn",
+      "category": "products",
       "date": "2026-10-30",
-      "hot": false,
-      "score": 5,
+      "hot": true,
+      "score": 100,
       "tags": [
-        "HN",
-        "AI",
-        "story",
-        "author_GloVin"
+        "HackerNoon",
+        "learn",
+        "AI"
       ]
     },
     {
       "id": "hntop-50289418",
       "title": "We're releasing the weights of Mistral Large 4",
-      "summary": "We're releasing the weights of Mistral Large 4 — 1397 points, 379 comments on HN.",
+      "summary": "We're releasing the weights of Mistral Large 4 — 1692 points, 436 comments on HN.",
       "source": "Hacker News",
       "sourceUrl": "https://mistral.ai/news/mistral-large-4-oss/",
       "category": "products",
       "date": "2026-10-29",
       "hot": true,
-      "score": 1397,
+      "score": 1692,
       "tags": [
         "HN",
         "top"
@@ -186,127 +265,48 @@
       ]
     },
     {
-      "id": "hnoon-your-billing-migration-is-really-a-state-machine",
-      "title": "Your Billing Migration is Really a State Machine",
-      "summary": "Records moved fine. State broke everything. An architect’s guide to modeling subscription state across billing, provisioning, and ERP before you migrate. — by naresh goyal on HackerNoon.",
-      "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/your-billing-migration-is-really-a-state-machine",
-      "category": "safety",
-      "date": "2026-10-29",
-      "hot": true,
-      "score": 100,
-      "tags": [
-        "HackerNoon",
-        "gtm-engineering",
-        "AI"
-      ]
-    },
-    {
-      "id": "hnoon-the-zombies-of-tech-what-actually-powers-the-world",
-      "title": "The Zombies of Tech: What Actually Powers the World",
-      "summary": "The internet is largely powered by older technologies, read about it with examples like cobol, jquery, react native and more — by William on HackerNoon.",
-      "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/the-zombies-of-tech-what-actually-powers-the-world",
-      "category": "products",
-      "date": "2026-10-29",
-      "hot": true,
-      "score": 100,
-      "tags": [
-        "HackerNoon",
-        "cobol",
-        "AI"
-      ]
-    },
-    {
-      "id": "hntop-50276792",
-      "title": "Gemini 4 Carbon",
-      "summary": "Gemini 4 Carbon — 1006 points, 798 comments on HN.",
-      "source": "Hacker News",
-      "sourceUrl": "https://blog.google/innovation-and-ai/models-and-research/gemini-models/introducing-gemini-4-carbon/",
-      "category": "products",
-      "date": "2026-10-28",
-      "hot": true,
-      "score": 1006,
-      "tags": [
-        "HN",
-        "top"
-      ]
-    },
-    {
-      "id": "dev-4878017",
-      "title": "Four Ways a Test Can Lie to You",
-      "summary": "Green and worthless: what verifying one small application taught me, when an AI agent wrote most of... — 25 reactions, 40 comments on DEV.to.",
+      "id": "dev-4929852",
+      "title": "Ghost in the Shell: Can a Log File Hijack an AI?",
+      "summary": "This week's Hacktoberfest theme is Ghost in the Machine. Unfortunately, I don't have enough time to... — 70 reactions, 63 comments on DEV.to.",
       "source": "DEV.to",
-      "sourceUrl": "https://dev.to/kenwalger/four-ways-a-test-can-lie-to-you-2ibf",
+      "sourceUrl": "https://dev.to/gramli/ghost-in-the-shell-can-a-log-file-hijack-an-ai-3gk",
       "category": "products",
-      "date": "2026-10-28",
-      "hot": false,
-      "score": 25,
+      "date": "2026-10-29",
+      "hot": true,
+      "score": 70,
       "tags": [
         "DEV.to",
         "ai",
-        "testing",
-        "ai"
+        "ai",
+        "security"
       ]
     },
     {
-      "id": "dev-4935157",
-      "title": "Last Witness: an AI detective for a dead 1999 website, graded on its ghosts",
-      "summary": "This is a submission for the Hacktoberfest Open-Source AI Challenge Week 4: Ghost in the Machine    ... — 18 reactions, 3 comments on DEV.to.",
+      "id": "dev-4938623",
+      "title": "I Almost Paid ₹1,499 for Prime Video I Never Use. An Open-Source AI Model Caught It.",
+      "summary": "This is a submission for the Hacktoberfest Open-Source AI Challenge Week 4: Ghost in the Machine    ... — 52 reactions, 28 comments on DEV.to.",
       "source": "DEV.to",
-      "sourceUrl": "https://dev.to/p0rt/last-witness-an-ai-detective-for-a-dead-1999-website-graded-on-its-ghosts-4bbe",
+      "sourceUrl": "https://dev.to/sarvar_04/i-almost-paid-1499-for-prime-video-i-never-use-an-open-source-ai-model-caught-it-1egm",
       "category": "products",
-      "date": "2026-10-28",
-      "hot": false,
-      "score": 18,
+      "date": "2026-10-29",
+      "hot": true,
+      "score": 52,
       "tags": [
         "DEV.to",
         "ai",
         "devchallenge",
         "hf26challenge"
       ]
-    },
-    {
-      "id": "hntop-50261319",
-      "title": "Genie 4",
-      "summary": "Genie 4 — 1039 points, 587 comments on HN.",
-      "source": "Hacker News",
-      "sourceUrl": "https://deepmind.google/blog/genie-4-a-new-generation-of-world-simulation/",
-      "category": "products",
-      "date": "2026-10-27",
-      "hot": true,
-      "score": 1039,
-      "tags": [
-        "HN",
-        "top"
-      ]
-    },
-    {
-      "id": "dev-4929675",
-      "title": "Stratagems #32: The AI Logged a Withdrawal. P Took It as Proof.",
-      "summary": "Make empty what is already empty. Let doubt breed inside doubt. — The 36 Stratagems, The Empty Fort... — 109 reactions, 60 comments on DEV.to.",
-      "source": "DEV.to",
-      "sourceUrl": "https://dev.to/xulingfeng/stratagems-32-the-ai-logged-a-withdrawal-p-took-it-as-proof-2jo2",
-      "category": "products",
-      "date": "2026-10-27",
-      "hot": true,
-      "score": 109,
-      "tags": [
-        "DEV.to",
-        "ai",
-        "ai",
-        "discuss"
-      ]
     }
   ],
   "meta": {
-    "fetchedAt": "2026-10-30T08:05:07.020Z",
+    "fetchedAt": "2026-10-31T08:00:14.988Z",
     "topic": "AI",
     "total": 15,
-    "hot": 9,
+    "hot": 12,
     "sources": [
-      "HackerNoon",
       "Hacker News",
+      "HackerNoon",
       "arXiv",
       "DEV.to"
     ]
