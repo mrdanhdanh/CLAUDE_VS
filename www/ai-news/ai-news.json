@@ -1,12 +1,12 @@
 {
-  "generatedAt": "2026-10-31T08:00:14.988Z",
+  "generatedAt": "2026-11-01T08:43:23.482Z",
   "generatedBy": "YUNIE × Last30Days",
   "version": 2,
   "description": "Tin AI mới nhất — tổng hợp từ Last30Days (HN, GitHub, DEV.to, Reddit, arXiv, HackerNoon) trong 30 ngày qua. Chủ đề: AI. Tự động cập nhật bởi YUNIE.",
   "last30days": {
     "enabled": true,
     "topic": "AI",
-    "since": "2026-10-01",
+    "since": "2026-10-02",
     "days": 30,
     "sources": [
       "Hacker News (Algolia, free)",
@@ -55,178 +55,212 @@
   ],
   "articles": [
     {
-      "id": "hn-50312922",
-      "title": "OpenAI raises less than half of $30B target",
-      "summary": "OpenAI raises less than half of $30B target — 145 points, 126 comments on HN.",
+      "id": "hn-50322022",
+      "title": "Leaking Secrets from Air-Gap Computers by Spelling Radio Signals from RAM (2024)",
+      "summary": "Leaking Secrets from Air-Gap Computers by Spelling Radio Signals from RAM (2024) — 76 points, 33 comments on HN.",
       "source": "Hacker News",
-      "sourceUrl": "https://www.wsj.com/tech/ai/openai-raises-less-than-half-of-30-billion-target-in-latest-round-91aecdc5",
-      "category": "big-tech",
-      "date": "2026-10-31",
-      "hot": true,
-      "score": 145,
+      "sourceUrl": "https://arxiv.org/abs/2409.02292",
+      "category": "products",
+      "date": "2026-11-01",
+      "hot": false,
+      "score": 76,
       "tags": [
         "HN",
         "AI",
         "story",
-        "author_timr"
+        "author_hapax_legomena"
       ]
     },
     {
-      "id": "hnoon-open-sourcing-all-day-ai-the-playbook-for-a-12000-attendee-c",
-      "title": "Open-Sourcing All Day AI: The Playbook for a 12,000+ Attendee Conference",
-      "summary": " — by Brian Turcotte on HackerNoon.",
+      "id": "hn-50323088",
+      "title": "The AI cost of JavaScript frameworks",
+      "summary": "The AI cost of JavaScript frameworks — 30 points, 11 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://nolanlawson.com/2026/10/28/the-ai-cost-of-javascript-frameworks/",
+      "category": "safety",
+      "date": "2026-11-01",
+      "hot": false,
+      "score": 30,
+      "tags": [
+        "HN",
+        "AI",
+        "story",
+        "author_luu"
+      ]
+    },
+    {
+      "id": "hn-50322251",
+      "title": "AI Made Me Homeless",
+      "summary": "AI Made Me Homeless — 13 points, 10 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://medium.com/effortless-programming/ai-made-me-homeless-a7266d716e59",
+      "category": "products",
+      "date": "2026-11-01",
+      "hot": false,
+      "score": 13,
+      "tags": [
+        "HN",
+        "AI",
+        "story",
+        "author_tchalla"
+      ]
+    },
+    {
+      "id": "hn-50322458",
+      "title": "Chinese markets lose trillions as race for AI supremacy with US takes its toll",
+      "summary": "Chinese markets lose trillions as race for AI supremacy with US takes its toll — 10 points, 5 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://www.theguardian.com/world/2026/oct/27/chinese-markets-lose-trillions-ai-race-beijing",
+      "category": "products",
+      "date": "2026-11-01",
+      "hot": false,
+      "score": 10,
+      "tags": [
+        "HN",
+        "AI",
+        "story",
+        "author_PeterHolzwarth"
+      ]
+    },
+    {
+      "id": "hn-50322165",
+      "title": "James Mickens' Talk: A Sober Analysis of AI Impact (LABScon '26)",
+      "summary": "James Mickens' Talk: A Sober Analysis of AI Impact (LABScon '26) — 5 points, 4 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://www.youtube.com/watch?v=usZLo_9Jz54",
+      "category": "products",
+      "date": "2026-11-01",
+      "hot": false,
+      "score": 5,
+      "tags": [
+        "HN",
+        "AI",
+        "story",
+        "author_corroclaro"
+      ]
+    },
+    {
+      "id": "hnoon-93-blog-posts-to-learn-about-live-streaming",
+      "title": "93 Blog Posts To Learn About Live Streaming",
+      "summary": "Learn everything you need to know about Live Streaming via these 93 free HackerNoon blog posts. — by Learn Repo on HackerNoon.",
       "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/open-sourcing-all-day-ai-the-playbook-for-a-12000-attendee-conference",
+      "sourceUrl": "https://hackernoon.com/93-blog-posts-to-learn-about-live-streaming",
       "category": "products",
       "date": "2026-10-31",
       "hot": true,
       "score": 100,
       "tags": [
         "HackerNoon",
-        "ai",
+        "live-streaming",
         "AI"
       ]
     },
     {
-      "id": "hn-50313127",
-      "title": "Visit Iceland Will Send a Real Knitter to Your Dumb Meeting So You Can Skip It",
-      "summary": "Visit Iceland Will Send a Real Knitter to Your Dumb Meeting So You Can Skip It — 12 points, 1 comments on HN.",
-      "source": "Hacker News",
-      "sourceUrl": "https://matadornetwork.com/read/iceland-ai-notetaker-knitting/",
+      "id": "hnoon-binance-lost--63-billion-to-its-own-signing-machine",
+      "title": "Binance Lost $6.3 Billion to Its Own Signing Machine",
+      "summary": "Binance lost $6.3B with no private key leaked. How a DevOps laptop and EIP-7702 turned the exchange's own signer against it. — by Sidra Zafar on HackerNoon.",
+      "source": "HackerNoon",
+      "sourceUrl": "https://hackernoon.com/binance-lost-$63-billion-to-its-own-signing-machine",
       "category": "safety",
       "date": "2026-10-31",
-      "hot": false,
-      "score": 12,
+      "hot": true,
+      "score": 100,
       "tags": [
-        "HN",
-        "AI",
-        "story",
-        "author_rdmuser"
+        "HackerNoon",
+        "cybersecurity",
+        "AI"
       ]
     },
     {
-      "id": "hn-50313473",
-      "title": "The Beleaguered Chip Sellers Getting Their Revenge on Apple",
-      "summary": "The Beleaguered Chip Sellers Getting Their Revenge on Apple — 4 points, 0 comments on HN.",
-      "source": "Hacker News",
-      "sourceUrl": "https://www.wsj.com/tech/apple-iphone-memory-chips-ai-c0084cc9",
-      "category": "safety",
-      "date": "2026-10-31",
-      "hot": false,
-      "score": 4,
-      "tags": [
-        "HN",
-        "AI",
-        "story",
-        "author_shubhamjain"
-      ]
-    },
-    {
-      "id": "hn-50313296",
-      "title": "The biggest names in AI are backing a new way to opt out of scraping",
-      "summary": "The biggest names in AI are backing a new way to opt out of scraping — 4 points, 0 comments on HN.",
-      "source": "Hacker News",
-      "sourceUrl": "https://www.theverge.com/tech/1023763/openai-google-microsoft-ai-scraping-standard-opt-out",
+      "id": "hnoon-the-ai-bubble-scorecard",
+      "title": "The AI-Bubble Scorecard",
+      "summary": "The AI bubble debate intensified this week, with 8 articles concluding it's a bubble and 4 rejecting the label. — by TheLLMSeeker on HackerNoon.",
+      "source": "HackerNoon",
+      "sourceUrl": "https://hackernoon.com/the-ai-bubble-scorecard",
       "category": "products",
       "date": "2026-10-31",
-      "hot": false,
-      "score": 4,
+      "hot": true,
+      "score": 100,
       "tags": [
-        "HN",
-        "AI",
-        "story",
-        "author_noorsimar"
+        "HackerNoon",
+        "ai-bubble",
+        "AI"
+      ]
+    },
+    {
+      "id": "hnoon-why-your-hex-converter-lies-to-you-twos-complement-the-53-bi",
+      "title": "Why Your Hex Converter Lies to You: Two's Complement, the 53-Bit Wall, and Radix Magic",
+      "summary": "An in-depth exploration of two's complement, sign extension traps, IEEE-754 precision limits in JavaScript, and why Radix 36 is the superior choice for URL-safe — by Elias Miller on HackerNoon.",
+      "source": "HackerNoon",
+      "sourceUrl": "https://hackernoon.com/why-your-hex-converter-lies-to-you-twos-complement-the-53-bit-wall-and-radix-magic",
+      "category": "safety",
+      "date": "2026-10-31",
+      "hot": true,
+      "score": 100,
+      "tags": [
+        "HackerNoon",
+        "web-development",
+        "AI"
+      ]
+    },
+    {
+      "id": "hnoon-i-gave-my-app-away-for-free-and-it-almost-killed-it",
+      "title": "I Gave My App Away for Free — And It Almost Killed It",
+      "summary": "Generosity is a marketing strategy. Unit economics is a survival strategy. You need both — but in this order: survive first, then be generous on purpose. — by Epic Devs on HackerNoon.",
+      "source": "HackerNoon",
+      "sourceUrl": "https://hackernoon.com/i-gave-my-app-away-for-free-and-it-almost-killed-it",
+      "category": "products",
+      "date": "2026-10-31",
+      "hot": true,
+      "score": 100,
+      "tags": [
+        "HackerNoon",
+        "entrepreneurship",
+        "AI"
       ]
     },
     {
       "id": "hntop-50300683",
       "title": "Backdoor in Claude Code for VS Code extension on the Cursor Marketplace",
-      "summary": "<a href=\"https:&#x2F;&#x2F;cursor.com&#x2F;blog&#x2F;claude-code-extension-security-notice\" rel=\"nofollow\">https:&#x2F;&#x2F;cursor.com&#x2F;blog&#x2F;claude-code-extension-security-notic...</a> — 875 points, 514 comments on HN.",
+      "summary": "<a href=\"https:&#x2F;&#x2F;cursor.com&#x2F;blog&#x2F;claude-code-extension-security-notice\" rel=\"nofollow\">https:&#x2F;&#x2F;cursor.com&#x2F;blog&#x2F;claude-code-extension-security-notic...</a> — 976 points, 547 comments on HN.",
       "source": "Hacker News",
       "sourceUrl": "https://phorion.io/blog/offical-claude-code-vsx-compromise/",
       "category": "products",
       "date": "2026-10-30",
       "hot": true,
-      "score": 875,
+      "score": 976,
       "tags": [
         "HN",
         "top"
       ]
     },
     {
-      "id": "hnoon-395-blog-posts-to-learn-about-learning",
-      "title": "395 Blog Posts To Learn About Learning",
-      "summary": "Learn everything you need to know about Learning via these 395 free HackerNoon blog posts. — by Learn Repo on HackerNoon.",
-      "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/395-blog-posts-to-learn-about-learning",
+      "id": "dev-4918252",
+      "title": "My open source project is brand new and already has contributors. Here's what I did.",
+      "summary": "In the spirit of Hacktoberfest, with it being the last day of October, I wanted to share my story... — 70 reactions, 18 comments on DEV.to.",
+      "source": "DEV.to",
+      "sourceUrl": "https://dev.to/nathan_tarbert/my-open-source-project-is-brand-new-and-already-has-contributors-heres-what-i-did-3fb4",
       "category": "products",
       "date": "2026-10-30",
       "hot": true,
-      "score": 100,
+      "score": 70,
       "tags": [
-        "HackerNoon",
-        "learning",
-        "AI"
-      ]
-    },
-    {
-      "id": "hnoon-the-night-he-came-home",
-      "title": "The Night He Came Home",
-      "summary": "Why evil needs no motive. — by Renan Botasse on HackerNoon.",
-      "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/the-night-he-came-home",
-      "category": "products",
-      "date": "2026-10-30",
-      "hot": true,
-      "score": 100,
-      "tags": [
-        "HackerNoon",
-        "halloween",
-        "AI"
-      ]
-    },
-    {
-      "id": "hnoon-proof-of-usefulness-hackathon-final-winners-announced",
-      "title": "Proof of Usefulness Hackathon Final Winners Announced 🎉",
-      "summary": "The Proof of Usefulness Hackathon announces its final winners, awarding $118,000 in cash prizes and software credits across five categories. — by Proof of Usefulness on HackerNoon.",
-      "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/proof-of-usefulness-hackathon-final-winners-announced",
-      "category": "products",
-      "date": "2026-10-30",
-      "hot": true,
-      "score": 100,
-      "tags": [
-        "HackerNoon",
-        "proof-of-usefulness-hackathon",
-        "AI"
-      ]
-    },
-    {
-      "id": "hnoon-500-blog-posts-to-learn-about-learn",
-      "title": "500 Blog Posts To Learn About Learn",
-      "summary": "Learn everything you need to know about Learn via these 500 free HackerNoon blog posts. — by Learn Repo on HackerNoon.",
-      "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/500-blog-posts-to-learn-about-learn",
-      "category": "products",
-      "date": "2026-10-30",
-      "hot": true,
-      "score": 100,
-      "tags": [
-        "HackerNoon",
-        "learn",
-        "AI"
+        "DEV.to",
+        "ai",
+        "opensource",
+        "github"
       ]
     },
     {
       "id": "hntop-50289418",
       "title": "We're releasing the weights of Mistral Large 4",
-      "summary": "We're releasing the weights of Mistral Large 4 — 1692 points, 436 comments on HN.",
+      "summary": "We're releasing the weights of Mistral Large 4 — 1708 points, 438 comments on HN.",
       "source": "Hacker News",
       "sourceUrl": "https://mistral.ai/news/mistral-large-4-oss/",
       "category": "products",
       "date": "2026-10-29",
       "hot": true,
-      "score": 1692,
+      "score": 1708,
       "tags": [
         "HN",
         "top"
@@ -263,52 +297,18 @@
         "paper",
         "AI"
       ]
-    },
-    {
-      "id": "dev-4929852",
-      "title": "Ghost in the Shell: Can a Log File Hijack an AI?",
-      "summary": "This week's Hacktoberfest theme is Ghost in the Machine. Unfortunately, I don't have enough time to... — 70 reactions, 63 comments on DEV.to.",
-      "source": "DEV.to",
-      "sourceUrl": "https://dev.to/gramli/ghost-in-the-shell-can-a-log-file-hijack-an-ai-3gk",
-      "category": "products",
-      "date": "2026-10-29",
-      "hot": true,
-      "score": 70,
-      "tags": [
-        "DEV.to",
-        "ai",
-        "ai",
-        "security"
-      ]
-    },
-    {
-      "id": "dev-4938623",
-      "title": "I Almost Paid ₹1,499 for Prime Video I Never Use. An Open-Source AI Model Caught It.",
-      "summary": "This is a submission for the Hacktoberfest Open-Source AI Challenge Week 4: Ghost in the Machine    ... — 52 reactions, 28 comments on DEV.to.",
-      "source": "DEV.to",
-      "sourceUrl": "https://dev.to/sarvar_04/i-almost-paid-1499-for-prime-video-i-never-use-an-open-source-ai-model-caught-it-1egm",
-      "category": "products",
-      "date": "2026-10-29",
-      "hot": true,
-      "score": 52,
-      "tags": [
-        "DEV.to",
-        "ai",
-        "devchallenge",
-        "hf26challenge"
-      ]
     }
   ],
   "meta": {
-    "fetchedAt": "2026-10-31T08:00:14.988Z",
+    "fetchedAt": "2026-11-01T08:43:23.482Z",
     "topic": "AI",
     "total": 15,
-    "hot": 12,
+    "hot": 10,
     "sources": [
       "Hacker News",
       "HackerNoon",
-      "arXiv",
-      "DEV.to"
+      "DEV.to",
+      "arXiv"
     ]
   }
 }
