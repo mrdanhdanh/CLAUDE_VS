@@ -1,12 +1,12 @@
 {
-  "generatedAt": "2026-11-01T08:43:23.482Z",
+  "generatedAt": "2026-11-02T08:54:11.558Z",
   "generatedBy": "YUNIE × Last30Days",
   "version": 2,
   "description": "Tin AI mới nhất — tổng hợp từ Last30Days (HN, GitHub, DEV.to, Reddit, arXiv, HackerNoon) trong 30 ngày qua. Chủ đề: AI. Tự động cập nhật bởi YUNIE.",
   "last30days": {
     "enabled": true,
     "topic": "AI",
-    "since": "2026-10-02",
+    "since": "2026-10-03",
     "days": 30,
     "sources": [
       "Hacker News (Algolia, free)",
@@ -55,225 +55,226 @@
   ],
   "articles": [
     {
-      "id": "hn-50322022",
-      "title": "Leaking Secrets from Air-Gap Computers by Spelling Radio Signals from RAM (2024)",
-      "summary": "Leaking Secrets from Air-Gap Computers by Spelling Radio Signals from RAM (2024) — 76 points, 33 comments on HN.",
+      "id": "hn-50333339",
+      "title": "Show HN: Wikihack – HackerTube, but for Wikipedia articles mentioned on HN",
+      "summary": "After seeing Karpathy&#x27;s Hackertube and Hackerbooks, I just had to make Wikihack.<p>I scraped all mentions of wikipedia on hackernews and ranked them, and turn them into a scrollable feed to make it a bit more easy t — 119 points, 28 comments on HN.",
       "source": "Hacker News",
-      "sourceUrl": "https://arxiv.org/abs/2409.02292",
-      "category": "products",
-      "date": "2026-11-01",
-      "hot": false,
-      "score": 76,
-      "tags": [
-        "HN",
-        "AI",
-        "story",
-        "author_hapax_legomena"
-      ]
-    },
-    {
-      "id": "hn-50323088",
-      "title": "The AI cost of JavaScript frameworks",
-      "summary": "The AI cost of JavaScript frameworks — 30 points, 11 comments on HN.",
-      "source": "Hacker News",
-      "sourceUrl": "https://nolanlawson.com/2026/10/28/the-ai-cost-of-javascript-frameworks/",
+      "sourceUrl": "https://wikihack.netlify.app",
       "category": "safety",
-      "date": "2026-11-01",
-      "hot": false,
-      "score": 30,
+      "date": "2026-11-02",
+      "hot": true,
+      "score": 119,
       "tags": [
         "HN",
         "AI",
         "story",
-        "author_luu"
+        "author_aizk"
       ]
     },
     {
-      "id": "hn-50322251",
-      "title": "AI Made Me Homeless",
-      "summary": "AI Made Me Homeless — 13 points, 10 comments on HN.",
+      "id": "hn-50334038",
+      "title": "China's First Frontier AI Export Controls: Mofcom Announcement No. 48",
+      "summary": "China's First Frontier AI Export Controls: Mofcom Announcement No. 48 — 15 points, 10 comments on HN.",
       "source": "Hacker News",
-      "sourceUrl": "https://medium.com/effortless-programming/ai-made-me-homeless-a7266d716e59",
+      "sourceUrl": "https://labs.cloudsecurityalliance.org/research/csa-research-note-china-ai-export-controls-announcement-48-2/",
       "category": "products",
-      "date": "2026-11-01",
+      "date": "2026-11-02",
       "hot": false,
-      "score": 13,
+      "score": 15,
       "tags": [
         "HN",
         "AI",
         "story",
-        "author_tchalla"
+        "author_jonnybgood"
       ]
     },
     {
-      "id": "hn-50322458",
-      "title": "Chinese markets lose trillions as race for AI supremacy with US takes its toll",
-      "summary": "Chinese markets lose trillions as race for AI supremacy with US takes its toll — 10 points, 5 comments on HN.",
+      "id": "hn-50333262",
+      "title": "Asking my AI teacher how to spell seventeen",
+      "summary": "Asking my AI teacher how to spell seventeen — 12 points, 4 comments on HN.",
       "source": "Hacker News",
-      "sourceUrl": "https://www.theguardian.com/world/2026/oct/27/chinese-markets-lose-trillions-ai-race-beijing",
+      "sourceUrl": "https://twitter.com/huskirl/status/2116941001335947635",
       "category": "products",
-      "date": "2026-11-01",
+      "date": "2026-11-02",
       "hot": false,
-      "score": 10,
+      "score": 12,
       "tags": [
         "HN",
         "AI",
         "story",
-        "author_PeterHolzwarth"
+        "author_xvxvx"
       ]
     },
     {
-      "id": "hn-50322165",
-      "title": "James Mickens' Talk: A Sober Analysis of AI Impact (LABScon '26)",
-      "summary": "James Mickens' Talk: A Sober Analysis of AI Impact (LABScon '26) — 5 points, 4 comments on HN.",
+      "id": "hn-50333699",
+      "title": "The Smartest People in AI Believe This Is the Most Important Chart",
+      "summary": "The Smartest People in AI Believe This Is the Most Important Chart — 6 points, 1 comments on HN.",
       "source": "Hacker News",
-      "sourceUrl": "https://www.youtube.com/watch?v=usZLo_9Jz54",
+      "sourceUrl": "https://www.wsj.com/tech/ai/ai-anthropic-rsi-recursive-self-improvement-bff4e815",
       "category": "products",
-      "date": "2026-11-01",
+      "date": "2026-11-02",
+      "hot": false,
+      "score": 6,
+      "tags": [
+        "HN",
+        "AI",
+        "story",
+        "author_fortran77"
+      ]
+    },
+    {
+      "id": "hn-50334263",
+      "title": "Proton's AI manifesto for software engineering",
+      "summary": "Proton's AI manifesto for software engineering — 5 points, 0 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://proton.me/blog/ai-manifesto",
+      "category": "products",
+      "date": "2026-11-02",
       "hot": false,
       "score": 5,
       "tags": [
         "HN",
         "AI",
         "story",
-        "author_corroclaro"
+        "author_doener"
       ]
     },
     {
-      "id": "hnoon-93-blog-posts-to-learn-about-live-streaming",
-      "title": "93 Blog Posts To Learn About Live Streaming",
-      "summary": "Learn everything you need to know about Live Streaming via these 93 free HackerNoon blog posts. — by Learn Repo on HackerNoon.",
-      "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/93-blog-posts-to-learn-about-live-streaming",
-      "category": "products",
-      "date": "2026-10-31",
-      "hot": true,
-      "score": 100,
-      "tags": [
-        "HackerNoon",
-        "live-streaming",
-        "AI"
-      ]
-    },
-    {
-      "id": "hnoon-binance-lost--63-billion-to-its-own-signing-machine",
-      "title": "Binance Lost $6.3 Billion to Its Own Signing Machine",
-      "summary": "Binance lost $6.3B with no private key leaked. How a DevOps laptop and EIP-7702 turned the exchange's own signer against it. — by Sidra Zafar on HackerNoon.",
-      "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/binance-lost-$63-billion-to-its-own-signing-machine",
+      "id": "hntop-50326821",
+      "title": "Show HN: HackerBooks – HackerTube, but for books mentioned on HN",
+      "summary": "Saw Karpathy&#x27;s HackerTube and wanted the same thing for books. So I had Claude build one (Opus 5.5).<p>It&#x27;s ~16.5k books that at least two different HN commenters brought up, from 2007 till now. Each book links — 1333 points, 223 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://hackerbooks.org",
       "category": "safety",
-      "date": "2026-10-31",
+      "date": "2026-11-01",
       "hot": true,
-      "score": 100,
+      "score": 1333,
       "tags": [
-        "HackerNoon",
-        "cybersecurity",
-        "AI"
+        "HN",
+        "top"
       ]
     },
     {
-      "id": "hnoon-the-ai-bubble-scorecard",
-      "title": "The AI-Bubble Scorecard",
-      "summary": "The AI bubble debate intensified this week, with 8 articles concluding it's a bubble and 4 rejecting the label. — by TheLLMSeeker on HackerNoon.",
+      "id": "hnoon-content-distribution-matters-as-much-as-content-creation",
+      "title": "Content Distribution Matters as Much as Content Creation",
+      "summary": "Explore why content distribution matters, how owned, shared, and paid media work, and what marketers should consider when choosing distribution channels. — by Vipin Labroo on HackerNoon.",
       "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/the-ai-bubble-scorecard",
+      "sourceUrl": "https://hackernoon.com/content-distribution-matters-as-much-as-content-creation",
       "category": "products",
-      "date": "2026-10-31",
+      "date": "2026-11-01",
       "hot": true,
       "score": 100,
       "tags": [
         "HackerNoon",
-        "ai-bubble",
+        "content-marketing",
         "AI"
       ]
     },
     {
-      "id": "hnoon-why-your-hex-converter-lies-to-you-twos-complement-the-53-bi",
-      "title": "Why Your Hex Converter Lies to You: Two's Complement, the 53-Bit Wall, and Radix Magic",
-      "summary": "An in-depth exploration of two's complement, sign extension traps, IEEE-754 precision limits in JavaScript, and why Radix 36 is the superior choice for URL-safe — by Elias Miller on HackerNoon.",
+      "id": "hnoon-from-bug-report-to-production-how-i-fix-bugs-with-ai",
+      "title": "From Bug Report to Production: How I Fix Bugs with AI",
+      "summary": "How a QA engineer at inDrive uses AI to investigate bugs, analyze production logs, write fixes, and ship changes to production. — by inDrive.Tech on HackerNoon.",
       "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/why-your-hex-converter-lies-to-you-twos-complement-the-53-bit-wall-and-radix-magic",
+      "sourceUrl": "https://hackernoon.com/from-bug-report-to-production-how-i-fix-bugs-with-ai",
       "category": "safety",
-      "date": "2026-10-31",
+      "date": "2026-11-01",
       "hot": true,
       "score": 100,
       "tags": [
         "HackerNoon",
-        "web-development",
+        "qa-engineering",
         "AI"
       ]
     },
     {
-      "id": "hnoon-i-gave-my-app-away-for-free-and-it-almost-killed-it",
-      "title": "I Gave My App Away for Free — And It Almost Killed It",
-      "summary": "Generosity is a marketing strategy. Unit economics is a survival strategy. You need both — but in this order: survive first, then be generous on purpose. — by Epic Devs on HackerNoon.",
+      "id": "hnoon-83-blog-posts-to-learn-about-metrics",
+      "title": "83 Blog Posts To Learn About Metrics",
+      "summary": "Learn everything you need to know about Metrics via these 83 free HackerNoon blog posts. — by Learn Repo on HackerNoon.",
       "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/i-gave-my-app-away-for-free-and-it-almost-killed-it",
+      "sourceUrl": "https://hackernoon.com/83-blog-posts-to-learn-about-metrics",
       "category": "products",
-      "date": "2026-10-31",
+      "date": "2026-11-01",
       "hot": true,
       "score": 100,
       "tags": [
         "HackerNoon",
-        "entrepreneurship",
+        "metrics",
         "AI"
+      ]
+    },
+    {
+      "id": "hnoon-assessing-common-mode-failures-in-redundant-power-distributi",
+      "title": "Assessing Common-Mode Failures in Redundant Power Distribution Systems",
+      "summary": "Two power sources don't guarantee resilience. Learn how shared transfer switches, control systems, and maintenance dependencies create hidden failure risks. — by MridulA on HackerNoon.",
+      "source": "HackerNoon",
+      "sourceUrl": "https://hackernoon.com/assessing-common-mode-failures-in-redundant-power-distribution-systems",
+      "category": "safety",
+      "date": "2026-11-01",
+      "hot": true,
+      "score": 100,
+      "tags": [
+        "HackerNoon",
+        "critical-infrastructure",
+        "AI"
+      ]
+    },
+    {
+      "id": "dev-4954082",
+      "title": "Every Codebase Has a '// DO NOT TOUCH' File. I Built an AI Necromancer to Summon the Ghost of the Developer Who Wrote It 💀🔮",
+      "summary": "This is a submission for the Hacktoberfest Open-Source AI Challenge Week 4: Ghost in the Machine    ... — 57 reactions, 34 comments on DEV.to.",
+      "source": "DEV.to",
+      "sourceUrl": "https://dev.to/dj29/every-codebase-has-a-do-not-touch-file-i-built-an-ai-necromancer-to-summon-the-ghost-of-the-2no5",
+      "category": "products",
+      "date": "2026-10-31",
+      "hot": true,
+      "score": 57,
+      "tags": [
+        "DEV.to",
+        "ai",
+        "devchallenge",
+        "hf26challenge"
+      ]
+    },
+    {
+      "id": "dev-4950698",
+      "title": "A Two-Line Function Caught AI Collusion Better Than the AI Did",
+      "summary": "A few days back, I took part in the Apart Research sprint where our team worked on the AI collusion... — 33 reactions, 63 comments on DEV.to.",
+      "source": "DEV.to",
+      "sourceUrl": "https://dev.to/ayush_singh_9b0d83152be5b/a-two-line-function-caught-ai-collusion-better-than-the-ai-did-3nmd",
+      "category": "fun",
+      "date": "2026-10-31",
+      "hot": true,
+      "score": 33,
+      "tags": [
+        "DEV.to",
+        "ai",
+        "ai",
+        "agents"
       ]
     },
     {
       "id": "hntop-50300683",
       "title": "Backdoor in Claude Code for VS Code extension on the Cursor Marketplace",
-      "summary": "<a href=\"https:&#x2F;&#x2F;cursor.com&#x2F;blog&#x2F;claude-code-extension-security-notice\" rel=\"nofollow\">https:&#x2F;&#x2F;cursor.com&#x2F;blog&#x2F;claude-code-extension-security-notic...</a> — 976 points, 547 comments on HN.",
+      "summary": "<a href=\"https:&#x2F;&#x2F;cursor.com&#x2F;blog&#x2F;claude-code-extension-security-notice\" rel=\"nofollow\">https:&#x2F;&#x2F;cursor.com&#x2F;blog&#x2F;claude-code-extension-security-notic...</a> — 997 points, 553 comments on HN.",
       "source": "Hacker News",
       "sourceUrl": "https://phorion.io/blog/offical-claude-code-vsx-compromise/",
       "category": "products",
       "date": "2026-10-30",
       "hot": true,
-      "score": 976,
+      "score": 997,
       "tags": [
         "HN",
         "top"
       ]
     },
     {
-      "id": "dev-4918252",
-      "title": "My open source project is brand new and already has contributors. Here's what I did.",
-      "summary": "In the spirit of Hacktoberfest, with it being the last day of October, I wanted to share my story... — 70 reactions, 18 comments on DEV.to.",
-      "source": "DEV.to",
-      "sourceUrl": "https://dev.to/nathan_tarbert/my-open-source-project-is-brand-new-and-already-has-contributors-heres-what-i-did-3fb4",
+      "id": "ax-2610.42130v1",
+      "title": "Value of Adding AI Weather Model Ensembles to a Multi-model Probabilistic Blend",
+      "summary": "Many weather forecasting organizations use a multi-model blend of ensemble members from different prediction systems to obtain a more accurate forecast. Recent studies have shown that blending deterministic AI-based mode",
+      "source": "arXiv",
+      "sourceUrl": "http://arxiv.org/abs/2610.42130v1",
       "category": "products",
       "date": "2026-10-30",
-      "hot": true,
-      "score": 70,
-      "tags": [
-        "DEV.to",
-        "ai",
-        "opensource",
-        "github"
-      ]
-    },
-    {
-      "id": "hntop-50289418",
-      "title": "We're releasing the weights of Mistral Large 4",
-      "summary": "We're releasing the weights of Mistral Large 4 — 1708 points, 438 comments on HN.",
-      "source": "Hacker News",
-      "sourceUrl": "https://mistral.ai/news/mistral-large-4-oss/",
-      "category": "products",
-      "date": "2026-10-29",
-      "hot": true,
-      "score": 1708,
-      "tags": [
-        "HN",
-        "top"
-      ]
-    },
-    {
-      "id": "ax-2610.40584v1",
-      "title": "Early career researcher responses to AI in math",
-      "summary": "We've heard a lot about AI in math from Fields medalists, AI labs, and established professors. However, the personal stakes are highest for early career researchers. Hoping to provide a platform for graduate students and",
-      "source": "arXiv",
-      "sourceUrl": "http://arxiv.org/abs/2610.40584v1",
-      "category": "safety",
-      "date": "2026-10-29",
       "hot": true,
       "score": 800,
       "tags": [
@@ -283,13 +284,13 @@
       ]
     },
     {
-      "id": "ax-2610.40551v1",
-      "title": "Ramanujan Challenge Results: AI-Assisted Evaluation Pipeline for Multi-Format Proofs",
-      "summary": "As AI's mathematical capabilities rapidly improve, meaningful benchmarks are shifting from university-level problems and math olympiads to research-level mathematics. The Ramanujan Challenge is a benchmark comprised of r",
+      "id": "ax-2610.42108v1",
+      "title": "Quantum 3xplorer: AI-Native Engine for Next-Generation Quantum Materials Modeling",
+      "summary": "Quantum-mechanical approaches, such as density functional theory (DFT), underpin much of modern computational materials science and are the primary source of data for AI-driven discovery. Yet the established electronic-s",
       "source": "arXiv",
-      "sourceUrl": "http://arxiv.org/abs/2610.40551v1",
+      "sourceUrl": "http://arxiv.org/abs/2610.42108v1",
       "category": "products",
-      "date": "2026-10-29",
+      "date": "2026-10-30",
       "hot": true,
       "score": 800,
       "tags": [
@@ -300,10 +301,10 @@
     }
   ],
   "meta": {
-    "fetchedAt": "2026-11-01T08:43:23.482Z",
+    "fetchedAt": "2026-11-02T08:54:11.558Z",
     "topic": "AI",
     "total": 15,
-    "hot": 10,
+    "hot": 11,
     "sources": [
       "Hacker News",
       "HackerNoon",
