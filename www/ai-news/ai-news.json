@@ -1,12 +1,12 @@
 {
-  "generatedAt": "2026-11-02T08:54:11.558Z",
+  "generatedAt": "2026-11-03T09:02:27.567Z",
   "generatedBy": "YUNIE × Last30Days",
   "version": 2,
   "description": "Tin AI mới nhất — tổng hợp từ Last30Days (HN, GitHub, DEV.to, Reddit, arXiv, HackerNoon) trong 30 ngày qua. Chủ đề: AI. Tự động cập nhật bởi YUNIE.",
   "last30days": {
     "enabled": true,
     "topic": "AI",
-    "since": "2026-10-03",
+    "since": "2026-10-04",
     "days": 30,
     "sources": [
       "Hacker News (Algolia, free)",
@@ -55,179 +55,226 @@
   ],
   "articles": [
     {
-      "id": "hn-50333339",
-      "title": "Show HN: Wikihack – HackerTube, but for Wikipedia articles mentioned on HN",
-      "summary": "After seeing Karpathy&#x27;s Hackertube and Hackerbooks, I just had to make Wikihack.<p>I scraped all mentions of wikipedia on hackernews and ranked them, and turn them into a scrollable feed to make it a bit more easy t — 119 points, 28 comments on HN.",
-      "source": "Hacker News",
-      "sourceUrl": "https://wikihack.netlify.app",
-      "category": "safety",
-      "date": "2026-11-02",
+      "id": "hnoon-how-i-built-a-shared-ai-memory-system-using-markdown-and-git",
+      "title": "How I Built a Shared AI Memory System Using Markdown and GitHub",
+      "summary": " — by Geoff Cox on HackerNoon.",
+      "source": "HackerNoon",
+      "sourceUrl": "https://hackernoon.com/how-i-built-a-shared-ai-memory-system-using-markdown-and-github",
+      "category": "products",
+      "date": "2026-11-03",
       "hot": true,
-      "score": 119,
+      "score": 100,
       "tags": [
-        "HN",
-        "AI",
-        "story",
-        "author_aizk"
+        "HackerNoon",
+        "ai",
+        "AI"
       ]
     },
     {
-      "id": "hn-50334038",
-      "title": "China's First Frontier AI Export Controls: Mofcom Announcement No. 48",
-      "summary": "China's First Frontier AI Export Controls: Mofcom Announcement No. 48 — 15 points, 10 comments on HN.",
-      "source": "Hacker News",
-      "sourceUrl": "https://labs.cloudsecurityalliance.org/research/csa-research-note-china-ai-export-controls-announcement-48-2/",
+      "id": "hnoon-how-i-gave-claude-code-long-term-memory-with-markdown-and-py",
+      "title": "How I Gave Claude Code Long-Term Memory With Markdown and Python Hooks",
+      "summary": " — by lachy on HackerNoon.",
+      "source": "HackerNoon",
+      "sourceUrl": "https://hackernoon.com/how-i-gave-claude-code-long-term-memory-with-markdown-and-python-hooks",
       "category": "products",
-      "date": "2026-11-02",
-      "hot": false,
-      "score": 15,
+      "date": "2026-11-03",
+      "hot": true,
+      "score": 100,
       "tags": [
-        "HN",
-        "AI",
-        "story",
-        "author_jonnybgood"
+        "HackerNoon",
+        "claude-code",
+        "AI"
       ]
     },
     {
-      "id": "hn-50333262",
-      "title": "Asking my AI teacher how to spell seventeen",
-      "summary": "Asking my AI teacher how to spell seventeen — 12 points, 4 comments on HN.",
+      "id": "hn-50348591",
+      "title": "How AI is creating a lopsided US economy",
+      "summary": "How AI is creating a lopsided US economy — 12 points, 0 comments on HN.",
       "source": "Hacker News",
-      "sourceUrl": "https://twitter.com/huskirl/status/2116941001335947635",
+      "sourceUrl": "https://www.abc.net.au/news/2026-10-19/ai-stock-market-concentration-data/107261078",
       "category": "products",
-      "date": "2026-11-02",
+      "date": "2026-11-03",
       "hot": false,
       "score": 12,
       "tags": [
         "HN",
         "AI",
         "story",
-        "author_xvxvx"
+        "author_gmays"
       ]
     },
     {
-      "id": "hn-50333699",
-      "title": "The Smartest People in AI Believe This Is the Most Important Chart",
-      "summary": "The Smartest People in AI Believe This Is the Most Important Chart — 6 points, 1 comments on HN.",
+      "id": "hn-50349222",
+      "title": "Open models can do 90 percent of agentic work at a twentieth of the cost",
+      "summary": "Open models can do 90 percent of agentic work at a twentieth of the cost — 5 points, 0 comments on HN.",
       "source": "Hacker News",
-      "sourceUrl": "https://www.wsj.com/tech/ai/ai-anthropic-rsi-recursive-self-improvement-bff4e815",
+      "sourceUrl": "https://www.theregister.com/ai-and-ml/2026/11/03/open-models-can-do-90-percent-of-agentic-work-at-a-twentieth-of-the-cost-of-a-frontier-llm-gartner/5307132",
       "category": "products",
-      "date": "2026-11-02",
-      "hot": false,
-      "score": 6,
-      "tags": [
-        "HN",
-        "AI",
-        "story",
-        "author_fortran77"
-      ]
-    },
-    {
-      "id": "hn-50334263",
-      "title": "Proton's AI manifesto for software engineering",
-      "summary": "Proton's AI manifesto for software engineering — 5 points, 0 comments on HN.",
-      "source": "Hacker News",
-      "sourceUrl": "https://proton.me/blog/ai-manifesto",
-      "category": "products",
-      "date": "2026-11-02",
+      "date": "2026-11-03",
       "hot": false,
       "score": 5,
       "tags": [
         "HN",
         "AI",
         "story",
-        "author_doener"
+        "author_Betelbuddy"
       ]
     },
     {
-      "id": "hntop-50326821",
-      "title": "Show HN: HackerBooks – HackerTube, but for books mentioned on HN",
-      "summary": "Saw Karpathy&#x27;s HackerTube and wanted the same thing for books. So I had Claude build one (Opus 5.5).<p>It&#x27;s ~16.5k books that at least two different HN commenters brought up, from 2007 till now. Each book links — 1333 points, 223 comments on HN.",
+      "id": "hn-50348536",
+      "title": "Y Combinator's Garry Tan uses AI agents so much",
+      "summary": "Y Combinator's Garry Tan uses AI agents so much — 4 points, 2 comments on HN.",
       "source": "Hacker News",
-      "sourceUrl": "https://hackerbooks.org",
-      "category": "safety",
-      "date": "2026-11-01",
+      "sourceUrl": "https://techcrunch.com/2026/11/02/y-combinators-garry-tan-uses-ai-agents-so-much-he-spends-up-to-200k-a-year-on-tokens/",
+      "category": "products",
+      "date": "2026-11-03",
+      "hot": false,
+      "score": 4,
+      "tags": [
+        "HN",
+        "AI",
+        "story",
+        "author_saikatsg"
+      ]
+    },
+    {
+      "id": "hntop-50341174",
+      "title": "Astra can read and write weights to improve Qwen",
+      "summary": "Astra can read and write weights to improve Qwen — 2533 points, 782 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://rikiyat.github.io/blog/weight-space-programming/",
+      "category": "products",
+      "date": "2026-11-02",
       "hot": true,
-      "score": 1333,
+      "score": 2533,
       "tags": [
         "HN",
         "top"
       ]
     },
     {
-      "id": "hnoon-content-distribution-matters-as-much-as-content-creation",
-      "title": "Content Distribution Matters as Much as Content Creation",
-      "summary": "Explore why content distribution matters, how owned, shared, and paid media work, and what marketers should consider when choosing distribution channels. — by Vipin Labroo on HackerNoon.",
+      "id": "hnoon-music-through-your-cheekbones-how-bone-conduction-headphones",
+      "title": "Music Through Your Cheekbones: How Bone-Conduction Headphones Work and Why They Sound Different",
+      "summary": "Learn how bone-conduction headphones work, how vibrations transmit sound through the skull, and why their audio quality differs from traditional headphones. — by Reetain Raina on HackerNoon.",
       "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/content-distribution-matters-as-much-as-content-creation",
+      "sourceUrl": "https://hackernoon.com/music-through-your-cheekbones-how-bone-conduction-headphones-work-and-why-they-sound-different",
       "category": "products",
-      "date": "2026-11-01",
+      "date": "2026-11-02",
       "hot": true,
       "score": 100,
       "tags": [
         "HackerNoon",
-        "content-marketing",
+        "technology",
         "AI"
       ]
     },
     {
-      "id": "hnoon-from-bug-report-to-production-how-i-fix-bugs-with-ai",
-      "title": "From Bug Report to Production: How I Fix Bugs with AI",
-      "summary": "How a QA engineer at inDrive uses AI to investigate bugs, analyze production logs, write fixes, and ship changes to production. — by inDrive.Tech on HackerNoon.",
+      "id": "hnoon-your-ai-agents-memory-needs-two-clocks",
+      "title": "Your AI Agent's Memory Needs Two Clocks",
+      "summary": "Agent memory goes stale because it tracks when a fact was stored and not when it happened. A practical guide to bitemporal memory: event time and write time. — by Rudraj Mehta on HackerNoon.",
       "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/from-bug-report-to-production-how-i-fix-bugs-with-ai",
+      "sourceUrl": "https://hackernoon.com/your-ai-agents-memory-needs-two-clocks",
+      "category": "products",
+      "date": "2026-11-02",
+      "hot": true,
+      "score": 100,
+      "tags": [
+        "HackerNoon",
+        "ai-agents",
+        "AI"
+      ]
+    },
+    {
+      "id": "hnoon-your-ai-assistant-is-waiting-around-an-ai-agent-goes-to-work",
+      "title": "Your AI Assistant Is Waiting Around - An AI Agent Goes to Work",
+      "summary": "A chatbot waits for instructions. An AI agent takes a goal and does the work. A founder who built and exited an AI company explains the difference. — by Elnaz Sarraf on HackerNoon.",
+      "source": "HackerNoon",
+      "sourceUrl": "https://hackernoon.com/your-ai-assistant-is-waiting-around-an-ai-agent-goes-to-work",
+      "category": "products",
+      "date": "2026-11-02",
+      "hot": true,
+      "score": 100,
+      "tags": [
+        "HackerNoon",
+        "ai-agents",
+        "AI"
+      ]
+    },
+    {
+      "id": "hnoon-educational-byte-what-are-synthetic-tokens-in-crypto-network",
+      "title": "Educational Byte: What Are Synthetic Tokens in Crypto Networks?",
+      "summary": "Synthetic assets in crypto can track gold, stocks, currencies, and more. Discover how they work and what they make possible on-chain. — by Obyte on HackerNoon.",
+      "source": "HackerNoon",
+      "sourceUrl": "https://hackernoon.com/educational-byte-what-are-synthetic-tokens-in-crypto-networks",
+      "category": "products",
+      "date": "2026-11-02",
+      "hot": true,
+      "score": 100,
+      "tags": [
+        "HackerNoon",
+        "learn-cryptocurrency",
+        "AI"
+      ]
+    },
+    {
+      "id": "hntop-50326821",
+      "title": "Show HN: HackerBooks – HackerTube, but for books mentioned on HN",
+      "summary": "Saw Karpathy&#x27;s HackerTube and wanted the same thing for books. So I had Claude build one (Opus 5.5).<p>It&#x27;s ~16.5k books that at least two different HN commenters brought up, from 2007 till now. Each book links — 1826 points, 302 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://hackerbooks.org",
       "category": "safety",
       "date": "2026-11-01",
       "hot": true,
-      "score": 100,
+      "score": 1826,
       "tags": [
-        "HackerNoon",
-        "qa-engineering",
-        "AI"
+        "HN",
+        "top"
       ]
     },
     {
-      "id": "hnoon-83-blog-posts-to-learn-about-metrics",
-      "title": "83 Blog Posts To Learn About Metrics",
-      "summary": "Learn everything you need to know about Metrics via these 83 free HackerNoon blog posts. — by Learn Repo on HackerNoon.",
-      "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/83-blog-posts-to-learn-about-metrics",
+      "id": "dev-4955502",
+      "title": "My Local AI Invented 162 Python Packages. I Reran Everything From Scratch, and 161 Came Back.",
+      "summary": "This is a submission for the Hacktoberfest Open-Source AI Challenge Week 4: Ghost in the Machine  I... — 31 reactions, 18 comments on DEV.to.",
+      "source": "DEV.to",
+      "sourceUrl": "https://dev.to/soumyadeepdey/my-local-ai-invented-162-python-packages-i-reran-everything-from-scratch-and-161-came-back-4j73",
       "category": "products",
       "date": "2026-11-01",
       "hot": true,
-      "score": 100,
+      "score": 31,
       "tags": [
-        "HackerNoon",
-        "metrics",
-        "AI"
+        "DEV.to",
+        "ai",
+        "devchallenge",
+        "hf26challenge"
       ]
     },
     {
-      "id": "hnoon-assessing-common-mode-failures-in-redundant-power-distributi",
-      "title": "Assessing Common-Mode Failures in Redundant Power Distribution Systems",
-      "summary": "Two power sources don't guarantee resilience. Learn how shared transfer switches, control systems, and maintenance dependencies create hidden failure risks. — by MridulA on HackerNoon.",
-      "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/assessing-common-mode-failures-in-redundant-power-distribution-systems",
-      "category": "safety",
+      "id": "dev-4955249",
+      "title": "All That Glisters Is Softmax: Shiny-Object Interns, Airplane-Magazine Execs, and Why AI Labs Can Only Bake In Half the Scars",
+      "summary": "Why do an eager intern with a Hacker News blog post, a C-level executive stepping off an airplane with an in-flight magazine, and a trillion-parameter LLM all walk straight into the exact same production bog? And why eve — 14 reactions, 12 comments on DEV.to.",
+      "source": "DEV.to",
+      "sourceUrl": "https://dev.to/gde/all-that-glisters-is-softmax-shiny-object-interns-airplane-magazine-execs-and-why-ai-labs-can-18af",
+      "category": "products",
       "date": "2026-11-01",
-      "hot": true,
-      "score": 100,
+      "hot": false,
+      "score": 14,
       "tags": [
-        "HackerNoon",
-        "critical-infrastructure",
-        "AI"
+        "DEV.to",
+        "ai",
+        "ai",
+        "programming"
       ]
     },
     {
       "id": "dev-4954082",
       "title": "Every Codebase Has a '// DO NOT TOUCH' File. I Built an AI Necromancer to Summon the Ghost of the Developer Who Wrote It 💀🔮",
-      "summary": "This is a submission for the Hacktoberfest Open-Source AI Challenge Week 4: Ghost in the Machine    ... — 57 reactions, 34 comments on DEV.to.",
+      "summary": "This is a submission for the Hacktoberfest Open-Source AI Challenge Week 4: Ghost in the Machine    ... — 71 reactions, 44 comments on DEV.to.",
       "source": "DEV.to",
       "sourceUrl": "https://dev.to/dj29/every-codebase-has-a-do-not-touch-file-i-built-an-ai-necromancer-to-summon-the-ghost-of-the-2no5",
       "category": "products",
       "date": "2026-10-31",
       "hot": true,
-      "score": 57,
+      "score": 71,
       "tags": [
         "DEV.to",
         "ai",
@@ -251,65 +298,17 @@
         "ai",
         "agents"
       ]
-    },
-    {
-      "id": "hntop-50300683",
-      "title": "Backdoor in Claude Code for VS Code extension on the Cursor Marketplace",
-      "summary": "<a href=\"https:&#x2F;&#x2F;cursor.com&#x2F;blog&#x2F;claude-code-extension-security-notice\" rel=\"nofollow\">https:&#x2F;&#x2F;cursor.com&#x2F;blog&#x2F;claude-code-extension-security-notic...</a> — 997 points, 553 comments on HN.",
-      "source": "Hacker News",
-      "sourceUrl": "https://phorion.io/blog/offical-claude-code-vsx-compromise/",
-      "category": "products",
-      "date": "2026-10-30",
-      "hot": true,
-      "score": 997,
-      "tags": [
-        "HN",
-        "top"
-      ]
-    },
-    {
-      "id": "ax-2610.42130v1",
-      "title": "Value of Adding AI Weather Model Ensembles to a Multi-model Probabilistic Blend",
-      "summary": "Many weather forecasting organizations use a multi-model blend of ensemble members from different prediction systems to obtain a more accurate forecast. Recent studies have shown that blending deterministic AI-based mode",
-      "source": "arXiv",
-      "sourceUrl": "http://arxiv.org/abs/2610.42130v1",
-      "category": "products",
-      "date": "2026-10-30",
-      "hot": true,
-      "score": 800,
-      "tags": [
-        "arXiv",
-        "paper",
-        "AI"
-      ]
-    },
-    {
-      "id": "ax-2610.42108v1",
-      "title": "Quantum 3xplorer: AI-Native Engine for Next-Generation Quantum Materials Modeling",
-      "summary": "Quantum-mechanical approaches, such as density functional theory (DFT), underpin much of modern computational materials science and are the primary source of data for AI-driven discovery. Yet the established electronic-s",
-      "source": "arXiv",
-      "sourceUrl": "http://arxiv.org/abs/2610.42108v1",
-      "category": "products",
-      "date": "2026-10-30",
-      "hot": true,
-      "score": 800,
-      "tags": [
-        "arXiv",
-        "paper",
-        "AI"
-      ]
     }
   ],
   "meta": {
-    "fetchedAt": "2026-11-02T08:54:11.558Z",
+    "fetchedAt": "2026-11-03T09:02:27.567Z",
     "topic": "AI",
     "total": 15,
     "hot": 11,
     "sources": [
-      "Hacker News",
       "HackerNoon",
-      "DEV.to",
-      "arXiv"
+      "Hacker News",
+      "DEV.to"
     ]
   }
 }
