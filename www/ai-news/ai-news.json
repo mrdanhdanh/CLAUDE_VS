@@ -1,12 +1,12 @@
 {
-  "generatedAt": "2026-11-03T09:02:27.567Z",
+  "generatedAt": "2026-11-04T08:38:36.624Z",
   "generatedBy": "YUNIE × Last30Days",
   "version": 2,
   "description": "Tin AI mới nhất — tổng hợp từ Last30Days (HN, GitHub, DEV.to, Reddit, arXiv, HackerNoon) trong 30 ngày qua. Chủ đề: AI. Tự động cập nhật bởi YUNIE.",
   "last30days": {
     "enabled": true,
     "topic": "AI",
-    "since": "2026-10-04",
+    "since": "2026-10-05",
     "days": 30,
     "sources": [
       "Hacker News (Algolia, free)",
@@ -55,177 +55,226 @@
   ],
   "articles": [
     {
-      "id": "hnoon-how-i-built-a-shared-ai-memory-system-using-markdown-and-git",
-      "title": "How I Built a Shared AI Memory System Using Markdown and GitHub",
-      "summary": " — by Geoff Cox on HackerNoon.",
+      "id": "hnoon-human-approval-is-not-a-security-boundary-unless-it-is-bound",
+      "title": "Human approval is not a security boundary unless it is bound to the exact action being approved, enf",
+      "summary": " — by Atul Kumar on HackerNoon.",
       "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/how-i-built-a-shared-ai-memory-system-using-markdown-and-github",
+      "sourceUrl": "https://hackernoon.com/human-approval-is-not-a-security-boundary-unless-it-is-bound-to-the-exact-action-being-approved-enf",
       "category": "products",
-      "date": "2026-11-03",
+      "date": "2026-11-04",
       "hot": true,
       "score": 100,
       "tags": [
         "HackerNoon",
-        "ai",
+        "artificial-intelligence",
         "AI"
       ]
     },
     {
-      "id": "hnoon-how-i-gave-claude-code-long-term-memory-with-markdown-and-py",
-      "title": "How I Gave Claude Code Long-Term Memory With Markdown and Python Hooks",
-      "summary": " — by lachy on HackerNoon.",
-      "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/how-i-gave-claude-code-long-term-memory-with-markdown-and-python-hooks",
-      "category": "products",
-      "date": "2026-11-03",
-      "hot": true,
-      "score": 100,
-      "tags": [
-        "HackerNoon",
-        "claude-code",
-        "AI"
-      ]
-    },
-    {
-      "id": "hn-50348591",
-      "title": "How AI is creating a lopsided US economy",
-      "summary": "How AI is creating a lopsided US economy — 12 points, 0 comments on HN.",
+      "id": "hn-50362274",
+      "title": "AI stocks slide as Texas governor result raises data center risks",
+      "summary": "AI stocks slide as Texas governor result raises data center risks — 13 points, 2 comments on HN.",
       "source": "Hacker News",
-      "sourceUrl": "https://www.abc.net.au/news/2026-10-19/ai-stock-market-concentration-data/107261078",
-      "category": "products",
-      "date": "2026-11-03",
+      "sourceUrl": "https://www.cnbc.com/2026/11/04/ai-stocks-texas-governor-data-centers.html",
+      "category": "safety",
+      "date": "2026-11-04",
       "hot": false,
-      "score": 12,
+      "score": 13,
       "tags": [
         "HN",
         "AI",
         "story",
-        "author_gmays"
+        "author_1659447091"
       ]
     },
     {
-      "id": "hn-50349222",
-      "title": "Open models can do 90 percent of agentic work at a twentieth of the cost",
-      "summary": "Open models can do 90 percent of agentic work at a twentieth of the cost — 5 points, 0 comments on HN.",
+      "id": "hn-50362588",
+      "title": "You'll need nerves of steel to work with AI agents",
+      "summary": "You'll need nerves of steel to work with AI agents — 5 points, 0 comments on HN.",
       "source": "Hacker News",
-      "sourceUrl": "https://www.theregister.com/ai-and-ml/2026/11/03/open-models-can-do-90-percent-of-agentic-work-at-a-twentieth-of-the-cost-of-a-frontier-llm-gartner/5307132",
+      "sourceUrl": "https://orchidfiles.com/youll-need-nerves-of-steel-to-work-with-ai-agents/",
       "category": "products",
-      "date": "2026-11-03",
+      "date": "2026-11-04",
       "hot": false,
       "score": 5,
       "tags": [
         "HN",
         "AI",
         "story",
-        "author_Betelbuddy"
+        "author_theorchid"
       ]
     },
     {
-      "id": "hn-50348536",
-      "title": "Y Combinator's Garry Tan uses AI agents so much",
-      "summary": "Y Combinator's Garry Tan uses AI agents so much — 4 points, 2 comments on HN.",
+      "id": "hn-50362464",
+      "title": "Dopplertrack: Acoustic geolocation from the Doppler curves of propeller aircraft",
+      "summary": "Dopplertrack: Acoustic geolocation from the Doppler curves of propeller aircraft — 4 points, 0 comments on HN.",
       "source": "Hacker News",
-      "sourceUrl": "https://techcrunch.com/2026/11/02/y-combinators-garry-tan-uses-ai-agents-so-much-he-spends-up-to-200k-a-year-on-tokens/",
+      "sourceUrl": "https://github.com/mjshiggins/dopplertrack",
       "category": "products",
-      "date": "2026-11-03",
+      "date": "2026-11-04",
       "hot": false,
       "score": 4,
       "tags": [
         "HN",
         "AI",
         "story",
-        "author_saikatsg"
+        "author_harporoeder"
       ]
     },
     {
-      "id": "hntop-50341174",
-      "title": "Astra can read and write weights to improve Qwen",
-      "summary": "Astra can read and write weights to improve Qwen — 2533 points, 782 comments on HN.",
+      "id": "hn-50362291",
+      "title": "Tencent Hy4",
+      "summary": "Tencent Hy4 — 4 points, 2 comments on HN.",
       "source": "Hacker News",
-      "sourceUrl": "https://rikiyat.github.io/blog/weight-space-programming/",
+      "sourceUrl": "https://hy.tencent.ai/research/hy4?langVersion=en",
       "category": "products",
-      "date": "2026-11-02",
+      "date": "2026-11-04",
+      "hot": false,
+      "score": 4,
+      "tags": [
+        "HN",
+        "AI",
+        "story",
+        "author_pierre"
+      ]
+    },
+    {
+      "id": "hntop-50354960",
+      "title": "Postman silently auto-installs AI plugins and attempts to share all API data",
+      "summary": "Postman silently auto-installs AI plugins and attempts to share all API data — 1234 points, 402 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://github.com/postmanlabs/postman-app-support/issues/14370",
+      "category": "products",
+      "date": "2026-11-03",
       "hot": true,
-      "score": 2533,
+      "score": 1234,
       "tags": [
         "HN",
         "top"
       ]
     },
     {
-      "id": "hnoon-music-through-your-cheekbones-how-bone-conduction-headphones",
-      "title": "Music Through Your Cheekbones: How Bone-Conduction Headphones Work and Why They Sound Different",
-      "summary": "Learn how bone-conduction headphones work, how vibrations transmit sound through the skull, and why their audio quality differs from traditional headphones. — by Reetain Raina on HackerNoon.",
-      "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/music-through-your-cheekbones-how-bone-conduction-headphones-work-and-why-they-sound-different",
+      "id": "hntop-50351111",
+      "title": "The 'Astra can read and write weights to improve Qwen' post is misleading",
+      "summary": "The 'Astra can read and write weights to improve Qwen' post is misleading — 968 points, 201 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://honnibal.dev/blog/astra-read-write-misleading",
       "category": "products",
-      "date": "2026-11-02",
+      "date": "2026-11-03",
       "hot": true,
-      "score": 100,
+      "score": 968,
       "tags": [
-        "HackerNoon",
-        "technology",
+        "HN",
+        "top"
+      ]
+    },
+    {
+      "id": "ax-2611.05347v1",
+      "title": "Whose Guardrail? User Identity Shapes the Effectiveness of Model Disclaimers in Mitigating LLM Political Persuasion",
+      "summary": "Politically biased AI can shift users' opinions, yet it remains unclear whether model disclaimers protect against such persuasion. We report a preregistered experiment (N=1,586) examining how disclaimer design and user c",
+      "source": "arXiv",
+      "sourceUrl": "http://arxiv.org/abs/2611.05347v1",
+      "category": "safety",
+      "date": "2026-11-03",
+      "hot": true,
+      "score": 800,
+      "tags": [
+        "arXiv",
+        "paper",
         "AI"
       ]
     },
     {
-      "id": "hnoon-your-ai-agents-memory-needs-two-clocks",
-      "title": "Your AI Agent's Memory Needs Two Clocks",
-      "summary": "Agent memory goes stale because it tracks when a fact was stored and not when it happened. A practical guide to bitemporal memory: event time and write time. — by Rudraj Mehta on HackerNoon.",
-      "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/your-ai-agents-memory-needs-two-clocks",
-      "category": "products",
-      "date": "2026-11-02",
+      "id": "ax-2611.05292v1",
+      "title": "Personas Are Not People: Identity as State, Not Attribute",
+      "summary": "Synthetic populations, large sets of simulated people, are increasingly used in place of real people to pretest surveys, simulate users and communities, and evaluate AI systems. Each simulated person is defined by a pers",
+      "source": "arXiv",
+      "sourceUrl": "http://arxiv.org/abs/2611.05292v1",
+      "category": "safety",
+      "date": "2026-11-03",
       "hot": true,
-      "score": 100,
+      "score": 800,
       "tags": [
-        "HackerNoon",
-        "ai-agents",
+        "arXiv",
+        "paper",
         "AI"
       ]
     },
     {
-      "id": "hnoon-your-ai-assistant-is-waiting-around-an-ai-agent-goes-to-work",
-      "title": "Your AI Assistant Is Waiting Around - An AI Agent Goes to Work",
-      "summary": "A chatbot waits for instructions. An AI agent takes a goal and does the work. A founder who built and exited an AI company explains the difference. — by Elnaz Sarraf on HackerNoon.",
-      "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/your-ai-assistant-is-waiting-around-an-ai-agent-goes-to-work",
+      "id": "ax-2611.05171v1",
+      "title": "AgentAM: An AI Agent for Spatter- and Defect-Aware Process Optimization in Laser Powder Bed Fusion",
+      "summary": "Predictive models for laser powder bed fusion (LPBF) are rarely used on the shop floor because querying them requires programming and model-specific knowledge. We present AgentAM, a large language model (LLM) agent that ",
+      "source": "arXiv",
+      "sourceUrl": "http://arxiv.org/abs/2611.05171v1",
       "category": "products",
-      "date": "2026-11-02",
+      "date": "2026-11-03",
       "hot": true,
-      "score": 100,
+      "score": 800,
       "tags": [
-        "HackerNoon",
-        "ai-agents",
+        "arXiv",
+        "paper",
         "AI"
       ]
     },
     {
-      "id": "hnoon-educational-byte-what-are-synthetic-tokens-in-crypto-network",
-      "title": "Educational Byte: What Are Synthetic Tokens in Crypto Networks?",
-      "summary": "Synthetic assets in crypto can track gold, stocks, currencies, and more. Discover how they work and what they make possible on-chain. — by Obyte on HackerNoon.",
-      "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/educational-byte-what-are-synthetic-tokens-in-crypto-networks",
+      "id": "hntop-50341174",
+      "title": "Astra can read and write weights to improve Qwen",
+      "summary": "Astra can read and write weights to improve Qwen — 2928 points, 880 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://rikiyat.github.io/blog/weight-space-programming/",
       "category": "products",
       "date": "2026-11-02",
       "hot": true,
-      "score": 100,
+      "score": 2928,
       "tags": [
-        "HackerNoon",
-        "learn-cryptocurrency",
-        "AI"
+        "HN",
+        "top"
+      ]
+    },
+    {
+      "id": "dev-4962916",
+      "title": "I built a 3D game about my Nigerian childhood (and I'm not a game developer)",
+      "summary": "If you grew up in Nigeria, there is one sentence that can stop your heart in the middle of... — 32 reactions, 7 comments on DEV.to.",
+      "source": "DEV.to",
+      "sourceUrl": "https://dev.to/deborahemeni1/i-built-a-3d-game-about-my-nigerian-childhood-and-im-not-a-game-developer-281g",
+      "category": "products",
+      "date": "2026-11-02",
+      "hot": true,
+      "score": 32,
+      "tags": [
+        "DEV.to",
+        "ai",
+        "gamedev",
+        "webdev"
+      ]
+    },
+    {
+      "id": "dev-4965289",
+      "title": "Use it, or lose it 🧠",
+      "summary": "Fayaz reminds everyone why we should keep doing deep intellectual and creative works.  — 31 reactions, 8 comments on DEV.to.",
+      "source": "DEV.to",
+      "sourceUrl": "https://dev.to/fm/use-it-or-lose-it-42l",
+      "category": "products",
+      "date": "2026-11-02",
+      "hot": true,
+      "score": 31,
+      "tags": [
+        "DEV.to",
+        "ai",
+        "discuss",
+        "ai"
       ]
     },
     {
       "id": "hntop-50326821",
       "title": "Show HN: HackerBooks – HackerTube, but for books mentioned on HN",
-      "summary": "Saw Karpathy&#x27;s HackerTube and wanted the same thing for books. So I had Claude build one (Opus 5.5).<p>It&#x27;s ~16.5k books that at least two different HN commenters brought up, from 2007 till now. Each book links — 1826 points, 302 comments on HN.",
+      "summary": "Saw Karpathy&#x27;s HackerTube and wanted the same thing for books. So I had Claude build one (Opus 5.5).<p>It&#x27;s ~16.5k books that at least two different HN commenters brought up, from 2007 till now. Each book links — 1843 points, 304 comments on HN.",
       "source": "Hacker News",
       "sourceUrl": "https://hackerbooks.org",
       "category": "safety",
       "date": "2026-11-01",
       "hot": true,
-      "score": 1826,
+      "score": 1843,
       "tags": [
         "HN",
         "top"
@@ -234,80 +283,30 @@
     {
       "id": "dev-4955502",
       "title": "My Local AI Invented 162 Python Packages. I Reran Everything From Scratch, and 161 Came Back.",
-      "summary": "This is a submission for the Hacktoberfest Open-Source AI Challenge Week 4: Ghost in the Machine  I... — 31 reactions, 18 comments on DEV.to.",
+      "summary": "This is a submission for the Hacktoberfest Open-Source AI Challenge Week 4: Ghost in the Machine  I... — 34 reactions, 21 comments on DEV.to.",
       "source": "DEV.to",
       "sourceUrl": "https://dev.to/soumyadeepdey/my-local-ai-invented-162-python-packages-i-reran-everything-from-scratch-and-161-came-back-4j73",
       "category": "products",
       "date": "2026-11-01",
       "hot": true,
-      "score": 31,
+      "score": 34,
       "tags": [
         "DEV.to",
         "ai",
         "devchallenge",
         "hf26challenge"
-      ]
-    },
-    {
-      "id": "dev-4955249",
-      "title": "All That Glisters Is Softmax: Shiny-Object Interns, Airplane-Magazine Execs, and Why AI Labs Can Only Bake In Half the Scars",
-      "summary": "Why do an eager intern with a Hacker News blog post, a C-level executive stepping off an airplane with an in-flight magazine, and a trillion-parameter LLM all walk straight into the exact same production bog? And why eve — 14 reactions, 12 comments on DEV.to.",
-      "source": "DEV.to",
-      "sourceUrl": "https://dev.to/gde/all-that-glisters-is-softmax-shiny-object-interns-airplane-magazine-execs-and-why-ai-labs-can-18af",
-      "category": "products",
-      "date": "2026-11-01",
-      "hot": false,
-      "score": 14,
-      "tags": [
-        "DEV.to",
-        "ai",
-        "ai",
-        "programming"
-      ]
-    },
-    {
-      "id": "dev-4954082",
-      "title": "Every Codebase Has a '// DO NOT TOUCH' File. I Built an AI Necromancer to Summon the Ghost of the Developer Who Wrote It 💀🔮",
-      "summary": "This is a submission for the Hacktoberfest Open-Source AI Challenge Week 4: Ghost in the Machine    ... — 71 reactions, 44 comments on DEV.to.",
-      "source": "DEV.to",
-      "sourceUrl": "https://dev.to/dj29/every-codebase-has-a-do-not-touch-file-i-built-an-ai-necromancer-to-summon-the-ghost-of-the-2no5",
-      "category": "products",
-      "date": "2026-10-31",
-      "hot": true,
-      "score": 71,
-      "tags": [
-        "DEV.to",
-        "ai",
-        "devchallenge",
-        "hf26challenge"
-      ]
-    },
-    {
-      "id": "dev-4950698",
-      "title": "A Two-Line Function Caught AI Collusion Better Than the AI Did",
-      "summary": "A few days back, I took part in the Apart Research sprint where our team worked on the AI collusion... — 33 reactions, 63 comments on DEV.to.",
-      "source": "DEV.to",
-      "sourceUrl": "https://dev.to/ayush_singh_9b0d83152be5b/a-two-line-function-caught-ai-collusion-better-than-the-ai-did-3nmd",
-      "category": "fun",
-      "date": "2026-10-31",
-      "hot": true,
-      "score": 33,
-      "tags": [
-        "DEV.to",
-        "ai",
-        "ai",
-        "agents"
       ]
     }
   ],
   "meta": {
-    "fetchedAt": "2026-11-03T09:02:27.567Z",
+    "fetchedAt": "2026-11-04T08:38:36.624Z",
     "topic": "AI",
     "total": 15,
     "hot": 11,
     "sources": [
       "HackerNoon",
       "Hacker News",
+      "arXiv",
       "DEV.to"
     ]
   }
