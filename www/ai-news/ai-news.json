@@ -1,12 +1,12 @@
 {
-  "generatedAt": "2026-11-05T08:58:44.392Z",
+  "generatedAt": "2026-11-06T08:56:18.394Z",
   "generatedBy": "YUNIE × Last30Days",
   "version": 2,
   "description": "Tin AI mới nhất — tổng hợp từ Last30Days (HN, GitHub, DEV.to, Reddit, arXiv, HackerNoon) trong 30 ngày qua. Chủ đề: AI. Tự động cập nhật bởi YUNIE.",
   "last30days": {
     "enabled": true,
     "topic": "AI",
-    "since": "2026-10-06",
+    "since": "2026-10-07",
     "days": 30,
     "sources": [
       "Hacker News (Algolia, free)",
@@ -55,29 +55,13 @@
   ],
   "articles": [
     {
-      "id": "hnoon-comic-panel-detection-with-a-vision-llm-pages-into-shots-for",
-      "title": "Comic Panel Detection With a Vision LLM: Pages Into Shots for Under Half a Cent",
-      "summary": " — by Frank Houbre on HackerNoon.",
+      "id": "hnoon-aura-autopilot-review-i-tested-the-ai-game-testing-agent-and",
+      "title": "Aura Autopilot Review: I Tested the AI Game-Testing Agent, and It Found Every Bug",
+      "summary": " — by Ishank Choudhary on HackerNoon.",
       "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/comic-panel-detection-with-a-vision-llm-pages-into-shots-for-under-half-a-cent",
+      "sourceUrl": "https://hackernoon.com/aura-autopilot-review-i-tested-the-ai-game-testing-agent-and-it-found-every-bug",
       "category": "products",
-      "date": "2026-11-05",
-      "hot": true,
-      "score": 100,
-      "tags": [
-        "HackerNoon",
-        "computer-vision",
-        "AI"
-      ]
-    },
-    {
-      "id": "hnoon-the-impact-framework-six-rules-for-better-ai-generated-desig",
-      "title": "The IMPACT Framework: Six Rules for Better AI-Generated Designs",
-      "summary": " — by James Shehan on HackerNoon.",
-      "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/the-impact-framework-six-rules-for-better-ai-generated-designs",
-      "category": "products",
-      "date": "2026-11-05",
+      "date": "2026-11-06",
       "hot": true,
       "score": 100,
       "tags": [
@@ -87,113 +71,31 @@
       ]
     },
     {
-      "id": "dev-4978154",
-      "title": "Crows, Moths, and Makefiles: How 300 Megabytes of Crow DNA Explains Why a 20-Kilobyte Scar File Outsmarts a Terabyte LLM",
-      "summary": "Why do New Caledonian crows bend wire into hooks with zero training while a trillion-parameter LLM flies straight into the same production bug zapper? How Anthony Zador's Genomic Bottleneck explains what 'instinct' reall — 6 reactions, 3 comments on DEV.to.",
-      "source": "DEV.to",
-      "sourceUrl": "https://dev.to/gde/crows-moths-and-makefiles-how-300-megabytes-of-crow-dna-explains-why-a-20-kilobyte-scar-file-36a",
+      "id": "hnoon-your-ai-agent-has-admin-access-and-you-dont-know-it",
+      "title": "Your AI Agent Has Admin Access and You Don't Know It",
+      "summary": " — by Venkat Kishore Yarram on HackerNoon.",
+      "source": "HackerNoon",
+      "sourceUrl": "https://hackernoon.com/your-ai-agent-has-admin-access-and-you-dont-know-it",
       "category": "products",
-      "date": "2026-11-05",
-      "hot": false,
-      "score": 6,
-      "tags": [
-        "DEV.to",
-        "ai",
-        "ai",
-        "programming"
-      ]
-    },
-    {
-      "id": "hn-50375602",
-      "title": "Big Tech claims voters' AI backlash is \"anti-Trump\" not \"anti-tech\"",
-      "summary": "Big Tech claims voters' AI backlash is \"anti-Trump\" not \"anti-tech\" — 5 points, 4 comments on HN.",
-      "source": "Hacker News",
-      "sourceUrl": "https://arstechnica.com/tech-policy/2026/11/big-tech-claims-voters-ai-backlash-is-anti-trump-not-anti-tech/",
-      "category": "products",
-      "date": "2026-11-05",
-      "hot": false,
-      "score": 5,
-      "tags": [
-        "HN",
-        "AI",
-        "story",
-        "author_cdrnsf"
-      ]
-    },
-    {
-      "id": "hn-50375779",
-      "title": "Tencent Hy4 Intelligence, Performance and Price Analysis",
-      "summary": "Tencent Hy4 Intelligence, Performance and Price Analysis — 4 points, 0 comments on HN.",
-      "source": "Hacker News",
-      "sourceUrl": "https://artificialanalysis.ai/models/tencent-hy4",
-      "category": "products",
-      "date": "2026-11-05",
-      "hot": false,
-      "score": 4,
-      "tags": [
-        "HN",
-        "AI",
-        "story",
-        "author_theanonymousone"
-      ]
-    },
-    {
-      "id": "hntop-50364336",
-      "title": "AI is forcing us to pay off 40 years of technical debt",
-      "summary": "AI is forcing us to pay off 40 years of technical debt — 1172 points, 682 comments on HN.",
-      "source": "Hacker News",
-      "sourceUrl": "https://spectrum.ieee.org/ai-in-cybersecurity-php2shell-vulnerability",
-      "category": "products",
-      "date": "2026-11-04",
+      "date": "2026-11-06",
       "hot": true,
-      "score": 1172,
+      "score": 100,
       "tags": [
-        "HN",
-        "top"
-      ]
-    },
-    {
-      "id": "ax-2611.06858v1",
-      "title": "CompressionBench: How can your coding agents compress LLMs?",
-      "summary": "Recursive self-improvement requires AI systems to improve the models and infrastructure used by subsequent systems. LLM compression offers a concrete efficiency objective: retain a pretrained model's behavior within a sm",
-      "source": "arXiv",
-      "sourceUrl": "http://arxiv.org/abs/2611.06858v1",
-      "category": "products",
-      "date": "2026-11-04",
-      "hot": true,
-      "score": 800,
-      "tags": [
-        "arXiv",
-        "paper",
+        "HackerNoon",
+        "cybersecurity",
         "AI"
       ]
     },
     {
-      "id": "ax-2611.06830v1",
-      "title": "Alignment Myopia in Generative AI",
-      "summary": "Current generative AI alignment relies on a myopic paradigm that prioritizes immediate conversational satisfaction. By relying on short-horizon feedback, this approach ignores the profound, longitudinal externalities of ",
-      "source": "arXiv",
-      "sourceUrl": "http://arxiv.org/abs/2611.06830v1",
-      "category": "self-improving",
-      "date": "2026-11-04",
-      "hot": true,
-      "score": 800,
-      "tags": [
-        "arXiv",
-        "paper",
-        "AI"
-      ]
-    },
-    {
-      "id": "dev-4971955",
-      "title": "We're Building AI to Replace Ourselves. What's the Plan?",
-      "summary": "Weren't we supposed to be replaced by AI by now? Or at least work less? AI agents were supposed to... — 121 reactions, 75 comments on DEV.to.",
+      "id": "dev-4985077",
+      "title": "An AI Testing Presentation Became the Final Push for Organizational Change at My Company",
+      "summary": "From a multi-agent testing experiment to a broader discussion about how engineering teams should... — 73 reactions, 41 comments on DEV.to.",
       "source": "DEV.to",
-      "sourceUrl": "https://dev.to/sylwia-lask/were-building-ai-to-replace-ourselves-whats-the-plan-4oll",
+      "sourceUrl": "https://dev.to/xulingfeng/an-ai-testing-presentation-became-the-final-push-for-organizational-change-at-my-company-12ag",
       "category": "products",
-      "date": "2026-11-04",
+      "date": "2026-11-06",
       "hot": true,
-      "score": 121,
+      "score": 73,
       "tags": [
         "DEV.to",
         "ai",
@@ -202,31 +104,160 @@
       ]
     },
     {
-      "id": "hnoon-what-happens-when-the-model-reads-it-wrong-building-llm-comp",
-      "title": "What Happens When the Model Reads It Wrong: Building LLM Compliance Review That Survives an Audit",
-      "summary": " — by lokeshvk on HackerNoon.",
-      "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/what-happens-when-the-model-reads-it-wrong-building-llm-compliance-review-that-survives-an-audit",
+      "id": "hn-50389448",
+      "title": "App Store 2026 in numbers: AI, pricing, abandoned apps",
+      "summary": "App Store 2026 in numbers: AI, pricing, abandoned apps — 9 points, 4 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://obelisk.club/research/app-store-2026",
       "category": "products",
-      "date": "2026-11-04",
+      "date": "2026-11-06",
+      "hot": false,
+      "score": 9,
+      "tags": [
+        "HN",
+        "AI",
+        "story",
+        "author_Peter216"
+      ]
+    },
+    {
+      "id": "hn-50389401",
+      "title": "Global stocks tumble as AI panic grips markets after Democrats' midterm success",
+      "summary": "Global stocks tumble as AI panic grips markets after Democrats' midterm success — 7 points, 0 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://www.theguardian.com/business/live/2026/nov/06/global-stocks-tumble-ai-panic-markets-democrats-midterms-success-jobs-oil-dollar-latest-news-updates",
+      "category": "safety",
+      "date": "2026-11-06",
+      "hot": false,
+      "score": 7,
+      "tags": [
+        "HN",
+        "AI",
+        "story",
+        "author_drayfield"
+      ]
+    },
+    {
+      "id": "hntop-50385272",
+      "title": "Claude Code sends your email address to websites",
+      "summary": "Claude Code sends your email address to websites — 1063 points, 332 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://github.com/anthropics/claude-code/issues/107757",
+      "category": "products",
+      "date": "2026-11-05",
+      "hot": true,
+      "score": 1063,
+      "tags": [
+        "HN",
+        "top"
+      ]
+    },
+    {
+      "id": "ax-2611.08483v1",
+      "title": "SwarmEvolve: Latent Agent Swarms for Evolutionary Discovery and Optimization",
+      "summary": "LLM-guided evolutionary search uses AI agents to improve programs for mathematical and computational problems by iteratively refining solutions and combining high-scoring methods. However, the process is often slow becau",
+      "source": "arXiv",
+      "sourceUrl": "http://arxiv.org/abs/2611.08483v1",
+      "category": "products",
+      "date": "2026-11-05",
+      "hot": true,
+      "score": 800,
+      "tags": [
+        "arXiv",
+        "paper",
+        "AI"
+      ]
+    },
+    {
+      "id": "ax-2611.08431v1",
+      "title": "Scaffolding GenAI Use in Ethical Essay Writing: A Three-Year Experience Report in Introductory Computing",
+      "summary": "As society, ethics, and professional practice become increasingly integrated across the computer science curriculum, technical courses need practical ways to support ethical reasoning. Ethical essay assignments offer one",
+      "source": "arXiv",
+      "sourceUrl": "http://arxiv.org/abs/2611.08431v1",
+      "category": "big-tech",
+      "date": "2026-11-05",
+      "hot": true,
+      "score": 800,
+      "tags": [
+        "arXiv",
+        "paper",
+        "AI"
+      ]
+    },
+    {
+      "id": "ax-2611.08428v1",
+      "title": "The Power of Meta Access in the Software of the Future --- Demonstrated on LLM Chat UIs and Chat AI",
+      "summary": "Chat remains the default surface for many large language model (LLM) tasks, even as agentic tools such as OpenCode excel at coding and automation. Yet the model sees the current dialogue but not the workspace around it. ",
+      "source": "arXiv",
+      "sourceUrl": "http://arxiv.org/abs/2611.08428v1",
+      "category": "safety",
+      "date": "2026-11-05",
+      "hot": true,
+      "score": 800,
+      "tags": [
+        "arXiv",
+        "paper",
+        "AI"
+      ]
+    },
+    {
+      "id": "hnoon-small-tweaks-great-output-what-merchants-can-do-to-maximize-",
+      "title": "Small Tweaks, Great Output: What Merchants Can Do to Maximize Pay By Bank Conversion",
+      "summary": "Practical checkout UX tips from Noda’s product designer. Learn 5 simple, tested checkout tweaks merchants can make to turn open banking into the obvious choice. — by Noda on HackerNoon.",
+      "source": "HackerNoon",
+      "sourceUrl": "https://hackernoon.com/small-tweaks-great-output-what-merchants-can-do-to-maximize-pay-by-bank-conversion",
+      "category": "safety",
+      "date": "2026-11-05",
       "hot": true,
       "score": 100,
       "tags": [
         "HackerNoon",
-        "ai",
+        "pay-by-bank",
         "AI"
+      ]
+    },
+    {
+      "id": "hntop-50364336",
+      "title": "AI is forcing us to pay off 40 years of technical debt",
+      "summary": "AI is forcing us to pay off 40 years of technical debt — 1274 points, 743 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://spectrum.ieee.org/ai-in-cybersecurity-php2shell-vulnerability",
+      "category": "products",
+      "date": "2026-11-04",
+      "hot": true,
+      "score": 1274,
+      "tags": [
+        "HN",
+        "top"
+      ]
+    },
+    {
+      "id": "dev-4971955",
+      "title": "We're Building AI to Replace Ourselves. What's the Plan?",
+      "summary": "Weren't we supposed to be replaced by AI by now? Or at least work less? AI agents were supposed to... — 171 reactions, 130 comments on DEV.to.",
+      "source": "DEV.to",
+      "sourceUrl": "https://dev.to/sylwia-lask/were-building-ai-to-replace-ourselves-whats-the-plan-4oll",
+      "category": "products",
+      "date": "2026-11-04",
+      "hot": true,
+      "score": 171,
+      "tags": [
+        "DEV.to",
+        "ai",
+        "discuss",
+        "ai"
       ]
     },
     {
       "id": "hntop-50354960",
       "title": "Postman silently auto-installs AI plugins and attempts to share all API data",
-      "summary": "Postman silently auto-installs AI plugins and attempts to share all API data — 1495 points, 485 comments on HN.",
+      "summary": "Postman silently auto-installs AI plugins and attempts to share all API data — 1517 points, 490 comments on HN.",
       "source": "Hacker News",
       "sourceUrl": "https://github.com/postmanlabs/postman-app-support/issues/14370",
       "category": "products",
       "date": "2026-11-03",
       "hot": true,
-      "score": 1495,
+      "score": 1517,
       "tags": [
         "HN",
         "top"
@@ -235,13 +266,13 @@
     {
       "id": "hntop-50351111",
       "title": "The 'Astra can read and write weights to improve Qwen' post is misleading",
-      "summary": "The 'Astra can read and write weights to improve Qwen' post is misleading — 1030 points, 208 comments on HN.",
+      "summary": "The 'Astra can read and write weights to improve Qwen' post is misleading — 1037 points, 209 comments on HN.",
       "source": "Hacker News",
       "sourceUrl": "https://honnibal.dev/blog/astra-read-write-misleading",
       "category": "products",
       "date": "2026-11-03",
       "hot": true,
-      "score": 1030,
+      "score": 1037,
       "tags": [
         "HN",
         "top"
@@ -250,58 +281,26 @@
     {
       "id": "dev-4971893",
       "title": "That's a Wrap on Hacktoberfest 2026! 🎃👻",
-      "summary": "Hacktoberfest 2026 wrapped up on October 31st! Thank you to everyone who built, hosted, mentored,... — 59 reactions, 13 comments on DEV.to.",
+      "summary": "Hacktoberfest 2026 wrapped up on October 31st! Thank you to everyone who built, hosted, mentored,... — 61 reactions, 14 comments on DEV.to.",
       "source": "DEV.to",
       "sourceUrl": "https://dev.to/devteam/thats-a-wrap-on-hacktoberfest-2026-148k",
       "category": "products",
       "date": "2026-11-03",
       "hot": true,
-      "score": 59,
+      "score": 61,
       "tags": [
         "DEV.to",
         "ai",
         "hacktoberfest",
         "hf26challenge"
       ]
-    },
-    {
-      "id": "hntop-50341174",
-      "title": "Astra can read and write weights to improve Qwen",
-      "summary": "Astra can read and write weights to improve Qwen — 2947 points, 891 comments on HN.",
-      "source": "Hacker News",
-      "sourceUrl": "https://rikiyat.github.io/blog/weight-space-programming/",
-      "category": "products",
-      "date": "2026-11-02",
-      "hot": true,
-      "score": 2947,
-      "tags": [
-        "HN",
-        "top"
-      ]
-    },
-    {
-      "id": "dev-4965289",
-      "title": "Use it, or lose it 🧠",
-      "summary": "Fayaz reminds everyone why we should keep doing deep intellectual and creative works.  — 35 reactions, 10 comments on DEV.to.",
-      "source": "DEV.to",
-      "sourceUrl": "https://dev.to/fm/use-it-or-lose-it-42l",
-      "category": "products",
-      "date": "2026-11-02",
-      "hot": true,
-      "score": 35,
-      "tags": [
-        "DEV.to",
-        "ai",
-        "discuss",
-        "ai"
-      ]
     }
   ],
   "meta": {
-    "fetchedAt": "2026-11-05T08:58:44.392Z",
+    "fetchedAt": "2026-11-06T08:56:18.394Z",
     "topic": "AI",
     "total": 15,
-    "hot": 12,
+    "hot": 13,
     "sources": [
       "HackerNoon",
       "DEV.to",
