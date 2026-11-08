@@ -1,12 +1,12 @@
 {
-  "generatedAt": "2026-11-07T08:20:31.888Z",
+  "generatedAt": "2026-11-08T08:37:22.734Z",
   "generatedBy": "YUNIE × Last30Days",
   "version": 2,
   "description": "Tin AI mới nhất — tổng hợp từ Last30Days (HN, GitHub, DEV.to, Reddit, arXiv, HackerNoon) trong 30 ngày qua. Chủ đề: AI. Tự động cập nhật bởi YUNIE.",
   "last30days": {
     "enabled": true,
     "topic": "AI",
-    "since": "2026-10-08",
+    "since": "2026-10-09",
     "days": 30,
     "sources": [
       "Hacker News (Algolia, free)",
@@ -55,100 +55,180 @@
   ],
   "articles": [
     {
-      "id": "hn-50401029",
-      "title": "The AI sell-off compared to well-known stock market crashes",
-      "summary": "The AI sell-off compared to well-known stock market crashes — 59 points, 56 comments on HN.",
+      "id": "hn-50409856",
+      "title": "Consumer brain wave headsets threaten privacy",
+      "summary": "Consumer brain wave headsets threaten privacy — 34 points, 12 comments on HN.",
       "source": "Hacker News",
-      "sourceUrl": "https://www.kadoa.com/companies/insights/ai-selloff-perspective",
+      "sourceUrl": "https://www.science.org/content/article/wearable-device-makers-are-harvesting-brain-data-train-ai-without-telling-users?referrer=https%3A%2F%2Fwww.google.com%2F",
+      "category": "products",
+      "date": "2026-11-08",
+      "hot": false,
+      "score": 34,
+      "tags": [
+        "HN",
+        "AI",
+        "story",
+        "author_maxall4"
+      ]
+    },
+    {
+      "id": "hn-50410126",
+      "title": "Good Night, and Good Luck: AI, fear and what the job data says",
+      "summary": "Good Night, and Good Luck: AI, fear and what the job data says — 6 points, 2 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://rpallas.xyz/good-night-and-good-luck/",
+      "category": "products",
+      "date": "2026-11-08",
+      "hot": false,
+      "score": 6,
+      "tags": [
+        "HN",
+        "AI",
+        "story",
+        "author_ibobev"
+      ]
+    },
+    {
+      "id": "hn-50409992",
+      "title": "Anthropic warns that it's close to RSI capability, a.k.a. self-building AI",
+      "summary": "Anthropic warns that it's close to RSI capability, a.k.a. self-building AI — 6 points, 5 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://techcrunch.com/2026/11/02/anthropic-warns-that-its-very-close-to-rsi-capability-aka-self-building-ai/",
+      "category": "big-tech",
+      "date": "2026-11-08",
+      "hot": false,
+      "score": 6,
+      "tags": [
+        "HN",
+        "AI",
+        "story",
+        "author_RickJWagner"
+      ]
+    },
+    {
+      "id": "hn-50410796",
+      "title": "70% of Brits say please or thank you when speaking to AI, some even apologize",
+      "summary": "70% of Brits say please or thank you when speaking to AI, some even apologize — 4 points, 6 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://www.techradar.com/pro/70-percent-of-brits-say-please-or-thank-you-when-speaking-to-ai-and-some-even-apologize",
+      "category": "products",
+      "date": "2026-11-08",
+      "hot": false,
+      "score": 4,
+      "tags": [
+        "HN",
+        "AI",
+        "story",
+        "author_giuliomagnifico"
+      ]
+    },
+    {
+      "id": "hn-50410557",
+      "title": "The internet has a human slop problem, and AI is exposing it",
+      "summary": "The internet has a human slop problem, and AI is exposing it — 4 points, 0 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://www.businessinsider.com/ai-human-slop-software-security-vulnerabilities-internet-2026-10",
+      "category": "products",
+      "date": "2026-11-08",
+      "hot": false,
+      "score": 4,
+      "tags": [
+        "HN",
+        "AI",
+        "story",
+        "author_ghernando"
+      ]
+    },
+    {
+      "id": "hnoon-348-blog-posts-to-learn-about-psychology",
+      "title": "348 Blog Posts To Learn About Psychology",
+      "summary": "Learn everything you need to know about Psychology via these 348 free HackerNoon blog posts. — by Learn Repo on HackerNoon.",
+      "source": "HackerNoon",
+      "sourceUrl": "https://hackernoon.com/348-blog-posts-to-learn-about-psychology",
       "category": "products",
       "date": "2026-11-07",
       "hot": true,
-      "score": 59,
+      "score": 100,
       "tags": [
-        "HN",
-        "AI",
-        "story",
-        "author_hubraumhugo"
+        "HackerNoon",
+        "psychology",
+        "AI"
       ]
     },
     {
-      "id": "hn-50401213",
-      "title": "Brave Sells Its Search Index to AI, and Your Website Is Probably in It",
-      "summary": "Brave Sells Its Search Index to AI, and Your Website Is Probably in It — 13 points, 2 comments on HN.",
-      "source": "Hacker News",
-      "sourceUrl": "https://www.searchenginejournal.com/brave-sells-its-search-index-to-ai-and-your-website-is-probably-in-it/595829/",
-      "category": "products",
+      "id": "hnoon-debugging-missing-results-in-a-multistage-search-pipeline",
+      "title": "Debugging Missing Results in a Multistage Search Pipeline",
+      "summary": "Before you tune anything, find the first stage where your candidate stopped progressing. Everything else follows from that. — by Anish Walawalkar on HackerNoon.",
+      "source": "HackerNoon",
+      "sourceUrl": "https://hackernoon.com/debugging-missing-results-in-a-multistage-search-pipeline",
+      "category": "safety",
       "date": "2026-11-07",
-      "hot": false,
-      "score": 13,
+      "hot": true,
+      "score": 100,
       "tags": [
-        "HN",
-        "AI",
-        "story",
-        "author_linhns"
+        "HackerNoon",
+        "search-engineering",
+        "AI"
       ]
     },
     {
-      "id": "hn-50401409",
-      "title": "Show HN: Backwords – Let AI teach you how to speak in reverse",
-      "summary": "Show HN: Backwords – Let AI teach you how to speak in reverse — 9 points, 2 comments on HN.",
-      "source": "Hacker News",
-      "sourceUrl": "https://backwords.greg.technology/",
+      "id": "hnoon-a-practitioners-field-guide-to-marketing-engineering",
+      "title": "A Practitioner's Field Guide to Marketing Engineering",
+      "summary": "What is marketing engineering? A practitioner’s guide to the AI systems that do marketing work: the 5-layer loop, real cases, and how to become one. — by Kristina Vislianska on HackerNoon.",
+      "source": "HackerNoon",
+      "sourceUrl": "https://hackernoon.com/a-practitioners-field-guide-to-marketing-engineering",
       "category": "products",
       "date": "2026-11-07",
-      "hot": false,
-      "score": 9,
+      "hot": true,
+      "score": 100,
       "tags": [
-        "HN",
-        "AI",
-        "story",
-        "author_gregsadetsky"
+        "HackerNoon",
+        "marketing-engineering",
+        "AI"
       ]
     },
     {
-      "id": "hn-50401596",
-      "title": "The Pangram Backlash Unfolding on College Campuses",
-      "summary": "The Pangram Backlash Unfolding on College Campuses — 5 points, 0 comments on HN.",
-      "source": "Hacker News",
-      "sourceUrl": "https://www.theatlantic.com/technology/2026/09/college-professors-ai-detectors-pangram/688727/",
+      "id": "hnoon-sealedbench-a-protocol-for-freezing-ai-benchmarks-before-the",
+      "title": "SealedBench: A Protocol for Freezing AI Benchmarks Before the Questions Are Known",
+      "summary": "An AI exam whose generator is sealed to a future drand round and stored on Arweave, so anyone can rebuild the questions and re-check the scores. — by ZG Z on HackerNoon.",
+      "source": "HackerNoon",
+      "sourceUrl": "https://hackernoon.com/sealedbench-a-protocol-for-freezing-ai-benchmarks-before-the-questions-are-known",
       "category": "products",
       "date": "2026-11-07",
-      "hot": false,
-      "score": 5,
+      "hot": true,
+      "score": 100,
       "tags": [
-        "HN",
-        "AI",
-        "story",
-        "author_paulpauper"
+        "HackerNoon",
+        "decentralize-ai",
+        "AI"
       ]
     },
     {
-      "id": "hn-50401390",
-      "title": "YC Backed Bron AI Accused of Using LeBron's Name and Likeness",
-      "summary": "YC Backed Bron AI Accused of Using LeBron's Name and Likeness — 5 points, 1 comments on HN.",
-      "source": "Hacker News",
-      "sourceUrl": "https://frontofficesports.com/article/lebron-james-demands-ai-betting-app-stop-using-his-likeness/",
+      "id": "hnoon-what-fact-checking-my-own-claude-code-guide-taught-me-about-",
+      "title": "What Fact-Checking My Own Claude Code Guide Taught Me About Verifiable AI",
+      "summary": "Fact-checking my Claude Code guide with AI agents showed what verifiable AI needs: a source, a version, a re-runnable check and independent evidence. — by Ben Ryan on HackerNoon.",
+      "source": "HackerNoon",
+      "sourceUrl": "https://hackernoon.com/what-fact-checking-my-own-claude-code-guide-taught-me-about-verifiable-ai",
       "category": "products",
       "date": "2026-11-07",
-      "hot": false,
-      "score": 5,
+      "hot": true,
+      "score": 100,
       "tags": [
-        "HN",
-        "AI",
-        "story",
-        "author_sicgods"
+        "HackerNoon",
+        "claude-code",
+        "AI"
       ]
     },
     {
       "id": "dev-4985077",
       "title": "An AI Testing Presentation Became the Final Push for Organizational Change at My Company",
-      "summary": "From a multi-agent testing experiment to a broader discussion about how engineering teams should... — 115 reactions, 65 comments on DEV.to.",
+      "summary": "From a multi-agent testing experiment to a broader discussion about how engineering teams should... — 121 reactions, 65 comments on DEV.to.",
       "source": "DEV.to",
       "sourceUrl": "https://dev.to/xulingfeng/an-ai-testing-presentation-became-the-final-push-for-organizational-change-at-my-company-12ag",
       "category": "products",
       "date": "2026-11-06",
       "hot": true,
-      "score": 115,
+      "score": 121,
       "tags": [
         "DEV.to",
         "ai",
@@ -157,79 +237,15 @@
       ]
     },
     {
-      "id": "hnoon-convenience-is-the-price-tag-on-your-privacy",
-      "title": "Convenience Is the Price Tag on Your Privacy",
-      "summary": " — by Gaus Ahamad on HackerNoon.",
-      "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/convenience-is-the-price-tag-on-your-privacy",
-      "category": "products",
-      "date": "2026-11-06",
-      "hot": true,
-      "score": 100,
-      "tags": [
-        "HackerNoon",
-        "privacy",
-        "AI"
-      ]
-    },
-    {
-      "id": "hnoon-we-love-our-tops-and-bottoms-the-25-wildest-quotes-from-grin",
-      "title": "“We Love Our Tops and Bottoms”: The 25 Wildest Quotes From Grindr CEO George Arison’s AMA",
-      "summary": "Grindr CEO George Arison faced WallStreetBets in an AMA mixing memes, AI ambitions, privacy questions, and candid answers. Here are 25 standout quotes. — by Clapback on HackerNoon.",
-      "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/we-love-our-tops-and-bottoms-the-25-wildest-quotes-from-grindr-ceo-george-arisons-ama",
-      "category": "fun",
-      "date": "2026-11-06",
-      "hot": true,
-      "score": 100,
-      "tags": [
-        "HackerNoon",
-        "grindr",
-        "AI"
-      ]
-    },
-    {
-      "id": "hnoon-load-balancing-starts-before-the-load-balancer-routing-patte",
-      "title": "Load Balancing Starts Before the Load Balancer: Routing Patterns for Distributed Systems",
-      "summary": "Load balancing isn't just a load balancer. Learn how routing works for databases, caches, and stream processors, and how to handle hot partitions — by Varsha Ganesh on HackerNoon.",
-      "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/load-balancing-starts-before-the-load-balancer-routing-patterns-for-distributed-systems",
-      "category": "products",
-      "date": "2026-11-06",
-      "hot": true,
-      "score": 100,
-      "tags": [
-        "HackerNoon",
-        "distributed-systems",
-        "AI"
-      ]
-    },
-    {
-      "id": "hnoon-gemini-4-carbon-is-locked-heres-what-it-means-for-your-budge",
-      "title": "Gemini 4 Carbon Is Locked: Here's What It Means for Your Budget and Your Patch Window",
-      "summary": " — by Ifeoluwa Tech (PhD) on HackerNoon.",
-      "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/gemini-4-carbon-is-locked-heres-what-it-means-for-your-budget-and-your-patch-window",
-      "category": "products",
-      "date": "2026-11-06",
-      "hot": true,
-      "score": 100,
-      "tags": [
-        "HackerNoon",
-        "ai",
-        "AI"
-      ]
-    },
-    {
       "id": "hntop-50385272",
       "title": "Claude Code sends your email address to websites",
-      "summary": "Claude Code sends your email address to websites — 1569 points, 502 comments on HN.",
+      "summary": "Claude Code sends your email address to websites — 1596 points, 521 comments on HN.",
       "source": "Hacker News",
       "sourceUrl": "https://github.com/anthropics/claude-code/issues/107757",
       "category": "products",
       "date": "2026-11-05",
       "hot": true,
-      "score": 1569,
+      "score": 1596,
       "tags": [
         "HN",
         "top"
@@ -282,34 +298,17 @@
         "paper",
         "AI"
       ]
-    },
-    {
-      "id": "dev-4984085",
-      "title": "Congrats to the Kaggle Benchmarking Challenge Winners!",
-      "summary": "A few weeks ago we teamed up with Kaggle to ask a deceptively simple question: how do you actually... — 114 reactions, 25 comments on DEV.to.",
-      "source": "DEV.to",
-      "sourceUrl": "https://dev.to/devteam/congrats-to-the-kaggle-benchmarking-challenge-winners-2moh",
-      "category": "products",
-      "date": "2026-11-05",
-      "hot": true,
-      "score": 114,
-      "tags": [
-        "DEV.to",
-        "ai",
-        "devchallenge",
-        "kagglechallenge"
-      ]
     }
   ],
   "meta": {
-    "fetchedAt": "2026-11-07T08:20:31.888Z",
+    "fetchedAt": "2026-11-08T08:37:22.734Z",
     "topic": "AI",
     "total": 15,
-    "hot": 11,
+    "hot": 10,
     "sources": [
       "Hacker News",
-      "DEV.to",
       "HackerNoon",
+      "DEV.to",
       "arXiv"
     ]
   }
