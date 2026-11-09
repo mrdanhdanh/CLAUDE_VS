@@ -1,12 +1,12 @@
 {
-  "generatedAt": "2026-11-08T08:37:22.734Z",
+  "generatedAt": "2026-11-09T09:08:56.010Z",
   "generatedBy": "YUNIE × Last30Days",
   "version": 2,
   "description": "Tin AI mới nhất — tổng hợp từ Last30Days (HN, GitHub, DEV.to, Reddit, arXiv, HackerNoon) trong 30 ngày qua. Chủ đề: AI. Tự động cập nhật bởi YUNIE.",
   "last30days": {
     "enabled": true,
     "topic": "AI",
-    "since": "2026-10-09",
+    "since": "2026-10-10",
     "days": 30,
     "sources": [
       "Hacker News (Algolia, free)",
@@ -55,64 +55,80 @@
   ],
   "articles": [
     {
-      "id": "hn-50409856",
-      "title": "Consumer brain wave headsets threaten privacy",
-      "summary": "Consumer brain wave headsets threaten privacy — 34 points, 12 comments on HN.",
-      "source": "Hacker News",
-      "sourceUrl": "https://www.science.org/content/article/wearable-device-makers-are-harvesting-brain-data-train-ai-without-telling-users?referrer=https%3A%2F%2Fwww.google.com%2F",
+      "id": "hnoon-startup-founder-interview-how-novera-is-turning-enterprise-i",
+      "title": "Startup Founder Interview: How Novera Is Turning Enterprise Infrastructure Into an Autonomous System",
+      "summary": " — by Novera on HackerNoon.",
+      "source": "HackerNoon",
+      "sourceUrl": "https://hackernoon.com/startup-founder-interview-how-novera-is-turning-enterprise-infrastructure-into-an-autonomous-system",
       "category": "products",
-      "date": "2026-11-08",
-      "hot": false,
-      "score": 34,
+      "date": "2026-11-09",
+      "hot": true,
+      "score": 100,
+      "tags": [
+        "HackerNoon",
+        "startup-founder-interview",
+        "AI"
+      ]
+    },
+    {
+      "id": "hn-50421426",
+      "title": "Apple capped engineers at a $200 daily AI budget",
+      "summary": "Apple capped engineers at a $200 daily AI budget — 83 points, 87 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://www.stork.ai/newsletter/2026-11-08-apple-capped-engineers-at-a-200-daily-ai-budget#story-1",
+      "category": "products",
+      "date": "2026-11-09",
+      "hot": true,
+      "score": 83,
       "tags": [
         "HN",
         "AI",
         "story",
-        "author_maxall4"
+        "author_GloVin"
       ]
     },
     {
-      "id": "hn-50410126",
-      "title": "Good Night, and Good Luck: AI, fear and what the job data says",
-      "summary": "Good Night, and Good Luck: AI, fear and what the job data says — 6 points, 2 comments on HN.",
+      "id": "hn-50422001",
+      "title": "Being a meat proxy for AI should be grounds for getting people fired",
+      "summary": "Being a meat proxy for AI should be grounds for getting people fired — 39 points, 28 comments on HN.",
       "source": "Hacker News",
-      "sourceUrl": "https://rpallas.xyz/good-night-and-good-luck/",
+      "sourceUrl": "https://swiftrocks.com/being-a-meat-proxy-for-ai-should-be-grounds-for-getting-people-fired",
       "category": "products",
-      "date": "2026-11-08",
+      "date": "2026-11-09",
       "hot": false,
-      "score": 6,
+      "score": 39,
       "tags": [
         "HN",
         "AI",
         "story",
-        "author_ibobev"
+        "author_rockbruno"
       ]
     },
     {
-      "id": "hn-50409992",
-      "title": "Anthropic warns that it's close to RSI capability, a.k.a. self-building AI",
-      "summary": "Anthropic warns that it's close to RSI capability, a.k.a. self-building AI — 6 points, 5 comments on HN.",
+      "id": "hn-50421778",
+      "title": "Ask HN: As a human, are you glad the AI bubble is bursting?",
+      "summary": "Ask HN: As a human, are you glad the AI bubble is bursting? — 4 points, 4 comments on HN.",
       "source": "Hacker News",
-      "sourceUrl": "https://techcrunch.com/2026/11/02/anthropic-warns-that-its-very-close-to-rsi-capability-aka-self-building-ai/",
+      "sourceUrl": "https://news.ycombinator.com/item?id=50421778",
+      "category": "products",
+      "date": "2026-11-09",
+      "hot": false,
+      "score": 4,
+      "tags": [
+        "HN",
+        "AI",
+        "story",
+        "author_roschdal"
+      ]
+    },
+    {
+      "id": "hn-50421371",
+      "title": "Anthropic secures $3.4B generator deal for AI data centers",
+      "summary": "Anthropic secures $3.4B generator deal for AI data centers — 4 points, 1 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://www.reuters.com/business/energy/anthropic-secures-34-billion-generator-deal-ai-data-centers-ft-reports-2026-11-08/",
       "category": "big-tech",
-      "date": "2026-11-08",
-      "hot": false,
-      "score": 6,
-      "tags": [
-        "HN",
-        "AI",
-        "story",
-        "author_RickJWagner"
-      ]
-    },
-    {
-      "id": "hn-50410796",
-      "title": "70% of Brits say please or thank you when speaking to AI, some even apologize",
-      "summary": "70% of Brits say please or thank you when speaking to AI, some even apologize — 4 points, 6 comments on HN.",
-      "source": "Hacker News",
-      "sourceUrl": "https://www.techradar.com/pro/70-percent-of-brits-say-please-or-thank-you-when-speaking-to-ai-and-some-even-apologize",
-      "category": "products",
-      "date": "2026-11-08",
+      "date": "2026-11-09",
       "hot": false,
       "score": 4,
       "tags": [
@@ -123,191 +139,177 @@
       ]
     },
     {
-      "id": "hn-50410557",
-      "title": "The internet has a human slop problem, and AI is exposing it",
-      "summary": "The internet has a human slop problem, and AI is exposing it — 4 points, 0 comments on HN.",
-      "source": "Hacker News",
-      "sourceUrl": "https://www.businessinsider.com/ai-human-slop-software-security-vulnerabilities-internet-2026-10",
+      "id": "hnoon-claudes-false-police-tip-shows-why-ai-safety-cannot-depend-o",
+      "title": "Claude's False Police Tip Shows Why AI Safety Cannot Depend on the Model Alone",
+      "summary": "An AI-generated false homicide tip exposed a deeper problem: rules are not boundaries. Real AI safety depends on controlling consequences, not just compliance. — by Sanford Diday on HackerNoon.",
+      "source": "HackerNoon",
+      "sourceUrl": "https://hackernoon.com/claudes-false-police-tip-shows-why-ai-safety-cannot-depend-on-the-model-alone",
+      "category": "safety",
+      "date": "2026-11-08",
+      "hot": true,
+      "score": 100,
+      "tags": [
+        "HackerNoon",
+        "ai-governance",
+        "AI"
+      ]
+    },
+    {
+      "id": "hnoon-158-blog-posts-to-learn-about-search-engine",
+      "title": "158 Blog Posts To Learn About Search Engine",
+      "summary": "Learn everything you need to know about Search Engine via these 158 free HackerNoon blog posts. — by Learn Repo on HackerNoon.",
+      "source": "HackerNoon",
+      "sourceUrl": "https://hackernoon.com/158-blog-posts-to-learn-about-search-engine",
       "category": "products",
       "date": "2026-11-08",
-      "hot": false,
-      "score": 4,
-      "tags": [
-        "HN",
-        "AI",
-        "story",
-        "author_ghernando"
-      ]
-    },
-    {
-      "id": "hnoon-348-blog-posts-to-learn-about-psychology",
-      "title": "348 Blog Posts To Learn About Psychology",
-      "summary": "Learn everything you need to know about Psychology via these 348 free HackerNoon blog posts. — by Learn Repo on HackerNoon.",
-      "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/348-blog-posts-to-learn-about-psychology",
-      "category": "products",
-      "date": "2026-11-07",
       "hot": true,
       "score": 100,
       "tags": [
         "HackerNoon",
-        "psychology",
+        "search-engine",
         "AI"
       ]
     },
     {
-      "id": "hnoon-debugging-missing-results-in-a-multistage-search-pipeline",
-      "title": "Debugging Missing Results in a Multistage Search Pipeline",
-      "summary": "Before you tune anything, find the first stage where your candidate stopped progressing. Everything else follows from that. — by Anish Walawalkar on HackerNoon.",
+      "id": "hnoon-a-step-by-step-guide-to-ebay-api-integration-with-ai-agents",
+      "title": "A Step-by-Step Guide to eBay API Integration With AI Agents",
+      "summary": "eBay API setup for an AI listing agent, in Production. You click six eBay pages and paste three keys. Your agent runs the rest of the steps. — by Mat Banik on HackerNoon.",
       "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/debugging-missing-results-in-a-multistage-search-pipeline",
+      "sourceUrl": "https://hackernoon.com/a-step-by-step-guide-to-ebay-api-integration-with-ai-agents",
+      "category": "products",
+      "date": "2026-11-08",
+      "hot": true,
+      "score": 100,
+      "tags": [
+        "HackerNoon",
+        "ai-agents",
+        "AI"
+      ]
+    },
+    {
+      "id": "hnoon-how-one-remote-reboot-cost-me-three-days-of-work",
+      "title": "How One Remote Reboot Cost Me Three Days of Work",
+      "summary": "A short story about a remote reboot test that locked me out of a machine for three days, and the rule I wrote afterward. — by Dumb Game Lab on HackerNoon.",
+      "source": "HackerNoon",
+      "sourceUrl": "https://hackernoon.com/how-one-remote-reboot-cost-me-three-days-of-work",
+      "category": "products",
+      "date": "2026-11-08",
+      "hot": true,
+      "score": 100,
+      "tags": [
+        "HackerNoon",
+        "remote-access",
+        "AI"
+      ]
+    },
+    {
+      "id": "hnoon-26-css-tips-and-tricks-for-modern-web-development",
+      "title": "26 CSS Tips and Tricks for Modern Web Development",
+      "summary": "Explore 26 practical CSS tips for animations, layouts, scroll effects, selectors, responsive typography, and other frontend development tasks. — by Marko Denic on HackerNoon.",
+      "source": "HackerNoon",
+      "sourceUrl": "https://hackernoon.com/26-css-tips-and-tricks-for-modern-web-development",
       "category": "safety",
-      "date": "2026-11-07",
+      "date": "2026-11-08",
       "hot": true,
       "score": 100,
       "tags": [
         "HackerNoon",
-        "search-engineering",
+        "css",
         "AI"
       ]
     },
     {
-      "id": "hnoon-a-practitioners-field-guide-to-marketing-engineering",
-      "title": "A Practitioner's Field Guide to Marketing Engineering",
-      "summary": "What is marketing engineering? A practitioner’s guide to the AI systems that do marketing work: the 5-layer loop, real cases, and how to become one. — by Kristina Vislianska on HackerNoon.",
-      "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/a-practitioners-field-guide-to-marketing-engineering",
+      "id": "dev-4992435",
+      "title": "Building RailPulse AI: Deploying an Open-Source Railway Dispatch Agent with Gemma and Google Cloud Run",
+      "summary": "Author: Robina Mirbahar AI/ML Google Developer Expert (GDE) | Google Cloud Champion Innovator GitHub... — 29 reactions, 23 comments on DEV.to.",
+      "source": "DEV.to",
+      "sourceUrl": "https://dev.to/gde/building-railpulse-ai-deploying-an-open-source-railway-dispatch-agent-with-gemma-and-google-cloud-2b9g",
+      "category": "big-tech",
+      "date": "2026-11-07",
+      "hot": false,
+      "score": 29,
+      "tags": [
+        "DEV.to",
+        "ai",
+        "ai",
+        "googlecloud"
+      ]
+    },
+    {
+      "id": "dev-4993366",
+      "title": "How to Master AWS for AI?",
+      "summary": "Ciao Amici 👋  Every hiking trail in the Alps has a map at the trailhead. A good one shows you the... — 23 reactions, 10 comments on DEV.to.",
+      "source": "DEV.to",
+      "sourceUrl": "https://dev.to/aws-builders/how-to-master-aws-for-ai-3la4",
       "category": "products",
       "date": "2026-11-07",
-      "hot": true,
-      "score": 100,
+      "hot": false,
+      "score": 23,
       "tags": [
-        "HackerNoon",
-        "marketing-engineering",
+        "DEV.to",
+        "ai",
+        "machinelearning",
+        "aws"
+      ]
+    },
+    {
+      "id": "ax-2611.09892v1",
+      "title": "On Agentic Manipulation Policies",
+      "summary": "Recent work on robot manipulation has focused on specialist policies trained on demonstrations. We show that generalist AI models can control manipulators more reliably than specialist policies such as vision-language-ac",
+      "source": "arXiv",
+      "sourceUrl": "http://arxiv.org/abs/2611.09892v1",
+      "category": "safety",
+      "date": "2026-11-06",
+      "hot": true,
+      "score": 800,
+      "tags": [
+        "arXiv",
+        "paper",
         "AI"
       ]
     },
     {
-      "id": "hnoon-sealedbench-a-protocol-for-freezing-ai-benchmarks-before-the",
-      "title": "SealedBench: A Protocol for Freezing AI Benchmarks Before the Questions Are Known",
-      "summary": "An AI exam whose generator is sealed to a future drand round and stored on Arweave, so anyone can rebuild the questions and re-check the scores. — by ZG Z on HackerNoon.",
-      "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/sealedbench-a-protocol-for-freezing-ai-benchmarks-before-the-questions-are-known",
-      "category": "products",
-      "date": "2026-11-07",
+      "id": "ax-2611.09730v1",
+      "title": "What to Delegate, What to Preserve: Human Preferences for Agentic AI Across Everyday Life and Work",
+      "summary": "AI agents can execute multi-step tasks on users' behalf, yet the boundaries of acceptable delegation remain unclear. We report a scenario-based survey of 289 U.S. adults with prior AI experience covering 45 use cases acr",
+      "source": "arXiv",
+      "sourceUrl": "http://arxiv.org/abs/2611.09730v1",
+      "category": "safety",
+      "date": "2026-11-06",
       "hot": true,
-      "score": 100,
+      "score": 800,
       "tags": [
-        "HackerNoon",
-        "decentralize-ai",
-        "AI"
-      ]
-    },
-    {
-      "id": "hnoon-what-fact-checking-my-own-claude-code-guide-taught-me-about-",
-      "title": "What Fact-Checking My Own Claude Code Guide Taught Me About Verifiable AI",
-      "summary": "Fact-checking my Claude Code guide with AI agents showed what verifiable AI needs: a source, a version, a re-runnable check and independent evidence. — by Ben Ryan on HackerNoon.",
-      "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/what-fact-checking-my-own-claude-code-guide-taught-me-about-verifiable-ai",
-      "category": "products",
-      "date": "2026-11-07",
-      "hot": true,
-      "score": 100,
-      "tags": [
-        "HackerNoon",
-        "claude-code",
+        "arXiv",
+        "paper",
         "AI"
       ]
     },
     {
       "id": "dev-4985077",
       "title": "An AI Testing Presentation Became the Final Push for Organizational Change at My Company",
-      "summary": "From a multi-agent testing experiment to a broader discussion about how engineering teams should... — 121 reactions, 65 comments on DEV.to.",
+      "summary": "From a multi-agent testing experiment to a broader discussion about how engineering teams should... — 127 reactions, 72 comments on DEV.to.",
       "source": "DEV.to",
       "sourceUrl": "https://dev.to/xulingfeng/an-ai-testing-presentation-became-the-final-push-for-organizational-change-at-my-company-12ag",
       "category": "products",
       "date": "2026-11-06",
       "hot": true,
-      "score": 121,
+      "score": 127,
       "tags": [
         "DEV.to",
         "ai",
         "discuss",
         "ai"
       ]
-    },
-    {
-      "id": "hntop-50385272",
-      "title": "Claude Code sends your email address to websites",
-      "summary": "Claude Code sends your email address to websites — 1596 points, 521 comments on HN.",
-      "source": "Hacker News",
-      "sourceUrl": "https://github.com/anthropics/claude-code/issues/107757",
-      "category": "products",
-      "date": "2026-11-05",
-      "hot": true,
-      "score": 1596,
-      "tags": [
-        "HN",
-        "top"
-      ]
-    },
-    {
-      "id": "ax-2611.08483v1",
-      "title": "SwarmEvolve: Latent Agent Swarms for Evolutionary Discovery and Optimization",
-      "summary": "LLM-guided evolutionary search uses AI agents to improve programs for mathematical and computational problems by iteratively refining solutions and combining high-scoring methods. However, the process is often slow becau",
-      "source": "arXiv",
-      "sourceUrl": "http://arxiv.org/abs/2611.08483v1",
-      "category": "products",
-      "date": "2026-11-05",
-      "hot": true,
-      "score": 800,
-      "tags": [
-        "arXiv",
-        "paper",
-        "AI"
-      ]
-    },
-    {
-      "id": "ax-2611.08431v1",
-      "title": "Scaffolding GenAI Use in Ethical Essay Writing: A Three-Year Experience Report in Introductory Computing",
-      "summary": "As society, ethics, and professional practice become increasingly integrated across the computer science curriculum, technical courses need practical ways to support ethical reasoning. Ethical essay assignments offer one",
-      "source": "arXiv",
-      "sourceUrl": "http://arxiv.org/abs/2611.08431v1",
-      "category": "big-tech",
-      "date": "2026-11-05",
-      "hot": true,
-      "score": 800,
-      "tags": [
-        "arXiv",
-        "paper",
-        "AI"
-      ]
-    },
-    {
-      "id": "ax-2611.08428v1",
-      "title": "The Power of Meta Access in the Software of the Future --- Demonstrated on LLM Chat UIs and Chat AI",
-      "summary": "Chat remains the default surface for many large language model (LLM) tasks, even as agentic tools such as OpenCode excel at coding and automation. Yet the model sees the current dialogue but not the workspace around it. ",
-      "source": "arXiv",
-      "sourceUrl": "http://arxiv.org/abs/2611.08428v1",
-      "category": "safety",
-      "date": "2026-11-05",
-      "hot": true,
-      "score": 800,
-      "tags": [
-        "arXiv",
-        "paper",
-        "AI"
-      ]
     }
   ],
   "meta": {
-    "fetchedAt": "2026-11-08T08:37:22.734Z",
+    "fetchedAt": "2026-11-09T09:08:56.010Z",
     "topic": "AI",
     "total": 15,
     "hot": 10,
     "sources": [
-      "Hacker News",
       "HackerNoon",
+      "Hacker News",
       "DEV.to",
       "arXiv"
     ]
