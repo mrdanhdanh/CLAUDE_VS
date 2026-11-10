@@ -1,12 +1,12 @@
 {
-  "generatedAt": "2026-11-09T09:08:56.010Z",
+  "generatedAt": "2026-11-10T09:17:12.552Z",
   "generatedBy": "YUNIE × Last30Days",
   "version": 2,
   "description": "Tin AI mới nhất — tổng hợp từ Last30Days (HN, GitHub, DEV.to, Reddit, arXiv, HackerNoon) trong 30 ngày qua. Chủ đề: AI. Tự động cập nhật bởi YUNIE.",
   "last30days": {
     "enabled": true,
     "topic": "AI",
-    "since": "2026-10-10",
+    "since": "2026-10-11",
     "days": 30,
     "sources": [
       "Hacker News (Algolia, free)",
@@ -55,263 +55,258 @@
   ],
   "articles": [
     {
-      "id": "hnoon-startup-founder-interview-how-novera-is-turning-enterprise-i",
-      "title": "Startup Founder Interview: How Novera Is Turning Enterprise Infrastructure Into an Autonomous System",
-      "summary": " — by Novera on HackerNoon.",
+      "id": "hnoon-why-human-judgment-matters-more-than-data-in-enterprise-ai",
+      "title": "Why Human Judgment Matters More Than Data in Enterprise AI",
+      "summary": " — by ShaoTung Lien (練紹彤) on HackerNoon.",
       "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/startup-founder-interview-how-novera-is-turning-enterprise-infrastructure-into-an-autonomous-system",
+      "sourceUrl": "https://hackernoon.com/why-human-judgment-matters-more-than-data-in-enterprise-ai",
+      "category": "products",
+      "date": "2026-11-10",
+      "hot": true,
+      "score": 100,
+      "tags": [
+        "HackerNoon",
+        "ai",
+        "AI"
+      ]
+    },
+    {
+      "id": "hnoon-the-convenience-trap-when-techonology-starts-making-decision",
+      "title": "The Convenience Trap: When Techonology Starts Making Decisions For Us",
+      "summary": " — by Bittu Kumar on HackerNoon.",
+      "source": "HackerNoon",
+      "sourceUrl": "https://hackernoon.com/the-convenience-trap-when-techonology-starts-making-decisions-for-us",
+      "category": "products",
+      "date": "2026-11-10",
+      "hot": true,
+      "score": 100,
+      "tags": [
+        "HackerNoon",
+        "automation",
+        "AI"
+      ]
+    },
+    {
+      "id": "hnoon-your-competitor-is-writing-your-product-comparison-page-here",
+      "title": "Your Competitor Is Writing Your Product Comparison Page - Here’s How to One-Up Them",
+      "summary": " — by Carmen Hughes on HackerNoon.",
+      "source": "HackerNoon",
+      "sourceUrl": "https://hackernoon.com/your-competitor-is-writing-your-product-comparison-page-heres-how-to-one-up-them",
+      "category": "products",
+      "date": "2026-11-10",
+      "hot": true,
+      "score": 100,
+      "tags": [
+        "HackerNoon",
+        "ai",
+        "AI"
+      ]
+    },
+    {
+      "id": "hn-50437106",
+      "title": "Fireworks AI security breach impacts Notion and their customers",
+      "summary": "Fireworks AI security breach impacts Notion and their customers — 19 points, 4 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://www.notion.com/help/security-incident-involving-a-third-party-ai-vendor",
+      "category": "products",
+      "date": "2026-11-10",
+      "hot": false,
+      "score": 19,
+      "tags": [
+        "HN",
+        "AI",
+        "story",
+        "author_werrett"
+      ]
+    },
+    {
+      "id": "hn-50436636",
+      "title": "Tell HN: Notion AI chat sessions have been exposed via Fireworks AI hack",
+      "summary": "Only an email so far, nothing official I could find. I figure if you didn&#x27;t get this email you are ok.<p>---<p>We are writing to inform you of a security incident at one of our vendors, Fireworks AI, that may impact — 11 points, 1 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://news.ycombinator.com/item?id=50436636",
+      "category": "products",
+      "date": "2026-11-10",
+      "hot": false,
+      "score": 11,
+      "tags": [
+        "HN",
+        "AI",
+        "story",
+        "author_RamblingCTO"
+      ]
+    },
+    {
+      "id": "hntop-50429906",
+      "title": "Claude Fable 5.2 and Mythos 5.2",
+      "summary": "Claude Fable 5.2 and Mythos 5.2 — 975 points, 6 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://www.anthropic.com/claude-fable-and-mythos-5-2",
+      "category": "products",
+      "date": "2026-11-09",
+      "hot": true,
+      "score": 975,
+      "tags": [
+        "HN",
+        "top"
+      ]
+    },
+    {
+      "id": "ax-2611.12825v1",
+      "title": "MaxIM: Maximally Informative Incremental Summarization via Reinforcement Learning",
+      "summary": "AI systems must often maintain bounded memory of unbounded interaction histories. However, optimizing the memory representation, and its updates, for downstream task utility is difficult for standard reinforcement learni",
+      "source": "arXiv",
+      "sourceUrl": "http://arxiv.org/abs/2611.12825v1",
+      "category": "products",
+      "date": "2026-11-09",
+      "hot": true,
+      "score": 800,
+      "tags": [
+        "arXiv",
+        "paper",
+        "AI"
+      ]
+    },
+    {
+      "id": "hnoon-sleep-tech-needs-to-prove-more-than-a-change-in-brain-waves",
+      "title": "Sleep Tech Needs to Prove More Than a Change in Brain Waves",
+      "summary": " — by Nargiza Noimann-Zander on HackerNoon.",
+      "source": "HackerNoon",
+      "sourceUrl": "https://hackernoon.com/sleep-tech-needs-to-prove-more-than-a-change-in-brain-waves",
       "category": "products",
       "date": "2026-11-09",
       "hot": true,
       "score": 100,
       "tags": [
         "HackerNoon",
-        "startup-founder-interview",
+        "brain",
         "AI"
       ]
     },
     {
-      "id": "hn-50421426",
-      "title": "Apple capped engineers at a $200 daily AI budget",
-      "summary": "Apple capped engineers at a $200 daily AI budget — 83 points, 87 comments on HN.",
-      "source": "Hacker News",
-      "sourceUrl": "https://www.stork.ai/newsletter/2026-11-08-apple-capped-engineers-at-a-200-daily-ai-budget#story-1",
+      "id": "hnoon-5-open-source-and-free-projects-for-coffee-lovers-to-support",
+      "title": "5 Open-Source & Free Projects for Coffee Lovers — To Support Via Kivach",
+      "summary": "Discover five free open-source software projects for coffee lovers, from brewing tools to coffee games, and support their creators with cryptocurrency. — by Obyte on HackerNoon.",
+      "source": "HackerNoon",
+      "sourceUrl": "https://hackernoon.com/5-open-source-and-free-projects-for-coffee-lovers-to-support-via-kivach",
       "category": "products",
       "date": "2026-11-09",
       "hot": true,
-      "score": 83,
+      "score": 100,
       "tags": [
-        "HN",
-        "AI",
-        "story",
-        "author_GloVin"
+        "HackerNoon",
+        "coffee-culture",
+        "AI"
       ]
     },
     {
-      "id": "hn-50422001",
-      "title": "Being a meat proxy for AI should be grounds for getting people fired",
-      "summary": "Being a meat proxy for AI should be grounds for getting people fired — 39 points, 28 comments on HN.",
-      "source": "Hacker News",
-      "sourceUrl": "https://swiftrocks.com/being-a-meat-proxy-for-ai-should-be-grounds-for-getting-people-fired",
-      "category": "products",
-      "date": "2026-11-09",
-      "hot": false,
-      "score": 39,
-      "tags": [
-        "HN",
-        "AI",
-        "story",
-        "author_rockbruno"
-      ]
-    },
-    {
-      "id": "hn-50421778",
-      "title": "Ask HN: As a human, are you glad the AI bubble is bursting?",
-      "summary": "Ask HN: As a human, are you glad the AI bubble is bursting? — 4 points, 4 comments on HN.",
-      "source": "Hacker News",
-      "sourceUrl": "https://news.ycombinator.com/item?id=50421778",
-      "category": "products",
-      "date": "2026-11-09",
-      "hot": false,
-      "score": 4,
-      "tags": [
-        "HN",
-        "AI",
-        "story",
-        "author_roschdal"
-      ]
-    },
-    {
-      "id": "hn-50421371",
-      "title": "Anthropic secures $3.4B generator deal for AI data centers",
-      "summary": "Anthropic secures $3.4B generator deal for AI data centers — 4 points, 1 comments on HN.",
-      "source": "Hacker News",
-      "sourceUrl": "https://www.reuters.com/business/energy/anthropic-secures-34-billion-generator-deal-ai-data-centers-ft-reports-2026-11-08/",
+      "id": "hnoon-jensen-huang-affair-timeline-every-date-interview-and-megasp",
+      "title": "Jensen Huang Affair Timeline: Every Date, Interview and Megaspeed Mention From 2024 to Now",
+      "summary": "Jensen Huang affair timeline: when it began, every interview since, and every time the Nvidia CEO spoke about Megaspeed and Alice Huang. — by Cyber Espionage on HackerNoon.",
+      "source": "HackerNoon",
+      "sourceUrl": "https://hackernoon.com/jensen-huang-affair-timeline-every-date-interview-and-megaspeed-mention-from-2024-to-now",
       "category": "big-tech",
       "date": "2026-11-09",
-      "hot": false,
-      "score": 4,
+      "hot": true,
+      "score": 100,
+      "tags": [
+        "HackerNoon",
+        "nvidia",
+        "AI"
+      ]
+    },
+    {
+      "id": "hntop-50418016",
+      "title": "Nvidia CEO Jensen Huang's letter to staff about affair",
+      "summary": "<a href=\"https:&#x2F;&#x2F;www.axios.com&#x2F;2026&#x2F;11&#x2F;08&#x2F;nvidia-ceo-jensen-huang-affair-email-to-company\" rel=\"nofollow\">https:&#x2F;&#x2F;www.axios.com&#x2F;2026&#x2F;11&#x2F;08&#x2F;nvidia-ceo-jensen-hua — 957 points, 1238 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://nvidianews.nvidia.com/news/a-message-to-our-company",
+      "category": "big-tech",
+      "date": "2026-11-08",
+      "hot": true,
+      "score": 957,
       "tags": [
         "HN",
-        "AI",
-        "story",
-        "author_giuliomagnifico"
+        "top"
       ]
     },
     {
-      "id": "hnoon-claudes-false-police-tip-shows-why-ai-safety-cannot-depend-o",
-      "title": "Claude's False Police Tip Shows Why AI Safety Cannot Depend on the Model Alone",
-      "summary": "An AI-generated false homicide tip exposed a deeper problem: rules are not boundaries. Real AI safety depends on controlling consequences, not just compliance. — by Sanford Diday on HackerNoon.",
-      "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/claudes-false-police-tip-shows-why-ai-safety-cannot-depend-on-the-model-alone",
-      "category": "safety",
-      "date": "2026-11-08",
-      "hot": true,
-      "score": 100,
-      "tags": [
-        "HackerNoon",
-        "ai-governance",
-        "AI"
-      ]
-    },
-    {
-      "id": "hnoon-158-blog-posts-to-learn-about-search-engine",
-      "title": "158 Blog Posts To Learn About Search Engine",
-      "summary": "Learn everything you need to know about Search Engine via these 158 free HackerNoon blog posts. — by Learn Repo on HackerNoon.",
-      "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/158-blog-posts-to-learn-about-search-engine",
+      "id": "hntop-50415628",
+      "title": "Goldman Sachs is pulling Claude Code from its bankers and traders",
+      "summary": "Goldman Sachs is pulling Claude Code from its bankers and traders — 888 points, 482 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://www.thestateofai.com/news/goldman-sachs-claude-code-traders-bankers",
       "category": "products",
       "date": "2026-11-08",
       "hot": true,
-      "score": 100,
+      "score": 888,
       "tags": [
-        "HackerNoon",
-        "search-engine",
-        "AI"
+        "HN",
+        "top"
       ]
     },
     {
-      "id": "hnoon-a-step-by-step-guide-to-ebay-api-integration-with-ai-agents",
-      "title": "A Step-by-Step Guide to eBay API Integration With AI Agents",
-      "summary": "eBay API setup for an AI listing agent, in Production. You click six eBay pages and paste three keys. Your agent runs the rest of the steps. — by Mat Banik on HackerNoon.",
-      "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/a-step-by-step-guide-to-ebay-api-integration-with-ai-agents",
+      "id": "dev-4999883",
+      "title": "How much does it cost to run a text game with LLMs",
+      "summary": "AI costs are confusing. Providers give you a lot of numbers and nothing to actually know how much you are going to pay in the long run. There is no point in these input/cached/output token prices if you have no idea how  — 31 reactions, 33 comments on DEV.to.",
+      "source": "DEV.to",
+      "sourceUrl": "https://dev.to/hiper2d/how-much-does-it-cost-to-run-a-text-game-with-llms-57o7",
       "category": "products",
       "date": "2026-11-08",
       "hot": true,
-      "score": 100,
+      "score": 31,
       "tags": [
-        "HackerNoon",
-        "ai-agents",
-        "AI"
+        "DEV.to",
+        "ai",
+        "ai",
+        "llm"
       ]
     },
     {
-      "id": "hnoon-how-one-remote-reboot-cost-me-three-days-of-work",
-      "title": "How One Remote Reboot Cost Me Three Days of Work",
-      "summary": "A short story about a remote reboot test that locked me out of a machine for three days, and the rule I wrote afterward. — by Dumb Game Lab on HackerNoon.",
-      "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/how-one-remote-reboot-cost-me-three-days-of-work",
+      "id": "dev-4944139",
+      "title": "I Never Thought I'd Be a Programmer. Yet Here I Am.",
+      "summary": "Here I am sitting at home on a rainy Saturday, so I thought I'd share my story. It's nothing special,... — 46 reactions, 23 comments on DEV.to.",
+      "source": "DEV.to",
+      "sourceUrl": "https://dev.to/sizzlebop/i-never-thought-id-be-a-programmer-yet-here-i-am-21in",
       "category": "products",
-      "date": "2026-11-08",
+      "date": "2026-11-07",
       "hot": true,
-      "score": 100,
+      "score": 46,
       "tags": [
-        "HackerNoon",
-        "remote-access",
-        "AI"
-      ]
-    },
-    {
-      "id": "hnoon-26-css-tips-and-tricks-for-modern-web-development",
-      "title": "26 CSS Tips and Tricks for Modern Web Development",
-      "summary": "Explore 26 practical CSS tips for animations, layouts, scroll effects, selectors, responsive typography, and other frontend development tasks. — by Marko Denic on HackerNoon.",
-      "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/26-css-tips-and-tricks-for-modern-web-development",
-      "category": "safety",
-      "date": "2026-11-08",
-      "hot": true,
-      "score": 100,
-      "tags": [
-        "HackerNoon",
-        "css",
-        "AI"
+        "DEV.to",
+        "ai",
+        "devjournal",
+        "beginners"
       ]
     },
     {
       "id": "dev-4992435",
       "title": "Building RailPulse AI: Deploying an Open-Source Railway Dispatch Agent with Gemma and Google Cloud Run",
-      "summary": "Author: Robina Mirbahar AI/ML Google Developer Expert (GDE) | Google Cloud Champion Innovator GitHub... — 29 reactions, 23 comments on DEV.to.",
+      "summary": "Author: Robina Mirbahar AI/ML Google Developer Expert (GDE) | Google Cloud Champion Innovator GitHub... — 30 reactions, 31 comments on DEV.to.",
       "source": "DEV.to",
       "sourceUrl": "https://dev.to/gde/building-railpulse-ai-deploying-an-open-source-railway-dispatch-agent-with-gemma-and-google-cloud-2b9g",
       "category": "big-tech",
       "date": "2026-11-07",
       "hot": false,
-      "score": 29,
+      "score": 30,
       "tags": [
         "DEV.to",
         "ai",
         "ai",
         "googlecloud"
       ]
-    },
-    {
-      "id": "dev-4993366",
-      "title": "How to Master AWS for AI?",
-      "summary": "Ciao Amici 👋  Every hiking trail in the Alps has a map at the trailhead. A good one shows you the... — 23 reactions, 10 comments on DEV.to.",
-      "source": "DEV.to",
-      "sourceUrl": "https://dev.to/aws-builders/how-to-master-aws-for-ai-3la4",
-      "category": "products",
-      "date": "2026-11-07",
-      "hot": false,
-      "score": 23,
-      "tags": [
-        "DEV.to",
-        "ai",
-        "machinelearning",
-        "aws"
-      ]
-    },
-    {
-      "id": "ax-2611.09892v1",
-      "title": "On Agentic Manipulation Policies",
-      "summary": "Recent work on robot manipulation has focused on specialist policies trained on demonstrations. We show that generalist AI models can control manipulators more reliably than specialist policies such as vision-language-ac",
-      "source": "arXiv",
-      "sourceUrl": "http://arxiv.org/abs/2611.09892v1",
-      "category": "safety",
-      "date": "2026-11-06",
-      "hot": true,
-      "score": 800,
-      "tags": [
-        "arXiv",
-        "paper",
-        "AI"
-      ]
-    },
-    {
-      "id": "ax-2611.09730v1",
-      "title": "What to Delegate, What to Preserve: Human Preferences for Agentic AI Across Everyday Life and Work",
-      "summary": "AI agents can execute multi-step tasks on users' behalf, yet the boundaries of acceptable delegation remain unclear. We report a scenario-based survey of 289 U.S. adults with prior AI experience covering 45 use cases acr",
-      "source": "arXiv",
-      "sourceUrl": "http://arxiv.org/abs/2611.09730v1",
-      "category": "safety",
-      "date": "2026-11-06",
-      "hot": true,
-      "score": 800,
-      "tags": [
-        "arXiv",
-        "paper",
-        "AI"
-      ]
-    },
-    {
-      "id": "dev-4985077",
-      "title": "An AI Testing Presentation Became the Final Push for Organizational Change at My Company",
-      "summary": "From a multi-agent testing experiment to a broader discussion about how engineering teams should... — 127 reactions, 72 comments on DEV.to.",
-      "source": "DEV.to",
-      "sourceUrl": "https://dev.to/xulingfeng/an-ai-testing-presentation-became-the-final-push-for-organizational-change-at-my-company-12ag",
-      "category": "products",
-      "date": "2026-11-06",
-      "hot": true,
-      "score": 127,
-      "tags": [
-        "DEV.to",
-        "ai",
-        "discuss",
-        "ai"
-      ]
     }
   ],
   "meta": {
-    "fetchedAt": "2026-11-09T09:08:56.010Z",
+    "fetchedAt": "2026-11-10T09:17:12.552Z",
     "topic": "AI",
     "total": 15,
-    "hot": 10,
+    "hot": 12,
     "sources": [
       "HackerNoon",
       "Hacker News",
-      "DEV.to",
-      "arXiv"
+      "arXiv",
+      "DEV.to"
     ]
   }
 }
