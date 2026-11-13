@@ -1,12 +1,12 @@
 {
-  "generatedAt": "2026-11-12T09:19:45.803Z",
+  "generatedAt": "2026-11-13T09:06:31.489Z",
   "generatedBy": "YUNIE × Last30Days",
   "version": 2,
   "description": "Tin AI mới nhất — tổng hợp từ Last30Days (HN, GitHub, DEV.to, Reddit, arXiv, HackerNoon) trong 30 ngày qua. Chủ đề: AI. Tự động cập nhật bởi YUNIE.",
   "last30days": {
     "enabled": true,
     "topic": "AI",
-    "since": "2026-10-13",
+    "since": "2026-10-14",
     "days": 30,
     "sources": [
       "Hacker News (Algolia, free)",
@@ -55,45 +55,29 @@
   ],
   "articles": [
     {
-      "id": "hnoon-how-i-fold-thirty-reports-of-the-same-event-into-one-story",
-      "title": "How I Fold Thirty Reports of the Same Event Into One Story",
-      "summary": "When thirty outlets cover one event, a news reader should show one story, not thirty cards. This is the pipeline behind Hushread's story grouping, which I build: each new article l — by Lavneet Sharma on HackerNoon.",
+      "id": "hnoon-i-turned-my-personal-website-into-a-four-hole-golf-course-wi",
+      "title": "I Turned My Personal Website Into a Four-Hole Golf Course With AI",
+      "summary": "My personal website isn't a resume. It's a four-hole golf course. Here's how I built it using AI agents, creative web design, and Cloudflare Pages. Read All — by Sam Brovda on HackerNoon.",
       "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/how-i-fold-thirty-reports-of-the-same-event-into-one-story",
-      "category": "safety",
-      "date": "2026-11-12",
-      "hot": true,
-      "score": 100,
-      "tags": [
-        "HackerNoon",
-        "rss",
-        "AI"
-      ]
-    },
-    {
-      "id": "hnoon-almost-60percent-of-businesses-have-implemented-automation-h",
-      "title": "Almost 60% of Businesses Have Implemented Automation: How Automation Is Bridging Productivity Gaps",
-      "summary": "Instead of writing traditional code, users can create automated workflow software in a matter of minutes using prompts and visual builders, saving both time and money. Read All — by Dmytro Spilka on HackerNoon.",
-      "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/almost-60percent-of-businesses-have-implemented-automation-how-automation-is-bridging-productivity-gaps",
+      "sourceUrl": "https://hackernoon.com/i-turned-my-personal-website-into-a-four-hole-golf-course-with-ai",
       "category": "products",
-      "date": "2026-11-12",
+      "date": "2026-11-13",
       "hot": true,
       "score": 100,
       "tags": [
         "HackerNoon",
-        "ai",
+        "web-development",
         "AI"
       ]
     },
     {
-      "id": "hnoon-the-ai-native-organization-smaller-teams-faster-execution-fe",
-      "title": "The AI-Native Organization: Smaller Teams, Faster Execution, Fewer Roadmaps",
-      "summary": "AI has collapsed the \"how\" of building. This is how firms like Anthropic, Ramp, Shopify, Meta and Linear are organizing product and engineering for 2027: small pods that own outcom — by Aditya Vithaldas on HackerNoon.",
+      "id": "hnoon-when-everyone-can-build-the-ability-to-sell-becomes-the-real",
+      "title": "When Everyone Can Build, the Ability to Sell Becomes the Real Differentiator",
+      "summary": "When building gets cheap, what sets a product apart is how it reaches people. Wispr Flow, Grok Bot and HeyClicky each broke through not because the product was novel, but because o — by Aditya Vithaldas on HackerNoon.",
       "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/the-ai-native-organization-smaller-teams-faster-execution-fewer-roadmaps",
-      "category": "big-tech",
-      "date": "2026-11-12",
+      "sourceUrl": "https://hackernoon.com/when-everyone-can-build-the-ability-to-sell-becomes-the-real-differentiator",
+      "category": "products",
+      "date": "2026-11-13",
       "hot": true,
       "score": 100,
       "tags": [
@@ -103,13 +87,13 @@
       ]
     },
     {
-      "id": "hnoon-billion-context-hands-on-compressing-coding-agent-history-to",
-      "title": "billion-context Hands-On: Compressing Coding-Agent History to Fit a Small Context Window",
-      "summary": "I ran a 41-request Gemini agent session through it: the final prompt shrank 2.9× and recall held, but on a short session it cost more Read All — by Ishank Choudhary on HackerNoon.",
+      "id": "hnoon-i-counted-what-2212-viral-ai-video-and-image-prompts-have-in",
+      "title": "I Counted What 2,212 Viral AI Video and Image Prompts Have in Common",
+      "summary": "Shared AI video prompts have a median of 309 words, half use timecodes, and a third list what to avoid. Short video prompts get fewer likes; image prompts work at any length. Read  — by Adrian Vale on HackerNoon.",
       "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/billion-context-hands-on-compressing-coding-agent-history-to-fit-a-small-context-window",
-      "category": "products",
-      "date": "2026-11-12",
+      "sourceUrl": "https://hackernoon.com/i-counted-what-2212-viral-ai-video-and-image-prompts-have-in-common",
+      "category": "fun",
+      "date": "2026-11-13",
       "hot": true,
       "score": 100,
       "tags": [
@@ -119,32 +103,128 @@
       ]
     },
     {
-      "id": "hn-50464055",
-      "title": "Why Every AI Model Will Ship as a Torrent",
-      "summary": "Why Every AI Model Will Ship as a Torrent — 20 points, 5 comments on HN.",
+      "id": "hn-50479703",
+      "title": "TSMC Has Been Hacked",
+      "summary": "TSMC Has Been Hacked — 10 points, 0 comments on HN.",
       "source": "Hacker News",
-      "sourceUrl": "https://pirateface.co/articles/every-ai-model-should-be-a-torrent",
-      "category": "safety",
-      "date": "2026-11-12",
+      "sourceUrl": "https://mlq.ai/news/tsmc-says-employee-personal-data-was-posted-online-from-a-cloud-providers-systems/",
+      "category": "products",
+      "date": "2026-11-13",
       "hot": false,
-      "score": 20,
+      "score": 10,
       "tags": [
         "HN",
         "AI",
         "story",
-        "author_llmmadness"
+        "author_pretext"
+      ]
+    },
+    {
+      "id": "hn-50480144",
+      "title": "Where Are the \"Killer Apps\" of AI?",
+      "summary": "Where Are the \"Killer Apps\" of AI? — 4 points, 0 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://www.oreilly.com/radar/where-are-the-killer-apps-of-ai/",
+      "category": "products",
+      "date": "2026-11-13",
+      "hot": false,
+      "score": 4,
+      "tags": [
+        "HN",
+        "AI",
+        "story",
+        "author_BerislavLopac"
+      ]
+    },
+    {
+      "id": "hntop-50467087",
+      "title": "Jensen Huang resigns",
+      "summary": "<a href=\"https:&#x2F;&#x2F;nvidianews.nvidia.com&#x2F;news&#x2F;nvidia-announces-ceo-transition\" rel=\"nofollow\">https:&#x2F;&#x2F;nvidianews.nvidia.com&#x2F;news&#x2F;nvidia-announces-ceo-tran...</a><p><a href=\"https:&#x — 3482 points, 3097 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://apnews.com/article/nvidia-megaspeed-china-singapore-huang-5403f152a601cf82ce939f1d24fffa0f",
+      "category": "big-tech",
+      "date": "2026-11-12",
+      "hot": true,
+      "score": 3482,
+      "tags": [
+        "HN",
+        "top"
+      ]
+    },
+    {
+      "id": "ax-2611.17212v1",
+      "title": "Theoretical and Empirical Analysis of Sparse Convolution",
+      "summary": "Deep neural networks for image processing are increasingly deployed on resource-constrained edge devices such as drones, medical systems, and smartphones, where limited computational resources and memory bandwidth pose s",
+      "source": "arXiv",
+      "sourceUrl": "http://arxiv.org/abs/2611.17212v1",
+      "category": "big-tech",
+      "date": "2026-11-12",
+      "hot": true,
+      "score": 800,
+      "tags": [
+        "arXiv",
+        "paper",
+        "AI"
+      ]
+    },
+    {
+      "id": "ax-2611.17114v1",
+      "title": "Designing Institutions for Autonomous AI",
+      "summary": "As autonomous AI agents increasingly interact in persistent populations, their collective capabilities and alignment depend not only on individual models, but also on the institutions governing their interactions. Yet AI",
+      "source": "arXiv",
+      "sourceUrl": "http://arxiv.org/abs/2611.17114v1",
+      "category": "safety",
+      "date": "2026-11-12",
+      "hot": true,
+      "score": 800,
+      "tags": [
+        "arXiv",
+        "paper",
+        "AI"
+      ]
+    },
+    {
+      "id": "ax-2611.17098v1",
+      "title": "Speed-to-Power Dominates Energy Costs for AI Data Centers: Technoeconomic Analysis of Powering AI in the Continental United States",
+      "summary": "The rapid growth of artificial intelligence is driving demand for new data centers at large scale and on short deployment timelines. To power them, firms connect to the commercial grid or contract generation directly, bu",
+      "source": "arXiv",
+      "sourceUrl": "http://arxiv.org/abs/2611.17098v1",
+      "category": "products",
+      "date": "2026-11-12",
+      "hot": true,
+      "score": 800,
+      "tags": [
+        "arXiv",
+        "paper",
+        "AI"
+      ]
+    },
+    {
+      "id": "ax-2611.17083v1",
+      "title": "List Update with Time Windows and Delays without Batch-Serving",
+      "summary": "We study list update with time windows and delays when every request requires a separate access. Unlike batch-serving models, serving several requests to one element still incurs one access per request, and each access m",
+      "source": "arXiv",
+      "sourceUrl": "http://arxiv.org/abs/2611.17083v1",
+      "category": "products",
+      "date": "2026-11-12",
+      "hot": true,
+      "score": 800,
+      "tags": [
+        "arXiv",
+        "paper",
+        "AI"
       ]
     },
     {
       "id": "hntop-50459703",
       "title": "Nvidia is preparing to oust Jensen Huang",
-      "summary": "Nvidia is preparing to oust Jensen Huang — 987 points, 1331 comments on HN.",
+      "summary": "Nvidia is preparing to oust Jensen Huang — 1217 points, 1640 comments on HN.",
       "source": "Hacker News",
       "sourceUrl": "https://www.wsj.com/business/nvidia-is-preparing-to-oust-nvidia-ceo-jensen-huang-30f421ad",
       "category": "big-tech",
       "date": "2026-11-11",
       "hot": true,
-      "score": 987,
+      "score": 1217,
       "tags": [
         "HN",
         "top"
@@ -153,13 +233,28 @@
     {
       "id": "hntop-50452455",
       "title": "My AI agents found an unmapped Maya site?",
-      "summary": "My AI agents found an unmapped Maya site? — 985 points, 358 comments on HN.",
+      "summary": "My AI agents found an unmapped Maya site? — 1031 points, 391 comments on HN.",
       "source": "Hacker News",
       "sourceUrl": "https://pietromiotti.com/latest/maya-site",
       "category": "products",
       "date": "2026-11-11",
       "hot": true,
-      "score": 985,
+      "score": 1031,
+      "tags": [
+        "HN",
+        "top"
+      ]
+    },
+    {
+      "id": "hntop-50456631",
+      "title": "AWS emulator",
+      "summary": "<a href=\"https:&#x2F;&#x2F;www.aboutamazon.com&#x2F;news&#x2F;aws&#x2F;how-autonomous-ai-agents-built-aws-emulator\" rel=\"nofollow\">https:&#x2F;&#x2F;www.aboutamazon.com&#x2F;news&#x2F;aws&#x2F;how-autonomous-ai-agent...< — 973 points, 264 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://github.com/aws/aws-emulator",
+      "category": "products",
+      "date": "2026-11-11",
+      "hot": true,
+      "score": 973,
       "tags": [
         "HN",
         "top"
@@ -168,13 +263,13 @@
     {
       "id": "dev-5015589",
       "title": "We Keep Hearing About AI Productivity. The QA Group Chat Told a Different Story.",
-      "summary": "An anonymous poll, a debate about multimodal testing, and some uncomfortable questions about who... — 100 reactions, 70 comments on DEV.to.",
+      "summary": "An anonymous poll, a debate about multimodal testing, and some uncomfortable questions about who... — 108 reactions, 104 comments on DEV.to.",
       "source": "DEV.to",
       "sourceUrl": "https://dev.to/xulingfeng/we-keep-hearing-about-ai-productivity-the-qa-group-chat-told-a-different-story-2nma",
       "category": "products",
       "date": "2026-11-11",
       "hot": true,
-      "score": 100,
+      "score": 108,
       "tags": [
         "DEV.to",
         "ai",
@@ -183,129 +278,33 @@
       ]
     },
     {
-      "id": "hnoon-500-blog-posts-to-learn-about-tech",
-      "title": "500 Blog Posts To Learn About Tech",
-      "summary": "Learn everything you need to know about Tech via these 500 free HackerNoon blog posts. — by Learn Repo on HackerNoon.",
-      "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/500-blog-posts-to-learn-about-tech",
-      "category": "products",
-      "date": "2026-11-11",
-      "hot": true,
-      "score": 100,
-      "tags": [
-        "HackerNoon",
-        "tech",
-        "AI"
-      ]
-    },
-    {
-      "id": "hnoon-before-you-add-another-kpi-ask-these-10-questions-first",
-      "title": "Before You Add Another KPI, Ask These 10 Questions First",
-      "summary": "mostly from net and research — by k.10` on HackerNoon.",
-      "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/before-you-add-another-kpi-ask-these-10-questions-first",
-      "category": "products",
-      "date": "2026-11-11",
-      "hot": true,
-      "score": 100,
-      "tags": [
-        "HackerNoon",
-        "kpis",
-        "AI"
-      ]
-    },
-    {
-      "id": "ax-2611.14333v1",
-      "title": "AI Isn't Getting Dumber, We're Getting Pickier: Rising Standards in Human Evaluation of Large Language Models",
-      "summary": "Users often complain that AI assistants such as ChatGPT are getting worse. Some versions do change, but human evaluation leaves a second possibility untested: the people judging may change. We separate the two on Chatbot",
-      "source": "arXiv",
-      "sourceUrl": "http://arxiv.org/abs/2611.14333v1",
-      "category": "products",
-      "date": "2026-11-10",
-      "hot": true,
-      "score": 800,
-      "tags": [
-        "arXiv",
-        "paper",
-        "AI"
-      ]
-    },
-    {
-      "id": "ax-2611.14244v1",
-      "title": "An AI Assistant for Automating Anti-Corruption Expertise of Draft Legislation Based on the TRACE Framework",
-      "summary": "We present an AI assistant for automating anti-corruption expertise of draft legislation based on the TRACE architecture, designed to screen bills for corruption risks: pinpoint provisions an expert would criticise and n",
-      "source": "arXiv",
-      "sourceUrl": "http://arxiv.org/abs/2611.14244v1",
-      "category": "safety",
-      "date": "2026-11-10",
-      "hot": true,
-      "score": 800,
-      "tags": [
-        "arXiv",
-        "paper",
-        "AI"
-      ]
-    },
-    {
-      "id": "dev-5012963",
-      "title": "Detecting Flaky Tests and Finding Their Root Causes with Strands Agents and Gemini",
-      "summary": "A few years ago (three years at most), one of the biggest challenges QA Engineers faced was: how do... — 71 reactions, 18 comments on DEV.to.",
+      "id": "dev-4982713",
+      "title": "Ask More of Your UI",
+      "summary": "In my last post, I wrote about moving Forem’s performance and maintenance work into autonomous loops... — 56 reactions, 6 comments on DEV.to.",
       "source": "DEV.to",
-      "sourceUrl": "https://dev.to/m4rri4nne/detecting-flaky-tests-and-finding-their-root-causes-with-strands-agents-and-gemini-4kan",
+      "sourceUrl": "https://dev.to/dailycontext/ask-more-of-your-ui-2nf7",
       "category": "products",
-      "date": "2026-11-10",
+      "date": "2026-11-11",
       "hot": true,
-      "score": 71,
+      "score": 56,
       "tags": [
         "DEV.to",
         "ai",
         "ai",
-        "testing"
-      ]
-    },
-    {
-      "id": "ax-2611.14515v1",
-      "title": "AutoScaffold: AI-Guided Scaffolding for Reinforcement Learning of Language Models",
-      "summary": "Reinforcement learning with verifiable rewards (RLVR) produces rich training experience, yet outcome rewards reduce each attempt to a single number and leave most of this information unused. Training-time scaffolds, such",
-      "source": "arXiv",
-      "sourceUrl": "http://arxiv.org/abs/2611.14515v1",
-      "category": "big-tech",
-      "date": "2026-11-10",
-      "hot": false,
-      "score": 0,
-      "tags": [
-        "arXiv",
-        "paper",
-        "AI"
-      ]
-    },
-    {
-      "id": "ax-2611.14511v1",
-      "title": "Pyrite: Building and Benchmarking Protein-Ligand Pose Ranking Agents",
-      "summary": "Predicting how a ligand binds to its target is central to small-molecule drug discovery. Modern cofolding models can generate diverse candidate poses, but reliably ranking these candidates remains challenging. We introdu",
-      "source": "arXiv",
-      "sourceUrl": "http://arxiv.org/abs/2611.14511v1",
-      "category": "safety",
-      "date": "2026-11-10",
-      "hot": false,
-      "score": 0,
-      "tags": [
-        "arXiv",
-        "paper",
-        "AI"
+        "agents"
       ]
     }
   ],
   "meta": {
-    "fetchedAt": "2026-11-12T09:19:45.803Z",
+    "fetchedAt": "2026-11-13T09:06:31.489Z",
     "topic": "AI",
     "total": 15,
-    "hot": 12,
+    "hot": 13,
     "sources": [
       "HackerNoon",
       "Hacker News",
-      "DEV.to",
-      "arXiv"
+      "arXiv",
+      "DEV.to"
     ]
   }
 }
