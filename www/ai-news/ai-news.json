@@ -1,12 +1,12 @@
 {
-  "generatedAt": "2026-11-13T09:06:31.489Z",
+  "generatedAt": "2026-11-14T08:37:35.579Z",
   "generatedBy": "YUNIE × Last30Days",
   "version": 2,
   "description": "Tin AI mới nhất — tổng hợp từ Last30Days (HN, GitHub, DEV.to, Reddit, arXiv, HackerNoon) trong 30 ngày qua. Chủ đề: AI. Tự động cập nhật bởi YUNIE.",
   "last30days": {
     "enabled": true,
     "topic": "AI",
-    "since": "2026-10-14",
+    "since": "2026-10-15",
     "days": 30,
     "sources": [
       "Hacker News (Algolia, free)",
@@ -55,45 +55,30 @@
   ],
   "articles": [
     {
-      "id": "hnoon-i-turned-my-personal-website-into-a-four-hole-golf-course-wi",
-      "title": "I Turned My Personal Website Into a Four-Hole Golf Course With AI",
-      "summary": "My personal website isn't a resume. It's a four-hole golf course. Here's how I built it using AI agents, creative web design, and Cloudflare Pages. Read All — by Sam Brovda on HackerNoon.",
-      "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/i-turned-my-personal-website-into-a-four-hole-golf-course-with-ai",
-      "category": "products",
-      "date": "2026-11-13",
+      "id": "hn-50493251",
+      "title": "Nvidia allegedly engineered scarcity by funding AI startups to buy its GPUs",
+      "summary": "Nvidia allegedly engineered scarcity by funding AI startups to buy its GPUs — 483 points, 269 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://www.techpowerup.com/354814/nvidia-allegedly-engineered-scarcity-by-funding-ai-startups-to-buy-its-gpus",
+      "category": "big-tech",
+      "date": "2026-11-14",
       "hot": true,
-      "score": 100,
+      "score": 483,
       "tags": [
-        "HackerNoon",
-        "web-development",
-        "AI"
+        "HN",
+        "AI",
+        "story",
+        "author_speckx"
       ]
     },
     {
-      "id": "hnoon-when-everyone-can-build-the-ability-to-sell-becomes-the-real",
-      "title": "When Everyone Can Build, the Ability to Sell Becomes the Real Differentiator",
-      "summary": "When building gets cheap, what sets a product apart is how it reaches people. Wispr Flow, Grok Bot and HeyClicky each broke through not because the product was novel, but because o — by Aditya Vithaldas on HackerNoon.",
+      "id": "hnoon-how-i-built-an-ai-marketing-team-with-grok-bot-without-writi",
+      "title": "How I Built an AI Marketing Team With Grok Bot Without Writing Code",
+      "summary": "I built an AI marketing team with Grok Bot. Here's how single-purpose agents, strict guardrails, and human oversight keep everything on track. Read All — by Sam Brovda on HackerNoon.",
       "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/when-everyone-can-build-the-ability-to-sell-becomes-the-real-differentiator",
+      "sourceUrl": "https://hackernoon.com/how-i-built-an-ai-marketing-team-with-grok-bot-without-writing-code",
       "category": "products",
-      "date": "2026-11-13",
-      "hot": true,
-      "score": 100,
-      "tags": [
-        "HackerNoon",
-        "product-management",
-        "AI"
-      ]
-    },
-    {
-      "id": "hnoon-i-counted-what-2212-viral-ai-video-and-image-prompts-have-in",
-      "title": "I Counted What 2,212 Viral AI Video and Image Prompts Have in Common",
-      "summary": "Shared AI video prompts have a median of 309 words, half use timecodes, and a third list what to avoid. Short video prompts get fewer likes; image prompts work at any length. Read  — by Adrian Vale on HackerNoon.",
-      "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/i-counted-what-2212-viral-ai-video-and-image-prompts-have-in-common",
-      "category": "fun",
-      "date": "2026-11-13",
+      "date": "2026-11-14",
       "hot": true,
       "score": 100,
       "tags": [
@@ -103,49 +88,161 @@
       ]
     },
     {
-      "id": "hn-50479703",
-      "title": "TSMC Has Been Hacked",
-      "summary": "TSMC Has Been Hacked — 10 points, 0 comments on HN.",
+      "id": "hn-50494696",
+      "title": "Ask HN: What are the most useful, concrete AI skills to independently learn?",
+      "summary": "Specifically, what are the most useful, concrete skills to learn as an individual to take economic advantage of the advances in LLMs, agents and associated new technological capabilities?<p>What is accessible to learn ju — 8 points, 9 comments on HN.",
       "source": "Hacker News",
-      "sourceUrl": "https://mlq.ai/news/tsmc-says-employee-personal-data-was-posted-online-from-a-cloud-providers-systems/",
+      "sourceUrl": "https://news.ycombinator.com/item?id=50494696",
       "category": "products",
-      "date": "2026-11-13",
+      "date": "2026-11-14",
       "hot": false,
-      "score": 10,
+      "score": 8,
       "tags": [
         "HN",
         "AI",
         "story",
-        "author_pretext"
+        "author_shnock"
       ]
     },
     {
-      "id": "hn-50480144",
-      "title": "Where Are the \"Killer Apps\" of AI?",
-      "summary": "Where Are the \"Killer Apps\" of AI? — 4 points, 0 comments on HN.",
+      "id": "hn-50493213",
+      "title": "Show HN: Open-Source Version of Cyclon: Phone where AI is the interface?",
+      "summary": "Show HN: Open-Source Version of Cyclon: Phone where AI is the interface? — 5 points, 0 comments on HN.",
       "source": "Hacker News",
-      "sourceUrl": "https://www.oreilly.com/radar/where-are-the-killer-apps-of-ai/",
+      "sourceUrl": "https://opencyclone.vercel.app/",
       "category": "products",
-      "date": "2026-11-13",
+      "date": "2026-11-14",
+      "hot": false,
+      "score": 5,
+      "tags": [
+        "HN",
+        "AI",
+        "story",
+        "author_Exorust"
+      ]
+    },
+    {
+      "id": "hn-50494529",
+      "title": "Every Flight Is Grounded on Day Trump Admin Installed AI Controls",
+      "summary": "Every Flight Is Grounded on Day Trump Admin Installed AI Controls — 4 points, 1 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://www.thedailybeast.com/faa-abruptly-grounds-all-flights-for-first-time-since-911",
+      "category": "products",
+      "date": "2026-11-14",
       "hot": false,
       "score": 4,
       "tags": [
         "HN",
         "AI",
         "story",
-        "author_BerislavLopac"
+        "author_madihaa"
+      ]
+    },
+    {
+      "id": "hnoon-the-nigerian-prince-doesnt-need-to-steal",
+      "title": "The Nigerian Prince Doesn't Need to Steal",
+      "summary": "The Nigerian Prince's AI has become a sophisticated threat, capable of adapting to the bank's defensive systems and exploiting their weaknesses. This has led to a situation where t — by Peter Brauer on HackerNoon.",
+      "source": "HackerNoon",
+      "sourceUrl": "https://hackernoon.com/the-nigerian-prince-doesnt-need-to-steal",
+      "category": "products",
+      "date": "2026-11-13",
+      "hot": true,
+      "score": 100,
+      "tags": [
+        "HackerNoon",
+        "cybersecurity",
+        "AI"
+      ]
+    },
+    {
+      "id": "hnoon-revops-is-quietly-becoming-an-engineering-job",
+      "title": "RevOps Is Quietly Becoming an Engineering Job",
+      "summary": "Malek Damiri, a head of revenue operations, on why RevOps now means schedulers, staging, tested numbers, and AI agents, and what to learn next. — by Malek Damiri on HackerNoon.",
+      "source": "HackerNoon",
+      "sourceUrl": "https://hackernoon.com/revops-is-quietly-becoming-an-engineering-job",
+      "category": "products",
+      "date": "2026-11-13",
+      "hot": true,
+      "score": 100,
+      "tags": [
+        "HackerNoon",
+        "revops",
+        "AI"
+      ]
+    },
+    {
+      "id": "hnoon-i-put-a-42-desk-design-studio-inside-my-coding-agent",
+      "title": "I Put a 42-Desk Design Studio Inside My Coding Agent",
+      "summary": "Desk Studio runs a design job like a studio inside your coding agent: roughs, a pick, polish, pixel proof, sign-off. One real job, 8.9, $1.34. — by Aditya Reddy on HackerNoon.",
+      "source": "HackerNoon",
+      "sourceUrl": "https://hackernoon.com/i-put-a-42-desk-design-studio-inside-my-coding-agent",
+      "category": "products",
+      "date": "2026-11-13",
+      "hot": true,
+      "score": 100,
+      "tags": [
+        "HackerNoon",
+        "ai-agents",
+        "AI"
+      ]
+    },
+    {
+      "id": "hnoon-ci-failure-triage-needs-evidence-before-it-needs-a-classifie",
+      "title": "CI Failure Triage Needs Evidence Before It Needs a Classifier",
+      "summary": "Sort CI failures into product defects, environment noise, agent errors and test defects, and capture the evidence before a model like Jev triages them. — by Saqib Jan on HackerNoon.",
+      "source": "HackerNoon",
+      "sourceUrl": "https://hackernoon.com/ci-failure-triage-needs-evidence-before-it-needs-a-classifier",
+      "category": "products",
+      "date": "2026-11-13",
+      "hot": true,
+      "score": 100,
+      "tags": [
+        "HackerNoon",
+        "cicd",
+        "AI"
+      ]
+    },
+    {
+      "id": "hnoon-115-blog-posts-to-learn-about-travel",
+      "title": "115 Blog Posts To Learn About Travel",
+      "summary": "Learn everything you need to know about Travel via these 115 free HackerNoon blog posts. — by Learn Repo on HackerNoon.",
+      "source": "HackerNoon",
+      "sourceUrl": "https://hackernoon.com/115-blog-posts-to-learn-about-travel",
+      "category": "products",
+      "date": "2026-11-13",
+      "hot": true,
+      "score": 100,
+      "tags": [
+        "HackerNoon",
+        "travel",
+        "AI"
       ]
     },
     {
       "id": "hntop-50467087",
       "title": "Jensen Huang resigns",
-      "summary": "<a href=\"https:&#x2F;&#x2F;nvidianews.nvidia.com&#x2F;news&#x2F;nvidia-announces-ceo-transition\" rel=\"nofollow\">https:&#x2F;&#x2F;nvidianews.nvidia.com&#x2F;news&#x2F;nvidia-announces-ceo-tran...</a><p><a href=\"https:&#x — 3482 points, 3097 comments on HN.",
+      "summary": "<a href=\"https:&#x2F;&#x2F;nvidianews.nvidia.com&#x2F;news&#x2F;nvidia-announces-ceo-transition\" rel=\"nofollow\">https:&#x2F;&#x2F;nvidianews.nvidia.com&#x2F;news&#x2F;nvidia-announces-ceo-tran...</a><p><a href=\"https:&#x — 4022 points, 3423 comments on HN.",
       "source": "Hacker News",
       "sourceUrl": "https://apnews.com/article/nvidia-megaspeed-china-singapore-huang-5403f152a601cf82ce939f1d24fffa0f",
       "category": "big-tech",
       "date": "2026-11-12",
       "hot": true,
-      "score": 3482,
+      "score": 4022,
+      "tags": [
+        "HN",
+        "top"
+      ]
+    },
+    {
+      "id": "hntop-50465829",
+      "title": "Anthropic IPO",
+      "summary": "Anthropic IPO — 996 points, 908 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://ipo.anthropic.com/us/",
+      "category": "big-tech",
+      "date": "2026-11-12",
+      "hot": true,
+      "score": 996,
       "tags": [
         "HN",
         "top"
@@ -198,113 +295,17 @@
         "paper",
         "AI"
       ]
-    },
-    {
-      "id": "ax-2611.17083v1",
-      "title": "List Update with Time Windows and Delays without Batch-Serving",
-      "summary": "We study list update with time windows and delays when every request requires a separate access. Unlike batch-serving models, serving several requests to one element still incurs one access per request, and each access m",
-      "source": "arXiv",
-      "sourceUrl": "http://arxiv.org/abs/2611.17083v1",
-      "category": "products",
-      "date": "2026-11-12",
-      "hot": true,
-      "score": 800,
-      "tags": [
-        "arXiv",
-        "paper",
-        "AI"
-      ]
-    },
-    {
-      "id": "hntop-50459703",
-      "title": "Nvidia is preparing to oust Jensen Huang",
-      "summary": "Nvidia is preparing to oust Jensen Huang — 1217 points, 1640 comments on HN.",
-      "source": "Hacker News",
-      "sourceUrl": "https://www.wsj.com/business/nvidia-is-preparing-to-oust-nvidia-ceo-jensen-huang-30f421ad",
-      "category": "big-tech",
-      "date": "2026-11-11",
-      "hot": true,
-      "score": 1217,
-      "tags": [
-        "HN",
-        "top"
-      ]
-    },
-    {
-      "id": "hntop-50452455",
-      "title": "My AI agents found an unmapped Maya site?",
-      "summary": "My AI agents found an unmapped Maya site? — 1031 points, 391 comments on HN.",
-      "source": "Hacker News",
-      "sourceUrl": "https://pietromiotti.com/latest/maya-site",
-      "category": "products",
-      "date": "2026-11-11",
-      "hot": true,
-      "score": 1031,
-      "tags": [
-        "HN",
-        "top"
-      ]
-    },
-    {
-      "id": "hntop-50456631",
-      "title": "AWS emulator",
-      "summary": "<a href=\"https:&#x2F;&#x2F;www.aboutamazon.com&#x2F;news&#x2F;aws&#x2F;how-autonomous-ai-agents-built-aws-emulator\" rel=\"nofollow\">https:&#x2F;&#x2F;www.aboutamazon.com&#x2F;news&#x2F;aws&#x2F;how-autonomous-ai-agent...< — 973 points, 264 comments on HN.",
-      "source": "Hacker News",
-      "sourceUrl": "https://github.com/aws/aws-emulator",
-      "category": "products",
-      "date": "2026-11-11",
-      "hot": true,
-      "score": 973,
-      "tags": [
-        "HN",
-        "top"
-      ]
-    },
-    {
-      "id": "dev-5015589",
-      "title": "We Keep Hearing About AI Productivity. The QA Group Chat Told a Different Story.",
-      "summary": "An anonymous poll, a debate about multimodal testing, and some uncomfortable questions about who... — 108 reactions, 104 comments on DEV.to.",
-      "source": "DEV.to",
-      "sourceUrl": "https://dev.to/xulingfeng/we-keep-hearing-about-ai-productivity-the-qa-group-chat-told-a-different-story-2nma",
-      "category": "products",
-      "date": "2026-11-11",
-      "hot": true,
-      "score": 108,
-      "tags": [
-        "DEV.to",
-        "ai",
-        "ai",
-        "discuss"
-      ]
-    },
-    {
-      "id": "dev-4982713",
-      "title": "Ask More of Your UI",
-      "summary": "In my last post, I wrote about moving Forem’s performance and maintenance work into autonomous loops... — 56 reactions, 6 comments on DEV.to.",
-      "source": "DEV.to",
-      "sourceUrl": "https://dev.to/dailycontext/ask-more-of-your-ui-2nf7",
-      "category": "products",
-      "date": "2026-11-11",
-      "hot": true,
-      "score": 56,
-      "tags": [
-        "DEV.to",
-        "ai",
-        "ai",
-        "agents"
-      ]
     }
   ],
   "meta": {
-    "fetchedAt": "2026-11-13T09:06:31.489Z",
+    "fetchedAt": "2026-11-14T08:37:35.579Z",
     "topic": "AI",
     "total": 15,
-    "hot": 13,
+    "hot": 12,
     "sources": [
-      "HackerNoon",
       "Hacker News",
-      "arXiv",
-      "DEV.to"
+      "HackerNoon",
+      "arXiv"
     ]
   }
 }
