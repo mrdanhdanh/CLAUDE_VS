@@ -1,12 +1,12 @@
 {
-  "generatedAt": "2026-11-14T08:37:35.579Z",
+  "generatedAt": "2026-11-15T08:50:37.342Z",
   "generatedBy": "YUNIE × Last30Days",
   "version": 2,
   "description": "Tin AI mới nhất — tổng hợp từ Last30Days (HN, GitHub, DEV.to, Reddit, arXiv, HackerNoon) trong 30 ngày qua. Chủ đề: AI. Tự động cập nhật bởi YUNIE.",
   "last30days": {
     "enabled": true,
     "topic": "AI",
-    "since": "2026-10-15",
+    "since": "2026-10-16",
     "days": 30,
     "sources": [
       "Hacker News (Algolia, free)",
@@ -55,179 +55,212 @@
   ],
   "articles": [
     {
-      "id": "hn-50493251",
-      "title": "Nvidia allegedly engineered scarcity by funding AI startups to buy its GPUs",
-      "summary": "Nvidia allegedly engineered scarcity by funding AI startups to buy its GPUs — 483 points, 269 comments on HN.",
-      "source": "Hacker News",
-      "sourceUrl": "https://www.techpowerup.com/354814/nvidia-allegedly-engineered-scarcity-by-funding-ai-startups-to-buy-its-gpus",
-      "category": "big-tech",
-      "date": "2026-11-14",
-      "hot": true,
-      "score": 483,
-      "tags": [
-        "HN",
-        "AI",
-        "story",
-        "author_speckx"
-      ]
-    },
-    {
-      "id": "hnoon-how-i-built-an-ai-marketing-team-with-grok-bot-without-writi",
-      "title": "How I Built an AI Marketing Team With Grok Bot Without Writing Code",
-      "summary": "I built an AI marketing team with Grok Bot. Here's how single-purpose agents, strict guardrails, and human oversight keep everything on track. Read All — by Sam Brovda on HackerNoon.",
+      "id": "hnoon-how-i-built-and-shut-down-an-ai-coded-sports-trivia-game",
+      "title": "How I Built and Shut Down an AI-Coded Sports Trivia Game",
+      "summary": "I’m not an engineer. I come from the sales world. But between June 18 and July 16, I pushed 172 commits to a side project called statback. Read All — by Sam Brovda on HackerNoon.",
       "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/how-i-built-an-ai-marketing-team-with-grok-bot-without-writing-code",
+      "sourceUrl": "https://hackernoon.com/how-i-built-and-shut-down-an-ai-coded-sports-trivia-game",
       "category": "products",
-      "date": "2026-11-14",
+      "date": "2026-11-15",
       "hot": true,
       "score": 100,
       "tags": [
         "HackerNoon",
-        "ai",
+        "startups",
         "AI"
       ]
     },
     {
-      "id": "hn-50494696",
-      "title": "Ask HN: What are the most useful, concrete AI skills to independently learn?",
-      "summary": "Specifically, what are the most useful, concrete skills to learn as an individual to take economic advantage of the advances in LLMs, agents and associated new technological capabilities?<p>What is accessible to learn ju — 8 points, 9 comments on HN.",
+      "id": "hn-50503671",
+      "title": "Two planes collide at Miami International Airport",
+      "summary": "Two planes collide at Miami International Airport — 7 points, 4 comments on HN.",
       "source": "Hacker News",
-      "sourceUrl": "https://news.ycombinator.com/item?id=50494696",
+      "sourceUrl": "https://www.cbsnews.com/miami/news/ups-plane-copa-airlines-jet-collide-miami-international-airport/",
       "category": "products",
-      "date": "2026-11-14",
+      "date": "2026-11-15",
       "hot": false,
-      "score": 8,
+      "score": 7,
       "tags": [
         "HN",
         "AI",
         "story",
-        "author_shnock"
+        "author_icepush"
       ]
     },
     {
-      "id": "hn-50493213",
-      "title": "Show HN: Open-Source Version of Cyclon: Phone where AI is the interface?",
-      "summary": "Show HN: Open-Source Version of Cyclon: Phone where AI is the interface? — 5 points, 0 comments on HN.",
+      "id": "hn-50504083",
+      "title": "How Jensen Huang Built the Backdoor Route That Keeps Beijing in the AI Race",
+      "summary": "How Jensen Huang Built the Backdoor Route That Keeps Beijing in the AI Race — 6 points, 1 comments on HN.",
       "source": "Hacker News",
-      "sourceUrl": "https://opencyclone.vercel.app/",
+      "sourceUrl": "https://www.wsj.com/tech/jensen-huang-backdoor-ai-data-centers-a5e4499d",
       "category": "products",
-      "date": "2026-11-14",
+      "date": "2026-11-15",
       "hot": false,
-      "score": 5,
+      "score": 6,
       "tags": [
         "HN",
         "AI",
         "story",
-        "author_Exorust"
+        "author_ViktorRay"
       ]
     },
     {
-      "id": "hn-50494529",
-      "title": "Every Flight Is Grounded on Day Trump Admin Installed AI Controls",
-      "summary": "Every Flight Is Grounded on Day Trump Admin Installed AI Controls — 4 points, 1 comments on HN.",
+      "id": "hn-50504061",
+      "title": "Anthropic, can you please make up your mind with your models?",
+      "summary": "Anthropic, can you please make up your mind with the models?<p>I don&#x27;t know if this is related to the IPO, fable 5.2 is WAY more expensive to run, if you put it in xhigh you can use in an 1 or 2 hours the allocation — 4 points, 6 comments on HN.",
       "source": "Hacker News",
-      "sourceUrl": "https://www.thedailybeast.com/faa-abruptly-grounds-all-flights-for-first-time-since-911",
-      "category": "products",
-      "date": "2026-11-14",
+      "sourceUrl": "https://news.ycombinator.com/item?id=50504061",
+      "category": "big-tech",
+      "date": "2026-11-15",
       "hot": false,
       "score": 4,
       "tags": [
         "HN",
         "AI",
         "story",
-        "author_madihaa"
+        "author_xlayn"
       ]
     },
     {
-      "id": "hnoon-the-nigerian-prince-doesnt-need-to-steal",
-      "title": "The Nigerian Prince Doesn't Need to Steal",
-      "summary": "The Nigerian Prince's AI has become a sophisticated threat, capable of adapting to the bank's defensive systems and exploiting their weaknesses. This has led to a situation where t — by Peter Brauer on HackerNoon.",
-      "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/the-nigerian-prince-doesnt-need-to-steal",
+      "id": "hn-50504874",
+      "title": "Baltimore County schools phase out AI reading program",
+      "summary": "Baltimore County schools phase out AI reading program — 3 points, 0 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://www.thebanner.com/education/k-12-schools/county-schools-artificial-intelligence-453DCFYJL5CDBAM4AY3NYY4ILU/",
       "category": "products",
-      "date": "2026-11-13",
+      "date": "2026-11-15",
+      "hot": false,
+      "score": 3,
+      "tags": [
+        "HN",
+        "AI",
+        "story",
+        "author_biker142541"
+      ]
+    },
+    {
+      "id": "hntop-50493251",
+      "title": "Nvidia allegedly engineered scarcity by funding AI startups to buy its GPUs",
+      "summary": "Nvidia allegedly engineered scarcity by funding AI startups to buy its GPUs — 1069 points, 635 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://www.techpowerup.com/354814/nvidia-allegedly-engineered-scarcity-by-funding-ai-startups-to-buy-its-gpus",
+      "category": "big-tech",
+      "date": "2026-11-14",
+      "hot": true,
+      "score": 1069,
+      "tags": [
+        "HN",
+        "top"
+      ]
+    },
+    {
+      "id": "hnoon-113-blog-posts-to-learn-about-tutorial-for-beginners",
+      "title": "113 Blog Posts To Learn About Tutorial For Beginners",
+      "summary": "Learn everything you need to know about Tutorial For Beginners via these 113 free HackerNoon blog posts. — by Learn Repo on HackerNoon.",
+      "source": "HackerNoon",
+      "sourceUrl": "https://hackernoon.com/113-blog-posts-to-learn-about-tutorial-for-beginners",
+      "category": "products",
+      "date": "2026-11-14",
       "hot": true,
       "score": 100,
       "tags": [
         "HackerNoon",
-        "cybersecurity",
+        "tutorial-for-beginners",
         "AI"
       ]
     },
     {
-      "id": "hnoon-revops-is-quietly-becoming-an-engineering-job",
-      "title": "RevOps Is Quietly Becoming an Engineering Job",
-      "summary": "Malek Damiri, a head of revenue operations, on why RevOps now means schedulers, staging, tested numbers, and AI agents, and what to learn next. — by Malek Damiri on HackerNoon.",
+      "id": "hnoon-why-your-numpy-array-changed-after-preprocessing-views-vs-co",
+      "title": "Why Your NumPy Array Changed After Preprocessing (Views vs Copies in ML)",
+      "summary": "Discover why NumPy arrays change during ML preprocessing. Learn how views, copies, slicing, and in-place operations affect memory and how to prevent unexpected — by Sohel Alam on HackerNoon.",
       "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/revops-is-quietly-becoming-an-engineering-job",
+      "sourceUrl": "https://hackernoon.com/why-your-numpy-array-changed-after-preprocessing-views-vs-copies-in-ml",
       "category": "products",
-      "date": "2026-11-13",
+      "date": "2026-11-14",
       "hot": true,
       "score": 100,
       "tags": [
         "HackerNoon",
-        "revops",
+        "python-programming",
         "AI"
       ]
     },
     {
-      "id": "hnoon-i-put-a-42-desk-design-studio-inside-my-coding-agent",
-      "title": "I Put a 42-Desk Design Studio Inside My Coding Agent",
-      "summary": "Desk Studio runs a design job like a studio inside your coding agent: roughs, a pick, polish, pixel proof, sign-off. One real job, 8.9, $1.34. — by Aditya Reddy on HackerNoon.",
+      "id": "hnoon-my-local-ai-agent-needed-a-bigger-brain-so-i-gave-it-a-decen",
+      "title": "My Local AI Agent Needed a Bigger Brain, So I Gave It a Decentralized GPU",
+      "summary": "This is my second progress update for the Decentralized AI Hackathon by HackerNoon and Nosana. Read All — by zkzk gamal on HackerNoon.",
       "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/i-put-a-42-desk-design-studio-inside-my-coding-agent",
+      "sourceUrl": "https://hackernoon.com/my-local-ai-agent-needed-a-bigger-brain-so-i-gave-it-a-decentralized-gpu",
       "category": "products",
-      "date": "2026-11-13",
+      "date": "2026-11-14",
       "hot": true,
       "score": 100,
       "tags": [
         "HackerNoon",
-        "ai-agents",
+        "nosana",
         "AI"
       ]
     },
     {
-      "id": "hnoon-ci-failure-triage-needs-evidence-before-it-needs-a-classifie",
-      "title": "CI Failure Triage Needs Evidence Before It Needs a Classifier",
-      "summary": "Sort CI failures into product defects, environment noise, agent errors and test defects, and capture the evidence before a model like Jev triages them. — by Saqib Jan on HackerNoon.",
+      "id": "hnoon-11-14-2026-newsletter",
+      "title": "The HackerNoon Newsletter: I Put a 42-Desk Design Studio Inside My Coding Agent (11/14/2026)",
+      "summary": "11/14/2026: Top 5 stories on the HackerNoon homepage! — by Noonification on HackerNoon.",
       "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/ci-failure-triage-needs-evidence-before-it-needs-a-classifier",
+      "sourceUrl": "https://hackernoon.com/11-14-2026-newsletter",
       "category": "products",
-      "date": "2026-11-13",
+      "date": "2026-11-14",
       "hot": true,
       "score": 100,
       "tags": [
         "HackerNoon",
-        "cicd",
+        "hackernoon-newsletter",
         "AI"
       ]
     },
     {
-      "id": "hnoon-115-blog-posts-to-learn-about-travel",
-      "title": "115 Blog Posts To Learn About Travel",
-      "summary": "Learn everything you need to know about Travel via these 115 free HackerNoon blog posts. — by Learn Repo on HackerNoon.",
-      "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/115-blog-posts-to-learn-about-travel",
+      "id": "dev-5025610",
+      "title": "Congrats to the Hacktoberfest Open-Source AI Challenge Week 4: Ghost in the Machine Winners!",
+      "summary": "The results are in for the final week of our Hacktoberfest DEV Challenges! For Ghost in the Machine,... — 91 reactions, 38 comments on DEV.to.",
+      "source": "DEV.to",
+      "sourceUrl": "https://dev.to/devteam/congrats-to-the-hacktoberfest-open-source-ai-challenge-week-4-ghost-in-the-machine-winners-nok",
       "category": "products",
       "date": "2026-11-13",
       "hot": true,
-      "score": 100,
+      "score": 91,
       "tags": [
-        "HackerNoon",
-        "travel",
-        "AI"
+        "DEV.to",
+        "ai",
+        "devchallenge",
+        "hf26challenge"
+      ]
+    },
+    {
+      "id": "dev-5031066",
+      "title": "Can't Beat Free: Gemma 4 31B on AMD Token Lab, with a Local Chat Page and an ADK Agent",
+      "summary": "AMD Token Lab is a free OpenAI-compatible API on AMD GPUs that comes with the AMD AI Developer Program. How to sign up, a local chat page that keeps the key off the browser, a terminal client, and a small ADK agent that  — 36 reactions, 13 comments on DEV.to.",
+      "source": "DEV.to",
+      "sourceUrl": "https://dev.to/gde/cant-beat-free-gemma-4-31b-on-amd-token-lab-with-a-local-chat-page-and-an-adk-agent-c5b",
+      "category": "products",
+      "date": "2026-11-13",
+      "hot": true,
+      "score": 36,
+      "tags": [
+        "DEV.to",
+        "ai",
+        "gemma",
+        "amd"
       ]
     },
     {
       "id": "hntop-50467087",
       "title": "Jensen Huang resigns",
-      "summary": "<a href=\"https:&#x2F;&#x2F;nvidianews.nvidia.com&#x2F;news&#x2F;nvidia-announces-ceo-transition\" rel=\"nofollow\">https:&#x2F;&#x2F;nvidianews.nvidia.com&#x2F;news&#x2F;nvidia-announces-ceo-tran...</a><p><a href=\"https:&#x — 4022 points, 3423 comments on HN.",
+      "summary": "<a href=\"https:&#x2F;&#x2F;nvidianews.nvidia.com&#x2F;news&#x2F;nvidia-announces-ceo-transition\" rel=\"nofollow\">https:&#x2F;&#x2F;nvidianews.nvidia.com&#x2F;news&#x2F;nvidia-announces-ceo-tran...</a><p><a href=\"https:&#x — 4045 points, 3449 comments on HN.",
       "source": "Hacker News",
       "sourceUrl": "https://apnews.com/article/nvidia-megaspeed-china-singapore-huang-5403f152a601cf82ce939f1d24fffa0f",
       "category": "big-tech",
       "date": "2026-11-12",
       "hot": true,
-      "score": 4022,
+      "score": 4045,
       "tags": [
         "HN",
         "top"
@@ -236,13 +269,13 @@
     {
       "id": "hntop-50465829",
       "title": "Anthropic IPO",
-      "summary": "Anthropic IPO — 996 points, 908 comments on HN.",
+      "summary": "Anthropic IPO — 1002 points, 916 comments on HN.",
       "source": "Hacker News",
       "sourceUrl": "https://ipo.anthropic.com/us/",
       "category": "big-tech",
       "date": "2026-11-12",
       "hot": true,
-      "score": 996,
+      "score": 1002,
       "tags": [
         "HN",
         "top"
@@ -263,48 +296,17 @@
         "paper",
         "AI"
       ]
-    },
-    {
-      "id": "ax-2611.17114v1",
-      "title": "Designing Institutions for Autonomous AI",
-      "summary": "As autonomous AI agents increasingly interact in persistent populations, their collective capabilities and alignment depend not only on individual models, but also on the institutions governing their interactions. Yet AI",
-      "source": "arXiv",
-      "sourceUrl": "http://arxiv.org/abs/2611.17114v1",
-      "category": "safety",
-      "date": "2026-11-12",
-      "hot": true,
-      "score": 800,
-      "tags": [
-        "arXiv",
-        "paper",
-        "AI"
-      ]
-    },
-    {
-      "id": "ax-2611.17098v1",
-      "title": "Speed-to-Power Dominates Energy Costs for AI Data Centers: Technoeconomic Analysis of Powering AI in the Continental United States",
-      "summary": "The rapid growth of artificial intelligence is driving demand for new data centers at large scale and on short deployment timelines. To power them, firms connect to the commercial grid or contract generation directly, bu",
-      "source": "arXiv",
-      "sourceUrl": "http://arxiv.org/abs/2611.17098v1",
-      "category": "products",
-      "date": "2026-11-12",
-      "hot": true,
-      "score": 800,
-      "tags": [
-        "arXiv",
-        "paper",
-        "AI"
-      ]
     }
   ],
   "meta": {
-    "fetchedAt": "2026-11-14T08:37:35.579Z",
+    "fetchedAt": "2026-11-15T08:50:37.342Z",
     "topic": "AI",
     "total": 15,
-    "hot": 12,
+    "hot": 11,
     "sources": [
-      "Hacker News",
       "HackerNoon",
+      "Hacker News",
+      "DEV.to",
       "arXiv"
     ]
   }
