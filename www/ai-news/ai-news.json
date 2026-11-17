@@ -1,12 +1,12 @@
 {
-  "generatedAt": "2026-11-16T09:01:31.602Z",
+  "generatedAt": "2026-11-17T10:12:55.125Z",
   "generatedBy": "YUNIE × Last30Days",
   "version": 2,
   "description": "Tin AI mới nhất — tổng hợp từ Last30Days (HN, GitHub, DEV.to, Reddit, arXiv, HackerNoon) trong 30 ngày qua. Chủ đề: AI. Tự động cập nhật bởi YUNIE.",
   "last30days": {
     "enabled": true,
     "topic": "AI",
-    "since": "2026-10-17",
+    "since": "2026-10-18",
     "days": 30,
     "sources": [
       "Hacker News (Algolia, free)",
@@ -55,253 +55,256 @@
   ],
   "articles": [
     {
-      "id": "hnoon-agents-are-not-the-answer-engineering-is",
-      "title": "Agents Are Not the Answer. Engineering Is.",
-      "summary": "The text describes how to build and maintain a coding agent, a language model that runs in a loop, by engineering the context around it. The agent's behavior is defined by a set of — by Renan Botasse on HackerNoon.",
+      "id": "hnoon-claude-fable-52-why-anthropics-most-expensive-model-can-end-",
+      "title": "Claude Fable 5.2: Why Anthropic's Most Expensive Model Can End Up the Cheapest",
+      "summary": "Claude Fable 5.2 explained by Alexander Volchek, host of ToTheMoon: how it differs from Opus 5.5, why Max mode can do worse than Medium, and when it pays off. Read All — by Alexander Volchek on HackerNoon.",
       "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/agents-are-not-the-answer-engineering-is",
+      "sourceUrl": "https://hackernoon.com/claude-fable-52-why-anthropics-most-expensive-model-can-end-up-the-cheapest",
       "category": "products",
-      "date": "2026-11-16",
+      "date": "2026-11-17",
       "hot": true,
       "score": 100,
       "tags": [
         "HackerNoon",
-        "ai-agents",
+        "ai",
         "AI"
       ]
     },
     {
-      "id": "hnoon-same-prompt-different-test-using-ai-agent-workspaces-to-make",
-      "title": "Same Prompt, Different Test: Using AI Agent Workspaces to Make Testing Repeatable",
-      "summary": "Ask an AI agent to test your app twice, and you’ll probably get two different tests. Here’s how you can use an AI agent workspace to make your testing more repeatable. Read All — by John Vester on HackerNoon.",
-      "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/same-prompt-different-test-using-ai-agent-workspaces-to-make-testing-repeatable",
-      "category": "products",
-      "date": "2026-11-16",
-      "hot": true,
-      "score": 100,
-      "tags": [
-        "HackerNoon",
-        "agentic-ai",
-        "AI"
-      ]
-    },
-    {
-      "id": "hn-50515018",
-      "title": "OpenTelemetry and AI Agents' Observability",
-      "summary": "OpenTelemetry and AI Agents' Observability — 8 points, 0 comments on HN.",
+      "id": "hn-50528364",
+      "title": "40-domain study: 80% of Shopify stores expose /API/ucp/MCP, 0% /agents.md",
+      "summary": "40-domain study: 80% of Shopify stores expose /API/ucp/MCP, 0% /agents.md — 8 points, 0 comments on HN.",
       "source": "Hacker News",
-      "sourceUrl": "https://signoz.io/blog/opentelemetry-ai-agent-observability/",
+      "sourceUrl": "https://verisource.dev/benchmarks/ai-search-readiness-2026",
       "category": "products",
-      "date": "2026-11-16",
+      "date": "2026-11-17",
       "hot": false,
       "score": 8,
       "tags": [
         "HN",
         "AI",
         "story",
-        "author_dhruv_ahuja"
+        "author_kulinichnick"
       ]
     },
     {
-      "id": "hn-50514822",
-      "title": "Show HN: Figma Like AI Landing Page Builder",
-      "summary": "Show HN: Figma Like AI Landing Page Builder — 7 points, 0 comments on HN.",
+      "id": "hn-50528707",
+      "title": "Ask HN: What was your weirdest or funniest job rejection?",
+      "summary": "I will start with mine. After the &quot;Product Interview&quot;, where we spent 80% of the time discussing a feature from the user’s perspective, I got this feedback:<p>&gt; While your extensive experience with Go, datab — 4 points, 2 comments on HN.",
       "source": "Hacker News",
-      "sourceUrl": "https://codecainehq.com/",
+      "sourceUrl": "https://news.ycombinator.com/item?id=50528707",
       "category": "products",
-      "date": "2026-11-16",
-      "hot": false,
-      "score": 7,
-      "tags": [
-        "HN",
-        "AI",
-        "story",
-        "author_sahil"
-      ]
-    },
-    {
-      "id": "hn-50514580",
-      "title": "The Tesla Roadster Won't Refill Its Air Tanks (Bet) [video]",
-      "summary": "The Tesla Roadster Won't Refill Its Air Tanks (Bet) [video] — 4 points, 1 comments on HN.",
-      "source": "Hacker News",
-      "sourceUrl": "https://www.youtube.com/watch?v=yKgox6ZKRJk",
-      "category": "products",
-      "date": "2026-11-16",
+      "date": "2026-11-17",
       "hot": false,
       "score": 4,
       "tags": [
         "HN",
         "AI",
         "story",
-        "author_num42"
+        "author_cristaloleg"
+      ]
+    },
+    {
+      "id": "hn-50528414",
+      "title": "AI Slop Spiral",
+      "summary": "AI Slop Spiral — 3 points, 0 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://nolanfrausto.com/posts/ai-slop-spiral/",
+      "category": "products",
+      "date": "2026-11-17",
+      "hot": false,
+      "score": 3,
+      "tags": [
+        "HN",
+        "AI",
+        "story",
+        "author_frausto"
+      ]
+    },
+    {
+      "id": "hn-50529485",
+      "title": "Show HN: I told AI to write FLAC/MP3/DST decoders, got ~2x faster than FFmpeg",
+      "summary": "Open source MIT licence. Detailed metrics at <a href=\"https:&#x2F;&#x2F;orpheic.com&#x2F;decoders&#x2F;\" rel=\"nofollow\">https:&#x2F;&#x2F;orpheic.com&#x2F;decoders&#x2F;</a> — 2 points, 0 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://github.com/orpheic/orpheic-decoders",
+      "category": "products",
+      "date": "2026-11-17",
+      "hot": false,
+      "score": 2,
+      "tags": [
+        "HN",
+        "AI",
+        "story",
+        "author_georgk"
+      ]
+    },
+    {
+      "id": "ax-2611.21476v1",
+      "title": "Generative AI and the Crisis of Higher Education Assessments: Examining 'AI-Proofing' Strategies for College-Level Assessments",
+      "summary": "Higher education is confronting an academic-integrity challenge unlike any in its history. Students can now outsource homework, take-home assignments, and online examinations to large language models (LLMs) that complete",
+      "source": "arXiv",
+      "sourceUrl": "http://arxiv.org/abs/2611.21476v1",
+      "category": "safety",
+      "date": "2026-11-16",
+      "hot": true,
+      "score": 800,
+      "tags": [
+        "arXiv",
+        "paper",
+        "AI"
+      ]
+    },
+    {
+      "id": "hnoon-crypto-etfs-bringing-centralization-back-to-crypto",
+      "title": "Crypto ETFs: Bringing Centralization Back to Crypto?",
+      "summary": "Crypto ETFs are bringing billions into traditional finance. But could that convenience come at the cost of crypto’s decentralization? Let’s explore. — by Obyte on HackerNoon.",
+      "source": "HackerNoon",
+      "sourceUrl": "https://hackernoon.com/crypto-etfs-bringing-centralization-back-to-crypto",
+      "category": "products",
+      "date": "2026-11-16",
+      "hot": true,
+      "score": 100,
+      "tags": [
+        "HackerNoon",
+        "decentralization",
+        "AI"
+      ]
+    },
+    {
+      "id": "hnoon-268-blog-posts-to-learn-about-women-in-tech",
+      "title": "268 Blog Posts To Learn About Women In Tech",
+      "summary": "Learn everything you need to know about Women In Tech via these 268 free HackerNoon blog posts. — by Learn Repo on HackerNoon.",
+      "source": "HackerNoon",
+      "sourceUrl": "https://hackernoon.com/268-blog-posts-to-learn-about-women-in-tech",
+      "category": "products",
+      "date": "2026-11-16",
+      "hot": true,
+      "score": 100,
+      "tags": [
+        "HackerNoon",
+        "women-in-tech",
+        "AI"
+      ]
+    },
+    {
+      "id": "hnoon-ironwallet-review-a-simple-open-wallet-that-is-growing-fast",
+      "title": "IronWallet Review: A Simple, Open Wallet That Is Growing Fast",
+      "summary": "IronWallet seems to have appeared out of nowhere, but according to Ermo Eero, the project has been around for four and a half years. The idea was to build a sim — by BTCWire on HackerNoon.",
+      "source": "HackerNoon",
+      "sourceUrl": "https://hackernoon.com/ironwallet-review-a-simple-open-wallet-that-is-growing-fast",
+      "category": "products",
+      "date": "2026-11-16",
+      "hot": true,
+      "score": 100,
+      "tags": [
+        "HackerNoon",
+        "web3",
+        "AI"
+      ]
+    },
+    {
+      "id": "hnoon-trybit-upgrades-crypto-infrastructure-with-new-api-and-inter",
+      "title": "Trybit Upgrades Crypto Infrastructure with New API and Interface for High-Volume Mass Payouts",
+      "summary": "Teams that pay partners, creators and contractors in crypto can now see errors before funds are sent and track the result of every transfer in a mass payout. — by BTCWire on HackerNoon.",
+      "source": "HackerNoon",
+      "sourceUrl": "https://hackernoon.com/trybit-upgrades-crypto-infrastructure-with-new-api-and-interface-for-high-volume-mass-payouts",
+      "category": "products",
+      "date": "2026-11-16",
+      "hot": true,
+      "score": 100,
+      "tags": [
+        "HackerNoon",
+        "web3",
+        "AI"
       ]
     },
     {
       "id": "hntop-50507303",
       "title": "All AI-generated code should be Open Source",
-      "summary": "All AI-generated code should be Open Source — 1163 points, 614 comments on HN.",
+      "summary": "All AI-generated code should be Open Source — 1271 points, 660 comments on HN.",
       "source": "Hacker News",
       "sourceUrl": "https://jakub.jankiewicz.org/blog/ai-code-open-source/",
       "category": "products",
       "date": "2026-11-15",
       "hot": true,
-      "score": 1163,
+      "score": 1271,
       "tags": [
         "HN",
         "top"
       ]
     },
     {
-      "id": "hnoon-how-to-make-enterprise-rag-systems-more-reliable",
-      "title": "How to Make Enterprise RAG Systems More Reliable",
-      "summary": "Enterprise RAG needs more than accurate retrieval. Explore four critical gaps in access control, data freshness, continuous evaluation, and cost. — by Vinuraj Devaraj on HackerNoon.",
-      "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/how-to-make-enterprise-rag-systems-more-reliable",
-      "category": "big-tech",
-      "date": "2026-11-15",
-      "hot": true,
-      "score": 100,
-      "tags": [
-        "HackerNoon",
-        "enterprise-ai",
-        "AI"
-      ]
-    },
-    {
-      "id": "hnoon-340-blog-posts-to-learn-about-virtual-reality",
-      "title": "340 Blog Posts To Learn About Virtual Reality",
-      "summary": "Learn everything you need to know about Virtual Reality via these 340 free HackerNoon blog posts. — by Learn Repo on HackerNoon.",
-      "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/340-blog-posts-to-learn-about-virtual-reality",
+      "id": "dev-5039203",
+      "title": "Ghost Rovers: I Called 12 Machines NASA Left Behind. One Picked Up.",
+      "summary": "A 1969 Mission Control console for kids. Built in one day for NASA Space Apps 2026.   TL;DR: For NASA... — 59 reactions, 21 comments on DEV.to.",
+      "source": "DEV.to",
+      "sourceUrl": "https://dev.to/earlgreyhot1701d/ghost-rovers-i-called-12-machines-nasa-left-behind-one-picked-up-2575",
       "category": "products",
       "date": "2026-11-15",
       "hot": true,
-      "score": 100,
+      "score": 59,
       "tags": [
-        "HackerNoon",
-        "virtual-reality",
-        "AI"
-      ]
-    },
-    {
-      "id": "hnoon-your-ec2-bill-is-an-architecture-problem-not-an-accounting-o",
-      "title": "Your EC2 Bill is an Architecture Problem, Not an Accounting One",
-      "summary": "Most EC2 bills are high because of early defaults nobody revisits. — by Zayeem Zaki on HackerNoon.",
-      "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/your-ec2-bill-is-an-architecture-problem-not-an-accounting-one",
-      "category": "products",
-      "date": "2026-11-15",
-      "hot": true,
-      "score": 100,
-      "tags": [
-        "HackerNoon",
-        "aws",
-        "AI"
-      ]
-    },
-    {
-      "id": "hnoon-the-future-of-ai-jobs-may-be-outside-the-tech-industry",
-      "title": "The Future of AI Jobs May Be Outside the Tech Industry",
-      "summary": "Five predictions for AI jobs by 2031, exploring software engineering, coding agents, robotics, industrial AI adoption, and future career opportunities. — by Pavel Yakovlev on HackerNoon.",
-      "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/the-future-of-ai-jobs-may-be-outside-the-tech-industry",
-      "category": "fun",
-      "date": "2026-11-15",
-      "hot": true,
-      "score": 100,
-      "tags": [
-        "HackerNoon",
-        "ai-adoption",
-        "AI"
+        "DEV.to",
+        "ai",
+        "ai",
+        "webdev"
       ]
     },
     {
       "id": "hntop-50493251",
       "title": "Nvidia allegedly engineered scarcity by funding AI startups to buy its GPUs",
-      "summary": "Nvidia allegedly engineered scarcity by funding AI startups to buy its GPUs — 1103 points, 649 comments on HN.",
+      "summary": "Nvidia allegedly engineered scarcity by funding AI startups to buy its GPUs — 1112 points, 649 comments on HN.",
       "source": "Hacker News",
       "sourceUrl": "https://www.techpowerup.com/354814/nvidia-allegedly-engineered-scarcity-by-funding-ai-startups-to-buy-its-gpus",
       "category": "big-tech",
       "date": "2026-11-14",
       "hot": true,
-      "score": 1103,
+      "score": 1112,
       "tags": [
         "HN",
         "top"
       ]
     },
     {
-      "id": "ax-2611.18484v1",
-      "title": "From AI-Enabled Remote Patient Monitoring Toward Agentic Robotics: Embodiment, Governance, and Care Integration",
-      "summary": "AI-enabled remote patient monitoring is evolving beyond passive data collection toward agentic AI systems that interpret patient states, coordinate care, and initiate action across domestic and clinical settings. This st",
-      "source": "arXiv",
-      "sourceUrl": "http://arxiv.org/abs/2611.18484v1",
-      "category": "fun",
-      "date": "2026-11-13",
-      "hot": true,
-      "score": 800,
-      "tags": [
-        "arXiv",
-        "paper",
-        "AI"
-      ]
-    },
-    {
-      "id": "ax-2611.18439v1",
-      "title": "Between Obligations and Evidence: A Participatory Study of Translating the EU AI Act into Technical Requirements",
-      "summary": "The EU AI Act imposes technical and organizational requirements for high-risk AI systems, but applying these requirements involves contextual choices about what to measure and what evidence supports a compliance claim. W",
-      "source": "arXiv",
-      "sourceUrl": "http://arxiv.org/abs/2611.18439v1",
-      "category": "safety",
-      "date": "2026-11-13",
-      "hot": true,
-      "score": 800,
-      "tags": [
-        "arXiv",
-        "paper",
-        "AI"
-      ]
-    },
-    {
-      "id": "ax-2611.18428v1",
-      "title": "Grid-Forming AI Data Centers: Coordinated Grid Support Control from IT Loads and Energy Storage",
-      "summary": "To exploit the grid-support capability of AI data centers (AIDCs), this paper proposes a grid-forming (GFM) control scheme which coordinates the IT loads and energy storage (ES) in the AIDC. First, the framework of a gri",
-      "source": "arXiv",
-      "sourceUrl": "http://arxiv.org/abs/2611.18428v1",
-      "category": "safety",
-      "date": "2026-11-13",
-      "hot": true,
-      "score": 800,
-      "tags": [
-        "arXiv",
-        "paper",
-        "AI"
-      ]
-    },
-    {
       "id": "dev-5025610",
       "title": "Congrats to the Hacktoberfest Open-Source AI Challenge Week 4: Ghost in the Machine Winners!",
-      "summary": "The results are in for the final week of our Hacktoberfest DEV Challenges! For Ghost in the Machine,... — 99 reactions, 43 comments on DEV.to.",
+      "summary": "The results are in for the final week of our Hacktoberfest DEV Challenges! For Ghost in the Machine,... — 107 reactions, 46 comments on DEV.to.",
       "source": "DEV.to",
       "sourceUrl": "https://dev.to/devteam/congrats-to-the-hacktoberfest-open-source-ai-challenge-week-4-ghost-in-the-machine-winners-nok",
       "category": "products",
       "date": "2026-11-13",
       "hot": true,
-      "score": 99,
+      "score": 107,
       "tags": [
         "DEV.to",
         "ai",
         "devchallenge",
         "hf26challenge"
       ]
+    },
+    {
+      "id": "dev-5017532",
+      "title": "remove.bg Is Shutting Down — Here's a Free, No-Upload Alternative",
+      "summary": "On December 1, 2026 at 9:00 AM CET, remove.bg — the site that turned \"one-click background removal\"... — 91 reactions, 130 comments on DEV.to.",
+      "source": "DEV.to",
+      "sourceUrl": "https://dev.to/akhourianmolkumar/removebg-is-shutting-down-heres-a-free-no-upload-alternative-4ebo",
+      "category": "products",
+      "date": "2026-11-13",
+      "hot": true,
+      "score": 91,
+      "tags": [
+        "DEV.to",
+        "ai",
+        "showdev",
+        "webdev"
+      ]
     }
   ],
   "meta": {
-    "fetchedAt": "2026-11-16T09:01:31.602Z",
+    "fetchedAt": "2026-11-17T10:12:55.126Z",
     "topic": "AI",
     "total": 15,
-    "hot": 12,
+    "hot": 11,
     "sources": [
       "HackerNoon",
       "Hacker News",
