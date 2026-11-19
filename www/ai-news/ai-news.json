@@ -1,12 +1,12 @@
 {
-  "generatedAt": "2026-11-18T09:45:36.643Z",
+  "generatedAt": "2026-11-19T09:54:43.737Z",
   "generatedBy": "YUNIE × Last30Days",
   "version": 2,
   "description": "Tin AI mới nhất — tổng hợp từ Last30Days (HN, GitHub, DEV.to, Reddit, arXiv, HackerNoon) trong 30 ngày qua. Chủ đề: AI. Tự động cập nhật bởi YUNIE.",
   "last30days": {
     "enabled": true,
     "topic": "AI",
-    "since": "2026-10-19",
+    "since": "2026-10-20",
     "days": 30,
     "sources": [
       "Hacker News (Algolia, free)",
@@ -55,13 +55,13 @@
   ],
   "articles": [
     {
-      "id": "hnoon-the-husk-o-meter-why-ai-comedy-is-the-reality-check-we-need",
-      "title": "The Husk-O-Meter: Why AI Comedy Is the Reality Check We Need",
-      "summary": "AI is either going to save humanity or destroy it, depending on whom you ask. But comedian Husk IRL offers a different way to gauge AI's progress: laughter. As long as we're still  — by The_AI_Ethicist on HackerNoon.",
+      "id": "hnoon-inside-agentwhy-part-1-a-step-by-step-audit-trail-for-ai-cod",
+      "title": "Inside Agentwhy, Part 1: A Step-by-Step Audit Trail for AI Coding Agents",
+      "summary": "One part of agentwhy each week. This one shows every step your AI and its helpers took, and where a rule stopped them. Read All — by Karol on HackerNoon.",
       "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/the-husk-o-meter-why-ai-comedy-is-the-reality-check-we-need",
+      "sourceUrl": "https://hackernoon.com/inside-agentwhy-part-1-a-step-by-step-audit-trail-for-ai-coding-agents",
       "category": "products",
-      "date": "2026-11-18",
+      "date": "2026-11-19",
       "hot": true,
       "score": 100,
       "tags": [
@@ -71,13 +71,13 @@
       ]
     },
     {
-      "id": "hnoon-californias-ai-kill-switch-raises-a-bigger-question-about-ag",
-      "title": "California's AI Kill Switch Raises a Bigger Question About Agentic AI Safety",
-      "summary": "AI kill switch raises a governance problem beyond shutting down a model. Autonomous agents can leave decisions, interpretations and downstream workflows in motion after the origina — by Maureen Doyle-Spare on HackerNoon.",
+      "id": "hnoon-nvidias-dory-shows-why-thinking-longer-doesnt-make-ai-smarte",
+      "title": "NVIDIA's Dory Shows Why Thinking Longer Doesn't Make AI Smarter",
+      "summary": "A new kind of model, the looped transformer, makes \"thinking harder\" literal: NVIDIA's 4B Dory stores 36 layers and runs 96 when its core loops four times. With two or more loops,  — by Michał Piszczek on HackerNoon.",
       "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/californias-ai-kill-switch-raises-a-bigger-question-about-agentic-ai-safety",
-      "category": "safety",
-      "date": "2026-11-18",
+      "sourceUrl": "https://hackernoon.com/nvidias-dory-shows-why-thinking-longer-doesnt-make-ai-smarter",
+      "category": "big-tech",
+      "date": "2026-11-19",
       "hot": true,
       "score": 100,
       "tags": [
@@ -87,110 +87,162 @@
       ]
     },
     {
-      "id": "hnoon-how-to-set-up-an-ai-bot-that-reads-the-school-email-for-you",
-      "title": "How to set up an AI bot that reads the school email for you",
-      "summary": "You can set up an AI agent to automate your daily tasks by following a step-by-step guide, which involves creating a new Gmail account for the bot, connecting it to your email and  — by Geoff Cox on HackerNoon.",
+      "id": "dev-5069884",
+      "title": "Stratagems #36: They Finished Their Coffee. The AI Still Has No Answer.",
+      "summary": "Know When to Walk Away  The Thirty-Six Stratagems, Stratagem 36               Open as Usual   When... — 72 reactions, 22 comments on DEV.to.",
+      "source": "DEV.to",
+      "sourceUrl": "https://dev.to/xulingfeng/stratagems-36-they-finished-their-coffee-the-ai-still-has-no-answer-4igh",
+      "category": "products",
+      "date": "2026-11-19",
+      "hot": true,
+      "score": 72,
+      "tags": [
+        "DEV.to",
+        "ai",
+        "discuss",
+        "ai"
+      ]
+    },
+    {
+      "id": "hn-50557420",
+      "title": "Wife of Senior Nvidia Executive Caught Up in Alleged AI Chip Smuggling Scandal",
+      "summary": "Wife of Senior Nvidia Executive Caught Up in Alleged AI Chip Smuggling Scandal — 9 points, 0 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://www.gadgetreview.com/wife-of-senior-nvidia-executive-caught-up-in-alleged-ai-chip-smuggling-scandal",
+      "category": "big-tech",
+      "date": "2026-11-19",
+      "hot": false,
+      "score": 9,
+      "tags": [
+        "HN",
+        "AI",
+        "story",
+        "author_mgh2"
+      ]
+    },
+    {
+      "id": "hn-50557102",
+      "title": "Anthropic IPO Raises over $81B",
+      "summary": "Anthropic IPO Raises over $81B — 8 points, 0 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://www.cnbc.com/2026/11/18/anthropic-ipo-ai-offering-price.html",
+      "category": "big-tech",
+      "date": "2026-11-19",
+      "hot": false,
+      "score": 8,
+      "tags": [
+        "HN",
+        "AI",
+        "story",
+        "author_Betelbuddy"
+      ]
+    },
+    {
+      "id": "ax-2611.24845v1",
+      "title": "Vibe-Trading: Towards Agent-Native Trading",
+      "summary": "Existing AI agents can retrieve information, call tools, run experiments, and produce multi-step outputs. Yet most are built around relatively static workflows and struggle to preserve reliable state as the environment c",
+      "source": "arXiv",
+      "sourceUrl": "http://arxiv.org/abs/2611.24845v1",
+      "category": "products",
+      "date": "2026-11-18",
+      "hot": true,
+      "score": 800,
+      "tags": [
+        "arXiv",
+        "paper",
+        "AI"
+      ]
+    },
+    {
+      "id": "dev-5060452",
+      "title": "Is Coding with AI Actually Faster and Cheaper?",
+      "summary": "How has AI actually changed the way we work? Are coding agents really making us remarkably faster?... — 134 reactions, 102 comments on DEV.to.",
+      "source": "DEV.to",
+      "sourceUrl": "https://dev.to/sylwia-lask/is-coding-with-ai-actually-faster-and-cheaper-2810",
+      "category": "products",
+      "date": "2026-11-18",
+      "hot": true,
+      "score": 134,
+      "tags": [
+        "DEV.to",
+        "ai",
+        "ai",
+        "programming"
+      ]
+    },
+    {
+      "id": "hnoon-stop-fixing-vulnerabilities-in-production-fix-them-where-the",
+      "title": "Stop Fixing Vulnerabilities in Production — Fix Them Where They're Born",
+      "summary": "Learn how SonarQube, JFrog Xray, and GitHub Copilot strengthen DevSecOps by detecting vulnerabilities early, accelerating secure coding, and reducing production — by Taru on HackerNoon.",
       "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/how-to-set-up-an-ai-bot-that-reads-the-school-email-for-you",
+      "sourceUrl": "https://hackernoon.com/stop-fixing-vulnerabilities-in-production-fix-them-where-theyre-born",
       "category": "products",
       "date": "2026-11-18",
       "hot": true,
       "score": 100,
       "tags": [
         "HackerNoon",
-        "ai-agents",
+        "security",
         "AI"
       ]
     },
     {
-      "id": "hnoon-if-your-ai-agent-breaks-the-law-its-your-problem",
-      "title": "If Your AI Agent Breaks the Law, It's Your Problem",
-      "summary": "- Who is responsible: In the UK, a company answers for what its AI agent does with customers \"in the same way you are responsible for what an employee does,\" even if a supplier bui — by Alexander Kopylkov on HackerNoon.",
+      "id": "hnoon-135-blog-posts-to-learn-about-youtube-transcripts",
+      "title": "135 Blog Posts To Learn About Youtube Transcripts",
+      "summary": "Learn everything you need to know about Youtube Transcripts via these 135 free HackerNoon blog posts. — by Learn Repo on HackerNoon.",
       "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/if-your-ai-agent-breaks-the-law-its-your-problem",
-      "category": "products",
-      "date": "2026-11-18",
-      "hot": true,
-      "score": 100,
-      "tags": [
-        "HackerNoon",
-        "ai-agents",
-        "AI"
-      ]
-    },
-    {
-      "id": "hnoon-i-was-drowning-in-claude-code-sessions-heres-how-i-hacked-my",
-      "title": "I Was Drowning in Claude Code Sessions - Here’s How I Hacked My Way Out",
-      "summary": "To stop drowning in terminal windows while running parallel AI workflows, I built Agent Desk: a local, browser-based multiplexer using node-pty and xterm.js that lets you monitor,  — by Faraazuddin Mohammed on HackerNoon",
-      "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/i-was-drowning-in-claude-code-sessions-heres-how-i-hacked-my-way-out",
+      "sourceUrl": "https://hackernoon.com/135-blog-posts-to-learn-about-youtube-transcripts",
       "category": "safety",
       "date": "2026-11-18",
       "hot": true,
       "score": 100,
       "tags": [
         "HackerNoon",
-        "ai-agents",
+        "youtube-transcripts",
+        "AI"
+      ]
+    },
+    {
+      "id": "hnoon-your-ai-agents-will-be-attacked-red-team-them-first",
+      "title": "Your AI Agents Will Be Attacked. Red-Team Them First",
+      "summary": "Learn why AI agents need continuous red teaming and how BotGauge AI tests prompt injection, tool misuse, data exfiltration, and multi-agent attacks. — by Jon Stojan Journalist on HackerNoon.",
+      "source": "HackerNoon",
+      "sourceUrl": "https://hackernoon.com/your-ai-agents-will-be-attacked-red-team-them-first",
+      "category": "products",
+      "date": "2026-11-18",
+      "hot": true,
+      "score": 100,
+      "tags": [
+        "HackerNoon",
+        "ai-agent-red-teaming",
         "AI"
       ]
     },
     {
       "id": "hntop-50535230",
       "title": "GPT‑6.2 Astra and Sol",
-      "summary": "GPT‑6.2 Astra and Sol — 1270 points, 791 comments on HN.",
+      "summary": "GPT‑6.2 Astra and Sol — 1339 points, 853 comments on HN.",
       "source": "Hacker News",
       "sourceUrl": "https://openai.com/index/introducing-gpt-6-2-astra-sol/",
       "category": "products",
       "date": "2026-11-17",
       "hot": true,
-      "score": 1270,
+      "score": 1339,
       "tags": [
         "HN",
         "top"
       ]
     },
     {
-      "id": "hnoon-git-clone-vs-fork-stop-mixing-them-up",
-      "title": "Git Clone vs Fork: Stop Mixing Them Up",
-      "summary": "Differentiating between git clone and git fork — by William on HackerNoon.",
-      "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/git-clone-vs-fork-stop-mixing-them-up",
-      "category": "products",
-      "date": "2026-11-17",
-      "hot": true,
-      "score": 100,
-      "tags": [
-        "HackerNoon",
-        "git",
-        "AI"
-      ]
-    },
-    {
-      "id": "hnoon-how-i-made-codex-cli-resume-itself-after-hitting-a-usage-lim",
-      "title": "How I Made Codex CLI Resume Itself After Hitting a Usage Limit",
-      "summary": "Cybokron Limit Guard is a free, open-source macOS menu bar app that tracks Codex CLI usage limits and resumes your sessions once the limit resets. — by Ercan Atay on HackerNoon.",
-      "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/how-i-made-codex-cli-resume-itself-after-hitting-a-usage-limit",
-      "category": "products",
-      "date": "2026-11-17",
-      "hot": true,
-      "score": 100,
-      "tags": [
-        "HackerNoon",
-        "codex",
-        "AI"
-      ]
-    },
-    {
       "id": "dev-5015822",
       "title": "Could I Still Do This From Scratch?",
-      "summary": "The thing that every dev I know is quietly worrying about is not AI taking their job. It's losing the... — 47 reactions, 25 comments on DEV.to.",
+      "summary": "The thing that every dev I know is quietly worrying about is not AI taking their job. It's losing the... — 66 reactions, 36 comments on DEV.to.",
       "source": "DEV.to",
       "sourceUrl": "https://dev.to/dannwaneri/could-i-still-do-this-from-scratch-427h",
       "category": "products",
       "date": "2026-11-17",
       "hot": true,
-      "score": 47,
+      "score": 66,
       "tags": [
         "DEV.to",
         "ai",
@@ -201,13 +253,13 @@
     {
       "id": "dev-5058432",
       "title": "AI agents open 17 million pull requests a month. I built a gate that rejects the ones that lie.",
-      "summary": "AI agents now open pull requests on their own. I gave Amazon Nova Pro a real GitHub bug, then built a deterministic Python gate that rejects it when it cannot prove the fix. No model grades the model. — 30 reactions, 19 comments on DEV.to.",
+      "summary": "AI agents now open pull requests on their own. I gave Amazon Nova Pro a real GitHub bug, then built a deterministic Python gate that rejects it when it cannot prove the fix. No model grades the model. — 57 reactions, 38 comments on DEV.to.",
       "source": "DEV.to",
       "sourceUrl": "https://dev.to/aws-builders/ai-agents-open-17-million-pull-requests-a-month-i-built-a-gate-that-rejects-the-ones-that-lie-46n7",
       "category": "products",
       "date": "2026-11-17",
-      "hot": false,
-      "score": 30,
+      "hot": true,
+      "score": 57,
       "tags": [
         "DEV.to",
         "ai",
@@ -218,43 +270,11 @@
     {
       "id": "dev-5004164",
       "title": "AI Avatar v28 (Security Support, Voxel Avatar)🛡️",
-      "summary": "Intro   AI Avatar is a free app where your VRoid (VRM) avatar cheers you with all its... — 55 reactions, 14 comments on DEV.to.",
+      "summary": "Intro   AI Avatar is a free app where your VRoid (VRM) avatar cheers you with all its... — 68 reactions, 21 comments on DEV.to.",
       "source": "DEV.to",
       "sourceUrl": "https://dev.to/webdeveloperhyper/ai-avatar-v28-security-support-voxel-avatar-2i5i",
       "category": "products",
       "date": "2026-11-16",
-      "hot": true,
-      "score": 55,
-      "tags": [
-        "DEV.to",
-        "ai",
-        "ai",
-        "webdev"
-      ]
-    },
-    {
-      "id": "hntop-50507303",
-      "title": "All AI-generated code should be Open Source",
-      "summary": "All AI-generated code should be Open Source — 1279 points, 669 comments on HN.",
-      "source": "Hacker News",
-      "sourceUrl": "https://jakub.jankiewicz.org/blog/ai-code-open-source/",
-      "category": "products",
-      "date": "2026-11-15",
-      "hot": true,
-      "score": 1279,
-      "tags": [
-        "HN",
-        "top"
-      ]
-    },
-    {
-      "id": "dev-5039203",
-      "title": "Ghost Rovers: I Called 12 Machines NASA Left Behind. One Picked Up.",
-      "summary": "A 1969 Mission Control console for kids. Built in one day for NASA Space Apps 2026.   TL;DR: For NASA... — 68 reactions, 23 comments on DEV.to.",
-      "source": "DEV.to",
-      "sourceUrl": "https://dev.to/earlgreyhot1701d/ghost-rovers-i-called-12-machines-nasa-left-behind-one-picked-up-2575",
-      "category": "products",
-      "date": "2026-11-15",
       "hot": true,
       "score": 68,
       "tags": [
@@ -265,47 +285,31 @@
       ]
     },
     {
-      "id": "hntop-50493251",
-      "title": "Nvidia allegedly engineered scarcity by funding AI startups to buy its GPUs",
-      "summary": "Nvidia allegedly engineered scarcity by funding AI startups to buy its GPUs — 1113 points, 650 comments on HN.",
+      "id": "hntop-50507303",
+      "title": "All AI-generated code should be Open Source",
+      "summary": "All AI-generated code should be Open Source — 1281 points, 671 comments on HN.",
       "source": "Hacker News",
-      "sourceUrl": "https://www.techpowerup.com/354814/nvidia-allegedly-engineered-scarcity-by-funding-ai-startups-to-buy-its-gpus",
-      "category": "big-tech",
-      "date": "2026-11-14",
+      "sourceUrl": "https://jakub.jankiewicz.org/blog/ai-code-open-source/",
+      "category": "products",
+      "date": "2026-11-15",
       "hot": true,
-      "score": 1113,
+      "score": 1281,
       "tags": [
         "HN",
         "top"
       ]
-    },
-    {
-      "id": "dev-5025610",
-      "title": "Congrats to the Hacktoberfest Open-Source AI Challenge Week 4: Ghost in the Machine Winners!",
-      "summary": "The results are in for the final week of our Hacktoberfest DEV Challenges! For Ghost in the Machine,... — 116 reactions, 50 comments on DEV.to.",
-      "source": "DEV.to",
-      "sourceUrl": "https://dev.to/devteam/congrats-to-the-hacktoberfest-open-source-ai-challenge-week-4-ghost-in-the-machine-winners-nok",
-      "category": "products",
-      "date": "2026-11-13",
-      "hot": true,
-      "score": 116,
-      "tags": [
-        "DEV.to",
-        "ai",
-        "devchallenge",
-        "hf26challenge"
-      ]
     }
   ],
   "meta": {
-    "fetchedAt": "2026-11-18T09:45:36.643Z",
+    "fetchedAt": "2026-11-19T09:54:43.737Z",
     "topic": "AI",
     "total": 15,
-    "hot": 14,
+    "hot": 13,
     "sources": [
       "HackerNoon",
+      "DEV.to",
       "Hacker News",
-      "DEV.to"
+      "arXiv"
     ]
   }
 }
