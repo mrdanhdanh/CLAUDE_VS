@@ -1,12 +1,12 @@
 {
-  "generatedAt": "2026-11-20T09:41:49.112Z",
+  "generatedAt": "2026-11-21T09:13:38.425Z",
   "generatedBy": "YUNIE × Last30Days",
   "version": 2,
   "description": "Tin AI mới nhất — tổng hợp từ Last30Days (HN, GitHub, DEV.to, Reddit, arXiv, HackerNoon) trong 30 ngày qua. Chủ đề: AI. Tự động cập nhật bởi YUNIE.",
   "last30days": {
     "enabled": true,
     "topic": "AI",
-    "since": "2026-10-21",
+    "since": "2026-10-22",
     "days": 30,
     "sources": [
       "Hacker News (Algolia, free)",
@@ -55,95 +55,178 @@
   ],
   "articles": [
     {
-      "id": "hnoon-langchain-says-prompt-engineering-will-disappear-heres-what-",
-      "title": "LangChain Says Prompt Engineering Will Disappear. Here's What Comes Next",
-      "summary": "Goal engineering is the argument that agents should be steered by goals and feedback loops, not step-by-step instructions. This covers the design shift, the tooling shipping in Dee — by Zafar Iqbal on HackerNoon.",
+      "id": "hnoon-fridges-hackers-ai-and-la-flemme",
+      "title": "Fridges, Hackers, AI and La Flemme",
+      "summary": "Using the 2026 Danfoss fridge hacks that defrosted supermarket and blood-bank refrigerators across Europe as a case study, this piece shows how AI can rebuild an authentication byp — by rs_cyber on HackerNoon.",
       "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/langchain-says-prompt-engineering-will-disappear-heres-what-comes-next",
+      "sourceUrl": "https://hackernoon.com/fridges-hackers-ai-and-la-flemme",
       "category": "safety",
-      "date": "2026-11-20",
+      "date": "2026-11-21",
       "hot": true,
       "score": 100,
       "tags": [
         "HackerNoon",
-        "llms",
+        "cybersecurity",
         "AI"
       ]
     },
     {
-      "id": "hnoon-github-suspended-my-14-year-old-account-and-made-my-work-dis",
-      "title": "GitHub Suspended My 14-Year-Old Account and Made My Work Disappear",
-      "summary": "On October 21, 2026, GitHub suspended the account I had used since 2012, then denied the appeal the same day, saying it was 'unable to see activity on your account' — an account wi — by Mike Henken on HackerNoon.",
+      "id": "hn-50586292",
+      "title": "ClawDOS – An AI coding agent for DOS",
+      "summary": "ClawDOS – An AI coding agent for DOS — 53 points, 15 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "http://ricapar.net/ClawDOS/",
+      "category": "products",
+      "date": "2026-11-21",
+      "hot": false,
+      "score": 53,
+      "tags": [
+        "HN",
+        "AI",
+        "story",
+        "author_Ricapar"
+      ]
+    },
+    {
+      "id": "hn-50586193",
+      "title": "Don't Play Anthropic's Game",
+      "summary": "Don't Play Anthropic's Game — 10 points, 3 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://www.nytimes.com/2026/11/19/opinion/anthropic-ipo-ai-regulation.html",
+      "category": "big-tech",
+      "date": "2026-11-21",
+      "hot": false,
+      "score": 10,
+      "tags": [
+        "HN",
+        "AI",
+        "story",
+        "author_rreyes1979"
+      ]
+    },
+    {
+      "id": "hn-50586323",
+      "title": "Show HN: Musset, open-source Scrivener alternative with an AI that never writes",
+      "summary": "I’m writing my first novel and could not find an app that fit my workflow: quiet like iA Writer, organized like Scrivener, and with AI so I can discuss my book while I write it. It allows me to feel less “alone” and have — 5 points, 1 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://github.com/Musset-App/musset",
+      "category": "products",
+      "date": "2026-11-21",
+      "hot": false,
+      "score": 5,
+      "tags": [
+        "HN",
+        "AI",
+        "story",
+        "author_julienmarie"
+      ]
+    },
+    {
+      "id": "hn-50586471",
+      "title": "Federal Revenue When AI Replaces Labor",
+      "summary": "Federal Revenue When AI Replaces Labor — 3 points, 2 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://www.rand.org/pubs/research_reports/RRA4980-1.html",
+      "category": "products",
+      "date": "2026-11-21",
+      "hot": false,
+      "score": 3,
+      "tags": [
+        "HN",
+        "AI",
+        "story",
+        "author_littlexsparkee"
+      ]
+    },
+    {
+      "id": "hntop-50581260",
+      "title": "Inkling 2 Mini",
+      "summary": "Inkling 2 Mini — 955 points, 177 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://thinkingmachines.ai/news/inkling-2-mini/",
+      "category": "products",
+      "date": "2026-11-20",
+      "hot": true,
+      "score": 955,
+      "tags": [
+        "HN",
+        "top"
+      ]
+    },
+    {
+      "id": "hnoon-the-anchor-effect-why-destination-footfall-doesnt-equal-reta",
+      "title": "The Anchor Effect: Why Destination Footfall Doesn't Equal Retail Demand",
+      "summary": "Battersea Power Station hit 50M visits, yet vacancy ranges from 6% to 38% by zone. Why destination footfall is not shopfront demand, and how to measure it. — by Dmitry Poroshin on HackerNoon.",
       "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/github-suspended-my-14-year-old-account-and-made-my-work-disappear",
+      "sourceUrl": "https://hackernoon.com/the-anchor-effect-why-destination-footfall-doesnt-equal-retail-demand",
       "category": "products",
       "date": "2026-11-20",
       "hot": true,
       "score": 100,
       "tags": [
         "HackerNoon",
-        "github",
+        "retail",
         "AI"
       ]
     },
     {
-      "id": "hnoon-how-my-ai-agents-spotted-prompt-injection-attempts-while-pub",
-      "title": "How My AI Agents Spotted Prompt Injection Attempts While Publishing",
-      "summary": "Some sites leave instructions for AI agents. Mine ignored them and flagged what they saw, because my rule is that text on a page is data, not a command. Read All — by Sam Brovda on HackerNoon.",
+      "id": "hnoon-we-killed-our-staging-environment-and-moved-qa-to-production",
+      "title": "We Killed Our Staging Environment and Moved QA to Production Canaries",
+      "summary": "Our shared staging cluster cost $2,740/month and missed real production bugs. Here is how we killed staging and moved QA to Argo Rollouts canaries. — by Akhil on HackerNoon.",
       "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/how-my-ai-agents-spotted-prompt-injection-attempts-while-publishing",
+      "sourceUrl": "https://hackernoon.com/we-killed-our-staging-environment-and-moved-qa-to-production-canaries",
       "category": "products",
       "date": "2026-11-20",
       "hot": true,
       "score": 100,
       "tags": [
         "HackerNoon",
-        "ai",
+        "devops",
         "AI"
       ]
     },
     {
-      "id": "hnoon-how-a-race-condition-in-the-php-mcp-sdk-broke-parallel-tool-",
-      "title": "How a Race Condition in the PHP MCP SDK Broke Parallel Tool Calls",
-      "summary": "mcp/sdk 0.8.1 queued every tool response in a shared session, so parallel calls on several PHP workers overwrote each other and about one call in ten got its own answer. The articl — by MattLeads on HackerNoon.",
+      "id": "hnoon-177-blog-posts-to-learn-about-bitcoin-mining",
+      "title": "177 Blog Posts To Learn About Bitcoin Mining",
+      "summary": "Learn everything you need to know about Bitcoin Mining via these 177 free HackerNoon blog posts. — by Learn Repo on HackerNoon.",
       "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/how-a-race-condition-in-the-php-mcp-sdk-broke-parallel-tool-calls",
+      "sourceUrl": "https://hackernoon.com/177-blog-posts-to-learn-about-bitcoin-mining",
       "category": "products",
       "date": "2026-11-20",
       "hot": true,
       "score": 100,
       "tags": [
         "HackerNoon",
-        "php",
+        "bitcoin-mining",
         "AI"
       ]
     },
     {
-      "id": "hnoon-self-healing-tests-can-preserve-the-wrong-behavior",
-      "title": "Self-Healing Tests Can Preserve the Wrong Behavior",
-      "summary": "A test can heal from a broken selector by clicking a different, valid element—and quietly stop testing the original user intent. Separate selector repair from intent reinterpretati — by Raju Dandigam on HackerNoon.",
+      "id": "hnoon-11-20-2026-newsletter",
+      "title": "The HackerNoon Newsletter: Creating the Intelligent Being; the AI Alien (11/20/2026)",
+      "summary": "11/20/2026: Top 5 stories on the HackerNoon homepage! Read All — by Noonification on HackerNoon.",
       "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/self-healing-tests-can-preserve-the-wrong-behavior",
+      "sourceUrl": "https://hackernoon.com/11-20-2026-newsletter",
       "category": "products",
       "date": "2026-11-20",
       "hot": true,
       "score": 100,
       "tags": [
         "HackerNoon",
-        "cypress",
+        "hackernoon-newsletter",
         "AI"
       ]
     },
     {
       "id": "hntop-50562754",
       "title": "Anthropic’s Nasdaq debut",
-      "summary": "Anthropic’s Nasdaq debut — 1077 points, 2128 comments on HN.",
+      "summary": "Anthropic’s Nasdaq debut — 1133 points, 2299 comments on HN.",
       "source": "Hacker News",
       "sourceUrl": "https://www.reuters.com/business/finance/anthropics-historic-debut-put-ais-promise-peril-wall-st-test-2026-11-19/",
       "category": "big-tech",
       "date": "2026-11-19",
       "hot": true,
-      "score": 1077,
+      "score": 1133,
       "tags": [
         "HN",
         "top"
@@ -168,13 +251,13 @@
     {
       "id": "dev-5069884",
       "title": "Stratagems #36: They Finished Their Coffee. The AI Still Has No Answer.",
-      "summary": "Know When to Walk Away  The Thirty-Six Stratagems, Stratagem 36               Open as Usual   When... — 101 reactions, 51 comments on DEV.to.",
+      "summary": "Know When to Walk Away  The Thirty-Six Stratagems, Stratagem 36               Open as Usual   When... — 112 reactions, 55 comments on DEV.to.",
       "source": "DEV.to",
       "sourceUrl": "https://dev.to/xulingfeng/stratagems-36-they-finished-their-coffee-the-ai-still-has-no-answer-4igh",
       "category": "products",
       "date": "2026-11-19",
       "hot": true,
-      "score": 101,
+      "score": 112,
       "tags": [
         "DEV.to",
         "ai",
@@ -183,124 +266,44 @@
       ]
     },
     {
-      "id": "hnoon-seven-spheres-became-an-app-heres-how",
-      "title": "Seven Spheres Became an App: Here's How",
-      "summary": "The author built a software product called Lunary, which is a digital representation of their Master's thesis on Hermetic cosmology and astrology. The product's architecture and fu — by sammii on HackerNoon.",
-      "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/seven-spheres-became-an-app-heres-how",
+      "id": "dev-5072558",
+      "title": "Can a plain table hijack an AI agent?",
+      "summary": "Living repo: every case in this article is in agent-redteam... — 24 reactions, 51 comments on DEV.to.",
+      "source": "DEV.to",
+      "sourceUrl": "https://dev.to/edbrdi/can-a-plain-table-hijack-an-ai-agent-2pde",
       "category": "products",
       "date": "2026-11-19",
-      "hot": true,
-      "score": 100,
+      "hot": false,
+      "score": 24,
       "tags": [
-        "HackerNoon",
-        "software-development",
-        "AI"
+        "DEV.to",
+        "ai",
+        "ai",
+        "security"
       ]
     },
     {
-      "id": "hnoon-53percent-of-gamers-rank-black-friday-as-the-best-value-even",
-      "title": "53% of Gamers Rank Black Friday as the Best Value Event of the Year, Reveals New G2A.COM Survey",
-      "summary": "New G2A findings reveal how gamers are turning Black Friday into a planned purchasing moment, with 64% having delayed purchases of newly released games or in-ga — by Technology Wire on HackerNoon.",
-      "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/53percent-of-gamers-rank-black-friday-as-the-best-value-event-of-the-year-reveals-new-g2acom-survey",
+      "id": "ax-2611.26624v1",
+      "title": "PlayCraft: Designing Engaging Games from Agent Play Experience",
+      "summary": "Recent AI agents can generate playable games, but these games are not necessarily engaging. Mastery is a key source of engagement, yet designing for it requires extensive human play and tuning. We propose PlayCraft, an a",
+      "source": "arXiv",
+      "sourceUrl": "http://arxiv.org/abs/2611.26624v1",
       "category": "products",
       "date": "2026-11-19",
-      "hot": true,
-      "score": 100,
+      "hot": false,
+      "score": 0,
       "tags": [
-        "HackerNoon",
-        "technology",
+        "arXiv",
+        "paper",
         "AI"
-      ]
-    },
-    {
-      "id": "hntop-50552424",
-      "title": "Gemini 4 Neon",
-      "summary": "Gemini 4 Neon — 1033 points, 768 comments on HN.",
-      "source": "Hacker News",
-      "sourceUrl": "https://blog.google/innovation-and-ai/models-and-research/gemini-models/introducing-gemini-4-neon/",
-      "category": "products",
-      "date": "2026-11-18",
-      "hot": true,
-      "score": 1033,
-      "tags": [
-        "HN",
-        "top"
-      ]
-    },
-    {
-      "id": "dev-5060452",
-      "title": "Is Coding with AI Actually Faster and Cheaper?",
-      "summary": "How has AI actually changed the way we work? Are coding agents really making us remarkably faster?... — 178 reactions, 153 comments on DEV.to.",
-      "source": "DEV.to",
-      "sourceUrl": "https://dev.to/sylwia-lask/is-coding-with-ai-actually-faster-and-cheaper-2810",
-      "category": "products",
-      "date": "2026-11-18",
-      "hot": true,
-      "score": 178,
-      "tags": [
-        "DEV.to",
-        "ai",
-        "ai",
-        "programming"
-      ]
-    },
-    {
-      "id": "dev-5059675",
-      "title": "The CodeNewbie Podcast is Back for Season 28!",
-      "summary": "Hi friends! 👋 The CodeNewbie Podcast is back for season 28, and I’m so excited to be the one hosting... — 71 reactions, 10 comments on DEV.to.",
-      "source": "DEV.to",
-      "sourceUrl": "https://dev.to/codenewbie/the-codenewbie-podcast-is-back-for-season-28-2484",
-      "category": "products",
-      "date": "2026-11-18",
-      "hot": true,
-      "score": 71,
-      "tags": [
-        "DEV.to",
-        "ai",
-        "codenewbie",
-        "ai"
-      ]
-    },
-    {
-      "id": "hntop-50535230",
-      "title": "GPT‑6.2 Astra and Sol",
-      "summary": "GPT‑6.2 Astra and Sol — 1345 points, 861 comments on HN.",
-      "source": "Hacker News",
-      "sourceUrl": "https://openai.com/index/introducing-gpt-6-2-astra-sol/",
-      "category": "products",
-      "date": "2026-11-17",
-      "hot": true,
-      "score": 1345,
-      "tags": [
-        "HN",
-        "top"
-      ]
-    },
-    {
-      "id": "dev-5058432",
-      "title": "AI agents open 17 million pull requests a month. I built a gate that rejects the ones that lie.",
-      "summary": "AI agents now open pull requests on their own. I gave Amazon Nova Pro a real GitHub bug, then built a deterministic Python gate that rejects it when it cannot prove the fix. No model grades the model. — 70 reactions, 52 comments on DEV.to.",
-      "source": "DEV.to",
-      "sourceUrl": "https://dev.to/aws-builders/ai-agents-open-17-million-pull-requests-a-month-i-built-a-gate-that-rejects-the-ones-that-lie-46n7",
-      "category": "products",
-      "date": "2026-11-17",
-      "hot": true,
-      "score": 70,
-      "tags": [
-        "DEV.to",
-        "ai",
-        "ai",
-        "aws"
       ]
     }
   ],
   "meta": {
-    "fetchedAt": "2026-11-20T09:41:49.112Z",
+    "fetchedAt": "2026-11-21T09:13:38.425Z",
     "topic": "AI",
     "total": 15,
-    "hot": 15,
+    "hot": 9,
     "sources": [
       "HackerNoon",
       "Hacker News",
