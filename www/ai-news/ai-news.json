@@ -1,12 +1,12 @@
 {
-  "generatedAt": "2026-11-21T09:13:38.425Z",
+  "generatedAt": "2026-11-22T09:23:25.384Z",
   "generatedBy": "YUNIE × Last30Days",
   "version": 2,
   "description": "Tin AI mới nhất — tổng hợp từ Last30Days (HN, GitHub, DEV.to, Reddit, arXiv, HackerNoon) trong 30 ngày qua. Chủ đề: AI. Tự động cập nhật bởi YUNIE.",
   "last30days": {
     "enabled": true,
     "topic": "AI",
-    "since": "2026-10-22",
+    "since": "2026-10-23",
     "days": 30,
     "sources": [
       "Hacker News (Algolia, free)",
@@ -55,160 +55,114 @@
   ],
   "articles": [
     {
-      "id": "hnoon-fridges-hackers-ai-and-la-flemme",
-      "title": "Fridges, Hackers, AI and La Flemme",
-      "summary": "Using the 2026 Danfoss fridge hacks that defrosted supermarket and blood-bank refrigerators across Europe as a case study, this piece shows how AI can rebuild an authentication byp — by rs_cyber on HackerNoon.",
-      "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/fridges-hackers-ai-and-la-flemme",
-      "category": "safety",
-      "date": "2026-11-21",
-      "hot": true,
-      "score": 100,
-      "tags": [
-        "HackerNoon",
-        "cybersecurity",
-        "AI"
-      ]
-    },
-    {
-      "id": "hn-50586292",
-      "title": "ClawDOS – An AI coding agent for DOS",
-      "summary": "ClawDOS – An AI coding agent for DOS — 53 points, 15 comments on HN.",
+      "id": "hn-50596511",
+      "title": "AI Supply Chain Security: What Canary Tokens Found",
+      "summary": "AI Supply Chain Security: What Canary Tokens Found — 81 points, 17 comments on HN.",
       "source": "Hacker News",
-      "sourceUrl": "http://ricapar.net/ClawDOS/",
+      "sourceUrl": "https://www.dragos.com/blog/ai-supply-chain-security-canary-tokens",
       "category": "products",
-      "date": "2026-11-21",
+      "date": "2026-11-22",
       "hot": false,
-      "score": 53,
+      "score": 81,
       "tags": [
         "HN",
         "AI",
         "story",
-        "author_Ricapar"
+        "author_kristianp"
       ]
     },
     {
-      "id": "hn-50586193",
-      "title": "Don't Play Anthropic's Game",
-      "summary": "Don't Play Anthropic's Game — 10 points, 3 comments on HN.",
+      "id": "hn-50596564",
+      "title": "Ask HN: What made you pivot your interest to the field of AI?",
+      "summary": "If you work in the field of AI, machine learning what made you do so? What sparked your interest and which skills and resources helped you along the way? — 5 points, 4 comments on HN.",
       "source": "Hacker News",
-      "sourceUrl": "https://www.nytimes.com/2026/11/19/opinion/anthropic-ipo-ai-regulation.html",
-      "category": "big-tech",
-      "date": "2026-11-21",
-      "hot": false,
-      "score": 10,
-      "tags": [
-        "HN",
-        "AI",
-        "story",
-        "author_rreyes1979"
-      ]
-    },
-    {
-      "id": "hn-50586323",
-      "title": "Show HN: Musset, open-source Scrivener alternative with an AI that never writes",
-      "summary": "I’m writing my first novel and could not find an app that fit my workflow: quiet like iA Writer, organized like Scrivener, and with AI so I can discuss my book while I write it. It allows me to feel less “alone” and have — 5 points, 1 comments on HN.",
-      "source": "Hacker News",
-      "sourceUrl": "https://github.com/Musset-App/musset",
+      "sourceUrl": "https://news.ycombinator.com/item?id=50596564",
       "category": "products",
-      "date": "2026-11-21",
+      "date": "2026-11-22",
       "hot": false,
       "score": 5,
       "tags": [
         "HN",
         "AI",
         "story",
-        "author_julienmarie"
+        "author_learner_yearner"
       ]
     },
     {
-      "id": "hn-50586471",
-      "title": "Federal Revenue When AI Replaces Labor",
-      "summary": "Federal Revenue When AI Replaces Labor — 3 points, 2 comments on HN.",
+      "id": "hn-50597612",
+      "title": "87% of the Anthropic power will come from gas and 11% from coal in 2028",
+      "summary": "87% of the Anthropic power will come from gas and 11% from coal in 2028 — 4 points, 1 comments on HN.",
       "source": "Hacker News",
-      "sourceUrl": "https://www.rand.org/pubs/research_reports/RRA4980-1.html",
+      "sourceUrl": "https://betterdatacenterproject.com/2026/11/16/how-ai-is-powered-a-breakdown-of-byop-and-grid-power/",
+      "category": "big-tech",
+      "date": "2026-11-22",
+      "hot": false,
+      "score": 4,
+      "tags": [
+        "HN",
+        "AI",
+        "story",
+        "author_happosai"
+      ]
+    },
+    {
+      "id": "hn-50596706",
+      "title": "AWS local emulator created by AI agents",
+      "summary": "AWS local emulator created by AI agents — 3 points, 0 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://aws.amazon.com/blogs/aws/test-your-applications-against-aws-locally-with-aws-emulator/",
       "category": "products",
-      "date": "2026-11-21",
+      "date": "2026-11-22",
       "hot": false,
       "score": 3,
       "tags": [
         "HN",
         "AI",
         "story",
-        "author_littlexsparkee"
+        "author_wenbert"
       ]
     },
     {
-      "id": "hntop-50581260",
-      "title": "Inkling 2 Mini",
-      "summary": "Inkling 2 Mini — 955 points, 177 comments on HN.",
+      "id": "hn-50596281",
+      "title": "One Vulnearbility Hacks Google, WordPress, Roundcube, Debian 13, Zoom, Box, etc.",
+      "summary": "One Vulnearbility Hacks Google, WordPress, Roundcube, Debian 13, Zoom, Box, etc. — 3 points, 1 comments on HN.",
       "source": "Hacker News",
-      "sourceUrl": "https://thinkingmachines.ai/news/inkling-2-mini/",
-      "category": "products",
-      "date": "2026-11-20",
-      "hot": true,
-      "score": 955,
+      "sourceUrl": "https://pwn.ai/upload2shell/research.html",
+      "category": "big-tech",
+      "date": "2026-11-22",
+      "hot": false,
+      "score": 3,
       "tags": [
         "HN",
-        "top"
+        "AI",
+        "story",
+        "author_lovetoseeitgeth"
       ]
     },
     {
-      "id": "hnoon-the-anchor-effect-why-destination-footfall-doesnt-equal-reta",
-      "title": "The Anchor Effect: Why Destination Footfall Doesn't Equal Retail Demand",
-      "summary": "Battersea Power Station hit 50M visits, yet vacancy ranges from 6% to 38% by zone. Why destination footfall is not shopfront demand, and how to measure it. — by Dmitry Poroshin on HackerNoon.",
+      "id": "hnoon-162-blog-posts-to-learn-about-blockchain-adoption",
+      "title": "162 Blog Posts To Learn About Blockchain Adoption",
+      "summary": "Learn everything you need to know about Blockchain Adoption via these 162 free HackerNoon blog posts. — by Learn Repo on HackerNoon.",
       "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/the-anchor-effect-why-destination-footfall-doesnt-equal-retail-demand",
+      "sourceUrl": "https://hackernoon.com/162-blog-posts-to-learn-about-blockchain-adoption",
       "category": "products",
-      "date": "2026-11-20",
+      "date": "2026-11-21",
       "hot": true,
       "score": 100,
       "tags": [
         "HackerNoon",
-        "retail",
+        "blockchain-adoption",
         "AI"
       ]
     },
     {
-      "id": "hnoon-we-killed-our-staging-environment-and-moved-qa-to-production",
-      "title": "We Killed Our Staging Environment and Moved QA to Production Canaries",
-      "summary": "Our shared staging cluster cost $2,740/month and missed real production bugs. Here is how we killed staging and moved QA to Argo Rollouts canaries. — by Akhil on HackerNoon.",
+      "id": "hnoon-11-21-2026-newsletter",
+      "title": "The HackerNoon Newsletter: Fridges, Hackers, AI and La Flemme (11/21/2026)",
+      "summary": "11/21/2026: Top 5 stories on the HackerNoon homepage! — by Noonification on HackerNoon.",
       "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/we-killed-our-staging-environment-and-moved-qa-to-production-canaries",
+      "sourceUrl": "https://hackernoon.com/11-21-2026-newsletter",
       "category": "products",
-      "date": "2026-11-20",
-      "hot": true,
-      "score": 100,
-      "tags": [
-        "HackerNoon",
-        "devops",
-        "AI"
-      ]
-    },
-    {
-      "id": "hnoon-177-blog-posts-to-learn-about-bitcoin-mining",
-      "title": "177 Blog Posts To Learn About Bitcoin Mining",
-      "summary": "Learn everything you need to know about Bitcoin Mining via these 177 free HackerNoon blog posts. — by Learn Repo on HackerNoon.",
-      "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/177-blog-posts-to-learn-about-bitcoin-mining",
-      "category": "products",
-      "date": "2026-11-20",
-      "hot": true,
-      "score": 100,
-      "tags": [
-        "HackerNoon",
-        "bitcoin-mining",
-        "AI"
-      ]
-    },
-    {
-      "id": "hnoon-11-20-2026-newsletter",
-      "title": "The HackerNoon Newsletter: Creating the Intelligent Being; the AI Alien (11/20/2026)",
-      "summary": "11/20/2026: Top 5 stories on the HackerNoon homepage! Read All — by Noonification on HackerNoon.",
-      "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/11-20-2026-newsletter",
-      "category": "products",
-      "date": "2026-11-20",
+      "date": "2026-11-21",
       "hot": true,
       "score": 100,
       "tags": [
@@ -218,96 +172,145 @@
       ]
     },
     {
-      "id": "hntop-50562754",
-      "title": "Anthropic’s Nasdaq debut",
-      "summary": "Anthropic’s Nasdaq debut — 1133 points, 2299 comments on HN.",
-      "source": "Hacker News",
-      "sourceUrl": "https://www.reuters.com/business/finance/anthropics-historic-debut-put-ais-promise-peril-wall-st-test-2026-11-19/",
-      "category": "big-tech",
-      "date": "2026-11-19",
+      "id": "hnoon-500-blog-posts-to-learn-about-bitcoin",
+      "title": "500 Blog Posts To Learn About Bitcoin",
+      "summary": "Learn everything you need to know about Bitcoin via these 500 free HackerNoon blog posts. — by Learn Repo on HackerNoon.",
+      "source": "HackerNoon",
+      "sourceUrl": "https://hackernoon.com/500-blog-posts-to-learn-about-bitcoin",
+      "category": "products",
+      "date": "2026-11-21",
       "hot": true,
-      "score": 1133,
+      "score": 100,
+      "tags": [
+        "HackerNoon",
+        "bitcoin",
+        "AI"
+      ]
+    },
+    {
+      "id": "hnoon-11-21-2026-techbeat",
+      "title": "The TechBeat: The Ghost of Columbia Still Haunts Starship's Heat Shield (11/21/2026)",
+      "summary": "11/21/2026: Trending stories on Hackernoon today! — by Techbeat on HackerNoon.",
+      "source": "HackerNoon",
+      "sourceUrl": "https://hackernoon.com/11-21-2026-techbeat",
+      "category": "safety",
+      "date": "2026-11-21",
+      "hot": true,
+      "score": 100,
+      "tags": [
+        "HackerNoon",
+        "tech-beat",
+        "AI"
+      ]
+    },
+    {
+      "id": "hnoon-setting-up-aws-control-tower-these-scp-and-networking-mistak",
+      "title": "Setting Up AWS Control Tower? These SCP and Networking Mistakes Can Cost You Hours",
+      "summary": "Build a multi-account AWS landing zone with Control Tower, SCPs, IAM Identity Center, and shared VPCs, including setup commands and troubleshooting lessons. — by Tokarev Artem on HackerNoon.",
+      "source": "HackerNoon",
+      "sourceUrl": "https://hackernoon.com/setting-up-aws-control-tower-these-scp-and-networking-mistakes-can-cost-you-hours",
+      "category": "products",
+      "date": "2026-11-21",
+      "hot": true,
+      "score": 100,
+      "tags": [
+        "HackerNoon",
+        "cloud-landing-zone",
+        "AI"
+      ]
+    },
+    {
+      "id": "hntop-50581260",
+      "title": "Inkling 2 Mini",
+      "summary": "Inkling 2 Mini — 1407 points, 287 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://thinkingmachines.ai/news/inkling-2-mini/",
+      "category": "products",
+      "date": "2026-11-20",
+      "hot": true,
+      "score": 1407,
       "tags": [
         "HN",
         "top"
       ]
     },
     {
-      "id": "ax-2611.26584v1",
-      "title": "Represented but misread: Post-training changes how language models read out what they represent",
-      "summary": "Does post-training change what a language model represents, or how this representation is read out into an answer? We compared linear probes with the models' own answers, analyzed with signal detection theory, in six ope",
-      "source": "arXiv",
-      "sourceUrl": "http://arxiv.org/abs/2611.26584v1",
-      "category": "safety",
-      "date": "2026-11-19",
-      "hot": true,
-      "score": 800,
-      "tags": [
-        "arXiv",
-        "paper",
-        "AI"
-      ]
-    },
-    {
-      "id": "dev-5069884",
-      "title": "Stratagems #36: They Finished Their Coffee. The AI Still Has No Answer.",
-      "summary": "Know When to Walk Away  The Thirty-Six Stratagems, Stratagem 36               Open as Usual   When... — 112 reactions, 55 comments on DEV.to.",
+      "id": "dev-5076491",
+      "title": "What team-wide AI adoption actually takes",
+      "summary": "I've tried nearly every way to make AI practical at work: new models, routers, agent frameworks,... — 55 reactions, 15 comments on DEV.to.",
       "source": "DEV.to",
-      "sourceUrl": "https://dev.to/xulingfeng/stratagems-36-they-finished-their-coffee-the-ai-still-has-no-answer-4igh",
+      "sourceUrl": "https://dev.to/peter/what-team-wide-ai-adoption-actually-takes-1gbh",
       "category": "products",
-      "date": "2026-11-19",
+      "date": "2026-11-20",
       "hot": true,
-      "score": 112,
+      "score": 55,
       "tags": [
         "DEV.to",
         "ai",
-        "discuss",
+        "ai",
+        "productivity"
+      ]
+    },
+    {
+      "id": "dev-5056698",
+      "title": "Tell us your story, and we might read it on the CodeNewbie Podcast 🎙️",
+      "summary": "Hi! I’m Lauren 👩🏼‍💻, the new host of the CodeNewbie Podcast, and I’d love to hear your... — 41 reactions, 7 comments on DEV.to.",
+      "source": "DEV.to",
+      "sourceUrl": "https://dev.to/codenewbie/tell-us-your-story-and-we-might-read-it-on-the-codenewbie-podcast-2840",
+      "category": "products",
+      "date": "2026-11-20",
+      "hot": true,
+      "score": 41,
+      "tags": [
+        "DEV.to",
+        "ai",
+        "codenewbie",
         "ai"
       ]
     },
     {
-      "id": "dev-5072558",
-      "title": "Can a plain table hijack an AI agent?",
-      "summary": "Living repo: every case in this article is in agent-redteam... — 24 reactions, 51 comments on DEV.to.",
+      "id": "dev-5074788",
+      "title": "I can't believe the podcast I learned to code with is back!",
+      "summary": "Hi friends! 👋   Okay, storytime 🎬 Felt the urge to share this here too, since DEV is where it all... — 31 reactions, 1 comments on DEV.to.",
       "source": "DEV.to",
-      "sourceUrl": "https://dev.to/edbrdi/can-a-plain-table-hijack-an-ai-agent-2pde",
+      "sourceUrl": "https://dev.to/codenewbie/i-cant-believe-the-podcast-i-learned-to-code-with-is-back-2gi5",
       "category": "products",
-      "date": "2026-11-19",
+      "date": "2026-11-20",
+      "hot": true,
+      "score": 31,
+      "tags": [
+        "DEV.to",
+        "ai",
+        "codenewbie",
+        "podcast"
+      ]
+    },
+    {
+      "id": "dev-5081870",
+      "title": "Agentic engineering a smart home energy system with Antigravity and Gemini 4",
+      "summary": "Running rooftop solar, a home battery, two electric vehicles (EVs), and dynamic hourly electricity... — 28 reactions, 5 comments on DEV.to.",
+      "source": "DEV.to",
+      "sourceUrl": "https://dev.to/googleai/agentic-engineering-a-smart-home-energy-system-with-antigravity-and-gemini-4-53md",
+      "category": "products",
+      "date": "2026-11-20",
       "hot": false,
-      "score": 24,
+      "score": 28,
       "tags": [
         "DEV.to",
         "ai",
         "ai",
-        "security"
-      ]
-    },
-    {
-      "id": "ax-2611.26624v1",
-      "title": "PlayCraft: Designing Engaging Games from Agent Play Experience",
-      "summary": "Recent AI agents can generate playable games, but these games are not necessarily engaging. Mastery is a key source of engagement, yet designing for it requires extensive human play and tuning. We propose PlayCraft, an a",
-      "source": "arXiv",
-      "sourceUrl": "http://arxiv.org/abs/2611.26624v1",
-      "category": "products",
-      "date": "2026-11-19",
-      "hot": false,
-      "score": 0,
-      "tags": [
-        "arXiv",
-        "paper",
-        "AI"
+        "antigravity"
       ]
     }
   ],
   "meta": {
-    "fetchedAt": "2026-11-21T09:13:38.425Z",
+    "fetchedAt": "2026-11-22T09:23:25.384Z",
     "topic": "AI",
     "total": 15,
     "hot": 9,
     "sources": [
-      "HackerNoon",
       "Hacker News",
-      "arXiv",
+      "HackerNoon",
       "DEV.to"
     ]
   }
