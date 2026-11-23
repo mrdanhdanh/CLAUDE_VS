@@ -1,12 +1,12 @@
 {
-  "generatedAt": "2026-11-22T09:23:25.384Z",
+  "generatedAt": "2026-11-23T10:19:36.082Z",
   "generatedBy": "YUNIE × Last30Days",
   "version": 2,
   "description": "Tin AI mới nhất — tổng hợp từ Last30Days (HN, GitHub, DEV.to, Reddit, arXiv, HackerNoon) trong 30 ngày qua. Chủ đề: AI. Tự động cập nhật bởi YUNIE.",
   "last30days": {
     "enabled": true,
     "topic": "AI",
-    "since": "2026-10-23",
+    "since": "2026-10-24",
     "days": 30,
     "sources": [
       "Hacker News (Algolia, free)",
@@ -55,189 +55,238 @@
   ],
   "articles": [
     {
-      "id": "hn-50596511",
-      "title": "AI Supply Chain Security: What Canary Tokens Found",
-      "summary": "AI Supply Chain Security: What Canary Tokens Found — 81 points, 17 comments on HN.",
+      "id": "hn-50608855",
+      "title": "Gartner: 40% of agentic AI projects will be canceled by the end of 2027",
+      "summary": "Gartner: 40% of agentic AI projects will be canceled by the end of 2027 — 4 points, 2 comments on HN.",
       "source": "Hacker News",
-      "sourceUrl": "https://www.dragos.com/blog/ai-supply-chain-security-canary-tokens",
+      "sourceUrl": "https://www.gartner.com/en/articles/ai-agent-reality-check",
       "category": "products",
-      "date": "2026-11-22",
-      "hot": false,
-      "score": 81,
-      "tags": [
-        "HN",
-        "AI",
-        "story",
-        "author_kristianp"
-      ]
-    },
-    {
-      "id": "hn-50596564",
-      "title": "Ask HN: What made you pivot your interest to the field of AI?",
-      "summary": "If you work in the field of AI, machine learning what made you do so? What sparked your interest and which skills and resources helped you along the way? — 5 points, 4 comments on HN.",
-      "source": "Hacker News",
-      "sourceUrl": "https://news.ycombinator.com/item?id=50596564",
-      "category": "products",
-      "date": "2026-11-22",
-      "hot": false,
-      "score": 5,
-      "tags": [
-        "HN",
-        "AI",
-        "story",
-        "author_learner_yearner"
-      ]
-    },
-    {
-      "id": "hn-50597612",
-      "title": "87% of the Anthropic power will come from gas and 11% from coal in 2028",
-      "summary": "87% of the Anthropic power will come from gas and 11% from coal in 2028 — 4 points, 1 comments on HN.",
-      "source": "Hacker News",
-      "sourceUrl": "https://betterdatacenterproject.com/2026/11/16/how-ai-is-powered-a-breakdown-of-byop-and-grid-power/",
-      "category": "big-tech",
-      "date": "2026-11-22",
+      "date": "2026-11-23",
       "hot": false,
       "score": 4,
       "tags": [
         "HN",
         "AI",
         "story",
-        "author_happosai"
+        "author_Betelbuddy"
       ]
     },
     {
-      "id": "hn-50596706",
-      "title": "AWS local emulator created by AI agents",
-      "summary": "AWS local emulator created by AI agents — 3 points, 0 comments on HN.",
+      "id": "hn-50609685",
+      "title": "GLM-5.4: Toward Generalized Coding with Our First Loop Transformer",
+      "summary": "GLM-5.4: Toward Generalized Coding with Our First Loop Transformer — 3 points, 0 comments on HN.",
       "source": "Hacker News",
-      "sourceUrl": "https://aws.amazon.com/blogs/aws/test-your-applications-against-aws-locally-with-aws-emulator/",
+      "sourceUrl": "https://z.ai/blog/glm-5.4",
       "category": "products",
-      "date": "2026-11-22",
+      "date": "2026-11-23",
       "hot": false,
       "score": 3,
       "tags": [
         "HN",
         "AI",
         "story",
-        "author_wenbert"
+        "author_foohis"
       ]
     },
     {
-      "id": "hn-50596281",
-      "title": "One Vulnearbility Hacks Google, WordPress, Roundcube, Debian 13, Zoom, Box, etc.",
-      "summary": "One Vulnearbility Hacks Google, WordPress, Roundcube, Debian 13, Zoom, Box, etc. — 3 points, 1 comments on HN.",
+      "id": "hn-50609671",
+      "title": "An Air Force Major Is Being Held in Solitary Confinement for Criticizing Trump",
+      "summary": "An Air Force Major Is Being Held in Solitary Confinement for Criticizing Trump — 2 points, 0 comments on HN.",
       "source": "Hacker News",
-      "sourceUrl": "https://pwn.ai/upload2shell/research.html",
+      "sourceUrl": "https://theintercept.com/2026/11/21/trump-jason-watson-air-force-solitary-speech/",
+      "category": "products",
+      "date": "2026-11-23",
+      "hot": false,
+      "score": 2,
+      "tags": [
+        "HN",
+        "AI",
+        "story",
+        "author_firefax"
+      ]
+    },
+    {
+      "id": "hn-50609039",
+      "title": "Why Italy's healthcare system is ailing",
+      "summary": "Why Italy's healthcare system is ailing — 2 points, 1 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://www.repubblica.it/en/europe/news/2026/11/23/news/italy_public_healthcare_crisis_funding_waiting_lists_doctors_nurses_protests-425738432/",
+      "category": "products",
+      "date": "2026-11-23",
+      "hot": false,
+      "score": 2,
+      "tags": [
+        "HN",
+        "AI",
+        "story",
+        "author_simonebrunozzi"
+      ]
+    },
+    {
+      "id": "hn-50608973",
+      "title": "Why Airlines Accept A321XLR's Heavier Takeoff Weight on Flights Shorter < 1 Hour",
+      "summary": "Why Airlines Accept A321XLR's Heavier Takeoff Weight on Flights Shorter < 1 Hour — 2 points, 0 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://simpleflying.com/airlines-accept-airbus-a321xlr-heavier-101-tonne-maximum-takeoff-weight-flights-shorter-hour/",
+      "category": "products",
+      "date": "2026-11-23",
+      "hot": false,
+      "score": 2,
+      "tags": [
+        "HN",
+        "AI",
+        "story",
+        "author_edward"
+      ]
+    },
+    {
+      "id": "hntop-50597612",
+      "title": "87% of the Anthropic power will come from gas and 11% from coal in 2028",
+      "summary": "87% of the Anthropic power will come from gas and 11% from coal in 2028 — 972 points, 952 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://betterdatacenterproject.com/2026/11/16/how-ai-is-powered-a-breakdown-of-byop-and-grid-power/",
       "category": "big-tech",
       "date": "2026-11-22",
-      "hot": false,
-      "score": 3,
-      "tags": [
-        "HN",
-        "AI",
-        "story",
-        "author_lovetoseeitgeth"
-      ]
-    },
-    {
-      "id": "hnoon-162-blog-posts-to-learn-about-blockchain-adoption",
-      "title": "162 Blog Posts To Learn About Blockchain Adoption",
-      "summary": "Learn everything you need to know about Blockchain Adoption via these 162 free HackerNoon blog posts. — by Learn Repo on HackerNoon.",
-      "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/162-blog-posts-to-learn-about-blockchain-adoption",
-      "category": "products",
-      "date": "2026-11-21",
       "hot": true,
-      "score": 100,
-      "tags": [
-        "HackerNoon",
-        "blockchain-adoption",
-        "AI"
-      ]
-    },
-    {
-      "id": "hnoon-11-21-2026-newsletter",
-      "title": "The HackerNoon Newsletter: Fridges, Hackers, AI and La Flemme (11/21/2026)",
-      "summary": "11/21/2026: Top 5 stories on the HackerNoon homepage! — by Noonification on HackerNoon.",
-      "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/11-21-2026-newsletter",
-      "category": "products",
-      "date": "2026-11-21",
-      "hot": true,
-      "score": 100,
-      "tags": [
-        "HackerNoon",
-        "hackernoon-newsletter",
-        "AI"
-      ]
-    },
-    {
-      "id": "hnoon-500-blog-posts-to-learn-about-bitcoin",
-      "title": "500 Blog Posts To Learn About Bitcoin",
-      "summary": "Learn everything you need to know about Bitcoin via these 500 free HackerNoon blog posts. — by Learn Repo on HackerNoon.",
-      "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/500-blog-posts-to-learn-about-bitcoin",
-      "category": "products",
-      "date": "2026-11-21",
-      "hot": true,
-      "score": 100,
-      "tags": [
-        "HackerNoon",
-        "bitcoin",
-        "AI"
-      ]
-    },
-    {
-      "id": "hnoon-11-21-2026-techbeat",
-      "title": "The TechBeat: The Ghost of Columbia Still Haunts Starship's Heat Shield (11/21/2026)",
-      "summary": "11/21/2026: Trending stories on Hackernoon today! — by Techbeat on HackerNoon.",
-      "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/11-21-2026-techbeat",
-      "category": "safety",
-      "date": "2026-11-21",
-      "hot": true,
-      "score": 100,
-      "tags": [
-        "HackerNoon",
-        "tech-beat",
-        "AI"
-      ]
-    },
-    {
-      "id": "hnoon-setting-up-aws-control-tower-these-scp-and-networking-mistak",
-      "title": "Setting Up AWS Control Tower? These SCP and Networking Mistakes Can Cost You Hours",
-      "summary": "Build a multi-account AWS landing zone with Control Tower, SCPs, IAM Identity Center, and shared VPCs, including setup commands and troubleshooting lessons. — by Tokarev Artem on HackerNoon.",
-      "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/setting-up-aws-control-tower-these-scp-and-networking-mistakes-can-cost-you-hours",
-      "category": "products",
-      "date": "2026-11-21",
-      "hot": true,
-      "score": 100,
-      "tags": [
-        "HackerNoon",
-        "cloud-landing-zone",
-        "AI"
-      ]
-    },
-    {
-      "id": "hntop-50581260",
-      "title": "Inkling 2 Mini",
-      "summary": "Inkling 2 Mini — 1407 points, 287 comments on HN.",
-      "source": "Hacker News",
-      "sourceUrl": "https://thinkingmachines.ai/news/inkling-2-mini/",
-      "category": "products",
-      "date": "2026-11-20",
-      "hot": true,
-      "score": 1407,
+      "score": 972,
       "tags": [
         "HN",
         "top"
       ]
     },
     {
+      "id": "hnoon-352-blog-posts-to-learn-about-blockchain-gaming",
+      "title": "352 Blog Posts To Learn About Blockchain Gaming",
+      "summary": "Learn everything you need to know about Blockchain Gaming via these 352 free HackerNoon blog posts. — by Learn Repo on HackerNoon.",
+      "source": "HackerNoon",
+      "sourceUrl": "https://hackernoon.com/352-blog-posts-to-learn-about-blockchain-gaming",
+      "category": "products",
+      "date": "2026-11-22",
+      "hot": true,
+      "score": 100,
+      "tags": [
+        "HackerNoon",
+        "blockchain-gaming",
+        "AI"
+      ]
+    },
+    {
+      "id": "hnoon-diagnosing-slow-sql-server-queries-a-practical-guide-to-quer",
+      "title": "Diagnosing Slow SQL Server Queries: A Practical Guide to Query Store and Execution Plans",
+      "summary": "This article covers a practical troubleshooting workflow for SQL Server 2016 and later. — by Surendra Reddy on HackerNoon.",
+      "source": "HackerNoon",
+      "sourceUrl": "https://hackernoon.com/diagnosing-slow-sql-server-queries-a-practical-guide-to-query-store-and-execution-plans",
+      "category": "products",
+      "date": "2026-11-22",
+      "hot": true,
+      "score": 100,
+      "tags": [
+        "HackerNoon",
+        "sql-server",
+        "AI"
+      ]
+    },
+    {
+      "id": "hnoon-what-happens-to-your-digital-accounts-after-a-chargeback",
+      "title": "What Happens to Your Digital Accounts After a Chargeback?",
+      "summary": "A credit card chargeback can trigger account restrictions on gaming, cloud, and subscription platforms. Learn the risks, policies, and recovery options. — by Dora Milen on HackerNoon.",
+      "source": "HackerNoon",
+      "sourceUrl": "https://hackernoon.com/what-happens-to-your-digital-accounts-after-a-chargeback",
+      "category": "safety",
+      "date": "2026-11-22",
+      "hot": true,
+      "score": 100,
+      "tags": [
+        "HackerNoon",
+        "digital-ownership",
+        "AI"
+      ]
+    },
+    {
+      "id": "hnoon-how-to-modernize-bank-without-taking-its-payment-systems-off",
+      "title": "How to Modernize Bank Without Taking Its Payment Systems Offline",
+      "summary": "A field guide to modernizing legacy banking integration: strangler patterns, anti-corruption layers and security controls that keep payments running. — by Naveed Akram on HackerNoon.",
+      "source": "HackerNoon",
+      "sourceUrl": "https://hackernoon.com/how-to-modernize-bank-without-taking-its-payment-systems-offline",
+      "category": "products",
+      "date": "2026-11-22",
+      "hot": true,
+      "score": 100,
+      "tags": [
+        "HackerNoon",
+        "banking-technology",
+        "AI"
+      ]
+    },
+    {
+      "id": "dev-5080715",
+      "title": "The Chairs Are Back. The Coffee Is On. ☕",
+      "summary": "Welcome to The Third Cup.           The Renovation Is Done. We're Open Again!   Finally, the... — 106 reactions, 54 comments on DEV.to.",
+      "source": "DEV.to",
+      "sourceUrl": "https://dev.to/thethirdcup/the-chairs-are-back-the-coffee-is-on-243p",
+      "category": "products",
+      "date": "2026-11-21",
+      "hot": true,
+      "score": 106,
+      "tags": [
+        "DEV.to",
+        "ai",
+        "community",
+        "discuss"
+      ]
+    },
+    {
+      "id": "dev-5036802",
+      "title": "Dead Keys: I Brought Back the Typing Games. Kiro Did the Heavy Lifting.",
+      "summary": "The keys you miss become the lesson.   TL;DR: Dead Keys is my entry for the Kiroween 2026 hackathon,... — 46 reactions, 21 comments on DEV.to.",
+      "source": "DEV.to",
+      "sourceUrl": "https://dev.to/earlgreyhot1701d/dead-keys-i-brought-back-the-typing-games-kiro-did-the-heavy-lifting-5gc2",
+      "category": "products",
+      "date": "2026-11-21",
+      "hot": true,
+      "score": 46,
+      "tags": [
+        "DEV.to",
+        "ai",
+        "ai",
+        "kiro"
+      ]
+    },
+    {
+      "id": "hntop-50581260",
+      "title": "Inkling 2 Mini",
+      "summary": "Inkling 2 Mini — 1466 points, 293 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://thinkingmachines.ai/news/inkling-2-mini/",
+      "category": "products",
+      "date": "2026-11-20",
+      "hot": true,
+      "score": 1466,
+      "tags": [
+        "HN",
+        "top"
+      ]
+    },
+    {
+      "id": "ax-2611.27784v1",
+      "title": "Neural Defend ARCAS 290M: A Robust Foundation Model for AI-Generated Audio Detection",
+      "summary": "Voice cloning now needs only seconds of audio, and detectors tuned to one dataset often fail when the generator, channel, or language changes. We introduce ARCAS 290M, Neural Defend's foundation model for detecting AI-ge",
+      "source": "arXiv",
+      "sourceUrl": "http://arxiv.org/abs/2611.27784v1",
+      "category": "products",
+      "date": "2026-11-20",
+      "hot": true,
+      "score": 800,
+      "tags": [
+        "arXiv",
+        "paper",
+        "AI"
+      ]
+    },
+    {
       "id": "dev-5076491",
       "title": "What team-wide AI adoption actually takes",
-      "summary": "I've tried nearly every way to make AI practical at work: new models, routers, agent frameworks,... — 55 reactions, 15 comments on DEV.to.",
+      "summary": "I've tried nearly every way to make AI practical at work: new models, routers, agent frameworks,... — 55 reactions, 16 comments on DEV.to.",
       "source": "DEV.to",
       "sourceUrl": "https://dev.to/peter/what-team-wide-ai-adoption-actually-takes-1gbh",
       "category": "products",
@@ -250,68 +299,18 @@
         "ai",
         "productivity"
       ]
-    },
-    {
-      "id": "dev-5056698",
-      "title": "Tell us your story, and we might read it on the CodeNewbie Podcast 🎙️",
-      "summary": "Hi! I’m Lauren 👩🏼‍💻, the new host of the CodeNewbie Podcast, and I’d love to hear your... — 41 reactions, 7 comments on DEV.to.",
-      "source": "DEV.to",
-      "sourceUrl": "https://dev.to/codenewbie/tell-us-your-story-and-we-might-read-it-on-the-codenewbie-podcast-2840",
-      "category": "products",
-      "date": "2026-11-20",
-      "hot": true,
-      "score": 41,
-      "tags": [
-        "DEV.to",
-        "ai",
-        "codenewbie",
-        "ai"
-      ]
-    },
-    {
-      "id": "dev-5074788",
-      "title": "I can't believe the podcast I learned to code with is back!",
-      "summary": "Hi friends! 👋   Okay, storytime 🎬 Felt the urge to share this here too, since DEV is where it all... — 31 reactions, 1 comments on DEV.to.",
-      "source": "DEV.to",
-      "sourceUrl": "https://dev.to/codenewbie/i-cant-believe-the-podcast-i-learned-to-code-with-is-back-2gi5",
-      "category": "products",
-      "date": "2026-11-20",
-      "hot": true,
-      "score": 31,
-      "tags": [
-        "DEV.to",
-        "ai",
-        "codenewbie",
-        "podcast"
-      ]
-    },
-    {
-      "id": "dev-5081870",
-      "title": "Agentic engineering a smart home energy system with Antigravity and Gemini 4",
-      "summary": "Running rooftop solar, a home battery, two electric vehicles (EVs), and dynamic hourly electricity... — 28 reactions, 5 comments on DEV.to.",
-      "source": "DEV.to",
-      "sourceUrl": "https://dev.to/googleai/agentic-engineering-a-smart-home-energy-system-with-antigravity-and-gemini-4-53md",
-      "category": "products",
-      "date": "2026-11-20",
-      "hot": false,
-      "score": 28,
-      "tags": [
-        "DEV.to",
-        "ai",
-        "ai",
-        "antigravity"
-      ]
     }
   ],
   "meta": {
-    "fetchedAt": "2026-11-22T09:23:25.384Z",
+    "fetchedAt": "2026-11-23T10:19:36.082Z",
     "topic": "AI",
     "total": 15,
-    "hot": 9,
+    "hot": 10,
     "sources": [
       "Hacker News",
       "HackerNoon",
-      "DEV.to"
+      "DEV.to",
+      "arXiv"
     ]
   }
 }
