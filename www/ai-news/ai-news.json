@@ -1,12 +1,12 @@
 {
-  "generatedAt": "2026-11-23T10:19:36.082Z",
+  "generatedAt": "2026-11-24T12:00:37.195Z",
   "generatedBy": "YUNIE × Last30Days",
   "version": 2,
   "description": "Tin AI mới nhất — tổng hợp từ Last30Days (HN, GitHub, DEV.to, Reddit, arXiv, HackerNoon) trong 30 ngày qua. Chủ đề: AI. Tự động cập nhật bởi YUNIE.",
   "last30days": {
     "enabled": true,
     "topic": "AI",
-    "since": "2026-10-24",
+    "since": "2026-10-25",
     "days": 30,
     "sources": [
       "Hacker News (Algolia, free)",
@@ -55,179 +55,189 @@
   ],
   "articles": [
     {
-      "id": "hn-50608855",
-      "title": "Gartner: 40% of agentic AI projects will be canceled by the end of 2027",
-      "summary": "Gartner: 40% of agentic AI projects will be canceled by the end of 2027 — 4 points, 2 comments on HN.",
-      "source": "Hacker News",
-      "sourceUrl": "https://www.gartner.com/en/articles/ai-agent-reality-check",
-      "category": "products",
-      "date": "2026-11-23",
-      "hot": false,
-      "score": 4,
-      "tags": [
-        "HN",
-        "AI",
-        "story",
-        "author_Betelbuddy"
-      ]
-    },
-    {
-      "id": "hn-50609685",
-      "title": "GLM-5.4: Toward Generalized Coding with Our First Loop Transformer",
-      "summary": "GLM-5.4: Toward Generalized Coding with Our First Loop Transformer — 3 points, 0 comments on HN.",
-      "source": "Hacker News",
-      "sourceUrl": "https://z.ai/blog/glm-5.4",
-      "category": "products",
-      "date": "2026-11-23",
-      "hot": false,
-      "score": 3,
-      "tags": [
-        "HN",
-        "AI",
-        "story",
-        "author_foohis"
-      ]
-    },
-    {
-      "id": "hn-50609671",
-      "title": "An Air Force Major Is Being Held in Solitary Confinement for Criticizing Trump",
-      "summary": "An Air Force Major Is Being Held in Solitary Confinement for Criticizing Trump — 2 points, 0 comments on HN.",
-      "source": "Hacker News",
-      "sourceUrl": "https://theintercept.com/2026/11/21/trump-jason-watson-air-force-solitary-speech/",
-      "category": "products",
-      "date": "2026-11-23",
-      "hot": false,
-      "score": 2,
-      "tags": [
-        "HN",
-        "AI",
-        "story",
-        "author_firefax"
-      ]
-    },
-    {
-      "id": "hn-50609039",
-      "title": "Why Italy's healthcare system is ailing",
-      "summary": "Why Italy's healthcare system is ailing — 2 points, 1 comments on HN.",
-      "source": "Hacker News",
-      "sourceUrl": "https://www.repubblica.it/en/europe/news/2026/11/23/news/italy_public_healthcare_crisis_funding_waiting_lists_doctors_nurses_protests-425738432/",
-      "category": "products",
-      "date": "2026-11-23",
-      "hot": false,
-      "score": 2,
-      "tags": [
-        "HN",
-        "AI",
-        "story",
-        "author_simonebrunozzi"
-      ]
-    },
-    {
-      "id": "hn-50608973",
-      "title": "Why Airlines Accept A321XLR's Heavier Takeoff Weight on Flights Shorter < 1 Hour",
-      "summary": "Why Airlines Accept A321XLR's Heavier Takeoff Weight on Flights Shorter < 1 Hour — 2 points, 0 comments on HN.",
-      "source": "Hacker News",
-      "sourceUrl": "https://simpleflying.com/airlines-accept-airbus-a321xlr-heavier-101-tonne-maximum-takeoff-weight-flights-shorter-hour/",
-      "category": "products",
-      "date": "2026-11-23",
-      "hot": false,
-      "score": 2,
-      "tags": [
-        "HN",
-        "AI",
-        "story",
-        "author_edward"
-      ]
-    },
-    {
-      "id": "hntop-50597612",
-      "title": "87% of the Anthropic power will come from gas and 11% from coal in 2028",
-      "summary": "87% of the Anthropic power will come from gas and 11% from coal in 2028 — 972 points, 952 comments on HN.",
-      "source": "Hacker News",
-      "sourceUrl": "https://betterdatacenterproject.com/2026/11/16/how-ai-is-powered-a-breakdown-of-byop-and-grid-power/",
-      "category": "big-tech",
-      "date": "2026-11-22",
+      "id": "hnoon-subscriptions-vs-credits-designing-sustainable-pricing-for-a",
+      "title": "Subscriptions vs. Credits: Designing Sustainable Pricing for AI Tools",
+      "summary": "Compare subscriptions, credits, and hybrid AI pricing through unit costs, user experience, quotas, failure refunds, and idempotent billing. — by budaiwen on HackerNoon.",
+      "source": "HackerNoon",
+      "sourceUrl": "https://hackernoon.com/subscriptions-vs-credits-designing-sustainable-pricing-for-ai-tools",
+      "category": "safety",
+      "date": "2026-11-24",
       "hot": true,
-      "score": 972,
+      "score": 100,
+      "tags": [
+        "HackerNoon",
+        "ai-pricing",
+        "AI"
+      ]
+    },
+    {
+      "id": "hnoon-why-ai-coding-tools-found-a-foothold-in-frontend-engineering",
+      "title": "Why AI Coding Tools Found a Foothold in Frontend Engineering so Quickly",
+      "summary": "AI coding tools can generate frontend interfaces quickly, but production reliability still depends on API contracts, runtime behavior and engineering judgment. — by Gioret on HackerNoon.",
+      "source": "HackerNoon",
+      "sourceUrl": "https://hackernoon.com/why-ai-coding-tools-found-a-foothold-in-frontend-engineering-so-quickly",
+      "category": "products",
+      "date": "2026-11-24",
+      "hot": true,
+      "score": 100,
+      "tags": [
+        "HackerNoon",
+        "ai-frontend-development",
+        "AI"
+      ]
+    },
+    {
+      "id": "hnoon-splitsecure-launches-new-access-control-architecture-for-hum",
+      "title": "SplitSecure Launches New Access Control Architecture for Humans and AI Agents",
+      "summary": "SplitSecure, a cybersecurity technology provider, has unveiled a new access control platform based on secret splitting technology, aiming to replace traditional access control tool — by CyberNewswire on HackerNoon.",
+      "source": "HackerNoon",
+      "sourceUrl": "https://hackernoon.com/splitsecure-launches-new-access-control-architecture-for-humans-and-ai-agents",
+      "category": "products",
+      "date": "2026-11-24",
+      "hot": true,
+      "score": 100,
+      "tags": [
+        "HackerNoon",
+        "ai",
+        "AI"
+      ]
+    },
+    {
+      "id": "hnoon-how-to-accelerate-root-cause-analysis-with-ai-tools",
+      "title": "How to Accelerate Root Cause Analysis with AI Tools",
+      "summary": "Learn how AI root cause analysis connects alerts, tickets, code, and telemetry to speed up incident investigation and reduce resolution time. — by PlayerZero on HackerNoon.",
+      "source": "HackerNoon",
+      "sourceUrl": "https://hackernoon.com/how-to-accelerate-root-cause-analysis-with-ai-tools",
+      "category": "products",
+      "date": "2026-11-24",
+      "hot": true,
+      "score": 100,
+      "tags": [
+        "HackerNoon",
+        "ai-assisted-debugging",
+        "AI"
+      ]
+    },
+    {
+      "id": "hnoon-ai-code-review-false-positives-the-hidden-cost",
+      "title": "AI Code Review False Positives: The Hidden Cost",
+      "summary": "Learn why AI code review false positives waste engineering time and how production context improves issue confirmation rates and customer-impact prediction. — by PlayerZero on HackerNoon.",
+      "source": "HackerNoon",
+      "sourceUrl": "https://hackernoon.com/ai-code-review-false-positives-the-hidden-cost",
+      "category": "products",
+      "date": "2026-11-24",
+      "hot": true,
+      "score": 100,
+      "tags": [
+        "HackerNoon",
+        "playerzero-ai-code-review",
+        "AI"
+      ]
+    },
+    {
+      "id": "hntop-50611576",
+      "title": "Nvidia Reinstates Jensen Huang as CEO",
+      "summary": "<a href=\"https:&#x2F;&#x2F;nvidianews.nvidia.com&#x2F;news&#x2F;nvidia-board-reinstates-jensen-huang-as-president-ceo-and-board-director\" rel=\"nofollow\">https:&#x2F;&#x2F;nvidianews.nvidia.com&#x2F;news&#x2F;nvidia-board — 2630 points, 3511 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://www.cnbc.com/2026/11/23/nvidia-jensen-huang-ceo.html",
+      "category": "big-tech",
+      "date": "2026-11-23",
+      "hot": true,
+      "score": 2630,
       "tags": [
         "HN",
         "top"
       ]
     },
     {
-      "id": "hnoon-352-blog-posts-to-learn-about-blockchain-gaming",
-      "title": "352 Blog Posts To Learn About Blockchain Gaming",
-      "summary": "Learn everything you need to know about Blockchain Gaming via these 352 free HackerNoon blog posts. — by Learn Repo on HackerNoon.",
-      "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/352-blog-posts-to-learn-about-blockchain-gaming",
-      "category": "products",
-      "date": "2026-11-22",
+      "id": "hntop-50611588",
+      "title": "Jensen Huang Reinstated as Nvidia CEO",
+      "summary": "Jensen Huang Reinstated as Nvidia CEO — 1708 points, 4 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://nvidianews.nvidia.com/news/nvidia-board-reinstates-jensen-huang-as-president-ceo-and-board-director",
+      "category": "big-tech",
+      "date": "2026-11-23",
       "hot": true,
-      "score": 100,
+      "score": 1708,
       "tags": [
-        "HackerNoon",
-        "blockchain-gaming",
-        "AI"
+        "HN",
+        "top"
       ]
     },
     {
-      "id": "hnoon-diagnosing-slow-sql-server-queries-a-practical-guide-to-quer",
-      "title": "Diagnosing Slow SQL Server Queries: A Practical Guide to Query Store and Execution Plans",
-      "summary": "This article covers a practical troubleshooting workflow for SQL Server 2016 and later. — by Surendra Reddy on HackerNoon.",
-      "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/diagnosing-slow-sql-server-queries-a-practical-guide-to-query-store-and-execution-plans",
+      "id": "hntop-50609685",
+      "title": "GLM-5.4: Toward generalized coding with our first loop transformer",
+      "summary": "GLM-5.4: Toward generalized coding with our first loop transformer — 1138 points, 369 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://z.ai/blog/glm-5.4",
       "category": "products",
-      "date": "2026-11-22",
+      "date": "2026-11-23",
       "hot": true,
-      "score": 100,
+      "score": 1138,
       "tags": [
-        "HackerNoon",
-        "sql-server",
-        "AI"
+        "HN",
+        "top"
       ]
     },
     {
-      "id": "hnoon-what-happens-to-your-digital-accounts-after-a-chargeback",
-      "title": "What Happens to Your Digital Accounts After a Chargeback?",
-      "summary": "A credit card chargeback can trigger account restrictions on gaming, cloud, and subscription platforms. Learn the risks, policies, and recovery options. — by Dora Milen on HackerNoon.",
-      "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/what-happens-to-your-digital-accounts-after-a-chargeback",
-      "category": "safety",
-      "date": "2026-11-22",
+      "id": "dev-5032798",
+      "title": "Proofreader vs. Rewriter vs. Prompt API: Test the Task, Not the Demo",
+      "summary": "“Make this message better” is not one task. It can mean correcting a spelling mistake, changing the... — 32 reactions, 18 comments on DEV.to.",
+      "source": "DEV.to",
+      "sourceUrl": "https://dev.to/gde/proofreader-vs-rewriter-vs-prompt-api-test-the-task-not-the-demo-pi9",
+      "category": "products",
+      "date": "2026-11-23",
       "hot": true,
-      "score": 100,
+      "score": 32,
       "tags": [
-        "HackerNoon",
-        "digital-ownership",
-        "AI"
+        "DEV.to",
+        "ai",
+        "webdev",
+        "ai"
       ]
     },
     {
-      "id": "hnoon-how-to-modernize-bank-without-taking-its-payment-systems-off",
-      "title": "How to Modernize Bank Without Taking Its Payment Systems Offline",
-      "summary": "A field guide to modernizing legacy banking integration: strangler patterns, anti-corruption layers and security controls that keep payments running. — by Naveed Akram on HackerNoon.",
-      "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/how-to-modernize-bank-without-taking-its-payment-systems-offline",
+      "id": "hntop-50597612",
+      "title": "87% of the Anthropic power will come from gas and 11% from coal in 2028",
+      "summary": "87% of the Anthropic power will come from gas and 11% from coal in 2028 — 1033 points, 1007 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://betterdatacenterproject.com/2026/11/16/how-ai-is-powered-a-breakdown-of-byop-and-grid-power/",
+      "category": "big-tech",
+      "date": "2026-11-22",
+      "hot": true,
+      "score": 1033,
+      "tags": [
+        "HN",
+        "top"
+      ]
+    },
+    {
+      "id": "dev-5091929",
+      "title": "I Made My RAG Safer. It Got Worse Under Load",
+      "summary": "RAG isn't dead, but unverified RAG should be. Here's what checking every sentence actually cost me on... — 59 reactions, 61 comments on DEV.to.",
+      "source": "DEV.to",
+      "sourceUrl": "https://dev.to/ayush_singh_9b0d83152be5b/i-made-my-rag-safer-it-got-worse-under-load-3olm",
       "category": "products",
       "date": "2026-11-22",
       "hot": true,
-      "score": 100,
+      "score": 59,
       "tags": [
-        "HackerNoon",
-        "banking-technology",
-        "AI"
+        "DEV.to",
+        "ai",
+        "ai",
+        "rag"
       ]
     },
     {
       "id": "dev-5080715",
       "title": "The Chairs Are Back. The Coffee Is On. ☕",
-      "summary": "Welcome to The Third Cup.           The Renovation Is Done. We're Open Again!   Finally, the... — 106 reactions, 54 comments on DEV.to.",
+      "summary": "Welcome to The Third Cup.           The Renovation Is Done. We're Open Again!   Finally, the... — 121 reactions, 62 comments on DEV.to.",
       "source": "DEV.to",
       "sourceUrl": "https://dev.to/thethirdcup/the-chairs-are-back-the-coffee-is-on-243p",
       "category": "products",
       "date": "2026-11-21",
       "hot": true,
-      "score": 106,
+      "score": 121,
       "tags": [
         "DEV.to",
         "ai",
@@ -238,13 +248,13 @@
     {
       "id": "dev-5036802",
       "title": "Dead Keys: I Brought Back the Typing Games. Kiro Did the Heavy Lifting.",
-      "summary": "The keys you miss become the lesson.   TL;DR: Dead Keys is my entry for the Kiroween 2026 hackathon,... — 46 reactions, 21 comments on DEV.to.",
+      "summary": "The keys you miss become the lesson.   TL;DR: Dead Keys is my entry for the Kiroween 2026 hackathon,... — 69 reactions, 34 comments on DEV.to.",
       "source": "DEV.to",
       "sourceUrl": "https://dev.to/earlgreyhot1701d/dead-keys-i-brought-back-the-typing-games-kiro-did-the-heavy-lifting-5gc2",
       "category": "products",
       "date": "2026-11-21",
       "hot": true,
-      "score": 46,
+      "score": 69,
       "tags": [
         "DEV.to",
         "ai",
@@ -255,38 +265,22 @@
     {
       "id": "hntop-50581260",
       "title": "Inkling 2 Mini",
-      "summary": "Inkling 2 Mini — 1466 points, 293 comments on HN.",
+      "summary": "Inkling 2 Mini — 1481 points, 294 comments on HN.",
       "source": "Hacker News",
       "sourceUrl": "https://thinkingmachines.ai/news/inkling-2-mini/",
       "category": "products",
       "date": "2026-11-20",
       "hot": true,
-      "score": 1466,
+      "score": 1481,
       "tags": [
         "HN",
         "top"
       ]
     },
     {
-      "id": "ax-2611.27784v1",
-      "title": "Neural Defend ARCAS 290M: A Robust Foundation Model for AI-Generated Audio Detection",
-      "summary": "Voice cloning now needs only seconds of audio, and detectors tuned to one dataset often fail when the generator, channel, or language changes. We introduce ARCAS 290M, Neural Defend's foundation model for detecting AI-ge",
-      "source": "arXiv",
-      "sourceUrl": "http://arxiv.org/abs/2611.27784v1",
-      "category": "products",
-      "date": "2026-11-20",
-      "hot": true,
-      "score": 800,
-      "tags": [
-        "arXiv",
-        "paper",
-        "AI"
-      ]
-    },
-    {
       "id": "dev-5076491",
       "title": "What team-wide AI adoption actually takes",
-      "summary": "I've tried nearly every way to make AI practical at work: new models, routers, agent frameworks,... — 55 reactions, 16 comments on DEV.to.",
+      "summary": "I've tried nearly every way to make AI practical at work: new models, routers, agent frameworks,... — 55 reactions, 17 comments on DEV.to.",
       "source": "DEV.to",
       "sourceUrl": "https://dev.to/peter/what-team-wide-ai-adoption-actually-takes-1gbh",
       "category": "products",
@@ -302,15 +296,14 @@
     }
   ],
   "meta": {
-    "fetchedAt": "2026-11-23T10:19:36.082Z",
+    "fetchedAt": "2026-11-24T12:00:37.195Z",
     "topic": "AI",
     "total": 15,
-    "hot": 10,
+    "hot": 15,
     "sources": [
-      "Hacker News",
       "HackerNoon",
-      "DEV.to",
-      "arXiv"
+      "Hacker News",
+      "DEV.to"
     ]
   }
 }
