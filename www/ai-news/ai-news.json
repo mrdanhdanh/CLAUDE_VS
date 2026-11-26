@@ -1,12 +1,12 @@
 {
-  "generatedAt": "2026-11-25T10:53:20.418Z",
+  "generatedAt": "2026-11-26T10:29:00.383Z",
   "generatedBy": "YUNIE × Last30Days",
   "version": 2,
   "description": "Tin AI mới nhất — tổng hợp từ Last30Days (HN, GitHub, DEV.to, Reddit, arXiv, HackerNoon) trong 30 ngày qua. Chủ đề: AI. Tự động cập nhật bởi YUNIE.",
   "last30days": {
     "enabled": true,
     "topic": "AI",
-    "since": "2026-10-26",
+    "since": "2026-10-27",
     "days": 30,
     "sources": [
       "Hacker News (Algolia, free)",
@@ -55,95 +55,194 @@
   ],
   "articles": [
     {
-      "id": "hnoon-three-ai-agents-one-android-phone-and-a-clock",
-      "title": "Three AI Agents, One Android Phone, and a Clock",
-      "summary": "Three coding agents, one Android phone, and a race at 3 a.m. The devlog of Corral: leases instead of locks, because a dead agent cannot hold a device; identity by process ancestry, — by Vitali Tsikhanovich on HackerNoon.",
-      "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/three-ai-agents-one-android-phone-and-a-clock",
+      "id": "hn-50652184",
+      "title": "Moat: Your OpenRouter Replacement",
+      "summary": "Moat: Your OpenRouter Replacement — 66 points, 49 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://commandcode.ai/moat",
       "category": "products",
-      "date": "2026-11-25",
-      "hot": true,
-      "score": 100,
+      "date": "2026-11-26",
+      "hot": false,
+      "score": 66,
       "tags": [
-        "HackerNoon",
+        "HN",
+        "AI",
+        "story",
+        "author_amanverasia"
+      ]
+    },
+    {
+      "id": "dev-5108945",
+      "title": "Nostalgia and the AI Productivity Paradox",
+      "summary": "There is something strangely nostalgic about November 2026.  GTA VI has finally arrived after 13... — 27 reactions, 10 comments on DEV.to.",
+      "source": "DEV.to",
+      "sourceUrl": "https://dev.to/gramli/nostalgia-and-the-ai-productivity-paradox-4f33",
+      "category": "products",
+      "date": "2026-11-26",
+      "hot": false,
+      "score": 27,
+      "tags": [
+        "DEV.to",
         "ai",
-        "AI"
-      ]
-    },
-    {
-      "id": "hnoon-how-language-models-learn-without-changing-their-weights",
-      "title": "How Language Models Learn Without Changing Their Weights",
-      "summary": "A model whose weights never change can behave as if it learned. Three explanations, induction heads, gradient descent in the forward pass, and Bayesian inference, and what each get — by Adele Chinda on HackerNoon.",
-      "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/how-language-models-learn-without-changing-their-weights",
-      "category": "products",
-      "date": "2026-11-25",
-      "hot": true,
-      "score": 100,
-      "tags": [
-        "HackerNoon",
-        "in-context-learning",
-        "AI"
-      ]
-    },
-    {
-      "id": "hnoon-can-ai-agents-produce-better-answers-by-disagreeing-with-eac",
-      "title": "Can AI Agents Produce Better Answers by Disagreeing With Each Other?",
-      "summary": "Can AI agents produce better answers by challenging each other? Assembly explores multi-agent reasoning, consensus scoring, and adversarial checks. Read All — by Anubhab Das on HackerNoon.",
-      "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/can-ai-agents-produce-better-answers-by-disagreeing-with-each-other",
-      "category": "products",
-      "date": "2026-11-25",
-      "hot": true,
-      "score": 100,
-      "tags": [
-        "HackerNoon",
         "ai",
-        "AI"
+        "productivity"
       ]
     },
     {
-      "id": "hnoon-how-ai-learned-to-pay-attention-the-origins-of-modern-llms",
-      "title": "How AI Learned to Pay Attention: The Origins of Modern LLMs",
-      "summary": "Discover how the attention mechanism transformed machine translation, overcame early AI limitations, and laid the foundation for modern LLMs. Read All — by Jake Tao on HackerNoon.",
-      "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/how-ai-learned-to-pay-attention-the-origins-of-modern-llms",
-      "category": "products",
-      "date": "2026-11-25",
-      "hot": true,
-      "score": 100,
+      "id": "hn-50652428",
+      "title": "California companies buying Nvidia advanced chips discovered to be Chinese-owned",
+      "summary": "California companies buying Nvidia advanced chips discovered to be Chinese-owned — 5 points, 0 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://www.cbsnews.com/news/nvidia-china-ai-chips-computing-sales/",
+      "category": "big-tech",
+      "date": "2026-11-26",
+      "hot": false,
+      "score": 5,
       "tags": [
-        "HackerNoon",
-        "ai",
-        "AI"
+        "HN",
+        "AI",
+        "story",
+        "author_reasonableklout"
       ]
     },
     {
-      "id": "hnoon-is-ai-going-to-replace-programming-in-2027",
-      "title": "Is AI Going to Replace Programming in 2027?",
-      "summary": "Programmers who are AI literate and adaptable will remain relevant in 2027, while those who are not may need to upskill or risk being replaced by AI. To remain relevant, programmer — by Jon Brookes on HackerNoon.",
-      "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/is-ai-going-to-replace-programming-in-2027",
+      "id": "hn-50652661",
+      "title": "Show HN: Hozo compiles React Native to native UI and semantic HTML",
+      "summary": "Hi HN,<p>I&#x27;ve worked with React Native for years, but I&#x27;ve never been fully satisfied with it. That&#x27;s why I&#x27;m building Hozo, an open-source UI compiler written in Rust.<p>In short, Hozo is yet another — 4 points, 0 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://github.com/iray-tno/hozo",
+      "category": "products",
+      "date": "2026-11-26",
+      "hot": false,
+      "score": 4,
+      "tags": [
+        "HN",
+        "AI",
+        "story",
+        "author_tanao"
+      ]
+    },
+    {
+      "id": "hn-50653477",
+      "title": "Google Will Make AI Agents Use Its MCP Servers. The Gmail One Can't Send Email",
+      "summary": "Google Will Make AI Agents Use Its MCP Servers. The Gmail One Can't Send Email — 3 points, 0 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://techstackups.com/articles/google-workspace-ai-agents-mcp/",
+      "category": "big-tech",
+      "date": "2026-11-26",
+      "hot": false,
+      "score": 3,
+      "tags": [
+        "HN",
+        "AI",
+        "story",
+        "author_ritzaco"
+      ]
+    },
+    {
+      "id": "hntop-50637220",
+      "title": "The matrix multiplication exponent is nine fourths [pdf]",
+      "summary": "See also <i>Holy shit holy shit holy shit holy shit: the magnitude of what’s now happening</i> - <a href=\"https:&#x2F;&#x2F;news.ycombinator.com&#x2F;item?id=50646108\">https:&#x2F;&#x2F;news.ycombinator.com&#x2F;item?id= — 1042 points, 592 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://github.com/openai/math/blob/main/preprints/The-matrix-multiplication-exponent-is-nine-fourths-November-24-2026/paper.pdf",
       "category": "safety",
       "date": "2026-11-25",
       "hot": true,
+      "score": 1042,
+      "tags": [
+        "HN",
+        "top"
+      ]
+    },
+    {
+      "id": "ax-2611.34770v1",
+      "title": "Make the Adversary Spend More: Stateful Deception as a Cost-Exchange Primitive for AI-Era Cyber Defense",
+      "summary": "Large language models (LLMs) are transforming the economics of intrusion by reducing the attacker's cost to scan and adapt, while tempting defenders into unbounded compute. We argue that cyber deception should be judged ",
+      "source": "arXiv",
+      "sourceUrl": "http://arxiv.org/abs/2611.34770v1",
+      "category": "big-tech",
+      "date": "2026-11-25",
+      "hot": true,
+      "score": 800,
+      "tags": [
+        "arXiv",
+        "paper",
+        "AI"
+      ]
+    },
+    {
+      "id": "hnoon-398-blog-posts-to-learn-about-crypto-adoption",
+      "title": "398 Blog Posts To Learn About Crypto Adoption",
+      "summary": "Learn everything you need to know about Crypto Adoption via these 398 free HackerNoon blog posts. — by Learn Repo on HackerNoon.",
+      "source": "HackerNoon",
+      "sourceUrl": "https://hackernoon.com/398-blog-posts-to-learn-about-crypto-adoption",
+      "category": "products",
+      "date": "2026-11-25",
+      "hot": true,
       "score": 100,
       "tags": [
         "HackerNoon",
-        "ai",
+        "crypto-adoption",
         "AI"
+      ]
+    },
+    {
+      "id": "hnoon-space-to-ground-connectivity-implementing-nb-ntn-in-consumer",
+      "title": "Space-to-Ground Connectivity: Implementing NB-NTN in Consumer Devices",
+      "summary": "Explore the engineering challenges of integrating NB-NTN satellite connectivity into smartwatches, covering antenna design, link budgets, and OTA validation. — by Juhig on HackerNoon.",
+      "source": "HackerNoon",
+      "sourceUrl": "https://hackernoon.com/space-to-ground-connectivity-implementing-nb-ntn-in-consumer-devices",
+      "category": "products",
+      "date": "2026-11-25",
+      "hot": true,
+      "score": 100,
+      "tags": [
+        "HackerNoon",
+        "satellite-communications",
+        "AI"
+      ]
+    },
+    {
+      "id": "hnoon-retargeting-has-a-state-synchronization-problem",
+      "title": "Retargeting Has a State-Synchronization Problem",
+      "summary": "A CRM update is not an instant ad exclusion. Trace audience eligibility, synchronization, matching, and campaign enforcement separately. — by Pratik Thakker on HackerNoon.",
+      "source": "HackerNoon",
+      "sourceUrl": "https://hackernoon.com/retargeting-has-a-state-synchronization-problem",
+      "category": "products",
+      "date": "2026-11-25",
+      "hot": true,
+      "score": 100,
+      "tags": [
+        "HackerNoon",
+        "marketing-automation",
+        "AI"
+      ]
+    },
+    {
+      "id": "hntop-50627340",
+      "title": "LLM agents work for their parent companies, not for you",
+      "summary": "LLM agents work for their parent companies, not for you — 1016 points, 410 comments on HN.",
+      "source": "Hacker News",
+      "sourceUrl": "https://michaelharley.net/posts/2026/11/01/llm-agents-work-for-their-parent-companies-not-for-you/",
+      "category": "products",
+      "date": "2026-11-24",
+      "hot": true,
+      "score": 1016,
+      "tags": [
+        "HN",
+        "top"
       ]
     },
     {
       "id": "dev-5103474",
       "title": "Why Your AI Release Notes Hallucinate: The \"Why vs What\" Problem in Git History",
-      "summary": "Passing raw git diffs to LLMs produces plausible but hallucinated changelogs. Here is why extracting the real \"why\" requires linked issues and counterfactual evals. — 43 reactions, 14 comments on DEV.to.",
+      "summary": "Passing raw git diffs to LLMs produces plausible but hallucinated changelogs. Here is why extracting the real \"why\" requires linked issues and counterfactual evals. — 59 reactions, 32 comments on DEV.to.",
       "source": "DEV.to",
       "sourceUrl": "https://dev.to/necoz/why-your-ai-release-notes-hallucinate-the-why-vs-what-problem-in-git-history-5ch0",
       "category": "products",
       "date": "2026-11-24",
       "hot": true,
-      "score": 43,
+      "score": 59,
       "tags": [
         "DEV.to",
         "ai",
@@ -154,13 +253,13 @@
     {
       "id": "dev-5109914",
       "title": "I Let Claude Code Create My AWS Account",
-      "summary": "Every time I've helped someone start on AWS, the same thing happens. They're keen, they have an idea,... — 15 reactions, 8 comments on DEV.to.",
+      "summary": "Every time I've helped someone start on AWS, the same thing happens. They're keen, they have an idea,... — 23 reactions, 14 comments on DEV.to.",
       "source": "DEV.to",
       "sourceUrl": "https://dev.to/aws/i-let-claude-code-create-my-aws-account-12gb",
       "category": "products",
       "date": "2026-11-24",
       "hot": false,
-      "score": 15,
+      "score": 23,
       "tags": [
         "DEV.to",
         "ai",
@@ -169,63 +268,15 @@
       ]
     },
     {
-      "id": "ax-2611.33137v1",
-      "title": "Physicl Scenes: An Artist-created 3D Dataset for Learning Perception and Action",
-      "summary": "We present Physicl Scenes, a high-quality artist-created and curated dataset of 6,499 3D scenes spanning household rooms, public interiors, and outdoor spaces. The dataset combines detailed geometry, physically based mat",
-      "source": "arXiv",
-      "sourceUrl": "http://arxiv.org/abs/2611.33137v1",
-      "category": "products",
-      "date": "2026-11-24",
-      "hot": false,
-      "score": 0,
-      "tags": [
-        "arXiv",
-        "paper",
-        "AI"
-      ]
-    },
-    {
-      "id": "ax-2611.33113v1",
-      "title": "Max-degree filtration, Koszul complexes, and Multicolor Permutation Wordle",
-      "summary": "We explore the Koszul resolutions of a family of ideals, each generated by multivariate polynomials that split completely into linear factors. The motivating examples come from the game Permutation Wordle of Kutin and Sm",
-      "source": "arXiv",
-      "sourceUrl": "http://arxiv.org/abs/2611.33113v1",
-      "category": "products",
-      "date": "2026-11-24",
-      "hot": false,
-      "score": 0,
-      "tags": [
-        "arXiv",
-        "paper",
-        "AI"
-      ]
-    },
-    {
-      "id": "ax-2611.33093v1",
-      "title": "AIChipBench: Benchmarking LLM Agents for Automated AI Accelerator Design",
-      "summary": "A language-model decoder carries state between decoding steps, and in hardware a wrong state update can leave the current token correct and corrupt the output several tokens later, so a design can pass output tests and s",
-      "source": "arXiv",
-      "sourceUrl": "http://arxiv.org/abs/2611.33093v1",
-      "category": "products",
-      "date": "2026-11-24",
-      "hot": false,
-      "score": 0,
-      "tags": [
-        "arXiv",
-        "paper",
-        "AI"
-      ]
-    },
-    {
       "id": "hntop-50611576",
       "title": "Nvidia Reinstates Jensen Huang as CEO",
-      "summary": "<a href=\"https:&#x2F;&#x2F;nvidianews.nvidia.com&#x2F;news&#x2F;nvidia-board-reinstates-jensen-huang-as-president-ceo-and-board-director\" rel=\"nofollow\">https:&#x2F;&#x2F;nvidianews.nvidia.com&#x2F;news&#x2F;nvidia-board — 2819 points, 3753 comments on HN.",
+      "summary": "<a href=\"https:&#x2F;&#x2F;nvidianews.nvidia.com&#x2F;news&#x2F;nvidia-board-reinstates-jensen-huang-as-president-ceo-and-board-director\" rel=\"nofollow\">https:&#x2F;&#x2F;nvidianews.nvidia.com&#x2F;news&#x2F;nvidia-board — 2843 points, 3804 comments on HN.",
       "source": "Hacker News",
       "sourceUrl": "https://www.cnbc.com/2026/11/23/nvidia-jensen-huang-ceo.html",
       "category": "big-tech",
       "date": "2026-11-23",
       "hot": true,
-      "score": 2819,
+      "score": 2843,
       "tags": [
         "HN",
         "top"
@@ -234,60 +285,13 @@
     {
       "id": "hntop-50611588",
       "title": "Jensen Huang Reinstated as Nvidia CEO",
-      "summary": "Jensen Huang Reinstated as Nvidia CEO — 1713 points, 4 comments on HN.",
+      "summary": "Jensen Huang Reinstated as Nvidia CEO — 1714 points, 4 comments on HN.",
       "source": "Hacker News",
       "sourceUrl": "https://nvidianews.nvidia.com/news/nvidia-board-reinstates-jensen-huang-as-president-ceo-and-board-director",
       "category": "big-tech",
       "date": "2026-11-23",
       "hot": true,
-      "score": 1713,
-      "tags": [
-        "HN",
-        "top"
-      ]
-    },
-    {
-      "id": "hntop-50609685",
-      "title": "GLM-5.4: Toward generalized coding with our first loop transformer",
-      "summary": "GLM-5.4: Toward generalized coding with our first loop transformer — 1173 points, 382 comments on HN.",
-      "source": "Hacker News",
-      "sourceUrl": "https://z.ai/blog/glm-5.4",
-      "category": "products",
-      "date": "2026-11-23",
-      "hot": true,
-      "score": 1173,
-      "tags": [
-        "HN",
-        "top"
-      ]
-    },
-    {
-      "id": "dev-5032798",
-      "title": "Proofreader vs. Rewriter vs. Prompt API: Test the Task, Not the Demo",
-      "summary": "“Make this message better” is not one task. It can mean correcting a spelling mistake, changing the... — 41 reactions, 35 comments on DEV.to.",
-      "source": "DEV.to",
-      "sourceUrl": "https://dev.to/gde/proofreader-vs-rewriter-vs-prompt-api-test-the-task-not-the-demo-pi9",
-      "category": "products",
-      "date": "2026-11-23",
-      "hot": true,
-      "score": 41,
-      "tags": [
-        "DEV.to",
-        "ai",
-        "webdev",
-        "ai"
-      ]
-    },
-    {
-      "id": "hntop-50597612",
-      "title": "87% of the Anthropic power will come from gas and 11% from coal in 2028",
-      "summary": "87% of the Anthropic power will come from gas and 11% from coal in 2028 — 1042 points, 1008 comments on HN.",
-      "source": "Hacker News",
-      "sourceUrl": "https://betterdatacenterproject.com/2026/11/16/how-ai-is-powered-a-breakdown-of-byop-and-grid-power/",
-      "category": "big-tech",
-      "date": "2026-11-22",
-      "hot": true,
-      "score": 1042,
+      "score": 1714,
       "tags": [
         "HN",
         "top"
@@ -295,15 +299,15 @@
     }
   ],
   "meta": {
-    "fetchedAt": "2026-11-25T10:53:20.418Z",
+    "fetchedAt": "2026-11-26T10:29:00.383Z",
     "topic": "AI",
     "total": 15,
-    "hot": 11,
+    "hot": 9,
     "sources": [
-      "HackerNoon",
+      "Hacker News",
       "DEV.to",
       "arXiv",
-      "Hacker News"
+      "HackerNoon"
     ]
   }
 }
