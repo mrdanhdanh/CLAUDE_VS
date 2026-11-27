@@ -1,12 +1,12 @@
 {
-  "generatedAt": "2026-11-26T10:29:00.383Z",
+  "generatedAt": "2026-11-27T10:32:05.275Z",
   "generatedBy": "YUNIE × Last30Days",
   "version": 2,
   "description": "Tin AI mới nhất — tổng hợp từ Last30Days (HN, GitHub, DEV.to, Reddit, arXiv, HackerNoon) trong 30 ngày qua. Chủ đề: AI. Tự động cập nhật bởi YUNIE.",
   "last30days": {
     "enabled": true,
     "topic": "AI",
-    "since": "2026-10-27",
+    "since": "2026-10-28",
     "days": 30,
     "sources": [
       "Hacker News (Algolia, free)",
@@ -55,32 +55,160 @@
   ],
   "articles": [
     {
-      "id": "hn-50652184",
-      "title": "Moat: Your OpenRouter Replacement",
-      "summary": "Moat: Your OpenRouter Replacement — 66 points, 49 comments on HN.",
-      "source": "Hacker News",
-      "sourceUrl": "https://commandcode.ai/moat",
+      "id": "hnoon-i-built-an-ai-agent-skill-that-writes-better-yara-l-detectio",
+      "title": "I Built an AI Agent Skill That Writes Better YARA-L Detection Rules",
+      "summary": "The YARA-L skill is an open-source Agent Skill that teaches coding agents to write, review, tune, and convert YARA-L 2.0 rules. It addresses common mistakes in AI-generated rules,  — by AjayNyayapathi on HackerNoon.",
+      "source": "HackerNoon",
+      "sourceUrl": "https://hackernoon.com/i-built-an-ai-agent-skill-that-writes-better-yara-l-detection-rules",
+      "category": "big-tech",
+      "date": "2026-11-27",
+      "hot": true,
+      "score": 100,
+      "tags": [
+        "HackerNoon",
+        "yara-rules",
+        "AI"
+      ]
+    },
+    {
+      "id": "hnoon-the-ai-job-market-tsunami-is-coming-and-most-people-arent-re",
+      "title": "The AI Job Market Tsunami Is Coming, and Most People Aren’t Ready",
+      "summary": "AI agents now work toward goals alone, claim proofs on Millennium Problems and find bugs faster than security teams. Dismissing it or ignoring it are both mistakes; the answer is t — by Marcello Pichini on HackerNoon.",
+      "source": "HackerNoon",
+      "sourceUrl": "https://hackernoon.com/the-ai-job-market-tsunami-is-coming-and-most-people-arent-ready",
+      "category": "products",
+      "date": "2026-11-27",
+      "hot": true,
+      "score": 100,
+      "tags": [
+        "HackerNoon",
+        "ai",
+        "AI"
+      ]
+    },
+    {
+      "id": "hnoon-eight-ai-models-43000-lines-of-dialogue-and-a--1564-bill",
+      "title": "Eight AI Models, 43,000 Lines of Dialogue, and a $15.64 Bill",
+      "summary": "I built a reality show with eight artificial intelligence models that live together around the clock. Sixteen days later I have 42,834 lines, a bill of 15.64 dollars and a few less — by Llorenc Ballester on HackerNoon.",
+      "source": "HackerNoon",
+      "sourceUrl": "https://hackernoon.com/eight-ai-models-43000-lines-of-dialogue-and-a-$1564-bill",
+      "category": "products",
+      "date": "2026-11-27",
+      "hot": true,
+      "score": 100,
+      "tags": [
+        "HackerNoon",
+        "ai-agents",
+        "AI"
+      ]
+    },
+    {
+      "id": "hnoon-i-tested-cicada-the-open-source-ai-app-that-turns-any-call-i",
+      "title": "I Tested Cicada, the Open-Source AI App That Turns Any Call Into a Bilingual Meeting",
+      "summary": "I ran Cicada's Linux build with zero cloud keys on local models and recorded what its virtual mic sends into the meeting: real virtual mic, median 4.2 s per segment, and one nuance — by Ishank Choudhary on HackerNoon.",
+      "source": "HackerNoon",
+      "sourceUrl": "https://hackernoon.com/i-tested-cicada-the-open-source-ai-app-that-turns-any-call-into-a-bilingual-meeting",
+      "category": "products",
+      "date": "2026-11-27",
+      "hot": true,
+      "score": 100,
+      "tags": [
+        "HackerNoon",
+        "ai",
+        "AI"
+      ]
+    },
+    {
+      "id": "hnoon-ai-writes-code-faster-than-you-can-review-it-now-what",
+      "title": "AI Writes Code Faster Than You Can Review It. Now What?",
+      "summary": "I see a lot of posts from developers who insist on reviewing every single line of code that AI agents write. I understand the approach, because that’s what we, including me, have b — by Nicolas Fränkel on HackerNoon.",
+      "source": "HackerNoon",
+      "sourceUrl": "https://hackernoon.com/ai-writes-code-faster-than-you-can-review-it-now-what",
+      "category": "products",
+      "date": "2026-11-27",
+      "hot": true,
+      "score": 100,
+      "tags": [
+        "HackerNoon",
+        "ai",
+        "AI"
+      ]
+    },
+    {
+      "id": "hnoon-the-haywood-securities-case-exposes-a-blind-spot-in-complian",
+      "title": "The Haywood Securities Case Exposes a Blind Spot in Compliance Technology",
+      "summary": "The Haywood Securities case shows why identifying compliance risk is only half the job. Effective controls must turn detection into accountable action. — by Sanford Diday on HackerNoon.",
+      "source": "HackerNoon",
+      "sourceUrl": "https://hackernoon.com/the-haywood-securities-case-exposes-a-blind-spot-in-compliance-technology",
+      "category": "safety",
+      "date": "2026-11-26",
+      "hot": true,
+      "score": 100,
+      "tags": [
+        "HackerNoon",
+        "regtech",
+        "AI"
+      ]
+    },
+    {
+      "id": "hnoon-64-blog-posts-to-learn-about-crypto-mining",
+      "title": "64 Blog Posts To Learn About Crypto Mining",
+      "summary": "Learn everything you need to know about Crypto Mining via these 64 free HackerNoon blog posts. — by Learn Repo on HackerNoon.",
+      "source": "HackerNoon",
+      "sourceUrl": "https://hackernoon.com/64-blog-posts-to-learn-about-crypto-mining",
       "category": "products",
       "date": "2026-11-26",
-      "hot": false,
-      "score": 66,
+      "hot": true,
+      "score": 100,
       "tags": [
-        "HN",
-        "AI",
-        "story",
-        "author_amanverasia"
+        "HackerNoon",
+        "crypto-mining",
+        "AI"
+      ]
+    },
+    {
+      "id": "hnoon-my-4-gb-laptop-cant-run-a-27b-model-nosana-ran-it-for-under-",
+      "title": "My 4 GB Laptop Can't Run a 27B Model. Nosana Ran It for Under a Cent per Task",
+      "summary": "A 60-run benchmark tests which zkzkAgent tasks can stay on a 4 GB laptop and which benefit from a 27B model served through Nosana — by zkzk gamal on HackerNoon.",
+      "source": "HackerNoon",
+      "sourceUrl": "https://hackernoon.com/my-4-gb-laptop-cant-run-a-27b-model-nosana-ran-it-for-under-a-cent-per-task",
+      "category": "products",
+      "date": "2026-11-26",
+      "hot": true,
+      "score": 100,
+      "tags": [
+        "HackerNoon",
+        "decentralize-ai",
+        "AI"
+      ]
+    },
+    {
+      "id": "dev-5120802",
+      "title": "I Built AI Test Automation. Today, I Went Back to Manual Testing.",
+      "summary": "Today, I manually tested a project.  It doesn't sound like anything special.  After all, I've been... — 91 reactions, 93 comments on DEV.to.",
+      "source": "DEV.to",
+      "sourceUrl": "https://dev.to/thethirdcup/i-built-ai-test-automation-today-i-went-back-to-manual-testing-mlh",
+      "category": "products",
+      "date": "2026-11-26",
+      "hot": true,
+      "score": 91,
+      "tags": [
+        "DEV.to",
+        "ai",
+        "discuss",
+        "testing"
       ]
     },
     {
       "id": "dev-5108945",
       "title": "Nostalgia and the AI Productivity Paradox",
-      "summary": "There is something strangely nostalgic about November 2026.  GTA VI has finally arrived after 13... — 27 reactions, 10 comments on DEV.to.",
+      "summary": "There is something strangely nostalgic about November 2026.  GTA VI has finally arrived after 13... — 68 reactions, 50 comments on DEV.to.",
       "source": "DEV.to",
       "sourceUrl": "https://dev.to/gramli/nostalgia-and-the-ai-productivity-paradox-4f33",
       "category": "products",
       "date": "2026-11-26",
-      "hot": false,
-      "score": 27,
+      "hot": true,
+      "score": 68,
       "tags": [
         "DEV.to",
         "ai",
@@ -89,66 +217,15 @@
       ]
     },
     {
-      "id": "hn-50652428",
-      "title": "California companies buying Nvidia advanced chips discovered to be Chinese-owned",
-      "summary": "California companies buying Nvidia advanced chips discovered to be Chinese-owned — 5 points, 0 comments on HN.",
-      "source": "Hacker News",
-      "sourceUrl": "https://www.cbsnews.com/news/nvidia-china-ai-chips-computing-sales/",
-      "category": "big-tech",
-      "date": "2026-11-26",
-      "hot": false,
-      "score": 5,
-      "tags": [
-        "HN",
-        "AI",
-        "story",
-        "author_reasonableklout"
-      ]
-    },
-    {
-      "id": "hn-50652661",
-      "title": "Show HN: Hozo compiles React Native to native UI and semantic HTML",
-      "summary": "Hi HN,<p>I&#x27;ve worked with React Native for years, but I&#x27;ve never been fully satisfied with it. That&#x27;s why I&#x27;m building Hozo, an open-source UI compiler written in Rust.<p>In short, Hozo is yet another — 4 points, 0 comments on HN.",
-      "source": "Hacker News",
-      "sourceUrl": "https://github.com/iray-tno/hozo",
-      "category": "products",
-      "date": "2026-11-26",
-      "hot": false,
-      "score": 4,
-      "tags": [
-        "HN",
-        "AI",
-        "story",
-        "author_tanao"
-      ]
-    },
-    {
-      "id": "hn-50653477",
-      "title": "Google Will Make AI Agents Use Its MCP Servers. The Gmail One Can't Send Email",
-      "summary": "Google Will Make AI Agents Use Its MCP Servers. The Gmail One Can't Send Email — 3 points, 0 comments on HN.",
-      "source": "Hacker News",
-      "sourceUrl": "https://techstackups.com/articles/google-workspace-ai-agents-mcp/",
-      "category": "big-tech",
-      "date": "2026-11-26",
-      "hot": false,
-      "score": 3,
-      "tags": [
-        "HN",
-        "AI",
-        "story",
-        "author_ritzaco"
-      ]
-    },
-    {
       "id": "hntop-50637220",
       "title": "The matrix multiplication exponent is nine fourths [pdf]",
-      "summary": "See also <i>Holy shit holy shit holy shit holy shit: the magnitude of what’s now happening</i> - <a href=\"https:&#x2F;&#x2F;news.ycombinator.com&#x2F;item?id=50646108\">https:&#x2F;&#x2F;news.ycombinator.com&#x2F;item?id= — 1042 points, 592 comments on HN.",
+      "summary": "See also <i>Holy shit holy shit holy shit holy shit: the magnitude of what’s now happening</i> - <a href=\"https:&#x2F;&#x2F;news.ycombinator.com&#x2F;item?id=50646108\">https:&#x2F;&#x2F;news.ycombinator.com&#x2F;item?id= — 1067 points, 607 comments on HN.",
       "source": "Hacker News",
       "sourceUrl": "https://github.com/openai/math/blob/main/preprints/The-matrix-multiplication-exponent-is-nine-fourths-November-24-2026/paper.pdf",
       "category": "safety",
       "date": "2026-11-25",
       "hot": true,
-      "score": 1042,
+      "score": 1067,
       "tags": [
         "HN",
         "top"
@@ -171,143 +248,66 @@
       ]
     },
     {
-      "id": "hnoon-398-blog-posts-to-learn-about-crypto-adoption",
-      "title": "398 Blog Posts To Learn About Crypto Adoption",
-      "summary": "Learn everything you need to know about Crypto Adoption via these 398 free HackerNoon blog posts. — by Learn Repo on HackerNoon.",
-      "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/398-blog-posts-to-learn-about-crypto-adoption",
-      "category": "products",
-      "date": "2026-11-25",
-      "hot": true,
-      "score": 100,
-      "tags": [
-        "HackerNoon",
-        "crypto-adoption",
-        "AI"
-      ]
-    },
-    {
-      "id": "hnoon-space-to-ground-connectivity-implementing-nb-ntn-in-consumer",
-      "title": "Space-to-Ground Connectivity: Implementing NB-NTN in Consumer Devices",
-      "summary": "Explore the engineering challenges of integrating NB-NTN satellite connectivity into smartwatches, covering antenna design, link budgets, and OTA validation. — by Juhig on HackerNoon.",
-      "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/space-to-ground-connectivity-implementing-nb-ntn-in-consumer-devices",
-      "category": "products",
-      "date": "2026-11-25",
-      "hot": true,
-      "score": 100,
-      "tags": [
-        "HackerNoon",
-        "satellite-communications",
-        "AI"
-      ]
-    },
-    {
-      "id": "hnoon-retargeting-has-a-state-synchronization-problem",
-      "title": "Retargeting Has a State-Synchronization Problem",
-      "summary": "A CRM update is not an instant ad exclusion. Trace audience eligibility, synchronization, matching, and campaign enforcement separately. — by Pratik Thakker on HackerNoon.",
-      "source": "HackerNoon",
-      "sourceUrl": "https://hackernoon.com/retargeting-has-a-state-synchronization-problem",
-      "category": "products",
-      "date": "2026-11-25",
-      "hot": true,
-      "score": 100,
-      "tags": [
-        "HackerNoon",
-        "marketing-automation",
-        "AI"
-      ]
-    },
-    {
-      "id": "hntop-50627340",
-      "title": "LLM agents work for their parent companies, not for you",
-      "summary": "LLM agents work for their parent companies, not for you — 1016 points, 410 comments on HN.",
-      "source": "Hacker News",
-      "sourceUrl": "https://michaelharley.net/posts/2026/11/01/llm-agents-work-for-their-parent-companies-not-for-you/",
-      "category": "products",
-      "date": "2026-11-24",
-      "hot": true,
-      "score": 1016,
-      "tags": [
-        "HN",
-        "top"
-      ]
-    },
-    {
-      "id": "dev-5103474",
-      "title": "Why Your AI Release Notes Hallucinate: The \"Why vs What\" Problem in Git History",
-      "summary": "Passing raw git diffs to LLMs produces plausible but hallucinated changelogs. Here is why extracting the real \"why\" requires linked issues and counterfactual evals. — 59 reactions, 32 comments on DEV.to.",
+      "id": "dev-5112821",
+      "title": "Lazy Senior Dev Mode Made My App Smaller. Was It Better?",
+      "summary": "Raise your hand if you've been curious about Ponytail. 🙋 Same spec, same model, same prompt. One... — 77 reactions, 19 comments on DEV.to.",
       "source": "DEV.to",
-      "sourceUrl": "https://dev.to/necoz/why-your-ai-release-notes-hallucinate-the-why-vs-what-problem-in-git-history-5ch0",
+      "sourceUrl": "https://dev.to/necoz/lazy-senior-dev-mode-made-my-app-smaller-was-it-better-90i",
       "category": "products",
-      "date": "2026-11-24",
+      "date": "2026-11-25",
       "hot": true,
-      "score": 59,
+      "score": 77,
       "tags": [
         "DEV.to",
         "ai",
         "ai",
-        "devops"
+        "webdev"
       ]
     },
     {
-      "id": "dev-5109914",
-      "title": "I Let Claude Code Create My AWS Account",
-      "summary": "Every time I've helped someone start on AWS, the same thing happens. They're keen, they have an idea,... — 23 reactions, 14 comments on DEV.to.",
+      "id": "dev-5114865",
+      "title": "Stop AI Agents Acting on Bluffs? A Strands Decider 2B Tool Gate Test",
+      "summary": "I tested Strands Decider 2B as an AI agent tool gate on 16 refund cases against Nova Pro as a judge: accuracy, thresholds, injection, latency, cost. — 29 reactions, 29 comments on DEV.to.",
       "source": "DEV.to",
-      "sourceUrl": "https://dev.to/aws/i-let-claude-code-create-my-aws-account-12gb",
-      "category": "products",
-      "date": "2026-11-24",
+      "sourceUrl": "https://dev.to/aws-builders/stop-ai-agents-acting-on-bluffs-a-strands-decider-2b-tool-gate-test-5004",
+      "category": "fun",
+      "date": "2026-11-25",
       "hot": false,
-      "score": 23,
+      "score": 29,
       "tags": [
         "DEV.to",
         "ai",
-        "aws",
-        "ai"
+        "ai",
+        "aws"
       ]
     },
     {
-      "id": "hntop-50611576",
-      "title": "Nvidia Reinstates Jensen Huang as CEO",
-      "summary": "<a href=\"https:&#x2F;&#x2F;nvidianews.nvidia.com&#x2F;news&#x2F;nvidia-board-reinstates-jensen-huang-as-president-ceo-and-board-director\" rel=\"nofollow\">https:&#x2F;&#x2F;nvidianews.nvidia.com&#x2F;news&#x2F;nvidia-board — 2843 points, 3804 comments on HN.",
-      "source": "Hacker News",
-      "sourceUrl": "https://www.cnbc.com/2026/11/23/nvidia-jensen-huang-ceo.html",
-      "category": "big-tech",
-      "date": "2026-11-23",
-      "hot": true,
-      "score": 2843,
+      "id": "ax-2611.34942v1",
+      "title": "Spectrum Adaptation of AI-Native Autoencoder Communications with Transfer Learning",
+      "summary": "End-to-end physical-layer learning replaces separate modulation, coding, and detection operations with an autoencoder (AE) that consists of a jointly trained encoder-decoder pair at the transmitter and the receiver. This",
+      "source": "arXiv",
+      "sourceUrl": "http://arxiv.org/abs/2611.34942v1",
+      "category": "products",
+      "date": "2026-11-25",
+      "hot": false,
+      "score": 0,
       "tags": [
-        "HN",
-        "top"
-      ]
-    },
-    {
-      "id": "hntop-50611588",
-      "title": "Jensen Huang Reinstated as Nvidia CEO",
-      "summary": "Jensen Huang Reinstated as Nvidia CEO — 1714 points, 4 comments on HN.",
-      "source": "Hacker News",
-      "sourceUrl": "https://nvidianews.nvidia.com/news/nvidia-board-reinstates-jensen-huang-as-president-ceo-and-board-director",
-      "category": "big-tech",
-      "date": "2026-11-23",
-      "hot": true,
-      "score": 1714,
-      "tags": [
-        "HN",
-        "top"
+        "arXiv",
+        "paper",
+        "AI"
       ]
     }
   ],
   "meta": {
-    "fetchedAt": "2026-11-26T10:29:00.383Z",
+    "fetchedAt": "2026-11-27T10:32:05.275Z",
     "topic": "AI",
     "total": 15,
-    "hot": 9,
+    "hot": 13,
     "sources": [
-      "Hacker News",
+      "HackerNoon",
       "DEV.to",
-      "arXiv",
-      "HackerNoon"
+      "Hacker News",
+      "arXiv"
     ]
   }
 }
